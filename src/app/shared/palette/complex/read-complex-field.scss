@@ -1,0 +1,39 @@
+@import "~govuk_frontend_toolkit/stylesheets/_colours.scss";
+
+.complex-panel {
+  $padding: 5px;
+
+  border: 1px solid $border-colour;
+
+  .complex-panel-title {
+    background-color: $panel-colour;
+    padding: $padding;
+    border-bottom: 1px solid $border-colour;
+    font-weight: bold;
+  }
+
+  .complex-panel-table {
+    &>tbody>tr>th {
+      vertical-align: top;
+    }
+
+    &>tbody>tr:last-child {
+      &>th, &>td {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .complex-panel-simple-field {
+    th {
+      padding-left: $padding;
+      width: 15%;
+    }
+  }
+
+  .complex-panel-compound-field {
+    td {
+      padding: $padding;
+    }
+  }
+}

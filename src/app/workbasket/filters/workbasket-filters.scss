@@ -1,0 +1,17 @@
+@import 'node_modules/@ccd/case-ui-toolkit/dist/cut-styles/components/typography';
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_shims';
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_conditionals';
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_measurements';
+
+.button {
+  margin-top: 16px;
+  @include core-12pt;
+}
+
+div select {
+  @include core-12pt;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}

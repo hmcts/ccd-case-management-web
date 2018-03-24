@@ -1,0 +1,9 @@
+<form [formGroup]="formGroup" (submit)="submit()">
+  <div id="confirmation-header" *ngIf="confirmation.getHeader()">
+    <ccd-markdown [content]="confirmation.getHeader()"></ccd-markdown>
+  </div>
+  <div id="confirmation-body" *ngIf="confirmation.getBody()">
+    <ccd-markdown [content]="confirmation.getBody()"></ccd-markdown>
+  </div>
+  <button type="submit" class="button" data-ng-click="submit()">{{this.triggerText}}</button>
+</form>

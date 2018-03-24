@@ -1,0 +1,77 @@
+@import 'node_modules/@ccd/case-ui-toolkit/dist/cut-styles/components/typography';
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_shims';
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_conditionals';
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_measurements';
+
+$black: #231F20;
+
+.global-display {
+  width: 100%;
+  @extend %contain-floats;
+  // position: relative;
+
+  .heading {
+    @include bold-24pt;
+    padding-top: 28px;
+    padding-left: 7px;
+    padding-bottom: 28px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: $black;
+  }
+
+  .right-in-heading {
+    width: 79%;
+    text-align: right;
+    margin-left:auto;
+    padding-right: 7px;
+
+    div {
+      width: 92.5%;
+      padding-right: 0px;
+      padding-left: 52px;
+
+        a {
+            margin-left: auto;
+        }
+    }
+  }
+
+  .display-left {
+    @extend %contain-floats;
+    float: left;
+    padding-left: 7px;
+
+    @include media(desktop){
+      width: 16%;
+    }
+    @media screen and (max-width: 379px) {
+      width: auto;
+      float: none;
+    }
+  }
+
+  .display-right::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0%;
+      margin-left: -15px;
+      border-left: 1px solid #BFC1C3;
+      transform: translate(-50%);
+  }
+
+  .display-right {
+    @extend %contain-floats;
+    float: right;
+    text-align: right;
+    padding-right: 7px;
+    position: relative;
+
+    @include media(desktop){
+      width: 79%;
+    }
+
+  }
+}

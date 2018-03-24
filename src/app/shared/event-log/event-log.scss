@@ -1,0 +1,14 @@
+@import "~govuk_frontend_toolkit/stylesheets/_colours.scss";
+
+@media (max-width: 991px) {
+
+  [class*="col-md"]{
+    margin-bottom: 30px;
+  }
+
+}
+
+.EventLog-DetailsPanel {
+  border: 1px solid $border-colour;
+  padding: 10px;
+}

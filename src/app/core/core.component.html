@@ -1,0 +1,32 @@
+<div defaultOverlayTarget></div>
+<cut-phase-bar phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
+<cut-header-bar [title]="selectedJurisdictionName"
+  username="{{profile?.user.idam.forename | titlecase}} {{profile?.user.idam.surname | titlecase}}"
+  (signOutRequest)='signOut()'></cut-header-bar>
+<cut-nav-bar class="global-navigation">
+  <div class="nav-left" leftNavLinks>
+    <ul id="menu-links-left">
+      <li>
+        <cut-nav-item label="Case List" link="/list/case"></cut-nav-item>
+      </li>
+      <li *ngIf="!router.isActive('/list/case')">
+        <cut-nav-item label="Create Case" link="/create/case"></cut-nav-item>
+      </li>
+    </ul>
+  </div>
+  <div class="nav-right" rightNavLinks>
+    <ul id="menu-links-right">
+      <li>
+        <cut-nav-item id="search" label="Search" link="/search" imageLink="/img/icon-search-white.png"></cut-nav-item>
+      </li>
+    </ul>
+  </div>
+</cut-nav-bar>
+<div class="container-fluid">
+  <ccd-alert></ccd-alert>
+  <router-outlet></router-outlet>
+  <div class="block-wrapper">
+    <div class="block mt-xl"></div>
+  </div>
+</div>
+<cut-footer-bar email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)"></cut-footer-bar>

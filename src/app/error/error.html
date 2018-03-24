@@ -1,0 +1,19 @@
+ <!-- TODO: Refactor this banner into Notification Banner and get rid of AlertBanner - https://tools.hmcts.net/jira/browse/RDM-1478 -->
+<ccd-activity-banner imageLink="/img/editorBanner.png" [description]="header" bannerType="editor">
+</ccd-activity-banner>
+
+<div class="error-summary" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+
+  <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+      {{header}}
+  </h1>
+
+  <p>
+      {{body}}
+  </p>
+
+  <ul class="error-summary-list">
+    <li><a routerLink="/">Go back to Case List</a></li>
+  </ul>
+
+</div>

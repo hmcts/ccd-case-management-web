@@ -1,0 +1,16 @@
+<h3 class="heading-medium">Search</h3>
+<div class="grid-row">
+  <div class="column-one-quarter">
+
+    <ccd-search-filters
+      [jurisdictions]="profile.jurisdictions"
+      (onApply)="applyFilter($event)"
+      [autoApply]="false"
+    ></ccd-search-filters>
+
+  </div>
+  <div class="column-three-quarters">
+    <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
+                       [caseFilterFG]="caseFilterFG" [paginationMetadata]="paginationMetadata" (changePage)="applyFilter($event)"></ccd-search-result>
+  </div>
+</div>

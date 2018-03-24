@@ -1,0 +1,23 @@
+<form>
+  <div class="form-group">
+    <label class="form-label form-label-bold" for="s-jurisdiction">Jurisdiction*</label>
+    <select class="form-control form-control-3-4" id="s-jurisdiction" name="jurisdiction" [(ngModel)]="selected.jurisdiction" (change)="onJurisdictionIdChange()">
+      <option *ngFor="let j of jurisdictions" [ngValue]="j">{{j.name}}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label form-label-bold" for="s-case-type">Case type*</label>
+    <select [disabled]="isJurisdictionSelected()" class="form-control form-control-3-4" id="s-case-type" name="case-type" [(ngModel)]="selected.caseType" (change)="onCaseTypeIdChange()">
+      <option *ngFor="let ct of selectedJurisdictionCaseTypes" [ngValue]="ct">{{ct.name}}</option>
+    </select>
+  </div>
+
+  <div id="dynamicFilters" *ngIf="isSearchableAndSearchInputsReady()">
+    <div class="form-group" *ngFor="let searchInput of searchInputs">
+      <ccd-field-write [caseField]="searchInput.field" [formGroup]="formGroup" (keyup.enter)="apply()"></ccd-field-write>
+    </div>
+  </div>
+
+  <button [disabled]="!isSearchableAndSearchInputsReady()" type="button" class="button" (click)="apply()" (keyup.enter)="apply()" >Apply</button>
+</form>

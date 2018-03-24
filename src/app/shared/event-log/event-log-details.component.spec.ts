@@ -1,0 +1,111 @@
+import { EventLogDetailsComponent } from './event-log-details.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+import { CaseViewEvent } from '../../core/cases/case-view-event.model';
+import { By } from '@angular/platform-browser';
+import { DatePipe } from '../palette/utils/date.pipe';
+import { DashPipe } from '../palette/utils/dash.pipe';
+
+describe('EventLogDetails', () => {
+
+  const EVENT: CaseViewEvent = {
+    id: 5,
+    timestamp: '2017-05-10T10:00:00Z',
+    summary: 'Case updated again!',
+    comment: 'Latest update',
+    event_id: 'updateCase',
+    event_name: 'Update a case',
+    state_id: 'CaseUpdated',
+    state_name: 'Case Updated',
+    user_id: 0,
+    user_last_name: 'smith',
+    user_first_name: 'justin'
+  };
+
+  const EVENT_WITH_EMPTY_SUMMARY_AND_COMMENT: CaseViewEvent = {
+    id: 5,
+    timestamp: '2017-05-10T10:00:00Z',
+    summary: '',
+    comment: '',
+    event_id: 'updateCase',
+    event_name: 'Update a case',
+    state_id: 'CaseUpdated',
+    state_name: 'Case Updated',
+    user_id: 0,
+    user_last_name: 'smith',
+    user_first_name: 'justin'
+  };
+
+  const $TABLE_ROWS = By.css('table>tbody>tr');
+
+  const expectRow = (row: DebugElement) => {
+    return {
+      toEqual: (label: string, value: string) => {
+        let actualLabel = row
+          .query(By.css('th'))
+          .nativeElement
+          .textContent
+          .trim();
+        let actualValue = row
+          .query(By.css('td'))
+          .nativeElement
+          .textContent
+          .trim();
+        expect(actualLabel).toBe(label);
+        expect(actualValue).toBe(value);
+      }
+    };
+  };
+
+  let fixture: ComponentFixture<EventLogDetailsComponent>;
+  let component: EventLogDetailsComponent;
+  let de: DebugElement;
+
+  beforeEach(async(() => {
+    TestBed
+      .configureTestingModule({
+        imports: [],
+        declarations: [
+          EventLogDetailsComponent,
+          DatePipe,
+          DashPipe
+        ],
+        providers: []
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(EventLogDetailsComponent);
+    component = fixture.componentInstance;
+
+    component.event = EVENT;
+
+    de = fixture.debugElement;
+    fixture.detectChanges();
+  }));
+
+  it('should render a table with the case details', () => {
+    let rows = de.queryAll($TABLE_ROWS);
+
+    expect(rows.length).toBe(6);
+
+    expectRow(rows[0]).toEqual('Date', new DatePipe().transform(EVENT.timestamp, null));
+    expectRow(rows[1]).toEqual('Author', 'Justin SMITH');
+    expectRow(rows[2]).toEqual('End state', EVENT.state_name);
+    expectRow(rows[3]).toEqual('Event', EVENT.event_name);
+    expectRow(rows[4]).toEqual('Summary', EVENT.summary);
+    expectRow(rows[5]).toEqual('Comment', EVENT.comment);
+  });
+
+  it('should render dash if empty summary or comment field', () => {
+    component.event = EVENT_WITH_EMPTY_SUMMARY_AND_COMMENT;
+    fixture.detectChanges();
+
+    let rows = de.queryAll($TABLE_ROWS);
+
+    expect(rows.length).toBe(6);
+
+    expectRow(rows[4]).toEqual('Summary', '-');
+    expectRow(rows[5]).toEqual('Comment', '-');
+  });
+
+});

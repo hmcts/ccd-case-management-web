@@ -1,0 +1,24 @@
+<div class="complex-panel">
+  <h3 class="complex-panel-title">{{caseField.label}}</h3>
+  <table class="complex-panel-table">
+    <tbody>
+      <ng-container *ngFor="let field of caseField | ccdFieldsFilter">
+        <ng-container *ngIf="(field | ccdIsCompound); else SimpleRow">
+          <tr class="complex-panel-compound-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="field" [eventFields]="caseField.field_type.complex_fields">
+            <td colspan="2">
+              <ccd-field-read [caseField]="field"></ccd-field-read>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #SimpleRow>
+          <tr class="complex-panel-simple-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="field" [eventFields]="caseField.field_type.complex_fields">
+            <th>{{field.label}}</th>
+            <td>
+              <ccd-field-read [caseField]="field"></ccd-field-read>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

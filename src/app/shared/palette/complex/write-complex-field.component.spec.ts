@@ -7,7 +7,7 @@ import { FieldsFilterPipe } from './fields-filter.pipe';
 import { MockComponent } from 'ng2-mock-component';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { PaletteUtilsModule } from '../utils/utils.module';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { IsCompoundPipe } from '../utils/is-compound.pipe';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
@@ -279,8 +279,9 @@ describe('WriteComplexFieldComponent', () => {
     const POSTCODE = 2;
 
     let formGroup: FormGroup;
-    const REGISTER_CONTROL = (control) => {
+    const REGISTER_CONTROL = <T extends AbstractControl> (control: T) => {
       formGroup.addControl(FIELD_ID, control);
+      return control;
     };
 
     beforeEach(async(() => {

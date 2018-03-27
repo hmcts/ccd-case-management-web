@@ -11,8 +11,8 @@ import { HttpError } from '../../../core/http/http-error.model';
 export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   private uploadedDocument: FormGroup;
   private selectedFile: File;
-  private valid = true;
-  private uploadError: string;
+  valid = true;
+  uploadError: string;
 
   constructor(private documentManagement: DocumentManagementService) {
     super();

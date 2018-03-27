@@ -1,6 +1,6 @@
 import { FormValidatorsService } from './form-validators.service';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
-import { aCaseField } from '../../shared/case-editor/case-edit.test.fixture';
+import { aCaseField } from '../../shared/case-editor/case-edit.spec';
 import { FormControl } from '@angular/forms';
 
 describe('FormValidatorsService', () => {

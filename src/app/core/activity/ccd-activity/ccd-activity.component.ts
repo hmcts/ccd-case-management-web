@@ -12,7 +12,7 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
   private VIEWERS_SUFFIX = 'viewing this case.';
   private EDITORS_PREFIX = 'This case is locked because ';
   private EDITORS_SUFFIX = 'working on this.';
-  private activity: Activity;
+  activity: Activity;
   dspMode = DisplayMode;
 
   viewersText: string;

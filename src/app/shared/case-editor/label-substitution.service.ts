@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FieldsUtils } from '../utils/fields.utils';
 
 @Injectable()
 export class LabelSubstitutionService {
@@ -93,17 +94,25 @@ export class LabelSubstitutionService {
             if (pageFormFields[fieldIds[index]] === undefined) {
                 return undefined;
             } else {
-                pageFormFields = pageFormFields[fieldIds[index]];
+                if (this.isNonEmptyArray(pageFormFields[fieldIds[index]]) && !this.isCollection(pageFormFields[fieldIds[index]])) {
+                    pageFormFields = pageFormFields[fieldIds[index] + FieldsUtils.LABEL_SUFFIX];
+                } else {
+                    pageFormFields = pageFormFields[fieldIds[index]];
+                }
             }
         }
-        if (this.isCollection(pageFormFields)) {
+        if (this.isNonEmptyArray(pageFormFields) && this.isCollection(pageFormFields)) {
             pageFormFields = pageFormFields.map(fieldValue => fieldValue['value']);
         }
         return pageFormFields;
     }
 
+    private isNonEmptyArray(pageFormFields) {
+        return Array.isArray(pageFormFields) && pageFormFields[0];
+    }
+
     private isCollection(pageFormFields) {
-        return Array.isArray(pageFormFields) && pageFormFields[0] && pageFormFields[0]['value'];
+        return pageFormFields[0]['value'];
     }
 
     private getSubstitutionValueLengthOrZero(pageFormFields, fieldIdToSubstitute) {

@@ -7,6 +7,7 @@ export class FieldsUtils {
 
     private static readonly currencyPipe: CurrencyPipe = new CurrencyPipe('en-GB');
     private static readonly datePipe: DatePipe = new DatePipe('en-GB');
+    public static readonly LABEL_SUFFIX = '-LABEL';
 
     private static readonly DEFAULT_MERGE_FUNCTION = function mergeFunction(field: CaseField, result: any) {
         if (!result.hasOwnProperty(field.id)) {
@@ -24,9 +25,10 @@ export class FieldsUtils {
                 break;
             }
             case 'MultiSelectList': {
-                let multiSelectArray = (result[field.id] || field.value) || [];
-                multiSelectArray.forEach((elem, idx) => {
-                    multiSelectArray[idx] = FieldsUtils.getFixedListLabelByCodeOrEmpty(field, elem);
+                let fieldValue = result[field.id] || [];
+                result[field.id + FieldsUtils.LABEL_SUFFIX] = [];
+                fieldValue.forEach((code, idx) => {
+                    result[field.id + FieldsUtils.LABEL_SUFFIX][idx] = FieldsUtils.getFixedListLabelByCodeOrEmpty(field, code);
                 });
                 break;
             }
@@ -70,7 +72,8 @@ export class FieldsUtils {
     }
 
     private static getFixedListLabelByCodeOrEmpty(field, code) {
-        return code ? field.field_type.fixed_list_items.find(item => item.code === code).label : '';
+        let relevantItem = code ? field.field_type.fixed_list_items.find(item => item.code === code) : '';
+        return relevantItem ? relevantItem.label : '';
     }
 
     mergeCaseFieldsAndFormFields(caseFields: CaseField[], formFields: any): any {

@@ -123,6 +123,23 @@ const TEST_SEARCH_INPUTS: SearchInput[] = [
   }
 ];
 
+@Component({
+  selector: 'ccd-field-write',
+  template: `{{value}}`
+
+})
+class FieldWriteComponent extends AbstractFieldWriteComponent {
+  @Input()
+  formGroup: FormGroup;
+}
+
+function createObservableFrom<T>(param: T): Observable<T> {
+  return Observable.create(observer => {
+    observer.next(param);
+    observer.complete();
+  });
+}
+
 let searchHandler;
 let mockSearchService;
 let orderService;
@@ -394,20 +411,3 @@ describe('SearchFiltersComponent', () => {
   }));
 
 });
-
-@Component({
-  selector: 'ccd-field-write',
-  template: `{{value}}`
-
-})
-class FieldWriteComponent extends AbstractFieldWriteComponent {
-  @Input()
-  formGroup: FormGroup;
-}
-
-function createObservableFrom<T>(param: T): Observable<T> {
-  return Observable.create(observer => {
-    observer.next(param);
-    observer.complete();
-  });
-}

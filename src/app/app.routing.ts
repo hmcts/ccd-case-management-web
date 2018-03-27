@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
 import { WorkbasketComponent } from './workbasket/workbasket.component';
 import { SearchComponent } from './search/search.component';
 import { ProfileResolver } from './core/profile/profile.resolver';
@@ -20,23 +19,29 @@ import { CaseEditPageComponent } from './shared/case-editor/case-edit-page.compo
 import { CaseEditWizardGuard } from './core/case-editor/case-edit-wizard.guard';
 import { OAuth2RedirectComponent } from './oauth2/oauth2-redirect.component';
 import { CaseEditConfirmComponent } from './shared/case-editor/case-edit-confirm.component';
+import { AppConfigGuard } from './app.config.guard';
 
 const routes: Routes = [
   {
     path: 'oauth2redirect',
-    component: OAuth2RedirectComponent
+    component: OAuth2RedirectComponent,
+    canActivate: [
+      AppConfigGuard,
+    ],
   },
   {
     path: '',
     component: CoreComponent,
+    canActivate: [
+      AppConfigGuard,
+    ],
     resolve: {
-      profile: ProfileResolver
+      profile: ProfileResolver,
     },
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'list/case' },
       { path: 'list/case', component: WorkbasketComponent },
       { path: 'error', component: ErrorComponent },
-      { path: 'home', component: HomeComponent },
       { path: 'create/case',
         children: [
           {

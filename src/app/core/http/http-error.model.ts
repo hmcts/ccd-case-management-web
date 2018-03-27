@@ -1,6 +1,5 @@
 export class HttpError {
   private static readonly DEFAULT_ERROR = 'Unknown error';
-  private static readonly DEFAULT_STATUS = 0;
   private static readonly DEFAULT_MESSAGE = 'Something unexpected happened, our technical staff have been automatically notified';
 
   timestamp: string;
@@ -26,8 +25,8 @@ export class HttpError {
   constructor() {
     this.timestamp = new Date().toISOString();
     this.error = HttpError.DEFAULT_ERROR;
-    this.status = HttpError.DEFAULT_STATUS;
     this.message = HttpError.DEFAULT_MESSAGE;
+    this.status = null;
     this.exception = null;
     this.path = null;
     this.details = null;

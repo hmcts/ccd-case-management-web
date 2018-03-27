@@ -19,6 +19,16 @@ import { WorkbasketInputModel } from '../workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
 import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
 
+@Component({
+  selector: 'ccd-field-write',
+  template: `{{value}}`
+
+})
+class FieldWriteComponent extends AbstractFieldWriteComponent {
+  @Input()
+  formGroup: FormGroup;
+}
+
 describe('WorkbasketFiltersComponent', () => {
 
   const JURISDICTION_1: Jurisdiction = {
@@ -881,17 +891,6 @@ describe('WorkbasketFiltersComponent', () => {
     });
   });
 });
-
-@Component({
-  selector: 'ccd-field-write',
-  template: `{{value}}`
-
-})
-
-class FieldWriteComponent extends AbstractFieldWriteComponent {
-  @Input()
-  formGroup: FormGroup;
-}
 
 function createObservableFrom<T>(param: T): Observable<T> {
   return Observable.create(observer => {

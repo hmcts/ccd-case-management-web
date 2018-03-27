@@ -19,6 +19,15 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 
+@Component({
+  selector: 'ccd-field-read',
+  template: `{{caseField.value}}`
+})
+class FieldReadComponent {
+  @Input()
+  caseField: string;
+}
+
 describe('SearchResultComponent', () => {
 
   describe('with results', () => {
@@ -469,12 +478,3 @@ describe('SearchResultComponent', () => {
   });
 
 });
-
-@Component({
-  selector: 'ccd-field-read',
-  template: `{{caseField.value}}`
-})
-class FieldReadComponent {
-  @Input()
-  caseField: string;
-}

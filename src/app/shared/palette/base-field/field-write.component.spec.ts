@@ -10,6 +10,13 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
 
 const CLASS = 'person-first-name-cls';
 
+@Component({
+  template: `
+    <div class="${CLASS}"></div>
+  `
+})
+class FieldTestComponent {}
+
 describe('FieldWriteComponent', () => {
 
   const CASE_FIELD: CaseField = {
@@ -101,10 +108,3 @@ describe('FieldWriteComponent', () => {
     expect(formGroup.controls[CASE_FIELD.id]).toBe(control);
   });
 });
-
-@Component({
-  template: `
-    <div class="${CLASS}"></div>
-  `
-})
-class FieldTestComponent {}

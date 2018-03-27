@@ -1,18 +1,17 @@
-@import 'node_modules/@ccd/case-ui-toolkit/dist/cut-styles/components/typography';
-@import 'node_modules/govuk_frontend_toolkit/stylesheets/_shims';
-@import 'node_modules/govuk_frontend_toolkit/stylesheets/_conditionals';
-@import 'node_modules/govuk_frontend_toolkit/stylesheets/_measurements';
+@import '~@ccd/case-ui-toolkit/dist/cut-styles/components/typography';
+@import 'shims';
+@import 'conditionals';
+@import 'measurements';
 
 $black: #323232;
 
 $path: "/assets/";
 
-@import "~govuk-elements-sass/public/sass/_govuk-elements.scss";
-
 $fa-font-path: "/node_modules/font-awesome/fonts";
 $govuk-frontend-toolkit-image-path: "/assets";
 $govuk-template-image-path: "/assets";
 
+@import "govuk-elements";
 
 // Organise SASS (TODO / TS)
 @import "./buttons";

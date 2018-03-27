@@ -4,7 +4,7 @@ describe('OrderService', () => {
 
   let orderService: OrderService;
 
-  const ITEM_X = { id: 1 };
+  const ITEM_X = { id: 1, order: undefined };
   const ITEM_0 = { id: 0, order: 0 };
   const ITEM_1 = { id: 1, order: 1 };
   const ITEM_2 = { id: 2, order: 2 };

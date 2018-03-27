@@ -54,7 +54,7 @@ describe('ConditionalShowDirective', () => {
         fixture.detectChanges();
 
         expect(el.hidden).toBe(false);
-        expect(conditionalShow.condition).toBeUndefined;
+        expect(conditionalShow.condition).toBeUndefined();
     });
 
     it('should display when condition matches a read only field. No form fields', () => {

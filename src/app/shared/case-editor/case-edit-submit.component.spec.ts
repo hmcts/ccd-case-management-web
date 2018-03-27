@@ -13,7 +13,7 @@ import { FieldsUtils } from '../utils/fields.utils';
 import { IsCompoundPipe } from '../palette/utils/is-compound.pipe';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseField } from '../domain/definition/case-field.model';
-import { aCaseField, aWizardPage } from './case-edit.test.fixture';
+import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
 
 describe('CaseEditSubmitComponent', () => {

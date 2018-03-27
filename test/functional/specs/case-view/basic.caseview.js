@@ -1,18 +1,9 @@
-BrowserUtils = require('../../utils/browser.utils.js')
-Login = require('../../page-objects/login.po')
+BrowserUtils = require('../../../utils/browser.utils.js')
+Login = require('../../../page-objects/login.po')
 
 describe('Case management - case view', function() {
 
 beforeEach(function(){
-
-//    browser.get("http:/localhost:3451")
-//    browser.sleep(3000)
-//
-//     var login = Login
-//
-//          login.isLoaded();
-//          login.inputCredentials("ccdwebdomain@gmail.com", "Monday01");
-//          login.signIn();
 
 });
 

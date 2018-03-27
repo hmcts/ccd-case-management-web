@@ -4,9 +4,9 @@ import createSpy = jasmine.createSpy;
 
 describe('wizard.model', () => {
 
-  const PAGE_1: WizardPage = page ('page1', 'Page 1', 1);
-  const PAGE_2: WizardPage = page ('page2', 'Page 2', 2);
-  const PAGE_3: WizardPage = page ('page3', 'Page 3', 3);
+  const PAGE_1: WizardPage = buildPage('page1', 'Page 1', 1);
+  const PAGE_2: WizardPage = buildPage('page2', 'Page 2', 2);
+  const PAGE_3: WizardPage = buildPage('page3', 'Page 3', 3);
 
   const PAGES: WizardPage[] = [ PAGE_1, PAGE_2, PAGE_3];
 
@@ -163,7 +163,7 @@ describe('wizard.model', () => {
     });
   });
 
-  function page(pageId: string, label: string, order: number): WizardPage {
+  function buildPage(pageId: string, label: string, order: number): WizardPage {
     let wp = new WizardPage();
     wp.id = pageId;
     wp.label = label;

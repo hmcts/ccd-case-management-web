@@ -21,6 +21,20 @@ import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substi
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 
+@Component({
+  // tslint:disable-next-line
+  selector: 'cut-tabs',
+  template: '<ng-content></ng-content>'
+})
+class TabsComponent {}
+
+@Component({
+  // tslint:disable-next-line
+  selector: 'cut-tab',
+  template: '<ng-content></ng-content>'
+})
+class TabComponent {}
+
 describe('CaseViewerComponent', () => {
 
   @Component({
@@ -474,17 +488,3 @@ describe('CaseViewerComponent', () => {
   });
 
 });
-
-@Component({
-  // tslint:disable-next-line
-  selector: 'cut-tabs',
-  template: '<ng-content></ng-content>'
-})
-class TabsComponent {}
-
-@Component({
-  // tslint:disable-next-line
-  selector: 'cut-tab',
-  template: '<ng-content></ng-content>'
-})
-class TabComponent {}

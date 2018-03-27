@@ -9,7 +9,7 @@
       <li>
         <cut-nav-item label="Case List" link="/list/case"></cut-nav-item>
       </li>
-      <li *ngIf="!router.isActive('/list/case')">
+      <li *ngIf="!router.isActive('/list/case', true)">
         <cut-nav-item label="Create Case" link="/create/case"></cut-nav-item>
       </li>
     </ul>

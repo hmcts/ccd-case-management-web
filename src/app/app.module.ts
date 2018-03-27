@@ -1,25 +1,25 @@
-import { APP_INITIALIZER, ApplicationRef, NgModule } from '@angular/core';
+import { APP_ID, Inject, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { HomeComponent } from './home/home.component';
 import { WorkbasketModule } from './workbasket/workbasket.module';
 import { SearchModule } from './search/search.module';
 import { routing } from './app.routing';
 
-import { createNewHosts, removeNgStyles } from '@angularclass/hmr';
 import { CasesModule } from './cases/cases.module';
 import { AppConfig } from './app.config';
 import { ErrorComponent } from './error/error.component';
 import { SharedModule } from './shared/shared.module';
+import { isPlatformBrowser } from '@angular/common';
 import { OAuth2RedirectModule } from './oauth2/oauth2-redirect.module';
+import { AppConfigGuard } from './app.config.guard';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'ccd-case-management-web' }),
     HttpModule,
     FormsModule,
     routing,
@@ -32,30 +32,20 @@ import { OAuth2RedirectModule } from './oauth2/oauth2-redirect.module';
   ],
   declarations: [
     AppComponent,
-    HomeComponent,
     ErrorComponent
   ],
   providers: [
     AppConfig,
-    { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true }
+    AppConfigGuard,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef) {}
-  hmrOnInit(store) {
-    console.log('HMR store', store);
-  }
-  hmrOnDestroy(store) {
-    let cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
-    // recreate elements
-    store.disposeOldHosts = createNewHosts(cmpLocation);
-    // remove styles
-    removeNgStyles();
-  }
-  hmrAfterDestroy(store) {
-    // display new elements
-    store.disposeOldHosts();
-    delete store.disposeOldHosts;
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
   }
 }

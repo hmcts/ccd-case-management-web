@@ -41,9 +41,9 @@ export class MoneyGbpInputComponent implements ControlValueAccessor, Validator {
   @Input()
   formControl: FormControl;
 
-  private displayValue: string = null;
   private rawValue: number;
-  private disabled: boolean;
+  public displayValue: string = null;
+  public disabled: boolean;
 
   // change events from the textarea
   onChange(event) {

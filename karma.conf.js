@@ -1,115 +1,34 @@
-var path = require('path');
-
-var webpackConfig = require('./webpack.config');
-
-var ENV = process.env.npm_lifecycle_event;
-var isTestWatch = ENV === 'test-watch';
-
-var TEST_BROWSER = process.env.TEST_BROWSER;
+// Karma configuration file, see link for more information
+// https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
-  var _config = {
-
-    // base path that will be used to resolve all patterns (eg. files, exclude)
+  config.set({
     basePath: '',
-
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
-
-    // list of files / patterns to load in the browser
-    files: [
-      { pattern: './karma-shim.js', watched: false }
+    frameworks: ['jasmine', '@angular/cli'],
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-phantomjs-launcher'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage-istanbul-reporter'),
+      require('@angular/cli/plugins/karma')
     ],
-
-    // list of files to exclude
-    exclude: [],
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      './karma-shim.js': ['webpack', 'sourcemap']
+    client:{
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-
-    webpack: webpackConfig,
-
-    webpackMiddleware: {
-      // webpack-dev-middleware configuration
-      // i. e.
-      stats: 'errors-only'
+    coverageIstanbulReporter: {
+      reports: [ 'html', 'lcovonly', 'json' ],
+      fixWebpackSourcePaths: true
     },
-
-    webpackServer: {
-      noInfo: true // please don't spam the console when running in karma!
+    angularCli: {
+      environment: 'dev'
     },
-
-    // test results reporter to use
-    // possible values: 'dots', 'progress', 'mocha'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ["mocha"],
-
-    // web server port
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
-
-    // enable / disable colors in the output (reporters and logs)
     colors: true,
-
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
-
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
-
-    // Configuration for running Chromium in headless mode (required when running tests in Jenkins CI environment)
-    customLaunchers: {
-      ChromiumHeadless: {
-        base: 'Chromium',
-        flags: [
-          '--headless',
-          '--disable-gpu',
-          // Without a remote debugging port, Google Chromium exits immediately.
-          '--remote-debugging-port=9222'
-        ]
-      }
-    },
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: TEST_BROWSER === 'ChromiumHeadless' ? ['PhantomJS'] : ['Chrome'],
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
-  };
-
-  if (!isTestWatch) {
-    _config.reporters.push("coverage");
-
-    _config.coverageReporter = {
-      dir: 'coverage/',
-      check: {
-        global: {
-          statements: 85,
-          lines: 85,
-          functions: 85,
-          branches: 85
-        }
-      },
-      reporters: [{
-        type: 'json',
-        dir: 'coverage',
-        subdir: 'json',
-        file: 'coverage-final.json'
-      },
-      {
-        type: 'lcov',
-        dir: 'coverage',
-        file: 'lcov.info'
-      }]
-    };
-  }
-
-  config.set(_config);
-
+    autoWatch: true,
+    browsers: ['PhantomJS'],
+    singleRun: false
+  });
 };

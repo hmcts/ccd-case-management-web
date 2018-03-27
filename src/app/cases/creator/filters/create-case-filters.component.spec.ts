@@ -232,6 +232,22 @@ const CASE_EVENTS_NO_PRE_STATES: CaseEvent[] = [
 
 const SORTED_CASE_EVENTS: CaseEvent[] = [...CASE_EVENTS_NO_PRE_STATES];
 
+@Component({
+  selector: 'ccd-callback-errors',
+  template: ``
+})
+class CallbackErrorsComponent {
+
+  public static readonly TRIGGER_TEXT_GO = 'Go';
+  public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
+
+  @Input()
+  callbackErrorsSubject: Subject<any> = new Subject();
+  @Output()
+  callbackErrorsContext: EventEmitter<any> = new EventEmitter();
+
+}
+
 let mockDefinitionsService;
 let mockRouter: any;
 let mockOrderService: any;
@@ -670,11 +686,11 @@ describe('CreateCaseFiltersComponent', () => {
       { queryParams: {}});
     expect(mockCallbackErrorSubject.next).toHaveBeenCalledWith(VALID_ERROR);
 
-    let error = de.query($ERROR_SUMMARY);
-    expect(error).toBeTruthy();
-    let errorMessage = error.query($ERROR_MESSAGE);
+    let errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeTruthy();
+    let errorMessage = errorElement.query($ERROR_MESSAGE);
     expect(text(errorMessage)).toBe('Field validation failed');
-    let errorFieldMessages = error.query($ERROR_FIELD_MESSAGES);
+    let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages.children.length).toBe(2);
     expect(errorFieldMessages.children[0].nativeElement.textContent).toContain('This field1 failed validation');
     expect(errorFieldMessages.children[1].nativeElement.textContent).toContain('This field2 failed validation');
@@ -708,19 +724,19 @@ describe('CreateCaseFiltersComponent', () => {
     button.nativeElement.click();
     fixture.detectChanges();
 
-    let error = de.query($ERROR_SUMMARY);
-    expect(error).toBeTruthy();
-    let errorMessage = error.query($ERROR_MESSAGE);
+    let errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeTruthy();
+    let errorMessage = errorElement.query($ERROR_MESSAGE);
     expect(errorMessage).toBeTruthy();
-    let errorFieldMessages = error.query($ERROR_FIELD_MESSAGES);
+    let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages).toBeTruthy();
 
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     fixture.detectChanges();
 
-    error = de.query($ERROR_SUMMARY);
-    expect(error).toBeFalsy();
+    errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeFalsy();
   });
 
   it('should remove field validation errors when errors previously but new case type selected', () => {
@@ -752,19 +768,19 @@ describe('CreateCaseFiltersComponent', () => {
     button.nativeElement.click();
     fixture.detectChanges();
 
-    let error = de.query($ERROR_SUMMARY);
-    expect(error).toBeTruthy();
-    let errorMessage = error.query($ERROR_MESSAGE);
+    let errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeTruthy();
+    let errorMessage = errorElement.query($ERROR_MESSAGE);
     expect(errorMessage).toBeTruthy();
-    let errorFieldMessages = error.query($ERROR_FIELD_MESSAGES);
+    let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages).toBeTruthy();
 
     component.filterCaseTypeControl.setValue(CASE_TYPES_2[2].id);
     component.onCaseTypeIdChange();
     fixture.detectChanges();
 
-    error = de.query($ERROR_SUMMARY);
-    expect(error).toBeFalsy();
+    errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeFalsy();
   });
 
   it('should remove field validation errors when errors previously but new event selected', () => {
@@ -795,19 +811,19 @@ describe('CreateCaseFiltersComponent', () => {
     button.nativeElement.click();
     fixture.detectChanges();
 
-    let error = de.query($ERROR_SUMMARY);
-    expect(error).toBeTruthy();
-    let errorMessage = error.query($ERROR_MESSAGE);
+    let errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeTruthy();
+    let errorMessage = errorElement.query($ERROR_MESSAGE);
     expect(errorMessage).toBeTruthy();
-    let errorFieldMessages = error.query($ERROR_FIELD_MESSAGES);
+    let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages).toBeTruthy();
 
     component.filterEventControl.setValue(EVENT_ID_3);
     component.onEventIdChange();
     fixture.detectChanges();
 
-    error = de.query($ERROR_SUMMARY);
-    expect(error).toBeFalsy();
+    errorElement = de.query($ERROR_SUMMARY);
+    expect(errorElement).toBeFalsy();
   });
 
   it('should change button label when callback warnings notified', () => {
@@ -889,18 +905,3 @@ describe('CreateCaseFiltersComponent', () => {
   });
 
 });
-@Component({
-  selector: 'ccd-callback-errors',
-  template: ``
-})
-class CallbackErrorsComponent {
-
-  public static readonly TRIGGER_TEXT_GO = 'Go';
-  public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
-
-  @Input()
-  callbackErrorsSubject: Subject<any> = new Subject();
-  @Output()
-  callbackErrorsContext: EventEmitter<any> = new EventEmitter();
-
-}

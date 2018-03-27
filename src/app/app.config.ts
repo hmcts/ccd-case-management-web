@@ -1,27 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AppConfig {
 
-  private static readonly CONFIG_PATH = '/config.json';
-
-  private config: Config;
+  protected config: Config;
 
   constructor(private http: Http) {}
 
   public load(): Promise<void> {
     console.log('Loading app config...');
 
+    let configUrl = environment.configUrl;
+
     return new Promise<void>((resolve, reject) => {
       this.http
-        .get(AppConfig.CONFIG_PATH)
+        .get(configUrl)
         .map(response => response.json())
         .catch((error: any): any => {
-          console.error('Configuration file "config.json" could not be read');
+          console.error(`Configuration ${configUrl} could not be read`, error);
           reject();
           return Observable.throw(error.json().error || 'Server error');
         })

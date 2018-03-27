@@ -234,7 +234,7 @@ describe('LabelSubstitutorDirective', () => {
             fixture.detectChanges();
 
             expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith(
-                { LabelB: '', LabelA: ['Option A', 'Option D']}, label);
+                { LabelB: '', LabelA: ['ValueA', 'ValueD'], 'LabelA-LABEL': ['Option A', 'Option D']}, label);
         });
 
         it('should pass case field value when field is read only and no form field but case field value present', () => {
@@ -264,7 +264,7 @@ describe('LabelSubstitutorDirective', () => {
             fixture.detectChanges();
 
             expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith(
-                { LabelB: '', LabelA: ['Option C', 'Option D'] }, label);
+                { LabelB: '', LabelA: ['ValueC', 'ValueD'], 'LabelA-LABEL': ['Option C', 'Option D']}, label);
         });
 
         it('should pass field form value when field is not read only and both form and case field values present', () => {
@@ -297,7 +297,7 @@ describe('LabelSubstitutorDirective', () => {
             fixture.detectChanges();
 
             expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith(
-                { LabelB: '', LabelA: ['Option A', 'Option C'] }, label);
+                { LabelB: '', LabelA: ['ValueA', 'ValueC'], 'LabelA-LABEL': ['Option A', 'Option C']}, label);
         });
     });
 

@@ -15,6 +15,29 @@ import { ActivityService } from '../../core/activity/activity.service';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import createSpyObj = jasmine.createSpyObj;
 
+@Component({
+  selector: 'ccd-case-edit',
+  template: ``
+})
+class CaseEditComponent {
+
+  @Input()
+  eventTrigger: CaseEventTrigger;
+
+  @Input()
+  submit: (CaseEventData) => Observable<object>;
+
+  @Input()
+  validate: (CaseEventData) => Observable<object>;
+
+  @Output()
+  cancelled: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  submitted: EventEmitter<string> = new EventEmitter();
+
+}
+
 describe('CaseEventTriggerComponent', () => {
   const CASE_DETAILS: CaseView = new CaseView();
   CASE_DETAILS.case_id = '42';
@@ -226,25 +249,3 @@ describe('CaseEventTriggerComponent', () => {
       CASE_DETAILS.case_id]);
   });
 });
-@Component({
-  selector: 'ccd-case-edit',
-  template: ``
-})
-class CaseEditComponent {
-
-  @Input()
-  eventTrigger: CaseEventTrigger;
-
-  @Input()
-  submit: (CaseEventData) => Observable<object>;
-
-  @Input()
-  validate: (CaseEventData) => Observable<object>;
-
-  @Output()
-  cancelled: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  submitted: EventEmitter<string> = new EventEmitter();
-
-}

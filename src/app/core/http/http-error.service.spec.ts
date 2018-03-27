@@ -1,7 +1,7 @@
 import { HttpErrorService } from './http-error.service';
 import { Observable } from 'rxjs/Observable';
 import { HttpError } from './http-error.model';
-import { Response, ResponseOptions } from '@angular/http';
+import { Headers, Response, ResponseOptions } from '@angular/http';
 import { AuthService } from '../auth/auth.service';
 
 describe('HttpErrorService', () => {
@@ -31,18 +31,30 @@ describe('HttpErrorService', () => {
     'path': CURRENT_URL
   };
   const VALID_ERROR_RESPONSE = new Response(new ResponseOptions({
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
     body: JSON.stringify(VALID_ERROR_BODY)
   }));
 
   const NOT_VALID_ERROR_RESPONSE = new Response(new ResponseOptions({
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
     body: '{notvalidjson}'
   }));
 
   const HTTP_401_RESPONSE = new Response(new ResponseOptions({
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
     body: JSON.stringify(HTTP_401_ERROR_BODY)
   }));
 
   const HTTP_403_RESPONSE = new Response(new ResponseOptions({
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
     body: JSON.stringify(HTTP_403_ERROR_BODY)
   }));
 

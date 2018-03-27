@@ -1,14 +1,13 @@
-BrowserUtils = require('../../utils/browser.utils.js')
-CaseListResults = require('../../page-objects/CaseListResults.po.js')
-Login = require('../../page-objects/login.po')
-CaseListFilters = require('../../page-objects/caseListFilters.po')
-let configuration = require('../../config/protractor.conf.js')
+BrowserUtils = require('../../../utils/browser.utils.js')
+CaseListResults = require('../../../page-objects/CaseListResults.po.js')
+Login = require('../../../page-objects/login.po')
+CaseListFilters = require('../../../page-objects/caseListFilters.po')
 
 describe('Case List - Case type', function() {
 
 beforeEach(function(){
 
-        browser.get(configuration.config.testFrontEndURL)
+        browser.get(process.env.TEST_URL || 'http://localhost:3451')
 
         browserUtils = new BrowserUtils
 

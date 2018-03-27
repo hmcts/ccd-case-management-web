@@ -32,7 +32,7 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     };
   }
 
-  buildControlRegistrer(id: string, index: number): <T extends AbstractControl> (control: T) => T {
+  buildControlRegistrer(id: string, index: number): (control: FormControl) => AbstractControl {
     return control => {
       if (this.formArray.at(index)) {
         return this.formArray.at(index).get('value');

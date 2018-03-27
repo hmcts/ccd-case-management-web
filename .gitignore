@@ -62,4 +62,5 @@ package-lock.json
 # Visual Studio Code History files #
 .history
 
-.sonar
+# Sonar
+.scannerwork/

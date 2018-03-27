@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="column-one-half">
-    <ccd-event-trigger [callbackErrorsSubject]="callbackErrorsSubject" [triggers]="caseDetails.triggers" [triggerText]="triggerText" (change)="clearErrorsAndWarnings($event)" (onTrigger)="applyTrigger($event)"></ccd-event-trigger>
+    <ccd-event-trigger [callbackErrorsSubject]="callbackErrorsSubject" [triggers]="caseDetails.triggers" [triggerText]="triggerText" (change)="clearErrorsAndWarnings()" (onTrigger)="applyTrigger($event)"></ccd-event-trigger>
   </div>
 </div>
 <div class="grid-row">

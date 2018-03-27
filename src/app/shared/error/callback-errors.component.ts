@@ -45,13 +45,13 @@ export class CallbackErrorsComponent implements OnInit, OnDestroy {
     return errorContext;
   }
 
-  private hasErrors(): boolean {
+  hasErrors(): boolean {
     return this.error
       && this.error.callbackErrors
       && this.error.callbackErrors.length;
   }
 
-  private hasWarnings(): boolean {
+  hasWarnings(): boolean {
     return this.error
       && this.error.callbackWarnings
       && this.error.callbackWarnings.length;

@@ -99,7 +99,7 @@ export class CreateCaseFiltersComponent implements OnInit {
       !this.hasInvalidData();
   }
 
-  apply(): Promise<boolean> {
+  apply(): Promise<boolean | void> {
     let queryParams = {};
     if (this.ignoreWarning) {
       queryParams['ignoreWarning'] = this.ignoreWarning;
@@ -147,7 +147,7 @@ export class CreateCaseFiltersComponent implements OnInit {
   }
 
   private findJurisdiction(jurisdictions: Jurisdiction[], id: string): Jurisdiction {
-    return jurisdictions.find(Jurisdiction => Jurisdiction.id === id);
+    return jurisdictions.find(j => j.id === id);
   }
 
   private findCaseType(caseTypes: CaseType[], id: string): CaseType {

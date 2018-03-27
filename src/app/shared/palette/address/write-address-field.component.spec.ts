@@ -3,7 +3,7 @@ import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { WriteAddressFieldComponent } from './write-address-field.component';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { By } from '@angular/platform-browser';
-import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AddressesService } from '../../../core/addresses/addresses.service';
 import { AddressModel } from '../../../core/addresses/address.model';
 import { Observable } from 'rxjs';
@@ -26,10 +26,81 @@ describe('WriteAddressFieldComponent', () => {
   const $MANUAL_LINK = By.css('.manual-link');
   const $ADDRESS_COMPLEX_FIELD = By.css('ccd-write-complex-type-field');
 
+  @Component({
+    selector: `ccd-host-component`,
+    template: `<ccd-write-address-field [caseField]="caseField" [registerControl]="registerControl"></ccd-write-address-field>`
+  })
+  class TestHostComponent {
+    @ViewChild(WriteAddressFieldComponent)
+    public componentUnderTest: WriteAddressFieldComponent;
+
+    caseField = caseField(null);
+
+    registerControl = () => {};
+  }
+
+  @Component({
+    selector: `ccd-write-complex-type-field`,
+    template: ``
+  })
+  class MockWriteComplexFieldComponent {
+
+    @Input()
+    caseField: CaseField;
+
+    @Input()
+    registerControl: (control: FormControl) => AbstractControl;
+
+    @Input()
+    idPrefix = '';
+
+    @Input()
+    ignoreMandatory = false;
+
+    @Input()
+    renderLabel: boolean;
+
+    complexGroup = {
+      value : {},
+      setValue: (value) => { this.complexGroup.value = value; }
+    };
+
+  }
+
   let addressesService: AddressesService;
   let testHostComponent: TestHostComponent;
   let debugElement: DebugElement;
   let fixture: ComponentFixture<TestHostComponent>;
+
+  function caseField(address: AddressModel) {
+    return {
+      id: 'caseFieldId',
+      label: CASE_FIELD_LABEL,
+      field_type: {id: 'FieldTypeId', type: 'Complex'},
+      value: address
+    };
+  }
+
+  function buildAddress(entryNo: number): AddressModel {
+    const address = new AddressModel();
+    address.AddressLine1 = 'AddressLine1-' + entryNo;
+    address.AddressLine2 = 'AddressLine2-' + entryNo;
+    address.AddressLine3 = 'AddressLine3-' + entryNo;
+    address.PostTown = 'PostTown-' + entryNo;
+    address.County = 'County-' + entryNo;
+    address.PostCode = 'PostCode-' + entryNo;
+    address.Country = 'Country-' + entryNo;
+    return address;
+  }
+
+  function queryPostcode() {
+    let postcodeField = fixture.debugElement.query($POSTCODE_LOOKUP_INPUT).nativeElement;
+    postcodeField.value = 'P05T CDE';
+    postcodeField.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    debugElement.query($POSTCODE_LOOKUP_FIND).triggerEventHandler('click', null);
+    fixture.detectChanges();
+  }
 
   beforeEach(async(() => {
 
@@ -117,13 +188,13 @@ describe('WriteAddressFieldComponent', () => {
 
   it('should render a default \'summary item\' and 3 address options when 3 addresses are returned from AddressesService', () => {
 
-    const address2 = address(2);
+    const address2 = buildAddress(2);
     address2.AddressLine2 = '';
-    const address3 = address(3);
+    const address3 = buildAddress(3);
     address3.AddressLine3 = '';
 
     spyOn(addressesService, 'getAddressesForPostcode').and.returnValue(
-      Observable.of([address(1), address2, address3])
+      Observable.of([buildAddress(1), address2, address3])
     );
 
     queryPostcode();
@@ -148,7 +219,7 @@ describe('WriteAddressFieldComponent', () => {
 
   it('should populate the address with the option selected, removing the \'manual link\'', () => {
 
-      const selectedAddress = address(1);
+      const selectedAddress = buildAddress(1);
       testHostComponent.componentUnderTest.addressList.setValue(selectedAddress);
       testHostComponent.componentUnderTest.addressSelected();
 
@@ -207,76 +278,5 @@ describe('WriteAddressFieldComponent', () => {
     expect(debugElement.query($POSTCODE_LOOKUP_ERROR_MESSAGE)).toBeFalsy();
 
   });
-
-  @Component({
-    selector: `ccd-host-component`,
-    template: `<ccd-write-address-field [caseField]="caseField" [registerControl]="registerControl"></ccd-write-address-field>`
-  })
-  class TestHostComponent {
-    @ViewChild(WriteAddressFieldComponent)
-    public componentUnderTest: WriteAddressFieldComponent;
-
-    caseField = caseField(null);
-
-    registerControl = function(){};
-  }
-
-  @Component({
-    selector: `ccd-write-complex-type-field`,
-    template: ``
-  })
-  class MockWriteComplexFieldComponent {
-
-    @Input()
-    caseField: CaseField;
-
-    @Input()
-    registerControl: <T extends AbstractControl> (control: T) => T;
-
-    @Input()
-    idPrefix = '';
-
-    @Input()
-    ignoreMandatory = false;
-
-    @Input()
-    renderLabel: boolean;
-
-    complexGroup = {
-      value : {},
-      setValue: (value) => { this.complexGroup.value = value; }
-    };
-
-  }
-
-  function caseField(address: AddressModel) {
-    return {
-      id: 'caseFieldId',
-      label: CASE_FIELD_LABEL,
-      field_type: {id: 'FieldTypeId', type: 'Complex'},
-      value: address
-    };
-  }
-
-  function address(entryNo: number): AddressModel {
-    const address = new AddressModel();
-    address.AddressLine1 = 'AddressLine1-' + entryNo;
-    address.AddressLine2 = 'AddressLine2-' + entryNo;
-    address.AddressLine3 = 'AddressLine3-' + entryNo;
-    address.PostTown = 'PostTown-' + entryNo;
-    address.County = 'County-' + entryNo;
-    address.PostCode = 'PostCode-' + entryNo;
-    address.Country = 'Country-' + entryNo;
-    return address;
-  }
-
-  function queryPostcode() {
-    let postcodeField = fixture.debugElement.query($POSTCODE_LOOKUP_INPUT).nativeElement;
-    postcodeField.value = 'P05T CDE';
-    postcodeField.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    debugElement.query($POSTCODE_LOOKUP_FIND).triggerEventHandler('click', null);
-    fixture.detectChanges();
-  }
 
 });

@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { PaletteService } from '../palette.service';
 import { AbstractFieldWriteComponent } from './abstract-field-write.component';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
 
@@ -21,7 +21,8 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
   @ViewChild('fieldContainer', {read: ViewContainerRef})
   fieldContainer: ViewContainerRef;
 
-  private defaultControlRegistrer(formGroup: FormGroup, caseField: CaseField): <T extends AbstractControl> (control: T) => T {
+  private  defaultControlRegistrer(formGroup: FormGroup,
+                                   caseField: CaseField): (control: FormControl) => AbstractControl {
     return control => {
       if (formGroup.controls[caseField.id]) {
         return formGroup.get(caseField.id);

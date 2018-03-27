@@ -1,6 +1,6 @@
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
 import { Component, OnInit, Input } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { IsCompoundPipe } from '../utils/is-compound.pipe';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
@@ -27,7 +27,7 @@ export class WriteComplexFieldComponent extends AbstractFieldWriteComponent impl
     this.complexGroup = this.registerControl(new FormGroup({}));
   }
 
-  buildControlRegistrer(caseField: CaseField): <T extends AbstractControl> (control: T) => T {
+  buildControlRegistrer(caseField: CaseField): (control: FormControl) => AbstractControl {
     return control => {
       if (this.complexGroup.contains(caseField.id)) {
         return this.complexGroup.get(caseField.id);

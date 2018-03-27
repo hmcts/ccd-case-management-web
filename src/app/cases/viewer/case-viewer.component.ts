@@ -86,7 +86,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.triggerText = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
   }
 
-  applyTrigger(trigger: CaseViewTrigger): Promise<boolean> {
+  applyTrigger(trigger: CaseViewTrigger): Promise<boolean | void> {
     this.error = null;
 
     let queryParams = {};

@@ -20,6 +20,27 @@ const CASE_FIELD: CaseField = {
 };
 const CLASS = 'text-cls';
 
+@Component({
+  template: `
+    <span class="${CLASS}"></span>
+  `
+})
+class FieldTestComponent {}
+
+@Component({
+  selector: 'ccd-field-read-label',
+  template: `
+    <ng-content></ng-content>
+  `
+})
+class FieldReadLabelComponent {
+  @Input()
+  caseField: CaseField;
+
+  @Input()
+  withLabel: boolean;
+}
+
 describe('FieldReadComponent', () => {
 
   let fixture: ComponentFixture<FieldReadComponent>;
@@ -104,24 +125,3 @@ describe('FieldReadComponent', () => {
     expect(fieldReadLabel.withLabel).toBe(true);
   });
 });
-
-@Component({
-  template: `
-    <span class="${CLASS}"></span>
-  `
-})
-class FieldTestComponent {}
-
-@Component({
-  selector: 'ccd-field-read-label',
-  template: `
-    <ng-content></ng-content>
-  `
-})
-class FieldReadLabelComponent {
-  @Input()
-  caseField: CaseField;
-
-  @Input()
-  withLabel: boolean;
-}

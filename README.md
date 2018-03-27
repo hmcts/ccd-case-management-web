@@ -108,16 +108,18 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 * single run: `yarn test`
 * live mode (TDD style): `yarn test-watch`
 
-### 2. End-to-End Tests (aka. e2e, integration)
+### 2. Smoke Tests
 
 * single run:
+  * set environment variables for test suite
+        | Name | Description |
+        |------|-------------|
+        | CCD_CASEWORKER_AUTOTEST_EMAIL     | Username for test account     |
+        | CCD_CASEWORKER_AUTOTEST_PASSWORD  | Password for tests account    |
+        | TEST_FRONTEND_URL                 | URL for systems under tests   |  
   * in a tab, *if not already running!*: `yarn start`
-  * in a new tab: `yarn webdriver-start`
-  * in another new tab: `yarn e2e`
-* interactive mode:
-  * instead of the last command above, you can run: `yarn e2e-live`
-  * when debugging or first writing test suites, you may find it helpful to try out Protractor commands without starting up the entire test suite. You can do this with the element explorer.
-  * you can learn more about [Protractor Interactive Mode here](https://github.com/angular/protractor/blob/master/docs/debugging.md#testing-out-protractor-interactively)
+  * in another new tab: `yarn test:smoke`
+  * the report of the test run is written to /test/end-to-end/test-report/screenshots/index.html
 
 ## Production
 

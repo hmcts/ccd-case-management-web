@@ -35,19 +35,6 @@ class CaseListFilters extends BrowserUtils{
         return element(this._pageTitle).getText()
     }
 
-    getSelectedOption(dropDownCss) {
-
-        let valueOfSelectedOption =
-        this.getValueByElementId(this._clfJurisdictionCss)
-
-        let cssForOption = valueOfSelectedOption
-                  .then(function(css){return dropDownCss + ' option[value="' +  css + '"]'})
-
-        return cssForOption
-                  .then(function(css) { return element(by.css(css)).getText()})
-
-    }
-
     jurisdictionDropDownIsClickable() {
         return element(this._clfJurisdiction).isDisplayed()
     }
@@ -63,6 +50,7 @@ class CaseListFilters extends BrowserUtils{
     }
 
     getCaseTypeSelectedOptionText() {
+
 
          return this.getSelectedOption(this._clfCaseTypeCss).then(function(v) {  return v } )
 

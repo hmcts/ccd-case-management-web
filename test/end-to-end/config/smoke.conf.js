@@ -31,11 +31,10 @@ exports.config = {
       'maxInstances': 3,
       'acceptInsecureCerts': true,
       'marionette': false,
-      'browserName': 'firefox'
-      ,
-//      'moz:firefoxOptions': {
-//              args: [ "--headless" ]
-//            }
+      'browserName': 'firefox',
+      'moz:firefoxOptions': {
+              args: [ "--headless" ]
+            }
   },
 
   jasmineNodeOpts: {
@@ -62,7 +61,6 @@ exports.config = {
          takeScreenShotsOnlyForFailedSpecs: true,
          docTitle: 'case-management-web test report',
          docName: 'index.html',
- //      pathBuilder: function pathBuilder(spec, descriptions, results, capabilities) { return path.join(capabilities.caps_.browser) }
       }).getJasmine2Reporter());
   },
 

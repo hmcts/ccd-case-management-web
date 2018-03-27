@@ -41,7 +41,7 @@ it('Should be able to navigate to search', function() {
    let failedOnMissingFooterItem = 'missing from footer on search page'
 
    expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1', failedOnLoggedInUserName)
-   expect(ccdBannerPage.getUserNameLabel()).toContain('Autotest Cnp ▼', failedOnLoggedInUserName)
+   expect(ccdBannerPage.getUserNameLabel()).toContain('Auto Test ▼', failedOnLoggedInUserName)
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List', failedOnMissingMenuItem)
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Create Case', failedOnMissingMenuItem)
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search', failedOnMissingMenuItem)

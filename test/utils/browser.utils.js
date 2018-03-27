@@ -41,8 +41,6 @@ class BrowserUtils {
 
         let query = "return document.querySelector('" + css + "').value"
 
-     //   browser.executeScript(query).then(function(v) { console.log("THE VALUES : " + v) })
-
         return browser.executeScript(query).then(function(v) { return v })
 
     }

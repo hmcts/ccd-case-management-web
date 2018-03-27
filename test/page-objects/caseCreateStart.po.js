@@ -1,10 +1,10 @@
 BrowserUtils = require('../utils/browser.utils.js')
 
-class CaseCreateStart {
+class CaseCreateStart extends BrowserUtils {
 
     constructor() {
 
-       this.browserUtils = new BrowserUtils
+       super(by.css('.container-fluid .button'), true)
 
        this._jurisdiction = by.css('#cc-jurisdiction');
        this._jurisdictionCss = '#cc-jurisdiction'
@@ -21,12 +21,14 @@ class CaseCreateStart {
        this._pageTitle = by.css('.container-fluid h1')
 
        this._submitButton = by.css('.container-fluid .button')
+
     }
 
     isLoaded() {
 
-        browser.waitForAngular
-        this.browserUtils.waitForPageElemToLoad(element(this._pageTitle))
+                let EC = protractor.ExpectedConditions;
+                browser.wait(EC.elementToBeClickable(this._pageTitle), 3000);
+
 
     }
 
@@ -83,9 +85,11 @@ class CaseCreateStart {
 
     clickSubmitButton() {
 
-         browser.waitForAngular
+         let EC = protractor.ExpectedConditions;
+         browser.wait(EC.elementToBeClickable(element(this._submitButton)), 5000)
          element(this._submitButton).click()
          browser.waitForAngular
+         browser.sleep(5000)
 
     }
 

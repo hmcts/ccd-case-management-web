@@ -1,91 +1,104 @@
 let StepUtils = require('../../../utils/step.utils.js')
 let Login = require('../../../page-objects/login.po.js')
 let CaseCreateStep = require('../../../page-objects/caseCreateStep.po.js')
+let CaseCreateCYA = require('../../../page-objects/caseCreateCYA.po.js')
 let CaseViewHistoryTab = require('../../../page-objects/caseViewHistoryTab.po.js')
 
-describe('Caseview - with no optionals', function() {
+describe('create and view case - empty case type (read/write)', function() {
 
 beforeEach(function(){
 
+   let browserUtils = new BrowserUtils("", false)
+
    browser.ignoreSynchronization = true
-   browser.get(process.env.TEST_URL || 'http://localhost:3451')
-
-   loginPage = new Login
-   loginPage.isLoaded()
-   loginPage.signInAs('caseworker-autotest1')
-
-   browserUtils = new BrowserUtils
-   browserUtils.waitForUrlToChangeTo(RegExp("list"))
-   browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
-   browser.waitForAngular()
+   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451').then(function()
+      { let loginPage = new Login
+        loginPage.signInTo()
+      })
 
 });
 
 afterEach(function(){
 
+  let browserUtils = new BrowserUtils("", false)
+  browserUtils.signOut()
+
 });
 
 it('Should have history tab', function() {
 
-   stepUtils = new StepUtils
-   stepUtils.fromCaseListResults_startANewCase()
-   stepUtils.fromCaseStep_throughSteps(3)
+   let stepUtils = new StepUtils
+   stepUtils.caseListResultsPageStartingANewCase()
 
-   caseCreateStepPage = new CaseCreateStep
-   caseCreateStepPage.clickSubmitButton()
+   let caseCreateStep = new CaseCreateStep
 
-   caseViewHistoryTabPage = new CaseViewHistoryTab
-   caseViewHistoryTabPage.isLoaded()
+   caseCreateStep.continueBy(4)
+
+   let caseCreateCYAPage = new CaseCreateCYA
+   caseCreateCYAPage.clickSubmitButton()
 
    let caseIDMatcher = /^#(\d){4}-(\d){4}-(\d){4}-(\d){4}$/
 
-   expect(caseViewHistoryTabPage.getCaseID()).toMatch(caseIDMatcher)
+   let caseView = new CaseView
 
-   expect(caseViewHistoryTabPage.getTabLabelText(0)).toBe('History')
+   expect(caseView.getCaseID()).toMatch(caseIDMatcher)
+   expect(caseView.getTabLabelText(0)).toBe('History')
 
 });
 
 it('Should have history with create event activity', function() {
 
-   stepUtils = new StepUtils
-   stepUtils.fromCaseListResults_startANewCase()
-   stepUtils.fromCaseStep_throughSteps(3)
+   let stepUtils = new StepUtils
+   stepUtils.caseListResultsPageStartingANewCase()
 
-   caseCreateStepPage = new CaseCreateStep
-   caseCreateStepPage.clickSubmitButton()
+   let caseCreateStep = new CaseCreateStep
 
-   caseViewHistoryTabPage = new CaseViewHistoryTab
-   caseViewHistoryTabPage.isLoaded()
+   caseCreateStep.continueBy(4)
 
-   expect(caseViewHistoryTabPage.getSubHeadingText(0)).toBe('History')
+   let caseCreateCYAPage = new CaseCreateCYA
+   caseCreateCYAPage.clickSubmitButton()
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogColumnName(0)).toBe('Date')
-   expect(caseViewHistoryTabPage.getHistoryEventLogColumnName(1)).toBe('Author')
-   expect(caseViewHistoryTabPage.getHistoryEventLogColumnName(2)).toBe('Event')
+   let caseViewHistoryTabPage = new CaseViewHistoryTab
+//   caseViewHistoryTabPage.isLoaded()
+
+   let failedOnMissingSubHeading = 'sub heading not found on case view page, history tab, event activity'
+   let failedOnMissingColumnLabel = 'column not displayed on case view page, history tab, event activity'
+
+   expect(caseViewHistoryTabPage.getSubHeadingText(0)).toBe('History', failedOnMissingSubHeading)
+   expect(caseViewHistoryTabPage.getHistoryEventLogColumnName(0)).toBe('Date', failedOnMissingColumnLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogColumnName(1)).toBe('Author', failedOnMissingColumnLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogColumnName(2)).toBe('Event', failedOnMissingColumnLabel)
 
 
    let dateFormat = require('dateformat');
+
    let now = new Date();
    let now_month_day = dateFormat(now, "mmm dd, yyyy");
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogRowFieldValue(0, 0)).toBe(now_month_day)
-   expect(caseViewHistoryTabPage.getHistoryEventLogRowFieldValue(0, 1)).toBe("User TEST")
-   expect(caseViewHistoryTabPage.getHistoryEventLogRowFieldValue(0, 2)).toBe("Create a new case")
+   let rowNum = 0
+   let failedOnExpectedFieldValue = 'field value for row ' + rowNum + ' was not as expected on case view page, history tab, event activity'
+
+   expect(caseViewHistoryTabPage.getHistoryEventLogRowFieldValue(rowNum, 0)).toBe(now_month_day, failedOnExpectedFieldValue)
+   expect(caseViewHistoryTabPage.getHistoryEventLogRowFieldValue(rowNum, 1)).toBe("Auto TEST", failedOnExpectedFieldValue)
+   expect(caseViewHistoryTabPage.getHistoryEventLogRowFieldValue(rowNum, 2)).toBe("Create a new case", failedOnExpectedFieldValue)
 
 });
 
-it('Should have history details', function() {
+it('Should have history with case event detail', function() {
 
-   stepUtils = new StepUtils
-   stepUtils.fromCaseListResults_startANewCase()
-   stepUtils.fromCaseStep_throughSteps(3)
+   let stopAtCYA = 4
 
-   caseCreateStepPage = new CaseCreateStep
-   caseCreateStepPage.clickSubmitButton()
+   let stepUtils = new StepUtils
+   stepUtils.caseListResultsPageStartingANewCase()
+   let caseCreateStep = new CaseCreateStep
 
-   caseViewHistoryTabPage = new CaseViewHistoryTab
+   caseCreateStep.continueBy(4)
 
-   caseViewHistoryTabPage.isLoaded()
+   let caseCreateCYAPage = new CaseCreateCYA
+   caseCreateCYAPage.clickSubmitButton()
+
+   let caseViewHistoryTabPage = new CaseViewHistoryTab
+//   caseViewHistoryTabPage.isLoaded()
 
    expect(caseViewHistoryTabPage.getSubHeadingText(1)).toBe('Details')
 
@@ -93,24 +106,26 @@ it('Should have history details', function() {
    let now = new Date();
    let now_month_day_hour = dateFormat(now, "mmm dd, yyyy, h");
 
+   let failedOnMissingEventDetailFieldLabel = 'field label is not present as expected for event detail displayed'
+   let failedOnMissingEventDetailFieldValue = 'field value is not as expected for event detail displayed'
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(0)).toBe('Date')
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(0)).toContain(now_month_day_hour)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(0)).toBe('Date', failedOnMissingEventDetailFieldLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(0)).toContain(now_month_day_hour, failedOnMissingEventDetailFieldValue)
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(1)).toBe('Author')
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(1)).toBe('User TEST')
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(1)).toBe('Author', failedOnMissingEventDetailFieldLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(1)).toBe('Auto TEST', failedOnMissingEventDetailFieldValue)
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(2)).toBe('End state')
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(2)).toBe('To do')
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(2)).toBe('End state', failedOnMissingEventDetailFieldLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(2)).toBe('To do', failedOnMissingEventDetailFieldValue)
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(3)).toBe('Event')
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(3)).toBe('Create a new case')
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(3)).toBe('Event', failedOnMissingEventDetailFieldLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(3)).toBe('Create a new case', failedOnMissingEventDetailFieldValue)
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(4)).toBe('Summary')
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(4)).toBe('')
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(4)).toBe('Summary', failedOnMissingEventDetailFieldLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(4)).toBe('-', failedOnMissingEventDetailFieldValue)
 
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(5)).toBe('Comment')
-   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(5)).toBe('')
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailField(5)).toBe('Comment', failedOnMissingEventDetailFieldLabel)
+   expect(caseViewHistoryTabPage.getHistoryEventLogDetailFieldValue(5)).toBe('-', failedOnMissingEventDetailFieldValue)
 
 });
 

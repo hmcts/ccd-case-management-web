@@ -1,9 +1,15 @@
 
 class BrowserUtils {
 
-    constructor() {
+    constructor(loc, waitToLoadYN) {
 
-    browser.waitForAngular
+          if (waitToLoadYN==true)
+          {
+                  let EC = protractor.ExpectedConditions;
+                  browser.wait(EC.visibilityOf(element(loc)), 5000);
+
+                   // console.log(loc)
+          }
 
     }
 
@@ -31,9 +37,9 @@ class BrowserUtils {
 
     }
 
-    getValueByElementId(id) {
+    getValueByElementCss(css) {
 
-        let query = "return document.querySelector('" + id + "').value"
+        let query = "return document.querySelector('" + css + "').value"
 
      //   browser.executeScript(query).then(function(v) { console.log("THE VALUES : " + v) })
 
@@ -41,9 +47,17 @@ class BrowserUtils {
 
     }
 
+    signOut() {
+
+       let query = "document.querySelector('.dropdown-content a').click()"
+
+       browser.executeScript(query)
+
+    }
+
     getSelectedOption(dropDownCss) {
 
-        let valueOfSelectedOption = this.getValueByElementId(dropDownCss)
+        let valueOfSelectedOption = this.getValueByElementCss(dropDownCss)
 
         let cssForOption = valueOfSelectedOption
                     .then(function(css){return dropDownCss + ' option[value="' +  css + '"]'})

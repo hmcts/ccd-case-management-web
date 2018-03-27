@@ -1,10 +1,10 @@
 BrowserUtils = require('../utils/browser.utils.js')
 
-class CaseListFilters {
+class CaseListFilters extends BrowserUtils{
 
     constructor() {
 
-       this.browserUtils = new BrowserUtils
+       super("", false)
 
        this._clfJurisdiction = by.css('#wb-jurisdiction');
        this._clfJurisdictionCss = '#wb-jurisdiction'
@@ -38,7 +38,7 @@ class CaseListFilters {
     getSelectedOption(dropDownCss) {
 
         let valueOfSelectedOption =
-        this.browserUtils.getValueByElementId(this._clfJurisdictionCss)
+        this.getValueByElementId(this._clfJurisdictionCss)
 
         let cssForOption = valueOfSelectedOption
                   .then(function(css){return dropDownCss + ' option[value="' +  css + '"]'})
@@ -80,19 +80,19 @@ class CaseListFilters {
 
     selectJurisdictionOptionByText(optionText) {
 
-         this.browserUtils.selectOption(this._clfJurisdictionOptions, optionText)
+         this.selectOption(this._clfJurisdictionOptions, optionText)
 
     }
 
     selectCaseTypeOptionByText(optionText) {
 
-         this.browserUtils.selectOption(this._clfCaseTypeOptions, optionText)
+         this.selectOption(this._clfCaseTypeOptions, optionText)
 
     }
 
     selectStateOptionByText(optionText) {
 
-         this.browserUtils.selectOption(this._clfStateOptions, optionText)
+         this.selectOption(this._clfStateOptions, optionText)
 
     }
 

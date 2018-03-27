@@ -1,7 +1,18 @@
+var HtmlReporter = require('protractor-beautiful-reporter');
+
 exports.config = {
 
+  /*
+     - before execution set the following environment variables:
+                CCD_CASEWORKER_AUTOTEST_EMAIL
+                CCD_CASEWORKER_AUTOTEST_PASSWORD
+                TEST_FRONTEND_URL
+     - to stop parallel execution: comment out shardTestFiles and maxInstances
+     - to stop tests running headless: comment out moz:firefoxOptions section
+  */
+
   specs: [
-    '../specs/*/login.*.spec.js'
+    '../specs/*/*.*.spec.js'
   ],
 
   exclude: [],
@@ -14,20 +25,17 @@ exports.config = {
 
   framework: 'jasmine2',
 
-  // comment out shardTestFiles andmaxInstances to stop test specs running in parallel
-
   capabilities: {
 
       'shardTestFiles': true,
-      'maxInstances': 4,
+      'maxInstances': 3,
       'acceptInsecureCerts': true,
       'marionette': false,
-      'browserName': 'firefox',
-
-      'moz:firefoxOptions': {
-              args: [ "--headless" ]
-            }
-
+      'browserName': 'firefox'
+      ,
+//      'moz:firefoxOptions': {
+//              args: [ "--headless" ]
+//            }
   },
 
   jasmineNodeOpts: {
@@ -39,30 +47,26 @@ exports.config = {
 
   },
 
-
-  /**
-   * Angular 2 configuration
-   *
-   * useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on the page instead of just the one matching
-   * `rootEl`
-   *
-   */
   useAllAngular2AppRoots: true,
 
   onCleanUp: function (results) {
-  //  retry.onCleanUp(results);
   },
 
   onPrepare: function () {
 
     var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-    // add jasmine spec reporter
-    jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
-  //  retry.onPrepare();
+
+      jasmine.getEnv().addReporter(new HtmlReporter({
+         baseDirectory: 'test/end-to-end/test-report/screenshots',
+         excludeSkippedSpecs: true,
+         takeScreenShotsOnlyForFailedSpecs: true,
+         docTitle: 'case-management-web test report',
+         docName: 'index.html',
+ //      pathBuilder: function pathBuilder(spec, descriptions, results, capabilities) { return path.join(capabilities.caps_.browser) }
+      }).getJasmine2Reporter());
   },
 
   afterLaunch: function() {
- //   return retry.afterLaunch(2);
   }
 
 };

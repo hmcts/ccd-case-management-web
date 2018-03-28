@@ -4,7 +4,7 @@
     <tbody>
       <ng-container *ngFor="let field of caseField | ccdFieldsFilter">
         <ng-container *ngIf="(field | ccdIsCompound); else SimpleRow">
-          <tr class="complex-panel-compound-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="field" [eventFields]="caseField.field_type.complex_fields">
+          <tr class="complex-panel-compound-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="caseField" [eventFields]="caseField.field_type.complex_fields">
             <td colspan="2">
               <ccd-field-read [caseField]="field"></ccd-field-read>
             </td>

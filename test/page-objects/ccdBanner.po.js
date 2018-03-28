@@ -1,16 +1,16 @@
 BrowserUtils = require('../utils/browser.utils.js')
 
-class CCDBanner {
+class CCDBanner extends BrowserUtils {
 
     constructor() {
 
-       this.browserUtils = new BrowserUtils
+       super("", false)
 
        this._bannerHeaderTitle = by.css('.header-title');
        this._userName = by.css('.dropbtn')
        this._userNameDropDown = by.css('.dropdown-content')
-       this._menuItems = by.css('#menu-links a')
-       this._searchBox = by.css('#search a')
+       this._menuItems = by.css('.global-navigation cut-nav-item a')
+       this._searchBox = by.css('.global-navigation .cut-nav-bar #search')
        this._footer = by.css('#footer-wrapper')
 
     }
@@ -18,8 +18,8 @@ class CCDBanner {
     isLoaded() {
 
         browser.waitForAngular
-        this.browserUtils.waitForPageElemToLoad(element(this._bannerHeaderTitle))
-        this.browserUtils.waitForPageElemToLoad(element(this._userName))
+        this.waitForPageElemToLoad(element(this._bannerHeaderTitle))
+        this.waitForPageElemToLoad(element(this._userName))
 
     }
 

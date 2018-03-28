@@ -1,10 +1,10 @@
 BrowserUtils = require('../utils/browser.utils.js')
 
-class CaseSearchFilters {
+class CaseSearchFilters extends BrowserUtils {
 
     constructor() {
 
-       this.browserUtils = new BrowserUtils
+       super("", false)
 
        this._clfJurisdiction = by.css('#s-jurisdiction');
        this._clfJurisdictionCss = '#s-jurisdiction'
@@ -27,7 +27,7 @@ class CaseSearchFilters {
     isLoaded() {
 
         browser.waitForAngular
-        this.browserUtils.waitForPageElemToLoad(element(this._pageTitle))
+        this.waitForPageElemToLoad(element(this._pageTitle))
 
     }
 
@@ -39,7 +39,7 @@ class CaseSearchFilters {
     getSelectedOption(dropDownCss) {
 
         let valueOfSelectedOption =
-        this.browserUtils.getValueByElementId(this._clfJurisdictionCss)
+        this.getValueByElementId(this._clfJurisdictionCss)
 
         let cssForOption = valueOfSelectedOption
                   .then(function(css){return dropDownCss + ' option[value="' +  css + '"]'})
@@ -81,19 +81,19 @@ class CaseSearchFilters {
 
     selectJurisdictionOptionByText(optionText) {
 
-         this.browserUtils.selectOption(this._clfJurisdictionOptions, optionText)
+         this.selectOption(this._clfJurisdictionOptions, optionText)
 
     }
 
     selectCaseTypeOptionByText(optionText) {
 
-         this.browserUtils.selectOption(this._clfCaseTypeOptions, optionText)
+         this.selectOption(this._clfCaseTypeOptions, optionText)
 
     }
 
     selectStateOptionByText(optionText) {
 
-         this.browserUtils.selectOption(this._clfStateOptions, optionText)
+         this.selectOption(this._clfStateOptions, optionText)
 
     }
 

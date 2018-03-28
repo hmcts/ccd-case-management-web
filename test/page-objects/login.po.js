@@ -1,27 +1,29 @@
 BrowserUtils = require('../utils/browser.utils.js')
 
-class Login {
+class Login extends BrowserUtils {
 
     constructor() {
 
-        this.browserUtils = new BrowserUtils
+        super(by.css('.button'), true)
 
         this._userNameField = by.css('#username');
         this._passwordField = by.css('#password');
         this._signIn = by.css('.button');
 
+        let EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.css('#username'))), 7000);
+        browser.wait(EC.visibilityOf(element(by.css('#password'))), 7000);
+
     }
 
-
     isLoaded() {
-
-        this.browserUtils.waitForPageElemToLoad(element(this._userNameField));
-        this.browserUtils.waitForPageElemToLoad(element(this._passwordField));
-        this.browserUtils.waitForPageElemToLoad(element(this._signIn));
 
     }
 
     inputCredentials(username, password) {
+
+        let EC = protractor.ExpectedConditions;
+        browser.wait(EC.elementToBeClickable(element(this._userNameField)), 3000);
 
         element(this._userNameField).isDisplayed();
         element(this._userNameField).click();
@@ -32,26 +34,20 @@ class Login {
 
     }
 
-    signIn() {
+    clickSignIn() {
 
         element(this._signIn).click();
 
     }
 
-    signInAs(user) {
 
-       switch(user) {
-          case 'test-casework':
-              this.inputCredentials(process.env.TEST_USERNAME, process.env.TEST_PASSWORD);
-              this.signIn();
-              break;
-          case 'caseworker-autotest1':
-              this.inputCredentials(process.env.TEST_USERNAME, process.env.TEST_PASSWORD);
-              this.signIn();
-              break;
-          default:
-              console.log("User not specified")
-        }
+    signInTo() {
+
+        this.waitForUrlToChangeTo(RegExp('login'))
+        this.inputCredentials(process.env.CCD_CASEWORKER_AUTOTEST_EMAIL, process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD);
+        this.clickSignIn()
+        this.waitForUrlToChangeTo(RegExp("list"))
+        browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
 
     }
 

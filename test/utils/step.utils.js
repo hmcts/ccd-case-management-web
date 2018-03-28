@@ -1,7 +1,7 @@
 let CaseListResults = require('../page-objects/caseListResults.po.js')
 let CaseCreateStart = require('../page-objects/caseCreateStart.po.js')
 let CaseCreateStep = require('../page-objects/caseCreateStep.po.js')
-
+let BrowserUtils = require('../utils/browser.utils.js')
 
 class StepUtils {
 
@@ -11,22 +11,7 @@ class StepUtils {
 
     }
 
-    fromCaseStep_throughSteps(noOfSteps) {
-
-           let caseCreateStepPage = new CaseCreateStep
-
-           let i = 0
-
-           for (i=1; i <=noOfSteps; ++i) {
-
-           browser.sleep(500)
-           caseCreateStepPage.continueButtonIsExists() ? caseCreateStepPage.clickContinueButton() : false
-
-            }
-
-    }
-
-    fromCaseListResults_startANewCase() {
+    caseListResultsPageStartingANewCase() {
 
            let caseListResultsPage = new CaseListResults
 
@@ -38,6 +23,8 @@ class StepUtils {
 
            createCaseStartPage.clickSubmitButton()
 
+           browser.sleep(5000)
+           browser.waitForAngular
     }
 
 }

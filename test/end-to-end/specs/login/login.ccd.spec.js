@@ -3,44 +3,48 @@ let CCDBanner = require('../../../page-objects/ccdBanner.po.js')
 let CaseListFilters = require('../../../page-objects/caseListFilters.po.js')
 let CaseListResults = require('../../../page-objects/caseListResults.po.js')
 
-describe('User - sign In', function() {
+describe('user - sign in and landing page', function() {
 
 beforeEach(function(){
 
+   let browserUtils = new BrowserUtils("", false)
+
    browser.ignoreSynchronization = true
-   browser.get(process.env.TEST_URL || 'http://localhost:3451')
-
-   loginPage = new Login
-   loginPage.isLoaded()
-   loginPage.signInAs('caseworker-autotest1')
-
-   browserUtils = new BrowserUtils
-   browserUtils.waitForUrlToChangeTo(RegExp("list"))
-   browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
-   browser.waitForAngular()
+   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451').then(function()
+      { let loginPage = new Login
+        loginPage.signInTo()
+      })
 
 });
 
 afterEach(function(){
+
+  let browserUtils = new BrowserUtils("", false)
+  browserUtils.signOut()
 
 });
 
 
 it('Should display banner', function() {
 
-   ccdBannerPage = new CCDBanner
+   let ccdBannerPage = new CCDBanner
 
    ccdBannerPage.isLoaded()
 
-   expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1')
-   expect(ccdBannerPage.getUserNameLabel()).toContain('User Test')
-   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List')
-   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search')
-   expect(ccdBannerPage.getSearchBoxLabel()).toBe('Search')
-   expect(ccdBannerPage.getFooterText()).toContain('Help')
-   expect(ccdBannerPage.getFooterText()).toContain('Email:')
-   expect(ccdBannerPage.getFooterText()).toContain('Phone:')
-   expect(ccdBannerPage.getFooterText()).toContain('Monday to Friday')
+   failedOnPageTitle = 'page not titled on case list page'
+   failedOnUserSignedIn = 'user appears not signed in on case list page'
+   failedOnMissingMenuItem = 'menu item missing on case list page'
+   failedOnMissingFooterItem = 'footer item missing on case list page'
+
+   expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1', failedOnPageTitle)
+   expect(ccdBannerPage.getUserNameLabel()).toContain('Auto Test ▼', failedOnUserSignedIn)
+   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getSearchBoxLabel()).toBe('Search', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Help', failedOnMissingFooterItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Email:', failedOnMissingFooterItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Phone:', failedOnMissingFooterItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Monday to Friday', failedOnMissingFooterItem)
 
 
 
@@ -52,11 +56,15 @@ it('Should display case list filters', function() {
 
    caseListFiltersPage.isLoaded()
 
+   failedOnPageTitle = 'page not titled on case list page'
+   failedOnMissingDropDownFilter = 'drop down filter missing on case list page'
+   failedOnMissingButton = 'button missing on case list page'
+
    expect(caseListFiltersPage.getPageTitleLabel()).toBe('Case List')
-   expect(caseListFiltersPage.jurisdictionDropDownIsClickable()).toBeTruthy();
-   expect(caseListFiltersPage.caseTypeDropDownIsClickable()).toBeTruthy();
-   expect(caseListFiltersPage.stateDropDownIsClickable()).toBeTruthy();
-   expect(caseListFiltersPage.applyButtonIsClickable()).toBeTruthy();
+   expect(caseListFiltersPage.jurisdictionDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
+   expect(caseListFiltersPage.caseTypeDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
+   expect(caseListFiltersPage.stateDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
+   expect(caseListFiltersPage.applyButtonIsClickable()).toBeTruthy(failedOnMissingButton);
 
  });
 
@@ -67,7 +75,9 @@ it('Should display case list results', function() {
 
    caseListResultsPage.isLoaded()
 
-   expect(caseListResultsPage.hasCreateCaseButton()).toBe(true)
+   failedOnEmptyCaseList = 'cases not listed on case list page'
+
+   expect(caseListResultsPage.hasCreateCaseButton()).toBe(true, failedOnEmptyCaseList)
 
  });
 

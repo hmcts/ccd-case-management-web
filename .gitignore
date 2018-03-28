@@ -64,3 +64,6 @@ package-lock.json
 
 # Sonar
 .scannerwork/
+
+# Protractor test report
+test-report

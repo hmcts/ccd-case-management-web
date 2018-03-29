@@ -38,7 +38,7 @@ describe('ReadCollectionFieldComponent', () => {
 
   let FieldReadComponent = MockComponent({
     selector: 'ccd-field-read',
-    inputs: ['caseField']
+    inputs: ['caseField', 'withLabel']
   });
 
   let fixture: ComponentFixture<ReadCollectionFieldComponent>;

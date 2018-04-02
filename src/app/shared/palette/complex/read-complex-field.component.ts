@@ -11,13 +11,20 @@ export class ReadComplexFieldComponent extends AbstractFieldReadComponent {
 
   getComplexFields() {
     let complexFields = [];
+
     this.caseField.field_type.complex_fields.forEach((elem, index) => {
-      let elemCopy = Object.assign({}, elem);
-      elemCopy.value = this.caseField.value[elem.id];
-      if (!elem.value) {
-        complexFields[index] = elemCopy;
+      let elemCopy = this.cloneObject(elem);
+      if (this.caseField.value) {
+        elemCopy.value = this.caseField.value[elem.id];
+        if (!elem.value) {
+          complexFields[index] = elemCopy;
+        }
       }
     });
     return complexFields;
+  }
+
+  private cloneObject(obj: any): any {
+    return Object.assign({}, obj);
   }
 }

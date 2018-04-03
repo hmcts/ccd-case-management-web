@@ -95,5 +95,4 @@ export class FieldsUtils {
     private cloneObject(obj: any): any {
         return Object.assign({}, obj);
     }
-
 }

@@ -1,4 +1,4 @@
-# case-management-web
+# case-management-web [![Build Status](https://travis-ci.org/hmcts/ccd-case-management-web.svg?branch=master)](https://travis-ci.org/hmcts/ccd-case-management-web)
 
 An Angular front-end for Core Case Data.
 

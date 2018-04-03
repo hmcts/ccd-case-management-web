@@ -3,7 +3,7 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
 
 @Component({
   selector: 'ccd-read-money-gbp-field',
-  template: `<ng-container *ngIf="isNumber(caseField.value)">{{caseField.value / 100 | currency:'GBP':true}}</ng-container>`
+  template: `<ng-container *ngIf="isNumber(caseField.value)">{{caseField.value / 100 | currency:'GBP':'symbol'}}</ng-container>`
 })
 export class ReadMoneyGbpFieldComponent extends AbstractFieldReadComponent {
 

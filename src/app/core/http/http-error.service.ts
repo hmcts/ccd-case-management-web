@@ -33,7 +33,7 @@ export class HttpErrorService {
 
       if (error.headers
           && error.headers.get(HttpErrorService.CONTENT_TYPE)
-          && HttpErrorService.APPLICATION_JSON === error.headers.get(HttpErrorService.CONTENT_TYPE)) {
+          && error.headers.get(HttpErrorService.CONTENT_TYPE).startsWith(HttpErrorService.APPLICATION_JSON)) {
         try {
           httpError = HttpError.from(error.json() || {});
         } catch (e) {

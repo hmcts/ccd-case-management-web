@@ -12,6 +12,7 @@ import { ConditionalShowModule } from '../../conditional-show/conditional-show.m
 describe('ReadComplexFieldComponent', () => {
 
   const $COMPLEX_PANEL = By.css('div.complex-panel');
+  const $COMPLEX_PANEL_TITLE = By.css('dl.complex-panel-title');
   const $COMPLEX_PANEL_SIMPLE_ROWS_HEADERS = By.css('table>tbody>tr.complex-panel-simple-field>th');
   const $COMPLEX_PANEL_SIMPLE_ROWS_VALUES = By.css('table>tbody>tr.complex-panel-simple-field>td>ccd-field-read');
   const $COMPLEX_PANEL_COMPOUND_ROWS_VALUES = By.css('table>tbody>tr.complex-panel-compound-field>td>ccd-field-read');
@@ -19,7 +20,7 @@ describe('ReadComplexFieldComponent', () => {
 
   let FieldReadComponent = MockComponent({
     selector: 'ccd-field-read',
-    inputs: ['caseField', 'withLabel']
+    inputs: ['caseField']
   });
 
   let fixture: ComponentFixture<ReadComplexFieldComponent>;
@@ -156,6 +157,15 @@ describe('ReadComplexFieldComponent', () => {
       fixture.detectChanges();
     }));
 
+    it('should render a panel with a header for the complex type', () => {
+      let panelTitle = de
+        .query($COMPLEX_PANEL)
+        .query($COMPLEX_PANEL_TITLE);
+
+      expect(panelTitle).toBeTruthy();
+      expect(panelTitle.nativeElement.textContent).toBe(CASE_FIELD.label);
+    });
+
     it('should render a table with a row containing 2 columns for each simple type', () => {
       let simpleRowsHeaders = de
         .query($COMPLEX_PANEL)
@@ -199,7 +209,7 @@ describe('ReadComplexFieldComponent', () => {
       expect(labels[0].nativeElement.textContent).toBe(FIELD_TYPE_WITH_MISSING_VALUE.complex_fields[LINE_2].label);
     });
 
-    it('should not render title when no fields', () => {
+    it('should only render title when no fields', () => {
       component.caseField = {
         id: 'x',
         label: 'x',
@@ -209,6 +219,9 @@ describe('ReadComplexFieldComponent', () => {
       fixture.detectChanges();
 
       let labels = de.queryAll($COMPLEX_PANEL_SIMPLE_ROWS_HEADERS);
+
+      let title = de.query($COMPLEX_PANEL_TITLE);
+      expect(title).toBeTruthy();
 
       expect(labels.length).toEqual(0);
     });

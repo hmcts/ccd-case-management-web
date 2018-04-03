@@ -76,6 +76,10 @@ export class FieldsUtils {
         return relevantItem ? relevantItem.label : '';
     }
 
+    static cloneObject(obj: any): any {
+        return Object.assign({}, obj);
+    }
+
     mergeCaseFieldsAndFormFields(caseFields: CaseField[], formFields: any): any {
         return this.mergeFields(caseFields, formFields, FieldsUtils.DEFAULT_MERGE_FUNCTION);
     }
@@ -85,14 +89,11 @@ export class FieldsUtils {
     }
 
     private mergeFields(caseFields: CaseField[], formFields: any, mergeFunction: (CaseField, any) => void) {
-        let result = this.cloneObject(formFields);
+        let result = FieldsUtils.cloneObject(formFields);
         caseFields.forEach(field => {
             mergeFunction(field, result);
         });
         return result;
     }
 
-    private cloneObject(obj: any): any {
-        return Object.assign({}, obj);
-    }
 }

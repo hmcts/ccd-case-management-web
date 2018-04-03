@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
 import { CaseField } from '../../domain/definition/case-field.model';
+import { FieldsUtils } from '../../utils/fields.utils';
 
 @Component({
   selector: 'ccd-read-complex-type-field',
@@ -13,7 +14,7 @@ export class ReadComplexFieldComponent extends AbstractFieldReadComponent {
     let complexFields = [];
 
     this.caseField.field_type.complex_fields.forEach((elem, index) => {
-      let elemCopy = this.cloneObject(elem);
+      let elemCopy = FieldsUtils.cloneObject(elem);
       if (this.caseField.value) {
         elemCopy.value = this.caseField.value[elem.id];
         if (!elem.value) {
@@ -24,7 +25,4 @@ export class ReadComplexFieldComponent extends AbstractFieldReadComponent {
     return complexFields;
   }
 
-  private cloneObject(obj: any): any {
-    return Object.assign({}, obj);
-  }
 }

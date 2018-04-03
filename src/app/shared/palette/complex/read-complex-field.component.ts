@@ -8,21 +8,4 @@ import { FieldsUtils } from '../../utils/fields.utils';
   templateUrl: './read-complex-field.html',
   styleUrls: ['./read-complex-field.scss']
 })
-export class ReadComplexFieldComponent extends AbstractFieldReadComponent {
-
-  getComplexFields() {
-    let complexFields = [];
-
-    this.caseField.field_type.complex_fields.forEach((elem, index) => {
-      let elemCopy = FieldsUtils.cloneObject(elem);
-      if (this.caseField.value) {
-        elemCopy.value = this.caseField.value[elem.id];
-        if (!elem.value) {
-          complexFields[index] = elemCopy;
-        }
-      }
-    });
-    return complexFields;
-  }
-
-}
+export class ReadComplexFieldComponent extends AbstractFieldReadComponent {}

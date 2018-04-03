@@ -218,10 +218,10 @@ describe('ReadComplexFieldComponent', () => {
       };
       fixture.detectChanges();
 
-      let labels = de.queryAll($COMPLEX_PANEL_SIMPLE_ROWS_HEADERS);
-
       let title = de.query($COMPLEX_PANEL_TITLE);
       expect(title).toBeTruthy();
+
+      let labels = de.queryAll($COMPLEX_PANEL_SIMPLE_ROWS_HEADERS);
 
       expect(labels.length).toEqual(0);
     });

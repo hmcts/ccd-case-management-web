@@ -7,7 +7,7 @@ locals {
 }
 
 module "case-management-web" {
-  source   = "git@github.com:contino/moj-module-webapp?ref=master"
+  source   = "git@github.com:hmcts/moj-module-webapp?ref=master"
   product  = "${var.product}-case-management-web"
   location = "${var.location}"
   env      = "${var.env}"
@@ -24,7 +24,7 @@ module "case-management-web" {
     CCD_GW_OAUTH2_URL = "${var.ccd_gateway_url}/oauth2"
     CCD_GW_OAUTH2_CLIENT_ID = "ccd_gateway"
     DM_URL = "${var.ccd_gateway_url}/documents"
-    DM_URL_REMOTE = "http://dm-api-gw-web-${local.env_ase_url}/documents"
+    DM_URL_REMOTE = "${var.document_management_url}/documents"
     CCD_PAGE_SIZE = 25
     POSTCODE_LOOKUP_URL = "${var.ccd_gateway_url}/addresses?postcode=$${postcode}"
     PRINT_SERVICE_URL = "${var.ccd_gateway_url}/print"

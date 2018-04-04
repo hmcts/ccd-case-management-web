@@ -1,3 +1,4 @@
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/_typography';
 @import "~govuk_frontend_toolkit/stylesheets/_colours.scss";
 
 .complex-panel {
@@ -10,6 +11,11 @@
     padding: $padding;
     border-bottom: 1px solid $border-colour;
     font-weight: bold;
+    display: block;
+    color: $text-colour;
+    padding-bottom: 2px;
+
+    @include bold-19;
   }
 
   .complex-panel-table {

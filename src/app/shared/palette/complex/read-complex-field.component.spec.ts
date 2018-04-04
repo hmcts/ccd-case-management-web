@@ -12,7 +12,7 @@ import { ConditionalShowModule } from '../../conditional-show/conditional-show.m
 describe('ReadComplexFieldComponent', () => {
 
   const $COMPLEX_PANEL = By.css('div.complex-panel');
-  const $COMPLEX_PANEL_TITLE = By.css('h3.complex-panel-title');
+  const $COMPLEX_PANEL_TITLE = By.css('dl.complex-panel-title');
   const $COMPLEX_PANEL_SIMPLE_ROWS_HEADERS = By.css('table>tbody>tr.complex-panel-simple-field>th');
   const $COMPLEX_PANEL_SIMPLE_ROWS_VALUES = By.css('table>tbody>tr.complex-panel-simple-field>td>ccd-field-read');
   const $COMPLEX_PANEL_COMPOUND_ROWS_VALUES = By.css('table>tbody>tr.complex-panel-compound-field>td>ccd-field-read');

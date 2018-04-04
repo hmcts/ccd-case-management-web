@@ -36,6 +36,12 @@ describe('HttpErrorService', () => {
     }),
     body: JSON.stringify(VALID_ERROR_BODY)
   }));
+  const VALID_ERROR_RESPONSE_WITH_CHARSET = new Response(new ResponseOptions({
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8',
+    }),
+    body: JSON.stringify(VALID_ERROR_BODY)
+  }));
 
   const NOT_VALID_ERROR_RESPONSE = new Response(new ResponseOptions({
     headers: new Headers({
@@ -85,6 +91,12 @@ describe('HttpErrorService', () => {
 
     it('should convert a valid Response error into an HttpError', () => {
       let obsError = errorService.handle(VALID_ERROR_RESPONSE);
+
+      expect(obsError).toEqual(Observable.throw(HttpError.from(VALID_ERROR_BODY)));
+    });
+
+    it('should handle a valid Response with charsetInfo', () => {
+      let obsError = errorService.handle(VALID_ERROR_RESPONSE_WITH_CHARSET);
 
       expect(obsError).toEqual(Observable.throw(HttpError.from(VALID_ERROR_BODY)));
     });

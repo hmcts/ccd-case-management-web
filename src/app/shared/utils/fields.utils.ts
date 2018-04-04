@@ -64,7 +64,7 @@ export class FieldsUtils {
     };
 
     private static getMoneyGBP(fieldValue) {
-        return fieldValue ? FieldsUtils.currencyPipe.transform(fieldValue / 100, 'GBP', true) : fieldValue;
+        return fieldValue ? FieldsUtils.currencyPipe.transform(fieldValue / 100, 'GBP', 'symbol') : fieldValue;
     }
 
     private static getDate(fieldValue) {

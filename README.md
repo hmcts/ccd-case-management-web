@@ -110,16 +110,21 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 
 ### 2. Smoke Tests
 
-* single run:
-  * set environment variables for test suite
+* The smoke tests are run within a docker container. To create an image to run execute the
+* following command in the test directory: 
+
+* docker build -t ccd-protractor .
+
+* before running the tests set the following environment variables
         | Name | Description |
         |------|-------------|
         | CCD_CASEWORKER_AUTOTEST_EMAIL     | Username for test account     |
         | CCD_CASEWORKER_AUTOTEST_PASSWORD  | Password for tests account    |
         | TEST_FRONTEND_URL                 | URL for systems under tests   |  
-  * in a tab, *if not already running!*: `yarn start`
-  * in another new tab: `yarn test:smoke`
-  * the report of the test run is written to /test/end-to-end/test-report/screenshots/index.html
+
+* docker run -it --rm -e CCD_CASEWORKER_AUTOTEST_EMAIL=$CCD_CASEWORKER_AUTOTEST_EMAIL -e 
+*    CCD_CASEWORKER_AUTOTEST_PASSWORD=$CCD_CASEWORKER_AUTOTEST_PASSWORD -e TEST_FRONTEND_URL=$TEST_FRONTEND_URL 
+*     --name protractor-runner -v $(PWD):/protractor/project ccd-protractor:latest test:smoke
 
 ## Production
 

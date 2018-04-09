@@ -1,0 +1,29 @@
+{
+  "name": "case-management-web",
+  "version": "1.2.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "webdriver-manager update",
+    "test:smoke": "protractor project/smoke.conf.js"
+  },
+  "dependencies": {
+    "class-transformer": "^0.1.8",
+    "core-js": "^2.4.1",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "jasmine-core": "~2.8.0",
+    "jasmine-spec-reporter": "^4.2.1",
+    "json-server": "^0.12.1",
+    "lodash": "^4.16.2",
+    "ng2-mock-component": "^0.1.1",
+    "nsp": "^3.2.1",
+    "phantomjs-prebuilt": "^2.1.16",
+    "protractor": "^5.1.1",
+    "protractor-beautiful-reporter": "^1.2.1",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.0.0",
+    "typescript": "2.7.1",
+    "webdriver-manager": "^12.0.6"
+  }
+}

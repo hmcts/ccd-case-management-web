@@ -114,7 +114,7 @@ The smoke tests are run within a docker container.
 
 To create an image to run execute the following command in the test directory: 
 
-* docker build -t ccd-protractor .
+``` docker build -t ccd-protractor . ```
 
 Before running the tests set the following environment variables
 
@@ -126,9 +126,9 @@ Before running the tests set the following environment variables
 
 To run the tests execute
 
-* docker run -it --rm -e CCD_CASEWORKER_AUTOTEST_EMAIL=$CCD_CASEWORKER_AUTOTEST_EMAIL -e 
-*    CCD_CASEWORKER_AUTOTEST_PASSWORD=$CCD_CASEWORKER_AUTOTEST_PASSWORD -e TEST_FRONTEND_URL=$TEST_FRONTEND_URL 
-*     --name protractor-runner -v $(PWD):/protractor/project ccd-protractor:latest test:smoke
+``` docker run -it --rm -e CCD_CASEWORKER_AUTOTEST_EMAIL=$CCD_CASEWORKER_AUTOTEST_EMAIL -e 
+    CCD_CASEWORKER_AUTOTEST_PASSWORD=$CCD_CASEWORKER_AUTOTEST_PASSWORD -e TEST_FRONTEND_URL=$TEST_FRONTEND_URL 
+     --name protractor-runner -v $(PWD):/protractor/project ccd-protractor:latest test:smoke ```
 
 ## Production
 

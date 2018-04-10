@@ -34,3 +34,8 @@ variable "document_management_url" {
 variable "ccd_print_service_url" {
   default = "https://return-case-doc-ccd.nonprod.platform.hmcts.net"
 }
+
+variable "external_host_name" {
+  default = "ccd-case-management-web.nonprod.platform.hmcts.net"
+}
+

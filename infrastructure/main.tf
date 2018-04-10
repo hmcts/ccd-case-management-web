@@ -14,6 +14,7 @@ module "case-management-web" {
   ilbIp    = "${var.ilbIp}"
   is_frontend  = true
   subscription = "${var.subscription}"
+  additional_host_name = "${var.external_host_name}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

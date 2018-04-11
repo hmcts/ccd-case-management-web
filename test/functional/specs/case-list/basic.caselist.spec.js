@@ -8,6 +8,8 @@ describe('Case List - Basic Page Structure', function() {
 beforeEach(function(){
 
    browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451')
+   let browserUtils = new BrowserUtils("", false)
+   browserUtils.waitForUrlToChangeTo(RegExp("list"))
 
 });
 
@@ -29,23 +31,23 @@ it('Should default the jurisdiction, case type and state for the CCD user', func
 
 it('Should display column names for listed cases', function() {
 
-//        let caseListResultsPage = new CaseListResults;
-//        let caseListFiltersPage = new CaseListFilters;
-//
-//        caseListFiltersPage.isLoaded()
-//        browser.sleep(3000)
-//        caseListResultsPage.isLoaded()
-//
-//        expect(caseListResultsPage.getResultsListColumnHeadingText(0)).toContain("Case reference")
-//        expect(caseListResultsPage.getResultsListColumnHeadingText(1)).toContain("First name")
-//        expect(caseListResultsPage.getResultsListColumnHeadingText(2)).toContain("Last name")
-//        expect(caseListResultsPage.getResultsListColumnHeadingText(3)).toContain("Link to evidence")
-//        expect(caseListResultsPage.getResultsListColumnHeadingText(4)).toContain("Address")
+        let caseListResultsPage = new CaseListResults;
+        let caseListFiltersPage = new CaseListFilters;
+
+        caseListFiltersPage.isLoaded()
+        browser.sleep(3000)
+        caseListResultsPage.isLoaded()
+
+        expect(caseListResultsPage.getResultsListColumnHeadingText(0)).toContain("Case reference")
+        expect(caseListResultsPage.getResultsListColumnHeadingText(1)).toContain("First name")
+        expect(caseListResultsPage.getResultsListColumnHeadingText(2)).toContain("Last name")
+        expect(caseListResultsPage.getResultsListColumnHeadingText(3)).toContain("Link to evidence")
+        expect(caseListResultsPage.getResultsListColumnHeadingText(4)).toContain("Address")
 
 })
 
-it('Should have cases listed', function() {
-
+//it('Should have cases listed', function() {
+//
 //        let caseListResultsPage = new CaseListResults;
 //        let caseListFiltersPage = new CaseListFilters;
 //
@@ -54,11 +56,11 @@ it('Should have cases listed', function() {
 //        caseListResultsPage.isLoaded();
 //
 //        expect(caseListResultsPage.getResultsListRowCount()).toBe(5)
+//
+//});
 
-});
 
-
-it('Should have a case listed with values in each column', function() {
+//it('Should have a case listed with values in each column', function() {
 //
 //        let caseListResultsPage = new CaseListResults;
 //        let caseListFiltersPage = new CaseListFilters;
@@ -67,10 +69,10 @@ it('Should have a case listed with values in each column', function() {
 //        browser.sleep(3000)
 //        caseListFiltersPage.isLoaded();
 //
-//        expect(caseListResultsPage.getResultsListRowText(0)).toContain("Janet")
-//        expect(caseListResultsPage.getResultsListRowText(0)).toContain("Parker")
-//        expect(caseListResultsPage.getResultsListRowText(0)).toContain("Example_filename.xyz")
-
-});
+//        expect(caseListResultsPage.getResultsListRowText(1)).toContain("Janet")
+//        expect(caseListResultsPage.getResultsListRowText(1)).toContain("Parker")
+//        expect(caseListResultsPage.getResultsListRowText(1)).toContain("Example_filename.xyz")
+//
+//});
 
 });

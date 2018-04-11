@@ -4,7 +4,7 @@ class CaseSearchFilters extends BrowserUtils {
 
     constructor() {
 
-       super("", false)
+       super(by.css('#s-jurisdiction'), true)
 
        this._clfJurisdiction = by.css('#s-jurisdiction');
        this._clfJurisdictionCss = '#s-jurisdiction'

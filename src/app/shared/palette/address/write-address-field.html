@@ -26,7 +26,7 @@
   <span class="manual-link" *ngIf="!isAddressSet()" (click)="blankAddress()">I can't enter a UK postcode</span>
 
   <ccd-write-complex-type-field
-    [hidden]="!caseField.value"
+    [hidden]="!isAddressSet()"
     [(caseField)]="caseField"
     [renderLabel]="false"
     [registerControl]="registerControl"

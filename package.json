@@ -12,6 +12,7 @@
     "test:a11y": "echo 'TODO: Accessibility tests'",
     "test:nsp": "nsp check",
     "test:smoke": "echo 'TODO: Smoke tests'",
+    "test:smokeDocker": "protractor test/smoke.conf.js",
     "test:functional": "echo 'TODO: Functional tests'",
     "lint": "tslint --project . -t verbose 'src/**/*.ts'",
     "e2e": "ng e2e",

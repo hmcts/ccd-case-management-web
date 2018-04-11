@@ -54,22 +54,16 @@ RUN apt-get clean \
 WORKDIR /protractor
 
 # Copy the run sript/s from local folder to the container's related folder
-COPY script/run-e2e-tests.sh /entrypoint.sh
 
-# Set the working directory
-WORKDIR /protractor/project
+COPY script/run-e2e-tests.sh /entrypoint.sh
 
 RUN git clone https://github.com/hmcts/ccd-case-management-web.git
 
-# Set the HOME environment variable for the test project
-ENV HOME=/protractor/project/ccd-case-management-web
-
-# Set the file access permissions (read, write and access) recursively for the new folders
-RUN chmod -Rf 777 .
-
-WORKDIR /protractor/project/ccd-case-management-web
+WORKDIR /protractor/ccd-case-management-web
 
 RUN yarn install
+
+ENV HOME=/protractor
 
 # Container entry point
 ENTRYPOINT ["/entrypoint.sh"]

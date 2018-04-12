@@ -1,10 +1,11 @@
-FROM ubuntu:16.04
+FROM debian:testing
 
 # Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
 # http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
+    apt-get install -y wget \
     apt-get install -y \
         xvfb \
         x11-xkb-utils \

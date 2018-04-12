@@ -61,6 +61,8 @@ RUN git clone https://github.com/hmcts/ccd-case-management-web.git
 
 WORKDIR /protractor/ccd-case-management-web
 
+RUN yarn config set proxy "$http_proxy" && yarn config set https-proxy "$https_proxy"
+
 RUN yarn install
 
 ENV HOME=/protractor

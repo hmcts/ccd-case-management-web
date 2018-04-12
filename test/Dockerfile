@@ -5,8 +5,11 @@ FROM debian:testing
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
-    apt-get install -y wget \
+    apt-get install -y wget && \
     apt-get install -y \
+        gnupg \
+        gnupg1 \
+        gnupg2 \
         xvfb \
         x11-xkb-utils \
         xfonts-100dpi \

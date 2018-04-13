@@ -7,7 +7,7 @@ import { FieldsFilterPipe } from './fields-filter.pipe';
 import { MockComponent } from 'ng2-mock-component';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { PaletteUtilsModule } from '../utils/utils.module';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { IsCompoundPipe } from '../utils/is-compound.pipe';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
@@ -200,6 +200,40 @@ describe('WriteComplexFieldComponent', () => {
 
       expect(labels[LINE_1].componentInstance.caseField.label).toBe(FIELD_TYPE_WITH_VALUES.complex_fields[LINE_1].label);
       expect(labels[LINE_2].componentInstance.caseField.label).toBe(FIELD_TYPE_WITH_VALUES.complex_fields[LINE_2].label);
+    });
+
+    it('should return control if exists in formGroup', () => {
+      const CASE_FIELD_1: CaseField = {
+        id: FIELD_ID,
+        label: 'Complex Field',
+        display_context: 'OPTIONAL',
+        field_type: FIELD_TYPE_WITH_MISSING_VALUE
+      };
+      let formGroup = new FormGroup({});
+      let firstControl = new FormControl('first');
+      formGroup.addControl(FIELD_ID, firstControl);
+      component.complexGroup = formGroup;
+      fixture.detectChanges();
+      let returned = component.buildControlRegistrer(CASE_FIELD_1).apply(firstControl);
+      expect(returned).toBe(firstControl);
+      expect(component.complexGroup.get(FIELD_ID)).toBeTruthy();
+    });
+
+    it('should return control if exists in formGroup', () => {
+      const CASE_FIELD_1: CaseField = {
+        id: 'anotherComplexField',
+        label: 'Complex Field',
+        display_context: 'OPTIONAL',
+        field_type: FIELD_TYPE_WITH_MISSING_VALUE
+      };
+      let firstControl = new FormControl();
+      let formGroup = new FormGroup({});
+      component.complexGroup = formGroup;
+      formGroup.addControl('first', firstControl);
+      fixture.detectChanges();
+      let returned = component.buildControlRegistrer(CASE_FIELD_1) (firstControl);
+      expect(returned).toBe(firstControl);
+      expect(component.complexGroup.get(CASE_FIELD_1.id)).toBeTruthy();
     });
   });
 

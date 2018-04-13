@@ -59,9 +59,9 @@ COPY script/run-e2e-tests.sh /entrypoint.sh
 
 RUN git clone https://github.com/hmcts/ccd-case-management-web.git
 
-WORKDIR /protractor/ccd-case-management-web/test
+WORKDIR /protractor/ccd-case-management-web
 
-#RUN yarn config set proxy "http://proxyout.reform.hmcts.net:8080/" && yarn config set https-proxy "http://proxyout.reform.hmcts.net:8080/"
+RUN yarn config set http-proxy "proxyout.reform.hmcts.net:8080" && yarn config set https-proxy "proxyout.reform.hmcts.net:8080"
 
 RUN yarn install
 

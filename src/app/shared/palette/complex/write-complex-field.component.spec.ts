@@ -209,14 +209,14 @@ describe('WriteComplexFieldComponent', () => {
         display_context: 'OPTIONAL',
         field_type: FIELD_TYPE_WITH_MISSING_VALUE
       };
+      let firstControl = new FormControl();
       let formGroup = new FormGroup({});
-      let firstControl = new FormControl('first');
       formGroup.addControl(FIELD_ID, firstControl);
       component.complexGroup = formGroup;
       fixture.detectChanges();
       let returned = component.buildControlRegistrer(CASE_FIELD_1).apply(firstControl);
       expect(returned).toBe(firstControl);
-      expect(component.complexGroup.get(FIELD_ID)).toBeTruthy();
+      expect(component.complexGroup.get(CASE_FIELD_1.id)).toBeTruthy();
     });
 
     it('should return control if exists in formGroup', () => {
@@ -228,8 +228,8 @@ describe('WriteComplexFieldComponent', () => {
       };
       let firstControl = new FormControl();
       let formGroup = new FormGroup({});
-      component.complexGroup = formGroup;
       formGroup.addControl('first', firstControl);
+      component.complexGroup = formGroup;
       fixture.detectChanges();
       let returned = component.buildControlRegistrer(CASE_FIELD_1) (firstControl);
       expect(returned).toBe(firstControl);

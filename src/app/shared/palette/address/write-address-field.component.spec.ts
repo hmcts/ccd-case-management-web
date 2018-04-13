@@ -146,6 +146,19 @@ describe('WriteAddressFieldComponent', () => {
 
   });
 
+  it('should render only title, lookup component and manual link when writeComplexFieldComponent is null', () => {
+      testHostComponent.componentUnderTest.writeComplexFieldComponent = null;
+      fixture.detectChanges();
+      expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
+      expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
+      expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
+      expect(debugElement.query($MANUAL_LINK)).toBeTruthy();
+
+      expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
+      expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeTruthy();
+
+  });
+
   it('should render only title, lookup component and address when address set', () => {
 
     const address = new AddressModel();

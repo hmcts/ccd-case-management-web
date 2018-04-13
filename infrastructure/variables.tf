@@ -34,6 +34,7 @@ variable "idam_authentication_web_url" {
 
 variable "ccd_gateway_url" {
   type = "string"
+  default = ""
 }
 
 variable "document_management_url" {

@@ -61,6 +61,10 @@ RUN git clone https://github.com/hmcts/ccd-case-management-web.git
 
 WORKDIR /protractor/ccd-case-management-web
 
+RUN http_proxy="http://reformmgmtproxyout.reform.hmcts.net:8080/"
+
+RUN https_proxy="http://reformmgmtproxyout.reform.hmcts.net:8080/"
+
 RUN yarn config set proxy "$http_proxy" && yarn config set https-proxy "$https_proxy"
 
 RUN yarn install

@@ -33,7 +33,7 @@ variable "idam_authentication_web_url" {
 }
 
 variable "ccd_gateway_url" {
-  default = "https://gateway-ccd.nonprod.platform.hmcts.net"
+  type = "string"
 }
 
 variable "document_management_url" {
@@ -47,4 +47,3 @@ variable "ccd_print_service_url" {
 variable "external_host_name" {
   default = "ccd-case-management-web.nonprod.platform.hmcts.net"
 }
-

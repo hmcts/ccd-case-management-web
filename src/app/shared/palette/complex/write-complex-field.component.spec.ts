@@ -219,7 +219,7 @@ describe('WriteComplexFieldComponent', () => {
       expect(component.complexGroup.get(CASE_FIELD_1.id)).toBeTruthy();
     });
 
-    it('should return control if exists in formGroup', () => {
+    fit('should add control if it does not exist in formGroup', () => {
       const CASE_FIELD_1: CaseField = {
         id: 'anotherComplexField',
         label: 'Complex Field',
@@ -234,6 +234,7 @@ describe('WriteComplexFieldComponent', () => {
       let returned = component.buildControlRegistrer(CASE_FIELD_1) (firstControl);
       expect(returned).toBe(firstControl);
       expect(component.complexGroup.get(CASE_FIELD_1.id)).toBeTruthy();
+      expect(component.complexGroup.get('first')).toBeTruthy();
     });
   });
 

@@ -22,7 +22,7 @@ export class OAuth2Service {
       params.set('code', code);
       // On successfully obtaining a token, the redirect should go back to the Angular application, i.e. ourselves.
       // Note: This *must not* include any query string.
-      params.set('redirect_uri', this.authService.redirectUri());
+      params.set('redirect_uri', this.authService.redirectUri().replace('https://', ''));
       return this.http
         .get(url, { search: params });
     } else {

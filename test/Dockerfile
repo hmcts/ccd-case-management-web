@@ -1,4 +1,4 @@
-FROM reform/yarn:8-ubuntu
+FROM docker.artifactory.reform.hmcts.net/reform/yarn:8-ubuntu
 
 # Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
 # http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
@@ -60,6 +60,8 @@ COPY script/run-e2e-tests.sh /entrypoint.sh
 RUN git clone https://github.com/hmcts/ccd-case-management-web.git
 
 WORKDIR /protractor/ccd-case-management-web
+
+RUN yarn config set http_proxy "proxyout.reform.hmcts.net:8080" && yarn config set https_proxy "proxyout.reform.hmcts.net:8080"
 
 RUN yarn install
 

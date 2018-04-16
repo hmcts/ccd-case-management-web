@@ -219,7 +219,7 @@ describe('WriteComplexFieldComponent', () => {
       expect(component.complexGroup.get(CASE_FIELD_1.id)).toBeTruthy();
     });
 
-    fit('should add control if it does not exist in formGroup', () => {
+    it('should add control if it does not exist in formGroup', () => {
       const CASE_FIELD_1: CaseField = {
         id: 'anotherComplexField',
         label: 'Complex Field',

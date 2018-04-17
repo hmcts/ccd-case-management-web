@@ -29,7 +29,7 @@ export class WriteComplexFieldComponent extends AbstractFieldWriteComponent impl
 
   buildControlRegistrer(caseField: CaseField): (control: FormControl) => AbstractControl {
     return control => {
-      if (this.complexGroup.contains(caseField.id)) {
+      if (this.complexGroup.get(caseField.id)) {
         return this.complexGroup.get(caseField.id);
       }
       if (!this.ignoreMandatory) {

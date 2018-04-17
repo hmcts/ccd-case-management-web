@@ -12,7 +12,7 @@ exports.config = {
   */
 
   specs: [
-    '../specs/*/*.*.spec.js'
+    './end-to-end/specs/*/login.*.spec.js'
   ],
 
   exclude: [],
@@ -26,16 +26,31 @@ exports.config = {
   framework: 'jasmine2',
 
   capabilities: {
-
-      'shardTestFiles': true,
-      'maxInstances': 3,
-      'acceptInsecureCerts': true,
-      'marionette': false,
-      'browserName': 'firefox',
-      'moz:firefoxOptions': {
-              args: [ "--headless" ]
-            }
+     'shardTestFiles': true,
+     'maxInstances': 2,
+     'browserName': 'chrome',
+     /**
+      * Chrome is not allowed to create a SUID sandbox when running inside Docker
+      */
+     'chromeOptions': {
+         'args': [
+            'no-sandbox',
+            '--disable-web-security'
+         ]
+     }
   },
+
+//  capabilities: {
+//
+//      'shardTestFiles': true,
+//      'maxInstances': 2,
+//      'acceptInsecureCerts': true,
+//      'marionette': false,
+//      'browserName': 'firefox'
+////      'moz:firefoxOptions': {
+////              args: [ "--headless" ]
+////            }
+//  },
 
   jasmineNodeOpts: {
     showTiming: true,

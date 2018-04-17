@@ -9,6 +9,7 @@ export class DocumentUrlPipe implements PipeTransform {
   constructor(private appConfig: AppConfig) {}
 
   transform(value: string): string {
-    return value.replace(this.appConfig.getRemoteDocumentManagementUrl(), this.appConfig.getDocumentManagementUrl());
+    let remoteDocumentManagementPattern = new RegExp(this.appConfig.getRemoteDocumentManagementUrl());
+    return value.replace(remoteDocumentManagementPattern, this.appConfig.getDocumentManagementUrl());
   }
 }

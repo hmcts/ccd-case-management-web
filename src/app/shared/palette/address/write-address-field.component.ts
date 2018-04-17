@@ -72,7 +72,10 @@ export class WriteAddressFieldComponent extends AbstractFieldWriteComponent impl
   }
 
   isAddressSet() {
-    const address = this.caseField.value;
+    if (!this.writeComplexFieldComponent || !this.writeComplexFieldComponent.complexGroup) {
+      return false;
+    }
+    const address = this.writeComplexFieldComponent.complexGroup.value;
     let hasAddress = false;
     if (address) {
       Object.keys(address).forEach(function (key) {

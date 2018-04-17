@@ -58,7 +58,7 @@ WORKDIR /protractor
 COPY script/run-e2e-tests.sh /entrypoint.sh
 
 RUN git clone https://github.com/hmcts/ccd-case-management-web.git
-RUN git checkout hemantt-patch-1
+#RUN git checkout hemantt-patch-1
 
 WORKDIR /protractor/ccd-case-management-web
 

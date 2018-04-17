@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
+import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 import { CasesService } from './cases/cases.service';
 import { DefinitionsService } from './definitions/definitions.service';
 import { WindowService } from './utils/window.service';

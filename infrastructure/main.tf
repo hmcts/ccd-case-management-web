@@ -7,6 +7,9 @@ locals {
 
   default_ccd_gateway_url = "https://ccd-api-gateway-web-${local.env_ase_url}"
   ccd_gateway_url = "${var.ccd_gateway_url != "" ? var.ccd_gateway_url : local.default_ccd_gateway_url}"
+
+  default_ccd_print_service_url = "https://ccd-case-print-service-${local.env_ase_url}"
+  ccd_print_service_url = "${var.ccd_print_service_url != "" ? var.ccd_print_service_url : local.default_ccd_print_service_url}"
 }
 
 module "case-management-web" {
@@ -32,7 +35,7 @@ module "case-management-web" {
     CCD_PAGE_SIZE = 25
     POSTCODE_LOOKUP_URL = "${local.ccd_gateway_url}/addresses?postcode=$${postcode}"
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"
-    PRINT_SERVICE_URL_REMOTE = "${var.ccd_print_service_url}"
+    PRINT_SERVICE_URL_REMOTE = "${local.ccd_print_service_url}"
     WEBSITE_NODE_DEFAULT_VERSION = "8.9.4"
   }
 }

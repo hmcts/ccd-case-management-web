@@ -38,7 +38,7 @@ module "case-management-web" {
 }
 
 module "ccd-case-management-web-vault" {
-  source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
+  source              = "git@github.com:contino/moj-module-key-vault?ref=master"
   name                = "ccd-case-web-${var.env}" // Max 24 characters
   product             = "${var.product}"
   env                 = "${var.env}"

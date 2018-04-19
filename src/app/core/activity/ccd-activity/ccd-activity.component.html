@@ -1,4 +1,4 @@
-<div class="activityComponent" *ngIf>
+<div class="activityComponent" *ngIf="isActivityEnabled()">
   <div *ngIf="!isActiveCase() && displayMode === dspMode.ICON">-</div>
   <div *ngIf="displayMode === dspMode.ICON && (activity.editors.length > 0 || activity.unknownEditors > 0)">
     <ccd-activity-icon imageLink="/img/editor.png" [description]="editorsText"></ccd-activity-icon>

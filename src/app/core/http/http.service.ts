@@ -22,10 +22,10 @@ export class HttpService {
    * @returns {Observable<Response>}
    * @see UrlResolverService
    */
-  public get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+  public get(url: string, options?: RequestOptionsArgs, redirectIfNotAuthorised = true): Observable<Response> {
     return this.http
       .get(url, this.sanitiseOptions(options))
-      .catch(res => this.httpErrorService.handle(res));
+      .catch(res => this.httpErrorService.handle(res, redirectIfNotAuthorised));
   }
 
   /**

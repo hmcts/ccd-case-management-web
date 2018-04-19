@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Activity } from './activity.model';
 import { Observable } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { AppConfig } from '../../app.config';
 import { HttpService } from '../http/http.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Headers, Http, RequestOptionsArgs, Response } from '@angular/http';
+
+const DUMMY_CASE_REFERENCE = '0';
 
 @Injectable()
 export class ActivityService {
   static get ACTIVITY_VIEW() { return 'view'; }
   static get ACTIVITY_EDIT() { return 'edit'; }
+  readonly DUMMY_CASE_REFERENCE = '0';
 
-  private userAuthorised = true;
+  private userAuthorised;
 
-  constructor(private http: HttpService, private appConfig: AppConfig) {}
+  constructor(private http: HttpService, private appConfig: AppConfig, private angularHttp: Http) {
+    console.log('activity service created');
+  }
 
   getActivities(...caseId: string[]): Observable<Activity[]> {
     const url = this.activityUrl() + `/cases/${caseId.join(',')}/activity`;
-
     return this.http
-      .get(url)
+      .get(url, null, false)
       .map(response => response.json());
   }
 
@@ -28,6 +35,32 @@ export class ActivityService {
       .post(url, body)
       .map(response => response.json());
   }
+
+  verifyUserIsAuthorized(): void {
+    if (this.activityUrl() && this.userAuthorised === undefined) {
+      console.log('verifyUserIsAuthorized');
+      this.getActivities(DUMMY_CASE_REFERENCE).subscribe(
+        data => {
+          this.userAuthorised = true},
+        error => {
+            if (error.status === 403) {
+              this.userAuthorised = false;
+            } else {
+              this.userAuthorised = true
+            }
+        }
+      );
+    }
+  }
+
+  private handleError(error) {
+      console.error('err: ' + error);
+      console.error('err status: ' + error.status);
+      if (error.status === 403) {
+        this.userAuthorised = false;
+      }
+      this.userAuthorised = true;
+  };
 
   private activityUrl(): string {
     return this.appConfig.getActivityUrl();

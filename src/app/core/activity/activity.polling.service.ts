@@ -18,7 +18,7 @@ export class ActivityPollingService {
   private currentTimeoutHandle: any;
 
   constructor(private activityService: ActivityService, private ngZone: NgZone) {
-    console.log('activity service created');
+    console.log('activity polling service created');
   }
 
   /* Executes next request NEXT_POLL_REQUEST_MS msec after the previous one returned.

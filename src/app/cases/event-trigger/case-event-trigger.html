@@ -1,5 +1,5 @@
 <div class="side-padding">
-  <ccd-activity *ngIf="activityEnabled()" [caseId]="caseDetails.case_id" [displayMode]="BANNER"></ccd-activity>
+  <ccd-activity [caseId]="caseDetails.case_id" [displayMode]="BANNER"></ccd-activity>
   <ccd-case-header [caseDetails]="caseDetails"></ccd-case-header>
   <ccd-case-edit [submit]="submit()" [validate]="validate()" [eventTrigger]="eventTrigger" (cancelled)="cancel()" (submitted)="submitted($event)"></ccd-case-edit>
 </div>

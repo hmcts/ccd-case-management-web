@@ -40,8 +40,7 @@ export class ActivityService {
     if (this.activityUrl() && this.userAuthorised === undefined) {
       console.log('verifyUserIsAuthorized');
       this.getActivities(DUMMY_CASE_REFERENCE).subscribe(
-        data => {
-          this.userAuthorised = true},
+        data => this.userAuthorised = true,
         error => {
             if (error.status === 403) {
               this.userAuthorised = false;

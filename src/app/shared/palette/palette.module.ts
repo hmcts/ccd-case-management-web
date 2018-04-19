@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
 import { ReadTextFieldComponent } from './text/read-text-field.component';
 import { PaletteService } from './palette.service';
 import { ReadNumberFieldComponent } from './number/read-number-field.component';

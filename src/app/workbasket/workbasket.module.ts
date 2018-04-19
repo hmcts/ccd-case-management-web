@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { WorkbasketFiltersComponent } from './filters/workbasket-filters.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
 import { PaletteModule } from '../shared/palette/palette.module';
 
 @NgModule({

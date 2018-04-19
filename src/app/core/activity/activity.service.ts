@@ -9,13 +9,11 @@ export class ActivityService {
   static get ACTIVITY_VIEW() { return 'view'; }
   static get ACTIVITY_EDIT() { return 'edit'; }
 
+  private userAuthorised = true;
+
   constructor(private http: HttpService, private appConfig: AppConfig) {}
 
   getActivities(...caseId: string[]): Observable<Activity[]> {
-    if (!this.activityUrl()) {
-      return Observable.empty();
-    };
-
     const url = this.activityUrl() + `/cases/${caseId.join(',')}/activity`;
 
     return this.http
@@ -24,10 +22,6 @@ export class ActivityService {
   }
 
   postActivity(caseId: string, activityType: String): Observable<Activity[]> {
-    if (!this.activityUrl()) {
-      return Observable.empty();
-    };
-
     const url = this.activityUrl() + `/cases/${caseId}/activity`;
     let body = { activity: activityType};
     return this.http
@@ -38,4 +32,9 @@ export class ActivityService {
   private activityUrl(): string {
     return this.appConfig.getActivityUrl();
   }
+
+  get isEnabled(): boolean {
+    return this.activityUrl() && this.userAuthorised;
+}
+
 }

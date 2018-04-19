@@ -17,11 +17,17 @@ export class ActivityPollingService {
   pendingRequests = new Map<string, Subject<Activity>>();
   private currentTimeoutHandle: any;
 
-  constructor(private activityService: ActivityService, private ngZone: NgZone) {}
+  constructor(private activityService: ActivityService, private ngZone: NgZone) {
+    console.log('activity service created');
+  }
 
-  /* Executes next request NEXT_POLL_REQUEST_MS sec after the previous one returned.
+  /* Executes next request NEXT_POLL_REQUEST_MS msec after the previous one returned.
   In case of errors it retries RETRY times with incremental delay between each retry*/
   pollActivities(...caseIds: string[]): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
     return this.activityService.getActivities(...caseIds)
       .switchMap(
         (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
@@ -32,7 +38,7 @@ export class ActivityPollingService {
           attempts
             .zip(Observable.range(1, RETRY), (_, i) => i)
             .flatMap(i => {
-          // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
+              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
               return Observable.timer(i * 1000);
             }));
   }
@@ -68,7 +74,7 @@ export class ActivityPollingService {
     // }
   }
 
-  public flushRequests(): void {
+  private flushRequests(): void {
     if (this.currentTimeoutHandle) {
       clearTimeout(this.currentTimeoutHandle);
       this.currentTimeoutHandle = undefined;
@@ -79,7 +85,7 @@ export class ActivityPollingService {
     this.performBatchRequest(requests);
   }
 
-  protected performBatchRequest(requests: Map<string, Subject<Activity>>): void {
+  private performBatchRequest(requests: Map<string, Subject<Activity>>): void {
     const caseIds = Array.from(requests.keys()).join();
     // console.log('issuing batch request for cases: '+ caseIds);
     this.pollActivities(caseIds).subscribe(
@@ -95,4 +101,36 @@ export class ActivityPollingService {
     );
   }
 
+  postViewActivity(caseId: string): Observable<Activity[]> {
+    return this.postActivity(caseId, ActivityService.ACTIVITY_VIEW);
+  }
+
+  postEditActivity(caseId: string): Observable<Activity[]> {
+    return this.postActivity(caseId, ActivityService.ACTIVITY_EDIT);
+  }
+
+  private postActivity(caseId: string, activityType: string): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
+    return this.activityService.postActivity(caseId, activityType)
+      .switchMap(
+        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
+          .switchMap(() => this.postActivity(caseId, activityType))
+          .startWith(data)
+      ).retryWhen(
+        attempts =>
+          attempts
+            .zip(Observable.range(1, RETRY), (_, i) => i)
+            .flatMap(i => {
+              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
+              return Observable.timer(i * 1000);
+            })
+      );
+  }
+
+  get isEnabled(): boolean {
+    return this.activityService.isEnabled;
+  }
 }

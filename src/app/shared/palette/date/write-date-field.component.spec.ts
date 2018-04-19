@@ -5,7 +5,7 @@ import { FieldType } from '../../domain/definition/field-type.model';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { PaletteUtilsModule } from '../utils/utils.module';
 import { WriteDateFieldComponent } from './write-date-field.component';
-import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
+import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseFieldService } from '../../domain/case-field.service';
 
 const FIELD_ID = 'CreatedAt';

@@ -19,7 +19,7 @@ import { CaseCreatorSubmitComponent } from './creator/case-creator-submit.compon
 import { CreateCaseFieldsResolver } from './creator/create-case-fields.resolver';
 import { CaseEditComponent } from '../shared/case-editor/case-edit.component';
 import { CallbackErrorsComponent } from '../shared/error/callback-errors.component';
-import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
+import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseEditPageComponent } from '../shared/case-editor/case-edit-page.component';
 import { CaseEditSubmitComponent } from '../shared/case-editor/case-edit-submit.component';
 import { ConditionalShowModule } from '../shared/conditional-show/conditional-show.module';

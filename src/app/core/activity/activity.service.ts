@@ -5,7 +5,6 @@ import { catchError, retry } from 'rxjs/operators';
 import { AppConfig } from '../../app.config';
 import { HttpService } from '../http/http.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Headers, Http, RequestOptionsArgs, Response } from '@angular/http';
 
 const DUMMY_CASE_REFERENCE = '0';
 
@@ -17,7 +16,7 @@ export class ActivityService {
 
   private userAuthorised;
 
-  constructor(private http: HttpService, private appConfig: AppConfig, private angularHttp: Http) {
+  constructor(private http: HttpService, private appConfig: AppConfig) {
     console.log('activity service created');
   }
 
@@ -32,7 +31,7 @@ export class ActivityService {
     const url = this.activityUrl() + `/cases/${caseId}/activity`;
     let body = { activity: activityType};
     return this.http
-      .post(url, body)
+      .post(url, body, null, false)
       .map(response => response.json());
   }
 
@@ -51,15 +50,6 @@ export class ActivityService {
       );
     }
   }
-
-  private handleError(error) {
-      console.error('err: ' + error);
-      console.error('err status: ' + error.status);
-      if (error.status === 403) {
-        this.userAuthorised = false;
-      }
-      this.userAuthorised = true;
-  };
 
   private activityUrl(): string {
     return this.appConfig.getActivityUrl();

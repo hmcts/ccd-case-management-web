@@ -12,10 +12,6 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 
-// TODO make this configurable
-const RETRY = 5;
-const NEXT_POLL_REQUEST_MS = 7500;
-
 @Component({
   selector: 'ccd-case-event-trigger',
   templateUrl: './case-event-trigger.html'

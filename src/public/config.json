@@ -4,7 +4,7 @@
   "api_url": "http://localhost:3453/aggregated",
   "case_data_url": "http://localhost:3453/data",
   "activity_url": "http://localhost:3453/activity",
-  "document_management_url": "http://localhost:3453/documents",
+  "document_management_url": "http://localhost:3000/api/documents",
   "remote_document_management_url": "https://api-gateway.dev.dm.reform.hmcts.net/documents",
   "pagination_page_size": 25,
   "postcode_lookup_url": "http://localhost:3453/addresses?postcode=${postcode}",

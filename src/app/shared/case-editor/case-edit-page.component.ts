@@ -71,7 +71,11 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       .filter(caseField => !this.caseFieldService.isReadOnly(caseField))
       .every(caseField => {
         let theControl = this.editForm.controls['data'].get(caseField.id);
-        return this.checkDocumentField(caseField, theControl) && (theControl.valid || theControl.disabled);
+        // if (theControl.invalid) {
+        //   console.log(caseField.id, ' this.editForm.controls', this.editForm.controls);
+        // }
+        return this.checkDocumentField(caseField, theControl)
+          && (this.caseFieldService.isOptional(caseField) || theControl.valid || theControl.disabled);
       });
   }
 
@@ -79,7 +83,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     if (caseField.field_type.id !== 'Document') {
       return true;
     }
-    return !(caseField.display_context === 'MANDATORY' && theControl === null);
+    return !(this.caseFieldService.isMandatory(caseField) && theControl === null);
   }
 
   submit() {

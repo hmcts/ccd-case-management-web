@@ -25,8 +25,10 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
                                    caseField: CaseField): (control: FormControl) => AbstractControl {
     return control => {
       if (formGroup.controls[caseField.id]) {
+        console.log(caseField.id, ' is found controls:', this.formGroup.controls);
         return formGroup.get(caseField.id);
       }
+      console.log(caseField.id, ' is not found');
       this.formValidatorsService.addValidators(caseField, control);
       formGroup.addControl(caseField.id, control);
       return control;
@@ -45,7 +47,6 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
     let resolvedInputs = ReflectiveInjector.resolve([]);
     let injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.fieldContainer.parentInjector);
     let component = this.resolver.resolveComponentFactory(componentClass).create(injector);
-
     // Provide component @Inputs
     component.instance['caseField'] = this.caseField;
     component.instance['registerControl'] = this.registerControl
@@ -54,7 +55,6 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
     if (this.caseField.field_type.id === 'AddressGlobal') {
       component.instance['ignoreMandatory'] = true;
     }
-
     this.fieldContainer.insert(component.hostView);
   }
 }

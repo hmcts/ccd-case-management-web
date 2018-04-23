@@ -28,7 +28,6 @@ export class HttpErrorService {
   handle(error: Response | any, redirectIfNotAuthorised = true) {
     let httpError = new HttpError();
     if (error instanceof Response) {
-
       if (error.headers
           && error.headers.get(HttpErrorService.CONTENT_TYPE)
           && error.headers.get(HttpErrorService.CONTENT_TYPE).startsWith(HttpErrorService.APPLICATION_JSON)) {
@@ -38,7 +37,9 @@ export class HttpErrorService {
           console.error(e, e.message);
         }
       }
-      httpError.status = error.status;
+      if (!httpError.status) {
+        httpError.status = error.status;
+      }
     } else if (error) {
       if (error.message) {
         httpError.message = error.message;

@@ -74,7 +74,7 @@ export class ActivityPollingService {
     // }
   }
 
-  private flushRequests(): void {
+  public flushRequests(): void {
     if (this.currentTimeoutHandle) {
       clearTimeout(this.currentTimeoutHandle);
       this.currentTimeoutHandle = undefined;
@@ -85,7 +85,7 @@ export class ActivityPollingService {
     this.performBatchRequest(requests);
   }
 
-  private performBatchRequest(requests: Map<string, Subject<Activity>>): void {
+  protected performBatchRequest(requests: Map<string, Subject<Activity>>): void {
     const caseIds = Array.from(requests.keys()).join();
     // console.log('issuing batch request for cases: '+ caseIds);
     this.pollActivities(caseIds).subscribe(

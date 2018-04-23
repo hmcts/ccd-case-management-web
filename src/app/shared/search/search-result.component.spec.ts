@@ -211,6 +211,16 @@ fdescribe('SearchResultComponent', () => {
       });
     });
 
+    it('should render columns based on SearchResultView without activity column when disabled', () => {
+      activityService = fixture.debugElement.injector.get(ActivityService);
+      activityService.isEnabled = false;
+      fixture.detectChanges();
+
+      let headRow = de.query(By.css('div>table>thead>tr'));
+
+      expect(headRow.children.length - STATIC_COLUMNS_COUNT).toBe(RESULT_VIEW.columns.length);
+    });
+
     it('should sort columns with higher order last', () => {
       let lastHeader = de.query(By.css('div>table>thead>tr th:nth-child(4)')).nativeElement.textContent.trim();
 
@@ -267,10 +277,8 @@ fdescribe('SearchResultComponent', () => {
     });
 
     it('should not render an case activity column when activity is disabled', () => {
-
       activityService = fixture.debugElement.injector.get(ActivityService);
       activityService.isEnabled = false;
-
       fixture.detectChanges();
 
       let headRow = de.query(By.css('div>table>thead>tr th:nth-child(5)'));

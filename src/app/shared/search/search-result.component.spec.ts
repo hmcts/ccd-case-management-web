@@ -28,7 +28,7 @@ class FieldReadComponent {
   caseField: string;
 }
 
-describe('SearchResultComponent', () => {
+fdescribe('SearchResultComponent', () => {
 
   describe('with results', () => {
 
@@ -136,6 +136,7 @@ describe('SearchResultComponent', () => {
     beforeEach(async(() => {
       activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
       activityService.postActivity.and.returnValue(switchMap);
+      activityService.isEnabled = true;
 
       searchHandler = createSpyObj('searchHandler', ['applyFilters']);
 
@@ -263,6 +264,18 @@ describe('SearchResultComponent', () => {
       let headRow = de.query(By.css('div>table>thead>tr th:nth-child(5)'));
 
       expect(headRow.nativeElement.textContent).toBe('Case Activity');
+    });
+
+    it('should not render an case activity column when activity is disabled', () => {
+
+      activityService = fixture.debugElement.injector.get(ActivityService);
+      activityService.isEnabled = false;
+
+      fixture.detectChanges();
+
+      let headRow = de.query(By.css('div>table>thead>tr th:nth-child(5)'));
+
+      expect(headRow).toBeNull();
     });
 
     it('should not display error message when results present', () => {

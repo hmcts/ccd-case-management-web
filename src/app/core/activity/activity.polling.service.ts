@@ -44,24 +44,26 @@ export class ActivityPollingService {
   }
 
   subscribeToActivity(caseId: string, done: (activity: Activity) => void) {
-    if (this.pendingRequests.has(caseId)) {
-      this.pendingRequests.get(caseId).subscribe(done);
-    } else {
-      let subject = new Subject<Activity>();
-      subject.subscribe(done);
-      this.pendingRequests.set(caseId, subject);
-    }
+    if (this.isEnabled) {
+      if (this.pendingRequests.has(caseId)) {
+        this.pendingRequests.get(caseId).subscribe(done);
+      } else {
+        let subject = new Subject<Activity>();
+        subject.subscribe(done);
+        this.pendingRequests.set(caseId, subject);
+      }
 
-    if (this.pendingRequests.size === 1) {
-      this.ngZone.runOutsideAngular(() => {
-        this.currentTimeoutHandle = setTimeout(
-          () => this.ngZone.run(() => this.flushRequests()),
-          BATCH_COLLECTION_DELAY_MS);
-      });
-    }
+      if (this.pendingRequests.size === 1) {
+        this.ngZone.runOutsideAngular(() => {
+          this.currentTimeoutHandle = setTimeout(
+            () => this.ngZone.run(() => this.flushRequests()),
+            BATCH_COLLECTION_DELAY_MS);
+        });
+      }
 
-    if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
-      this.flushRequests();
+      if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
+        this.flushRequests();
+      }
     }
   }
 

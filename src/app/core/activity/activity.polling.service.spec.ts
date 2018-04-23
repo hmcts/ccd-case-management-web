@@ -15,7 +15,7 @@ const switchMap = {
   })
 };
 
-fdescribe('ActivityPollingService', () => {
+describe('ActivityPollingService', () => {
 
   beforeEach(() => {
     ngZone = jasmine.createSpyObj<NgZone>('ngZone', ['run', 'runOutsideAngular']);

@@ -34,7 +34,7 @@ export class CaseEventTriggerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.caseDetails = this.route.snapshot.data.case;
     this.eventTrigger = this.route.snapshot.data.eventTrigger;
-    this.subscription = this.postViewActivity().subscribe((_resolved) => {
+    this.subscription = this.postEditActivity().subscribe((_resolved) => {
       // console.log('Posted EDIT activity and result is: ' + JSON.stringify(resolved));
     });
   }
@@ -43,7 +43,7 @@ export class CaseEventTriggerComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  postViewActivity(): Observable<Activity[]> {
+  postEditActivity(): Observable<Activity[]> {
     return this.activityPollingService.postEditActivity(this.caseDetails.case_id);
   }
 

@@ -28,7 +28,7 @@ class FieldReadComponent {
   caseField: string;
 }
 
-fdescribe('SearchResultComponent', () => {
+describe('SearchResultComponent', () => {
 
   describe('with results', () => {
 

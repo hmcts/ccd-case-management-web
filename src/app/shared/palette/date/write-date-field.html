@@ -7,9 +7,9 @@
       <span class="error-message" *ngIf="dateControl.errors && dateControl.touched">{{dateControl.errors | ccdFirstError}}</span>
     </legend>
 
-    <ccd-cut-date-input [id]="id()"
+    <cut-date-input [id]="id()"
                     [mandatory]="caseField | ccdIsMandatory"
-                    [formControl]="dateControl"></ccd-cut-date-input>
+                    [formControl]="dateControl"></cut-date-input>
 
   </fieldset>
 </div>

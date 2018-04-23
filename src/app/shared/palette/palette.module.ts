@@ -30,7 +30,6 @@ import { DocumentModule } from './document/document.module';
 import { LabelFieldComponent } from './label/label-field.component';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
-import { DateInputComponent } from './date/date-input.component';
 
 @NgModule({
   imports: [
@@ -52,7 +51,6 @@ import { DateInputComponent } from './date/date-input.component';
   declarations: [
     UnsupportedFieldComponent,
     LabelFieldComponent,
-    DateInputComponent,
 
     // Read
     ReadTextFieldComponent,
@@ -75,7 +73,6 @@ import { DateInputComponent } from './date/date-input.component';
   entryComponents: [
     UnsupportedFieldComponent,
     LabelFieldComponent,
-    DateInputComponent,
 
     // Read
     ReadTextFieldComponent,

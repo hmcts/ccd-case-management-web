@@ -10,6 +10,9 @@ locals {
 
   default_ccd_print_service_url = "https://ccd-case-print-service-${local.env_ase_url}"
   ccd_print_service_url = "${var.ccd_print_service_url != "" ? var.ccd_print_service_url : local.default_ccd_print_service_url}"
+
+  default_document_management_url = "^https?://(?:api-gateway\\.test\\.dm\\.reform\\.hmcts\\.net|dm-store-${var.env}\\.service\\.core-compute-${var.env}\\.internal(?::\\d+)?)"
+  document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
 }
 
 module "case-management-web" {
@@ -31,7 +34,7 @@ module "case-management-web" {
     CCD_GW_OAUTH2_URL = "${local.ccd_gateway_url}/oauth2"
     CCD_GW_OAUTH2_CLIENT_ID = "ccd_gateway"
     DM_URL = "${local.ccd_gateway_url}/documents"
-    DM_URL_REMOTE = "${var.document_management_url}/documents"
+    DM_URL_REMOTE = "${local.document_management_url}/documents"
     CCD_PAGE_SIZE = 25
     POSTCODE_LOOKUP_URL = "${local.ccd_gateway_url}/addresses?postcode=$${postcode}"
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"

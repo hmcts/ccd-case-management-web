@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AlertComponent } from './alert.component';
 import { LevelToTypePipe } from './level-to-type.pipe';
 import { AlertService } from './alert.service';
-import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
+import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 
 @NgModule({
   imports: [

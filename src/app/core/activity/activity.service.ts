@@ -16,9 +16,7 @@ export class ActivityService {
 
   private userAuthorised;
 
-  constructor(private http: HttpService, private appConfig: AppConfig) {
-    console.log('activity service created');
-  }
+  constructor(private http: HttpService, private appConfig: AppConfig) {}
 
   getActivities(...caseId: string[]): Observable<Activity[]> {
     const url = this.activityUrl() + `/cases/${caseId.join(',')}/activity`;
@@ -37,7 +35,6 @@ export class ActivityService {
 
   verifyUserIsAuthorized(): void {
     if (this.activityUrl() && this.userAuthorised === undefined) {
-      console.log('verifyUserIsAuthorized');
       this.getActivities(DUMMY_CASE_REFERENCE).subscribe(
         data => this.userAuthorised = true,
         error => {

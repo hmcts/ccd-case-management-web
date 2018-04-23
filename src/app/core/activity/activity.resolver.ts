@@ -9,7 +9,6 @@ export class ActivityResolver implements Resolve<Boolean> {
   constructor(private activityService: ActivityService) {}
 
   resolve(): Observable<Boolean> {
-    console.log('ActivityResolver');
     this.activityService.verifyUserIsAuthorized();
     return Observable.of(true);
   }

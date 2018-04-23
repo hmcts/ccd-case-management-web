@@ -52,14 +52,6 @@ describe('CaseEventTriggerComponent', () => {
   CASE_DETAILS.case_type.id = 'TEST_CASE_TYPE';
   CASE_DETAILS.case_type.jurisdiction.id = 'TEST';
 
-  const switchMap = {
-    switchMap: () => ({
-      retryWhen: () => ({
-        subscribe: () => ({})
-      })
-    })
-  };
-
   const EVENT_TRIGGER: CaseEventTrigger = {
     id: 'TEST_TRIGGER',
     name: 'Test Trigger',

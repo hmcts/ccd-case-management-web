@@ -17,9 +17,7 @@ export class ActivityPollingService {
   pendingRequests = new Map<string, Subject<Activity>>();
   private currentTimeoutHandle: any;
 
-  constructor(private activityService: ActivityService, private ngZone: NgZone) {
-    console.log('activity polling service created');
-  }
+  constructor(private activityService: ActivityService, private ngZone: NgZone) {}
 
   /* Executes next request NEXT_POLL_REQUEST_MS msec after the previous one returned.
   In case of errors it retries RETRY times with incremental delay between each retry*/

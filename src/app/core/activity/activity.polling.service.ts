@@ -15,7 +15,6 @@ const BATCH_COLLECTION_DELAY_MS = 1;
 export class ActivityPollingService {
 
   pendingRequests = new Map<string, Subject<Activity>>();
-  subscriptions = new Map<string, Subject<Activity>>();
   private currentTimeoutHandle: any;
 
   constructor(private activityService: ActivityService, private ngZone: NgZone) {}
@@ -38,16 +37,14 @@ export class ActivityPollingService {
             }));
   }
 
-  subscribeToActivity(caseId: string, done: (activity: Activity) => void): Subscription {
-    let subsctiption: Subscription;
-    if (this.pendingRequests.has(caseId)) {
-      subsctiption = this.pendingRequests.get(caseId).subscribe(done);
+  subscribeToActivity(caseId: string, done: (activity: Activity) => void): Subject<Activity> {
+    let subject = this.pendingRequests.get(caseId);
+    if (subject) {
+      subject.subscribe(done);
     } else {
-      let subject = new Subject<Activity>();
-      subsctiption = subject.subscribe(done);
+      subject = new Subject<Activity>();
       this.pendingRequests.set(caseId, subject);
     }
-
     if (this.pendingRequests.size === 1) {
       this.ngZone.runOutsideAngular(() => {
         this.currentTimeoutHandle = setTimeout(
@@ -59,25 +56,8 @@ export class ActivityPollingService {
     if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
       this.flushRequests();
     }
-    console.log('subscribe map size:' + this.subscriptions.size);
-    return subsctiption;
+    return subject;
   }
-
-  unsubscribeFromActivity(caseId: string) {
-    if (this.pendingRequests.has(caseId)) {
-      console.log(`pendingRequests unsubscribed for ${caseId}`);
-      this.pendingRequests.get(caseId).unsubscribe();
-    }
-
-    if (this.subscriptions.has(caseId)) {
-      console.log(`subscription unsubscribed for ${caseId}`);
-      this.subscriptions.get(caseId).unsubscribe();
-    }
-  }
-
-  // public clearSubsctiptions(): void {
-  //   this.subscriptions.clear();
-  // }
 
   public flushRequests(): void {
     if (this.currentTimeoutHandle) {
@@ -86,7 +66,6 @@ export class ActivityPollingService {
     }
 
     const requests = new Map(this.pendingRequests);
-    this.subscriptions = new Map([...Array.from(this.subscriptions.entries()), ...Array.from(this.pendingRequests.entries())]);
     this.pendingRequests.clear();
 
     this.performBatchRequest(requests);

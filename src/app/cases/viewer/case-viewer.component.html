@@ -32,7 +32,7 @@
         <table [class]="tab.id">
           <tbody>
           <ng-container *ngFor="let field of tab.fields">
-            <div ccdLabelSubstitutor [caseField]="field" [eventFields]="caseFields">
+            <div ccdConditionalShowView ccdLabelSubstitutor [caseField]="field" [eventFields]="caseFields">
               <ng-container [ngSwitch]="!(field | ccdIsCompound)">
                 <tr *ngSwitchCase="true">
                   <th>{{field.label}}</th>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Activity } from './activity.model';
 import { ActivityService } from './activity.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Subject } from 'rxjs';
 import { NgZone } from '@angular/core';
 
@@ -15,6 +15,7 @@ const BATCH_COLLECTION_DELAY_MS = 1;
 export class ActivityPollingService {
 
   pendingRequests = new Map<string, Subject<Activity>>();
+  subscriptions = new Map<string, Subject<Activity>>();
   private currentTimeoutHandle: any;
 
   constructor(private activityService: ActivityService, private ngZone: NgZone) {}
@@ -37,12 +38,13 @@ export class ActivityPollingService {
             }));
   }
 
-  subscribeToActivity(caseId: string, done: (activity: Activity) => void) {
+  subscribeToActivity(caseId: string, done: (activity: Activity) => void): Subscription {
+    let subsctiption: Subscription;
     if (this.pendingRequests.has(caseId)) {
-      this.pendingRequests.get(caseId).subscribe(done);
+      subsctiption = this.pendingRequests.get(caseId).subscribe(done);
     } else {
       let subject = new Subject<Activity>();
-      subject.subscribe(done);
+      subsctiption = subject.subscribe(done);
       this.pendingRequests.set(caseId, subject);
     }
 
@@ -57,16 +59,25 @@ export class ActivityPollingService {
     if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
       this.flushRequests();
     }
+    console.log('subscribe map size:' + this.subscriptions.size);
+    return subsctiption;
   }
 
-  unsubscribeFromActivity(_caseId: string) {
-    // TODO: The code below doesn't do the intended job
-    // console.log(`Unsubscribe request for ${caseId}`);
-    // if (this.pendingRequests.has(caseId)) {
-    //   console.log(`pendingRequests has ${caseId}`);
-    //   this.pendingRequests.get(caseId).unsubscribe();
-    // }
+  unsubscribeFromActivity(caseId: string) {
+    if (this.pendingRequests.has(caseId)) {
+      console.log(`pendingRequests unsubscribed for ${caseId}`);
+      this.pendingRequests.get(caseId).unsubscribe();
+    }
+
+    if (this.subscriptions.has(caseId)) {
+      console.log(`subscription unsubscribed for ${caseId}`);
+      this.subscriptions.get(caseId).unsubscribe();
+    }
   }
+
+  // public clearSubsctiptions(): void {
+  //   this.subscriptions.clear();
+  // }
 
   public flushRequests(): void {
     if (this.currentTimeoutHandle) {
@@ -75,7 +86,9 @@ export class ActivityPollingService {
     }
 
     const requests = new Map(this.pendingRequests);
+    this.subscriptions = new Map([...Array.from(this.subscriptions.entries()), ...Array.from(this.pendingRequests.entries())]);
     this.pendingRequests.clear();
+
     this.performBatchRequest(requests);
   }
 

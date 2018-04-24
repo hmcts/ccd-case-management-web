@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Activity, ActivityInfo, DisplayMode } from '../activity.model';
 import { ActivityPollingService } from '../activity.polling.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ccd-activity',
@@ -17,6 +18,8 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
 
   viewersText: string;
   editorsText: string;
+
+  subscription: Subscription;
 
   @Input()
   public caseId: string;
@@ -35,7 +38,7 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     this.activity.unknownViewers = 0;
     this.viewersText = '';
     this.editorsText = '';
-    this.activityPollingService.subscribeToActivity(this.caseId, newActivity => this.onActivityChange(newActivity));
+    this.subscription = this.activityPollingService.subscribeToActivity(this.caseId, newActivity => this.onActivityChange(newActivity));
   }
 
   onActivityChange(newActivity: Activity) {
@@ -56,6 +59,9 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.activityPollingService.unsubscribeFromActivity(this.caseId);
+    console.log('unsubscibing activity: ' + this.caseId);
+    this.subscription.unsubscribe();
+    // this.activityPollingService.clearSubsctiptions();
   }
 
   generateDescription(prefix: string, suffix: string, namesArray: Array<ActivityInfo>, unknownCount) {

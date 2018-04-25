@@ -11,7 +11,7 @@ def app = "case-management-web"
 
 List<LinkedHashMap<String, Object>> secrets = [
     secret('caseworkerAutoTestEmail', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
-    secret('caseworkerAutoTestPassword', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+    secret('caseworkerAutoTestPassword', 'CCD_CASEWORKER_AUTOTEST_PASSWORD')
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {

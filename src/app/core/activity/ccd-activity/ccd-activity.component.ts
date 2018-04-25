@@ -60,6 +60,7 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.complete();
     this.subscription.unsubscribe();
+    this.activityPollingService.stopPolling();
   }
 
   generateDescription(prefix: string, suffix: string, namesArray: Array<ActivityInfo>, unknownCount) {

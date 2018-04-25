@@ -30,14 +30,6 @@ export class ActivityPollingService {
 
   constructor(private activityService: ActivityService, private ngZone: NgZone) {}
 
-  pollActivities(...caseIds: string[]): Observable<Activity[]> {
-    if (!this.isEnabled) {
-      return Observable.empty();
-    }
-
-    return polling(this.activityService.getActivities(...caseIds), POLL_CONFIG);
-  }
-
   subscribeToActivity(caseId: string, done: (activity: Activity) => void): Subject<Activity> {
     if (!this.isEnabled) {
       return new Subject<Activity>();
@@ -84,6 +76,14 @@ export class ActivityPollingService {
     this.performBatchRequest(requests);
   }
 
+  pollActivities(...caseIds: string[]): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
+    return polling(this.activityService.getActivities(...caseIds), POLL_CONFIG);
+  }
+
   protected performBatchRequest(requests: Map<string, Subject<Activity>>): void {
     const caseIds = Array.from(requests.keys()).join();
     // console.log('issuing batch request for cases: ' + caseIds);
@@ -114,20 +114,7 @@ export class ActivityPollingService {
       return Observable.empty();
     }
 
-    return this.activityService.postActivity(caseId, activityType)
-      .switchMap(
-        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
-          .switchMap(() => this.postActivity(caseId, activityType))
-          .startWith(data)
-      ).retryWhen(
-        attempts =>
-          attempts
-            .zip(Observable.range(1, RETRY), (_, i) => i)
-            .flatMap(i => {
-              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
-              return Observable.timer(i * 1000);
-            })
-      );
+    return polling(this.activityService.postActivity(caseId, activityType), POLL_CONFIG);
   }
 
   get isEnabled(): boolean {

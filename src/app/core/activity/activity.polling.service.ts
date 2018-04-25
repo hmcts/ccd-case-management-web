@@ -31,6 +31,10 @@ export class ActivityPollingService {
   constructor(private activityService: ActivityService, private ngZone: NgZone) {}
 
   pollActivities(...caseIds: string[]): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
     return polling(this.activityService.getActivities(...caseIds), POLL_CONFIG);
   }
 
@@ -73,7 +77,6 @@ export class ActivityPollingService {
 
     const requests = new Map(this.pendingRequests);
     this.pendingRequests.clear();
-
     this.performBatchRequest(requests);
   }
 
@@ -94,4 +97,36 @@ export class ActivityPollingService {
     );
   }
 
+  postViewActivity(caseId: string): Observable<Activity[]> {
+    return this.postActivity(caseId, ActivityService.ACTIVITY_VIEW);
+  }
+
+  postEditActivity(caseId: string): Observable<Activity[]> {
+    return this.postActivity(caseId, ActivityService.ACTIVITY_EDIT);
+  }
+
+  private postActivity(caseId: string, activityType: string): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
+    return this.activityService.postActivity(caseId, activityType)
+      .switchMap(
+        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
+          .switchMap(() => this.postActivity(caseId, activityType))
+          .startWith(data)
+      ).retryWhen(
+        attempts =>
+          attempts
+            .zip(Observable.range(1, RETRY), (_, i) => i)
+            .flatMap(i => {
+              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
+              return Observable.timer(i * 1000);
+            })
+      );
+  }
+
+  get isEnabled(): boolean {
+    return this.activityService.isEnabled;
+  }
 }

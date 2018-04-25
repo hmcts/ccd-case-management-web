@@ -39,6 +39,10 @@ export class ActivityPollingService {
   }
 
   subscribeToActivity(caseId: string, done: (activity: Activity) => void): Subject<Activity> {
+    if (!this.isEnabled) {
+      return new Subject<Activity>();
+    }
+
     let subject = this.pendingRequests.get(caseId);
     if (subject) {
       subject.subscribe(done);

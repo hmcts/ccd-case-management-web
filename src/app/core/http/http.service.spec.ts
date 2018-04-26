@@ -121,7 +121,7 @@ describe('HttpService', () => {
     it('should catch with http-error service', () => {
       httpMock.get.and.returnValue(Observable.throw(error));
       httpService.get(URL).subscribe(() => {}, () => {});
-      expect(httpErrorService.handle).toHaveBeenCalledWith(error);
+      expect(httpErrorService.handle).toHaveBeenCalledWith(error, true);
     });
   });
 
@@ -159,7 +159,7 @@ describe('HttpService', () => {
     it('should catch with http-error service', () => {
       httpMock.post.and.returnValue(Observable.throw(error));
       httpService.post(URL, BODY).subscribe(() => {}, () => {});
-      expect(httpErrorService.handle).toHaveBeenCalledWith(error);
+      expect(httpErrorService.handle).toHaveBeenCalledWith(error, true);
     });
 
     it('should add a `content-type` and `accept` headers', () => {

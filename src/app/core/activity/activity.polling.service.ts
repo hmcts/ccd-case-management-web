@@ -19,9 +19,13 @@ export class ActivityPollingService {
 
   constructor(private activityService: ActivityService, private ngZone: NgZone) {}
 
-  /* Executes next request NEXT_POLL_REQUEST_MS sec after the previous one returned.
+  /* Executes next request NEXT_POLL_REQUEST_MS msec after the previous one returned.
   In case of errors it retries RETRY times with incremental delay between each retry*/
   pollActivities(...caseIds: string[]): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
     return this.activityService.getActivities(...caseIds)
       .switchMap(
         (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
@@ -32,30 +36,32 @@ export class ActivityPollingService {
           attempts
             .zip(Observable.range(1, RETRY), (_, i) => i)
             .flatMap(i => {
-          // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
+              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
               return Observable.timer(i * 1000);
             }));
   }
 
   subscribeToActivity(caseId: string, done: (activity: Activity) => void) {
-    if (this.pendingRequests.has(caseId)) {
-      this.pendingRequests.get(caseId).subscribe(done);
-    } else {
-      let subject = new Subject<Activity>();
-      subject.subscribe(done);
-      this.pendingRequests.set(caseId, subject);
-    }
+    if (this.isEnabled) {
+      if (this.pendingRequests.has(caseId)) {
+        this.pendingRequests.get(caseId).subscribe(done);
+      } else {
+        let subject = new Subject<Activity>();
+        subject.subscribe(done);
+        this.pendingRequests.set(caseId, subject);
+      }
 
-    if (this.pendingRequests.size === 1) {
-      this.ngZone.runOutsideAngular(() => {
-        this.currentTimeoutHandle = setTimeout(
-          () => this.ngZone.run(() => this.flushRequests()),
-          BATCH_COLLECTION_DELAY_MS);
-      });
-    }
+      if (this.pendingRequests.size === 1) {
+        this.ngZone.runOutsideAngular(() => {
+          this.currentTimeoutHandle = setTimeout(
+            () => this.ngZone.run(() => this.flushRequests()),
+            BATCH_COLLECTION_DELAY_MS);
+        });
+      }
 
-    if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
-      this.flushRequests();
+      if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
+        this.flushRequests();
+      }
     }
   }
 
@@ -95,4 +101,36 @@ export class ActivityPollingService {
     );
   }
 
+  postViewActivity(caseId: string): Observable<Activity[]> {
+    return this.postActivity(caseId, ActivityService.ACTIVITY_VIEW);
+  }
+
+  postEditActivity(caseId: string): Observable<Activity[]> {
+    return this.postActivity(caseId, ActivityService.ACTIVITY_EDIT);
+  }
+
+  private postActivity(caseId: string, activityType: string): Observable<Activity[]> {
+    if (!this.isEnabled) {
+      return Observable.empty();
+    }
+
+    return this.activityService.postActivity(caseId, activityType)
+      .switchMap(
+        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
+          .switchMap(() => this.postActivity(caseId, activityType))
+          .startWith(data)
+      ).retryWhen(
+        attempts =>
+          attempts
+            .zip(Observable.range(1, RETRY), (_, i) => i)
+            .flatMap(i => {
+              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
+              return Observable.timer(i * 1000);
+            })
+      );
+  }
+
+  get isEnabled(): boolean {
+    return this.activityService.isEnabled;
+  }
 }

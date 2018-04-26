@@ -12,7 +12,6 @@ exports.config = {
   */
 
   specs: [
-    './end-to-end/specs/*/login.*.spec.js'
   ],
 
   exclude: [],

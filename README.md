@@ -49,6 +49,15 @@ The following environment variables are required:
 | CCD_ACTIVITY_BASE_URL | Base URL for CCD Case Activity service. `https://case-activity-api.dev.ccd.reform.hmcts.net/health` for the `dev` instance. |
 | DM_GATEWAY_BASE_URL | Base URL for Document Management gateway. `https://api-gateway.dev.dm.reform.hmcts.net` for the `dev` instance. |
 
+Environment variables:
+
+| Name | Description |
+|------|-------------|
+| CCD_ACTIVITY_NEXT_POLL_REQUEST_MS | Frequency of activity requests |
+| CCD_ACTIVITY_RETRY | Number of attempts in case of unsuccessful calls to Activity service |
+| CCD_ACTIVITY_MAX_REQUEST_PER_BATCH | Max number of cases activity requests batched in a single activity call |
+| CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS | Max delay between a batch activity call is issued |
+
 ## Install dependencies
 
 The project uses [yarn](https://yarnpkg.com/).
@@ -110,9 +119,9 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 
 ### 2. Smoke Tests
 
-The smoke tests are run within a docker container. 
+The smoke tests are run within a docker container.
 
-To create an image to run execute the following command in the test directory: 
+To create an image to run execute the following command in the test directory:
 
 ``` docker build -t ccd-protractor . ```
 
@@ -122,7 +131,7 @@ Before running the tests set the following environment variables
         |------|-------------|
         | CCD_CASEWORKER_AUTOTEST_EMAIL     | Username for test account     |
         | CCD_CASEWORKER_AUTOTEST_PASSWORD  | Password for tests account    |
-        | TEST_FRONTEND_URL                 | URL for systems under tests   |  
+        | TEST_FRONTEND_URL                 | URL for systems under tests   |
 
 To run the tests execute
 

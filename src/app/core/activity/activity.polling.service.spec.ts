@@ -21,7 +21,6 @@ describe('ActivityPollingService', () => {
     ngZone = jasmine.createSpyObj<NgZone>('ngZone', ['run', 'runOutsideAngular']);
     activityService = jasmine.createSpyObj<ActivityService>('activityService', ['getActivities']);
     activityService.getActivities.and.returnValue(switchMap);
-    activityService.isEnabled = true;
 
     activityPollingService = new ActivityPollingService(activityService, ngZone);
   });
@@ -34,23 +33,9 @@ describe('ActivityPollingService', () => {
     expect(activityService.getActivities).toHaveBeenCalled();
   });
 
-  it('should accesss activityService for subscribe', () => {
+  it('should accesss activityService for pollActivities', () => {
     activityPollingService.subscribeToActivity('222', () => ({}));
     expect(ngZone.runOutsideAngular).toHaveBeenCalled();
-  });
-
-  it('should not accesss activityService for pollActivities when disabled', () => {
-    activityService.isEnabled = false;
-    activityPollingService.pollActivities('');
-
-    expect(activityService.getActivities).not.toHaveBeenCalled();
-  });
-
-  it('should not accesss activityService for pollActivities when disabled', () => {
-    activityService.isEnabled = false;
-    activityPollingService.subscribeToActivity('222', () => ({}));
-
-    expect(ngZone.runOutsideAngular).not.toHaveBeenCalled();
   });
 
   it('should clear pending requests after flushRequests is called', () => {

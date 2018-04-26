@@ -20,7 +20,6 @@ import { CaseEditWizardGuard } from './core/case-editor/case-edit-wizard.guard';
 import { OAuth2RedirectComponent } from './oauth2/oauth2-redirect.component';
 import { CaseEditConfirmComponent } from './shared/case-editor/case-edit-confirm.component';
 import { AppConfigGuard } from './app.config.guard';
-import { ActivityResolver } from './core/activity/activity.resolver';
 
 const routes: Routes = [
   {
@@ -38,7 +37,6 @@ const routes: Routes = [
     ],
     resolve: {
       profile: ProfileResolver,
-      activity: ActivityResolver,
     },
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'list/case' },

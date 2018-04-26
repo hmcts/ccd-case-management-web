@@ -24,8 +24,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 
-withPipeline("angular", product, app) {
+withPipeline("nodejs", product, app) {
 
-   //loadVaultSecrets(secrets)
+   loadVaultSecrets(secrets)
 
 }

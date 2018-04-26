@@ -23,10 +23,9 @@ const POLL_CONFIG = {
 @Injectable()
 export class ActivityPollingService {
 
-  pendingRequests = new Map<string, Subject<Activity>>();
+  private pendingRequests = new Map<string, Subject<Activity>>();
   private currentTimeoutHandle: any;
-
-  pollActivitiesSubscription: Subscription;
+  private pollActivitiesSubscription: Subscription;
 
   constructor(private activityService: ActivityService, private ngZone: NgZone) {}
 

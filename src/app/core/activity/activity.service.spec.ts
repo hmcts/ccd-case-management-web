@@ -12,7 +12,7 @@ const response = {
   map: () => ({})
 };
 
-fdescribe('ActivityService', () => {
+describe('ActivityService', () => {
 
   beforeEach(() => {
     appConfig = jasmine.createSpyObj<AppConfig>('appConfig', ['getActivityUrl']);

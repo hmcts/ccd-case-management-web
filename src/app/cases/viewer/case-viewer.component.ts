@@ -12,6 +12,7 @@ import { ActivityService } from '../../core/activity/activity.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
+import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 
 // TODO make this configurable
 const RETRY = 5;
@@ -47,12 +48,12 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     // Clone and sort tabs array
     this.sortedTabs = this.orderService.sort(this.caseDetails.tabs);
 
-    // Clone and sort fields array
-    this.sortedTabs = this.sortedTabs.map(tab => Object.assign({}, tab, {
-      fields: this.orderService.sort(tab.fields)
-    }));
-
     this.caseFields = this.getTabFields();
+
+    // Clone and sort fields array
+    this.sortedTabs = this.sortedTabs
+      .map(tab => Object.assign({}, tab, { fields: this.orderService.sort(tab.fields) }))
+      .filter(tab => new ShowCondition(tab.show_condition).matchByCaseFields(this.caseFields));
 
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));

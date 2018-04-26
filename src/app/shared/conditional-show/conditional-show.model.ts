@@ -1,3 +1,5 @@
+import { CaseField } from '../domain/definition/case-field.model';
+
 export class ShowCondition {
 
   // Expects a show condition of the form: <fieldName>="string"
@@ -29,5 +31,19 @@ export class ShowCondition {
 
   private removeStarChar(s: string) {
     return s.substring(0, s.length - 1);
+  }
+
+  matchByCaseFields(caseFields: CaseField[]): boolean {
+    return this.match(this.buildState(caseFields));
+  }
+
+  private buildState(caseFields: CaseField[]): any {
+    let state = {};
+
+    caseFields.forEach(field => {
+      state[field.id] = field.value;
+    });
+
+    return state;
   }
 }

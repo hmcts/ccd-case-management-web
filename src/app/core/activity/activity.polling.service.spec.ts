@@ -3,15 +3,17 @@ import { ActivityService } from './activity.service';
 import { ActivityPollingService } from './activity.polling.service';
 import { NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
-
-let ngZone: any;
-let activityService: any;
-let activityPollingService: ActivityPollingService;
+import { AppConfig } from '../../app.config';
 
 const CASE_ID = '22';
 const CASES = ['111', '222', '333'];
 
-describe('ActivityPollingService', () => {
+let ngZone: any;
+let activityService: any;
+let activityPollingService: ActivityPollingService;
+let appConfig;
+
+fdescribe('ActivityPollingService', () => {
 
   beforeEach(() => {
     ngZone = jasmine.createSpyObj<NgZone>('ngZone', ['run', 'runOutsideAngular']);
@@ -19,7 +21,14 @@ describe('ActivityPollingService', () => {
     activityService.getActivities.and.returnValue(Observable.of());
     activityService.isEnabled = true;
 
-    activityPollingService = new ActivityPollingService(activityService, ngZone);
+    appConfig = jasmine.createSpyObj('AppConfig', ['getActivityMaxRequestPerBatch', 'getActivityBatchCollectionDelayMs',
+                                                    'getActivityNexPollRequestMs', 'getActivityRetry']);
+    appConfig.getActivityBatchCollectionDelayMs.and.returnValue(1);
+    appConfig.getActivityMaxRequestPerBatch.and.returnValue(25);
+    appConfig.getActivityNexPollRequestMs.and.returnValue(5000);
+    appConfig.getActivityRetry.and.returnValue(5);
+
+    activityPollingService = new ActivityPollingService(activityService, ngZone, appConfig);
   });
 
   it('should accesss activityService for pollActivities', () => {

@@ -50,10 +50,6 @@ export class AppConfig {
     return this.config.case_data_url;
   }
 
-  public getActivityUrl() {
-    return this.config.activity_url;
-  }
-
   public getDocumentManagementUrl() {
     return this.config.document_management_url;
   }
@@ -85,6 +81,26 @@ export class AppConfig {
   public getRemotePrintServiceUrl() {
     return this.config.remote_print_service_url;
   }
+
+  public getActivityUrl() {
+    return this.config.activity_url;
+  }
+
+  public getActivityNexPollRequestMs() {
+    return this.config.activity_next_poll_request_ms;
+  }
+
+  public getActivityRetry() {
+    return this.config.activity_retry;
+  }
+
+  public getActivityBatchCollectionDelayMs() {
+    return this.config.activity_batch_collection_delay_ms;
+  }
+
+  public getActivityMaxRequestPerBatch() {
+    return this.config.activity_max_request_per_batch;
+  }
 }
 
 export class Config {
@@ -101,4 +117,8 @@ export class Config {
   oauth2_client_id: string;
   print_service_url: string;
   remote_print_service_url: string;
+  activity_next_poll_request_ms: number;
+  activity_retry: number;
+  activity_batch_collection_delay_ms: number;
+  activity_max_request_per_batch: number;
 }

@@ -5,20 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Subject } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { SubjectSubscriber } from 'rxjs/Subject';
-import polling from 'rx-polling';
-
-// TODO make this configurable
-const RETRY = 5;
-const NEXT_POLL_REQUEST_MS = 5000;
-const MAX_REQUEST_PER_BATCH = 25;
-const BATCH_COLLECTION_DELAY_MS = 1;
-
-/* Execute poll requests every NEXT_POLL_REQUEST_MS msec.
-  In case of errors retry RETRY times */
-const POLL_CONFIG = {
-  interval: NEXT_POLL_REQUEST_MS,
-  attempts: RETRY,
-};
+import polling, { IOptions } from 'rx-polling';
+import { AppConfig } from '../../app.config';
 
 @Injectable()
 export class ActivityPollingService {
@@ -26,8 +14,18 @@ export class ActivityPollingService {
   private pendingRequests = new Map<string, Subject<Activity>>();
   private currentTimeoutHandle: any;
   private pollActivitiesSubscription: Subscription;
+  private pollConfig: IOptions;
+  private batchCollectionDelayMs: Number;
+  private maxRequestsPerBatch: Number;
 
-  constructor(private activityService: ActivityService, private ngZone: NgZone) {}
+  constructor(private activityService: ActivityService, private ngZone: NgZone, private config: AppConfig) {
+    this.pollConfig = {
+      interval: config.getActivityNexPollRequestMs(),
+      attempts: config.getActivityRetry(),
+    };
+    this.batchCollectionDelayMs = config.getActivityBatchCollectionDelayMs();
+    this.maxRequestsPerBatch = config.getActivityMaxRequestPerBatch();
+  }
 
   subscribeToActivity(caseId: string, done: (activity: Activity) => void): Subject<Activity> {
     if (!this.isEnabled) {
@@ -49,11 +47,11 @@ export class ActivityPollingService {
             // console.log('timeout: flushing requests')
             this.flushRequests();
           }),
-          BATCH_COLLECTION_DELAY_MS);
+          this.batchCollectionDelayMs);
       });
     }
 
-    if (this.pendingRequests.size >= MAX_REQUEST_PER_BATCH) {
+    if (this.pendingRequests.size >= this.maxRequestsPerBatch) {
       // console.log('max pending hit: flushing requests');
       this.flushRequests();
     }
@@ -80,7 +78,7 @@ export class ActivityPollingService {
       return Observable.empty();
     }
 
-    return polling(this.activityService.getActivities(...caseIds), POLL_CONFIG);
+    return polling(this.activityService.getActivities(...caseIds), this.pollConfig);
   }
 
   protected performBatchRequest(requests: Map<string, Subject<Activity>>): void {
@@ -113,7 +111,7 @@ export class ActivityPollingService {
       return Observable.empty();
     }
 
-    return polling(this.activityService.postActivity(caseId, activityType), POLL_CONFIG);
+    return polling(this.activityService.postActivity(caseId, activityType), this.pollConfig);
   }
 
   get isEnabled(): boolean {

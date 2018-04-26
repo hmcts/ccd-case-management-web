@@ -10,7 +10,8 @@ def product = "ccd"
 def app = "case-management-web"
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret('caseworkerAutoTestEmail', 'TEST'),
+    secret('caseworkerAutoTestEmail', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
+    secret('caseworkerAutoTestPassword', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -25,6 +26,6 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withPipeline("angular", product, app) {
 
-  //  loadVaultSecrets(secrets)
+   //loadVaultSecrets(secrets)
 
 }

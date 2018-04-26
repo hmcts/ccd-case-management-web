@@ -11,7 +11,7 @@ import { AlertService } from '../../core/alert/alert.service';
 import { HttpError } from '../../core/http/http-error.model';
 import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivityPollingService } from '../../core/activity/activity.polling.service';
+import { ActivityService } from '../../core/activity/activity.service';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -51,6 +51,14 @@ describe('CaseEventTriggerComponent', () => {
   };
   CASE_DETAILS.case_type.id = 'TEST_CASE_TYPE';
   CASE_DETAILS.case_type.jurisdiction.id = 'TEST';
+
+  const switchMap = {
+    switchMap: () => ({
+      retryWhen: () => ({
+        subscribe: () => ({})
+      })
+    })
+  };
 
   const EVENT_TRIGGER: CaseEventTrigger = {
     id: 'TEST_TRIGGER',
@@ -137,7 +145,7 @@ describe('CaseEventTriggerComponent', () => {
   let alertService: any;
   let casesService: any;
   let casesReferencePipe: any;
-  let activityPollingService: any;
+  let activityService: any;
 
   beforeEach(async(() => {
     casesService = createSpyObj<CasesService>('casesService', ['createEvent', 'validateCase']);
@@ -147,8 +155,8 @@ describe('CaseEventTriggerComponent', () => {
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
-    activityPollingService = createSpyObj<ActivityPollingService>('activityPollingService', ['postEditActivity']);
-    activityPollingService.postEditActivity.and.returnValue(Observable.of());
+    activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
+    activityService.postActivity.and.returnValue(switchMap);
     router = createSpyObj('router', ['navigate']);
     router.navigate.and.returnValue({then: f => f()});
 
@@ -176,7 +184,7 @@ describe('CaseEventTriggerComponent', () => {
           { provide: Router, useValue: router },
           { provide: AlertService, useValue: alertService },
           { provide: CaseReferencePipe, useValue: casesReferencePipe },
-          { provide: ActivityPollingService, useValue: activityPollingService }
+          { provide: ActivityService, useValue: activityService }
         ]
       })
       .compileComponents();

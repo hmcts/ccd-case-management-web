@@ -76,7 +76,6 @@ describe('CcdActivityComponent', () => {
       ['subscribeToActivity', 'unsubscribeFromActivity']);
     activityPollingService.subscribeToActivity.and.returnValue();
     activityPollingService.unsubscribeFromActivity.and.returnValue();
-    activityPollingService.isEnabled = true;
     TestBed
       .configureTestingModule({
         imports: [],
@@ -102,15 +101,6 @@ describe('CcdActivityComponent', () => {
     de = fixture.debugElement;
     fixture.detectChanges();
   }));
-
-  it('should render create when activity is disabled', () => {
-    activityPollingService = fixture.debugElement.injector.get(ActivityPollingService);
-    activityPollingService.isEnabled = false;
-    fixture.detectChanges();
-    let activityElement = de.query(By.css('.activityComponent'));
-
-    expect(activityElement).toBeFalsy();
-  });
 
   it('should render a case activity banner', () => {
     let banner = de.query(By.directive(CcdActivityBannerComponent));

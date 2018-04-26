@@ -50,10 +50,6 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
       this.activity.unknownEditors);
   }
 
-  isActivityEnabled() {
-    return this.activityPollingService.isEnabled;
-  }
-
   isActiveCase() {
     return this.activity.editors.length || this.activity.viewers.length || this.activity.unknownEditors || this.activity.unknownViewers;
   }

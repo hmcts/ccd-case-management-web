@@ -12,7 +12,6 @@ import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
-import { ActivityService } from '../../core/activity/activity.service';
 
 @Component({
   selector: 'ccd-search-result',
@@ -67,8 +66,7 @@ export class SearchResultComponent implements OnChanges {
   sortParameters: SortParameters;
   searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory;
 
-  constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
-    appConfig: AppConfig, private activityService: ActivityService) {
+  constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory, appConfig: AppConfig) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -125,10 +123,6 @@ export class SearchResultComponent implements OnChanges {
 
   sortWidget(column: SearchResultViewColumn) {
     return this.isSortAscending(column) ? '&#9660;' : '&#9650;';
-  }
-
-  activityEnabled(): boolean {
-    return this.activityService.isEnabled;
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {

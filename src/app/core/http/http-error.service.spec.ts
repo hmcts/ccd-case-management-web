@@ -34,15 +34,13 @@ describe('HttpErrorService', () => {
     headers: new Headers({
       'Content-Type': 'application/json',
     }),
-    body: JSON.stringify(VALID_ERROR_BODY),
-    status: 422
+    body: JSON.stringify(VALID_ERROR_BODY)
   }));
   const VALID_ERROR_RESPONSE_WITH_CHARSET = new Response(new ResponseOptions({
     headers: new Headers({
       'Content-Type': 'application/json;charset=UTF-8',
     }),
-    body: JSON.stringify(VALID_ERROR_BODY),
-    status: 422
+    body: JSON.stringify(VALID_ERROR_BODY)
   }));
 
   const NOT_VALID_ERROR_RESPONSE = new Response(new ResponseOptions({
@@ -56,16 +54,14 @@ describe('HttpErrorService', () => {
     headers: new Headers({
       'Content-Type': 'application/json',
     }),
-    body: JSON.stringify(HTTP_401_ERROR_BODY),
-    status: 401
+    body: JSON.stringify(HTTP_401_ERROR_BODY)
   }));
 
   const HTTP_403_RESPONSE = new Response(new ResponseOptions({
     headers: new Headers({
       'Content-Type': 'application/json',
     }),
-    body: JSON.stringify(HTTP_403_ERROR_BODY),
-    status: 403
+    body: JSON.stringify(HTTP_403_ERROR_BODY)
   }));
 
   let authService: any;

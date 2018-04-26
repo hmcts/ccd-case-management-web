@@ -7,10 +7,14 @@ import { AlertService } from '../../core/alert/alert.service';
 import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
 import { Observable } from 'rxjs/Observable';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
+import { ActivityService } from '../../core/activity/activity.service';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
-import { ActivityPollingService } from '../../core/activity/activity.polling.service';
+
+// TODO make this configurable
+const RETRY = 5;
+const NEXT_POLL_REQUEST_MS = 7500;
 
 @Component({
   selector: 'ccd-case-event-trigger',
@@ -28,13 +32,13 @@ export class CaseEventTriggerComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private route: ActivatedRoute,
     private caseReferencePipe: CaseReferencePipe,
-    private activityPollingService: ActivityPollingService
+    private activityService: ActivityService
   ) { }
 
   ngOnInit(): void {
     this.caseDetails = this.route.snapshot.data.case;
     this.eventTrigger = this.route.snapshot.data.eventTrigger;
-    this.subscription = this.postEditActivity().subscribe((_resolved) => {
+    this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted EDIT activity and result is: ' + JSON.stringify(resolved));
     });
   }
@@ -43,8 +47,21 @@ export class CaseEventTriggerComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  postEditActivity(): Observable<Activity[]> {
-    return this.activityPollingService.postEditActivity(this.caseDetails.case_id);
+  // TODO: We need to pull this method to ActivityPolllingService
+  postViewActivity(): Observable<Activity[]> {
+    return this.activityService.postActivity(this.caseDetails.case_id, ActivityService.ACTIVITY_EDIT)
+      .switchMap(
+        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
+          .switchMap(() => this.postViewActivity())
+          .startWith(data)
+      ).retryWhen(
+        attempts =>
+          attempts
+            .zip(Observable.range(1, RETRY), (_, i) => i)
+            .flatMap(i => {
+              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
+              return Observable.timer(i * 1000);
+            }));
   }
 
   submit(): (sanitizedEditForm: CaseEventData) => Observable<object> {

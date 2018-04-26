@@ -2,7 +2,6 @@
 import { ActivityService } from './activity.service';
 import { ActivityPollingService } from './activity.polling.service';
 import { NgZone } from '@angular/core';
-import { IfObservable } from 'rxjs/observable/IfObservable';
 import { Observable } from 'rxjs';
 
 let ngZone: any;
@@ -12,7 +11,7 @@ let activityPollingService: ActivityPollingService;
 const CASE_ID = '22';
 const CASES = ['111', '222', '333'];
 
-fdescribe('ActivityPollingService', () => {
+describe('ActivityPollingService', () => {
 
   beforeEach(() => {
     ngZone = jasmine.createSpyObj<NgZone>('ngZone', ['run', 'runOutsideAngular']);

@@ -6,7 +6,6 @@ import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
 import { OrderService } from '../../core/order/order.service';
-import { Observable } from 'rxjs/Observable';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { attr } from '../../test/helpers';
@@ -21,7 +20,6 @@ import { ActivityService } from '../../core/activity/activity.service';
 import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
-import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 
 @Component({
   // tslint:disable-next-line
@@ -123,6 +121,14 @@ describe('CaseViewerComponent', () => {
       user_first_name: 'Phillip'
     }
   ];
+
+  const switchMap = {
+    switchMap: () => ({
+      retryWhen: () => ({
+        subscribe: () => ({})
+      })
+    })
+  };
 
   const CASE_VIEW: CaseView = {
     case_id: '1',
@@ -231,8 +237,8 @@ describe('CaseViewerComponent', () => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
 
-    activityService = createSpyObj<ActivityPollingService>('activityPollingService', ['postViewActivity']);
-    activityService.postViewActivity.and.returnValue(Observable.of());
+    activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
+    activityService.postActivity.and.returnValue(switchMap);
 
     router = createSpyObj<Router>('router', ['navigate']);
     router.navigate.and.returnValue(new Promise(any));
@@ -264,7 +270,7 @@ describe('CaseViewerComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router },
-          { provide: ActivityPollingService, useValue: activityService }
+          { provide: ActivityService, useValue: activityService }
         ]
       })
       .compileComponents();

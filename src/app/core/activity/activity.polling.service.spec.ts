@@ -13,7 +13,7 @@ let activityService: any;
 let activityPollingService: ActivityPollingService;
 let appConfig;
 
-fdescribe('ActivityPollingService', () => {
+describe('ActivityPollingService', () => {
 
   beforeEach(() => {
     ngZone = jasmine.createSpyObj<NgZone>('ngZone', ['run', 'runOutsideAngular']);

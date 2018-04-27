@@ -3,6 +3,10 @@
 # Move to the Protractor test project folder
 cd $HOME
 
+if [ -z "$CCD_CASEWORKER_AUTOTEST_EMAIL" ] ; then echo "CCD_CASEWORKER_AUTOTEST_EMAIL null"; fi;
+if [ -z "$CCD_CASEWORKER_AUTOTEST_PASSWORD" ]; then echo "CCD_CASEWORKER_AUTOTEST_PASSWORD null"; fi;
+if [ -z "$TEST_URL" ]; then echo "TEST_URL null"; fi;
+
 cd ccd-case-management-web
 
 # X11 for Ubuntu is not configured! The following configurations are needed for XVFB.

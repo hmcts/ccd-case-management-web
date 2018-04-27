@@ -7,7 +7,7 @@ import { ActivityPollingService } from '../activity.polling.service';
 import { MockComponent } from 'ng2-mock-component';
 import { Activity, DisplayMode } from '../activity.model';
 
-describe('CcdActivityComponent', () => {
+fdescribe('CcdActivityComponent', () => {
   let BANNER: any = DisplayMode.BANNER;
   let ICON: any = DisplayMode.ICON;
   let CASE_ID = '1507217479821551';
@@ -32,6 +32,16 @@ describe('CcdActivityComponent', () => {
     unknownViewers: 0
   };
 
+  const ACTIVITY_W_MULTIPLE_EDITOR: Activity = {
+    caseId: CASE_ID,
+    editors: [{forename: 'Bob', surname: 'Ross'},
+      {forename: 'William', surname: 'Orange'},
+      {forename: 'Jon', surname: 'Doe'}],
+    unknownEditors: 0,
+    viewers: [],
+    unknownViewers: 0
+  };
+
   const ACTIVITY_W_UNKNOWN_EDITOR: Activity = {
     caseId: CASE_ID,
     editors: [],
@@ -46,6 +56,17 @@ describe('CcdActivityComponent', () => {
     viewers: [{forename: 'Jamie', surname: 'Olivier'}],
     unknownViewers: 0
   };
+
+  const ACTIVITY_W_MULTIPLE_VIEWER: Activity = {
+    caseId: CASE_ID,
+    editors: [],
+    unknownEditors: 0,
+    viewers: [{forename: 'Jamie', surname: 'Olivier'},
+      {forename: 'William', surname: 'Orange'},
+      {forename: 'Jon', surname: 'Doe'}],
+    unknownViewers: 0
+  };
+
   const ACTIVITY_W_UNKNOWN_VIEWER: Activity = {
     caseId: CASE_ID,
     editors: [],
@@ -162,12 +183,23 @@ describe('CcdActivityComponent', () => {
     expect(banner[1].componentInstance.bannerType).toBe('viewer');
   });
 
-  it('should render single case VIEWER icon', () => {
+  it('should render single case VIEWER icon with the proper description', () => {
     component.displayMode = ICON;
     fixture.detectChanges();
     let icon = de.queryAll(By.directive(CcdActivityIconComponent));
     expect(icon).toBeTruthy();
     expect(icon[0].componentInstance.imageLink).toContain('viewer.png');
+    expect(icon[0].componentInstance.description).toBe('Jamie Olivier is viewing this case.');
+  });
+
+  it('should render multiple case VIEWER icon with the proper description', () => {
+    component.displayMode = ICON;
+    component.onActivityChange(ACTIVITY_W_MULTIPLE_VIEWER);
+    fixture.detectChanges();
+    let icon = de.queryAll(By.directive(CcdActivityIconComponent));
+    expect(icon).toBeTruthy();
+    expect(icon[0].componentInstance.imageLink).toContain('viewer.png');
+    expect(icon[0].componentInstance.description).toBe('Jamie Olivier, William Orange and Jon Doe are viewing this case.');
   });
 
   it('should render single case EDITOR icon', () => {
@@ -177,6 +209,7 @@ describe('CcdActivityComponent', () => {
     let icon = de.queryAll(By.directive(CcdActivityIconComponent));
     expect(icon).toBeTruthy();
     expect(icon[0].componentInstance.imageLink).toContain('editor.png');
+    expect(icon[0].componentInstance.description).toBe('This case is locked because Bob Ross is working on this.');
   });
 
   it('should render both VIEWER & EDITOR icons', () => {

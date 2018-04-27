@@ -1,7 +1,7 @@
 import { ActivityService } from './activity.service';
 import { ActivityResolver } from './activity.resolver';
 
-fdescribe('ActivityResolver', () => {
+describe('ActivityResolver', () => {
 
   let activityService;
   let activityResolver: ActivityResolver;

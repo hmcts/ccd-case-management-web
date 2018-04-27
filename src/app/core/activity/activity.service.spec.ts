@@ -44,6 +44,20 @@ describe('ActivityService', () => {
     expect(activityService.isEnabled).toBeTruthy();
   });
 
+  it('should return not enabled when activity url is emty', () => {
+    appConfig.getActivityUrl.and.returnValue('');
+    activityService['userAuthorised'] = true;
+
+    expect(activityService.isEnabled).toBeFalsy();
+  });
+
+  it('should return enabled when activity url is not emty', () => {
+    appConfig.getActivityUrl.and.returnValue('www');
+    activityService['userAuthorised'] = true;
+
+    expect(activityService.isEnabled).toBeTruthy();
+  });
+
   it('should return not enabled when 403', () => {
     const error = {
       status: 403

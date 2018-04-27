@@ -12,7 +12,7 @@
         </tr>
       </table>
     </th>
-    <th style="width: 135px;">Case Activity</th>
+    <th *ngIf="activityEnabled()" style="width: 135px;">Case Activity</th>
   </tr>
   </thead>
   <tbody>
@@ -30,7 +30,7 @@
           }"></ccd-field-read>
       </div>
     </td>
-    <td>
+    <td *ngIf="activityEnabled()">
         <div [style.visibility]="hideRows ? 'hidden' : 'visible'">
           <ccd-activity [caseId]="result.case_id" [displayMode]="ICON"></ccd-activity>
         </div>

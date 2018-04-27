@@ -1,4 +1,5 @@
 import { CaseField } from '../domain/definition/case-field.model';
+import { FieldsUtils } from '../utils/fields.utils';
 
 export class ShowCondition {
 
@@ -34,16 +35,6 @@ export class ShowCondition {
   }
 
   matchByCaseFields(caseFields: CaseField[]): boolean {
-    return this.match(this.buildState(caseFields));
-  }
-
-  private buildState(caseFields: CaseField[]): any {
-    let state = {};
-
-    caseFields.forEach(field => {
-      state[field.id] = field.value;
-    });
-
-    return state;
+    return this.match(FieldsUtils.toValuesMap(caseFields));
   }
 }

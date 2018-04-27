@@ -46,10 +46,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
 
     this.caseFields = this.getTabFields();
 
-    // Clone and sort fields array
-    this.sortedTabs = this.sortedTabs
-      .map(tab => Object.assign({}, tab, { fields: this.orderService.sort(tab.fields) }))
-      .filter(tab => new ShowCondition(tab.show_condition).matchByCaseFields(this.caseFields));
+    this.sortedTabs = this.sortTabFieldsAndFilterTabs(this.sortedTabs);
 
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));
@@ -62,6 +59,12 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
 
   postViewActivity(): Observable<Activity[]> {
     return this.activityPollingService.postViewActivity(this.caseDetails.case_id);
+  }
+
+  private sortTabFieldsAndFilterTabs(tabs: CaseTab[]): CaseTab[] {
+    return tabs
+      .map(tab => Object.assign({}, tab, { fields: this.orderService.sort(tab.fields) }))
+      .filter(tab => new ShowCondition(tab.show_condition).matchByCaseFields(this.caseFields));
   }
 
   clearErrorsAndWarnings() {

@@ -7,7 +7,7 @@ import { ActivityPollingService } from '../activity.polling.service';
 import { MockComponent } from 'ng2-mock-component';
 import { Activity, DisplayMode } from '../activity.model';
 
-fdescribe('CcdActivityComponent', () => {
+describe('CcdActivityComponent', () => {
   let BANNER: any = DisplayMode.BANNER;
   let ICON: any = DisplayMode.ICON;
   let CASE_ID = '1507217479821551';
@@ -35,8 +35,7 @@ fdescribe('CcdActivityComponent', () => {
   const ACTIVITY_W_MULTIPLE_EDITOR: Activity = {
     caseId: CASE_ID,
     editors: [{forename: 'Bob', surname: 'Ross'},
-      {forename: 'William', surname: 'Orange'},
-      {forename: 'Jon', surname: 'Doe'}],
+      {forename: 'William', surname: 'Orange'}],
     unknownEditors: 0,
     viewers: [],
     unknownViewers: 0
@@ -202,7 +201,17 @@ fdescribe('CcdActivityComponent', () => {
     expect(icon[0].componentInstance.description).toBe('Jamie Olivier, William Orange and Jon Doe are viewing this case.');
   });
 
-  it('should render single case EDITOR icon', () => {
+  it('should render single case EDITOR icon with the proper description', () => {
+    component.displayMode = ICON;
+    component.onActivityChange(ACTIVITY_W_MULTIPLE_EDITOR);
+    fixture.detectChanges();
+    let icon = de.queryAll(By.directive(CcdActivityIconComponent));
+    expect(icon).toBeTruthy();
+    expect(icon[0].componentInstance.imageLink).toContain('editor.png');
+    expect(icon[0].componentInstance.description).toBe('This case is locked because Bob Ross and William Orange are working on this.');
+  });
+
+  it('should render multiple case EDITOR icon with the proper description', () => {
     component.displayMode = ICON;
     component.onActivityChange(ACTIVITY_W_EDITOR);
     fixture.detectChanges();

@@ -3,7 +3,7 @@
 @import 'node_modules/govuk_frontend_toolkit/stylesheets/_conditionals';
 @import 'node_modules/govuk_frontend_toolkit/stylesheets/_measurements';
 
-$blue: #0074B4;
+$blue: #0062a0;
 $white: #FFFFFF;
 $menu-border: 0px;
 $menu-active-nav: $white;
@@ -83,7 +83,8 @@ $menu-active-nav: $white;
     @include vertical-align;
 
     @include media(desktop){
-      width: 30%;
+      width: 50%;
+      height: 100%;
     }
 
     #menu-links-right {
@@ -133,4 +134,24 @@ $menu-active-nav: $white;
       }
     }
   }
+}
+
+.search-wrapper {
+  display: inline-flex;
+  margin-top: 7px;
+  height: 41px;
+  width: 321px;
+}
+.search-input {
+  outline-width: 0;
+  width: 88%;
+  border: 0px;
+  box-shadow: 0px;
+  background-color: #ffffff;
+}
+.search-img-div {
+  width: 12%;
+  padding: 5px 7px 0 0;
+  background-color: #00823b;
+  border: solid 1px #00823b;
 }

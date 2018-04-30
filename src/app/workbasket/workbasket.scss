@@ -6,10 +6,17 @@
 $black: #231F20;
 
 .global-display {
-  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
   @extend %contain-floats;
   // position: relative;
 
+  .heading-medium {
+    margin-top: 25px;
+    h1 {
+      font-size: 24px;
+    }
+  }
   .heading {
     @include bold-24pt;
     padding-top: 28px;
@@ -40,10 +47,10 @@ $black: #231F20;
   .display-left {
     @extend %contain-floats;
     float: left;
-    padding-left: 7px;
+    // padding-left: 7px;
 
     @include media(desktop){
-      width: 16%;
+      width: 15%;
     }
     @media screen and (max-width: 379px) {
       width: auto;
@@ -57,7 +64,7 @@ $black: #231F20;
       top: 0;
       bottom: 0;
       left: 0%;
-      margin-left: -15px;
+      // margin-left: -15px;
       border-left: 1px solid #BFC1C3;
       transform: translate(-50%);
   }
@@ -66,11 +73,11 @@ $black: #231F20;
     @extend %contain-floats;
     float: right;
     text-align: right;
-    padding-right: 7px;
+    // padding-right: 7px;
     position: relative;
 
     @include media(desktop){
-      width: 79%;
+      width: 83%;
     }
 
   }

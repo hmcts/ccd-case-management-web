@@ -25,20 +25,20 @@ export class HttpErrorService {
       return error;
   }
 
-  handle(error: Response | any) {
+  handle(error: Response | any, redirectIfNotAuthorised = true) {
     let httpError = new HttpError();
-
     if (error instanceof Response) {
-      httpError.status = error.status;
-
       if (error.headers
           && error.headers.get(HttpErrorService.CONTENT_TYPE)
-          && HttpErrorService.APPLICATION_JSON === error.headers.get(HttpErrorService.CONTENT_TYPE)) {
+          && error.headers.get(HttpErrorService.CONTENT_TYPE).startsWith(HttpErrorService.APPLICATION_JSON)) {
         try {
           httpError = HttpError.from(error.json() || {});
         } catch (e) {
           console.error(e, e.message);
         }
+      }
+      if (!httpError.status) {
+        httpError.status = error.status;
       }
     } else if (error) {
       if (error.message) {
@@ -48,7 +48,7 @@ export class HttpErrorService {
         httpError.status = error.status;
       }
     }
-    if (httpError.status === 401 || httpError.status === 403) {
+    if (redirectIfNotAuthorised && (httpError.status === 401 || httpError.status === 403)) {
       this.authService.signIn();
     }
     return Observable.throw(httpError);

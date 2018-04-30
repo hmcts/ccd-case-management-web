@@ -4,6 +4,7 @@ import { AppConfig } from '../../../app.config';
 
 describe('DocumentUrlPipe', () => {
   const DOCUMENT_MANAGEMENT_URL = 'http://localhost:1234/documents';
+  const REMOTE_DOCUMENT_MANAGEMENT_PATTERN = '^https://external\\.dm\\.reform/documents';
   const MATCHING_REMOTE_DOCUMENT_MANAGEMENT_URL = 'https://external.dm.reform/documents';
   const NON_MATCHING_REMOTE_DOCUMENT_MANAGEMENT_URL = 'https://external.evidence.reform/documents';
   let documentUrlPipe: DocumentUrlPipe;
@@ -12,7 +13,7 @@ describe('DocumentUrlPipe', () => {
   beforeEach(() => {
     appConfig = createSpyObj<AppConfig>('appConfig', ['getDocumentManagementUrl', 'getRemoteDocumentManagementUrl']);
     appConfig.getDocumentManagementUrl.and.returnValue(DOCUMENT_MANAGEMENT_URL);
-    appConfig.getRemoteDocumentManagementUrl.and.returnValue(MATCHING_REMOTE_DOCUMENT_MANAGEMENT_URL);
+    appConfig.getRemoteDocumentManagementUrl.and.returnValue(REMOTE_DOCUMENT_MANAGEMENT_PATTERN);
     documentUrlPipe = new DocumentUrlPipe(appConfig);
   });
 

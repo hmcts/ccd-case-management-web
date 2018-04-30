@@ -3,15 +3,15 @@ import { FieldType } from '../../domain/definition/field-type.model';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WriteDocumentFieldComponent } from './write-document-field.component';
 import { DebugElement } from '@angular/core';
-import createSpyObj = jasmine.createSpyObj;
 import { DocumentManagementService } from '../../../core/documentManagement/documentManagement.service';
 import { DocumentData } from '../../domain/document/document-data.model';
 import { Observable } from 'rxjs/Observable';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component';
 import { FormGroup } from '@angular/forms';
-import any = jasmine.any;
 import { FieldLabelPipe } from '../utils/field-label.pipe';
+import createSpyObj = jasmine.createSpyObj;
+import any = jasmine.any;
 
 describe('WriteDocumentFieldComponent', () => {
 
@@ -145,4 +145,28 @@ describe('WriteDocumentFieldComponent', () => {
     expect(mockDocumentManagementService.uploadFile).toHaveBeenCalledWith(any(FormData));
   });
 
+  it('should be invalid if document management throws error', () => {
+    mockDocumentManagementService.uploadFile.and.returnValue(Observable.throw('{"error": "A terrible thing happened", ' +
+      '"message": "But really really terrible thing!", "status": 502}'));
+    let file = {
+      name: 'test.pdf'
+    };
+    component.fileChangeEvent({
+      target: {
+        files: [
+          file
+        ]
+      }
+    });
+    expect(component.valid).toBeFalsy();
+  });
+
+  it('should be invalid if no document specified for upload', () => {
+    component.fileChangeEvent({
+      target: {
+        files: []
+      }
+    });
+    expect(component.valid).toBeTruthy();
+  });
 });

@@ -16,4 +16,12 @@ export class FieldReadLabelComponent {
   @Input()
   withLabel: boolean;
 
+  public isLabel(): boolean {
+    return this.caseField.field_type.type === 'Label';
+  }
+
+  public isComplex(): boolean {
+    return this.caseField.field_type.type === 'Complex';
+  }
+
 }

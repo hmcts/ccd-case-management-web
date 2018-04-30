@@ -8,7 +8,7 @@ import { MockComponent } from 'ng2-mock-component';
 
 describe('LabelFieldComponent', () => {
 
-  const $CONTENT = By.css('div>h3 ccd-markdown');
+  const $CONTENT = By.css('dl>dt ccd-markdown');
 
   const FIELD_TYPE: FieldType = {
     id: 'Label',

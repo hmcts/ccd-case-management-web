@@ -8,14 +8,10 @@ import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
-import { ActivityService } from '../../core/activity/activity.service';
+import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
-
-// TODO make this configurable
-const RETRY = 5;
-const NEXT_POLL_REQUEST_MS = 7500;
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -38,7 +34,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
-    private activityService: ActivityService
+    private activityPollingService: ActivityPollingService
   ) {}
 
   ngOnInit(): void {
@@ -63,21 +59,8 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // TODO: We need to pull this method to ActivityPolllingService
   postViewActivity(): Observable<Activity[]> {
-    return this.activityService.postActivity(this.caseDetails.case_id, ActivityService.ACTIVITY_VIEW)
-      .switchMap(
-        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
-          .switchMap(() => this.postViewActivity())
-          .startWith(data)
-      ).retryWhen(
-        attempts =>
-          attempts
-            .zip(Observable.range(1, RETRY), (_, i) => i)
-            .flatMap(i => {
-              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
-              return Observable.timer(i * 1000);
-            }));
+    return this.activityPollingService.postViewActivity(this.caseDetails.case_id);
   }
 
   clearErrorsAndWarnings() {

@@ -4,57 +4,60 @@ let CaseListResults = require('../../../page-objects/caseListResults.po.js')
 let CaseSearchFilters = require('../../../page-objects/caseSearchFilters.po.js')
 let CaseCreateStart = require('../../../page-objects/caseCreateStart.po.js')
 let CaseCreateStep = require('../../../page-objects/caseCreateStep.po.js')
+let CaseCreateCYA = require('../../../page-objects/caseCreateCYA.po.js')
 let CaseView = require('../../../page-objects/caseView.po.js')
 let StepUtils = require('../../../utils/step.utils.js')
 
-describe('User - navigation', function() {
+describe('user - navigation', function() {
 
 beforeEach(function(){
 
+   let browserUtils = new BrowserUtils("", false)
+
    browser.ignoreSynchronization = true
-   browser.get(process.env.TEST_URL || 'http://localhost:3451')
-
-   loginPage = new Login
-   loginPage.isLoaded()
-   loginPage.signInAs('caseworker-autotest1')
-
-   browserUtils = new BrowserUtils
-   browserUtils.waitForUrlToChangeTo(RegExp("list"))
-   browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
-   browser.waitForAngular()
+   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451').then(function()
+      { let loginPage = new Login
+        loginPage.signInTo()
+      })
 
 });
 
 afterEach(function(){
 
+  let browserUtils = new BrowserUtils("", false)
+  browserUtils.signOut()
+
 });
 
 it('Should be able to navigate to search', function() {
 
-   ccdBannerPage = new CCDBanner
+   let ccdBannerPage = new CCDBanner
 
    ccdBannerPage.isLoaded()
    ccdBannerPage.clickSearchBoxLabel()
 
-   expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1')
-   expect(ccdBannerPage.getUserNameLabel()).toContain('User Test')
-   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List')
-   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Create Case')
-   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search')
-   expect(ccdBannerPage.getSearchBoxLabel()).toBe('Search')
-   expect(ccdBannerPage.getFooterText()).toContain('Help')
-   expect(ccdBannerPage.getFooterText()).toContain('Email:')
-   expect(ccdBannerPage.getFooterText()).toContain('Phone:')
-   expect(ccdBannerPage.getFooterText()).toContain('Monday to Friday')
+   let failedOnLoggedInUserName = 'user appears not logged in on search page'
+   let failedOnMissingMenuItem = 'missing from menu bar on search page'
+   let failedOnMissingFooterItem = 'missing from footer on search page'
 
-   caseSearchFiltersPage = new CaseSearchFilters
+   expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1', failedOnLoggedInUserName)
+   expect(ccdBannerPage.getUserNameLabel()).toContain('Auto Test ▼', failedOnLoggedInUserName)
+   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Create Case', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getSearchBoxLabel()).toBe('Search', failedOnMissingMenuItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Help', failedOnMissingFooterItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Email:', failedOnMissingFooterItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Phone:', failedOnMissingFooterItem)
+   expect(ccdBannerPage.getFooterText()).toContain('Monday to Friday', failedOnMissingFooterItem)
+
+   let caseSearchFiltersPage = new CaseSearchFilters
 
    caseSearchFiltersPage.isLoaded()
 
    expect(caseSearchFiltersPage.getPageTitleLabel()).toBe('Search')
    expect(caseSearchFiltersPage.jurisdictionDropDownIsClickable()).toBeTruthy();
    expect(caseSearchFiltersPage.caseTypeDropDownIsClickable()).toBeTruthy();
-  // expect(caseSearchFiltersPage.applyButtonIsClickable()).toBeTruthy();
 
 });
 
@@ -62,59 +65,63 @@ it('Should be able to navigate to create case', function() {
 
    let caseListResultsPage = new CaseListResults
 
-   caseListResultsPage.isLoaded()
-
    caseListResultsPage.clickCreateCaseButton()
 
-   caseCreateStartPage = new CaseCreateStart
+   let caseCreateStartPage = new CaseCreateStart
 
-   expect(caseCreateStartPage.getPageTitleLabel()).toBe('Create Case')
-   expect(caseCreateStartPage.jurisdictionDropDownIsClickable()).toBeTruthy()
-   expect(caseCreateStartPage.caseTypeDropDownIsClickable()).toBeTruthy()
-   expect(caseCreateStartPage.eventDropDownIsClickable()).toBeTruthy()
-   expect(caseCreateStartPage.submitButtonIsClickable()).toBeTruthy()
+   let failedOnPageTitle = 'not on create case page - title missing'
+   let failedMissingDropDownOption = 'selection from drop down not possible on create case page'
 
+   expect(caseCreateStartPage.getPageTitleLabel()).toBe('Create Case', failedOnPageTitle)
+   expect(caseCreateStartPage.jurisdictionDropDownIsClickable()).toBeTruthy(failedMissingDropDownOption)
+   expect(caseCreateStartPage.caseTypeDropDownIsClickable()).toBeTruthy(failedMissingDropDownOption)
+   expect(caseCreateStartPage.eventDropDownIsClickable()).toBeTruthy(failedMissingDropDownOption)
+   expect(caseCreateStartPage.submitButtonIsClickable()).toBeTruthy(failedMissingDropDownOption)
 
 });
 
-it('Should be able to navigate to start to create case', function() {
+it('Should be able to navigate to start to create case steps', function() {
 
    let caseListResultsPage = new CaseListResults
 
-   caseListResultsPage.isLoaded()
-
    caseListResultsPage.clickCreateCaseButton()
 
-   createCaseStartPage = new CaseCreateStart
+   let createCaseStartPage = new CaseCreateStart
 
    createCaseStartPage.clickSubmitButton()
 
-   caseCreateStepPage = new CaseCreateStep
+   let caseCreateStepPage = new CaseCreateStep
 
-   expect(caseCreateStepPage.getPageTitleLabel()).toBe('Create a new case')
-   expect(caseCreateStepPage.continueButtonIsClickable()).toBeTruthy()
-   expect(caseCreateStepPage.previousButtonIsEnabled()).toBe(false)
-   expect(caseCreateStepPage.cancelLinkIsClickable()).toBeTruthy()
+   let failedOnPageTitle = 'not on create case step - title missing'
+   let failedOnMissingButton = 'missing button on create case step'
+   let failedOnButtonNotDisabled = 'button should not be clickable on create case step'
+
+   expect(caseCreateStepPage.getPageTitleLabel()).toBe('Create a new case', failedOnPageTitle)
+   expect(caseCreateStepPage.continueButtonIsClickable()).toBeTruthy(failedOnMissingButton)
+   expect(caseCreateStepPage.previousButtonIsEnabled()).toBe(false, failedOnButtonNotDisabled)
+   expect(caseCreateStepPage.cancelLinkIsClickable()).toBeTruthy(failedOnMissingButton)
 
 });
 
-it('Should be able to navigate to start to create case then cancel', function() {
+it('Should be able to navigate to start to create case steps then cancel', function() {
 
    let caseListResultsPage = new CaseListResults
 
-   caseListResultsPage.isLoaded()
-
    caseListResultsPage.clickCreateCaseButton()
 
-   createCaseStartPage = new CaseCreateStart
+   let createCaseStartPage = new CaseCreateStart
 
    createCaseStartPage.clickSubmitButton()
 
-   caseCreateStepPage = new CaseCreateStep
+   let caseCreateStepPage = new CaseCreateStep
 
    caseCreateStepPage.clickCancelLink()
 
-   expect(caseCreateStartPage.getPageTitleLabel()).toBe('Create Case')
+   let failedOnPageTitle = 'not on create case page - title missing'
+
+   let caseCreateStartPage =  new CaseCreateStart
+
+   expect(caseCreateStartPage.getPageTitleLabel()).toBe('Create Case', failedOnPageTitle)
 
 });
 
@@ -123,26 +130,33 @@ it('Should be able to navigate back to a previous create case step', function() 
 
    let caseListResultsPage = new CaseListResults
 
-   caseListResultsPage.isLoaded()
-
    caseListResultsPage.clickCreateCaseButton()
 
-   createCaseStartPage = new CaseCreateStart
+   let createCaseStartPage = new CaseCreateStart
 
    createCaseStartPage.clickSubmitButton()
 
-   caseCreateStepPage = new CaseCreateStep
+   let caseCreateStepPage = new CaseCreateStep
 
    caseCreateStepPage.clickContinueButton()
 
-   browser.waitForAngular
+   browser.waitForAngular()
+
    caseCreateStepPage.isLoaded()
-   expect(caseCreateStepPage.previousButtonIsClickable()).toBe(true)
+
+   let failedOnMissingButton = 'button should be clickable on create case step'
+
+   expect(caseCreateStepPage.previousButtonIsClickable()).toBe(true, failedOnMissingButton)
+
    caseCreateStepPage.clickPreviousButton()
 
-   browser.waitForAngular
+   browser.waitForAngular()
+
    caseCreateStepPage.isLoaded()
-   expect(caseCreateStepPage.previousButtonIsEnabled()).toBe(false)
+
+   let failedOnButtonNotDisabled = 'button should not be clickable on create case step'
+
+   expect(caseCreateStepPage.previousButtonIsEnabled()).toBe(false, failedOnButtonNotDisabled)
 
 });
 
@@ -150,22 +164,29 @@ it('Should be able to navigate through all create case step to view a case', fun
 
    let caseListResultsPage = new CaseListResults
 
-   caseListResultsPage.isLoaded()
+   let stopAtCYA = 3
 
    let stepUtils = new StepUtils
 
-   stepUtils.fromCaseListResults_startANewCase()
-   stepUtils.fromCaseStep_throughSteps(3)
+   stepUtils.caseListResultsPageStartingANewCase()
 
-   caseCreateStepPage.clickSubmitButton()
+   let caseCreateStep = new CaseCreateStep
 
-   caseViewPage = new CaseView
+   caseCreateStep.continueBy(stopAtCYA)
+
+   let caseCreateCYAPage = new CaseCreateCYA
+
+   caseCreateCYAPage.clickSubmitButton()
+
+   let caseViewPage = new CaseView
 
    caseViewPage.isLoaded()
 
    let caseIDMatcher = /^#(\d){4}-(\d){4}-(\d){4}-(\d){4}$/
 
-   expect(caseViewPage.getCaseID()).toMatch(caseIDMatcher)
+   let failedOnMissingCaseId = 'not on case view page - case id missing'
+
+   expect(caseViewPage.getCaseID()).toMatch(caseIDMatcher, failedOnMissingCaseId)
 
 });
 

@@ -7,15 +7,7 @@ describe('Case List - Case type', function() {
 
 beforeEach(function(){
 
-        browser.get(process.env.TEST_URL || 'http://localhost:3451')
-
-        browserUtils = new BrowserUtils
-
-        browserUtils.waitForUrlToChangeTo(RegExp("list"))
-
-        browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
-        browser.waitForAngular()
-
+   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451')
 
 });
 

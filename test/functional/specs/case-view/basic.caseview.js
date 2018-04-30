@@ -5,6 +5,8 @@ describe('Case management - case view', function() {
 
 beforeEach(function(){
 
+   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451')
+
 });
 
 afterEach(function(){

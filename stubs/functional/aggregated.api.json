@@ -4,8 +4,8 @@
       "idam": {
         "id": 42,
         "email": "case-worker@hmcts.net",
-        "first_name": "Case",
-        "last_name": "Worker",
+        "forename": "Case",
+        "surname": "Worker",
         "roles": [
           "case-worker"
         ]

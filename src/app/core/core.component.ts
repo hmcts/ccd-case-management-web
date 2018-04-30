@@ -42,7 +42,6 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
   isSolicitor(): boolean {
-    // return this.profile.isSolicitor();
-    return false;
+    return this.profile.isSolicitor();
   }
 }

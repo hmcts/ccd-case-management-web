@@ -27,6 +27,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   callbackErrorsSubject: Subject<any> = new Subject();
   ignoreWarning = false;
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+  isSubmitting = false;
 
   constructor(
     private caseEdit: CaseEditComponent,
@@ -83,6 +84,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   submit() {
+    this.isSubmitting = true;
     this.error = null;
     let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields,
       this.editForm.value);
@@ -109,6 +111,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   next(): Promise<boolean> {
+    this.isSubmitting = false;
     return this.caseEdit.next(this.currentPage.id);
   }
 
@@ -123,6 +126,10 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   cancel(): void {
     this.caseEdit.cancel();
+  }
+
+  submitting(): boolean {
+    return this.isSubmitting;
   }
 
   private scrollToTop(): void {

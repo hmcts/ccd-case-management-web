@@ -100,6 +100,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
           }
         }
       );
+    this.scrollToTop();
   }
 
   callbackErrorsNotify(errorContext: CallbackErrorsContext) {
@@ -122,5 +123,9 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   cancel(): void {
     this.caseEdit.cancel();
+  }
+
+  private scrollToTop(): void {
+    window.scrollTo(0, 0);
   }
 }

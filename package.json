@@ -11,7 +11,7 @@
     "test:coverage": "istanbul check-coverage --statements 80 --lines 80 --functions 80 --branches 80",
     "test:a11y": "echo 'TODO: Accessibility tests'",
     "test:nsp": "nsp check",
-    "test:smoke": "echo 'TODO: Smoke tests'",
+    "test:smoke": "yarn test:smokeDockTest",
     "test:smokeDockTest": "docker build --no-cache=true  -t ccd-protractor:latest test/. && docker run -t --rm -e CCD_CASEWORKER_AUTOTEST_EMAIL=$CCD_CASEWORKER_AUTOTEST_EMAIL -e CCD_CASEWORKER_AUTOTEST_PASSWORD=$CCD_CASEWORKER_AUTOTEST_PASSWORD -e TEST_URL=$TEST_URL --name protractor-runner ccd-protractor:latest test:smokeDocker",
     "test:smokeDocker": "protractor test/smoke.conf.js",
     "test:functional": "echo 'TODO: Functional tests'",

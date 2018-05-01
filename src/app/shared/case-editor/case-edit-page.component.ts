@@ -84,25 +84,27 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   submit() {
-    this.isSubmitting = true;
-    this.error = null;
-    let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields,
-      this.editForm.value);
-    let caseEventData: CaseEventData = this.formValueService.sanitise(currentPageFields) as CaseEventData;
-    caseEventData.event_token = this.eventTrigger.event_token;
-    caseEventData.ignore_warning = this.ignoreWarning;
-    this.caseEdit.validate(caseEventData)
-      .subscribe(() => this.next(),
-        error => {
-          this.error = error;
-          this.callbackErrorsSubject.next(this.error);
-          if (this.error.details) {
-            this.formErrorService
-              .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
+    if (!this.isSubmitting) {
+      this.isSubmitting = true;
+      this.error = null;
+      let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields,
+        this.editForm.value);
+      let caseEventData: CaseEventData = this.formValueService.sanitise(currentPageFields) as CaseEventData;
+      caseEventData.event_token = this.eventTrigger.event_token;
+      caseEventData.ignore_warning = this.ignoreWarning;
+      this.caseEdit.validate(caseEventData)
+        .subscribe(() => this.next(),
+          error => {
+            this.error = error;
+            this.callbackErrorsSubject.next(this.error);
+            if (this.error.details) {
+              this.formErrorService
+                .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
+            }
           }
-        }
-      );
-    this.scrollToTop();
+        );
+      this.scrollToTop();
+    }
   }
 
   callbackErrorsNotify(errorContext: CallbackErrorsContext) {

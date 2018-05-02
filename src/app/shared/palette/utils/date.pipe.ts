@@ -19,7 +19,7 @@ export class DatePipe implements PipeTransform {
       let date = this.getDate(match);
       let offsetDate = this.getOffsetDate(date);
 
-      resultDate = DatePipe.MONTHS[offsetDate.getMonth()] + ' ' + offsetDate.getDate() + ', ' + offsetDate.getFullYear();
+      resultDate = `${offsetDate.getDate()} ${DatePipe.MONTHS[offsetDate.getMonth()]} ${offsetDate.getFullYear()}`;
       if (match[4] && match[5] && match[6] && format !== 'short') {
         resultDate += ', ';
         resultDate += this.getHour(offsetDate.getHours().toString()) + ':';

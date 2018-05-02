@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
@@ -15,6 +15,8 @@ import { Wizard } from './wizard.model';
 import { Router } from '@angular/router';
 import { WizardPage } from '../domain/wizard-page.model';
 import createSpyObj = jasmine.createSpyObj;
+import { WizardPageField } from '../domain/wizard-page-field.model';
+import { CaseField } from '../domain/definition/case-field.model';
 
 describe('CaseEditComponent', () => {
 
@@ -39,6 +41,26 @@ describe('CaseEditComponent', () => {
     ],
     wizard_pages: [],
     event_token: EVENT_TOKEN
+  };
+
+  const WIZARD_PAGE_FIELD: WizardPageField = {
+    case_field_id: 'PersonFirstName'
+  };
+
+  const CASE_FIELD: CaseField = {
+    id: 'PersonFirstName',
+    label: 'First name',
+    field_type: null,
+    display_context: 'READONLY',
+    show_condition: 'PersonLastName=\"Smith\"',
+    value: 'Robert'
+  };
+
+  const CASE_FIELD_2: CaseField = {
+    id: 'PersonLastName',
+    label: 'First name',
+    field_type: null,
+    display_context: 'READONLY'
   };
 
   let fixture: ComponentFixture<CaseEditComponent>;
@@ -158,22 +180,186 @@ describe('CaseEditComponent', () => {
     expect(routerStub.navigate).toHaveBeenCalled();
   });
 
-  it('should navigate to next page when next is called', () => {
-    component.wizard = wizard;
-    wizard.nextPage.and.returnValue(new WizardPage());
-    fixture.detectChanges();
-    component.next('somePage');
-    expect(wizard.nextPage).toHaveBeenCalled();
-    expect(routerStub.navigate).toHaveBeenCalled();
+  describe('next page', () => {
+
+    it('should navigate to next page when next is called and do not clear visible field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.nextPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormControl('John'),
+            PersonLastName: new FormControl('Smith')
+          })
+        });
+      fixture.detectChanges();
+
+      component.next('somePage');
+
+      expect(wizard.nextPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(component.form.get('data').get('PersonFirstName').value).toBe('John');
+    });
+
+    it('should navigate to next page when next is called and clear hidden simple form field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.nextPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormControl('John'),
+            PersonLastName: new FormControl('Other')
+          })
+        });
+      fixture.detectChanges();
+
+      component.next('somePage');
+
+      expect(wizard.nextPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(component.form.get('data').get('PersonFirstName').value).toBeNull();
+    });
+
+    it('should navigate to next page when next is called and clear hidden complex form field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.nextPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormGroup({PersonMiddleName: new FormControl('John')}),
+            PersonLastName: new FormControl('Other')
+          })
+        });
+      fixture.detectChanges();
+
+      component.next('somePage');
+
+      expect(wizard.nextPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(JSON.stringify(component.form.get('data').get('PersonFirstName').value)).toBe(JSON.stringify({ PersonMiddleName: null }));
+    });
+
+    it('should navigate to next page when next is called and clear hidden collection form field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.nextPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormArray([new FormGroup({PersonMiddleName: new FormControl('John')})]),
+            PersonLastName: new FormControl('Other')
+          })
+        });
+      fixture.detectChanges();
+
+      component.next('somePage');
+
+      expect(wizard.nextPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(JSON.stringify(component.form.get('data').get('PersonFirstName').value)).toBe(JSON.stringify([ { PersonMiddleName: null } ]));
+    });
   });
 
-  it('should navigate to previous page when previous is called', () => {
-    component.wizard = wizard;
-    wizard.previousPage.and.returnValue(new WizardPage());
-    fixture.detectChanges();
-    component.previous('somePage');
-    expect(wizard.previousPage).toHaveBeenCalled();
-    expect(routerStub.navigate).toHaveBeenCalled();
+  describe('previous page', () => {
+
+    it('should navigate to previous page when previous is called and do not clear visible field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.previousPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormControl('John'),
+            PersonLastName: new FormControl('Smith')
+          })
+        });
+      fixture.detectChanges();
+
+      component.previous('somePage');
+
+      expect(wizard.previousPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(component.form.get('data').get('PersonFirstName').value).toBe('John');
+    });
+
+    it('should navigate to previous page when previous is called and clear hidden simple form field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.previousPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormControl('John'),
+            PersonLastName: new FormControl('Other')
+          })
+        });
+      fixture.detectChanges();
+
+      component.previous('somePage');
+
+      expect(wizard.previousPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(component.form.get('data').get('PersonFirstName').value).toBeNull();
+    });
+
+    it('should navigate to previous page when next is called and clear hidden complex form field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.previousPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormGroup({PersonMiddleName: new FormControl('John')}),
+            PersonLastName: new FormControl('Other')
+          })
+        });
+      fixture.detectChanges();
+
+      component.previous('somePage');
+
+      expect(wizard.previousPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(JSON.stringify(component.form.get('data').get('PersonFirstName').value)).toBe(JSON.stringify({ PersonMiddleName: null }));
+    });
+
+    it('should navigate to previous page when next is called and clear hidden collection form field', () => {
+      component.wizard = wizard;
+      let currentPage = new WizardPage();
+      currentPage.wizard_page_fields = [WIZARD_PAGE_FIELD];
+      currentPage.case_fields = [CASE_FIELD, CASE_FIELD_2];
+      wizard.getPage.and.returnValue(currentPage);
+      wizard.previousPage.and.returnValue(new WizardPage());
+      component.form = new FormGroup({
+        data : new FormGroup({
+            PersonFirstName: new FormArray([new FormGroup({PersonMiddleName: new FormControl('John')})]),
+            PersonLastName: new FormControl('Other')
+          })
+        });
+      fixture.detectChanges();
+
+      component.previous('somePage');
+
+      expect(wizard.previousPage).toHaveBeenCalled();
+      expect(routerStub.navigate).toHaveBeenCalled();
+      expect(JSON.stringify(component.form.get('data').get('PersonFirstName').value)).toBe(JSON.stringify([ { PersonMiddleName: null } ]));
+    });
   });
 
   it('should navigate to the page when navigateToPage is called', () => {

@@ -8,6 +8,7 @@ import { Predicate } from '../predicate';
 import { WizardPage } from '../domain/wizard-page.model';
 import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ShowCondition } from '../conditional-show/conditional-show.model';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -79,13 +80,16 @@ export class CaseEditComponent implements OnInit {
   }
 
   next(currentPageId: string): Promise<boolean> {
+    this.clearHiddenFieldsOnWizardPage(currentPageId);
+
     let nextPage = this.wizard.nextPage(currentPageId, this.buildCanShowPredicate());
     return this.router.navigate([nextPage ? nextPage.id : 'submit'], { relativeTo: this.route });
   }
 
   previous(currentPageId: string): Promise<boolean> {
-    let previousPage = this.wizard.previousPage(currentPageId, this.buildCanShowPredicate());
+    this.clearHiddenFieldsOnWizardPage(currentPageId);
 
+    let previousPage = this.wizard.previousPage(currentPageId, this.buildCanShowPredicate());
     if (!previousPage) {
       return Promise.resolve(false);
     }
@@ -105,4 +109,47 @@ export class CaseEditComponent implements OnInit {
     this.confirmation = confirmation;
     return this.router.navigate(['confirm'], {relativeTo: this.route});
   }
+
+  private clearHiddenFieldsOnWizardPage(currentPageId) {
+    let currentPage: WizardPage = this.wizard.getPage(currentPageId, this.buildCanShowPredicate());
+    let formFields = this.form.getRawValue();
+    currentPage.wizard_page_fields.forEach(wpf => {
+      let case_field = this.findCaseFieldByWizardPageFieldId(currentPage, wpf);
+      if (this.hasShowConditionField(case_field, formFields)) {
+          let condition = new ShowCondition(case_field.show_condition);
+          if (!condition.match(formFields.data)) {
+            this.resetField(case_field);
+          }
+      }
+    });
+  }
+
+  private findCaseFieldByWizardPageFieldId(currentPage, wizardPageField) {
+    return currentPage.case_fields.find(cf => cf.id === wizardPageField.case_field_id);
+  }
+
+  private hasShowConditionField(case_field, formFields): boolean {
+    return case_field.show_condition && formFields.data[case_field.show_condition.split('=')[0]];
+  }
+
+  private resetField(field) {
+    if (Array.isArray(field.value)) {
+      field.value.splice(0, field.value.length);
+    } else if (this.isObject(field.value)) {
+      field.value = {};
+    } else {
+      field.value = '';
+    }
+    if (this.form.get('data').get(field.id)) {
+      this.form.get('data').get(field.id).reset();
+    }
+  }
+
+  private getType(elem): string {
+    return Object.prototype.toString.call(elem).slice(8, -1);
+  }
+
+  private isObject(elem) {
+    return this.getType(elem) === 'Object';
+  };
 }

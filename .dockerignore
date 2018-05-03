@@ -1,3 +1,6 @@
 *
+!package.json
+!yarn.lock
+!src/
 !docker/
-!dist/
+

@@ -29,7 +29,7 @@ export class CaseEditSubmitComponent implements OnInit {
   error: HttpError;
   callbackErrorsSubject: Subject<any> = new Subject();
   ignoreWarning = false;
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+  triggerText: string;
   wizard: Wizard;
   profile: Profile;
 
@@ -45,6 +45,8 @@ export class CaseEditSubmitComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventTrigger = this.caseEdit.eventTrigger;
+    this.triggerText = this.eventTrigger.end_button_label ? this.eventTrigger.end_button_label
+      : CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
     this.editForm = this.caseEdit.form;
     this.wizard = this.caseEdit.wizard;
     this.profile = this.getProfile(this.route);

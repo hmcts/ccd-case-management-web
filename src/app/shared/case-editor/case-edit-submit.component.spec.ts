@@ -11,16 +11,18 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { WizardPage } from '../domain/wizard-page.model';
 import { FieldsUtils } from '../utils/fields.utils';
 import { IsCompoundPipe } from '../palette/utils/is-compound.pipe';
-import createSpyObj = jasmine.createSpyObj;
 import { CaseField } from '../domain/definition/case-field.model';
 import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
+import { By } from '@angular/platform-browser';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('CaseEditSubmitComponent', () => {
   let comp: CaseEditSubmitComponent;
   let fixture: ComponentFixture<CaseEditSubmitComponent>;
   let de: DebugElement;
 
+  let END_BUTTON_LABEL = 'Go now!';
   let formValueService: any;
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();
@@ -68,7 +70,7 @@ describe('CaseEditSubmitComponent', () => {
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
-      'eventTrigger': {'case_fields': []},
+      'eventTrigger': {'case_fields': [], 'end_button_label': END_BUTTON_LABEL},
       'wizard': wizard,
       'hasPrevious': () => true,
       'getPage': () => firstPage,
@@ -104,6 +106,11 @@ describe('CaseEditSubmitComponent', () => {
     comp = fixture.componentInstance;
     de = fixture.debugElement;
     fixture.detectChanges();
+  });
+
+  it('must render correct button label', () => {
+    let buttons = de.queryAll(By.css('div>button'));
+    expect(buttons[1].nativeElement.textContent.trim()).toEqual(END_BUTTON_LABEL);
   });
 
   it('should delegate navigateToPage calls to caseEditComponent', () => {

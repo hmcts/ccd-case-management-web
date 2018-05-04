@@ -85,11 +85,10 @@ export class CaseEditComponent implements OnInit {
 
   previous(currentPageId: string): Promise<boolean> {
     let previousPage = this.wizard.previousPage(currentPageId, this.buildCanShowPredicate());
-
     if (!previousPage) {
       return Promise.resolve(false);
     }
-
+    this.resetInvalidFormFields();
     return this.router.navigate([previousPage.id], { relativeTo: this.route });
   }
 
@@ -104,5 +103,14 @@ export class CaseEditComponent implements OnInit {
   confirm(confirmation: Confirmation): Promise<boolean> {
     this.confirmation = confirmation;
     return this.router.navigate(['confirm'], {relativeTo: this.route});
+  }
+
+  private resetInvalidFormFields() {
+    Object.keys(this.form.controls['data'].value).forEach(key => {
+      const control = this.form.controls['data'].get(key);
+      if (control.touched && control.invalid) {
+        control.reset();
+      }
+    });
   }
 }

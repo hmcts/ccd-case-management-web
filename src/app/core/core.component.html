@@ -1,16 +1,17 @@
 <div defaultOverlayTarget></div>
 
-<!-- Condition: Case Worker -->
 <!-- BETA -->
 <cut-phase-bar *ngIf="!isSolicitor()" phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
 
 <!-- Header : Start -->
 <cut-header-bar [title]="selectedJurisdictionName"
+                [isSolicitor]="isSolicitor()"
                 username="{{profile?.user.idam.forename | titlecase}} {{profile?.user.idam.surname | titlecase}}"
                 (signOutRequest)='signOut()'>
 
-  <!-- Conditional Header menu : Start -->
-  <div *ngIf="isSolicitor() && true" headerNavigation>
+  <!-- Header menu : Start -->
+  <!-- "true" condition is placeholder whether to display header menu or not -->
+  <div *ngIf="true" headerNavigation>
     <ul id="proposition-links">
       <li>
         <cut-nav-item label="Case List" link="/list/case"></cut-nav-item>
@@ -20,17 +21,16 @@
       </li>
     </ul>
   </div>
-  <!-- Conditional Header menu : End -->
+  <!-- Header menu : End -->
 
 </cut-header-bar>
 <!-- Header : End -->
 
-<!-- Conditional: Solicitor -->
-<!-- Mini blue bar -->
-<div *ngIf="isSolicitor() && false" id="global-header-bar"></div>
+<!-- Mini blue bar : A placeholder for now -->
+<div *ngIf="false" id="global-header-bar"></div>
 
 <!-- Big blue bar : Start -->
-<cut-nav-bar *ngIf="true" class="global-navigation">
+<cut-nav-bar class="global-navigation">
   <div class="nav-left" leftNavLinks>
     <div *ngIf="!isSolicitor()">
       <ul id="menu-links-left">
@@ -44,25 +44,24 @@
     </div>
   </div>
   <div class="nav-right" rightNavLinks>
-    <div *ngIf="isSolicitor()" class="search-wrapper">
+    <div class="search-wrapper">
+      <ul id="menu-links-right">
+        <li>
+          <cut-nav-item id="search" label="Search" link="/search" imageLink="/img/icon-search-white.png"></cut-nav-item>
+        </li>
+      </ul>
+      <!-- For Input type search field...
       <input type='text' placeholder='' class='search-input' />
       <div class="search-img-div">
         <img class="search-img" src='../../img/icon-search-white.png' />
       </div>
+      -->
     </div>
-    <!--
-    <ul id="menu-links-right">
-      <li>
-        <cut-nav-item id="search" label="Search" link="/search" imageLink="/img/icon-search-white.png"></cut-nav-item>
-      </li>
-    </ul>
-    -->
   </div>
 </cut-nav-bar>
 <!-- Big blue bar : End -->
 
-<!-- Condition: Case Worker -->
-<!-- BETA -->
+<!-- BETA : For Solicitor -->
 <cut-phase-bar *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
 
 <!-- Main area : Start -->
@@ -76,5 +75,5 @@
 <!-- Main area : End -->
 
 <!-- Footer : Start -->
-<cut-footer-bar email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)"></cut-footer-bar>
+<cut-footer-bar [isSolicitor]="isSolicitor()" email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)"></cut-footer-bar>
 <!-- Footer : End -->

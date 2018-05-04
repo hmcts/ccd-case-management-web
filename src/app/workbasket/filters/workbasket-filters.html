@@ -1,25 +1,21 @@
 <form class="global-display">
-  <div class="x-img">
-    <img src="../../../img/x.PNG" />
-  </div>
-
   <div class="form-group">
-    <label class="form-label form-label-bold dropdown-label" for="wb-jurisdiction">Jurisdiction</label>
-    <select class="form-control form-control-3-4 dropdown" id="wb-jurisdiction" name="jurisdiction" [(ngModel)]="selected.jurisdiction" (change)="onJurisdictionIdChange()">
+    <label class="form-label form-label-bold" for="wb-jurisdiction">Jurisdiction</label>
+    <select class="form-control form-control-3-4" id="wb-jurisdiction" name="jurisdiction" [(ngModel)]="selected.jurisdiction" (change)="onJurisdictionIdChange()">
       <option *ngFor="let j of jurisdictions" [ngValue]="j">{{j.name}}</option>
     </select>
   </div>
 
   <div class="form-group">
-    <label class="form-label form-label-bold dropdown-label" for="wb-case-type">Case type</label>
-    <select class="form-control form-control-3-4 dropdown" id="wb-case-type" name="case-type" [(ngModel)]="selected.caseType" [disabled]="isCaseTypesDropdownDisabled()" (change)="onCaseTypeIdChange()">
+    <label class="form-label form-label-bold" for="wb-case-type">Case type</label>
+    <select class="form-control form-control-3-4" id="wb-case-type" name="case-type" [(ngModel)]="selected.caseType" [disabled]="isCaseTypesDropdownDisabled()" (change)="onCaseTypeIdChange()">
       <option *ngFor="let ct of selectedJurisdictionCaseTypes" [ngValue]="ct">{{ct.name}}</option>
     </select>
   </div>
 
   <div class="form-group">
-    <label class="form-label form-label-bold dropdown-label" for="wb-case-state">State</label>
-    <select class="form-control form-control-3-4 dropdown" id="wb-case-state" name="state" [(ngModel)]="selected.caseState" [disabled]="isCaseStatesDropdownDisabled()">
+    <label class="form-label form-label-bold" for="wb-case-state">State</label>
+    <select class="form-control form-control-3-4" id="wb-case-state" name="state" [(ngModel)]="selected.caseState" [disabled]="isCaseStatesDropdownDisabled()">
       <option *ngFor="let cs of selectedCaseTypeStates" [ngValue]="cs">{{cs.name}}</option>
     </select>
   </div>

@@ -28,7 +28,7 @@ describe('CaseEditSubmitComponent', () => {
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
   const FORM_GROUP = new FormGroup({
-    'data': new FormGroup({'PersonLastName': new FormControl('Khaleesi')})
+    'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
   });
   let caseEditComponent: any;
   let pages: WizardPage[] = [
@@ -70,7 +70,7 @@ describe('CaseEditSubmitComponent', () => {
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
-      'eventTrigger': {'case_fields': [], 'end_button_label': END_BUTTON_LABEL},
+      'eventTrigger': { 'case_fields': [], 'end_button_label': END_BUTTON_LABEL },
       'wizard': wizard,
       'hasPrevious': () => true,
       'getPage': () => firstPage,
@@ -90,12 +90,12 @@ describe('CaseEditSubmitComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {provide: CaseEditComponent, useValue: caseEditComponent},
-        {provide: FormValueService, useValue: formValueService},
-        {provide: FormErrorService, useValue: formErrorService},
-        {provide: CaseFieldService, useValue: caseFieldService},
-        {provide: FieldsUtils, useValue: fieldsUtils},
-        {provide: ActivatedRoute, useValue: mockRoute}
+        { provide: CaseEditComponent, useValue: caseEditComponent },
+        { provide: FormValueService, useValue: formValueService },
+        { provide: FormErrorService, useValue: formErrorService },
+        { provide: CaseFieldService, useValue: caseFieldService },
+        { provide: FieldsUtils, useValue: fieldsUtils },
+        { provide: ActivatedRoute, useValue: mockRoute }
       ]
     }).compileComponents();
 
@@ -173,4 +173,98 @@ describe('CaseEditSubmitComponent', () => {
     expect(result).toBeTruthy();
   });
 
+});
+
+describe('CaseEditSubmitComponent without custom end button label', () => {
+  let comp: CaseEditSubmitComponent;
+  let fixture: ComponentFixture<CaseEditSubmitComponent>;
+  let de: DebugElement;
+
+  let formValueService: any;
+  let formErrorService: any;
+  let caseFieldService = new CaseFieldService();
+  let fieldsUtils: FieldsUtils = new FieldsUtils();
+  const FORM_GROUP = new FormGroup({
+    'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
+  });
+  let caseEditComponent: any;
+  let pages: WizardPage[] = [
+    aWizardPage('page1', 'Page 1', 1),
+  ];
+  let firstPage = pages[0];
+  let wizard: Wizard = new Wizard(pages);
+
+  let mockRoute: any = {
+    snapshot: {
+      data: {},
+      params: {},
+      pathFromRoot: [
+        {},
+        {
+          data: {
+            profile: {
+              user: {
+                idam: {
+                  id: 'userId',
+                  email: 'string',
+                  forename: 'string',
+                  surname: 'string',
+                  roles: ['caseworker', 'caseworker-test', 'caseworker-probate-solicitor']
+                }
+              },
+              'isSolicitor': () => false,
+            }
+          }
+        }
+      ]
+    },
+    params: Observable.of({})
+  };
+
+  beforeEach(async(() => {
+    caseEditComponent = {
+      'form': FORM_GROUP,
+      'data': '',
+      'eventTrigger': { 'case_fields': [] },
+      'wizard': wizard,
+      'hasPrevious': () => true,
+      'getPage': () => firstPage,
+      'navigateToPage': () => undefined,
+      'cancel': () => undefined
+    };
+    formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
+    formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);
+
+    spyOn(caseEditComponent, 'navigateToPage');
+    spyOn(caseEditComponent, 'cancel');
+
+    TestBed.configureTestingModule({
+      declarations: [
+        CaseEditSubmitComponent,
+        IsCompoundPipe
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: CaseEditComponent, useValue: caseEditComponent },
+        { provide: FormValueService, useValue: formValueService },
+        { provide: FormErrorService, useValue: formErrorService },
+        { provide: CaseFieldService, useValue: caseFieldService },
+        { provide: FieldsUtils, useValue: fieldsUtils },
+        { provide: ActivatedRoute, useValue: mockRoute }
+      ]
+    }).compileComponents();
+
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CaseEditSubmitComponent);
+    comp = fixture.componentInstance;
+    de = fixture.debugElement;
+    fixture.detectChanges();
+  });
+
+  it('must render default button label when custom one is not supplied', () => {
+    let buttons = de.queryAll(By.css('div>button'));
+    expect(buttons[1].nativeElement.textContent.trim()).toEqual('Submit');
+  });
 });

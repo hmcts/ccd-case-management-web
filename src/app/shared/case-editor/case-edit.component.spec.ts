@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
@@ -174,6 +174,25 @@ describe('CaseEditComponent', () => {
     component.previous('somePage');
     expect(wizard.previousPage).toHaveBeenCalled();
     expect(routerStub.navigate).toHaveBeenCalled();
+  });
+
+  it('should reset invalid form fields when previous is called', () => {
+    component.wizard = wizard;
+    wizard.previousPage.and.returnValue(new WizardPage());
+
+    component.form.controls['data'] = new FormGroup({
+      invalidNotTouched: new FormControl('Jon', Validators.minLength(10)),
+      invalidTouched: new FormControl('Jan', Validators.minLength(10)),
+      valid: new FormControl('Drew'),
+    });
+    component.form.controls['data'].get('invalidTouched').markAsTouched();
+    wizard.previousPage.and.returnValue(new WizardPage());
+    fixture.detectChanges();
+    component.previous('somePage');
+
+    expect(component.form.controls['data'].get('invalidNotTouched').value).toBe('Jon');
+    expect(component.form.controls['data'].get('invalidTouched').value).toBeNull();
+    expect(component.form.controls['data'].get('valid').value).toBe('Drew');
   });
 
   it('should navigate to the page when navigateToPage is called', () => {

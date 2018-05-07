@@ -1,7 +1,7 @@
 <form *ngIf="triggers.length" class="EventTrigger" (ngSubmit)="onTrigger.emit(triggerForm.value['trigger'])" [formGroup]="triggerForm">
   <div class="form-group">
     <label class="form-label">
-      Action to be taken
+      Next step
       <select class="form-control" formControlName="trigger" [ngClass]="{
         'EventTrigger-empty': !triggerForm.value['trigger']
       }">

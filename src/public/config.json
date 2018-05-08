@@ -1,9 +1,9 @@
 {
-  "login_url": "https://localhost:3501/login",
+  "login_url": "https://idam-test.dev.ccidam.reform.hmcts.net/login",
   "logout_url": "http://localhost:3453/logout",
   "api_url": "http://localhost:3453/aggregated",
   "case_data_url": "http://localhost:3453/data",
-  "activity_url": "http://localhost:3453/activity",
+  "activity_url": "",
   "document_management_url": "http://localhost:3453/documents",
   "remote_document_management_url": "https://api-gateway.dev.dm.reform.hmcts.net/documents",
   "pagination_page_size": 25,

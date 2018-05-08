@@ -1,7 +1,5 @@
-import { TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CaseEditPageComponent } from './case-edit-page.component';
-import { async } from '@angular/core/testing';
-import { ComponentFixture } from '@angular/core/testing';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CaseEditComponent } from './case-edit.component';
@@ -11,9 +9,10 @@ import { CaseField } from '../domain/definition/case-field.model';
 import { FormValueService } from '../../core/form/form-value.service';
 import { FormErrorService } from '../../core/form/form-error.service';
 import { Observable } from 'rxjs/Observable';
-import { FormGroup, FormControl } from '@angular/forms';
-import createSpyObj = jasmine.createSpyObj;
+import { FormControl, FormGroup } from '@angular/forms';
 import { CaseFieldService } from '../domain/case-field.service';
+import { aCaseField } from './case-edit.spec';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('CaseEditPageComponent', () => {
 
@@ -113,5 +112,29 @@ describe('CaseEditPageComponent', () => {
   it('should delegate cancel calls to caseEditComponent', () => {
     comp.cancel();
     expect(caseEditComponentStub.cancel).toHaveBeenCalled();
+  });
+
+  it('should allow empty values when field is OPTIONAL', () => {
+    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Text', 'OPTIONAL'));
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    expect(comp.currentPageIsNotValid()).toBeFalsy();
+  });
+
+  it('should allow empty document fields when OPTIONAL', () => {
+    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Document', 'OPTIONAL'));
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    expect(comp.currentPageIsNotValid()).toBeFalsy();
+  });
+
+  it('should not allow empty document fields when MANDATORY', () => {
+    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Document', 'MANDATORY'));
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    expect(comp.currentPageIsNotValid()).toBeTruthy();
   });
 });

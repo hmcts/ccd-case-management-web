@@ -13,6 +13,11 @@ locals {
 
   default_document_management_url = "^https?://(?:api-gateway\\.test\\.dm\\.reform\\.hmcts\\.net|dm-store-${var.env}\\.service\\.core-compute-${var.env}\\.internal(?::\\d+)?)"
   document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
+
+  // Vault name
+  previewVaultName = "${var.product}-case-web"
+  nonPreviewVaultName = "ccd-case-web-${var.env}"
+  vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
 }
 
 module "case-management-web" {
@@ -45,7 +50,7 @@ module "case-management-web" {
 
 module "ccd-case-management-web-vault" {
   source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "ccd-case-web-${var.env}" // Max 24 characters
+  name                = "${local.vaultName}" // Max 24 characters
   product             = "${var.product}"
   env                 = "${var.env}"
   tenant_id           = "${var.tenant_id}"

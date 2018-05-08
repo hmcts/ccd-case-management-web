@@ -29,7 +29,7 @@
   </fieldset>
 
   <div class="form-group form-group-related">
-    <button class="button" type="submit" [disabled]="currentPageIsNotValid()">Continue</button>
+    <button class="button" type="submit" [disabled]="currentPageIsNotValid() || submitting()">Continue</button>
   </div>
 
   <p><a (click)="cancel()" href="javascript:void(0)">Cancel</a></p>

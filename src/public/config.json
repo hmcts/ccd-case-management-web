@@ -1,5 +1,5 @@
 {
-  "login_url": "https://idam-test.dev.ccidam.reform.hmcts.net/login",
+  "login_url": "https://localhost:3501/login",
   "logout_url": "http://localhost:3453/logout",
   "api_url": "http://localhost:3453/aggregated",
   "case_data_url": "http://localhost:3453/data",

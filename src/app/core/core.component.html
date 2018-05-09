@@ -30,7 +30,7 @@
 <div *ngIf="false" id="global-header-bar"></div>
 
 <!-- Big blue bar : Start -->
-<cut-nav-bar class="global-navigation">
+<cut-nav-bar [isSolicitor]="isSolicitor()" class="global-navigation">
   <div class="nav-left" leftNavLinks>
     <div *ngIf="!isSolicitor()">
       <ul id="menu-links-left">
@@ -62,7 +62,7 @@
 <!-- Big blue bar : End -->
 
 <!-- BETA : For Solicitor -->
-<cut-phase-bar *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
+<cut-phase-bar [isSolicitor]="isSolicitor()" *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
 
 <!-- Main area : Start -->
 <div class="container-fluid">

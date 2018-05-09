@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReadComplexFieldComponent } from './read-complex-field.component';
+import { ReadComplexFieldTableComponent } from './read-complex-field-table.component';
 import { DebugElement } from '@angular/core';
 import { FieldType } from '../../domain/definition/field-type.model';
 import { By } from '@angular/platform-browser';
@@ -10,7 +10,7 @@ import { PaletteUtilsModule } from '../utils/utils.module';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { PaletteContext } from '../base-field/palette-context.enum';
 
-describe('ReadComplexFieldComponent', () => {
+describe('ReadComplexFieldTableComponent', () => {
 
   const $COMPLEX_PANEL = By.css('div.complex-panel');
   const $COMPLEX_PANEL_TITLE = By.css('dl.complex-panel-title');
@@ -24,8 +24,8 @@ describe('ReadComplexFieldComponent', () => {
     inputs: ['caseField', 'context']
   });
 
-  let fixture: ComponentFixture<ReadComplexFieldComponent>;
-  let component: ReadComplexFieldComponent;
+  let fixture: ComponentFixture<ReadComplexFieldTableComponent>;
+  let component: ReadComplexFieldTableComponent;
   let de: DebugElement;
 
   describe('when values split accross children fields', () => {
@@ -139,7 +139,7 @@ describe('ReadComplexFieldComponent', () => {
             ConditionalShowModule
           ],
           declarations: [
-            ReadComplexFieldComponent,
+            ReadComplexFieldTableComponent,
             FieldsFilterPipe,
 
             // Mock
@@ -149,7 +149,7 @@ describe('ReadComplexFieldComponent', () => {
         })
         .compileComponents();
 
-      fixture = TestBed.createComponent(ReadComplexFieldComponent);
+      fixture = TestBed.createComponent(ReadComplexFieldTableComponent);
       component = fixture.componentInstance;
 
       component.caseField = CASE_FIELD;
@@ -326,7 +326,7 @@ describe('ReadComplexFieldComponent', () => {
             ConditionalShowModule
           ],
           declarations: [
-            ReadComplexFieldComponent,
+            ReadComplexFieldTableComponent,
             FieldsFilterPipe,
 
             // Mock
@@ -336,7 +336,7 @@ describe('ReadComplexFieldComponent', () => {
         })
         .compileComponents();
 
-      fixture = TestBed.createComponent(ReadComplexFieldComponent);
+      fixture = TestBed.createComponent(ReadComplexFieldTableComponent);
       component = fixture.componentInstance;
 
       component.caseField = CASE_FIELD;

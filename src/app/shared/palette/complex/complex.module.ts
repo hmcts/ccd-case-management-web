@@ -9,6 +9,7 @@ import { IsCompoundPipe } from '../utils/is-compound.pipe';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { MarkdownModule } from '../../markdown/markdown.module';
 import { ReadComplexFieldRawComponent } from './read-complex-field-raw.component';
+import { ReadComplexFieldComponent } from './read-complex-field.component';
 
 @NgModule({
   imports: [
@@ -22,12 +23,14 @@ import { ReadComplexFieldRawComponent } from './read-complex-field-raw.component
     IsCompoundPipe,
   ],
   declarations: [
+    ReadComplexFieldComponent,
     ReadComplexFieldTableComponent,
     ReadComplexFieldRawComponent,
     WriteComplexFieldComponent,
     FieldsFilterPipe,
   ],
   entryComponents: [
+    ReadComplexFieldComponent,
     ReadComplexFieldTableComponent,
     ReadComplexFieldRawComponent,
     WriteComplexFieldComponent,

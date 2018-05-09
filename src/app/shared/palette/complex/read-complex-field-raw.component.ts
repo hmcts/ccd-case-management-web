@@ -6,7 +6,7 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
  * This is intended for rendering of Check Your Answer page.
  */
 @Component({
-  selector: 'ccd-read-complex-type-raw-field',
+  selector: 'ccd-read-complex-field-raw',
   templateUrl: './read-complex-field-raw.html',
   styleUrls: [],
 })

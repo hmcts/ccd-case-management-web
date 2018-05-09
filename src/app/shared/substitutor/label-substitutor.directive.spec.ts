@@ -423,7 +423,7 @@ describe('LabelSubstitutorDirective', () => {
             expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '7 Mar 2018' }, label);
         });
 
-        it('should pass form field value with invalid date', () => {
+        it('should pass form field value with invalid date when both form and case field values present', () => {
           let label = 'someLabel';
           comp.caseField = field('LabelB', '', {
               id: 'LabelB',

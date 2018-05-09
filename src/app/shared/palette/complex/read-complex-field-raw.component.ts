@@ -8,6 +8,8 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
 @Component({
   selector: 'ccd-read-complex-field-raw',
   templateUrl: './read-complex-field-raw.html',
-  styleUrls: [],
+  styleUrls: [
+    './read-complex-field-raw.scss'
+  ],
 })
 export class ReadComplexFieldRawComponent extends AbstractFieldReadComponent {}

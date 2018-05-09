@@ -31,8 +31,6 @@ import { ReadComplexFieldComponent } from './read-complex-field.component';
   ],
   entryComponents: [
     ReadComplexFieldComponent,
-    ReadComplexFieldTableComponent,
-    ReadComplexFieldRawComponent,
     WriteComplexFieldComponent,
   ],
   exports: [

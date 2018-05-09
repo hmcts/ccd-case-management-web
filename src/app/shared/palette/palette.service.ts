@@ -1,7 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { ReadTextFieldComponent } from './text/read-text-field.component';
 import { ReadTextAreaFieldComponent } from './text-area/read-text-area-field.component';
-import { ReadComplexFieldTableComponent } from './complex/read-complex-field-table.component';
+import { ReadComplexFieldComponent } from './complex/read-complex-field.component';
 import { ReadNumberFieldComponent } from './number/read-number-field.component';
 import { ReadYesNoFieldComponent } from './yes-no/read-yes-no-field.component';
 import { ReadEmailFieldComponent } from './email/read-email-field.component';
@@ -58,9 +58,9 @@ export class PaletteService {
         switch (caseField.field_type.id) {
           case 'AddressGlobalUK':
           case 'AddressUK':
-            return write ? WriteAddressFieldComponent : ReadComplexFieldTableComponent;
+            return write ? WriteAddressFieldComponent : ReadComplexFieldComponent;
           default:
-            return write ? WriteComplexFieldComponent : ReadComplexFieldTableComponent;
+            return write ? WriteComplexFieldComponent : ReadComplexFieldComponent;
         }
       case 'Collection':
         return write ? WriteCollectionFieldComponent : ReadCollectionFieldComponent;

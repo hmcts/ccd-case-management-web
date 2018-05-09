@@ -1,6 +1,6 @@
 import { PaletteService } from './palette.service';
 import { ReadTextFieldComponent } from './text/read-text-field.component';
-import { ReadComplexFieldTableComponent } from './complex/read-complex-field-table.component';
+import { ReadComplexFieldComponent } from './complex/read-complex-field.component';
 import { ReadNumberFieldComponent } from './number/read-number-field.component';
 import { ReadYesNoFieldComponent } from './yes-no/read-yes-no-field.component';
 import { ReadEmailFieldComponent } from './email/read-email-field.component';
@@ -65,8 +65,8 @@ describe('PaletteService', () => {
       assertComponent('Postcode', true, WriteTextFieldComponent, 'AnID');
     });
 
-    it('should get ReadComplexTypeField component class for ComplexType input', () => {
-      assertComponent('Complex', false, ReadComplexFieldTableComponent, 'AnID');
+    it('should get ReadComplexField component class for ComplexType input', () => {
+      assertComponent('Complex', false, ReadComplexFieldComponent, 'AnID');
     });
 
     it('should get WriteComplexField component class for Complex input', () => {
@@ -161,16 +161,16 @@ describe('PaletteService', () => {
       assertComponent('Document', true, WriteDocumentFieldComponent, 'AnID');
     });
 
-    it('should get ReadComplexFieldTableComponent component class for Complex field with AddressUK complex type', () => {
-      assertComponent('Complex', false, ReadComplexFieldTableComponent, 'AddressUK');
+    it('should get ReadComplexFieldComponent component class for Complex field with AddressUK complex type', () => {
+      assertComponent('Complex', false, ReadComplexFieldComponent, 'AddressUK');
     });
 
     it('should get WriteAddressFieldComponent component class for Complex field with AddressUK complex type', () => {
       assertComponent('Complex', true, WriteAddressFieldComponent, 'AddressUK');
     });
 
-    it('should get ReadComplexFieldTableComponent component class for Complex field with AddressGlobalUK complex type', () => {
-      assertComponent('Complex', false, ReadComplexFieldTableComponent, 'AddressGlobalUK');
+    it('should get ReadComplexFieldComponent component class for Complex field with AddressGlobalUK complex type', () => {
+      assertComponent('Complex', false, ReadComplexFieldComponent, 'AddressGlobalUK');
     });
 
     it('should get WriteAddressFieldComponent component class for Complex field with AddressGlobalUK complex type', () => {

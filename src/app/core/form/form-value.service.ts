@@ -14,7 +14,7 @@ export class FormValueService {
     }
 
     let sanitisedObject = {};
-    Object.keys(rawObject).map(key => {
+    Object.keys(rawObject).forEach(key => {
       sanitisedObject[key] = this.sanitiseValue(rawObject[key]);
     });
     return sanitisedObject;
@@ -53,7 +53,7 @@ export class FormValueService {
 
   filterCurrentPageFields(caseFields: CaseField[], editFrom: any): any {
     let cloneForm = JSON.parse(JSON.stringify(editFrom));
-    Object.keys(cloneForm['data']).map((key) => {
+    Object.keys(cloneForm['data']).forEach((key) => {
       if (caseFields.findIndex((element) => element.id === key) < 0) {
         delete cloneForm['data'][key];
       }

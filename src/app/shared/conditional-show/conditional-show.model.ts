@@ -1,3 +1,6 @@
+import { CaseField } from '../domain/definition/case-field.model';
+import { FieldsUtils } from '../utils/fields.utils';
+
 export class ShowCondition {
 
   // Expects a show condition of the form: <fieldName>="string"
@@ -29,5 +32,9 @@ export class ShowCondition {
 
   private removeStarChar(s: string) {
     return s.substring(0, s.length - 1);
+  }
+
+  matchByCaseFields(caseFields: CaseField[]): boolean {
+    return this.match(FieldsUtils.toValuesMap(caseFields));
   }
 }

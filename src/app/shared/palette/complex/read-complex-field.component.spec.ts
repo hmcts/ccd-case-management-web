@@ -23,6 +23,21 @@ describe('ReadComplexFieldComponent', () => {
   let component: ReadComplexFieldComponent;
   let de: DebugElement;
 
+  const expectTable = () => {
+    expect(de.queryAll($COMPLEX_AS_RAW).length).toEqual(0);
+    expect(de.query($COMPLEX_AS_TABLE)).toBeTruthy();
+  };
+
+  const expectRaw = () => {
+    expect(de.queryAll($COMPLEX_AS_TABLE).length).toEqual(0);
+    expect(de.query($COMPLEX_AS_RAW)).toBeTruthy();
+  };
+
+  const expectInputs = (componentInstance, expectedContext) => {
+    expect(componentInstance.caseField).toBe(caseField);
+    expect(componentInstance.context).toBe(expectedContext);
+  };
+
   beforeEach(async(() => {
 
     ReadComplexFieldRawComponent = MockComponent({
@@ -91,19 +106,4 @@ describe('ReadComplexFieldComponent', () => {
       expectInputs(de.query($COMPLEX_AS_RAW).componentInstance, PaletteContext.CHECK_YOUR_ANSWER);
     });
   });
-
-  const expectTable = () => {
-    expect(de.queryAll($COMPLEX_AS_RAW).length).toEqual(0);
-    expect(de.query($COMPLEX_AS_TABLE)).toBeTruthy();
-  };
-
-  const expectRaw = () => {
-    expect(de.queryAll($COMPLEX_AS_TABLE).length).toEqual(0);
-    expect(de.query($COMPLEX_AS_RAW)).toBeTruthy();
-  };
-
-  const expectInputs = (componentInstance, expectedContext) => {
-    expect(componentInstance.caseField).toBe(caseField);
-    expect(componentInstance.context).toBe(expectedContext);
-  };
 });

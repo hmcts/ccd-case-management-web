@@ -9,6 +9,46 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component';
 
+const initTests = (caseField, mocks) => {
+  let fixture: ComponentFixture<ReadComplexFieldRawComponent>;
+  let component: ReadComplexFieldRawComponent;
+  let de: DebugElement;
+
+  TestBed
+    .configureTestingModule({
+      imports: [
+        PaletteUtilsModule,
+        ConditionalShowModule
+      ],
+      declarations: [
+        ReadComplexFieldRawComponent,
+        FieldsFilterPipe,
+
+        ...mocks
+      ],
+      providers: []
+    })
+    .compileComponents();
+
+  fixture = TestBed.createComponent(ReadComplexFieldRawComponent);
+  component = fixture.componentInstance;
+
+  component.caseField = caseField;
+
+  de = fixture.debugElement;
+  fixture.detectChanges();
+
+  return {
+    de,
+    component,
+    fixture,
+  };
+};
+
+const expectCaseField = (de, caseField) => {
+  expect(de.componentInstance.caseField).toEqual(caseField)
+};
+
 describe('ReadComplexFieldRawComponent', () => {
 
   const $COMPLEX_LIST = By.css('ul.complex-raw');
@@ -340,43 +380,3 @@ describe('ReadComplexFieldRawComponent', () => {
   });
 
 });
-
-const initTests = (caseField, mocks) => {
-  let fixture: ComponentFixture<ReadComplexFieldRawComponent>;
-  let component: ReadComplexFieldRawComponent;
-  let de: DebugElement;
-
-  TestBed
-    .configureTestingModule({
-      imports: [
-        PaletteUtilsModule,
-        ConditionalShowModule
-      ],
-      declarations: [
-        ReadComplexFieldRawComponent,
-        FieldsFilterPipe,
-
-        ...mocks
-      ],
-      providers: []
-    })
-    .compileComponents();
-
-  fixture = TestBed.createComponent(ReadComplexFieldRawComponent);
-  component = fixture.componentInstance;
-
-  component.caseField = caseField;
-
-  de = fixture.debugElement;
-  fixture.detectChanges();
-
-  return {
-    de,
-    component,
-    fixture,
-  };
-};
-
-const expectCaseField = (de, caseField) => {
-  expect(de.componentInstance.caseField).toEqual(caseField)
-};

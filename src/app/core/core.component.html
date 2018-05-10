@@ -14,10 +14,10 @@
   <div *ngIf="true" headerNavigation>
     <ul id="proposition-links">
       <li>
-        <cut-nav-item label="Case List" link="/list/case"></cut-nav-item>
+        <a [routerLink]="'/list/case'">Case List</a>
       </li>
       <li *ngIf="!router.isActive('/list/case', true)">
-        <cut-nav-item label="Create Case" link="/create/case"></cut-nav-item>
+        <a [routerLink]="'/create/case'" class="header-menu">Create Case</a>
       </li>
     </ul>
   </div>

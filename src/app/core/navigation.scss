@@ -127,6 +127,9 @@ $menu-active-nav: $white;
           text-align: left;
           display: inline-block;
           padding: 0;
+          &:hover {
+            text-decoration: underline;
+          }
         }
 
       }

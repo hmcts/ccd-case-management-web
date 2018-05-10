@@ -17,6 +17,7 @@ import { Profile } from '../../core/profile/profile.model';
 import { Confirmation } from './confirmation.model';
 import { CaseFieldService } from '../domain/case-field.service';
 import { Wizard } from './wizard.model';
+import { OrderService } from '../../core/order/order.service';
 
 @Component({
   selector: 'ccd-case-edit-submit',
@@ -32,6 +33,21 @@ export class CaseEditSubmitComponent implements OnInit {
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
   wizard: Wizard;
   profile: Profile;
+  sortedFields: CaseField[];
+
+  public static readonly SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION = function compareFunction(a: CaseField, b: CaseField): number {
+    let aCaseField = a.show_summary_content_option === 0 || a.show_summary_content_option;
+    let bCaseField = b.show_summary_content_option === 0 || b.show_summary_content_option;
+
+    if (!aCaseField) {
+      return !bCaseField ? 0 : 1;
+    }
+
+    if (!bCaseField) {
+      return -1;
+    }
+    return a.show_summary_content_option - b.show_summary_content_option;
+  }
 
   constructor(
     private caseEdit: CaseEditComponent,
@@ -39,7 +55,8 @@ export class CaseEditSubmitComponent implements OnInit {
     private formErrorService: FormErrorService,
     private fieldsUtils: FieldsUtils,
     private caseFieldService: CaseFieldService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private orderService: OrderService,
     ) {
   }
 
@@ -48,6 +65,7 @@ export class CaseEditSubmitComponent implements OnInit {
     this.editForm = this.caseEdit.form;
     this.wizard = this.caseEdit.wizard;
     this.profile = this.getProfile(this.route);
+    this.sortedFields = this.sortFields(this.eventTrigger.case_fields);
   }
 
   submit(): void {
@@ -115,7 +133,7 @@ export class CaseEditSubmitComponent implements OnInit {
     return !this.caseFieldService.isReadOnly(field);
   }
 
-  fieldsToDisplayExists(): boolean {
+  checkYourAnswerFieldsToDisplayExists(): boolean {
 
     if (!this.eventTrigger.show_summary) {
       return false;
@@ -124,7 +142,7 @@ export class CaseEditSubmitComponent implements OnInit {
     for (let page of this.wizard.pages) {
       if (this.isShown(page)) {
         for (let field of page.case_fields) {
-          if (this.canShowField(field)) {
+          if (this.canShowFieldInCYA(field)) {
             // at least one field needs showing
             return true;
           }
@@ -132,7 +150,20 @@ export class CaseEditSubmitComponent implements OnInit {
       }
     }
 
-    // found no fields to show in summary page
+    // found no fields to show in CYA summary page
+    return false;
+  }
+
+  readOnlySummaryfieldsToDisplayExists(): boolean {
+
+    for (let eventCaseField of this.eventTrigger.case_fields) {
+      if (eventCaseField.show_summary_content_option) {
+          // at least one field needs showing
+          return true;
+      }
+    }
+
+    // found no fields to show in read only summary page
     return false;
   }
 
@@ -163,7 +194,7 @@ export class CaseEditSubmitComponent implements OnInit {
     return page.parsedShowCondition.match(fields);
   }
 
-  canShowField(field: CaseField): boolean {
+  canShowFieldInCYA(field: CaseField): boolean {
     return field.show_summary_change_option;
   }
 
@@ -187,4 +218,11 @@ export class CaseEditSubmitComponent implements OnInit {
       return null;
     }
   }
+
+  private sortFields(fields: CaseField[]): CaseField[] {
+    return this.orderService
+    .sort(fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
+    .filter(cf => cf.show_summary_content_option);
+  }
+
 }

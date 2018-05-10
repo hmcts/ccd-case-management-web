@@ -10,6 +10,51 @@ import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component';
 import { PaletteContext } from '../base-field/palette-context.enum';
 
+const initTests = (caseField, mocks) => {
+  let fixture: ComponentFixture<ReadComplexFieldRawComponent>;
+  let component: ReadComplexFieldRawComponent;
+  let de: DebugElement;
+
+  TestBed
+    .configureTestingModule({
+      imports: [
+        PaletteUtilsModule,
+        ConditionalShowModule
+      ],
+      declarations: [
+        ReadComplexFieldRawComponent,
+        FieldsFilterPipe,
+
+        ...mocks
+      ],
+      providers: []
+    })
+    .compileComponents();
+
+  fixture = TestBed.createComponent(ReadComplexFieldRawComponent);
+  component = fixture.componentInstance;
+
+  component.caseField = caseField;
+  component.context = PaletteContext.CHECK_YOUR_ANSWER;
+
+  de = fixture.debugElement;
+  fixture.detectChanges();
+
+  return {
+    de,
+    component,
+    fixture,
+  };
+};
+
+const expectCaseField = (de, caseField) => {
+  expect(de.componentInstance.caseField).toEqual(caseField)
+};
+
+const expectContext = (de, expectedContext) => {
+  expect(de.componentInstance.context).toEqual(expectedContext)
+};
+
 describe('ReadComplexFieldRawComponent', () => {
 
   const $COMPLEX_LIST = By.css('ul.complex-raw');
@@ -349,48 +394,3 @@ describe('ReadComplexFieldRawComponent', () => {
   });
 
 });
-
-const initTests = (caseField, mocks) => {
-  let fixture: ComponentFixture<ReadComplexFieldRawComponent>;
-  let component: ReadComplexFieldRawComponent;
-  let de: DebugElement;
-
-  TestBed
-    .configureTestingModule({
-      imports: [
-        PaletteUtilsModule,
-        ConditionalShowModule
-      ],
-      declarations: [
-        ReadComplexFieldRawComponent,
-        FieldsFilterPipe,
-
-        ...mocks
-      ],
-      providers: []
-    })
-    .compileComponents();
-
-  fixture = TestBed.createComponent(ReadComplexFieldRawComponent);
-  component = fixture.componentInstance;
-
-  component.caseField = caseField;
-  component.context = PaletteContext.CHECK_YOUR_ANSWER;
-
-  de = fixture.debugElement;
-  fixture.detectChanges();
-
-  return {
-    de,
-    component,
-    fixture,
-  };
-};
-
-const expectCaseField = (de, caseField) => {
-  expect(de.componentInstance.caseField).toEqual(caseField)
-};
-
-const expectContext = (de, expectedContext) => {
-  expect(de.componentInstance.context).toEqual(expectedContext)
-};

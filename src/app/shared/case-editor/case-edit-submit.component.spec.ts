@@ -22,7 +22,7 @@ describe('CaseEditSubmitComponent', () => {
   let fixture: ComponentFixture<CaseEditSubmitComponent>;
   let de: DebugElement;
 
-  let END_BUTTON_LABEL = 'Go now!';
+  const END_BUTTON_LABEL = 'Go now!';
   let formValueService: any;
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();

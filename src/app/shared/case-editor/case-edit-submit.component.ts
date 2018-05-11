@@ -45,8 +45,7 @@ export class CaseEditSubmitComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventTrigger = this.caseEdit.eventTrigger;
-    this.triggerText = this.eventTrigger.end_button_label ? this.eventTrigger.end_button_label
-      : CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+    this.triggerText = this.eventTrigger.end_button_label || CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
     this.editForm = this.caseEdit.form;
     this.wizard = this.caseEdit.wizard;
     this.profile = this.getProfile(this.route);

@@ -15,9 +15,14 @@ locals {
   document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
 
   // Vault name
-  previewVaultName = "${var.product}-case-web"
+  previewVaultName = "${var.product}-mgmt-web"
   nonPreviewVaultName = "ccd-case-web-${var.env}"
   vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
+
+  // Vault URI
+  previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
+  nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
+  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
 }
 
 module "case-management-web" {

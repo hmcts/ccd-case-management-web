@@ -159,21 +159,21 @@ describe('CaseEditComponent', () => {
   });
 
   it('should navigate to next page when next is called', () => {
-    component.wizard = wizard;
-    wizard.nextPage.and.returnValue(new WizardPage());
-    fixture.detectChanges();
-    component.next('somePage');
-    expect(wizard.nextPage).toHaveBeenCalled();
-    expect(routerStub.navigate).toHaveBeenCalled();
-  });
+        component.wizard = wizard;
+        wizard.nextPage.and.returnValue(new WizardPage());
+        fixture.detectChanges();
+        component.next('somePage');
+        expect(wizard.nextPage).toHaveBeenCalled();
+        expect(routerStub.navigate).toHaveBeenCalled();
+    });
 
   it('should navigate to previous page when previous is called', () => {
-    component.wizard = wizard;
-    wizard.previousPage.and.returnValue(new WizardPage());
-    fixture.detectChanges();
-    component.previous('somePage');
-    expect(wizard.previousPage).toHaveBeenCalled();
-    expect(routerStub.navigate).toHaveBeenCalled();
+        component.wizard = wizard;
+        wizard.previousPage.and.returnValue(new WizardPage());
+        fixture.detectChanges();
+        component.previous('somePage');
+        expect(wizard.previousPage).toHaveBeenCalled();
+        expect(routerStub.navigate).toHaveBeenCalled();
   });
 
   it('should navigate to the page when navigateToPage is called', () => {

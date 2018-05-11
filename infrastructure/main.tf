@@ -31,7 +31,7 @@ module "case-management-web" {
   location = "${var.location}"
   env      = "${var.env}"
   ilbIp    = "${var.ilbIp}"
-  is_frontend  = "${var.env != "preview" ? 1: 0}"
+  is_frontend = "${var.env != "preview" ? 1: 0}"
   subscription = "${var.subscription}"
   additional_host_name = "${var.external_host_name}"
 

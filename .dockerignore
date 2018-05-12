@@ -3,4 +3,5 @@
 !yarn.lock
 !src/
 !docker/
-
+!.angular-cli.json
+!tsconfig.json

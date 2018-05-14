@@ -5,11 +5,12 @@ services:
   ccd-case-management-web:
     build:
       context: .
-    image: docker.artifactory.reform.hmcts.net/ccd/ccd-case-management-web
+    image: hmcts/ccd-case-management-web
     environment:
-      - IDAM_LOGIN_URL=https://idam.dev.ccidam.reform.hmcts.net/login
+      - IDAM_LOGIN_URL=https://localhost:8000/login
       - CCD_GATEWAY_BASE_URL=http://localhost:3453
       - CCD_ACTIVITY_BASE_URL=http://localhost:3455
       - DM_GATEWAY_BASE_URL=https://api-gateway.dev.dm.reform.hmcts.net
+      -
     ports:
-      - 3451:80
+      - 3451:3451

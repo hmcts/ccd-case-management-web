@@ -384,7 +384,7 @@ describe('LabelSubstitutorDirective', () => {
             }, '')];
             fixture.detectChanges();
 
-            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '07-03-2018' }, label);
+            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '7 Mar 2018' }, label);
         });
 
         it('should pass form field value with Date when form field value but no case field value present', () => {
@@ -402,7 +402,7 @@ describe('LabelSubstitutorDirective', () => {
             });
             fixture.detectChanges();
 
-            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '07-03-2018' }, label);
+            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '7 Mar 2018' }, label);
         });
 
         it('should pass form field value with Date when both form and case field values present', () => {
@@ -420,7 +420,25 @@ describe('LabelSubstitutorDirective', () => {
             });
             fixture.detectChanges();
 
-            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '07-03-2018' }, label);
+            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '7 Mar 2018' }, label);
+        });
+
+        it('should pass form field value with invalid date when both form and case field values present', () => {
+          let label = 'someLabel';
+          comp.caseField = field('LabelB', '', {
+              id: 'LabelB',
+              type: 'Text'
+          },  label);
+          comp.eventFields = [comp.caseField, field('LabelA', '2018-03', {
+              id: 'LabelA',
+              type: 'Date'
+          }, '')];
+          comp.formGroup = new FormGroup({
+              LabelA: new FormControl('2018-03')
+          });
+          fixture.detectChanges();
+
+          expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '{ Invalid Date: 2018-03 }' }, label);
         });
     });
 
@@ -725,7 +743,7 @@ describe('LabelSubstitutorDirective', () => {
                 type: 'Text'
             },  label);
             const RAW_VALUES = [{value: '2018-03-07'}, {value: '2015-02-22'}, {value: '2017-12-12'}];
-            const TRANSFORMED_VALUES = [{value: '07-03-2018'}, {value: '22-02-2015'}, {value: '12-12-2017'}];
+            const TRANSFORMED_VALUES = [{value: '7 Mar 2018'}, {value: '22 Feb 2015'}, {value: '12 Dec 2017'}];
             comp.eventFields = [comp.caseField, field('LabelA', RAW_VALUES, {
                 id: 'LabelA',
                 type: 'Collection',
@@ -746,7 +764,7 @@ describe('LabelSubstitutorDirective', () => {
                 type: 'Text'
             },  label);
             const RAW_VALUES = [{value: '2018-03-07'}, {value: '2015-02-22'}, {value: '2017-12-12'}];
-            const TRANSFORMED_VALUES = [{value: '07-03-2018'}, {value: '22-02-2015'}, {value: '12-12-2017'}];
+            const TRANSFORMED_VALUES = [{value: '7 Mar 2018'}, {value: '22 Feb 2015'}, {value: '12 Dec 2017'}];
               comp.eventFields = [comp.caseField, field('LabelA', [], {
                 id: 'LabelA',
                 type: 'Collection',
@@ -770,7 +788,7 @@ describe('LabelSubstitutorDirective', () => {
                 type: 'Text'
             },  label);
             const RAW_VALUES = [{value: '2018-03-07'}, {value: '2015-02-22'}, {value: '2017-12-12'}];
-            const TRANSFORMED_VALUES = [{value: '07-03-2018'}, {value: '22-02-2015'}, {value: '12-12-2017'}];
+            const TRANSFORMED_VALUES = [{value: '7 Mar 2018'}, {value: '22 Feb 2015'}, {value: '12 Dec 2017'}];
             comp.eventFields = [comp.caseField, field('LabelA', [{value: 'ValueD'}, {value: 'ValueD'}, {value: 'ValueD'}], {
                 id: 'LabelA',
                 type: 'Collection',

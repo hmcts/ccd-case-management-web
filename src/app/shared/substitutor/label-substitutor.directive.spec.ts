@@ -439,7 +439,7 @@ describe('LabelSubstitutorDirective', () => {
           fixture.detectChanges();
 
           expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: '{ Invalid Date: 2018-03 }' }, label);
-        });
+      });
     });
 
     describe('Collection type fields', () => {

@@ -5,3 +5,5 @@
 !docker/
 !.angular-cli.json
 !tsconfig.json
+!webpack.server.config.js
+!server.ts

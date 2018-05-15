@@ -8,6 +8,7 @@ import { PaletteUtilsModule } from '../utils/utils.module';
 import { IsCompoundPipe } from '../utils/is-compound.pipe';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { MarkdownModule } from '../../markdown/markdown.module';
+import { ReadComplexFieldRawComponent } from './read-complex-field-raw.component';
 
 @NgModule({
   imports: [
@@ -22,11 +23,13 @@ import { MarkdownModule } from '../../markdown/markdown.module';
   ],
   declarations: [
     ReadComplexFieldComponent,
+    ReadComplexFieldRawComponent,
     WriteComplexFieldComponent,
     FieldsFilterPipe,
   ],
   entryComponents: [
     ReadComplexFieldComponent,
+    ReadComplexFieldRawComponent,
     WriteComplexFieldComponent,
   ],
   exports: [

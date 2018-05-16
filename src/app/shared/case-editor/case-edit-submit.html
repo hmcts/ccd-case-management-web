@@ -28,7 +28,7 @@
                   [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
                 <th class="valign-top">{{field.label}}</th>
                 <td class="form-cell">
-                  <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                  <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                 </td>
                 <td class="valign-top">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
@@ -40,7 +40,7 @@
                     [formGroup]="editForm.controls['data']"
                     [eventFields]="eventTrigger.case_fields">
                   <td colspan="2">
-                    <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                    <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                   </td>
                   <td>
                     <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"

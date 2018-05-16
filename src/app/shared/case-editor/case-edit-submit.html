@@ -55,27 +55,26 @@
       </tbody>
     </table>
   </ng-container>
-  <ng-container *ngIf="readOnlySummaryfieldsToDisplayExists()">
+  <ng-container *ngIf="readOnlySummaryFieldsToDisplayExists()">
     
     <table class="form-table">
       <tbody>
-        <ng-container *ngFor="let field of this.sortedFields">          
-            <tr *ngIf="!(field | ccdIsCompound); else ReadOnlyCompoundRow" ccdLabelSubstitutor [caseField]="field"
-            [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
-              <th>{{field.label}}</th>
-              <td class="form-cell">
-                <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
-              </td>
-            </tr>
-            <ng-template #ReadOnlyCompoundRow>
-              <tr class="compound-field" ccdLabelSubstitutor [caseField]="field"
+        <ng-container *ngFor="let field of this.sortedFields">
+            <ng-container [ngSwitch]="!(field | ccdIsCompound)">
+              <tr *ngSwitchCase="true" ccdLabelSubstitutor [caseField]="field" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
+                <th>{{field.label}}</th>
+                <td class="form-cell">
+                  <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                </td>
+              </tr>
+              <tr *ngSwitchCase="false" class="compound-field" ccdLabelSubstitutor [caseField]="field"
                   [formGroup]="editForm.controls['data']"
                   [eventFields]="eventTrigger.case_fields">
                 <td colspan="2">
                   <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
                 </td>
               </tr>
-            </ng-template>
+            </ng-container>
           </ng-container>
       </tbody>
     </table>

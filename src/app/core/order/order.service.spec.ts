@@ -13,7 +13,7 @@ describe('OrderService', () => {
     orderService = new OrderService();
   });
 
-  describe('compareAsc', () => {
+  describe('sortAsc', () => {
 
     it('should sort in ascending order', () => {
       expect(orderService.sortAsc(ITEM_1, ITEM_2)).toBe(-1);

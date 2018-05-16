@@ -181,7 +181,7 @@ describe('CaseEditSubmitComponent', () => {
     comp.eventTrigger.case_fields = [];
     fixture.detectChanges();
 
-    let result = comp.readOnlySummaryfieldsToDisplayExists();
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
 
     expect(result).toBeFalsy();
   });
@@ -191,7 +191,7 @@ describe('CaseEditSubmitComponent', () => {
     caseField.show_summary_content_option = 3;
     comp.eventTrigger.case_fields = [caseField];
 
-    let result = comp.readOnlySummaryfieldsToDisplayExists();
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
 
     expect(result).toBeTruthy();
   });

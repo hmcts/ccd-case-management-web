@@ -10,7 +10,7 @@ export class OrderService {
    */
   sortAsc = OrderService.DEFAULT_COMPARE_FUNCTION;
 
-  private static readonly DEFAULT_COMPARE_FUNCTION = function compareFunction(a: Orderable, b: Orderable): number {
+  private static readonly DEFAULT_COMPARE_FUNCTION = (a: Orderable, b: Orderable) => {
     let aOrdered = a.order === 0 || a.order;
     let bOrdered = b.order === 0 || b.order;
 

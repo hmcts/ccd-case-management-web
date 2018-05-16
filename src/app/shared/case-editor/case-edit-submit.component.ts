@@ -17,6 +17,7 @@ import { Profile } from '../../core/profile/profile.model';
 import { Confirmation } from './confirmation.model';
 import { CaseFieldService } from '../domain/case-field.service';
 import { Wizard } from './wizard.model';
+import { PaletteContext } from '../palette/base-field/palette-context.enum';
 
 @Component({
   selector: 'ccd-case-edit-submit',
@@ -32,6 +33,7 @@ export class CaseEditSubmitComponent implements OnInit {
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
   wizard: Wizard;
   profile: Profile;
+  paletteContext: PaletteContext = PaletteContext.CHECK_YOUR_ANSWER;
 
   constructor(
     private caseEdit: CaseEditComponent,

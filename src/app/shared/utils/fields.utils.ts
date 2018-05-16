@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CaseField } from '../domain/definition/case-field.model';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, } from '@angular/common';
+import { DatePipe } from '../palette/utils/date.pipe';
 
 @Injectable()
 export class FieldsUtils {
 
   private static readonly currencyPipe: CurrencyPipe = new CurrencyPipe('en-GB');
-  private static readonly datePipe: DatePipe = new DatePipe('en-GB');
+  private static readonly datePipe: DatePipe = new DatePipe();
   public static readonly LABEL_SUFFIX = '-LABEL';
 
   public static toValuesMap(caseFields: CaseField[]): any {
@@ -76,12 +77,20 @@ export class FieldsUtils {
   }
 
   private static getDate(fieldValue) {
-    return FieldsUtils.datePipe.transform(fieldValue, 'dd-MM-yyyy');
+    try {
+      return FieldsUtils.datePipe.transform(fieldValue, 'dd-MM-yyyy');
+    } catch (e) {
+      return this.textForInvalidField('Date', fieldValue);
+    }
   }
 
   private static getFixedListLabelByCodeOrEmpty(field, code) {
     let relevantItem = code ? field.field_type.fixed_list_items.find(item => item.code === code) : '';
     return relevantItem ? relevantItem.label : '';
+  }
+
+  private static textForInvalidField(type: string, invalidValue: string): string {
+    return `{ Invalid ${type}: ${invalidValue} }`;
   }
 
   mergeCaseFieldsAndFormFields(caseFields: CaseField[], formFields: any): any {
@@ -103,4 +112,5 @@ export class FieldsUtils {
   private cloneObject(obj: any): any {
     return Object.assign({}, obj);
   }
+
 }

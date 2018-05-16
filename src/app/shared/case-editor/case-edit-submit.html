@@ -26,11 +26,11 @@
 
               <tr ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
                   [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
-                <th>{{field.label}}</th>
+                <th class="valign-top">{{field.label}}</th>
                 <td class="form-cell">
                   <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                 </td>
-                <td>
+                <td class="valign-top">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
                      href="javascript:void(0)">Change</a>
                 </td>

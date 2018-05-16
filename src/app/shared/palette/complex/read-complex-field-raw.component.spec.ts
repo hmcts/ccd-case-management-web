@@ -8,6 +8,7 @@ import { FieldsFilterPipe } from './fields-filter.pipe';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component';
+import { PaletteContext } from '../base-field/palette-context.enum';
 
 const initTests = (caseField, mocks) => {
   let fixture: ComponentFixture<ReadComplexFieldRawComponent>;
@@ -34,6 +35,7 @@ const initTests = (caseField, mocks) => {
   component = fixture.componentInstance;
 
   component.caseField = caseField;
+  component.context = PaletteContext.CHECK_YOUR_ANSWER;
 
   de = fixture.debugElement;
   fixture.detectChanges();
@@ -47,6 +49,10 @@ const initTests = (caseField, mocks) => {
 
 const expectCaseField = (de, caseField) => {
   expect(de.componentInstance.caseField).toEqual(caseField)
+};
+
+const expectContext = (de, expectedContext) => {
+  expect(de.componentInstance.context).toEqual(expectedContext)
 };
 
 describe('ReadComplexFieldRawComponent', () => {
@@ -64,7 +70,7 @@ describe('ReadComplexFieldRawComponent', () => {
   beforeEach(() => {
     FieldReadComponent = MockComponent({
       selector: 'ccd-field-read',
-      inputs: ['caseField']
+      inputs: ['caseField', 'context']
     });
   });
 
@@ -143,6 +149,14 @@ describe('ReadComplexFieldRawComponent', () => {
       expectCaseField(complexListValues[0], FIELD_TYPE_WITH_VALUES.complex_fields[0]);
       expectCaseField(complexListValues[1], FIELD_TYPE_WITH_VALUES.complex_fields[1]);
       expectCaseField(complexListValues[2], FIELD_TYPE_WITH_VALUES.complex_fields[2]);
+    });
+
+    it('should render one field read component per child field', () => {
+      let complexListValues = de.queryAll($COMPLEX_LIST_VALUES);
+
+      expectContext(complexListValues[0], PaletteContext.CHECK_YOUR_ANSWER);
+      expectContext(complexListValues[1], PaletteContext.CHECK_YOUR_ANSWER);
+      expectContext(complexListValues[2], PaletteContext.CHECK_YOUR_ANSWER);
     });
 
   });

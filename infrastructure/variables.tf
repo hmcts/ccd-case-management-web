@@ -50,5 +50,5 @@ variable "external_host_name" {
 }
 
 variable "aat_gateway" {
-  default = "http://ccd-api-gateway-web-aat.service.core-compute-aat.internal"
+  default = "https://ccd-api-gateway-web-aat.service.core-compute-aat.internal"
 }

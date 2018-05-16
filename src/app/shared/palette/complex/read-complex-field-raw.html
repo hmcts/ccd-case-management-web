@@ -1,5 +1,5 @@
 <ul class="complex-raw">
   <li *ngFor="let field of caseField | ccdFieldsFilter">
-    <ccd-field-read [caseField]="field"></ccd-field-read>
+    <ccd-field-read [caseField]="field" [context]="context"></ccd-field-read>
   </li>
 </ul>

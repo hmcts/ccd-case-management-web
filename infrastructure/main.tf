@@ -6,7 +6,8 @@ locals {
   env_ase_url = "${var.env}.service.${data.terraform_remote_state.core_apps_compute.ase_name[0]}.internal"
 
   default_ccd_gateway_url = "https://ccd-api-gateway-web-${local.env_ase_url}"
-  ccd_gateway_url = "${var.ccd_gateway_url != "" ? var.ccd_gateway_url : local.default_ccd_gateway_url}"
+  non_preview_ccd_gateway_url = "${var.ccd_gateway_url != "" ? var.ccd_gateway_url : local.default_ccd_gateway_url}"
+  ccd_gateway_url = "${var.env == "preview" ? var.aat_gateway : local.non_preview_ccd_gateway_url}"
 
   default_ccd_print_service_url = "https://ccd-case-print-service-${local.env_ase_url}"
   ccd_print_service_url = "${var.ccd_print_service_url != "" ? var.ccd_print_service_url : local.default_ccd_print_service_url}"
@@ -31,7 +32,7 @@ module "case-management-web" {
   location = "${var.location}"
   env      = "${var.env}"
   ilbIp    = "${var.ilbIp}"
-  is_frontend  = true
+  is_frontend = "${var.env != "preview" ? 1: 0}"
   subscription = "${var.subscription}"
   additional_host_name = "${var.external_host_name}"
 

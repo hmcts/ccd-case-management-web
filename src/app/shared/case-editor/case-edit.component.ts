@@ -114,6 +114,7 @@ export class CaseEditComponent implements OnInit {
     let formFields = this.form.getRawValue();
     this.clearHiddenFieldForFieldShowCondition(currentPageId, formFields);
     this.clearHiddenFieldForPageShowCondition(formFields);
+
   }
 
   private clearHiddenFieldForPageShowCondition(formFields) {
@@ -185,4 +186,5 @@ export class CaseEditComponent implements OnInit {
   private isObject(elem) {
     return this.getType(elem) === 'Object';
   };
+
 }

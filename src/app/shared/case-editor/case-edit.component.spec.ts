@@ -221,7 +221,7 @@ describe('CaseEditComponent', () => {
               PersonFirstName: new FormControl('John'),
               PersonLastName: new FormControl('Smith')
             })
-          });
+        });
         fixture.detectChanges();
 
         component.next('somePage');
@@ -660,4 +660,5 @@ describe('CaseEditComponent', () => {
     component.cancel();
     expect(cancelHandler.applyFilters).toHaveBeenCalled();
   });
+
 });

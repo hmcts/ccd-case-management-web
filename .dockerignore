@@ -1,3 +1,9 @@
 *
+!package.json
+!yarn.lock
+!src/
 !docker/
-!dist/
+!.angular-cli.json
+!tsconfig.json
+!webpack.server.config.js
+!server.ts

@@ -18,6 +18,7 @@ import { Confirmation } from './confirmation.model';
 import { CaseFieldService } from '../domain/case-field.service';
 import { Wizard } from './wizard.model';
 import { OrderService } from '../../core/order/order.service';
+import { PaletteContext } from '../palette/base-field/palette-context.enum';
 
 @Component({
   selector: 'ccd-case-edit-submit',
@@ -34,6 +35,7 @@ export class CaseEditSubmitComponent implements OnInit {
   wizard: Wizard;
   profile: Profile;
   sortedFields: CaseField[];
+  paletteContext: PaletteContext = PaletteContext.CHECK_YOUR_ANSWER;
 
   public static readonly SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION = (a: CaseField, b: CaseField) => {
     let aCaseField = a.show_summary_content_option === 0 || a.show_summary_content_option;

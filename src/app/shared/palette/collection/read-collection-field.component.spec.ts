@@ -5,8 +5,11 @@ import { CaseField } from '../../domain/definition/case-field.model';
 import { ReadCollectionFieldComponent } from './read-collection-field.component';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component';
+import { PaletteContext } from '../base-field/palette-context.enum';
 
 describe('ReadCollectionFieldComponent', () => {
+
+  const $CHILD_FIELDS = By.css('table>tbody>tr>td>ccd-field-read');
 
   const NESTED_FIELD_TYPE: FieldType = {
     id: 'Text',
@@ -38,7 +41,7 @@ describe('ReadCollectionFieldComponent', () => {
 
   let FieldReadComponent = MockComponent({
     selector: 'ccd-field-read',
-    inputs: ['caseField']
+    inputs: ['caseField', 'context']
   });
 
   let fixture: ComponentFixture<ReadCollectionFieldComponent>;
@@ -63,6 +66,7 @@ describe('ReadCollectionFieldComponent', () => {
     component = fixture.componentInstance;
 
     component.caseField = CASE_FIELD;
+    component.context = PaletteContext.CHECK_YOUR_ANSWER;
 
     de = fixture.debugElement;
     fixture.detectChanges();
@@ -72,7 +76,7 @@ describe('ReadCollectionFieldComponent', () => {
     component.caseField.value = VALUES;
     fixture.detectChanges();
 
-    let cells = de.queryAll(By.css('table>tbody>tr>td>ccd-field-read'));
+    let cells = de.queryAll($CHILD_FIELDS);
 
     for (let i = 0; i < VALUES.length; i++) {
 
@@ -109,5 +113,19 @@ describe('ReadCollectionFieldComponent', () => {
     fixture.detectChanges();
 
     expect(de.children.length).toBe(0);
+  });
+
+  it('render values as a table with one row and one cell per value', () => {
+    component.caseField.value = VALUES;
+    fixture.detectChanges();
+
+    let cells = de.queryAll($CHILD_FIELDS);
+
+    for (let i = 0; i < VALUES.length; i++) {
+
+      let field = cells[i].componentInstance;
+
+      expect(field.context).toEqual(PaletteContext.CHECK_YOUR_ANSWER);
+    }
   });
 });

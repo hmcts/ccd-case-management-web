@@ -8,6 +8,7 @@ import { MockComponent } from 'ng2-mock-component';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { PaletteUtilsModule } from '../utils/utils.module';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
+import { PaletteContext } from '../base-field/palette-context.enum';
 
 describe('ReadComplexFieldComponent', () => {
 
@@ -20,7 +21,7 @@ describe('ReadComplexFieldComponent', () => {
 
   let FieldReadComponent = MockComponent({
     selector: 'ccd-field-read',
-    inputs: ['caseField']
+    inputs: ['caseField', 'context']
   });
 
   let fixture: ComponentFixture<ReadComplexFieldComponent>;
@@ -152,6 +153,7 @@ describe('ReadComplexFieldComponent', () => {
       component = fixture.componentInstance;
 
       component.caseField = CASE_FIELD;
+      component.context = PaletteContext.CHECK_YOUR_ANSWER;
 
       de = fixture.debugElement;
       fixture.detectChanges();
@@ -224,6 +226,21 @@ describe('ReadComplexFieldComponent', () => {
       let labels = de.queryAll($COMPLEX_PANEL_SIMPLE_ROWS_HEADERS);
 
       expect(labels.length).toEqual(0);
+    });
+
+    it('should pass context down to child fields', () => {
+      let simpleRowsValues = de
+        .query($COMPLEX_PANEL)
+        .queryAll($COMPLEX_PANEL_SIMPLE_ROWS_VALUES);
+
+      expect(simpleRowsValues[LINE_1].componentInstance.context).toEqual(PaletteContext.CHECK_YOUR_ANSWER);
+      expect(simpleRowsValues[LINE_2].componentInstance.context).toEqual(PaletteContext.CHECK_YOUR_ANSWER);
+
+      let compoundRowsValues = de
+        .query($COMPLEX_PANEL)
+        .queryAll($COMPLEX_PANEL_COMPOUND_ROWS_VALUES);
+
+      expect(compoundRowsValues[0].componentInstance.context).toEqual(PaletteContext.CHECK_YOUR_ANSWER);
     });
   });
 

@@ -23,30 +23,17 @@
         <ng-container *ngIf="isShown(page)">
           <ng-container *ngFor="let field of page.case_fields">
             <ng-container *ngIf="canShowFieldInCYA(field)">
-
-              <tr *ngIf="!(field | ccdIsCompound); else CYACompoundRow" ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
-                  [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
+              <tr ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
+                [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
                 <th class="valign-top">{{field.label}}</th>
                 <td class="form-cell">
                   <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                 </td>
                 <td class="valign-top">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
-                     href="javascript:void(0)">Change</a>
+                    href="javascript:void(0)">Change</a>
                 </td>
               </tr>
-              <ng-template #CYACompoundRow>
-                <tr class="compound-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
-                    [formGroup]="editForm.controls['data']"
-                    [eventFields]="eventTrigger.case_fields">
-                  <td colspan="2">
-                    <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
-                  </td>
-                  <td>
-                    <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
-                       href="javascript:void(0)">Change</a>
-                  </td>
-                </tr>
               </ng-template>
             </ng-container>
           </ng-container>

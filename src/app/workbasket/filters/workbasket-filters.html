@@ -1,4 +1,6 @@
 <form class="global-display">
+  <button type="button" class="button" (click)="openModal()" style="margin-bottom: 25px">Remove</button>
+  {{ selection }}
   <div class="form-group">
     <label class="form-label form-label-bold" for="wb-jurisdiction">Jurisdiction</label>
     <select class="form-control form-control-3-4" id="wb-jurisdiction" name="jurisdiction" [(ngModel)]="selected.jurisdiction" (change)="onJurisdictionIdChange()">

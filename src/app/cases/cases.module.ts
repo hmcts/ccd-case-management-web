@@ -29,6 +29,9 @@ import { LabelSubstitutionService } from '../shared/case-editor/label-substituti
 import { LabelSubstitutorModule } from '../shared/substitutor/label-substitutor.module';
 import { CaseEditConfirmComponent } from '../shared/case-editor/case-edit-confirm.component';
 import { PrintUrlPipe } from './printer/print-url.pipe';
+import { MatDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RemoveDialogComponent } from '../shared/remove-dialog/remove-dialog.component';
 
 @NgModule({
   imports: [
@@ -43,7 +46,9 @@ import { PrintUrlPipe } from './printer/print-url.pipe';
     PaletteUtilsModule,
     RouterModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     CallbackErrorsComponent,
@@ -59,8 +64,10 @@ import { PrintUrlPipe } from './printer/print-url.pipe';
     CaseViewerComponent,
     CreateCaseFiltersComponent,
     CallbackErrorsComponent,
-    PrintUrlPipe
+    PrintUrlPipe,
+    RemoveDialogComponent
   ],
+  entryComponents: [RemoveDialogComponent],
   providers: [
     CasePrintDocumentsResolver,
     CaseReferencePipe,

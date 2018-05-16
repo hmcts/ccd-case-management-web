@@ -1,24 +1,12 @@
-<div class="complex-panel">
-  <dl class="complex-panel-title"><dt>{{caseField.label}}</dt><dd></dd></dl>
-  <table class="complex-panel-table">
-    <tbody>
-      <ng-container *ngFor="let field of caseField | ccdFieldsFilter">
-        <ng-container *ngIf="(field | ccdIsCompound); else SimpleRow">
-          <tr class="complex-panel-compound-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="field" [eventFields]="caseField | ccdFieldsFilter">
-            <td colspan="2">
-              <ccd-field-read [caseField]="field" [context]="context"></ccd-field-read>
-            </td>
-          </tr>
-        </ng-container>
-        <ng-template #SimpleRow>
-          <tr class="complex-panel-simple-field" ccdConditionalShow ccdLabelSubstitutor [caseField]="field" [eventFields]="caseField | ccdFieldsFilter">
-            <th>{{field.label}}</th>
-            <td>
-              <ccd-field-read [caseField]="field" [context]="context"></ccd-field-read>
-            </td>
-          </tr>
-        </ng-template>
-      </ng-container>
-    </tbody>
-  </table>
-</div>
+<ng-container [ngSwitch]="context">
+  <ccd-read-complex-field-raw
+    *ngSwitchCase="paletteContext.CHECK_YOUR_ANSWER"
+    [caseField]="caseField"
+    [context]="context"
+  ></ccd-read-complex-field-raw>
+  <ccd-read-complex-field-table
+    *ngSwitchDefault
+    [caseField]="caseField"
+    [context]="context"
+  ></ccd-read-complex-field-table>
+</ng-container>

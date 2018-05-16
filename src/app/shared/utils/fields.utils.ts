@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CaseField } from '../domain/definition/case-field.model';
 import { CurrencyPipe, } from '@angular/common';
 import { DatePipe } from '../palette/utils/date.pipe';
+import { WizardPage } from '../domain/wizard-page.model';
+import { Predicate } from '../predicate';
 
 @Injectable()
 export class FieldsUtils {
@@ -91,6 +93,13 @@ export class FieldsUtils {
 
   private static textForInvalidField(type: string, invalidValue: string): string {
     return `{ Invalid ${type}: ${invalidValue} }`;
+  }
+
+  public buildCanShowPredicate(eventTrigger, form): Predicate<WizardPage> {
+    let currentState = this.mergeCaseFieldsAndFormFields(eventTrigger.case_fields, form.controls['data'].value);
+    return (page: WizardPage): boolean => {
+      return page.parsedShowCondition.match(currentState);
+    };
   }
 
   mergeCaseFieldsAndFormFields(caseFields: CaseField[], formFields: any): any {

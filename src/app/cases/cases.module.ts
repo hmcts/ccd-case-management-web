@@ -29,6 +29,7 @@ import { LabelSubstitutionService } from '../shared/case-editor/label-substituti
 import { LabelSubstitutorModule } from '../shared/substitutor/label-substitutor.module';
 import { CaseEditConfirmComponent } from '../shared/case-editor/case-edit-confirm.component';
 import { PrintUrlPipe } from './printer/print-url.pipe';
+import { FieldsPurger } from '../shared/utils/fields.purger';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import { PrintUrlPipe } from './printer/print-url.pipe';
     CreateCaseFieldsResolver,
     EventTriggerResolver,
     LabelSubstitutionService,
+    FieldsPurger
   ]
 })
 export class CasesModule {}

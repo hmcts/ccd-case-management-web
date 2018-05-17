@@ -1,6 +1,6 @@
-<div [class.back-link-spacing]="!currentPage.label">
+<!--<div [class.back-link-spacing]="!currentPage.label">
   <a (click)="previous()" href="javascript:void(0)" class="back-link">&lt; Back</a>
-</div>
+</div>-->
 <div *ngIf="error" class="error-summary" role="group" aria-labelledby="edit-case-event_error-summary-heading" tabindex="-1">
   <h3 class="heading-medium error-summary-heading" id="edit-case-event_error-summary-heading">
     The event could not be created
@@ -31,6 +31,7 @@
   </fieldset>
 
   <div class="form-group form-group-related">
+    <button class="button button-secondary" type="button" [disabled]="!hasPrevious()" (click)="previous()">Previous</button>
     <button class="button" type="submit" [disabled]="currentPageIsNotValid() || submitting()">Continue</button>
   </div>
 

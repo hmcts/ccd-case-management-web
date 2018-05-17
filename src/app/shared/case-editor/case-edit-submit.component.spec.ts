@@ -196,6 +196,42 @@ describe('CaseEditSubmitComponent', () => {
     expect(result).toBeTruthy();
   });
 
+  it('should return true when show event notes set to true in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.show_event_notes = true;
+    fixture.detectChanges();
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeTruthy();
+  });
+
+  it('should return false when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.show_event_notes = null;
+    fixture.detectChanges();
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeTruthy();
+  });
+
+  it('should return false when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.show_event_notes = undefined;
+    fixture.detectChanges();
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeTruthy();
+  });
+
+  it('should return false when show event notes set to false in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.show_event_notes = false;
+    fixture.detectChanges();
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeFalsy();
+  });
+
   it('should sort case fields with show_summary_content_option', () => {
     expect(comp.eventTrigger.case_fields[0].show_summary_content_option).toBe(3);
     expect(comp.eventTrigger.case_fields[1].show_summary_content_option).toBe(2);

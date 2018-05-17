@@ -9,6 +9,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component';
 import { PaletteContext } from '../base-field/palette-context.enum';
+import { text } from '../../../test/helpers';
 
 const initTests = (caseField, mocks) => {
   let fixture: ComponentFixture<ReadComplexFieldRawComponent>;
@@ -51,15 +52,20 @@ const expectCaseField = (de, caseField) => {
   expect(de.componentInstance.caseField).toEqual(caseField)
 };
 
+const expectLabel = (de: DebugElement, label) => {
+  expect(text(de)).toEqual(label)
+};
+
 const expectContext = (de, expectedContext) => {
   expect(de.componentInstance.context).toEqual(expectedContext)
 };
 
 describe('ReadComplexFieldRawComponent', () => {
 
-  const $COMPLEX_LIST = By.css('ul.complex-raw');
-  const $COMPLEX_LIST_ITEMS = By.css('ul.complex-raw>li');
-  const $COMPLEX_LIST_VALUES = By.css('ul.complex-raw>li>ccd-field-read');
+  const $COMPLEX_LIST = By.css('dl.complex-raw');
+  const $COMPLEX_LIST_ITEMS = By.css('dl.complex-raw>dd');
+  const $COMPLEX_LIST_LABELS = By.css('dl.complex-raw>dt');
+  const $COMPLEX_LIST_VALUES = By.css('dl.complex-raw>dd>ccd-field-read');
 
   let FieldReadComponent;
 
@@ -149,6 +155,15 @@ describe('ReadComplexFieldRawComponent', () => {
       expectCaseField(complexListValues[0], FIELD_TYPE_WITH_VALUES.complex_fields[0]);
       expectCaseField(complexListValues[1], FIELD_TYPE_WITH_VALUES.complex_fields[1]);
       expectCaseField(complexListValues[2], FIELD_TYPE_WITH_VALUES.complex_fields[2]);
+    });
+
+    it('should render one field read component per child field', () => {
+      let complexListLabels = de.queryAll($COMPLEX_LIST_LABELS);
+
+      expect(complexListLabels.length).toEqual(FIELD_TYPE_WITH_VALUES.complex_fields.length);
+      expectLabel(complexListLabels[0], FIELD_TYPE_WITH_VALUES.complex_fields[0].label);
+      expectLabel(complexListLabels[1], FIELD_TYPE_WITH_VALUES.complex_fields[1].label);
+      expectLabel(complexListLabels[2], FIELD_TYPE_WITH_VALUES.complex_fields[2].label);
     });
 
     it('should render one field read component per child field', () => {

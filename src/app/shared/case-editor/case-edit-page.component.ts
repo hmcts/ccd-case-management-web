@@ -103,6 +103,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       this.caseEdit.validate(caseEventData)
         .subscribe(() => this.next(),
           error => {
+            this.isSubmitting = false;
             this.error = error;
             this.callbackErrorsSubject.next(this.error);
             if (this.error.details) {

@@ -8,7 +8,7 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
 @Component({
   selector: 'ccd-write-complex-type-field',
   templateUrl: './write-complex-field.html',
-  styleUrls: ['./read-complex-field.scss']
+  styleUrls: ['./read-complex-field-table.scss']
 })
 export class WriteComplexFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   complexGroup: FormGroup;

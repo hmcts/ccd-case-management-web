@@ -1,8 +1,12 @@
-ul.complex-raw {
+dl.complex-raw {
   list-style-type: none;
 
-  ul.complex-raw {
+  dl.complex-raw {
     // Only apply indent to nested complex types
     padding-left: 2ch;
+  }
+
+  dt {
+    font-weight: bold;
   }
 }

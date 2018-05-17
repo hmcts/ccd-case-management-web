@@ -1,3 +1,5 @@
+$darkgray: #231F20;
+
 #fieldset-case-data {
   margin-bottom: 30px;
 
@@ -29,4 +31,12 @@
 
 .valign-top {
   vertical-align: top;
+}
+.back-link {
+  color: $darkgray;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
 }

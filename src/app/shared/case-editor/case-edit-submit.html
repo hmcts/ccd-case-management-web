@@ -43,7 +43,7 @@
   </ng-container>
   <ng-container *ngIf="readOnlySummaryFieldsToDisplayExists()">
     
-    <table class="form-table">
+    <table class="summary-fields">
       <tbody>
         <ng-container *ngFor="let field of this.showSummaryFields">
             <ng-container [ngSwitch]="!(field | ccdIsCompound)">

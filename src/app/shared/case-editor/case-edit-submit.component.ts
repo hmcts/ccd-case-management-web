@@ -157,8 +157,11 @@ export class CaseEditSubmitComponent implements OnInit {
   }
 
   readOnlySummaryFieldsToDisplayExists(): boolean {
-    // found no fields to show in read only summary page
     return this.eventTrigger.case_fields.some(field => field.show_summary_content_option >= 0 );
+  }
+
+  showEventNotes(): boolean {
+    return this.eventTrigger.show_event_notes;
   }
 
   private getLastPageShown(): WizardPage {

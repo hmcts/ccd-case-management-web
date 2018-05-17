@@ -65,20 +65,22 @@
       </tbody>
     </table>
   </ng-container>
-  <fieldset id="fieldset-event" formGroupName="event" *ngIf="!isSolicitor()">
-    <div class="form-group">
-      <label for="field-trigger-summary" class="form-label">
-        Event summary (optional)
-        <span class="form-hint">A few words describing the purpose of the event.</span>
-      </label>
-      <input type="text" id="field-trigger-summary" class="form-control" formControlName="summary" maxlength="1024">
-    </div>
-    <div class="form-group">
-      <label for="field-trigger-description" class="form-label">Event description (optional)</label>
-      <textarea id="field-trigger-description" class="form-control" formControlName="description"
-                maxlength="65536"></textarea>
-    </div>
-  </fieldset>
+  <ng-container *ngIf="showEventNotes()">
+    <fieldset id="fieldset-event" formGroupName="event" *ngIf="!isSolicitor()">
+      <div class="form-group">
+        <label for="field-trigger-summary" class="form-label">
+          Event summary (optional)
+          <span class="form-hint">A few words describing the purpose of the event.</span>
+        </label>
+        <input type="text" id="field-trigger-summary" class="form-control" formControlName="summary" maxlength="1024">
+      </div>
+      <div class="form-group">
+        <label for="field-trigger-description" class="form-label">Event description (optional)</label>
+        <textarea id="field-trigger-description" class="form-control" formControlName="description"
+                  maxlength="65536"></textarea>
+      </div>
+    </fieldset>
+  </ng-container>
   <div class="form-group form-group-related">
     <button class="button button-secondary" type="button" [disabled]="!hasPrevious()" (click)="previous()">Previous</button>
     <button type="submit" [disabled]="isDisabled()" class="button">{{triggerText}}</button>

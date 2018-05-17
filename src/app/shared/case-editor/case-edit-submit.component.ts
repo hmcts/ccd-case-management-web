@@ -34,7 +34,7 @@ export class CaseEditSubmitComponent implements OnInit {
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
   wizard: Wizard;
   profile: Profile;
-  sortedFields: CaseField[];
+  showSummaryFields: CaseField[];
   paletteContext: PaletteContext = PaletteContext.CHECK_YOUR_ANSWER;
 
   public static readonly SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION = (a: CaseField, b: CaseField) => {
@@ -67,7 +67,7 @@ export class CaseEditSubmitComponent implements OnInit {
     this.editForm = this.caseEdit.form;
     this.wizard = this.caseEdit.wizard;
     this.profile = this.getProfile(this.route);
-    this.sortedFields = this.sortFieldsAccordingToShowSummaryContent(this.eventTrigger.case_fields);
+    this.showSummaryFields = this.sortFieldsByShowSummaryContent(this.eventTrigger.case_fields);
   }
 
   submit(): void {
@@ -213,9 +213,9 @@ export class CaseEditSubmitComponent implements OnInit {
     }
   }
 
-  private sortFieldsAccordingToShowSummaryContent(fields: CaseField[]): CaseField[] {
+  private sortFieldsByShowSummaryContent(fields: CaseField[]): CaseField[] {
     return this.orderService
-    .sort(fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
+    .sort(this.eventTrigger.case_fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
     .filter(cf => cf.show_summary_content_option);
   }
 

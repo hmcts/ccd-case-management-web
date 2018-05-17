@@ -215,8 +215,8 @@ export class CaseEditSubmitComponent implements OnInit {
 
   private sortFieldsByShowSummaryContent(fields: CaseField[]): CaseField[] {
     return this.orderService
-    .sort(this.eventTrigger.case_fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
-    .filter(cf => cf.show_summary_content_option);
+      .sort(fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
+      .filter(cf => cf.show_summary_content_option);
   }
 
 }

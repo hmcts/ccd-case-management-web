@@ -46,7 +46,7 @@ describe('OrderService', () => {
 
       let sortedArray = orderService.sort(array);
 
-      expect(array.slice).toHaveBeenCalledWith(0);
+      expect(array.slice).toHaveBeenCalledWith();
       expect(sortedArray).toEqual(arrayClone);
     });
 

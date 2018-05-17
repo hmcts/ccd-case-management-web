@@ -33,6 +33,7 @@ export class OrderService {
    */
   sort<T extends Orderable>(array: T[], sortingFunction = this.sortAsc): T[] {
     return array
+      .slice()
       .sort(sortingFunction);
   }
 

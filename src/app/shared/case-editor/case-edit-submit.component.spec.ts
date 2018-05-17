@@ -203,9 +203,9 @@ describe('CaseEditSubmitComponent', () => {
     expect(orderService.sort).toHaveBeenCalledWith(
       comp.eventTrigger.case_fields,
       CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION);
-    expect(comp.sortedFields.length).toBe(3);
-    expect(comp.sortedFields[0].show_summary_content_option).toBe(1);
-    expect(comp.sortedFields[1].show_summary_content_option).toBe(2);
-    expect(comp.sortedFields[2].show_summary_content_option).toBe(3);
+    expect(comp.showSummaryFields.length).toBe(3);
+    expect(comp.showSummaryFields[0].show_summary_content_option).toBe(1);
+    expect(comp.showSummaryFields[1].show_summary_content_option).toBe(2);
+    expect(comp.showSummaryFields[2].show_summary_content_option).toBe(3);
   });
 });

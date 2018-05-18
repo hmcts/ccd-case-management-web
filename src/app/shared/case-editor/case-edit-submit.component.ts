@@ -161,9 +161,7 @@ export class CaseEditSubmitComponent implements OnInit {
   }
 
   showEventNotes(): boolean {
-    return this.eventTrigger.show_event_notes
-      || this.eventTrigger.show_event_notes === undefined
-      || this.eventTrigger.show_event_notes === null;
+    return this.eventTrigger.show_event_notes !== false;
   }
 
   private getLastPageShown(): WizardPage {

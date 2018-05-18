@@ -17,6 +17,7 @@ import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
 import { OrderService } from '../../core/order/order.service';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { By } from '@angular/platform-browser';
 
 describe('CaseEditSubmitComponent', () => {
   let comp: CaseEditSubmitComponent;
@@ -43,6 +44,7 @@ describe('CaseEditSubmitComponent', () => {
   let caseField1: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', 3);
   let caseField2: CaseField = aCaseField('field2', 'field2', 'Text', 'OPTIONAL', 2);
   let caseField3: CaseField = aCaseField('field3', 'field3', 'Text', 'OPTIONAL', 1);
+  const $EVENT_NOTES = By.css('#fieldset-event');
 
   let mockRoute: any = {
     snapshot: {
@@ -196,40 +198,48 @@ describe('CaseEditSubmitComponent', () => {
     expect(result).toBeTruthy();
   });
 
-  it('should return true when show event notes set to true in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should show event notes when set in event trigger and showEventNotes is called', () => {
     comp.eventTrigger.show_event_notes = true;
     fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
 
     let result = comp.showEventNotes();
 
     expect(result).toBeTruthy();
+    expect(eventNotes).not.toBeNull();
   });
 
-  it('should return true when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should show event notes when not set in event trigger and showEventNotes is called', () => {
     comp.eventTrigger.show_event_notes = null;
     fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
 
     let result = comp.showEventNotes();
 
     expect(result).toBeTruthy();
+    expect(eventNotes).not.toBeNull();
   });
 
-  it('should return true when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should show event notes when not defined in event trigger and showEventNotes is called', () => {
     comp.eventTrigger.show_event_notes = undefined;
     fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
 
     let result = comp.showEventNotes();
 
     expect(result).toBeTruthy();
+    expect(eventNotes).not.toBeNull();
   });
 
-  it('should return false when show event notes set to false in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should not show event notes when set to false in event trigger and showEventNotes is called', () => {
     comp.eventTrigger.show_event_notes = false;
     fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
 
     let result = comp.showEventNotes();
 
     expect(result).toBeFalsy();
+    expect(eventNotes).toBeNull();
   });
 
   it('should sort case fields with show_summary_content_option', () => {

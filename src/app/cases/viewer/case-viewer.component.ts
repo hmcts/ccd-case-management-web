@@ -25,7 +25,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   sortedTabs: CaseTab[];
   caseFields: CaseField[];
   error: any;
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   ignoreWarning = false;
   subscription: Subscription;
 
@@ -70,7 +70,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   clearErrorsAndWarnings() {
     this.error = null;
     this.ignoreWarning = false;
-    this.triggerText = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+    this.triggerText = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   }
 
   applyTrigger(trigger: CaseViewTrigger): Promise<boolean | void> {

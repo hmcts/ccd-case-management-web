@@ -42,7 +42,7 @@ export class CreateCaseFiltersComponent implements OnInit {
   filterCaseTypeControl: FormControl;
   filterEventControl: FormControl;
 
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_START;
   ignoreWarning = false;
   error: HttpError;
 

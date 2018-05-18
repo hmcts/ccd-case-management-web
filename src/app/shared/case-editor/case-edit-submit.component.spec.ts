@@ -205,7 +205,7 @@ describe('CaseEditSubmitComponent', () => {
     expect(result).toBeTruthy();
   });
 
-  it('should return false when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should return true when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
     comp.eventTrigger.show_event_notes = null;
     fixture.detectChanges();
 
@@ -214,7 +214,7 @@ describe('CaseEditSubmitComponent', () => {
     expect(result).toBeTruthy();
   });
 
-  it('should return false when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should return true when show event notes not set in event trigger and readOnlySummaryFieldsToDisplayExists is called', () => {
     comp.eventTrigger.show_event_notes = undefined;
     fixture.detectChanges();
 

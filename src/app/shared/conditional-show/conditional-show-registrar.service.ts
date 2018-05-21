@@ -3,13 +3,11 @@ import { ConditionalShowDirective } from './conditional-show.directive';
 
 @Injectable()
 export class ConditionalShowRegistrarService {
-  registeredDirectives = new Map<String, ConditionalShowDirective>();
+  registeredDirectives = [];
 
   register(newDirective: ConditionalShowDirective) {
-      // console.log('[', this.registeredDirectives.size, '] adding new directive', newDirective.caseField.id);
-      if (!this.registeredDirectives.has(newDirective.caseField.id)) {
-        this.registeredDirectives.set(newDirective.caseField.id, newDirective);
-      }
+      // console.log('[', this.registeredDirectives.length, ']adding new directive', newDirective.caseField.id);
+      this.registeredDirectives.push(newDirective);
   }
 
   refresh() {
@@ -17,5 +15,9 @@ export class ConditionalShowRegistrarService {
       // console.log('refreshing ', dir.caseField.id);
       dir.refreshVisibility()
     });
+  }
+
+  reset() {
+    this.registeredDirectives = [];
   }
 }

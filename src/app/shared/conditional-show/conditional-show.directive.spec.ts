@@ -7,7 +7,6 @@ import { async } from '@angular/core/testing';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FieldsUtils } from '../utils/fields.utils';
 import { ConditionalShowRegistrarService } from './conditional-show-registrar.service';
-import { ActivatedRoute } from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({

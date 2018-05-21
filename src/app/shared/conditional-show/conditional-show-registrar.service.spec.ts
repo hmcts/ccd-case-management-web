@@ -24,7 +24,14 @@ describe('ConditionalShowRegistrarService', () => {
   it('should register', () => {
     registrarService.register(conditionalShowDirective1);
     registrarService.register(conditionalShowDirective2);
-    expect(registrarService.registeredDirectives.size).toEqual(2);
+    expect(registrarService.registeredDirectives.length).toEqual(2);
+  });
+
+  it('should reset', () => {
+    registrarService.register(conditionalShowDirective1);
+    registrarService.register(conditionalShowDirective2);
+    registrarService.reset();
+    expect(registrarService.registeredDirectives.length).toEqual(0);
   });
 
   it('should refresh visibility of registered directives', () => {

@@ -18,6 +18,7 @@ describe('AppConfig', () => {
   const OAUTH2_CLIENT_ID = 'some_client_id';
   const PRINT_SERVICE_URL = 'http://print';
   const REMOTE_PRINT_SERVICE_URL = 'http://print.ccd.reform';
+  const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
 
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,
@@ -32,7 +33,8 @@ describe('AppConfig', () => {
     oauth2_token_endpoint_url: OAUTH2_TOKEN_ENDPOINT_URL,
     oauth2_client_id: OAUTH2_CLIENT_ID,
     print_service_url: PRINT_SERVICE_URL,
-    remote_print_service_url: REMOTE_PRINT_SERVICE_URL
+    remote_print_service_url: REMOTE_PRINT_SERVICE_URL,
+    smart_survey_url: SMART_SURVEY_URL
   };
 
   beforeEach(() => {

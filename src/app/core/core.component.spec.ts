@@ -79,13 +79,15 @@ describe('CoreComponent', () => {
   let httpService: any;
   let appConfig: any;
   let authService: any;
+  const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
     httpService = createSpyObj('HttpService', ['get']);
-    appConfig = createSpyObj('AppConfig', ['get']);
+    appConfig   = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
     authService = createSpyObj('AppConfig', ['signIn']);
+    appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
 
     profile = {
       user: {
@@ -181,7 +183,7 @@ describe('CoreComponent', () => {
     let betaBar = betaBarEl.componentInstance;
 
     expect(betaBar.phaseLabel).toEqual('BETA');
-    expect(betaBar.phaseLink).toEqual('\'javascript:void(0)\'');
+    expect(betaBar.phaseLink).toEqual('https://www.smartsurvey.co.uk/s/CCDfeedback/');
   });
 
   it('should have a `header-bar`', () => {

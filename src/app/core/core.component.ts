@@ -16,17 +16,15 @@ export class CoreComponent implements OnInit, OnDestroy {
 
   selectedJurisdictionName: string;
   subscription: Subscription;
-  smartSurveryUrl: string;
 
   profile: Profile;
 
   constructor(public router: Router, private route: ActivatedRoute,
-              private jurisdictionService: JurisdictionService, private authService: AuthService,
-              private appConfig: AppConfig) {}
+              private jurisdictionService: JurisdictionService, private appConfig: AppConfig,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
-    this.smartSurveryUrl = this.appConfig.getSmartSurveyUrl();
     this.subscription =  this.jurisdictionService.selectedJurisdiction.subscribe(
       selectedJurisdiction => {
         this.selectedJurisdictionName = selectedJurisdiction.name;
@@ -35,6 +33,10 @@ export class CoreComponent implements OnInit, OnDestroy {
     this.jurisdictionService.announceSelectedJurisdiction(this.profile.jurisdictions.find(
       jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
     );
+  }
+
+  getSmartSurveyUrl(): string {
+    return this.appConfig.getSmartSurveyUrl();
   }
 
   signOut(): void {

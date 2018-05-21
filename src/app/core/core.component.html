@@ -5,7 +5,7 @@
   (signOutRequest)='signOut()'></cut-header-bar>
 <cut-nav-bar class="global-navigation">
   <div class="nav-left" leftNavLinks>
-    <ul id="menu-links-left">
+    <ul class="menu-links">
       <li>
         <cut-nav-item label="Case List" link="/list/case"></cut-nav-item>
       </li>
@@ -15,11 +15,20 @@
     </ul>
   </div>
   <div class="nav-right" rightNavLinks>
-    <ul id="menu-links-right">
-      <li>
-        <cut-nav-item id="search" label="Search" link="/search" imageLink="/img/icon-search-white.png"></cut-nav-item>
-      </li>
-    </ul>
+    <div class="header-search">
+      <ul class="menu-links">
+        <li><a href="/search/advanced" class="advanced-link">Advanced search</a></li>
+        <li>
+          <form action="/search" method="get" role="search">
+              <label for="header-search-input" class="visually-hidden">Search</label>
+              <input type="search" value="" id="header-search-input" name="q" title="Search"
+                     class="search-element search-input js-class-toggle"><span
+                  class="search-element search-submit-wrapper"><input type="submit" class="search-submit" value=" ">
+              </span>
+          </form>
+        </li>
+      </ul>
+    </div>
   </div>
 </cut-nav-bar>
 <div class="container-fluid">

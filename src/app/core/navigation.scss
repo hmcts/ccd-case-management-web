@@ -23,27 +23,16 @@ $menu-active-nav: $white;
   height: 55px;
   @extend %contain-floats;
 
-  .nav-left {
+  .nav-left, .nav-right {
     @extend %contain-floats;
-    float: left;
-    color: $white;
-    padding-left: 22px;
     @include vertical-align;
+    color: $white;
 
-    @include media(desktop){
-      width: 60%;
-    }
-    @media screen and (max-width: 379px) {
-      width: auto;
-      float: none;
-    }
-
-    #menu-links-left {
+    ul {
       clear: both;
       @extend %contain-floats;
       margin: 2px 0 0 0;
       padding: 0;
-
       .js-enabled & {
         display: none;
         @include media(desktop){
@@ -55,20 +44,36 @@ $menu-active-nav: $white;
       }
 
       li {
-        float: left;
-        width: 50%;
         padding: 3px 0;
         border-bottom: 1px solid $menu-border;
-
-        @include media(desktop){
+        list-style-type: none;
+        @include media(desktop) {
           display: block;
           width: auto;
           padding: 0 15px 0 0;
           border-bottom: 0;
 
           &.clear-child {
-            clear: left;
+             clear: left;
           }
+        }
+      }
+    }
+  }
+
+  .nav-left {
+    float: left;
+    padding-left: 22px;
+    @media screen and (max-width: 379px) {
+      width: auto;
+      float: none;
+    }
+
+    ul.menu-links {
+      li {
+        float: left;
+        @media screen and (max-width: 379px) {
+          float: none;
         }
       }
     }
@@ -76,61 +81,62 @@ $menu-active-nav: $white;
 
   .nav-right {
     @include core-16pt;
-    @extend %contain-floats;
     float: right;
     text-align: right;
-    color: $white;
-    @include vertical-align;
 
-    @include media(desktop){
-      width: 30%;
-    }
-
-    #menu-links-right {
-      clear: both;
-      @extend %contain-floats;
-      margin: 2px 0 0 0;
-      padding: 0;
-
-      .js-enabled & {
-        display: none;
-        @include media(desktop){
-          display: block;
-        }
-        &.js-visible {
-          display: block;
-        }
-      }
-
+    ul.menu-links {
       li {
-        @extend %contain-floats;
-        float: right;
-        width: 50%;
-        padding: 3px 0;
-        border-bottom: 1px solid $menu-border;
-
-        @include media(desktop){
-          display: block;
-          width: auto;
-          padding: 0 22px 0 0;
-          border-bottom: 0;
-
-          &.clear-child {
-            clear: left;
-          }
+        display: table-cell;
+        @include media(desktop) {
+          padding-right: 22px;
         }
-
-        img {
+        @media screen and (max-width: 379px) {
+          display: inline-block;
           float: right;
         }
-
-        #search {
-          text-align: left;
-          display: inline-block;
-          padding: 0;
-        }
-
       }
     }
+
+    .header-search {
+      display: table;
+      margin: 0 auto;
+
+      .advanced-link {
+        color: white;
+        text-decoration: underline;
+        font-size: 80%
+      }
+      #header-search-input {
+        padding-left: 5px;
+        height: 1.8em;
+        font-size: 1em;
+        width: 15.5em;
+      }
+
+      input {
+        display: inline;
+        border-width: 0px;
+        box-sizing: content-box;
+      }
+
+      input:focus {
+        outline: none;
+      }
+
+      input[type=submit] {
+        height:1.8em;
+        width:1.8em;
+        color: black;
+        padding: 1px;
+        background-color: black;
+        background-image: url('/img/icon-search-white.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+        border-color: black;
+        border-width: 1px;
+      }
+    }
+
   }
 }

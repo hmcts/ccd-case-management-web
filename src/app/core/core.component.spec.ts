@@ -98,8 +98,8 @@ describe('CoreComponent', () => {
     }
   };
 
-  const $LEFT_MENU_LINKS = By.css('.nav-left #menu-links-left');
-  const $RIGHT_MENU_LINKS = By.css('.nav-right #menu-links-right');
+  const $LEFT_MENU_LINKS = By.css('.nav-left .menu-links');
+  const $RIGHT_MENU_LINKS = By.css('.nav-right .menu-links');
 
   let comp: CoreComponent;
   let fixture: ComponentFixture<CoreComponent>;
@@ -175,13 +175,23 @@ describe('CoreComponent', () => {
     expect(headerBar.username).toEqual('Forename Surname');
   });
 
+  it('should have the advanced search link and the search form', () => {
+    const advancedSearchEl = de.query(By.css('.advanced-link'));
+    const searchFormEl = de.query(By.css('form[role=search]'));
+
+    expect(advancedSearchEl).not.toBeNull();
+    expect(advancedSearchEl.attributes.href).toEqual('/search/advanced');
+
+    expect(searchFormEl).not.toBeNull();
+    expect(attr(searchFormEl, 'action')).toEqual('/search');
+  });
+
   it('should have a `nav-bar` and two `nav-item`s not on Case List', () => {
     spyOn(mockRouter, 'isActive').and.returnValue(false);
     fixture.detectChanges();
 
     let navBarEl = de.query(By.directive(NavigationComponent));
     let leftMenuLinkEl = de.query($LEFT_MENU_LINKS);
-    let rightMenuLinkEl = de.query($RIGHT_MENU_LINKS);
 
     expect(navBarEl).not.toBeNull();
     expect(navBarEl.nativeElement.tagName).toBe('CUT-NAV-BAR');
@@ -192,10 +202,6 @@ describe('CoreComponent', () => {
 
     expect(leftMenuLinkEl.children[1].children[0].nativeElement.tagName).toBe('CUT-NAV-ITEM');
     expect(attr(leftMenuLinkEl.children[1].children[0], 'imageLink')).toBeNull();
-
-    expect(rightMenuLinkEl.children.length).toBe(1);
-    expect(rightMenuLinkEl.children[0].children[0].nativeElement.tagName).toBe('CUT-NAV-ITEM');
-    expect(attr(rightMenuLinkEl.children[0].children[0], 'imageLink')).toEqual('/img/icon-search-white.png');
   });
 
   it('should have a `nav-bar` and one `nav-item` on Case List page', () => {
@@ -204,17 +210,12 @@ describe('CoreComponent', () => {
 
     let navBarEl = de.query(By.directive(NavigationComponent));
     let leftMenuLinkEl = de.query($LEFT_MENU_LINKS);
-    let rightMenuLinkEl = de.query($RIGHT_MENU_LINKS);
 
     expect(navBarEl).not.toBeNull();
     expect(navBarEl.nativeElement.tagName).toBe('CUT-NAV-BAR');
     expect(leftMenuLinkEl.children.length).toBe(1);
     expect(leftMenuLinkEl.children[0].children[0].nativeElement.tagName).toBe('CUT-NAV-ITEM');
     expect(attr(leftMenuLinkEl.children[0].children[0], 'imageLink')).toBeNull();
-
-    expect(rightMenuLinkEl.children.length).toBe(1);
-    expect(rightMenuLinkEl.children[0].children[0].nativeElement.tagName).toBe('CUT-NAV-ITEM');
-    expect(attr(rightMenuLinkEl.children[0].children[0], 'imageLink')).toEqual('/img/icon-search-white.png');
   });
 
   it('should have a `router-outlet`', () => {

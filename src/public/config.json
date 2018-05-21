@@ -11,5 +11,6 @@
   "oauth2_token_endpoint_url": "http://localhost:3453/oauth2",
   "oauth2_client_id": "ccd_gateway",
   "print_service_url": "http://localhost:3453/print",
-  "remote_print_service_url": "https://return-case-doc.dev.ccd.reform.hmcts.net"
+  "remote_print_service_url": "https://return-case-doc.dev.ccd.reform.hmcts.net",
+  "smart_survey_url": "https://www.smartsurvey.co.uk/s/CCDfeedback/"
 }

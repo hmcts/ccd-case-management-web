@@ -6,6 +6,8 @@ import { CaseField } from '../domain/definition/case-field.model';
 import { async } from '@angular/core/testing';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FieldsUtils } from '../utils/fields.utils';
+import { ConditionalShowRegistrarService } from './conditional-show-registrar.service';
+import createSpyObj = jasmine.createSpyObj;
 
 @Component({
     template: `
@@ -33,11 +35,18 @@ describe('ConditionalShowDirective', () => {
     let de:      DebugElement;
     let el:      HTMLElement;
     let conditionalShow: ConditionalShowDirective;
+    let mockRegistrar: ConditionalShowRegistrarService = createSpyObj<ConditionalShowRegistrarService>(
+      'conditionalShowRegistrarService',
+      ['register', 'refresh']
+    );
 
     beforeEach( async(() => {
         TestBed.configureTestingModule({
             declarations: [ ConditionalShowDirective, TestHostComponent ],
-            providers:    [ FieldsUtils ]
+            providers:    [
+              FieldsUtils,
+              { provide: ConditionalShowRegistrarService, useValue: mockRegistrar }
+            ]
         }).compileComponents();
         }));
 

@@ -13,7 +13,7 @@ import { HttpService } from './http/http.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../app.config';
 
-fdescribe('CoreComponent', () => {
+describe('CoreComponent', () => {
 
   const PROFILE = {
     user: {

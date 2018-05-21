@@ -130,6 +130,7 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
     }
   }
 
+  // TODO This must be extracted to a generic service for traversing see RDM-2233
   private checkHideShowCondition(key: string, aControl: AbstractControl) {
     if (aControl instanceof FormArray) {  // We're in a collection
       // console.log('traversing array', aControl);

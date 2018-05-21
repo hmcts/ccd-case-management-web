@@ -13,7 +13,7 @@ import { HttpService } from './http/http.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../app.config';
 
-describe('CoreComponent', () => {
+fdescribe('CoreComponent', () => {
 
   const PROFILE = {
     user: {
@@ -41,7 +41,8 @@ describe('CoreComponent', () => {
         description: 'Divorce descritpion',
         case_types: []
       }
-    ]
+    ],
+    isSolicitor: () => false
   };
 
   const SELECTED_JURISDICTION: Jurisdiction = {
@@ -52,11 +53,13 @@ describe('CoreComponent', () => {
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
       'title',
+      'isSolicitor',
       'username'
     ]});
 
   let PhaseComponent: any = MockComponent({ selector: 'cut-phase-bar', inputs: [
       'phaseLabel',
+      'isSolicitor',
       'phaseLink'
     ]});
 
@@ -69,7 +72,9 @@ describe('CoreComponent', () => {
     </div>
     `;
 
-  let NavigationComponent: any = MockComponent({ selector: 'cut-nav-bar', template: TEMPLATE});
+  let NavigationComponent: any = MockComponent({ selector: 'cut-nav-bar', template: TEMPLATE, inputs: [
+    'isSolicitor'
+  ]});
 
   let NavigationItemComponent: any = MockComponent({ selector: 'cut-nav-item', inputs: [
       'link',
@@ -83,6 +88,7 @@ describe('CoreComponent', () => {
   let FooterComponent: any = MockComponent({ selector: 'cut-footer-bar', inputs: [
       'email',
       'phone',
+      'isSolicitor',
       'workhours'
     ]});
 

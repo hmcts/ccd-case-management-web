@@ -12,69 +12,9 @@ import { AuthService } from './auth/auth.service';
 import { HttpService } from './http/http.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../app.config';
-import { Observable } from 'rxjs/Observable';
+import createSpy = jasmine.createSpy;
 
-fdescribe('CoreComponent', () => {
-
-  const PROFILE = {
-    user: {
-      idam: {
-        email: 'hello@world.co.uk',
-        forename: 'forename',
-        surname: 'surname'
-      }
-    },
-    default: {
-      workbasket: {
-        jurisdiction_id: 'PROBATE'
-      }
-    },
-    jurisdictions: [
-      {
-        id: 'PROBATE',
-        name: 'Probate',
-        description: 'Probate descritpion',
-        case_types: []
-      },
-      {
-        id: 'DIVORCE',
-        name: 'Divorce',
-        description: 'Divorce descritpion',
-        case_types: []
-      }
-    ],
-    isSolicitor: () => true
-  };
-
-  const PROFILE_NOT_SOLICITOR = {
-    user: {
-      idam: {
-        email: 'hello@world.co.uk',
-        forename: 'forename',
-        surname: 'surname'
-      }
-    },
-    default: {
-      workbasket: {
-        jurisdiction_id: 'PROBATE'
-      }
-    },
-    jurisdictions: [
-      {
-        id: 'PROBATE',
-        name: 'Probate',
-        description: 'Probate descritpion',
-        case_types: []
-      },
-      {
-        id: 'DIVORCE',
-        name: 'Divorce',
-        description: 'Divorce descritpion',
-        case_types: []
-      }
-    ],
-    isSolicitor: () => false
-  };
+describe('CoreComponent', () => {
 
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
@@ -123,20 +63,11 @@ fdescribe('CoreComponent', () => {
       'workhours'
     ]});
 
-  let mockRouter: any = {
-    'isActive': () => false,
-    'events': Observable.of(),
-    'currentUrlTree': {},
-    createUrlTree: () => {}
-  };
+  let BlankComponent: any = MockComponent({ selector: 'blank-component', inputs: []});
 
-  let mockRoute: any = {
-    snapshot: {
-      data: {
-        profile: PROFILE
-      }
-    }
-  };
+  let profile;
+
+  let mockRoute;
 
   const $LEFT_MENU_LINKS = By.css('.nav-left #menu-links-left');
   const $RIGHT_MENU_LINKS = By.css('.nav-right #menu-links-right');
@@ -156,9 +87,57 @@ fdescribe('CoreComponent', () => {
     appConfig = createSpyObj('AppConfig', ['get']);
     authService = createSpyObj('AppConfig', ['signIn']);
 
+    profile = {
+      user: {
+        idam: {
+          email: 'hello@world.co.uk',
+          forename: 'forename',
+          surname: 'surname'
+        }
+      },
+      default: {
+        workbasket: {
+          jurisdiction_id: 'PROBATE'
+        }
+      },
+      jurisdictions: [
+        {
+          id: 'PROBATE',
+          name: 'Probate',
+          description: 'Probate descritpion',
+          case_types: []
+        },
+        {
+          id: 'DIVORCE',
+          name: 'Divorce',
+          description: 'Divorce descritpion',
+          case_types: []
+        }
+      ],
+      isSolicitor: createSpy()
+    };
+
+    profile.isSolicitor.and.returnValue(false);
+    // TODO Write test where `isSolicitor()` is true
+
+    mockRoute = {
+      snapshot: {
+        data: {
+          profile: profile
+        }
+      }
+    };
+
     TestBed
       .configureTestingModule({
-        imports: [RouterTestingModule],
+        imports: [
+          RouterTestingModule.withRoutes(
+            [
+              {path: 'list/case', component: BlankComponent},
+              {path: 'create/case', component: BlankComponent}
+            ]
+          )
+        ],
         declarations: [
           CoreComponent,
           // Mocks
@@ -169,11 +148,11 @@ fdescribe('CoreComponent', () => {
           FooterComponent,
           PhaseComponent,
           NavigationComponent,
-          NavigationItemComponent
+          NavigationItemComponent,
+          BlankComponent,
         ],
         providers: [
           provideRoutes([]),
-          { provide: Router, useValue: mockRouter},
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: JurisdictionService, useValue: jurisdictionService },
           { provide: HttpService, useValue: httpService },
@@ -193,20 +172,16 @@ fdescribe('CoreComponent', () => {
     de = fixture.debugElement;
   });
 
-  fit('should have a `beta-bar`', () => {
-    // let route = TestBed.get(ActivatedRoute);
-    let route = fixture.debugElement.injector.get(ActivatedRoute);
-    route.snapshot.data.profile = PROFILE;
-    fixture.detectChanges();
+  it('should have a `beta-bar`', () => {
 
     let betaBarEl = de.query(By.directive(PhaseComponent));
 
-    // expect(betaBarEl).not.toBeNull();
+    expect(betaBarEl).not.toBeNull();
 
-    // let betaBar = betaBarEl.componentInstance;
+    let betaBar = betaBarEl.componentInstance;
 
-    // expect(betaBar.phaseLabel).toEqual('BETA');
-    // expect(betaBar.phaseLink).toEqual('\'javascript:void(0)\'');
+    expect(betaBar.phaseLabel).toEqual('BETA');
+    expect(betaBar.phaseLink).toEqual('\'javascript:void(0)\'');
   });
 
   it('should have a `header-bar`', () => {
@@ -221,7 +196,9 @@ fdescribe('CoreComponent', () => {
   });
 
   it('should have a `nav-bar` and two `nav-item`s not on Case List', () => {
-    spyOn(mockRouter, 'isActive').and.returnValue(false);
+    spyOn(comp.router, 'isActive').and.callFake((url) => {
+      return url !== '/list/case';
+    });
     fixture.detectChanges();
 
     let navBarEl = de.query(By.directive(NavigationComponent));
@@ -231,6 +208,7 @@ fdescribe('CoreComponent', () => {
     expect(navBarEl).not.toBeNull();
     expect(navBarEl.nativeElement.tagName).toBe('CUT-NAV-BAR');
 
+    expect(leftMenuLinkEl).not.toBeNull();
     expect(leftMenuLinkEl.children.length).toBe(2);
     expect(leftMenuLinkEl.children[0].children[0].nativeElement.tagName).toBe('CUT-NAV-ITEM');
     expect(attr(leftMenuLinkEl.children[0].children[0], 'imageLink')).toBeNull();
@@ -244,7 +222,9 @@ fdescribe('CoreComponent', () => {
   });
 
   it('should have a `nav-bar` and one `nav-item` on Case List page', () => {
-    spyOn(comp.router, 'isActive').and.returnValue(true);
+    spyOn(comp.router, 'isActive').and.callFake((url) => {
+      return url === '/list/case';
+    });
     fixture.detectChanges();
 
     let navBarEl = de.query(By.directive(NavigationComponent));

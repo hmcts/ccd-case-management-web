@@ -142,8 +142,8 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
       if (aControl.get('value')) { // Complex Field
         let complexControl = aControl.get('value') as FormGroup;
         Object.keys(complexControl.controls).forEach(controlKey => {
-          // console.log('traversing formGroup item', key, aControl.get('value').get(key));
-          this.checkHideShowCondition(controlKey, aControl.get('value').get(controlKey));
+          // console.log('traversing formGroup item', key, complexControl.get(key));
+          this.checkHideShowCondition(controlKey, complexControl.get(controlKey));
         });
       } else if (aControl.controls) { // Special Field like AddressUK, AddressGlobal
         Object.keys(aControl.controls).forEach(controlKey => {

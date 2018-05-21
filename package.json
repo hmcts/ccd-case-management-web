@@ -15,7 +15,7 @@
     "test:smokeDockTest": "docker build -t ccd-protractor:latest test/. && docker run -t --rm -e CCD_CASEWORKER_AUTOTEST_EMAIL=$CCD_CASEWORKER_AUTOTEST_EMAIL -e CCD_CASEWORKER_AUTOTEST_PASSWORD=$CCD_CASEWORKER_AUTOTEST_PASSWORD -e TEST_FRONTEND_URL=$TEST_FRONTEND_URL --name protractor-runner ccd-protractor:latest test:smokeDocker",
     "test:smokeDocker": "protractor test/smoke.conf.js",
     "test:functional": "echo 'TODO: Functional tests'",
-    "lint": "tslint --project . -t verbose 'src/**/*.ts'",
+    "lint": "NODE_PATH=. tslint --project . -t verbose 'src/**/*.ts'",
     "e2e": "ng e2e",
     "start:fr": "ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",
     "build:fr": "ng build --prod --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",

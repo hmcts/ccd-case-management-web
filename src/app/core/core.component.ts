@@ -41,4 +41,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  isSolicitor(): boolean {
+    return this.profile.isSolicitor();
+  }
 }

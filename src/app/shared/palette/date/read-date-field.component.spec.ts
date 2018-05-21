@@ -19,7 +19,7 @@ describe('ReadDateFieldComponent', () => {
     field_type: FIELD_TYPE,
     value: VALUE
   };
-  const FORMATTED_VALUE = 'Jul 15, 1800';
+  const FORMATTED_VALUE = '15 Jul 1800';
   const EMPTY = '';
 
   let fixture: ComponentFixture<ReadDateFieldComponent>;

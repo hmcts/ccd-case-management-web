@@ -1,16 +1,15 @@
-FROM nginx:1.13.7
+FROM node:8.11.1
 
-## Copy our default nginx config
-COPY docker/nginx/default.conf /etc/nginx/conf.d/
+RUN mkdir -p /usr/src/app
 
-## Remove default nginx website
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /usr/src/app
 
-## Copydist folder to default nginx public folder
-COPY dist /usr/share/nginx/html
+COPY package.json yarn.lock /usr/src/app/
+RUN yarn install
 
-COPY docker/config.json.template config.json.template
-COPY docker/run_nginx.sh run_nginx.sh
-RUN chmod +x run_nginx.sh
+COPY . /usr/src/app/
 
-CMD "./run_nginx.sh"
+RUN yarn build:ssr
+
+WORKDIR /usr/src/app/dist
+CMD node ./server.js

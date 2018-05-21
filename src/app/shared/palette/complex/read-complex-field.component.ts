@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
-import { CaseField } from '../../domain/definition/case-field.model';
-import { FieldsUtils } from '../../utils/fields.utils';
+import { PaletteContext } from '../base-field/palette-context.enum';
 
 @Component({
-  selector: 'ccd-read-complex-type-field',
+  selector: 'ccd-read-complex-field',
   templateUrl: './read-complex-field.html',
-  styleUrls: ['./read-complex-field.scss']
 })
-export class ReadComplexFieldComponent extends AbstractFieldReadComponent {}
+export class ReadComplexFieldComponent extends AbstractFieldReadComponent {
+
+  public paletteContext = PaletteContext;
+}

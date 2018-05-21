@@ -8,14 +8,11 @@ import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
-import { ActivityService } from '../../core/activity/activity.service';
+import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
-
-// TODO make this configurable
-const RETRY = 5;
-const NEXT_POLL_REQUEST_MS = 7500;
+import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -28,7 +25,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   sortedTabs: CaseTab[];
   caseFields: CaseField[];
   error: any;
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   ignoreWarning = false;
   subscription: Subscription;
 
@@ -38,7 +35,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
-    private activityService: ActivityService
+    private activityPollingService: ActivityPollingService
   ) {}
 
   ngOnInit(): void {
@@ -47,12 +44,9 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     // Clone and sort tabs array
     this.sortedTabs = this.orderService.sort(this.caseDetails.tabs);
 
-    // Clone and sort fields array
-    this.sortedTabs = this.sortedTabs.map(tab => Object.assign({}, tab, {
-      fields: this.orderService.sort(tab.fields)
-    }));
-
     this.caseFields = this.getTabFields();
+
+    this.sortedTabs = this.sortTabFieldsAndFilterTabs(this.sortedTabs);
 
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));
@@ -63,27 +57,20 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // TODO: We need to pull this method to ActivityPolllingService
   postViewActivity(): Observable<Activity[]> {
-    return this.activityService.postActivity(this.caseDetails.case_id, ActivityService.ACTIVITY_VIEW)
-      .switchMap(
-        (data) => Observable.timer(NEXT_POLL_REQUEST_MS)
-          .switchMap(() => this.postViewActivity())
-          .startWith(data)
-      ).retryWhen(
-        attempts =>
-          attempts
-            .zip(Observable.range(1, RETRY), (_, i) => i)
-            .flatMap(i => {
-              // console.log('retrying fetching of activity. Delay retry by ' + i + ' second(s)');
-              return Observable.timer(i * 1000);
-            }));
+    return this.activityPollingService.postViewActivity(this.caseDetails.case_id);
+  }
+
+  private sortTabFieldsAndFilterTabs(tabs: CaseTab[]): CaseTab[] {
+    return tabs
+      .map(tab => Object.assign({}, tab, { fields: this.orderService.sort(tab.fields) }))
+      .filter(tab => new ShowCondition(tab.show_condition).matchByCaseFields(this.caseFields));
   }
 
   clearErrorsAndWarnings() {
     this.error = null;
     this.ignoreWarning = false;
-    this.triggerText = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+    this.triggerText = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   }
 
   applyTrigger(trigger: CaseViewTrigger): Promise<boolean | void> {

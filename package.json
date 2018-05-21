@@ -41,7 +41,7 @@
     "@angular/platform-server": "~5.0.0",
     "@angular/router": "~5.0.0",
     "@angular/upgrade": "~5.0.0",
-    "@hmcts/ccd-case-ui-toolkit": "1.1.0",
+    "@hmcts/ccd-case-ui-toolkit": "1.1.2",
     "@nguniversal/express-engine": "^5.0.0-beta.5",
     "@nguniversal/module-map-ngfactory-loader": "^5.0.0-beta.5",
     "class-transformer": "^0.1.8",

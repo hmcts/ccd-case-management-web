@@ -5,6 +5,7 @@ import { Profile } from './profile/profile.model';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { Subscription }   from 'rxjs/Subscription';
 import { AuthService } from './auth/auth.service';
+import { AppConfig } from '../app.config';
 
 @Component({
   selector: 'ccd-core',
@@ -19,7 +20,8 @@ export class CoreComponent implements OnInit, OnDestroy {
   profile: Profile;
 
   constructor(public router: Router, private route: ActivatedRoute,
-              private jurisdictionService: JurisdictionService, private authService: AuthService) {}
+              private jurisdictionService: JurisdictionService, private appConfig: AppConfig,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
@@ -31,6 +33,10 @@ export class CoreComponent implements OnInit, OnDestroy {
     this.jurisdictionService.announceSelectedJurisdiction(this.profile.jurisdictions.find(
       jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
     );
+  }
+
+  getSmartSurveyUrl(): string {
+    return this.appConfig.getSmartSurveyUrl();
   }
 
   signOut(): void {

@@ -1,7 +1,7 @@
 <div defaultOverlayTarget></div>
 
 <!-- BETA -->
-<cut-phase-bar *ngIf="!isSolicitor()" phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
+<cut-phase-bar *ngIf="!isSolicitor()" phaseLabel="BETA" phaseLink="{{getSmartSurveyUrl()}}"></cut-phase-bar>
 
 <!-- Header : Start -->
 <cut-header-bar [title]="selectedJurisdictionName"
@@ -62,7 +62,7 @@
 <!-- Big blue bar : End -->
 
 <!-- BETA : For Solicitor -->
-<cut-phase-bar [isSolicitor]="isSolicitor()" *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="'javascript:void(0)'"></cut-phase-bar>
+<cut-phase-bar [isSolicitor]="isSolicitor()" *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="{{getSmartSurveyUrl()}}"></cut-phase-bar>
 
 <!-- Main area : Start -->
 <div class="container-fluid">

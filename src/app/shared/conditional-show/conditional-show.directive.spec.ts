@@ -6,6 +6,7 @@ import { CaseField } from '../domain/definition/case-field.model';
 import { async } from '@angular/core/testing';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FieldsUtils } from '../utils/fields.utils';
+import { ConditionalShowRegistrarService } from './conditional-show-registrar.service';
 
 @Component({
     template: `
@@ -37,7 +38,7 @@ describe('ConditionalShowDirective', () => {
     beforeEach( async(() => {
         TestBed.configureTestingModule({
             declarations: [ ConditionalShowDirective, TestHostComponent ],
-            providers:    [ FieldsUtils ]
+            providers:    [ FieldsUtils, ConditionalShowRegistrarService ]
         }).compileComponents();
         }));
 

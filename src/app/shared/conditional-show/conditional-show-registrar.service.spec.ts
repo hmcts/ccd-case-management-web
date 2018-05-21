@@ -1,55 +1,32 @@
 import { ConditionalShowDirective } from './conditional-show.directive';
-import { Component, DebugElement, Input } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { FieldsUtils } from '../utils/fields.utils';
-import { CaseField } from '../domain/definition/case-field.model';
-import { FormGroup } from '@angular/forms';
+import { ConditionalShowRegistrarService } from './conditional-show-registrar.service';
+import { async } from '@angular/core/testing';
+import createSpyObj = jasmine.createSpyObj;
 
-@Component({
-  template: `
-      <tr ccdConditionalShow [caseField]="caseField" [formGroup]="formGroup" [eventFields]="eventFields"></tr>`
-})
-class TestHostComponent {
+let registrarService: ConditionalShowRegistrarService;
+let conditionalShowDirective1: any;
+let conditionalShowDirective2: any;
 
-  @Input() caseField: CaseField;
-  @Input() eventFields: CaseField[];
-  @Input() formGroup: FormGroup;
-}
+describe('ConditionalShowRegistrarService', () => {
 
-let field = (id, value, showCondition?) => {
-  let caseField = new CaseField();
-  caseField.id = id;
-  caseField.value = value;
-  caseField.show_condition = showCondition;
-  return caseField;
-};
-
-describe('ConditionalShowDirective', () => {
-
-  let comp: TestHostComponent;
-  let fixture: ComponentFixture<TestHostComponent>;
-  let de: DebugElement;
-  let el: HTMLElement;
-  let conditionalShow: ConditionalShowDirective;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ConditionalShowDirective, TestHostComponent],
-      providers: [FieldsUtils]
-    }).compileComponents();
+  beforeEach( async(() => {
+    registrarService = new ConditionalShowRegistrarService();
+    conditionalShowDirective1 = createSpyObj<ConditionalShowDirective>('conditionalShowDirective1', ['refreshVisibility']);
+    conditionalShowDirective2 = createSpyObj<ConditionalShowDirective>('conditionalShowDirective2', ['refreshVisibility']);
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    comp = fixture.componentInstance;
-    de = fixture.debugElement.query(By.directive(ConditionalShowDirective));
-    el = de.nativeElement;
-    conditionalShow = de.injector.get(ConditionalShowDirective) as ConditionalShowDirective;
+  it('should register', () => {
+    registrarService.register(conditionalShowDirective1);
+    registrarService.register(conditionalShowDirective2);
+    expect(registrarService.registeredDirectives.length).toEqual(2);
   });
 
-  it('should register', () => {
-      // TODO: do sth
+  it('should refresh visibility of registered directives', () => {
+    registrarService.register(conditionalShowDirective1);
+    registrarService.register(conditionalShowDirective2);
+    registrarService.refresh();
+    expect(conditionalShowDirective1.refreshVisibility).toHaveBeenCalled();
+    expect(conditionalShowDirective2.refreshVisibility).toHaveBeenCalled();
   });
 
 });

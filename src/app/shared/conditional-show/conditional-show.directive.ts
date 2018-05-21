@@ -140,7 +140,8 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
     } else if (aControl instanceof FormGroup) {
       // console.log('met a FormGroup ', aControl, ' fromGroup.controls', aControl.controls);
       if (aControl.get('value')) { // Complex Field
-        Object.keys(aControl.get('value').controls).forEach(controlKey => {
+        let complexControl = aControl.get('value') as FormGroup;
+        Object.keys(complexControl.controls).forEach(controlKey => {
           // console.log('traversing formGroup item', key, aControl.get('value').get(key));
           this.checkHideShowCondition(controlKey, aControl.get('value').get(controlKey));
         });
@@ -152,7 +153,7 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
       }
     } else if (aControl instanceof FormControl) {  // FormControl
       if (aControl.invalid) {
-        console.log('met an invalid FormControl ', key, ' control:', aControl, ' is valid:', aControl.valid);
+        // console.log('met an invalid FormControl ', key, ' control:', aControl, ' is valid:', aControl.valid);
         this.registry.refresh();
       }
     }

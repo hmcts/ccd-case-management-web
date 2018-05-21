@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 export class Profile {
   user: {
     idam: {
-      id: number,
+      id: string,
       email: string
       forename: string,
       surname: string,

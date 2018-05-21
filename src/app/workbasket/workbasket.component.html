@@ -1,17 +1,19 @@
 <div class="global-display">
   <cut-body>
-
-    <div class="heading-top" topBody>
-      <h1 class="heading-medium">Case List</h1>
-      <a routerLink="/create/case" class="button">Create new case</a>
+    <div class="heading-medium" topBody>
+      <h1>Case List</h1>
+      <div class="right-in-heading">
+        <div class="font-xsmall">
+          <a routerLink="/create/case" class="button">Create new case</a>
+        </div>
+      </div>
     </div>
-
     <div class="display-left" leftBody>
-      <ccd-workbasket-filters
-        [jurisdictions]="profile.jurisdictions"
-        [defaults]="profile.default.workbasket"
-        (onApply)="applyFilter($event)"
-      ></ccd-workbasket-filters>
+        <ccd-workbasket-filters
+          [jurisdictions]="profile.jurisdictions"
+          [defaults]="profile.default.workbasket"
+          (onApply)="applyFilter($event)"
+        ></ccd-workbasket-filters>
     </div>
     <div class="display-right" rightBody>
 

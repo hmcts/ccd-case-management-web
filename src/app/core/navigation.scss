@@ -3,7 +3,7 @@
 @import 'node_modules/govuk_frontend_toolkit/stylesheets/_conditionals';
 @import 'node_modules/govuk_frontend_toolkit/stylesheets/_measurements';
 
-$blue: #0062a0;
+$blue: #0074B4;
 $white: #FFFFFF;
 $menu-border: 0px;
 $menu-active-nav: $white;
@@ -27,6 +27,7 @@ $menu-active-nav: $white;
     @extend %contain-floats;
     float: left;
     color: $white;
+    padding-left: 22px;
     @include vertical-align;
 
     @include media(desktop){
@@ -111,7 +112,7 @@ $menu-active-nav: $white;
         @include media(desktop){
           display: block;
           width: auto;
-          padding: 0;
+          padding: 0 22px 0 0;
           border-bottom: 0;
 
           &.clear-child {
@@ -127,9 +128,6 @@ $menu-active-nav: $white;
           text-align: left;
           display: inline-block;
           padding: 0;
-          &:hover {
-            text-decoration: underline;
-          }
         }
 
       }

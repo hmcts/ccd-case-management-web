@@ -20,27 +20,24 @@ $black: #231F20;
     color: $black;
   }
 
-  .right-in-heading {
-    width: 79%;
-    text-align: right;
-    margin-left:auto;
-    padding-right: 7px;
+  .heading-top {
+    height: 35px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 
-    div {
-      width: 92.5%;
-      padding-right: 0px;
-      padding-left: 52px;
-
-        a {
-            margin-left: auto;
-        }
+    h1 {
+      float: left;
+      margin-top: 5px;
+    }
+    a {
+      float: right;
     }
   }
 
   .display-left {
     @extend %contain-floats;
     float: left;
-    padding-left: 7px;
+    // padding-left: 7px;
 
     @include media(desktop){
       width: 16%;
@@ -52,14 +49,14 @@ $black: #231F20;
   }
 
   .display-right::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0%;
-      margin-left: -15px;
-      border-left: 1px solid #BFC1C3;
-      transform: translate(-50%);
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0%;
+    margin-left: -15px;
+    border-left: 1px solid #BFC1C3;
+    transform: translate(-50%);
   }
 
   .display-right {

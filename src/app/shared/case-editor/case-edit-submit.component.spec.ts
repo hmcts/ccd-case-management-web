@@ -226,6 +226,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
+  let orderService;
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
   });
@@ -264,6 +265,9 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   };
 
   beforeEach(async(() => {
+    orderService = new OrderService();
+    spyOn(orderService, 'sort').and.callThrough();
+
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
@@ -292,7 +296,8 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
         { provide: FormErrorService, useValue: formErrorService },
         { provide: CaseFieldService, useValue: caseFieldService },
         { provide: FieldsUtils, useValue: fieldsUtils },
-        { provide: ActivatedRoute, useValue: mockRoute }
+        { provide: ActivatedRoute, useValue: mockRoute },
+        { provide: OrderService, useValue: orderService }
       ]
     }).compileComponents();
 

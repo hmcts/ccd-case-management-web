@@ -12,37 +12,9 @@ import { AuthService } from './auth/auth.service';
 import { HttpService } from './http/http.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../app.config';
+import createSpy = jasmine.createSpy;
 
 describe('CoreComponent', () => {
-
-  const PROFILE = {
-    user: {
-      idam: {
-        email: 'hello@world.co.uk',
-        forename: 'forename',
-        surname: 'surname'
-      }
-    },
-    default: {
-      workbasket: {
-        jurisdiction_id: 'PROBATE'
-      }
-    },
-    jurisdictions: [
-      {
-        id: 'PROBATE',
-        name: 'Probate',
-        description: 'Probate descritpion',
-        case_types: []
-      },
-      {
-        id: 'DIVORCE',
-        name: 'Divorce',
-        description: 'Divorce descritpion',
-        case_types: []
-      }
-    ]
-  };
 
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
@@ -52,12 +24,14 @@ describe('CoreComponent', () => {
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
       'title',
-      'username'
+      'username',
+      'isSolicitor',
     ]});
 
   let PhaseComponent: any = MockComponent({ selector: 'cut-phase-bar', inputs: [
       'phaseLabel',
-      'phaseLink'
+      'phaseLink',
+      'isSolicitor',
     ]});
 
   const TEMPLATE =
@@ -69,7 +43,9 @@ describe('CoreComponent', () => {
     </div>
     `;
 
-  let NavigationComponent: any = MockComponent({ selector: 'cut-nav-bar', template: TEMPLATE});
+  let NavigationComponent: any = MockComponent({ selector: 'cut-nav-bar', inputs: [
+      'isSolicitor',
+    ], template: TEMPLATE});
 
   let NavigationItemComponent: any = MockComponent({ selector: 'cut-nav-item', inputs: [
       'link',
@@ -83,20 +59,15 @@ describe('CoreComponent', () => {
   let FooterComponent: any = MockComponent({ selector: 'cut-footer-bar', inputs: [
       'email',
       'phone',
-      'workhours'
+      'workhours',
+      'isSolicitor',
     ]});
 
-  let mockRouter: any = {
-    'isActive': () => false
-  };
+  let BlankComponent: any = MockComponent({ selector: 'blank-component', inputs: []});
 
-  let mockRoute: any = {
-    snapshot: {
-      data: {
-        profile: PROFILE
-      }
-    }
-  };
+  let profile;
+
+  let mockRoute;
 
   const $LEFT_MENU_LINKS = By.css('.nav-left #menu-links-left');
   const $RIGHT_MENU_LINKS = By.css('.nav-right #menu-links-right');
@@ -108,17 +79,67 @@ describe('CoreComponent', () => {
   let httpService: any;
   let appConfig: any;
   let authService: any;
+  const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
     httpService = createSpyObj('HttpService', ['get']);
-    appConfig = createSpyObj('AppConfig', ['get']);
+    appConfig   = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
     authService = createSpyObj('AppConfig', ['signIn']);
+    appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
+
+    profile = {
+      user: {
+        idam: {
+          email: 'hello@world.co.uk',
+          forename: 'forename',
+          surname: 'surname'
+        }
+      },
+      default: {
+        workbasket: {
+          jurisdiction_id: 'PROBATE'
+        }
+      },
+      jurisdictions: [
+        {
+          id: 'PROBATE',
+          name: 'Probate',
+          description: 'Probate descritpion',
+          case_types: []
+        },
+        {
+          id: 'DIVORCE',
+          name: 'Divorce',
+          description: 'Divorce descritpion',
+          case_types: []
+        }
+      ],
+      isSolicitor: createSpy()
+    };
+
+    profile.isSolicitor.and.returnValue(false);
+    // TODO Write test where `isSolicitor()` is true
+
+    mockRoute = {
+      snapshot: {
+        data: {
+          profile: profile
+        }
+      }
+    };
 
     TestBed
       .configureTestingModule({
-        imports: [RouterTestingModule],
+        imports: [
+          RouterTestingModule.withRoutes(
+            [
+              {path: 'list/case', component: BlankComponent},
+              {path: 'create/case', component: BlankComponent}
+            ]
+          )
+        ],
         declarations: [
           CoreComponent,
           // Mocks
@@ -129,11 +150,11 @@ describe('CoreComponent', () => {
           FooterComponent,
           PhaseComponent,
           NavigationComponent,
-          NavigationItemComponent
+          NavigationItemComponent,
+          BlankComponent,
         ],
         providers: [
           provideRoutes([]),
-          { provide: Router, useValue: mockRouter},
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: JurisdictionService, useValue: jurisdictionService },
           { provide: HttpService, useValue: httpService },
@@ -154,6 +175,7 @@ describe('CoreComponent', () => {
   });
 
   it('should have a `beta-bar`', () => {
+
     let betaBarEl = de.query(By.directive(PhaseComponent));
 
     expect(betaBarEl).not.toBeNull();
@@ -161,7 +183,7 @@ describe('CoreComponent', () => {
     let betaBar = betaBarEl.componentInstance;
 
     expect(betaBar.phaseLabel).toEqual('BETA');
-    expect(betaBar.phaseLink).toEqual('\'javascript:void(0)\'');
+    expect(betaBar.phaseLink).toEqual('https://www.smartsurvey.co.uk/s/CCDfeedback/');
   });
 
   it('should have a `header-bar`', () => {
@@ -176,7 +198,9 @@ describe('CoreComponent', () => {
   });
 
   it('should have a `nav-bar` and two `nav-item`s not on Case List', () => {
-    spyOn(mockRouter, 'isActive').and.returnValue(false);
+    spyOn(comp.router, 'isActive').and.callFake((url) => {
+      return url !== '/list/case';
+    });
     fixture.detectChanges();
 
     let navBarEl = de.query(By.directive(NavigationComponent));
@@ -186,6 +210,7 @@ describe('CoreComponent', () => {
     expect(navBarEl).not.toBeNull();
     expect(navBarEl.nativeElement.tagName).toBe('CUT-NAV-BAR');
 
+    expect(leftMenuLinkEl).not.toBeNull();
     expect(leftMenuLinkEl.children.length).toBe(2);
     expect(leftMenuLinkEl.children[0].children[0].nativeElement.tagName).toBe('CUT-NAV-ITEM');
     expect(attr(leftMenuLinkEl.children[0].children[0], 'imageLink')).toBeNull();
@@ -199,7 +224,9 @@ describe('CoreComponent', () => {
   });
 
   it('should have a `nav-bar` and one `nav-item` on Case List page', () => {
-    spyOn(comp.router, 'isActive').and.returnValue(true);
+    spyOn(comp.router, 'isActive').and.callFake((url) => {
+      return url === '/list/case';
+    });
     fixture.detectChanges();
 
     let navBarEl = de.query(By.directive(NavigationComponent));

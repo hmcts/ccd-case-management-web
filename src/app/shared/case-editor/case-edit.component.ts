@@ -9,6 +9,7 @@ import { WizardPage } from '../domain/wizard-page.model';
 import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShowCondition } from '../conditional-show/conditional-show.model';
+import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -43,6 +44,7 @@ export class CaseEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fieldsUtils: FieldsUtils,
+    private registrarService: ConditionalShowRegistrarService,
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +83,7 @@ export class CaseEditComponent implements OnInit {
 
   next(currentPageId: string): Promise<boolean> {
     this.clearHiddenFields(currentPageId);
+    this.registrarService.reset();
 
     let nextPage = this.wizard.nextPage(currentPageId, this.buildCanShowPredicate());
     return this.router.navigate([nextPage ? nextPage.id : 'submit'], { relativeTo: this.route });
@@ -88,6 +91,7 @@ export class CaseEditComponent implements OnInit {
 
   previous(currentPageId: string): Promise<boolean> {
     this.clearHiddenFields(currentPageId);
+    this.registrarService.reset();
 
     let previousPage = this.wizard.previousPage(currentPageId, this.buildCanShowPredicate());
     if (!previousPage) {

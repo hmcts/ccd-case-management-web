@@ -1,14 +1,15 @@
 {
-  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/pagination_metadata": "/pagination_metadata",
+  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/pagination_metadata?state=CaseCreated": "/pagination_metadata",
   "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/validate": "/validate",
-  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases": "/cases",
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases?view=WORKBASKET&state=CaseCreated&page=1": "/cases",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:id": "/case",
   "/data/caseworkers/:uid/profile": "/profile",
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/work-basket-inputs": "/profile",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/event-triggers/:etid": "/event-trigger",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:cid/event-triggers/:etid": "/event-trigger",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/event-triggers/:etid" : "/create-case-event-trigger",
   "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:cid/documents": "/documents",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/alpha/inputs": "/inputs-address-book",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/inputs": "/inputs",
-  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types": "/case-types"
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=read": "/case-types"
 }

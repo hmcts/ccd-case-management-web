@@ -85,6 +85,10 @@ export class AppConfig {
   public getRemotePrintServiceUrl() {
     return this.config.remote_print_service_url;
   }
+
+  public getSmartSurveyUrl() {
+    return this.config.smart_survey_url;
+  }
 }
 
 export class Config {
@@ -101,4 +105,5 @@ export class Config {
   oauth2_client_id: string;
   print_service_url: string;
   remote_print_service_url: string;
+  smart_survey_url: string;
 }

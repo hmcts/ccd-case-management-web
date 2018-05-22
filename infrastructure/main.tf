@@ -24,6 +24,8 @@ locals {
   previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
   nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
   vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+
+  saat_activity_url = "${local.ccd_gateway_url}/activity"
 }
 
 module "case-management-web" {
@@ -41,7 +43,7 @@ module "case-management-web" {
     CCD_GW_LOGOUT_URL = "${local.ccd_gateway_url}/logout"
     CCD_API_URL = "${local.ccd_gateway_url}/aggregated"
     CCD_DATA_URL = "${local.ccd_gateway_url}/data"
-    CCD_ACTIVITY_URL = "" // Activity disabled until it's deployed on CNP
+    CCD_ACTIVITY_URL = "${var.env != "saat" ? "" : local.saat_activity_url}"
     CCD_GW_OAUTH2_URL = "${local.ccd_gateway_url}/oauth2"
     CCD_GW_OAUTH2_CLIENT_ID = "ccd_gateway"
     DM_URL = "${local.ccd_gateway_url}/documents"

@@ -10,6 +10,7 @@ import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShowCondition } from '../conditional-show/conditional-show.model';
 import { FieldsPurger } from '../utils/fields.purger';
+import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -45,6 +46,7 @@ export class CaseEditComponent implements OnInit {
     private route: ActivatedRoute,
     private fieldsUtils: FieldsUtils,
     private fieldsPurger: FieldsPurger,
+    private registrarService: ConditionalShowRegistrarService,
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +78,7 @@ export class CaseEditComponent implements OnInit {
 
   next(currentPageId: string): Promise<boolean> {
     this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
+    this.registrarService.reset();
 
     let nextPage = this.wizard.nextPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     return this.router.navigate([nextPage ? nextPage.id : 'submit'], { relativeTo: this.route });
@@ -83,6 +86,7 @@ export class CaseEditComponent implements OnInit {
 
   previous(currentPageId: string): Promise<boolean> {
     this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
+    this.registrarService.reset();
 
     let previousPage = this.wizard.previousPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     if (!previousPage) {

@@ -12,4 +12,5 @@ export class CaseEventTrigger {
   wizard_pages: WizardPage[];
   show_summary?: boolean;
   show_event_notes?: boolean;
+  end_button_label?: string;
 }

@@ -3,9 +3,9 @@ import { aCaseField } from '../case-editor/case-edit.spec';
 import { CaseField } from '../domain/definition/case-field.model';
 
 describe('conditional-show', () => {
-  let caseField1: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL');
-  let caseField2: CaseField = aCaseField('field2', 'field2', 'Text', 'OPTIONAL');
-  let caseField3: CaseField = aCaseField('field3', 'field3', 'Text', 'OPTIONAL');
+  let caseField1: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
+  let caseField2: CaseField = aCaseField('field2', 'field2', 'Text', 'OPTIONAL', null);
+  let caseField3: CaseField = aCaseField('field3', 'field3', 'Text', 'OPTIONAL', null);
 
   caseField1.value = 's1';
   caseField2.value = 3;

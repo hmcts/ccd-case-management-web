@@ -15,7 +15,7 @@
                      (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
 
 <form [formGroup]="editForm" (submit)="submit()">
-  <ng-container *ngIf="fieldsToDisplayExists()">
+  <ng-container *ngIf="checkYourAnswerFieldsToDisplayExists()">
 
     <h1 class="heading-small">Check your answers</h1>
     <h2 class="plain-message">Check the information below carefully. This will form a record of your application.</h2>
@@ -25,24 +25,46 @@
       <ng-container *ngFor="let page of this.wizard.pages">
         <ng-container *ngIf="isShown(page)">
           <ng-container *ngFor="let field of page.case_fields">
-            <ng-container *ngIf="canShowField(field)">
-
+            <ng-container *ngIf="canShowFieldInCYA(field)">
               <tr ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
-                  [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
+                [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
                 <th class="valign-top">{{field.label}}</th>
                 <td class="form-cell">
                   <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                 </td>
                 <td class="valign-top">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
-                     href="javascript:void(0)">Change</a>
+                    href="javascript:void(0)">Change</a>
                 </td>
               </tr>
-
             </ng-container>
           </ng-container>
         </ng-container>
       </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-container *ngIf="readOnlySummaryFieldsToDisplayExists()">
+    
+    <table class="summary-fields">
+      <tbody>
+        <ng-container *ngFor="let field of this.showSummaryFields">
+            <ng-container [ngSwitch]="!(field | ccdIsCompound)">
+              <tr *ngSwitchCase="true" ccdLabelSubstitutor [caseField]="field" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
+                <th>{{field.label}}</th>
+                <td class="form-cell">
+                  <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                </td>
+              </tr>
+              <tr *ngSwitchCase="false" class="compound-field" ccdLabelSubstitutor [caseField]="field"
+                  [formGroup]="editForm.controls['data']"
+                  [eventFields]="eventTrigger.case_fields">
+                <td colspan="2">
+                  <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
       </tbody>
     </table>
   </ng-container>

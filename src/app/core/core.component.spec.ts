@@ -10,8 +10,8 @@ import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { attr } from '../test/helpers';
 import { OAuth2Service } from "./auth/oauth2.service";
 import { HttpService } from './http/http.service';
-import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../app.config';
+import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 
 describe('CoreComponent', () => {

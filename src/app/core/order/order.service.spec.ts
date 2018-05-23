@@ -13,27 +13,27 @@ describe('OrderService', () => {
     orderService = new OrderService();
   });
 
-  describe('compareAsc', () => {
+  describe('sortAsc', () => {
 
     it('should sort in ascending order', () => {
-      expect(orderService.compareAsc(ITEM_1, ITEM_2)).toBe(-1);
-      expect(orderService.compareAsc(ITEM_2, ITEM_1)).toBe(1);
+      expect(orderService.sortAsc(ITEM_1, ITEM_2)).toBe(-1);
+      expect(orderService.sortAsc(ITEM_2, ITEM_1)).toBe(1);
     });
 
     it('should keep order of items with same order', () => {
-      expect(orderService.compareAsc(ITEM_1, ITEM_1)).toBe(0);
+      expect(orderService.sortAsc(ITEM_1, ITEM_1)).toBe(0);
     });
 
     it('should sort items without order at the end', () => {
-      expect(orderService.compareAsc(ITEM_X, ITEM_1)).toBe(1);
+      expect(orderService.sortAsc(ITEM_X, ITEM_1)).toBe(1);
     });
 
     it('should keep order of items without order', () => {
-      expect(orderService.compareAsc(ITEM_X, ITEM_X)).toBe(0);
+      expect(orderService.sortAsc(ITEM_X, ITEM_X)).toBe(0);
     });
 
     it('should consider 0 as a lower order', () => {
-      expect(orderService.compareAsc(ITEM_1, ITEM_0)).toBe(1);
+      expect(orderService.sortAsc(ITEM_1, ITEM_0)).toBe(1);
     });
   });
 
@@ -46,7 +46,7 @@ describe('OrderService', () => {
 
       let sortedArray = orderService.sort(array);
 
-      expect(array.slice).toHaveBeenCalledWith(0);
+      expect(array.slice).toHaveBeenCalledWith();
       expect(sortedArray).toEqual(arrayClone);
     });
 
@@ -60,7 +60,7 @@ describe('OrderService', () => {
 
       let sortedArray = orderService.sort(array);
 
-      expect(arrayClone.sort).toHaveBeenCalledWith(orderService.compareAsc);
+      expect(arrayClone.sort).toHaveBeenCalledWith(orderService.sortAsc);
       expect(sortedArray).toBe(arrayExpected);
     });
   });

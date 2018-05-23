@@ -30,3 +30,10 @@
 .valign-top {
   vertical-align: top;
 }
+
+.summary-fields {
+  margin-bottom: 30px;
+  tbody tr th, tbody tr td {
+    border-bottom: 0px;
+  }
+}

@@ -1,5 +1,5 @@
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
-import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { WriteComplexFieldComponent } from '../complex/write-complex-field.component';
 import { AddressModel } from '../../../core/addresses/address.model';
 import { AddressOption } from './address-option.model';
@@ -12,6 +12,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['write-address-field.scss']
 })
 export class WriteAddressFieldComponent extends AbstractFieldWriteComponent implements OnInit, OnChanges {
+
+  @Input()
+  isSearchField = false;
 
   @ViewChild('writeComplexFieldComponent')
   writeComplexFieldComponent: WriteComplexFieldComponent;
@@ -72,6 +75,9 @@ export class WriteAddressFieldComponent extends AbstractFieldWriteComponent impl
   }
 
   isAddressSet() {
+    if (this.isSearchField) {
+      return true;
+    }
     if (!this.writeComplexFieldComponent || !this.writeComplexFieldComponent.complexGroup) {
       return false;
     }

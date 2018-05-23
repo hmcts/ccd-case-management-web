@@ -1,6 +1,4 @@
-import {
-  Component, ComponentFactoryResolver, Input, OnInit, ReflectiveInjector, ViewChild, ViewContainerRef
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, OnInit, ReflectiveInjector, ViewChild, ViewContainerRef } from '@angular/core';
 import { PaletteService } from '../palette.service';
 import { AbstractFieldWriteComponent } from './abstract-field-write.component';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -14,6 +12,9 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
   `
 })
 export class FieldWriteComponent extends AbstractFieldWriteComponent implements OnInit {
+
+  @Input()
+  isSearchField = false;
 
   @Input()
   formGroup: FormGroup;
@@ -53,6 +54,12 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
     component.instance['idPrefix'] = this.idPrefix;
     if (this.caseField.field_type.id === 'AddressGlobal') {
       component.instance['ignoreMandatory'] = true;
+    }
+    if (this.isSearchField && (
+      this.caseField.field_type.id === 'AddressGlobalUK'
+      || this.caseField.field_type.id === 'AddressGlobal'
+      || this.caseField.field_type.id === 'AddressUK')) {
+      component.instance['isSearchField'] = true;
     }
 
     this.fieldContainer.insert(component.hostView);

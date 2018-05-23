@@ -10,6 +10,8 @@ import { CallbackErrorsContext } from './error-context';
 export class CallbackErrorsComponent implements OnInit, OnDestroy {
 
   public static readonly TRIGGER_TEXT_SUBMIT = 'Submit';
+  public static readonly TRIGGER_TEXT_START = 'Start';
+  public static readonly TRIGGER_TEXT_GO = 'Go';
   public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
 
   @Input()

@@ -2,12 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 import { Observable } from 'rxjs/Observable';
 import { Wizard } from './wizard.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Confirmation } from './confirmation.model';
 import { Predicate } from '../predicate';
 import { WizardPage } from '../domain/wizard-page.model';
 import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ShowCondition } from '../conditional-show/conditional-show.model';
+import { FieldsPurger } from '../utils/fields.purger';
+import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -42,6 +45,8 @@ export class CaseEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fieldsUtils: FieldsUtils,
+    private fieldsPurger: FieldsPurger,
+    private registrarService: ConditionalShowRegistrarService,
   ) {}
 
   ngOnInit(): void {
@@ -57,19 +62,12 @@ export class CaseEditComponent implements OnInit {
     });
   }
 
-  buildCanShowPredicate(): Predicate<WizardPage> {
-    let currentState = this.fieldsUtils.mergeCaseFieldsAndFormFields(this.eventTrigger.case_fields, this.form.controls['data'].value);
-    return (page: WizardPage): boolean => {
-      return page.parsedShowCondition.match(currentState);
-    };
-  }
-
   getPage(pageId: string): WizardPage {
-    return this.wizard.getPage(pageId, this.buildCanShowPredicate());
+    return this.wizard.getPage(pageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
   }
 
   first(): Promise<boolean> {
-    let firstPage = this.wizard.firstPage(this.buildCanShowPredicate());
+    let firstPage = this.wizard.firstPage(this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     return this.router.navigate([firstPage ? firstPage.id : 'submit'], { relativeTo: this.route });
   }
 
@@ -79,13 +77,18 @@ export class CaseEditComponent implements OnInit {
   }
 
   next(currentPageId: string): Promise<boolean> {
-    let nextPage = this.wizard.nextPage(currentPageId, this.buildCanShowPredicate());
+    this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
+    this.registrarService.reset();
+
+    let nextPage = this.wizard.nextPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     return this.router.navigate([nextPage ? nextPage.id : 'submit'], { relativeTo: this.route });
   }
 
   previous(currentPageId: string): Promise<boolean> {
-    let previousPage = this.wizard.previousPage(currentPageId, this.buildCanShowPredicate());
+    this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
+    this.registrarService.reset();
 
+    let previousPage = this.wizard.previousPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     if (!previousPage) {
       return Promise.resolve(false);
     }
@@ -94,7 +97,7 @@ export class CaseEditComponent implements OnInit {
   }
 
   hasPrevious(currentPageId: string): boolean {
-    return this.wizard.hasPreviousPage(currentPageId, this.buildCanShowPredicate());
+    return this.wizard.hasPreviousPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
   }
 
   cancel(): void {
@@ -105,4 +108,5 @@ export class CaseEditComponent implements OnInit {
     this.confirmation = confirmation;
     return this.router.navigate(['confirm'], {relativeTo: this.route});
   }
+
 }

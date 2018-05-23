@@ -7,6 +7,10 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { CaseField } from '../../domain/definition/case-field.model';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
+import { PaletteContext } from './palette-context.enum';
+
+const $FIELD_READ_LABEL = By.css('ccd-field-read-label');
+const $FIELD_TEST = By.css('ccd-field-read-label span.text-cls');
 
 const CASE_FIELD: CaseField = {
   id: 'PersonFirstName',
@@ -83,6 +87,7 @@ describe('FieldReadComponent', () => {
     component = fixture.componentInstance;
 
     component.caseField = CASE_FIELD;
+    component.context = PaletteContext.CHECK_YOUR_ANSWER;
 
     de = fixture.debugElement;
     fixture.detectChanges();
@@ -95,17 +100,24 @@ describe('FieldReadComponent', () => {
   it('should inject component instance as child', () => {
     fixture.detectChanges();
 
-    let fieldReadLabelComponent = de.query(By.css('ccd-field-read-label'));
+    let fieldReadLabelComponent = de.query($FIELD_READ_LABEL);
     expect(fieldReadLabelComponent.children.length).toBe(1);
 
     let fieldReadLabel = fieldReadLabelComponent.componentInstance;
     expect(fieldReadLabel.caseField).toBe(CASE_FIELD);
 
-    let fieldTestComponent = fieldReadLabelComponent.query(By.css('span.text-cls'));
+    let fieldTestComponent = de.query($FIELD_TEST);
     expect(fieldTestComponent).toBeTruthy();
 
     let fieldTest = fieldTestComponent.componentInstance;
     expect(fieldTest.caseField).toBe(CASE_FIELD);
+  });
+
+  it('should pass context to field instance', () => {
+    fixture.detectChanges();
+
+    let fieldTest = de.query($FIELD_TEST).componentInstance;
+    expect(fieldTest.context).toBe(PaletteContext.CHECK_YOUR_ANSWER);
   });
 
   it('should NOT display label by default', () => {

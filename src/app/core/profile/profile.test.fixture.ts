@@ -4,7 +4,7 @@ export let createAProfile = () => {
   const p = new Profile();
   p.user = {
     idam: {
-      id: 42,
+      id: '42',
       email: 'user@test.com',
       forename: 'Test',
       surname: 'User',

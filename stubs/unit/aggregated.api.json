@@ -18,54 +18,12 @@
       {
         "id": "TEST",
         "name": "Test",
-        "description": "Content for the Test Jurisdiction.",
-        "case_types": [
-          {
-            "id": "TestAddressBookCase",
-            "name": "Test Address Book Case",
-            "description": "Test Address Book Case",
-            "states": [
-              {
-                "id": "CaseCreated",
-                "name": "Case created"
-              },
-              {
-                "id": "CaseEnteredIntoLegacy",
-                "name": "Case has been Entered into Legacy"
-              },
-              {
-                "id": "CaseStopped",
-                "name": "Put case on hold"
-              }
-            ]
-          }
-        ]
+        "description": "Content for the Test Jurisdiction."
       },
       {
         "id": "TEST2",
         "name": "Test2",
-        "description": " Content for the second Test Jurisdiction.",
-        "case_types": [
-          {
-            "id": "TestAddressBookCase",
-            "name": "Test Address Book Case",
-            "description": "Test Address Book Case",
-            "states": [
-              {
-                "id": "CaseCreated",
-                "name": "Case created"
-              },
-              {
-                "id": "CaseEnteredIntoLegacy",
-                "name": "Case has been Entered into Legacy"
-              },
-              {
-                "id": "CaseStopped",
-                "name": "Put case on hold"
-              }
-            ]
-          }
-        ]
+        "description": " Content for the second Test Jurisdiction."
       }
     ],
     "default": {

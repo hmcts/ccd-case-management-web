@@ -15,8 +15,8 @@ describe('ConditionalShowRegistrarService', () => {
     registrarService = new ConditionalShowRegistrarService();
     conditionalShowDirective1 = createSpyObj<ConditionalShowDirective>('conditionalShowDirective1', ['refreshVisibility']);
     conditionalShowDirective2 = createSpyObj<ConditionalShowDirective>('conditionalShowDirective2', ['refreshVisibility']);
-    let caseField1: CaseField = aCaseField('id1', 'label', 'Text', 'OPTIONAL');
-    let caseField2: CaseField = aCaseField('id2', 'label', 'Text', 'OPTIONAL');
+    let caseField1: CaseField = aCaseField('id1', 'label', 'Text', 'OPTIONAL', null);
+    let caseField2: CaseField = aCaseField('id2', 'label', 'Text', 'OPTIONAL', null);
     conditionalShowDirective1.caseField = caseField1;
     conditionalShowDirective2.caseField = caseField2;
   }));

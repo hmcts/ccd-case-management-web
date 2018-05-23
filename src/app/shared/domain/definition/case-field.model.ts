@@ -14,5 +14,6 @@ export class CaseField implements Orderable {
   display_context: string;
   show_condition?: string;
   show_summary_change_option?: boolean;
+  show_summary_content_option?: number;
   wizardProps?: WizardPageField;
 }

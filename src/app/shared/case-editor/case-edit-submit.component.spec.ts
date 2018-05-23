@@ -14,6 +14,8 @@ import { IsCompoundPipe } from '../palette/utils/is-compound.pipe';
 import { CaseField } from '../domain/definition/case-field.model';
 import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
+import { OrderService } from '../../core/order/order.service';
+import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -38,6 +40,11 @@ describe('CaseEditSubmitComponent', () => {
   ];
   let firstPage = pages[0];
   let wizard: Wizard = new Wizard(pages);
+  let orderService;
+  let eventTrigger: CaseEventTrigger = new CaseEventTrigger();
+  let caseField1: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', 3);
+  let caseField2: CaseField = aCaseField('field2', 'field2', 'Text', 'OPTIONAL', 2);
+  let caseField3: CaseField = aCaseField('field3', 'field3', 'Text', 'OPTIONAL', 1);
 
   let mockRoute: any = {
     snapshot: {
@@ -67,10 +74,13 @@ describe('CaseEditSubmitComponent', () => {
   };
 
   beforeEach(async(() => {
+    orderService = new OrderService();
+    spyOn(orderService, 'sort').and.callThrough();
+
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
-      'eventTrigger': { 'case_fields': [], 'end_button_label': END_BUTTON_LABEL },
+      'eventTrigger': {'case_fields': [caseField1, caseField2, caseField3], 'end_button_label': END_BUTTON_LABEL},
       'wizard': wizard,
       'hasPrevious': () => true,
       'getPage': () => firstPage,
@@ -90,12 +100,13 @@ describe('CaseEditSubmitComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        { provide: CaseEditComponent, useValue: caseEditComponent },
-        { provide: FormValueService, useValue: formValueService },
-        { provide: FormErrorService, useValue: formErrorService },
-        { provide: CaseFieldService, useValue: caseFieldService },
-        { provide: FieldsUtils, useValue: fieldsUtils },
-        { provide: ActivatedRoute, useValue: mockRoute }
+        {provide: CaseEditComponent, useValue: caseEditComponent},
+        {provide: FormValueService, useValue: formValueService},
+        {provide: FormErrorService, useValue: formErrorService},
+        {provide: CaseFieldService, useValue: caseFieldService},
+        {provide: FieldsUtils, useValue: fieldsUtils},
+        {provide: ActivatedRoute, useValue: mockRoute},
+        {provide: OrderService, useValue: orderService}
       ]
     }).compileComponents();
 
@@ -124,26 +135,26 @@ describe('CaseEditSubmitComponent', () => {
   });
 
   it('should not allow changes for READONLY fields', () => {
-    let changeAllowed = comp.isChangeAllowed(aCaseField('field1', 'field1', 'Text', 'READONLY'));
+    let changeAllowed = comp.isChangeAllowed(aCaseField('field1', 'field1', 'Text', 'READONLY', null));
     expect(changeAllowed).toBeFalsy();
   });
 
   it('should allow changes for non READONLY fields', () => {
-    let changeAllowed = comp.isChangeAllowed(aCaseField('field1', 'field1', 'Text', 'OPTIONAL'));
+    let changeAllowed = comp.isChangeAllowed(aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null));
     expect(changeAllowed).toBeTruthy();
   });
 
-  it('should return TRUE for canShowField when caseField show_summary_change_option is TRUE', () => {
-    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL');
+  it('should return TRUE for canShowFieldInCYA when caseField show_summary_change_option is TRUE', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
     caseField.show_summary_change_option = true;
-    let canShow = comp.canShowField(caseField);
+    let canShow = comp.canShowFieldInCYA(caseField);
     expect(canShow).toBeTruthy();
   });
 
-  it('should return FALSE for canShowField when caseField show_summary_change_option is FALSE', () => {
-    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL');
+  it('should return FALSE for canShowFieldInCYA when caseField show_summary_change_option is FALSE', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
     caseField.show_summary_change_option = false;
-    let canShow = comp.canShowField(caseField);
+    let canShow = comp.canShowFieldInCYA(caseField);
     expect(canShow).toBeFalsy();
   });
 
@@ -156,23 +167,54 @@ describe('CaseEditSubmitComponent', () => {
     expect(caseEditComponent.navigateToPage).toHaveBeenCalled();
   });
 
-  it('should return false when no field exists and fieldsToDisplayExists is called', () => {
-    let result = comp.fieldsToDisplayExists();
+  it('should return false when no field exists and checkYourAnswerFieldsToDisplayExists is called', () => {
+    let result = comp.checkYourAnswerFieldsToDisplayExists();
 
     expect(result).toBeFalsy();
   });
 
-  it('should return true when no Fields to Display exists and fieldsToDisplayExists is called', () => {
-    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL');
+  it('should return true when no Fields to Display exists and checkYourAnswerFieldsToDisplayExists is called', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
     caseField.show_summary_change_option = true;
     comp.wizard.pages[0].case_fields = [caseField];
     comp.eventTrigger.show_summary = true;
 
-    let result = comp.fieldsToDisplayExists();
+    let result = comp.checkYourAnswerFieldsToDisplayExists();
 
     expect(result).toBeTruthy();
   });
 
+  it('should return false when no field exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.case_fields = [];
+    fixture.detectChanges();
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeFalsy();
+  });
+
+  it('should return true when no Fields to Display exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
+    caseField.show_summary_content_option = 3;
+    comp.eventTrigger.case_fields = [caseField];
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeTruthy();
+  });
+
+  it('should sort case fields with show_summary_content_option', () => {
+    expect(comp.eventTrigger.case_fields[0].show_summary_content_option).toBe(3);
+    expect(comp.eventTrigger.case_fields[1].show_summary_content_option).toBe(2);
+    expect(comp.eventTrigger.case_fields[2].show_summary_content_option).toBe(1);
+    expect(orderService.sort).toHaveBeenCalledWith(
+      comp.eventTrigger.case_fields,
+      CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION);
+    expect(comp.showSummaryFields.length).toBe(3);
+    expect(comp.showSummaryFields[0].show_summary_content_option).toBe(1);
+    expect(comp.showSummaryFields[1].show_summary_content_option).toBe(2);
+    expect(comp.showSummaryFields[2].show_summary_content_option).toBe(3);
+  });
 });
 
 describe('CaseEditSubmitComponent without custom end button label', () => {
@@ -184,6 +226,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
+  let orderService;
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
   });
@@ -222,6 +265,9 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   };
 
   beforeEach(async(() => {
+    orderService = new OrderService();
+    spyOn(orderService, 'sort').and.callThrough();
+
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
@@ -250,7 +296,8 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
         { provide: FormErrorService, useValue: formErrorService },
         { provide: CaseFieldService, useValue: caseFieldService },
         { provide: FieldsUtils, useValue: fieldsUtils },
-        { provide: ActivatedRoute, useValue: mockRoute }
+        { provide: ActivatedRoute, useValue: mockRoute },
+        { provide: OrderService, useValue: orderService }
       ]
     }).compileComponents();
 

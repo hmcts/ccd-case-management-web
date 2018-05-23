@@ -65,7 +65,7 @@ describe('PaletteService', () => {
       assertComponent('Postcode', true, WriteTextFieldComponent, 'AnID');
     });
 
-    it('should get ReadComplexTypeField component class for ComplexType input', () => {
+    it('should get ReadComplexField component class for ComplexType input', () => {
       assertComponent('Complex', false, ReadComplexFieldComponent, 'AnID');
     });
 

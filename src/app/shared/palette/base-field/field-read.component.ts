@@ -26,6 +26,7 @@ export class FieldReadComponent extends AbstractFieldReadComponent implements On
 
     // Provide component @Inputs
     component.instance['caseField'] = this.caseField;
+    component.instance['context'] = this.context;
 
     this.fieldContainer.insert(component.hostView);
   }

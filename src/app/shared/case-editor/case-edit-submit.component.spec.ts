@@ -81,7 +81,7 @@ describe('CaseEditSubmitComponent', () => {
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
-      'eventTrigger': {'case_fields': [caseField1, caseField2, caseField3], 'end_button_label': END_BUTTON_LABEL },
+      'eventTrigger': {'case_fields': [caseField1, caseField2, caseField3], 'end_button_label': END_BUTTON_LABEL},
       'wizard': wizard,
       'hasPrevious': () => true,
       'getPage': () => firstPage,
@@ -181,7 +181,6 @@ describe('CaseEditSubmitComponent', () => {
     comp.eventTrigger.show_summary = true;
 
     let result = comp.checkYourAnswerFieldsToDisplayExists();
-
     expect(result).toBeTruthy();
   });
 
@@ -248,6 +247,25 @@ describe('CaseEditSubmitComponent', () => {
     expect(eventNotes).toBeNull();
   });
 
+  it('should return false when no field exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.case_fields = [];
+    fixture.detectChanges();
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeFalsy();
+  });
+
+  it('should return true when no Fields to Display exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
+    caseField.show_summary_content_option = 3;
+    comp.eventTrigger.case_fields = [caseField];
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeTruthy();
+  });
+
   it('should sort case fields with show_summary_content_option', () => {
     expect(comp.eventTrigger.case_fields[0].show_summary_content_option).toBe(3);
     expect(comp.eventTrigger.case_fields[1].show_summary_content_option).toBe(2);
@@ -271,6 +289,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
+  let orderService;
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
   });

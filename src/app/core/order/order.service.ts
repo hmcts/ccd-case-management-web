@@ -8,21 +8,9 @@ export class OrderService {
    * @deprecated Use `sort` function instead or `compareAsc`
    * @type {(a:Orderable, b:Orderable)=>number}
    */
-  sortAsc = this.compareAsc;
+  sortAsc = OrderService.DEFAULT_COMPARE_FUNCTION;
 
-  /**
-   * Clone and sort array. Ascending order used by default.
-   *
-   * @param array Array to sort
-   * @returns {Orderable[]} Sorted clone array.
-   */
-  sort<T extends Orderable>(array: T[]): T[] {
-    return array
-      .slice(0)
-      .sort(this.compareAsc);
-  }
-
-  compareAsc(a: Orderable, b: Orderable): number {
+  private static readonly DEFAULT_COMPARE_FUNCTION = (a: Orderable, b: Orderable) => {
     let aOrdered = a.order === 0 || a.order;
     let bOrdered = b.order === 0 || b.order;
 
@@ -36,4 +24,17 @@ export class OrderService {
 
     return a.order - b.order;
   }
+
+  /**
+   * Clone and sort array. Ascending order used by default.
+   *
+   * @param array Array to sort
+   * @returns {Orderable[]} Sorted clone array.
+   */
+  sort<T extends Orderable>(array: T[], sortingFunction = this.sortAsc): T[] {
+    return array
+      .slice()
+      .sort(sortingFunction);
+  }
+
 }

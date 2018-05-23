@@ -115,7 +115,7 @@ describe('CaseEditPageComponent', () => {
   });
 
   it('should allow empty values when field is OPTIONAL', () => {
-    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Text', 'OPTIONAL'));
+    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null));
     wizardPage.isMultiColumn = () => false;
     comp.currentPage = wizardPage;
     fixture.detectChanges();
@@ -123,7 +123,7 @@ describe('CaseEditPageComponent', () => {
   });
 
   it('should allow empty document fields when OPTIONAL', () => {
-    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Document', 'OPTIONAL'));
+    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Document', 'OPTIONAL', null));
     wizardPage.isMultiColumn = () => false;
     comp.currentPage = wizardPage;
     fixture.detectChanges();
@@ -131,7 +131,7 @@ describe('CaseEditPageComponent', () => {
   });
 
   it('should not allow empty document fields when MANDATORY', () => {
-    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Document', 'MANDATORY'));
+    wizardPage.case_fields.push(aCaseField('field1', 'field1', 'Document', 'MANDATORY', null));
     wizardPage.isMultiColumn = () => false;
     comp.currentPage = wizardPage;
     fixture.detectChanges();

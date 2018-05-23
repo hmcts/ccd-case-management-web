@@ -28,7 +28,8 @@ const CONFIG = {
   'oauth2_token_endpoint_url': process.env['CCD_GW_OAUTH2_URL'] || 'http://localhost:3453/oauth2',
   'oauth2_client_id': process.env['CCD_GW_OAUTH2_CLIENT_ID'] || 'ccd_gateway',
   'print_service_url': process.env['PRINT_SERVICE_URL'] || 'http://localhost:3453/print',
-  'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net'
+  'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net',
+  'smart_survey_url':process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/'
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack

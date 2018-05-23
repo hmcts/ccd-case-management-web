@@ -24,6 +24,9 @@ locals {
   previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
   nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
   vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+
+  is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
+  external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 }
 
 module "case-management-web" {
@@ -32,9 +35,9 @@ module "case-management-web" {
   location = "${var.location}"
   env      = "${var.env}"
   ilbIp    = "${var.ilbIp}"
-  is_frontend = "${var.env != "preview" ? 1: 0}"
   subscription = "${var.subscription}"
-  additional_host_name = "${var.external_host_name}"
+  is_frontend = "${local.is_frontend}"
+  additional_host_name = "${local.external_host_name}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

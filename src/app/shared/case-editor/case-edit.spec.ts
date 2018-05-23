@@ -4,7 +4,8 @@ import { WizardPage } from '../domain/wizard-page.model';
 import createSpyObj = jasmine.createSpyObj;
 import { FieldTypeEnum } from '../domain/definition/field-type-enum.model';
 
-export let aCaseField = (id: string, label: string, type: FieldTypeEnum, display_context: string): CaseField => {
+export let aCaseField = (id: string, label: string, type: FieldTypeEnum, display_context: string,
+  show_summary_content_option: number): CaseField => {
   return {
     id: id || 'personFirstName',
     field_type: {
@@ -13,6 +14,7 @@ export let aCaseField = (id: string, label: string, type: FieldTypeEnum, display
     },
     display_context: display_context || 'OPTIONAL',
     label: label || 'First name',
+    show_summary_content_option: show_summary_content_option
   };
 };
 

@@ -289,7 +289,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
-  let orderService;
+
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
   });

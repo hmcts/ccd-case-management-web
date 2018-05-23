@@ -8,15 +8,19 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class RemoveDialogComponent implements OnInit {
 
-  constructor(private matDialogRef: MatDialogRef<RemoveDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  result: string;
+
+  constructor(private matDialogRef: MatDialogRef<RemoveDialogComponent>) {}
 
   ngOnInit() {
   }
 
   remove() {
-    this.matDialogRef.close('Remove');
+    this.result = 'Remove';
+    this.matDialogRef.close(this.result);
   }
   cancel() {
-    this.matDialogRef.close('Cancel');
+    this.result = 'Cancel';
+    this.matDialogRef.close(this.result);
   }
 }

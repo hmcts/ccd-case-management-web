@@ -11,8 +11,6 @@ import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import { AlertService } from '../../core/alert/alert.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-import { RemoveDialogComponent } from '../../shared/remove-dialog/remove-dialog.component';
 import 'rxjs/add/operator/do';
 
 @Component({
@@ -25,8 +23,6 @@ export class WorkbasketFiltersComponent implements OnInit {
   public static readonly PARAM_JURISDICTION = 'jurisdiction';
   public static readonly PARAM_CASE_TYPE = 'case-type';
   public static readonly PARAM_CASE_STATE = 'case-state';
-
-  selection = '';
 
   @Input()
   jurisdictions: Jurisdiction[];
@@ -62,30 +58,7 @@ export class WorkbasketFiltersComponent implements OnInit {
               private workbasketInputFilterService: WorkbasketInputFilterService,
               private jurisdictionService: JurisdictionService,
               private definitionsService: DefinitionsService,
-              private alertService: AlertService,
-              public dialog: MatDialog) { }
-
-  openModal() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.ariaLabel = 'Label';
-    dialogConfig.data = { result: ''};
-    dialogConfig.height = '220px';
-    dialogConfig.width = '550px';
-    dialogConfig.panelClass = 'remove-dialog';
-
-    dialogConfig.closeOnNavigation = false;
-    dialogConfig.position = {
-      top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
-    }
-
-    const dialogRef = this.dialog.open(RemoveDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.selection = result;
-    });
-  }
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.selected = {};

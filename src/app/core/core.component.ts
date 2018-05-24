@@ -5,7 +5,7 @@ import { Profile } from './profile/profile.model';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '../app.config';
-import { OAuth2Service } from "./auth/oauth2.service";
+import { OAuth2Service } from './auth/oauth2.service';
 
 @Component({
   selector: 'ccd-core',

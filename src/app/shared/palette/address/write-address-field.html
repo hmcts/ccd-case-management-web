@@ -23,10 +23,10 @@
     </select>
   </div>
 
-  <span class="manual-link" *ngIf="!isAddressSet()" (click)="blankAddress()">I can't enter a UK postcode</span>
+  <span class="manual-link" *ngIf="!shouldShowDetailFields()" (click)="blankAddress()">I can't enter a UK postcode</span>
 
   <ccd-write-complex-type-field
-    [hidden]="!isAddressSet()"
+    [hidden]="!shouldShowDetailFields()"
     [(caseField)]="caseField"
     [renderLabel]="false"
     [registerControl]="registerControl"

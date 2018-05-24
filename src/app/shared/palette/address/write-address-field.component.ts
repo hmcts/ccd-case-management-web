@@ -74,7 +74,7 @@ export class WriteAddressFieldComponent extends AbstractFieldWriteComponent impl
     this.setFormValue();
   }
 
-  isAddressSet() {
+  shouldShowDetailFields() {
     if (this.isSearchField) {
       return true;
     }

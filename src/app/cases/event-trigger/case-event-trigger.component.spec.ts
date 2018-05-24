@@ -30,6 +30,9 @@ class CaseEditComponent {
   @Input()
   validate: (CaseEventData) => Observable<object>;
 
+  @Input()
+  caseDetails: CaseView;
+
   @Output()
   cancelled: EventEmitter<any> = new EventEmitter();
 

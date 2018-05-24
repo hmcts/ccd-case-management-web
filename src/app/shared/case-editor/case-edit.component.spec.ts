@@ -188,11 +188,7 @@ describe('CaseEditComponent', () => {
   beforeEach(() => {
   });
 
-  it('should render an event trigger header', () => {
-    let header = de.query(By.directive(EventTriggerHeaderComponent));
-    expect(header).toBeTruthy();
-    expect(header.componentInstance.eventTrigger).toEqual(EVENT_TRIGGER);
-  });
+  // Moved this test case to case-edit-page.component
 
   it('should return true for hasPrevious', () => {
     component.wizard = wizard;

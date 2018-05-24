@@ -1,5 +1,4 @@
 <div class="side-padding">
   <ccd-activity [caseId]="caseDetails.case_id" [displayMode]="BANNER"></ccd-activity>
-  <ccd-case-header [caseDetails]="caseDetails"></ccd-case-header>
-  <ccd-case-edit [submit]="submit()" [validate]="validate()" [eventTrigger]="eventTrigger" (cancelled)="cancel()" (submitted)="submitted($event)"></ccd-case-edit>
+  <ccd-case-edit [caseDetails]="caseDetails" [submit]="submit()" [validate]="validate()" [eventTrigger]="eventTrigger" (cancelled)="cancel()" (submitted)="submitted($event)"></ccd-case-edit>
 </div>

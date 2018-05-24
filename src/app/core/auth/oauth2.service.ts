@@ -13,8 +13,7 @@ export class OAuth2Service {
 
   constructor(private http: HttpService,
               private appConfig: AppConfig,
-              private authService: AuthService) {
-  }
+              private authService: AuthService) {}
 
   getAccessToken(code: string): Observable<Response> {
     if (code) {
@@ -25,7 +24,7 @@ export class OAuth2Service {
       // Note: This *must not* include any query string.
       params.set('redirect_uri', this.authService.redirectUri().replace('https://', ''));
       return this.http
-        .get(url, {search: params});
+        .get(url, { search: params });
     } else {
       console.error('Error: Unable to obtain access token - no OAuth2 code provided');
     }

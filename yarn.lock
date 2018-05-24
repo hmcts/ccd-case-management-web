@@ -168,9 +168,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@hmcts/ccd-case-ui-toolkit@1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.1.5.tgz#58d15acac81c33498e55a4063f12a0a4740d57c2"
+"@hmcts/ccd-case-ui-toolkit@1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.1.6.tgz#63f5a76ee28f02d3114f2f7869ef12de82b4b5b3"
   dependencies:
     govuk-elements-sass "^3.1.2"
 

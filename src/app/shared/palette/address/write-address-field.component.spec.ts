@@ -147,11 +147,8 @@ describe('WriteAddressFieldComponent', () => {
   });
 
   it('should render only address lines if field is search ', () => {
-    testHostComponent.componentUnderTest.isSearchField = true;
+    testHostComponent.componentUnderTest.isSearchField = true; // false by default
     fixture.detectChanges();
-
-    expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
-    expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeFalsy();
 
     expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
     expect(debugElement.query($POSTCODE_LOOKUP)).toBeFalsy();

@@ -17,6 +17,7 @@ import { WizardPage } from '../domain/wizard-page.model';
 import createSpyObj = jasmine.createSpyObj;
 import { WizardPageField } from '../domain/wizard-page-field.model';
 import { CaseField } from '../domain/definition/case-field.model';
+import { FieldsPurger } from '../utils/fields.purger';
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 
 describe('CaseEditComponent', () => {
@@ -121,6 +122,7 @@ describe('CaseEditComponent', () => {
   let wizard: any;
   let routerStub: any;
   let fieldsUtils = new FieldsUtils();
+  let fieldsPurger = new FieldsPurger(fieldsUtils);
   let registrarService = new ConditionalShowRegistrarService()
 
   routerStub = {
@@ -164,6 +166,7 @@ describe('CaseEditComponent', () => {
           { provide: FormErrorService, useValue: formErrorService },
           { provide: FormValueService, useValue: formValueService },
           { provide: FieldsUtils, useValue: fieldsUtils },
+          { provide: FieldsPurger, useValue: fieldsPurger },
           { provide: ConditionalShowRegistrarService, useValue: registrarService },
           { provide: Router, useValue: routerStub }
         ]

@@ -32,6 +32,7 @@ import { PrintUrlPipe } from './printer/print-url.pipe';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RemoveDialogComponent } from '../shared/remove-dialog/remove-dialog.component';
+import { FieldsPurger } from '../shared/utils/fields.purger';
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import { RemoveDialogComponent } from '../shared/remove-dialog/remove-dialog.com
     CreateCaseFieldsResolver,
     EventTriggerResolver,
     LabelSubstitutionService,
+    FieldsPurger
   ]
 })
 export class CasesModule {}

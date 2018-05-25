@@ -46,7 +46,7 @@ variable "ccd_print_service_url" {
 }
 
 variable "external_host_name" {
-  default = "ccd-case-management-web.nonprod.platform.hmcts.net"
+  default = ""
 }
 
 variable "aat_gateway" {

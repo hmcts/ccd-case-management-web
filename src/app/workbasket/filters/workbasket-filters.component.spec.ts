@@ -27,9 +27,6 @@ import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.mo
 class FieldWriteComponent extends AbstractFieldWriteComponent {
   @Input()
   formGroup: FormGroup;
-
-  @Input()
-  isSearchField = false;
 }
 
 describe('WorkbasketFiltersComponent', () => {

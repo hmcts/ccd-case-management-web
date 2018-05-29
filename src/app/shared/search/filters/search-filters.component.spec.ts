@@ -131,9 +131,6 @@ const TEST_SEARCH_INPUTS: SearchInput[] = [
 class FieldWriteComponent extends AbstractFieldWriteComponent {
   @Input()
   formGroup: FormGroup;
-
-  @Input()
-  isSearchField: boolean;
 }
 
 function createObservableFrom<T>(param: T): Observable<T> {

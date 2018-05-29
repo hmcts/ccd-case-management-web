@@ -6,12 +6,12 @@ class CCDBanner extends BrowserUtils {
 
        super("", false)
 
-       this._bannerHeaderTitle = by.css('.header-title');
-       this._userName = by.css('.dropbtn')
-       this._userNameDropDown = by.css('.dropdown-content')
+       this._bannerHeaderTitle = by.css('.global-header .title');
+       this._userName = by.css('.header-proposition .dropbtn')
+       this._userNameDropDown = by.css('.header-proposition .dropdown-content')
        this._menuItems = by.css('.global-navigation cut-nav-item a')
        this._searchBox = by.css('.global-navigation .cut-nav-bar #search')
-       this._footer = by.css('#footer-wrapper')
+       this._footer = by.css('.footer-wrapper')
 
     }
 

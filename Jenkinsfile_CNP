@@ -7,11 +7,11 @@ properties(
 @Library("Infrastructure")
 
 def product = "ccd"
-def app = "case-management-web"
+def component = "case-management-web"
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret('caseworkerAutoTestEmail', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
-    secret('caseworkerAutoTestPassword', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+    secret('ccdCaseworkerAutotestEmail', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
+    secret('ccdCaseworkerAutotestPassword', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -24,8 +24,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 
-withPipeline("angular", product, app) {
+withPipeline("angular", product, component) {
 
-   //loadVaultSecrets(secrets)
+   loadVaultSecrets(secrets)
 
 }

@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Profile } from './profile/profile.model';
 import { JurisdictionService } from '../shared/jurisdiction.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription }   from 'rxjs/Subscription';
+import { AuthService } from './auth/auth.service';
 import { AppConfig } from '../app.config';
-import { OAuth2Service } from './auth/oauth2.service';
 
 @Component({
   selector: 'ccd-core',
@@ -19,11 +19,9 @@ export class CoreComponent implements OnInit, OnDestroy {
 
   profile: Profile;
 
-  constructor(public router: Router,
-              private route: ActivatedRoute,
-              private jurisdictionService: JurisdictionService,
-              private appConfig: AppConfig,
-              private oauth2Service: OAuth2Service) {}
+  constructor(public router: Router, private route: ActivatedRoute,
+              private jurisdictionService: JurisdictionService, private appConfig: AppConfig,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
@@ -42,7 +40,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
   signOut(): void {
-    this.oauth2Service.signOut();
+    this.authService.signOut();
   }
 
   ngOnDestroy(): void {

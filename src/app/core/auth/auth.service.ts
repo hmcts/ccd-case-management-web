@@ -21,6 +21,10 @@ export class AuthService {
     this.document.location.href = `${loginUrl}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
   }
 
+  public signOut(): void {
+    this.document.location.href = this.appConfig.getLogoutUrl();
+  }
+
   public redirectUri(): string {
     return this.document.location.origin + AuthService.PATH_OAUTH2_REDIRECT;
   }

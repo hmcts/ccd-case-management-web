@@ -147,7 +147,7 @@ describe('WriteAddressFieldComponent', () => {
   });
 
   it('should render only address lines if field is search ', () => {
-    testHostComponent.componentUnderTest.isSearchField = true; // false by default
+    testHostComponent.componentUnderTest.isExpanded = true; // false by default
     fixture.detectChanges();
 
     expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);

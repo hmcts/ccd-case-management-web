@@ -14,9 +14,6 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
 export class FieldWriteComponent extends AbstractFieldWriteComponent implements OnInit {
 
   @Input()
-  isSearchField = false;
-
-  @Input()
   formGroup: FormGroup;
 
   @ViewChild('fieldContainer', {read: ViewContainerRef})
@@ -55,13 +52,7 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
     if (this.caseField.field_type.id === 'AddressGlobal') {
       component.instance['ignoreMandatory'] = true;
     }
-    if (this.isSearchField && (
-      this.caseField.field_type.id === 'AddressGlobalUK'
-      || this.caseField.field_type.id === 'AddressGlobal'
-      || this.caseField.field_type.id === 'AddressUK')) {
-      component.instance['isSearchField'] = true;
-    }
-
+    component.instance['isExpanded'] = this.isExpanded;
     this.fieldContainer.insert(component.hostView);
   }
 }

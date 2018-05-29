@@ -71,7 +71,7 @@ describe('CaseCreatorSubmitComponent', () => {
 
   let FieldWrite: any = MockComponent({
     selector: 'ccd-field-write',
-    inputs: ['caseField', 'formGroup', 'idPrefix', 'isSearchField']
+    inputs: ['caseField', 'formGroup', 'idPrefix', 'isExpanded']
   });
 
   const RouterLinkComponent: any = MockComponent({

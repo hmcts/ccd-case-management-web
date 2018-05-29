@@ -7,6 +7,9 @@ export class AbstractFieldWriteComponent {
   caseField: CaseField;
 
   @Input()
+  isExpanded = false;
+
+  @Input()
   registerControl: <T extends AbstractControl> (control: T) => T;
 
   @Input()

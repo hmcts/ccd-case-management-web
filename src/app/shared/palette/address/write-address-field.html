@@ -2,7 +2,7 @@
 
   <h3 class="heading-medium">{{caseField | ccdFieldLabel }}</h3>
 
-  <div class="form-group" id="postcodeLookup" [ngClass]="{'form-group-error': missingPostcode}" *ngIf="!isSearchField">
+  <div class="form-group" id="postcodeLookup" [ngClass]="{'form-group-error': missingPostcode}" *ngIf="!isExpanded">
     <label for="postcodeInput">
       <span class="form-label-bold">Enter a UK postcode</span>
     </label>

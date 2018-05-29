@@ -13,9 +13,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class WriteAddressFieldComponent extends AbstractFieldWriteComponent implements OnInit, OnChanges {
 
-  @Input()
-  isSearchField = false;
-
   @ViewChild('writeComplexFieldComponent')
   writeComplexFieldComponent: WriteComplexFieldComponent;
 
@@ -75,7 +72,7 @@ export class WriteAddressFieldComponent extends AbstractFieldWriteComponent impl
   }
 
   shouldShowDetailFields() {
-    if (this.isSearchField) {
+    if (this.isExpanded) {
       return true;
     }
     if (!this.writeComplexFieldComponent || !this.writeComplexFieldComponent.complexGroup) {

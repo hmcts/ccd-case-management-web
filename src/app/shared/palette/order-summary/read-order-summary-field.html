@@ -1,0 +1,17 @@
+<div class="order-summary-title">Order Summary</div>
+<table>
+    <thead>
+      <tr><td>Code</td><td>Description</td><td>Amount</td></tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="caseField.value">
+        <ng-container *ngFor="let fee of caseField.value.Fees">
+          <tr>
+            <td>{{fee.value.FeeCode}}</td>
+            <td>{{fee.value.FeeDescription}}</td>
+            <td>{{fee.value.FeeAmount}}</td>
+          </tr>
+        </ng-container>        
+      </ng-container>
+    </tbody>
+</table>

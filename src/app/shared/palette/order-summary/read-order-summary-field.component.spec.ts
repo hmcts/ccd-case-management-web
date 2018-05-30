@@ -4,7 +4,6 @@ import { DebugElement } from '@angular/core';
 import { FieldType } from '../../domain/definition/field-type.model';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { By } from '@angular/platform-browser';
-import { Jsonp } from '@angular/http';
 import { text } from '../../../test/helpers';
 
 describe('ReadOrderSummaryFieldComponent', () => {

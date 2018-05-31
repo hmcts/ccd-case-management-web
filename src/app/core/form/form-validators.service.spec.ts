@@ -9,7 +9,7 @@ describe('FormValidatorsService', () => {
 
   it('should not add REQUIRED validator for OPTIONAL fields', () => {
     let formControl: FormControl = new FormControl();
-    let caseField: CaseField = aCaseField('id', 'label', 'Text', 'OPTIONAL');
+    let caseField: CaseField = aCaseField('id', 'label', 'Text', 'OPTIONAL', null);
     let result: FormControl = formValidatorsService.addValidators(caseField, formControl);
     result.markAsTouched();
     result.updateValueAndValidity();
@@ -18,7 +18,7 @@ describe('FormValidatorsService', () => {
 
   it('should return add REQUIRED validator for MANDATORY fields', () => {
     let formControl: FormControl = new FormControl();
-    let caseField: CaseField = aCaseField('id', 'label', 'Text', 'MANDATORY');
+    let caseField: CaseField = aCaseField('id', 'label', 'Text', 'MANDATORY', null);
     let result: FormControl = formValidatorsService.addValidators(caseField, formControl);
     result.markAsTouched();
     result.updateValueAndValidity();

@@ -28,6 +28,7 @@ const CONFIG = {
   'oauth2_client_id': process.env['CCD_GW_OAUTH2_CLIENT_ID'] || 'ccd_gateway',
   'print_service_url': process.env['PRINT_SERVICE_URL'] || 'http://localhost:3453/print',
   'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net',
+  'smart_survey_url': process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
   'activity_next_poll_request_ms': process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'] || 5000,
   'activity_retry': process.env['CCD_ACTIVITY_RETRY'] || 5,

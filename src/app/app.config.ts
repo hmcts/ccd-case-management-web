@@ -82,6 +82,10 @@ export class AppConfig {
     return this.config.remote_print_service_url;
   }
 
+  public getSmartSurveyUrl() {
+    return this.config.smart_survey_url;
+  }
+
   public getActivityUrl() {
     return this.config.activity_url;
   }
@@ -117,6 +121,7 @@ export class Config {
   oauth2_client_id: string;
   print_service_url: string;
   remote_print_service_url: string;
+  smart_survey_url: string;
   activity_next_poll_request_ms: number;
   activity_retry: number;
   activity_batch_collection_delay_ms: number;

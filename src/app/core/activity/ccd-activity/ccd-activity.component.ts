@@ -73,6 +73,8 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     if (unknownCount > 0) {
       resultText += (namesArray.length > 0 ? ' and ' + unknownCount + ' other' : unknownCount + ' user');
       resultText += ( unknownCount > 1 ? 's' : '');
+    } else {
+      resultText = this.replaceLastCommaWithAnd(resultText);
     }
     if (namesArray.length + unknownCount > 1) {
       resultText += ' are ' + suffix;
@@ -80,5 +82,9 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
       resultText += ' is ' + suffix;
     }
     return resultText;
+  }
+
+  private replaceLastCommaWithAnd(str: String) {
+    return str.replace(/(.*)\,(.*?)$/, '$1 and$2');
   }
 }

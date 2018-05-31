@@ -37,7 +37,7 @@ describe('AppConfig', () => {
     oauth2_client_id: OAUTH2_CLIENT_ID,
     print_service_url: PRINT_SERVICE_URL,
     remote_print_service_url: REMOTE_PRINT_SERVICE_URL,
-    smart_survey_url: SMART_SURVEY_URL
+    smart_survey_url: SMART_SURVEY_URL,
     activity_url: ACTIVITY_URL,
     activity_next_poll_request_ms: ACTIVITY_NEXT_POLL_REQUEST_MS,
     activity_retry: ACTIVITY_RETRY,

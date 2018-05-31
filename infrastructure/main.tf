@@ -6,13 +6,27 @@ locals {
   env_ase_url = "${var.env}.service.${data.terraform_remote_state.core_apps_compute.ase_name[0]}.internal"
 
   default_ccd_gateway_url = "https://ccd-api-gateway-web-${local.env_ase_url}"
-  ccd_gateway_url = "${var.ccd_gateway_url != "" ? var.ccd_gateway_url : local.default_ccd_gateway_url}"
+  non_preview_ccd_gateway_url = "${var.ccd_gateway_url != "" ? var.ccd_gateway_url : local.default_ccd_gateway_url}"
+  ccd_gateway_url = "${var.env == "preview" ? var.aat_gateway : local.non_preview_ccd_gateway_url}"
 
   default_ccd_print_service_url = "https://ccd-case-print-service-${local.env_ase_url}"
   ccd_print_service_url = "${var.ccd_print_service_url != "" ? var.ccd_print_service_url : local.default_ccd_print_service_url}"
 
   default_document_management_url = "^https?://(?:api-gateway\\.test\\.dm\\.reform\\.hmcts\\.net|dm-store-${var.env}\\.service\\.core-compute-${var.env}\\.internal(?::\\d+)?)"
   document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
+
+  // Vault name
+  previewVaultName = "${var.product}-mgmt-web"
+  nonPreviewVaultName = "ccd-case-web-${var.env}"
+  vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
+
+  // Vault URI
+  previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
+  nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
+  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+
+  is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
+  external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 }
 
 module "case-management-web" {
@@ -21,9 +35,9 @@ module "case-management-web" {
   location = "${var.location}"
   env      = "${var.env}"
   ilbIp    = "${var.ilbIp}"
-  is_frontend  = true
   subscription = "${var.subscription}"
-  additional_host_name = "${var.external_host_name}"
+  is_frontend = "${local.is_frontend}"
+  additional_host_name = "${local.external_host_name}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"
@@ -49,7 +63,7 @@ module "case-management-web" {
 
 module "ccd-case-management-web-vault" {
   source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "ccd-case-web-${var.env}" // Max 24 characters
+  name                = "${local.vaultName}" // Max 24 characters
   product             = "${var.product}"
   env                 = "${var.env}"
   tenant_id           = "${var.tenant_id}"

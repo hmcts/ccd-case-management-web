@@ -90,7 +90,7 @@ describe('EventLogTableComponent', () => {
     expect(firstRowCells.length).toBe(3);
     let firstEvent = EVENTS[0];
 
-    expect(firstRowCells[COL_DATE].nativeElement.textContent).toBe('May 10, 2017');
+    expect(firstRowCells[COL_DATE].nativeElement.textContent).toBe('10 May 2017');
     expect(firstRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Justin SMITH');
     expect(firstRowCells[COL_EVENT].nativeElement.textContent).toBe(firstEvent.event_name);
 
@@ -99,7 +99,7 @@ describe('EventLogTableComponent', () => {
     expect(secondRowCells.length).toBe(3);
     let secondEvent = EVENTS[1];
 
-    expect(secondRowCells[COL_DATE].nativeElement.textContent).toBe('May 9, 2017');
+    expect(secondRowCells[COL_DATE].nativeElement.textContent).toBe('9 May 2017');
     expect(secondRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Phillip CHAN');
     expect(secondRowCells[COL_EVENT].nativeElement.textContent).toBe(secondEvent.event_name);
   });

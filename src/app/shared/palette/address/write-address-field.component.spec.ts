@@ -1,5 +1,5 @@
-import { DebugElement, Component, ViewChild, Input } from '@angular/core';
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { Component, DebugElement, Input, ViewChild } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WriteAddressFieldComponent } from './write-address-field.component';
 import { ConditionalShowModule } from '../../conditional-show/conditional-show.module';
 import { By } from '@angular/platform-browser';
@@ -76,7 +76,7 @@ describe('WriteAddressFieldComponent', () => {
     return {
       id: 'caseFieldId',
       label: CASE_FIELD_LABEL,
-      field_type: {id: 'FieldTypeId', type: 'Complex'},
+      field_type: { id: 'FieldTypeId', type: 'Complex' },
       value: address
     };
   }
@@ -136,26 +136,40 @@ describe('WriteAddressFieldComponent', () => {
 
   it('should render only title, lookup component and manual link when address not set', () => {
 
-      expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
-      expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
-      expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
-      expect(debugElement.query($MANUAL_LINK)).toBeTruthy();
+    expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
+    expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
+    expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
+    expect(debugElement.query($MANUAL_LINK)).toBeTruthy();
 
-      expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
-      expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeTruthy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeTruthy();
+
+  });
+
+  it('should render only address lines if field is search ', () => {
+    testHostComponent.componentUnderTest.isExpanded = true; // false by default
+    fixture.detectChanges();
+
+    expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
+    expect(debugElement.query($POSTCODE_LOOKUP)).toBeFalsy();
+    expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
+    expect(debugElement.query($MANUAL_LINK)).toBeFalsy();
+
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeFalsy();
 
   });
 
   it('should render only title, lookup component and manual link when writeComplexFieldComponent is null', () => {
-      testHostComponent.componentUnderTest.writeComplexFieldComponent = null;
-      fixture.detectChanges();
-      expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
-      expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
-      expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
-      expect(debugElement.query($MANUAL_LINK)).toBeTruthy();
+    testHostComponent.componentUnderTest.writeComplexFieldComponent = null;
+    fixture.detectChanges();
+    expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
+    expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
+    expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
+    expect(debugElement.query($MANUAL_LINK)).toBeTruthy();
 
-      expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
-      expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeTruthy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeTruthy();
 
   });
 
@@ -232,23 +246,23 @@ describe('WriteAddressFieldComponent', () => {
 
   it('should populate the address with the option selected, removing the \'manual link\'', () => {
 
-      const selectedAddress = buildAddress(1);
-      testHostComponent.componentUnderTest.addressList.setValue(selectedAddress);
-      testHostComponent.componentUnderTest.addressSelected();
+    const selectedAddress = buildAddress(1);
+    testHostComponent.componentUnderTest.addressList.setValue(selectedAddress);
+    testHostComponent.componentUnderTest.addressSelected();
 
-      fixture.detectChanges();
+    fixture.detectChanges();
 
-      expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
-      expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
-      expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
-      expect(debugElement.query($MANUAL_LINK)).toBeFalsy();
+    expect(debugElement.query($TITLE).nativeElement.innerHTML).toEqual(CASE_FIELD_LABEL);
+    expect(debugElement.query($POSTCODE_LOOKUP)).toBeTruthy();
+    expect(debugElement.query($SELECT_ADDRESS)).toBeFalsy();
+    expect(debugElement.query($MANUAL_LINK)).toBeFalsy();
 
-      expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
-      expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeFalsy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD)).toBeTruthy();
+    expect(debugElement.query($ADDRESS_COMPLEX_FIELD).nativeElement['hidden']).toBeFalsy();
 
-      expect(testHostComponent.componentUnderTest.writeComplexFieldComponent.complexGroup.value).toEqual(selectedAddress);
+    expect(testHostComponent.componentUnderTest.writeComplexFieldComponent.complexGroup.value).toEqual(selectedAddress);
 
-    });
+  });
 
   it('should populate a blank address when the \'manual link\' is clicked', () => {
 

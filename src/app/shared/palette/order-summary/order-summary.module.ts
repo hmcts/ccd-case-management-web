@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from '../../markdown/markdown.module';
 import { PaletteUtilsModule } from '../utils/utils.module';
 import { FieldsFilterPipe } from '../complex/fields-filter.pipe';
+import { MoneyGbpModule } from '../money-gbp/money-gbp.module';
+import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component';
 
 @NgModule({
   imports: [
@@ -14,12 +16,15 @@ import { FieldsFilterPipe } from '../complex/fields-filter.pipe';
     ComplexModule,
     ReactiveFormsModule,
     PaletteUtilsModule,
+    MoneyGbpModule
   ],
   declarations: [
     ReadOrderSummaryFieldComponent,
+    ReadOrderSummaryRowComponent,
   ],
   entryComponents: [
     ReadOrderSummaryFieldComponent,
+    ReadOrderSummaryRowComponent,
   ]
 })
 export class OrderSummaryModule {}

@@ -11,18 +11,22 @@ $padding: 12px;
 table {
   margin-bottom: 23px;
   thead {
-    tr td {
-      margin: 0;
-      border-bottom: 1px solid $black;
-      padding-top: 41px;
-      padding-bottom: 36px;
-      @include bold-16;
+    tr{
+      td {
+        margin: 0;
+        border-bottom: 1px solid $black;
+        padding-top: 41px;
+        padding-bottom: 36px;
+        @include bold-16;
+      }
+      td:nth-child(3) {
+        text-align: right;
+      }
     }
   }
-  tbody{
+  tbody {
     tr {
       td {
-        width: 100%;
         padding-top: $padding;
         padding-bottom: $padding;
         margin: 0;
@@ -33,11 +37,22 @@ table {
         width: 20px;
       }
       td:nth-child(2) {
-        width: 60%;
+        width: 70%;
       }
       td:nth-child(3) {
-        width: 20%;
+        text-align: right;
+        width: 10%;
       }
     }
+    tr:last-child {
+      td:nth-child(1) {
+        border-bottom: 0px;
+      }
+      td:nth-child(2) {
+        @include bold-16;
+        text-align: right;
+        border-bottom: 0px;
+      }
+    }  
   }
 }

@@ -45,6 +45,7 @@ describe('CaseEditSubmitComponent', () => {
   let caseField1: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', 3);
   let caseField2: CaseField = aCaseField('field2', 'field2', 'Text', 'OPTIONAL', 2);
   let caseField3: CaseField = aCaseField('field3', 'field3', 'Text', 'OPTIONAL', 1);
+  const $EVENT_NOTES = By.css('#fieldset-event');
 
   let mockRoute: any = {
     snapshot: {
@@ -180,8 +181,70 @@ describe('CaseEditSubmitComponent', () => {
     comp.eventTrigger.show_summary = true;
 
     let result = comp.checkYourAnswerFieldsToDisplayExists();
+    expect(result).toBeTruthy();
+  });
+
+  it('should return false when no field exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+    comp.eventTrigger.case_fields = [];
+    fixture.detectChanges();
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeFalsy();
+  });
+
+  it('should return true when no Fields to Display exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
+    caseField.show_summary_content_option = 3;
+    comp.eventTrigger.case_fields = [caseField];
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
 
     expect(result).toBeTruthy();
+  });
+
+  it('should show event notes when set in event trigger and showEventNotes is called', () => {
+    comp.eventTrigger.show_event_notes = true;
+    fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeTruthy();
+    expect(eventNotes).not.toBeNull();
+  });
+
+  it('should show event notes when not set in event trigger and showEventNotes is called', () => {
+    comp.eventTrigger.show_event_notes = null;
+    fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeTruthy();
+    expect(eventNotes).not.toBeNull();
+  });
+
+  it('should show event notes when not defined in event trigger and showEventNotes is called', () => {
+    comp.eventTrigger.show_event_notes = undefined;
+    fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeTruthy();
+    expect(eventNotes).not.toBeNull();
+  });
+
+  it('should not show event notes when set to false in event trigger and showEventNotes is called', () => {
+    comp.eventTrigger.show_event_notes = false;
+    fixture.detectChanges();
+    let eventNotes = de.query($EVENT_NOTES);
+
+    let result = comp.showEventNotes();
+
+    expect(result).toBeFalsy();
+    expect(eventNotes).toBeNull();
   });
 
   it('should return false when no field exists and readOnlySummaryFieldsToDisplayExists is called', () => {
@@ -226,7 +289,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   let formErrorService: any;
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
-  let orderService;
+
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({ 'PersonLastName': new FormControl('Khaleesi') })
   });
@@ -236,6 +299,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   ];
   let firstPage = pages[0];
   let wizard: Wizard = new Wizard(pages);
+  let orderService;
 
   let mockRoute: any = {
     snapshot: {

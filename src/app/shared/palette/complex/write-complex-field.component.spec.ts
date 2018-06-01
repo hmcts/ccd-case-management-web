@@ -21,7 +21,7 @@ describe('WriteComplexFieldComponent', () => {
 
   let FieldWriteComponent = MockComponent({
     selector: 'ccd-field-write',
-    inputs: ['caseField', 'registerControl', 'idPrefix']
+    inputs: ['caseField', 'registerControl', 'idPrefix', 'isExpanded']
   });
 
   let fixture: ComponentFixture<WriteComplexFieldComponent>;

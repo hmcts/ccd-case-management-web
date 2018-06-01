@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, provideRoutes, Router } from '@angular/router';
+import { ActivatedRoute, provideRoutes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { DebugElement } from '@angular/core';
@@ -8,10 +8,10 @@ import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { attr } from '../test/helpers';
-import { AuthService } from './auth/auth.service';
+import { OAuth2Service } from './auth/oauth2.service';
 import { HttpService } from './http/http.service';
-import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../app.config';
+import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 
 describe('CoreComponent', () => {
@@ -78,15 +78,15 @@ describe('CoreComponent', () => {
   let jurisdictionService: JurisdictionService;
   let httpService: any;
   let appConfig: any;
-  let authService: any;
+  let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
     httpService = createSpyObj('HttpService', ['get']);
-    appConfig   = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
-    authService = createSpyObj('AppConfig', ['signIn']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
 
     profile = {
@@ -159,7 +159,7 @@ describe('CoreComponent', () => {
           { provide: JurisdictionService, useValue: jurisdictionService },
           { provide: HttpService, useValue: httpService },
           { provide: AppConfig, useValue: appConfig },
-          { provide: AuthService, useValue: authService },
+          { provide: OAuth2Service, useValue: oauth2Service },
         ]
       })
       .compileComponents();  // compile template and css
@@ -280,5 +280,11 @@ describe('CoreComponent', () => {
 
     expect(headerBar).toBeTruthy();
     expect(headerBar.componentInstance.title).toEqual('Divorce');
+  });
+
+  it('should call OAuth2 sign out on component sign out', () => {
+    comp.signOut();
+
+    expect(oauth2Service.signOut).toHaveBeenCalled();
   });
 });

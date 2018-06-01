@@ -1,5 +1,5 @@
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
-import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { WriteComplexFieldComponent } from '../complex/write-complex-field.component';
 import { AddressModel } from '../../../core/addresses/address.model';
 import { AddressOption } from './address-option.model';
@@ -71,7 +71,10 @@ export class WriteAddressFieldComponent extends AbstractFieldWriteComponent impl
     this.setFormValue();
   }
 
-  isAddressSet() {
+  shouldShowDetailFields() {
+    if (this.isExpanded) {
+      return true;
+    }
     if (!this.writeComplexFieldComponent || !this.writeComplexFieldComponent.complexGroup) {
       return false;
     }

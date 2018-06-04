@@ -8,7 +8,7 @@
   </h3>
   <p>{{error.message}}</p>
   <ul *ngIf="error.details?.field_errors" class="error-summary-list">
-    <li *ngFor="let fieldError of error.details.field_errors">{{fieldError.message}}</li>
+    <li *ngFor="let fieldError of error.details.field_errors" class="ccd-error-summary-li">{{fieldError.message}}</li>
   </ul>
 </div>
 <ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject"
@@ -45,7 +45,7 @@
     </table>
   </ng-container>
   <ng-container *ngIf="readOnlySummaryFieldsToDisplayExists()">
-    
+
     <table class="summary-fields">
       <tbody>
         <ng-container *ngFor="let field of this.showSummaryFields">

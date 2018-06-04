@@ -43,16 +43,6 @@ describe('AuthService', () => {
     authService = new AuthService(appConfig, document);
   });
 
-  describe('signOut', () => {
-    it('should redirect to logout page', () => {
-
-      authService.signOut();
-
-      expect(document.location.href).toEqual(LOGOUT_URL);
-    });
-
-  });
-
   describe('signIn', () => {
 
     it('should redirect IDAM login page', () => {

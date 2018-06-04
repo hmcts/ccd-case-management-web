@@ -9,6 +9,8 @@ import { PaletteUtilsModule } from '../utils/utils.module';
 import { FieldsFilterPipe } from '../complex/fields-filter.pipe';
 import { MoneyGbpModule } from '../money-gbp/money-gbp.module';
 import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component';
+import { ReadMoneyGbpFieldComponent } from '../money-gbp/read-money-gbp-field.component';
+import { MoneyGBPCaseFieldBuilder } from '../money-gbp/money-gbp.builder';
 
 @NgModule({
   imports: [
@@ -22,9 +24,8 @@ import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component
     ReadOrderSummaryFieldComponent,
     ReadOrderSummaryRowComponent,
   ],
-  entryComponents: [
-    ReadOrderSummaryFieldComponent,
-    ReadOrderSummaryRowComponent,
+  providers: [
+    MoneyGBPCaseFieldBuilder
   ]
 })
 export class OrderSummaryModule {}

@@ -4,13 +4,11 @@
       <tr><td>Code</td><td>Description</td><td>Amount</td></tr>
     </thead>
     <tbody>
-        <ng-container *ngIf="caseField.value">
-          <tr ccd-read-order-summary-row *ngFor="let feeValue of caseField.value.Fees" [feeValue]="feeValue"></tr>
-          <tr>
-              <td></td>
-              <td class="payment-total">Total</td>
-              <td><ng-container #paymentTotal></ng-container></td>
-            </tr>
-        </ng-container>
+        <tr ccdReadOrderSummaryRow *ngFor="let feeValue of getFees()" [feeValue]="feeValue"></tr>
+        <tr>
+            <td></td>
+            <td class="payment-total">Total</td>
+            <td><ng-container #paymentTotal></ng-container></td>
+        </tr>
     </tbody>
 </table>

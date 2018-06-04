@@ -1,6 +1,6 @@
 import { FeeValue } from './fee-value.model';
 
-class OrderSummary {
+export class OrderSummary {
     PaymentReference: string;
     Fees: FeeValue[];
     PaymentTotal: string;

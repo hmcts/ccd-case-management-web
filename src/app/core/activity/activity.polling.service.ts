@@ -59,7 +59,9 @@ export class ActivityPollingService {
   }
 
   stopPolling() {
-    this.pollActivitiesSubscription.unsubscribe();
+    if (this.pollActivitiesSubscription) {
+      this.pollActivitiesSubscription.unsubscribe();
+    }
   }
 
   public flushRequests(): void {

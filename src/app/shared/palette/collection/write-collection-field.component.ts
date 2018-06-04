@@ -3,6 +3,8 @@ import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.
 import { CaseField } from '../../domain/definition/case-field.model';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.component';
 
 @Component({
   selector: 'ccd-write-collection-field',
@@ -12,7 +14,7 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
 export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   formArray: FormArray;
 
-  constructor(private formValidatorsService: FormValidatorsService) {
+  constructor(private formValidatorsService: FormValidatorsService, private dialog: MatDialog) {
     super();
   }
 
@@ -70,6 +72,29 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
   itemLabel(index: number) {
     let displayIndex = index + 1;
     return index ? `${this.caseField.label} ${displayIndex}` : this.caseField.label;
+  }
+
+  openModal(i: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.ariaLabel = 'Label';
+    dialogConfig.height = '220px';
+    dialogConfig.width = '550px';
+    dialogConfig.panelClass = 'remove-dialog';
+
+    dialogConfig.closeOnNavigation = false;
+    dialogConfig.position = {
+      top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+    }
+
+    const dialogRef = this.dialog.open(RemoveDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'Remove') {
+        this.removeItem(i);
+      }
+    });
   }
 
 }

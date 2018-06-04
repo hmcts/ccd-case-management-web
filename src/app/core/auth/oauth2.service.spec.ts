@@ -34,7 +34,7 @@ describe('OAuth2Service', () => {
     appConfig.getLoginUrl.and.returnValue(LOGIN_URL);
     appConfig.getLogoutUrl.and.returnValue(LOGOUT_URL);
     appConfig.getOAuth2ClientId.and.returnValue(OAUTH2_CLIENT_ID);
-    authService = createSpyObj<HttpService>('authService', ['redirectUri']);
+    authService = createSpyObj<HttpService>('authService', ['redirectUri', 'signIn']);
     authService.redirectUri.and.returnValue(REDIRECT_URI);
 
     oauth2Service = new OAuth2Service(httpService, appConfig, authService);
@@ -49,6 +49,15 @@ describe('OAuth2Service', () => {
 
       expect(httpService.get).toHaveBeenCalledWith(TOKEN_ENDPOINT, { search: params });
       expect(response).toEqual(RESPONSE);
+    });
+  });
+
+  describe('signOut', () => {
+    it('should make an HTTP GET request with the logout url', () => {
+      oauth2Service.signOut();
+
+      expect(httpService.get).toHaveBeenCalledWith(LOGOUT_URL);
+      expect(authService.signIn).toHaveBeenCalled();
     });
   });
 });

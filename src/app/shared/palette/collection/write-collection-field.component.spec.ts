@@ -9,6 +9,8 @@ import { PaletteUtilsModule } from '../utils/utils.module';
 import { By } from '@angular/platform-browser';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
 import createSpyObj = jasmine.createSpyObj;
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.component';
 
 const FIELD_ID = 'Values';
 const SIMPLE_FIELD_TYPE: FieldType = {
@@ -50,22 +52,31 @@ describe('WriteCollectionFieldComponent', () => {
   const $WRITE_FIELDS = By.css('ccd-field-write');
   const $ADD_BUTTON = By.css('.form-group>.panel>.button');
   const $REMOVE_BUTTONS = By.css('.button.button-secondary');
+  const $DIALOG_REMOVE_BUTTON = By.css('.button[title=Remove]');
+  const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
 
   let FieldWriteComponent = MockComponent({
     selector: 'ccd-field-write',
-    inputs: ['caseField', 'registerControl', 'idPrefix']
+    inputs: ['caseField', 'registerControl', 'idPrefix', 'isExpanded']
   });
 
   let fixture: ComponentFixture<WriteCollectionFieldComponent>;
   let component: WriteCollectionFieldComponent;
+  let fixtureDialog: ComponentFixture<RemoveDialogComponent>;
+  let componentDialog: RemoveDialogComponent;
+
   let de: DebugElement;
+  let deDialog: DebugElement;
   let formValidatorService: any;
+  let dialog: any;
+  let matDialogRef: MatDialogRef<RemoveDialogComponent>;
 
   let caseField: CaseField;
 
   beforeEach(async(() => {
-
     formValidatorService = createSpyObj<FormValidatorsService>('formValidatorService', ['addValidators']);
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    matDialogRef = createSpyObj<MatDialogRef<RemoveDialogComponent>>('matDialogRef', ['close']);
 
     caseField = {
       id: FIELD_ID,
@@ -83,12 +94,15 @@ describe('WriteCollectionFieldComponent', () => {
         ],
         declarations: [
           WriteCollectionFieldComponent,
-
+          RemoveDialogComponent,
           // Mock
           FieldWriteComponent,
         ],
         providers: [
-          { provide: FormValidatorsService, useValue: formValidatorService }
+          { provide: FormValidatorsService, useValue: formValidatorService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatDialogRef, useValue: matDialogRef },
+          RemoveDialogComponent
         ]
       })
       .compileComponents();
@@ -103,6 +117,11 @@ describe('WriteCollectionFieldComponent', () => {
 
     de = fixture.debugElement;
     fixture.detectChanges();
+
+    fixtureDialog = TestBed.createComponent(RemoveDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
   }));
 
   it('should render a row with a write field for each items', () => {
@@ -179,6 +198,12 @@ describe('WriteCollectionFieldComponent', () => {
     removeFirstButton.nativeElement.click();
     fixture.detectChanges();
 
+    let dialogRemoveButton = deDialog.query($DIALOG_REMOVE_BUTTON);
+    dialogRemoveButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Remove');
+    component.removeItem(0);
+    fixture.detectChanges();
+
     let writeFields = de.queryAll($WRITE_FIELDS);
 
     expect(writeFields.length).toEqual(1);
@@ -207,8 +232,34 @@ describe('WriteCollectionFieldComponent', () => {
     removeFirstButton.nativeElement.click();
     fixture.detectChanges();
 
+    let dialogRemoveButton = deDialog.query($DIALOG_REMOVE_BUTTON);
+    dialogRemoveButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Remove');
+    component.removeItem(0);
+    fixture.detectChanges();
+
     expect(component.formArray.controls.length).toBe(1);
     expect(component.formArray.controls[0]).toBe(control1);
+  });
+
+  it('should not remove item from collection when cancel button is clicked', () => {
+    let removeButtons = de.queryAll($REMOVE_BUTTONS);
+
+    expect(removeButtons.length).toBe(2);
+
+    let removeFirstButton = removeButtons[0];
+
+    removeFirstButton.nativeElement.click();
+    fixture.detectChanges();
+
+    let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
+    dialogCancelButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Cancel');
+    fixture.detectChanges();
+
+    let writeFields = de.queryAll($WRITE_FIELDS);
+
+    expect(writeFields.length).toEqual(2);
   });
 
   it('should handle null or undefined values as empty array', () => {

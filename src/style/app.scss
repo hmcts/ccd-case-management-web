@@ -84,3 +84,14 @@ table.form-table {
 .field-label {
     font-weight: 900;
 }
+
+.remove-dialog {
+  mat-dialog-container {
+    padding: 0;
+    background: #cecccc;
+  }
+}
+
+.ccd-error-summary-li {
+  margin-left: 40px;
+}

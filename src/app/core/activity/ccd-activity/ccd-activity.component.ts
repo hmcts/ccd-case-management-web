@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Activity, ActivityInfo, DisplayMode } from '../activity.model';
 import { ActivityPollingService } from '../activity.polling.service';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'ccd-activity',
@@ -17,6 +18,8 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
 
   viewersText: string;
   editorsText: string;
+
+  subscription: Subject<Activity>;
 
   @Input()
   public caseId: string;
@@ -35,7 +38,7 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     this.activity.unknownViewers = 0;
     this.viewersText = '';
     this.editorsText = '';
-    this.activityPollingService.subscribeToActivity(this.caseId, newActivity => this.onActivityChange(newActivity));
+    this.subscription = this.activityPollingService.subscribeToActivity(this.caseId, newActivity => this.onActivityChange(newActivity));
   }
 
   onActivityChange(newActivity: Activity) {
@@ -59,7 +62,9 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.activityPollingService.unsubscribeFromActivity(this.caseId);
+    this.subscription.complete();
+    this.subscription.unsubscribe();
+    this.activityPollingService.stopPolling();
   }
 
   generateDescription(prefix: string, suffix: string, namesArray: Array<ActivityInfo>, unknownCount) {
@@ -68,6 +73,8 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     if (unknownCount > 0) {
       resultText += (namesArray.length > 0 ? ' and ' + unknownCount + ' other' : unknownCount + ' user');
       resultText += ( unknownCount > 1 ? 's' : '');
+    } else {
+      resultText = this.replaceLastCommaWithAnd(resultText);
     }
     if (namesArray.length + unknownCount > 1) {
       resultText += ' are ' + suffix;
@@ -75,5 +82,9 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
       resultText += ' is ' + suffix;
     }
     return resultText;
+  }
+
+  private replaceLastCommaWithAnd(str: String) {
+    return str.replace(/(.*)\,(.*?)$/, '$1 and$2');
   }
 }

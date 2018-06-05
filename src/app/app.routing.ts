@@ -21,6 +21,8 @@ import { OAuth2RedirectComponent } from './oauth2/oauth2-redirect.component';
 import { CaseEditConfirmComponent } from './shared/case-editor/case-edit-confirm.component';
 import { AppConfigGuard } from './app.config.guard';
 import { ActivityResolver } from './core/activity/activity.resolver';
+import { EventCaseHistoryComponent } from "./shared/event-case-history/event-case-history.component";
+import { EventCaseHistoryResolver } from "./shared/event-case-history/event-case-history.resolver";
 
 const routes: Routes = [
   {
@@ -131,6 +133,13 @@ const routes: Routes = [
                 component: CaseEditPageComponent,
               }
             ]
+          },
+          {
+            path: 'event/:eid',
+            resolve: {
+              eventCaseData: EventCaseHistoryResolver,
+            },
+            component: EventCaseHistoryComponent,
           }
         ]
       },

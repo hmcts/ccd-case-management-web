@@ -1,0 +1,29 @@
+<div class="grid-row">
+  <div class="column-full">
+    <ccd-case-header [caseDetails]="caseDetails"></ccd-case-header>
+  </div>
+</div>
+<div class="grid-row">
+  <div class="column-full">
+    <ng-container *ngFor="let tab of caseDetails.tabs">
+      <h2 class="heading-medium">{{tab.label}}</h2>
+      <table class="EventCaseHistory">
+        <tbody>
+        <ng-container *ngFor="let field of tab.fields">
+          <div>
+            <ng-container [ngSwitch]="!(field | ccdIsCompound)">
+              <tr *ngSwitchCase="true">
+                <th>{{field.label}} </th>
+                <td><ccd-field-read [caseField]="field"></ccd-field-read></td>
+              </tr>
+              <tr *ngSwitchCase="false" class="compound-field">
+                <td colspan="2"><ccd-field-read [caseField]="field"></ccd-field-read></td>
+              </tr>
+            </ng-container>
+          </div>
+        </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

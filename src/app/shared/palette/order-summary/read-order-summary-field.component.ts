@@ -7,8 +7,8 @@ import { Fee } from './fee.model';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { ReadTextFieldComponent } from '../text/read-text-field.component';
 import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component';
-import { MoneyGBPCaseFieldBuilder } from '../money-gbp/money-gbp.builder';
 import { FeeValue } from './fee-value.model';
+import { MoneyGBPCaseField } from '../../domain/definition/money-gbp-case-field.model';
 
 @Component({
   selector: 'ccd-read-order-summary-field',
@@ -28,8 +28,7 @@ export class ReadOrderSummaryFieldComponent extends AbstractFieldReadComponent i
   constructor(
     private resolver: ComponentFactoryResolver,
     private appRef: ApplicationRef,
-    private injector: Injector,
-    private moneyGBPBuilder: MoneyGBPCaseFieldBuilder
+    private injector: Injector
   ) {
     super();
   }
@@ -40,8 +39,8 @@ export class ReadOrderSummaryFieldComponent extends AbstractFieldReadComponent i
     let paymentTotalComponent = this.resolver.resolveComponentFactory(ReadMoneyGbpFieldComponent).create(injector);
 
     paymentTotalComponent.instance['caseField'] = this.caseField.value ?
-        this.moneyGBPBuilder.buildMoneyGBPCaseField(this.caseField.value.PaymentTotal)
-      : this.moneyGBPBuilder.buildMoneyGBPCaseField(ReadOrderSummaryFieldComponent.NO_VALUE);
+        new MoneyGBPCaseField(this.caseField.value.PaymentTotal)
+      : new MoneyGBPCaseField(ReadOrderSummaryFieldComponent.NO_VALUE);
     paymentTotalComponent.instance['context'] = this.context;
     this.paymentTotal.insert(paymentTotalComponent.hostView);
   }

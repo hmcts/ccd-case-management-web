@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderSummaryModule } from './order-summary.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MoneyGbpModule } from '../money-gbp/money-gbp.module';
-import { MoneyGBPCaseFieldBuilder } from '../money-gbp/money-gbp.builder';
 
 describe('ReadOrderSummaryFieldComponent', () => {
 
@@ -74,7 +73,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
     let fixture: ComponentFixture<ReadOrderSummaryFieldComponent>;
     let component: ReadOrderSummaryFieldComponent;
     let de: DebugElement;
-    let moneyGBPBuilder = new MoneyGBPCaseFieldBuilder()
 
     beforeEach(async(() => {
       TestBed
@@ -86,9 +84,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
           declarations: [
             ReadOrderSummaryFieldComponent,
             ReadOrderSummaryRowComponent,
-          ],
-          providers: [
-            { provide: MoneyGBPCaseFieldBuilder, useValue: moneyGBPBuilder },
           ]
         })
         .compileComponents();
@@ -136,7 +131,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
     let fixture: ComponentFixture<ReadOrderSummaryFieldComponent>;
     let component: ReadOrderSummaryFieldComponent;
     let de: DebugElement;
-    let moneyGBPBuilder = new MoneyGBPCaseFieldBuilder()
 
     beforeEach(async(() => {
       TestBed
@@ -148,9 +142,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
           declarations: [
             ReadOrderSummaryFieldComponent,
             ReadOrderSummaryRowComponent,
-          ],
-          providers: [
-            { provide: MoneyGBPCaseFieldBuilder, useValue: moneyGBPBuilder },
           ]
         })
         .compileComponents();
@@ -185,7 +176,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
     let fixture: ComponentFixture<ReadOrderSummaryFieldComponent>;
     let component: ReadOrderSummaryFieldComponent;
     let de: DebugElement;
-    let moneyGBPBuilder = new MoneyGBPCaseFieldBuilder()
 
     beforeEach(async(() => {
       TestBed
@@ -197,9 +187,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
           declarations: [
             ReadOrderSummaryFieldComponent,
             ReadOrderSummaryRowComponent,
-          ],
-          providers: [
-            { provide: MoneyGBPCaseFieldBuilder, useValue: moneyGBPBuilder },
           ]
         })
         .compileComponents();

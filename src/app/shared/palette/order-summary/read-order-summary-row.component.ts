@@ -6,7 +6,7 @@ import { ReadMoneyGbpFieldComponent } from '../money-gbp/read-money-gbp-field.co
 import { CaseField } from '../../domain/definition/case-field.model';
 import { ReadTextFieldComponent } from '../text/read-text-field.component';
 import { FeeValue } from './fee-value.model';
-import { MoneyGBPCaseFieldBuilder } from '../money-gbp/money-gbp.builder';
+import { MoneyGBPCaseField } from '../../domain/definition/money-gbp-case-field.model';
 
 @Component({
   // tslint:disable-next-line
@@ -18,6 +18,7 @@ import { MoneyGBPCaseFieldBuilder } from '../money-gbp/money-gbp.builder';
 })
 export class ReadOrderSummaryRowComponent extends AbstractFieldReadComponent implements OnInit {
 
+  public static readonly NO_VALUE = undefined;
   @Input()
   feeValue: FeeValue;
   @ViewChild('feeAmount', {read: ViewContainerRef})
@@ -26,8 +27,7 @@ export class ReadOrderSummaryRowComponent extends AbstractFieldReadComponent imp
   constructor(
     private resolver: ComponentFactoryResolver,
     private appRef: ApplicationRef,
-    private injector: Injector,
-    private moneyGBPBuilder: MoneyGBPCaseFieldBuilder
+    private injector: Injector
   ) {
     super();
   }
@@ -37,7 +37,9 @@ export class ReadOrderSummaryRowComponent extends AbstractFieldReadComponent imp
     let injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs);
     let feeAmountComponent = this.resolver.resolveComponentFactory(ReadMoneyGbpFieldComponent).create(injector);
 
-    feeAmountComponent.instance['caseField'] = this.moneyGBPBuilder.buildMoneyGBPCaseField(this.feeValue.value.FeeAmount);
+    feeAmountComponent.instance['caseField'] = this.feeValue.value ?
+        new MoneyGBPCaseField(this.feeValue.value.FeeAmount)
+      : new MoneyGBPCaseField(ReadOrderSummaryRowComponent.NO_VALUE);
     feeAmountComponent.instance['context'] = this.context;
     this.feeAmount.insert(feeAmountComponent.hostView);
   }

@@ -19,13 +19,16 @@ describe('AppConfig', () => {
   const PRINT_SERVICE_URL = 'http://print';
   const REMOTE_PRINT_SERVICE_URL = 'http://print.ccd.reform';
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
+  const ACTIVITY_NEXT_POLL_REQUEST_MS = 1;
+  const ACTIVITY_RETRY = 1;
+  const ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1;
+  const ACTIVITY_MAX_REQUEST_PER_BATCH = 1;
 
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,
     logout_url: LOGOUT_URL,
     api_url: API_URL,
     case_data_url: DATA_URL,
-    activity_url: ACTIVITY_URL,
     document_management_url: DOC_MANAGEMENT_URL,
     remote_document_management_url: REMOTE_DOC_MANAGEMENT_URL,
     pagination_page_size: PAGINATION_PAGE_SIZE,
@@ -34,7 +37,12 @@ describe('AppConfig', () => {
     oauth2_client_id: OAUTH2_CLIENT_ID,
     print_service_url: PRINT_SERVICE_URL,
     remote_print_service_url: REMOTE_PRINT_SERVICE_URL,
-    smart_survey_url: SMART_SURVEY_URL
+    smart_survey_url: SMART_SURVEY_URL,
+    activity_url: ACTIVITY_URL,
+    activity_next_poll_request_ms: ACTIVITY_NEXT_POLL_REQUEST_MS,
+    activity_retry: ACTIVITY_RETRY,
+    activity_batch_collection_delay_ms: ACTIVITY_BATCH_COLLECTION_DELAY_MS,
+    activity_max_request_per_batch: ACTIVITY_MAX_REQUEST_PER_BATCH
   };
 
   beforeEach(() => {
@@ -64,7 +72,6 @@ describe('AppConfig', () => {
             expect(appConfig.getLogoutUrl()).toEqual(LOGOUT_URL);
             expect(appConfig.getApiUrl()).toEqual(API_URL);
             expect(appConfig.getCaseDataUrl()).toEqual(DATA_URL);
-            expect(appConfig.getActivityUrl()).toEqual(ACTIVITY_URL);
             expect(appConfig.getDocumentManagementUrl()).toEqual(DOC_MANAGEMENT_URL);
             expect(appConfig.getRemoteDocumentManagementUrl()).toEqual(REMOTE_DOC_MANAGEMENT_URL);
             expect(appConfig.getPaginationPageSize()).toEqual(PAGINATION_PAGE_SIZE);
@@ -73,6 +80,11 @@ describe('AppConfig', () => {
             expect(appConfig.getOAuth2ClientId()).toEqual(OAUTH2_CLIENT_ID);
             expect(appConfig.getPrintServiceUrl()).toEqual(PRINT_SERVICE_URL);
             expect(appConfig.getRemotePrintServiceUrl()).toEqual(REMOTE_PRINT_SERVICE_URL);
+            expect(appConfig.getActivityUrl()).toEqual(ACTIVITY_URL);
+            expect(appConfig.getActivityBatchCollectionDelayMs()).toEqual(ACTIVITY_BATCH_COLLECTION_DELAY_MS);
+            expect(appConfig.getActivityMaxRequestPerBatch()).toEqual(ACTIVITY_MAX_REQUEST_PER_BATCH);
+            expect(appConfig.getActivityNexPollRequestMs()).toEqual(ACTIVITY_NEXT_POLL_REQUEST_MS);
+            expect(appConfig.getActivityRetry()).toEqual(ACTIVITY_RETRY);
           });
       })));
   });

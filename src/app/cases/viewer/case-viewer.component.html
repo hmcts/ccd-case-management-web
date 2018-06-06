@@ -35,7 +35,9 @@
             <div ccdConditionalShow ccdLabelSubstitutor [caseField]="field" [eventFields]="caseFields">
               <ng-container [ngSwitch]="!(field | ccdIsCompound)">
                 <tr *ngSwitchCase="true">
-                  <th>{{field.label}}</th>
+                  <th>
+                    <div class="case-viewer-label">{{field.label}}</div>
+                  </th>
                   <td><ccd-field-read [caseField]="field"></ccd-field-read></td>
                 </tr>
                 <tr *ngSwitchCase="false" class="compound-field">

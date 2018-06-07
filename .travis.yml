@@ -3,6 +3,9 @@ cache: yarn
 install:
   - npm install -g codecov
   - yarn install
+env:
+  global:
+    - CODACY_PROJECT_TOKEN=49af421bcb7f45028e0bc9ec1bb71187
 script:
   - yarn --version
   - yarn lint

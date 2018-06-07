@@ -11,5 +11,6 @@ script:
   - yarn lint
   - yarn test
   - yarn test:coverage
+  - yarn codacy:coverage
   - codecov
 after_success:

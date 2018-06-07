@@ -1,4 +1,9 @@
-# case-management-web [![Build Status](https://travis-ci.org/hmcts/ccd-case-management-web.svg?branch=master)](https://travis-ci.org/hmcts/ccd-case-management-web)
+# case-management-web
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/hmcts/ccd-case-management-web.svg?branch=master)](https://travis-ci.org/hmcts/ccd-case-management-web)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8375dcaa04594226a973d5cd44842713)](https://www.codacy.com/app/adr1ancho/ccd-case-management-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hmcts/ccd-case-management-web&amp;utm_campaign=Badge_Grade)
+[![Issue Stats](http://issuestats.com/github/hmcts/ccd-case-management-web/badge/pr)](http://issuestats.com/github/hmcts/ccd-case-management-web)
+[![HitCount](http://hits.dwyl.io/8dUDm7pw/hmcts/ccd-case-management-web.svg)](http://hits.dwyl.io/8dUDm7pw/hmcts/ccd-case-management-web)[![HitCou
 
 An Angular front-end for Core Case Data.
 

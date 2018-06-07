@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
-    "codacy:coverage": "NODE_ENV=mocha LOG_LEVEL=OFF nyc mocha --compilers ts:ts-node/register -r tsconfig-paths/register $(find src/ap \\( -name '*.spec.ts'\\) ! -path '*a11y*' ! -path '*/routes/*') && cat ./coverage/lcov.info | codacy-coverage",
+    "codacy:coverage": "NODE_ENV=mocha LOG_LEVEL=OFF nyc mocha --compilers ts:ts-node/register -r tsconfig-paths/register $(find src/ap \\( -name '*.spec.ts' \\) ! -path '*a11y*' ! -path '*/routes/*') && cat ./coverage/lcov.info | codacy-coverage",
     "ng": "ng",
     "postinstall": "webdriver-manager update",
     "build": "ng build --prod",

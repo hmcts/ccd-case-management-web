@@ -3,13 +3,14 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
+    "codacy:coverage": "NODE_ENV=mocha LOG_LEVEL=OFF nyc mocha --compilers ts:ts-node/register -r tsconfig-paths/register $(find src/ap \\( -name '*.spec.ts' \\) ! -path '*a11y*' ! -path '*/routes/*') && cat ./coverage/lcov.info | codacy-coverage",
     "ng": "ng",
     "postinstall": "webdriver-manager update",
     "build": "ng build --prod",
     "start": "ng serve",
     "test": "ng test --single-run --code-coverage",
     "test-watch": "ng test --code-coverage",
-    "test:coverage": "istanbul check-coverage --statements 80 --lines 80 --functions 80 --branches 80",
+    "test:coverage": "NODE_ENV=mocha LOG_LEVEL=OFF nyc mocha --compilers ts:ts-node/register -r tsconfig-paths/register $(find src/test \\( -name '*.spec.ts' \\) ! -path '*a11y*' ! -path '*/routes/*')",
     "test:a11y": "echo 'TODO: Accessibility tests'",
     "test:nsp": "nsp check",
     "test:smoke": "echo 'TODO'",
@@ -25,20 +26,20 @@
     "serve:ssr": "node dist/server.js",
     "build:client-and-server-bundles": "ng build --prod && ng build --prod --app 1 --output-hashing=false",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
-    "sonar-scan": "NODE_PATH=. sonar-scanner -X",
+    "sonar-scan": "NODE_PATH=. sonar-scanner -X -Dsonar.sources=src/app/ -Dsonar.exclusions=node_modules/**,coverage/** -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info",
     "stub-api": "json-server -p 3453 --delay 800 --routes stubs/unit/aggregated.routes.json --watch stubs/unit/aggregated.api.json",
     "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json"
   },
   "dependencies": {
     "@angular/animations": "~5.0.0",
     "@angular/cdk": "^5.0.0",
-    "@angular/material": "^5.0.0",
     "@angular/common": "~5.0.0",
     "@angular/compiler": "~5.0.0",
     "@angular/compiler-cli": "~5.0.0",
     "@angular/core": "~5.0.0",
     "@angular/forms": "~5.0.0",
     "@angular/http": "~5.0.0",
+    "@angular/material": "^5.0.0",
     "@angular/platform-browser": "~5.0.0",
     "@angular/platform-browser-dynamic": "~5.0.0",
     "@angular/platform-server": "~5.0.0",
@@ -48,11 +49,13 @@
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "class-transformer": "^0.1.8",
+    "codacy-coverage": "^3.0.0",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "govuk-elements-sass": "^3.1.2",
     "govuk_template_mustache": "^0.23.0",
     "mocha": "^5.0.5",
+    "mocha-lcov-reporter": "^1.3.0",
     "ngx-md": "^3.1.1",
     "ngx-pagination": "^3.0.3",
     "reflect-metadata": "^0.1.12",
@@ -84,6 +87,7 @@
     "lodash": "^4.16.2",
     "ng2-mock-component": "^0.1.1",
     "nsp": "^3.2.1",
+    "nyc": "^11.8.0",
     "phantomjs-prebuilt": "^2.1.16",
     "protractor": "^5.1.1",
     "protractor-beautiful-reporter": "^1.2.1",
@@ -92,5 +96,21 @@
     "tslint": "^5.0.0",
     "typescript": "2.7.1",
     "webdriver-manager": "^12.0.6"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/app"
+    ],
+    "exclude": [
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "all": true
   }
 }

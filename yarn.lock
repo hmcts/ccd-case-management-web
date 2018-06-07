@@ -33,6 +33,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/cdk@^5.0.0":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.5.tgz#cae2b12e1990a692dd267a73fdb1d49db37f9604"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.5.tgz#9217c5d5c366292aca61fb0328c406bb5b0f2d76"
@@ -136,6 +142,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/material@^5.0.0":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.5.tgz#287af95d234e0644244d9db565f7a05c10b737f8"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/platform-browser-dynamic@~5.0.0":
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.0.5.tgz#d7ac74c5ffd4c9a133ba90af160402266e92351d"
@@ -168,9 +180,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@ccd/case-ui-toolkit@0.0.29":
-  version "0.0.29"
-  resolved "https://artifactory.reform.hmcts.net:443/artifactory/api/npm/npm/@ccd/case-ui-toolkit/-/@ccd/case-ui-toolkit-0.0.29.tgz#f71303f8fef2fcd0cef5e4784d5c37290652f598"
+"@hmcts/ccd-case-ui-toolkit@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.1.2.tgz#d40efa05f672d4ad89d0995ba81ef341e7f8612b"
   dependencies:
     govuk-elements-sass "^3.1.2"
 
@@ -6388,6 +6400,10 @@ rx-lite-aggregates@^4.0.8:
 rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
+
+rx-polling@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/rx-polling/-/rx-polling-0.2.3.tgz#4148e1a581d6e1e37fe23466fd68caf3ea781d76"
 
 rxjs@^5.5.0, rxjs@^5.5.2, rxjs@^5.5.6:
   version "5.5.6"

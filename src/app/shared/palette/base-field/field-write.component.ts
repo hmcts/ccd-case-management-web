@@ -1,6 +1,4 @@
-import {
-  Component, ComponentFactoryResolver, Input, OnInit, ReflectiveInjector, ViewChild, ViewContainerRef
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, OnInit, ReflectiveInjector, ViewChild, ViewContainerRef } from '@angular/core';
 import { PaletteService } from '../palette.service';
 import { AbstractFieldWriteComponent } from './abstract-field-write.component';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -54,7 +52,7 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
     if (this.caseField.field_type.id === 'AddressGlobal') {
       component.instance['ignoreMandatory'] = true;
     }
-
+    component.instance['isExpanded'] = this.isExpanded;
     this.fieldContainer.insert(component.hostView);
   }
 }

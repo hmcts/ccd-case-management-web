@@ -29,4 +29,9 @@ export class OAuth2Service {
       console.error('Error: Unable to obtain access token - no OAuth2 code provided');
     }
   }
+
+  signOut(): void {
+    this.http.get(this.appConfig.getLogoutUrl()).subscribe();
+    this.authService.signIn();
+  }
 }

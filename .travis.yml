@@ -1,8 +1,11 @@
 language: node_js
 cache: yarn
+install:
+  - npm install -g codecov
 script:
   - yarn --version
   - yarn lint
   - yarn test
   - yarn test:coverage
+  - codecov
 after_success:

@@ -6,6 +6,7 @@ import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
 import { OrderService } from '../../core/order/order.service';
+import { Observable } from 'rxjs/Observable';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { attr } from '../../test/helpers';
@@ -20,6 +21,7 @@ import { ActivityService } from '../../core/activity/activity.service';
 import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
+import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 
 @Component({
   // tslint:disable-next-line
@@ -122,14 +124,6 @@ describe('CaseViewerComponent', () => {
     }
   ];
 
-  const switchMap = {
-    switchMap: () => ({
-      retryWhen: () => ({
-        subscribe: () => ({})
-      })
-    })
-  };
-
   const CASE_VIEW: CaseView = {
     case_id: '1',
     case_type: {
@@ -150,7 +144,8 @@ describe('CaseViewerComponent', () => {
         id: 'AddressTab',
         label: 'Address',
         order: 2,
-        fields: []
+        fields: [],
+        show_condition: 'PersonFirstName="Jane"'
       },
       {
         id: 'NameTab',
@@ -166,7 +161,8 @@ describe('CaseViewerComponent', () => {
               type: 'Text'
             },
             order: 2,
-            value: 'Janet'
+            value: 'Janet',
+            show_condition: ''
           },
           {
             id: 'PersonLastName',
@@ -177,7 +173,8 @@ describe('CaseViewerComponent', () => {
               type: 'Text'
             },
             order: 1,
-            value: 'Parker'
+            value: 'Parker',
+            show_condition: 'PersonFirstName="Jane*"'
           },
           {
             id: 'PersonComplex',
@@ -189,9 +186,18 @@ describe('CaseViewerComponent', () => {
               complex_fields: []
             },
             order: 3,
+            show_condition: 'PersonFirstName="Park"'
           }
-        ]
-      }
+        ],
+        show_condition: 'PersonFirstName="Janet"'
+      },
+      {
+        id: 'SomeTab',
+        label: 'Some Tab',
+        order: 3,
+        fields: [],
+        show_condition: ''
+      },
     ],
     triggers: TRIGGERS,
     events: EVENTS
@@ -237,8 +243,8 @@ describe('CaseViewerComponent', () => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
 
-    activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
-    activityService.postActivity.and.returnValue(switchMap);
+    activityService = createSpyObj<ActivityPollingService>('activityPollingService', ['postViewActivity']);
+    activityService.postViewActivity.and.returnValue(Observable.of());
 
     router = createSpyObj<Router>('router', ['navigate']);
     router.navigate.and.returnValue(new Promise(any));
@@ -270,7 +276,7 @@ describe('CaseViewerComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router },
-          { provide: ActivityService, useValue: activityService }
+          { provide: ActivityPollingService, useValue: activityService }
         ]
       })
       .compileComponents();
@@ -288,9 +294,12 @@ describe('CaseViewerComponent', () => {
     expect(header.componentInstance.caseDetails).toEqual(CASE_VIEW);
   });
 
-  it('should render the correct number of tabs', () => {
+  it('should render the correct tabs based on show_condition', () => {
+    // we expect address tab not to be rendered
     let tabHeaders = de.queryAll($ALL_TAB_HEADERS);
-    expect(tabHeaders.length).toBe(STATIC_TABS_LENGTH + CASE_VIEW.tabs.length);
+    expect(tabHeaders.length).toBe(STATIC_TABS_LENGTH + CASE_VIEW.tabs.length - 1);
+    expect(attr(tabHeaders[1], 'title')).toBe(CASE_VIEW.tabs[1].label);
+    expect(attr(tabHeaders[2], 'title')).toBe(CASE_VIEW.tabs[2].label);
   });
 
   it('should render the event log tab first', () => {
@@ -301,12 +310,25 @@ describe('CaseViewerComponent', () => {
   });
 
   it('should render each tab defined by the Case view', () => {
+    // we expect address tab not to be rendered
     let tabHeaders = de.queryAll($CASE_TAB_HEADERS);
-    expect(tabHeaders.length).toBe(CASE_VIEW.tabs.length);
+    expect(tabHeaders.length).toBe(CASE_VIEW.tabs.length - 1);
 
-    CASE_VIEW.tabs.forEach(tab => {
-      expect(tabHeaders.find(c => tab.label === attr(c, 'title'))).toBeTruthy(`Could not find tab ${tab.label}`);
-    });
+    expect(tabHeaders.find(c => 'Name' === attr(c, 'title'))).toBeTruthy('Could not find tab Name');
+    expect(tabHeaders.find(c => 'Some Tab' === attr(c, 'title'))).toBeTruthy('Could not find tab Some Tab');
+  });
+
+  it('should render the field labels based on show_condition', () => {
+    let headers = de
+      .query($NAME_TAB_CONTENT)
+      .queryAll(By.css('tbody>tr>th'));
+
+    expect(headers.find(r => r.nativeElement.textContent.trim() === 'Complex field'))
+      .toBeFalsy('Found row with label Complex field');
+    expect(headers.find(r => r.nativeElement.textContent.trim() === 'Last name'))
+      .toBeTruthy('Cannot find row with label Last name');
+    expect(headers.find(r => r.nativeElement.textContent.trim() === 'First name'))
+      .toBeTruthy('Cannot find row with label First name');
   });
 
   it('should render tabs in ascending order', () => {

@@ -1,10 +1,13 @@
+<!--<div [class.back-link-spacing]="!currentPage.label">
+  <a (click)="previous()" href="javascript:void(0)" class="back-link">&lt; Back</a>
+</div>-->
 <div *ngIf="error" class="error-summary" role="group" aria-labelledby="edit-case-event_error-summary-heading" tabindex="-1">
   <h3 class="heading-medium error-summary-heading" id="edit-case-event_error-summary-heading">
     The event could not be created
   </h3>
   <p>{{error.message}}</p>
   <ul *ngIf="error.details?.field_errors" class="error-summary-list">
-    <li *ngFor="let fieldError of error.details.field_errors">{{fieldError.message}}</li>
+    <li *ngFor="let fieldError of error.details.field_errors" class=" ccd-error-summary-li">{{fieldError.message}}</li>
   </ul>
 </div>
 <ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject" (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
@@ -29,7 +32,7 @@
 
   <div class="form-group form-group-related">
     <button class="button button-secondary" type="button" [disabled]="!hasPrevious()" (click)="previous()">Previous</button>
-    <button class="button" type="submit" [disabled]="currentPageIsNotValid()">Continue</button>
+    <button class="button" type="submit" [disabled]="currentPageIsNotValid() || submitting()">Continue</button>
   </div>
 
   <p><a (click)="cancel()" href="javascript:void(0)">Cancel</a></p>

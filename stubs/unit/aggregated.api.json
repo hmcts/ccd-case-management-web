@@ -18,54 +18,12 @@
       {
         "id": "TEST",
         "name": "Test",
-        "description": "Content for the Test Jurisdiction.",
-        "case_types": [
-          {
-            "id": "TestAddressBookCase",
-            "name": "Test Address Book Case",
-            "description": "Test Address Book Case",
-            "states": [
-              {
-                "id": "CaseCreated",
-                "name": "Case created"
-              },
-              {
-                "id": "CaseEnteredIntoLegacy",
-                "name": "Case has been Entered into Legacy"
-              },
-              {
-                "id": "CaseStopped",
-                "name": "Put case on hold"
-              }
-            ]
-          }
-        ]
+        "description": "Content for the Test Jurisdiction."
       },
       {
         "id": "TEST2",
         "name": "Test2",
-        "description": " Content for the second Test Jurisdiction.",
-        "case_types": [
-          {
-            "id": "TestAddressBookCase",
-            "name": "Test Address Book Case",
-            "description": "Test Address Book Case",
-            "states": [
-              {
-                "id": "CaseCreated",
-                "name": "Case created"
-              },
-              {
-                "id": "CaseEnteredIntoLegacy",
-                "name": "Case has been Entered into Legacy"
-              },
-              {
-                "id": "CaseStopped",
-                "name": "Put case on hold"
-              }
-            ]
-          }
-        ]
+        "description": " Content for the second Test Jurisdiction."
       }
     ],
     "default": {
@@ -1776,6 +1734,7 @@
               "complex_fields": null
             },
             "order": 1,
+            "show_condition": "",
             "value": "Janet"
           },
           {
@@ -1791,6 +1750,7 @@
               "complex_fields": null
             },
             "order": 2,
+            "show_condition": "PersonFirstName=\"Jane\"",
             "value": "Parker"
           },
           {
@@ -1801,6 +1761,7 @@
               "type": "Number"
             },
             "order": 3,
+            "show_condition": "",
             "value": 42
           },
           {
@@ -1811,7 +1772,8 @@
               "type": "YesOrNo"
             },
             "order": 4,
-            "value": true
+            "show_condition": "PersonAge=\"42\"",
+            "value": "Yes"
           },
           {
             "id": "PersonEmail",
@@ -1821,6 +1783,7 @@
               "type": "Email"
             },
             "order": 5,
+            "show_condition": "",
             "value": "ccd@hmcts.net"
           },
           {
@@ -1831,6 +1794,7 @@
               "type": "PhoneUK"
             },
             "order": 6,
+            "show_condition": "PersonEmail=\"ccd*\"",
             "value": "07123456789"
           },
           {
@@ -1841,6 +1805,7 @@
               "type": "Date"
             },
             "order": 7,
+            "show_condition": "PersonGender=F",
             "value": "2017-05-15T00:26:45Z"
           },
           {
@@ -1851,13 +1816,15 @@
               "type": "Document"
             },
             "order": 8,
+            "show_condition": "",
             "value": {
               "document_url": "https://api-gateway.test.evidence.reform.hmcts.net/documents/6ed8ff37-2a40-4766-abd5-c33ef5abe13f",
               "document_binary_url": "https://api-gateway.test.evidence.reform.hmcts.net/documents/6ed8ff37-2a40-4766-abd5-c33ef5abe13f/binary",
               "document_filename": "Example_evidence.xyz"
             }
           }
-        ]
+        ],
+        "show_condition": "PersonFirstName=\"Jane\""
       },
       {
         "id": "AddressTab",
@@ -1886,6 +1853,7 @@
               ]
             },
             "order": 8,
+            "show_condition": "PersonAlive=\"Yes\"",
             "value": "F"
           },
           {
@@ -1896,6 +1864,7 @@
               "type": "MoneyGBP"
             },
             "order": 9,
+            "show_condition": "",
             "value": 4200000
           },
           {
@@ -2012,9 +1981,11 @@
                   "value": "Wales"
                 }
               ]
-            }
+            },
+            "show_condition": ""
           }
-        ]
+        ],
+        "show_condition": ""
       },
       {
         "id": "CollectionsTab",
@@ -2033,6 +2004,7 @@
               }
             },
             "order": 1,
+            "show_condition": "PersonIncome=\"4200000\"",
             "value": [
               {
                 "id": "1",
@@ -2078,6 +2050,7 @@
               }
             },
             "order": 2,
+            "show_condition": "",
             "value": [
               {
                 "id": "123",
@@ -2102,7 +2075,8 @@
               }
             ]
           }
-        ]
+        ],
+        "show_condition": ""
       }
     ],
     "triggers": [

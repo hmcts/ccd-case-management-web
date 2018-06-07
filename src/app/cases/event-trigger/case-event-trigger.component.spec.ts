@@ -11,7 +11,7 @@ import { AlertService } from '../../core/alert/alert.service';
 import { HttpError } from '../../core/http/http-error.model';
 import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivityService } from '../../core/activity/activity.service';
+import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -51,14 +51,6 @@ describe('CaseEventTriggerComponent', () => {
   };
   CASE_DETAILS.case_type.id = 'TEST_CASE_TYPE';
   CASE_DETAILS.case_type.jurisdiction.id = 'TEST';
-
-  const switchMap = {
-    switchMap: () => ({
-      retryWhen: () => ({
-        subscribe: () => ({})
-      })
-    })
-  };
 
   const EVENT_TRIGGER: CaseEventTrigger = {
     id: 'TEST_TRIGGER',
@@ -125,7 +117,7 @@ describe('CaseEventTriggerComponent', () => {
 
   let FieldWrite: any = MockComponent({
     selector: 'ccd-field-write',
-    inputs: ['caseField', 'formGroup', 'idPrefix']
+    inputs: ['caseField', 'formGroup', 'idPrefix', 'isExpanded']
   });
 
   const RouterLinkComponent: any = MockComponent({
@@ -145,7 +137,7 @@ describe('CaseEventTriggerComponent', () => {
   let alertService: any;
   let casesService: any;
   let casesReferencePipe: any;
-  let activityService: any;
+  let activityPollingService: any;
 
   beforeEach(async(() => {
     casesService = createSpyObj<CasesService>('casesService', ['createEvent', 'validateCase']);
@@ -155,8 +147,8 @@ describe('CaseEventTriggerComponent', () => {
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
-    activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
-    activityService.postActivity.and.returnValue(switchMap);
+    activityPollingService = createSpyObj<ActivityPollingService>('activityPollingService', ['postEditActivity']);
+    activityPollingService.postEditActivity.and.returnValue(Observable.of());
     router = createSpyObj('router', ['navigate']);
     router.navigate.and.returnValue({then: f => f()});
 
@@ -184,7 +176,7 @@ describe('CaseEventTriggerComponent', () => {
           { provide: Router, useValue: router },
           { provide: AlertService, useValue: alertService },
           { provide: CaseReferencePipe, useValue: casesReferencePipe },
-          { provide: ActivityService, useValue: activityService }
+          { provide: ActivityPollingService, useValue: activityPollingService }
         ]
       })
       .compileComponents();

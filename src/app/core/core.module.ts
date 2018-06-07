@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CaseUIToolkitModule } from '@ccd/case-ui-toolkit';
+import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 import { CasesService } from './cases/cases.service';
 import { DefinitionsService } from './definitions/definitions.service';
 import { WindowService } from './utils/window.service';
@@ -29,6 +29,7 @@ import { AddressesService } from './addresses/addresses.service';
 import { AuthService } from './auth/auth.service';
 import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
+import { ActivityResolver } from './activity/activity.resolver';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { OAuth2Service } from './auth/oauth2.service';
     HttpErrorService,
     JurisdictionService,
     ActivityService,
+    ActivityResolver,
     ActivityPollingService,
     DocumentManagementService,
     AddressesService,

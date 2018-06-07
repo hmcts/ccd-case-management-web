@@ -24,6 +24,9 @@ locals {
   previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
   nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
   vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+
+  is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
+  external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 }
 
 module "case-management-web" {
@@ -32,16 +35,15 @@ module "case-management-web" {
   location = "${var.location}"
   env      = "${var.env}"
   ilbIp    = "${var.ilbIp}"
-  is_frontend = "${var.env != "preview" ? 1: 0}"
   subscription = "${var.subscription}"
-  additional_host_name = "${var.external_host_name}"
+  is_frontend = "${local.is_frontend}"
+  additional_host_name = "${local.external_host_name}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"
     CCD_GW_LOGOUT_URL = "${local.ccd_gateway_url}/logout"
     CCD_API_URL = "${local.ccd_gateway_url}/aggregated"
     CCD_DATA_URL = "${local.ccd_gateway_url}/data"
-    CCD_ACTIVITY_URL = "" // Activity disabled until it's deployed on CNP
     CCD_GW_OAUTH2_URL = "${local.ccd_gateway_url}/oauth2"
     CCD_GW_OAUTH2_CLIENT_ID = "ccd_gateway"
     DM_URL = "${local.ccd_gateway_url}/documents"
@@ -51,6 +53,11 @@ module "case-management-web" {
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"
     PRINT_SERVICE_URL_REMOTE = "${local.ccd_print_service_url}"
     WEBSITE_NODE_DEFAULT_VERSION = "8.9.4"
+    CCD_ACTIVITY_URL = "" // Activity disabled until it's deployed on CNP
+    CCD_ACTIVITY_NEXT_POLL_REQUEST_MS = 5000
+    CCD_ACTIVITY_RETRY = 5
+    CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1
+    CCD_ACTIVITY_MAX_REQUEST_PER_BATCH = 25 // Better have this same as CCD_PAGE_SIZE
   }
 }
 

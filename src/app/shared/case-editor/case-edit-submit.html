@@ -8,14 +8,14 @@
   </h3>
   <p>{{error.message}}</p>
   <ul *ngIf="error.details?.field_errors" class="error-summary-list">
-    <li *ngFor="let fieldError of error.details.field_errors">{{fieldError.message}}</li>
+    <li *ngFor="let fieldError of error.details.field_errors" class="ccd-error-summary-li">{{fieldError.message}}</li>
   </ul>
 </div>
 <ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject"
                      (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
 
 <form [formGroup]="editForm" (submit)="submit()">
-  <ng-container *ngIf="fieldsToDisplayExists()">
+  <ng-container *ngIf="checkYourAnswerFieldsToDisplayExists()">
 
     <h1 class="heading-small">Check your answers</h1>
     <h2 class="plain-message">Check the information below carefully. This will form a record of your application.</h2>
@@ -25,20 +25,18 @@
       <ng-container *ngFor="let page of this.wizard.pages">
         <ng-container *ngIf="isShown(page)">
           <ng-container *ngFor="let field of page.case_fields">
-            <ng-container *ngIf="canShowField(field)">
-
+            <ng-container *ngIf="canShowFieldInCYA(field)">
               <tr ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
-                  [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
+                [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
                 <th class="valign-top">{{field.label}}</th>
                 <td class="form-cell">
                   <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                 </td>
                 <td class="valign-top">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
-                     href="javascript:void(0)">Change</a>
+                    href="javascript:void(0)">Change</a>
                 </td>
               </tr>
-
             </ng-container>
           </ng-container>
         </ng-container>
@@ -46,20 +44,46 @@
       </tbody>
     </table>
   </ng-container>
-  <fieldset id="fieldset-event" formGroupName="event" *ngIf="!isSolicitor()">
-    <div class="form-group">
-      <label for="field-trigger-summary" class="form-label">
-        Event summary (optional)
-        <span class="form-hint">A few words describing the purpose of the event.</span>
-      </label>
-      <input type="text" id="field-trigger-summary" class="form-control" formControlName="summary" maxlength="1024">
-    </div>
-    <div class="form-group">
-      <label for="field-trigger-description" class="form-label">Event description (optional)</label>
-      <textarea id="field-trigger-description" class="form-control" formControlName="description"
-                maxlength="65536"></textarea>
-    </div>
-  </fieldset>
+  <ng-container *ngIf="readOnlySummaryFieldsToDisplayExists()">
+
+    <table class="summary-fields">
+      <tbody>
+        <ng-container *ngFor="let field of this.showSummaryFields">
+            <ng-container [ngSwitch]="!(field | ccdIsCompound)">
+              <tr *ngSwitchCase="true" ccdLabelSubstitutor [caseField]="field" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
+                <th>{{field.label}}</th>
+                <td class="form-cell">
+                  <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                </td>
+              </tr>
+              <tr *ngSwitchCase="false" class="compound-field" ccdLabelSubstitutor [caseField]="field"
+                  [formGroup]="editForm.controls['data']"
+                  [eventFields]="eventTrigger.case_fields">
+                <td colspan="2">
+                  <ccd-field-read [caseField]="summaryCaseField(field)"></ccd-field-read>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-container *ngIf="showEventNotes()">
+    <fieldset id="fieldset-event" formGroupName="event" *ngIf="!isSolicitor()">
+      <div class="form-group">
+        <label for="field-trigger-summary" class="form-label">
+          Event summary (optional)
+          <span class="form-hint">A few words describing the purpose of the event.</span>
+        </label>
+        <input type="text" id="field-trigger-summary" class="form-control" formControlName="summary" maxlength="1024">
+      </div>
+      <div class="form-group">
+        <label for="field-trigger-description" class="form-label">Event description (optional)</label>
+        <textarea id="field-trigger-description" class="form-control" formControlName="description"
+                  maxlength="65536"></textarea>
+      </div>
+    </fieldset>
+  </ng-container>
   <div class="form-group form-group-related">
     <button class="button button-secondary" type="button" [disabled]="!hasPrevious()" (click)="previous()">Previous</button>
     <button type="submit" [disabled]="isDisabled()" class="button">{{triggerText}}</button>

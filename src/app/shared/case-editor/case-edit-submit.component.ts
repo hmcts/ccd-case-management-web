@@ -17,6 +17,7 @@ import { Profile } from '../../core/profile/profile.model';
 import { Confirmation } from './confirmation.model';
 import { CaseFieldService } from '../domain/case-field.service';
 import { Wizard } from './wizard.model';
+import { OrderService } from '../../core/order/order.service';
 import { PaletteContext } from '../palette/base-field/palette-context.enum';
 
 @Component({
@@ -30,10 +31,25 @@ export class CaseEditSubmitComponent implements OnInit {
   error: HttpError;
   callbackErrorsSubject: Subject<any> = new Subject();
   ignoreWarning = false;
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
+  triggerText: string;
   wizard: Wizard;
   profile: Profile;
+  showSummaryFields: CaseField[];
   paletteContext: PaletteContext = PaletteContext.CHECK_YOUR_ANSWER;
+
+  public static readonly SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION = (a: CaseField, b: CaseField) => {
+    let aCaseField = a.show_summary_content_option === 0 || a.show_summary_content_option;
+    let bCaseField = b.show_summary_content_option === 0 || b.show_summary_content_option;
+
+    if (!aCaseField) {
+      return !bCaseField ? 0 : 1;
+    }
+
+    if (!bCaseField) {
+      return -1;
+    }
+    return a.show_summary_content_option - b.show_summary_content_option;
+  }
 
   constructor(
     private caseEdit: CaseEditComponent,
@@ -41,15 +57,18 @@ export class CaseEditSubmitComponent implements OnInit {
     private formErrorService: FormErrorService,
     private fieldsUtils: FieldsUtils,
     private caseFieldService: CaseFieldService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private orderService: OrderService,
     ) {
   }
 
   ngOnInit(): void {
     this.eventTrigger = this.caseEdit.eventTrigger;
+    this.triggerText = this.eventTrigger.end_button_label || CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
     this.editForm = this.caseEdit.form;
     this.wizard = this.caseEdit.wizard;
     this.profile = this.getProfile(this.route);
+    this.showSummaryFields = this.sortFieldsByShowSummaryContent(this.eventTrigger.case_fields);
   }
 
   submit(): void {
@@ -117,7 +136,7 @@ export class CaseEditSubmitComponent implements OnInit {
     return !this.caseFieldService.isReadOnly(field);
   }
 
-  fieldsToDisplayExists(): boolean {
+  checkYourAnswerFieldsToDisplayExists(): boolean {
 
     if (!this.eventTrigger.show_summary) {
       return false;
@@ -126,7 +145,7 @@ export class CaseEditSubmitComponent implements OnInit {
     for (let page of this.wizard.pages) {
       if (this.isShown(page)) {
         for (let field of page.case_fields) {
-          if (this.canShowField(field)) {
+          if (this.canShowFieldInCYA(field)) {
             // at least one field needs showing
             return true;
           }
@@ -134,8 +153,16 @@ export class CaseEditSubmitComponent implements OnInit {
       }
     }
 
-    // found no fields to show in summary page
+    // found no fields to show in CYA summary page
     return false;
+  }
+
+  readOnlySummaryFieldsToDisplayExists(): boolean {
+    return this.eventTrigger.case_fields.some(field => field.show_summary_content_option >= 0 );
+  }
+
+  showEventNotes(): boolean {
+    return this.eventTrigger.show_event_notes !== false;
   }
 
   private getLastPageShown(): WizardPage {
@@ -165,7 +192,7 @@ export class CaseEditSubmitComponent implements OnInit {
     return page.parsedShowCondition.match(fields);
   }
 
-  canShowField(field: CaseField): boolean {
+  canShowFieldInCYA(field: CaseField): boolean {
     return field.show_summary_change_option;
   }
 
@@ -189,4 +216,11 @@ export class CaseEditSubmitComponent implements OnInit {
       return null;
     }
   }
+
+  private sortFieldsByShowSummaryContent(fields: CaseField[]): CaseField[] {
+    return this.orderService
+      .sort(fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
+      .filter(cf => cf.show_summary_content_option);
+  }
+
 }

@@ -20,7 +20,6 @@ const CONFIG = {
   'logout_url': process.env['CCD_GW_LOGOUT_URL'] || 'http://localhost:3453/logout',
   'api_url': process.env['CCD_API_URL'] || 'http://localhost:3453/aggregated',
   'case_data_url': process.env['CCD_DATA_URL'] || 'http://localhost:3453/data',
-  'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
   'document_management_url': process.env['DM_URL'] || 'http://localhost:3453/documents',
   'remote_document_management_url': process.env['DM_URL_REMOTE'] || 'https://api-gateway.dev.dm.reform.hmcts.net/documents',
   'pagination_page_size': parseInt(process.env['CCD_PAGE_SIZE'], 10) || 25,
@@ -29,7 +28,12 @@ const CONFIG = {
   'oauth2_client_id': process.env['CCD_GW_OAUTH2_CLIENT_ID'] || 'ccd_gateway',
   'print_service_url': process.env['PRINT_SERVICE_URL'] || 'http://localhost:3453/print',
   'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net',
-  'smart_survey_url':process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/'
+  'smart_survey_url': process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/',
+  'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
+  'activity_next_poll_request_ms': process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'] || 5000,
+  'activity_retry': process.env['CCD_ACTIVITY_RETRY'] || 5,
+  'activity_batch_collection_delay_ms': process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'] || 1,
+  'activity_max_request_per_batch': process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'] || 25
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack

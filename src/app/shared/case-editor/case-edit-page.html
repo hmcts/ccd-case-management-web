@@ -2,7 +2,7 @@
 <h1 class="heading-medium" id="page-header"><span *ngIf="currentPage.label">{{currentPage.label}}&nbsp;-&nbsp;</span>{{ eventTrigger.name}}</h1>
 
 <!-- Case ID -->
-<h2 class="heading-small">
+<h2 *ngIf="getCaseId()" class="heading-small">
   #{{ getCaseId() | ccdCaseReference}}
 </h2>
 

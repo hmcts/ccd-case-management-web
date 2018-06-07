@@ -147,7 +147,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     window.scrollTo(0, 0);
   }
 
-  getCaseId(): String {
-    return this.caseEdit.caseDetails.case_id;
+  getCaseId(): string {
+    return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
   }
 }

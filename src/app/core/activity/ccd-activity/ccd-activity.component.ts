@@ -10,9 +10,9 @@ import { Subscription, Subject } from 'rxjs';
 })
 export class CcdActivityComponent implements OnInit, OnDestroy {
   private VIEWERS_PREFIX = '';
-  private VIEWERS_SUFFIX = 'viewing this case.';
-  private EDITORS_PREFIX = 'This case is locked because ';
-  private EDITORS_SUFFIX = 'working on this.';
+  private VIEWERS_SUFFIX = 'viewing this case';
+  private EDITORS_PREFIX = 'This case is being updated by ';
+  private EDITORS_SUFFIX = '';
   activity: Activity;
   dspMode = DisplayMode;
 
@@ -84,10 +84,12 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     } else {
       resultText = this.replaceLastCommaWithAnd(resultText);
     }
-    if (namesArray.length + unknownCount > 1) {
-      resultText += ' are ' + suffix;
-    } else {
-      resultText += ' is ' + suffix;
+    if (suffix.length > 0) {
+      if (namesArray.length + unknownCount > 1) {
+        resultText += ' are ' + suffix;
+      } else {
+        resultText += ' is ' + suffix;
+      }
     }
     return resultText;
   }

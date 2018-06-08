@@ -61,6 +61,14 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     return this.activity.editors.length || this.activity.viewers.length || this.activity.unknownEditors || this.activity.unknownViewers;
   }
 
+  viewersPresent(): boolean {
+    return (this.activity.viewers.length > 0 || this.activity.unknownViewers > 0)
+  }
+
+  editorsPresent(): boolean {
+    return (this.activity.editors.length > 0 || this.activity.unknownEditors > 0)
+  }
+
   ngOnDestroy() {
     this.subscription.complete();
     this.subscription.unsubscribe();

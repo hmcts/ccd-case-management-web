@@ -1,7 +1,7 @@
 <div class="form-group" [ngClass]="{'form-group-error': !valid}">
 
   <label [for]="id()">
-    <span class="form-label-bold">{{caseField | ccdFieldLabel}}</span>
+    <span class="form-label">{{caseField | ccdFieldLabel}}</span>
     <span class="form-hint" *ngIf="caseField.hint_text">{{caseField.hint_text}}</span>
     <span class="error-message" *ngIf="uploadError && !valid">{{uploadError}}</span>
   </label>
@@ -10,6 +10,6 @@
     <ccd-read-document-field *ngIf="caseField" [caseField]="caseField"></ccd-read-document-field>
   </div>
 
-  <input class="form-control" [id]="id()" type="file" (change)="fileChangeEvent($event)"/>
+  <input class="form-control bottom-30" [id]="id()" type="file" (change)="fileChangeEvent($event)"/>
 
 </div>

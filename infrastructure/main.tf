@@ -55,7 +55,7 @@ module "case-management-web" {
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"
     PRINT_SERVICE_URL_REMOTE = "${local.ccd_print_service_url}"
     WEBSITE_NODE_DEFAULT_VERSION = "8.9.4"
-    CCD_ACTIVITY_URL = "${var.activity_enabled == "false" ? "" : local.ccd_activity_url}"
+    CCD_ACTIVITY_URL = "${var.activity_enabled == "true" ? local.ccd_activity_url : ""}"
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS = 5000
     CCD_ACTIVITY_RETRY = 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1

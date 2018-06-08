@@ -1,4 +1,16 @@
 .activityComponent {
+}
 
+.activityEditorsIcon {
+    margin-left: 10px;
+}
 
+.activityEditorsAndViewersIcons {
+    float: left;
+    margin-left: 10px;
+}
+
+.activityViewersIcon {
+    float: left;
+    margin-left: 10px;
 }

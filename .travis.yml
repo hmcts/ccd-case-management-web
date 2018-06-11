@@ -2,6 +2,7 @@ language: node_js
 cache: yarn
 install:
   - npm install -g codecov
+  - yarn install
 script:
   - yarn --version
   - yarn lint

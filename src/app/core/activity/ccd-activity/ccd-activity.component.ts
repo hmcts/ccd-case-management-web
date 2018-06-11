@@ -10,9 +10,9 @@ import { Subscription, Subject } from 'rxjs';
 })
 export class CcdActivityComponent implements OnInit, OnDestroy {
   private VIEWERS_PREFIX = '';
-  private VIEWERS_SUFFIX = 'viewing this case.';
-  private EDITORS_PREFIX = 'This case is locked because ';
-  private EDITORS_SUFFIX = 'working on this.';
+  private VIEWERS_SUFFIX = 'viewing this case';
+  private EDITORS_PREFIX = 'This case is being updated by ';
+  private EDITORS_SUFFIX = '';
   activity: Activity;
   dspMode = DisplayMode;
 
@@ -61,6 +61,14 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     return this.activity.editors.length || this.activity.viewers.length || this.activity.unknownEditors || this.activity.unknownViewers;
   }
 
+  viewersPresent(): boolean {
+    return (this.activity.viewers.length > 0 || this.activity.unknownViewers > 0)
+  }
+
+  editorsPresent(): boolean {
+    return (this.activity.editors.length > 0 || this.activity.unknownEditors > 0)
+  }
+
   ngOnDestroy() {
     this.subscription.complete();
     this.subscription.unsubscribe();
@@ -76,10 +84,12 @@ export class CcdActivityComponent implements OnInit, OnDestroy {
     } else {
       resultText = this.replaceLastCommaWithAnd(resultText);
     }
-    if (namesArray.length + unknownCount > 1) {
-      resultText += ' are ' + suffix;
-    } else {
-      resultText += ' is ' + suffix;
+    if (suffix.length > 0) {
+      if (namesArray.length + unknownCount > 1) {
+        resultText += ' are ' + suffix;
+      } else {
+        resultText += ' is ' + suffix;
+      }
     }
     return resultText;
   }

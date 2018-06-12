@@ -16,8 +16,10 @@ import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity
 import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';
 import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-activity-banner/ccd-activity-banner.component';
 import { CaseFieldService } from './domain/case-field.service';
-import { EventCaseHistoryComponent } from './event-case-history/event-case-history.component';
-import { EventCaseHistoryResolver } from "./event-case-history/event-case-history.resolver";
+import { CaseHistoryComponent } from './case-history/case-history.component';
+import { CaseHistoryResolver } from "./case-history/case-history.resolver";
+import { LabelSubstitutorModule } from "./substitutor/label-substitutor.module";
+import { ConditionalShowModule } from "./conditional-show/conditional-show.module";
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import { EventCaseHistoryResolver } from "./event-case-history/event-case-histor
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    EventTriggerModule
+    EventTriggerModule,
+    LabelSubstitutorModule,
+    ConditionalShowModule
   ],
   declarations: [
     SearchResultComponent,
@@ -39,12 +43,12 @@ import { EventCaseHistoryResolver } from "./event-case-history/event-case-histor
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
-    EventCaseHistoryComponent,
+    CaseHistoryComponent,
   ],
   providers: [
     SearchResultViewItemComparatorFactory,
     CaseFieldService,
-    EventCaseHistoryResolver,
+    CaseHistoryResolver,
   ],
   exports: [
     SearchResultComponent,
@@ -56,7 +60,7 @@ import { EventCaseHistoryResolver } from "./event-case-history/event-case-histor
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
-    EventCaseHistoryComponent,
+    CaseHistoryComponent,
   ]
 })
 export class SharedModule {}

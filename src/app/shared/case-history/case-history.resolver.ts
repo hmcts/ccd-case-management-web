@@ -1,4 +1,3 @@
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRouteSnapshot, Resolve, Router, ParamMap } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -6,35 +5,37 @@ import { CasesService } from '../../core/cases/cases.service';
 import { Response } from '@angular/http';
 
 import 'rxjs/add/operator/catch';
+import { CaseHistoryView } from "../../core/cases/case-history-view.model";
 
 @Injectable()
-export class EventCaseHistoryResolver implements Resolve<CaseView> {
+export class CaseHistoryResolver implements Resolve<CaseHistoryView> {
 
   public static readonly PARAM_JURISDICTION_ID = 'jid';
   public static readonly PARAM_CASE_TYPE_ID = 'ctid';
   public static readonly PARAM_CASE_ID = 'cid';
+  public static readonly PARAM_EVENT_ID = 'eid';
 
   constructor(private casesService: CasesService,
               private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<CaseView> {
-    let {jid, ctid, cid} = this.getParams(route.paramMap);
-    return this.getCaseView(jid, ctid, cid);
+  resolve(route: ActivatedRouteSnapshot): Observable<CaseHistoryView> {
+    let {jid, ctid, cid, eid} = this.getParams(route.paramMap);
+    return this.getCaseHistoryView(jid, ctid, cid, eid);
   }
 
   private getParams(pm: ParamMap) {
-    const jid = pm.get(EventCaseHistoryResolver.PARAM_JURISDICTION_ID);
-    const ctid = pm.get(EventCaseHistoryResolver.PARAM_CASE_TYPE_ID);
-    const cid = pm.get(EventCaseHistoryResolver.PARAM_CASE_ID);
+    const jid = pm.get(CaseHistoryResolver.PARAM_JURISDICTION_ID);
+    const ctid = pm.get(CaseHistoryResolver.PARAM_CASE_TYPE_ID);
+    const cid = pm.get(CaseHistoryResolver.PARAM_CASE_ID);
+    const eid = pm.get(CaseHistoryResolver.PARAM_EVENT_ID);
 
-    return {jid, ctid, cid};
+    return {jid, ctid, cid, eid};
   }
 
-  private getCaseView(jid, ctid, cid): Observable<CaseView> {
+  private getCaseHistoryView(jid, ctid, cid, eid): Observable<CaseHistoryView> {
     return this.casesService
-      .getCaseView(jid, ctid, cid)
+      .getCaseHistoryView(jid, ctid, cid, eid)
       .catch((error: Response | any) => {
-        // TODO Should be logged to remote logging infrastructure
         console.error(error);
         if (error.status !== 401 && error.status !== 403) {
           this.router.navigate(['/error']);

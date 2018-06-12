@@ -4,6 +4,7 @@ import { DebugElement } from '@angular/core';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '../palette/utils/date.pipe';
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe('EventLogTableComponent', () => {
 
@@ -40,9 +41,10 @@ describe('EventLogTableComponent', () => {
   const $TABLE_HEADERS = By.css('table>thead>tr>th');
   const $TABLE_ROWS = By.css('table>tbody>tr');
 
-  const COL_DATE = 0;
-  const COL_AUTHOR = 1;
-  const COL_EVENT = 2;
+  const CASE_DATA = 0;
+  const COL_DATE = 1;
+  const COL_AUTHOR = 2;
+  const COL_EVENT = 3;
 
   let fixture: ComponentFixture<EventLogTableComponent>;
   let component: EventLogTableComponent;
@@ -51,7 +53,7 @@ describe('EventLogTableComponent', () => {
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
-        imports: [],
+        imports: [RouterTestingModule],
         declarations: [
           EventLogTableComponent,
           DatePipe
@@ -73,8 +75,9 @@ describe('EventLogTableComponent', () => {
   it('should render a table with 3 columns', () => {
     let headers = de.queryAll($TABLE_HEADERS);
 
-    expect(headers.length).toBe(3);
+    expect(headers.length).toBe(4);
 
+    expect(headers[CASE_DATA].nativeElement.textContent).toBe('Case Data');
     expect(headers[COL_DATE].nativeElement.textContent).toBe('Date');
     expect(headers[COL_AUTHOR].nativeElement.textContent).toBe('Author');
     expect(headers[COL_EVENT].nativeElement.textContent).toBe('Event');
@@ -87,18 +90,20 @@ describe('EventLogTableComponent', () => {
 
     let firstRowCells = rows[0].queryAll(By.css('td'));
 
-    expect(firstRowCells.length).toBe(3);
+    expect(firstRowCells.length).toBe(4);
     let firstEvent = EVENTS[0];
 
+    expect(firstRowCells[CASE_DATA].nativeElement.textContent).toBe('Case Data');
     expect(firstRowCells[COL_DATE].nativeElement.textContent).toBe('10 May 2017');
     expect(firstRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Justin SMITH');
     expect(firstRowCells[COL_EVENT].nativeElement.textContent).toBe(firstEvent.event_name);
 
     let secondRowCells = rows[1].queryAll(By.css('td'));
 
-    expect(secondRowCells.length).toBe(3);
+    expect(secondRowCells.length).toBe(4);
     let secondEvent = EVENTS[1];
 
+    expect(firstRowCells[CASE_DATA].nativeElement.textContent).toBe('Case Data');
     expect(secondRowCells[COL_DATE].nativeElement.textContent).toBe('9 May 2017');
     expect(secondRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Phillip CHAN');
     expect(secondRowCells[COL_EVENT].nativeElement.textContent).toBe(secondEvent.event_name);

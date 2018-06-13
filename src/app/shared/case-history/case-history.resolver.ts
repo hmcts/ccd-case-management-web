@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { CasesService } from '../../core/cases/cases.service';
 import { Response } from '@angular/http';
-
 import 'rxjs/add/operator/catch';
-import { CaseHistoryView } from "../../core/cases/case-history-view.model";
+import { CaseHistoryView } from '../../core/cases/case-history-view.model';
 
 @Injectable()
 export class CaseHistoryResolver implements Resolve<CaseHistoryView> {

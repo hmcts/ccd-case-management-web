@@ -4,7 +4,7 @@ import { DebugElement } from '@angular/core';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '../palette/utils/date.pipe';
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EventLogTableComponent', () => {
 

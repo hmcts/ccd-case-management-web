@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { CaseHistoryView } from "../../core/cases/case-history-view.model";
-import { OrderService } from "../../core/order/order.service";
-import { CaseTab } from "../../core/cases/case-tab.model";
-import { ShowCondition } from "../conditional-show/conditional-show.model";
+import { ActivatedRoute } from '@angular/router';
+import { CaseHistoryView } from '../../core/cases/case-history-view.model';
+import { OrderService } from '../../core/order/order.service';
+import { CaseTab } from '../../core/cases/case-tab.model';
+import { ShowCondition } from '../conditional-show/conditional-show.model';
 
 @Component({
   templateUrl: './case-history.component.html',

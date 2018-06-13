@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CaseHistoryComponent } from './case-history.component';
-import { FieldsUtils } from "../utils/fields.utils";
-import { PaletteUtilsModule } from "../palette/utils/utils.module";
-import { attr } from "../../test/helpers";
-import { CaseViewEvent } from "../../core/cases/case-view-event.model";
-import { MockComponent } from "ng2-mock-component";
-import { By } from "@angular/platform-browser";
-import { HttpError } from "../../core/http/http-error.model";
-import { LabelSubstitutorDirective } from "../substitutor/label-substitutor.directive";
-import { ActivatedRoute, Router } from "@angular/router";
-import { LabelSubstitutionService } from "../case-editor/label-substitution.service";
+import { FieldsUtils } from '../utils/fields.utils';
+import { PaletteUtilsModule } from '../palette/utils/utils.module';
+import { attr } from '../../test/helpers';
+import { CaseViewEvent } from '../../core/cases/case-view-event.model';
+import { MockComponent } from 'ng2-mock-component';
+import { By } from '@angular/platform-browser';
+import { HttpError } from '../../core/http/http-error.model';
+import { LabelSubstitutorDirective } from '../substitutor/label-substitutor.directive';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LabelSubstitutionService } from '../case-editor/label-substitution.service';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseHistoryView } from "../../core/cases/case-history-view.model";
+import { CaseHistoryView } from '../../core/cases/case-history-view.model';
 import any = jasmine.any;
-import { DebugElement } from "@angular/core";
-import { OrderService } from "../../core/order/order.service";
+import { DebugElement } from '@angular/core';
+import { OrderService } from '../../core/order/order.service';
 
 describe('CaseHistoryComponent', () => {
 

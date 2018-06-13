@@ -11,7 +11,7 @@ import { WizardPageField } from '../../shared/domain/wizard-page-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
-import { CaseHistoryView } from "./case-history-view.model";
+import { CaseHistoryView } from './case-history-view.model';
 
 @Injectable()
 export class CasesService {

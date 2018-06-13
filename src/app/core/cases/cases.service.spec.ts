@@ -11,8 +11,8 @@ import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError } from '../http/http-error.model';
 import { HttpErrorService } from '../http/http-error.service';
-import { CaseHistoryView } from "./case-history-view.model";
-import { CaseViewEvent } from "./case-view-event.model";
+import { CaseHistoryView } from './case-history-view.model';
+import { CaseViewEvent } from './case-view-event.model';
 
 describe('CasesService', () => {
 

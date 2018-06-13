@@ -17,9 +17,9 @@ import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-acti
 import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-activity-banner/ccd-activity-banner.component';
 import { CaseFieldService } from './domain/case-field.service';
 import { CaseHistoryComponent } from './case-history/case-history.component';
-import { CaseHistoryResolver } from "./case-history/case-history.resolver";
-import { LabelSubstitutorModule } from "./substitutor/label-substitutor.module";
-import { ConditionalShowModule } from "./conditional-show/conditional-show.module";
+import { CaseHistoryResolver } from './case-history/case-history.resolver';
+import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
+import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 
 @NgModule({
   imports: [

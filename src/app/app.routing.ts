@@ -21,8 +21,8 @@ import { OAuth2RedirectComponent } from './oauth2/oauth2-redirect.component';
 import { CaseEditConfirmComponent } from './shared/case-editor/case-edit-confirm.component';
 import { AppConfigGuard } from './app.config.guard';
 import { ActivityResolver } from './core/activity/activity.resolver';
-import { CaseHistoryComponent } from "./shared/case-history/case-history.component";
-import { CaseHistoryResolver } from "./shared/case-history/case-history.resolver";
+import { CaseHistoryComponent } from './shared/case-history/case-history.component';
+import { CaseHistoryResolver } from './shared/case-history/case-history.resolver';
 
 const routes: Routes = [
   {

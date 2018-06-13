@@ -4,7 +4,7 @@ import { EventLogComponent } from './event-log.component';
 import { EventLogTableComponent } from './event-log-table.component';
 import { EventLogDetailsComponent } from './event-log-details.component';
 import { PaletteUtilsModule } from '../palette/utils/utils.module';
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [

@@ -1,6 +1,11 @@
-<!--<div>
-  <a (click)="previous()" href="javascript:void(0)" class="back-link">&lt; Back</a>
-</div>-->
+<!-- Current Page && Event trigger name -->
+<h1 class="heading-medium"><span *ngIf="currentPage && currentPage.label">{{currentPage.label}}&nbsp;-&nbsp;</span>{{ eventTrigger.name}}</h1>
+
+<!-- Case ID -->
+<h2 *ngIf="getCaseId()" class="heading-small">
+  #{{ getCaseId() | ccdCaseReference}}
+</h2>
+
 <div *ngIf="error" class="error-summary" role="group" aria-labelledby="edit-case-event_error-summary-heading"
      tabindex="-1">
   <h3 class="heading-medium error-summary-heading" id="edit-case-event_error-summary-heading">
@@ -17,8 +22,8 @@
 <form [formGroup]="editForm" (submit)="submit()">
   <ng-container *ngIf="checkYourAnswerFieldsToDisplayExists()">
 
-    <h1 class="heading-small">Check your answers</h1>
-    <h2 class="plain-message">Check the information below carefully. This will form a record of your application.</h2>
+    <h2 class="heading-small">Check your answers</h2>
+    <span class="text-16">Check the information below carefully. This will form a record of your application.</span>
 
     <table class="form-table">
       <tbody>
@@ -28,13 +33,18 @@
             <ng-container *ngIf="canShowFieldInCYA(field)">
               <tr ccdConditionalShow ccdLabelSubstitutor [caseField]="field"
                 [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields">
-                <th class="valign-top">{{field.label}}</th>
+                <th class="valign-top"><span class="text-16">{{field.label}}</span></th>
                 <td class="form-cell">
-                  <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
+                  <a href="mailto:{{summaryCaseField(field).value}}" class="text-16" *ngIf="isEmail(field)">
+                    <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
+                  </a>
+                  <span class="text-16" *ngIf="!isEmail(field)">
+                    <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
+                  </span>
                 </td>
                 <td class="valign-top">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
-                    href="javascript:void(0)">Change</a>
+                    href="javascript:void(0)"><span class="text-16">Change</span></a>
                 </td>
               </tr>
             </ng-container>
@@ -88,5 +98,5 @@
     <button class="button button-secondary" type="button" [disabled]="!hasPrevious()" (click)="previous()">Previous</button>
     <button type="submit" [disabled]="isDisabled()" class="button">{{triggerText}}</button>
   </div>
-  <p><a (click)="cancel()" href="javascript:void(0)">Cancel</a></p>
+  <p class="cancel"><a (click)="cancel()" href="javascript:void(0)">Cancel</a></p>
 </form>

@@ -59,7 +59,7 @@ export class CaseEditSubmitComponent implements OnInit {
     private caseFieldService: CaseFieldService,
     private route: ActivatedRoute,
     private orderService: OrderService,
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -188,7 +188,7 @@ export class CaseEditSubmitComponent implements OnInit {
 
   isShown(page: WizardPage): boolean {
     let fields = this.fieldsUtils
-        .mergeCaseFieldsAndFormFields(this.eventTrigger.case_fields, this.editForm.controls['data'].value);
+      .mergeCaseFieldsAndFormFields(this.eventTrigger.case_fields, this.editForm.controls['data'].value);
     return page.parsedShowCondition.match(fields);
   }
 
@@ -221,6 +221,14 @@ export class CaseEditSubmitComponent implements OnInit {
     return this.orderService
       .sort(fields, CaseEditSubmitComponent.SHOW_SUMMARY_CONTENT_COMPARE_FUNCTION)
       .filter(cf => cf.show_summary_content_option);
+  }
+
+  getCaseId(): String {
+    return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
+  }
+
+  isEmail(field: CaseField): boolean {
+    return (this.summaryCaseField(field).value ? this.summaryCaseField(field).value.indexOf('@') !== -1 : false)
   }
 
 }

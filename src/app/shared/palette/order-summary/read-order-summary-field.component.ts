@@ -19,7 +19,7 @@ import { MoneyGBPCaseField } from '../../domain/definition/money-gbp-case-field.
 })
 export class ReadOrderSummaryFieldComponent extends AbstractFieldReadComponent implements OnInit {
 
-  public static readonly NO_VALUE = undefined;
+  private static readonly NO_VALUE = undefined;
   @ViewChild('paymentTotal', {read: ViewContainerRef})
   paymentTotal: ViewContainerRef;
   @ViewChildren(ReadOrderSummaryRowComponent)

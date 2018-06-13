@@ -32,6 +32,15 @@ describe('CcdActivityComponent', () => {
     unknownViewers: 0
   };
 
+  const ACTIVITY_W_MULTIPLE_EDITOR: Activity = {
+    caseId: CASE_ID,
+    editors: [{forename: 'Bob', surname: 'Ross'},
+      {forename: 'William', surname: 'Orange'}],
+    unknownEditors: 0,
+    viewers: [],
+    unknownViewers: 0
+  };
+
   const ACTIVITY_W_UNKNOWN_EDITOR: Activity = {
     caseId: CASE_ID,
     editors: [],
@@ -46,6 +55,17 @@ describe('CcdActivityComponent', () => {
     viewers: [{forename: 'Jamie', surname: 'Olivier'}],
     unknownViewers: 0
   };
+
+  const ACTIVITY_W_MULTIPLE_VIEWER: Activity = {
+    caseId: CASE_ID,
+    editors: [],
+    unknownEditors: 0,
+    viewers: [{forename: 'Jamie', surname: 'Olivier'},
+      {forename: 'William', surname: 'Orange'},
+      {forename: 'Jon', surname: 'Doe'}],
+    unknownViewers: 0
+  };
+
   const ACTIVITY_W_UNKNOWN_VIEWER: Activity = {
     caseId: CASE_ID,
     editors: [],
@@ -162,21 +182,43 @@ describe('CcdActivityComponent', () => {
     expect(banner[1].componentInstance.bannerType).toBe('viewer');
   });
 
-  it('should render single case VIEWER icon', () => {
+  it('should render single case VIEWER icon with the proper description', () => {
     component.displayMode = ICON;
     fixture.detectChanges();
     let icon = de.queryAll(By.directive(CcdActivityIconComponent));
     expect(icon).toBeTruthy();
     expect(icon[0].componentInstance.imageLink).toContain('viewer.png');
+    expect(icon[0].componentInstance.description).toBe('Jamie Olivier is viewing this case');
   });
 
-  it('should render single case EDITOR icon', () => {
+  it('should render multiple case VIEWER icon with the proper description', () => {
+    component.displayMode = ICON;
+    component.onActivityChange(ACTIVITY_W_MULTIPLE_VIEWER);
+    fixture.detectChanges();
+    let icon = de.queryAll(By.directive(CcdActivityIconComponent));
+    expect(icon).toBeTruthy();
+    expect(icon[0].componentInstance.imageLink).toContain('viewer.png');
+    expect(icon[0].componentInstance.description).toBe('Jamie Olivier, William Orange and Jon Doe are viewing this case');
+  });
+
+  it('should render single case EDITOR icon with the proper description', () => {
+    component.displayMode = ICON;
+    component.onActivityChange(ACTIVITY_W_MULTIPLE_EDITOR);
+    fixture.detectChanges();
+    let icon = de.queryAll(By.directive(CcdActivityIconComponent));
+    expect(icon).toBeTruthy();
+    expect(icon[0].componentInstance.imageLink).toContain('editor.png');
+    expect(icon[0].componentInstance.description).toBe('This case is being updated by Bob Ross and William Orange');
+  });
+
+  it('should render multiple case EDITOR icon with the proper description', () => {
     component.displayMode = ICON;
     component.onActivityChange(ACTIVITY_W_EDITOR);
     fixture.detectChanges();
     let icon = de.queryAll(By.directive(CcdActivityIconComponent));
     expect(icon).toBeTruthy();
     expect(icon[0].componentInstance.imageLink).toContain('editor.png');
+    expect(icon[0].componentInstance.description).toBe('This case is being updated by Bob Ross');
   });
 
   it('should render both VIEWER & EDITOR icons', () => {
@@ -187,59 +229,5 @@ describe('CcdActivityComponent', () => {
     expect(icon).toBeTruthy();
     expect(icon[0].componentInstance.imageLink).toContain('editor.png');
     expect(icon[1].componentInstance.imageLink).toContain('viewer.png');
-  });
-
-  it('should render dash if no editors and viewers in ICON mode', () => {
-    component.onActivityChange(ACTIVITY_WOUT_EDITOR_AND_VIEWER);
-    component.displayMode = ICON;
-    fixture.detectChanges();
-    let cell = de.query(By.css('div>div'));
-    expect(cell).toBeTruthy();
-    expect(cell.nativeElement.textContent.trim()).toBe('-');
-  });
-
-  it('should not render dash if an editor in ICON mode', () => {
-    component.onActivityChange(ACTIVITY_W_EDITOR);
-    component.displayMode = ICON;
-    fixture.detectChanges();
-    let cell = de.query(By.css('div>div'));
-    expect(cell).toBeTruthy();
-    expect(cell.nativeElement.textContent.trim()).toBe('');
-  });
-
-  it('should not render dash if an unknown editor in ICON mode', () => {
-    component.onActivityChange(ACTIVITY_W_UNKNOWN_EDITOR);
-    component.displayMode = ICON;
-    fixture.detectChanges();
-    let cell = de.query(By.css('div>div'));
-    expect(cell).toBeTruthy();
-    expect(cell.nativeElement.textContent.trim()).toBe('');
-  });
-
-  it('should not render dash if a viewer in ICON mode', () => {
-    component.onActivityChange(ACTIVITY_W_VIEWER);
-    component.displayMode = ICON;
-    fixture.detectChanges();
-    let cell = de.query(By.css('div>div'));
-    expect(cell).toBeTruthy();
-    expect(cell.nativeElement.textContent.trim()).toBe('');
-  });
-
-  it('should not render dash if an unknown viewer in ICON mode', () => {
-    component.onActivityChange(ACTIVITY_W_UNKNOWN_VIEWER);
-    component.displayMode = ICON;
-    fixture.detectChanges();
-    let cell = de.query(By.css('div>div'));
-    expect(cell).toBeTruthy();
-    expect(cell.nativeElement.textContent.trim()).toBe('');
-  });
-
-  it('should not render dash if no editors and viewers in BANNER mode', () => {
-    component.onActivityChange(ACTIVITY_WOUT_EDITOR_AND_VIEWER);
-    component.displayMode = BANNER;
-    fixture.detectChanges();
-    let cell = de.query(By.css('div>div'));
-    expect(cell).toBeTruthy();
-    expect(cell.nativeElement.textContent.trim()).toBe('');
   });
 });

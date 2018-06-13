@@ -16,7 +16,7 @@ import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
 import { OrderService } from '../../core/order/order.service';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
-import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
+import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
 

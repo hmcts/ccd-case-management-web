@@ -2077,6 +2077,106 @@
           }
         ],
         "show_condition": ""
+      },
+      {
+        "id": "PaymentTab",
+        "label": "Payment",
+        "order": 4,
+        "fields": [
+          {
+            "id": "PersonOrderSummary",
+            "label": "Order Summary",
+            "field_type": {
+              "id": "OrderSummary",
+              "type": "Complex",
+              "complex_fields": [
+                {  
+                  "id":"PaymentReference",
+                  "label":"Payment Reference",
+                  "field_type":{  
+                      "id":"Text",
+                      "type":"Text"
+                  }
+                },
+                {  
+                  "id":"PaymentTotal",
+                  "label":"Total",
+                  "field_type":{  
+                      "id":"MoneyGBP",
+                      "type":"MoneyGBP"
+                  }
+                },
+                {  
+                  "id":"Fees",
+                  "label":"Fees",
+                  "field_type":{  
+                      "id":"FeesList",
+                      "type":"Collection",
+                      "collection_field_type":{  
+                        "id":"Fee",
+                        "type":"Complex",
+                        "complex_fields":[  
+                            {  
+                              "id":"FeeCode",
+                              "label":"Fee Code",
+                              "field_type":{  
+                                  "id":"Text",
+                                  "type":"Text"
+                              }
+                            },
+                            {  
+                              "id":"FeeDescription",
+                              "label":"Fee Description",
+                              "field_type":{  
+                                  "id":"Text",
+                                  "type":"Text"
+                              }
+                            },
+                            {  
+                              "id":"FeeAmount",
+                              "label":"Fee Amount",
+                              "field_type":{  
+                                  "id":"MoneyGBP",
+                                  "type":"MoneyGBP"
+                              },
+                              "security_classification":"PUBLIC"
+                            }
+                        ]
+                      }
+                  }
+                }
+              ]
+            },
+            "order": 10,
+            "value": {
+              "PaymentReference": "RC-1521-1095-0964-3143",
+              "Fees": [
+                {
+                  "value": {
+                    "FeeAmount": "4545",
+                    "FeeCode": "FEE0001",
+                    "FeeDescription": "First fee description"
+                  }
+                },
+                {
+                  "value": {
+                    "FeeAmount": "0455",
+                    "FeeCode": "FEE0002",
+                    "FeeDescription": "Second fee description"
+                  }
+                },
+                {
+                  "value": {
+                    "FeeAmount": "7055",
+                    "FeeCode": "FEE0003",
+                    "FeeDescription": "Third fee description"
+                  }
+                }
+              ],
+              "PaymentTotal": "5000"
+            }
+          }
+        ]
       }
     ],
     "triggers": [

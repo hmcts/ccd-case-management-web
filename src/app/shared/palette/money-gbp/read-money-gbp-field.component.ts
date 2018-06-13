@@ -1,14 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
+import { CaseField } from '../../domain/definition/case-field.model';
 
 @Component({
   selector: 'ccd-read-money-gbp-field',
-  template: `<ng-container *ngIf="isNumber(caseField.value)">{{caseField.value / 100 | currency:'GBP':'symbol'}}</ng-container>`
+  template: `<ng-container *ngIf="isNumber()">{{value / 100 | currency:'GBP':'symbol'}}</ng-container>`
 })
-export class ReadMoneyGbpFieldComponent extends AbstractFieldReadComponent {
+export class ReadMoneyGbpFieldComponent extends AbstractFieldReadComponent implements OnInit {
 
-  isNumber(value): boolean {
-    return null !== value && !isNaN(value);
+  @Input()
+  amount: any;
+  value: any;
+
+  ngOnInit(): void {
+    if (this.amount) {
+      this.value = this.amount;
+    } else if (this.caseField) {
+      this.value = this.caseField.value;
+    }
+  }
+
+  isNumber(): boolean {
+    return null !== this.value && !isNaN(this.value);
   }
 
 }

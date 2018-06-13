@@ -7,10 +7,7 @@ import { CaseField } from '../../domain/definition/case-field.model';
 import { By } from '@angular/platform-browser';
 import { text } from '../../../test/helpers';
 import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component';
-import { MockComponent } from 'ng2-mock-component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OrderSummaryModule } from './order-summary.module';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MoneyGbpModule } from '../money-gbp/money-gbp.module';
 
 describe('ReadOrderSummaryFieldComponent', () => {
@@ -43,7 +40,6 @@ describe('ReadOrderSummaryFieldComponent', () => {
 
   const EXPECTED_FEE_AMOUNTS = ['£45.45', '£4.55'];
   const EXPECTED_PAYMENT_TOTAL = '£50.00';
-  const EMPTY = '';
   const CASE_FIELD: CaseField = {
     id: 'x',
     label: 'X',

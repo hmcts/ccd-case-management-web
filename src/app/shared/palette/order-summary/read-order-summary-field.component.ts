@@ -12,9 +12,6 @@ import { FeeValue } from './fee-value.model';
 })
 export class ReadOrderSummaryFieldComponent extends AbstractFieldReadComponent {
 
-  @ViewChildren(ReadOrderSummaryRowComponent)
-  orderSummaryRows: QueryList<ReadOrderSummaryRowComponent>;
-
   getFees(): FeeValue[] {
     return this.caseField.value ? this.caseField.value.Fees : [];
   }

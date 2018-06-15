@@ -31,7 +31,7 @@ describe('CaseHistoryComponent', () => {
 
   // Page object selectors
   const $NAME_TAB_CONTENT = By.css('table#NameTab');
-  
+
   const CASE_HISTORY: CaseHistory = createCaseHistory();
   const FIELDS = CASE_HISTORY.tabs[1].fields;
   const SIMPLE_FIELDS = CASE_HISTORY.tabs[1].fields.slice(0, 2);

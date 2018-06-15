@@ -15,7 +15,8 @@ describe('CaseHistoryService', () => {
   const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
   const EVENT_ID = '10';
-  const CASE_HISTORY_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/events/${EVENT_ID}/case-history`;
+  const CASE_HISTORY_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}`
+    + `/events/${EVENT_ID}/case-history`;
   const ERROR: HttpError = new HttpError();
   ERROR.message = 'Critical error!';
 

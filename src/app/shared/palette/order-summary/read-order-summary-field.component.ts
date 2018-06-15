@@ -1,6 +1,5 @@
-import { Component, ViewChildren, QueryList } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
-import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component';
 import { FeeValue } from './fee-value.model';
 
 @Component({

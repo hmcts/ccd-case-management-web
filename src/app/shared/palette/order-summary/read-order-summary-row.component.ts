@@ -1,5 +1,4 @@
-import { Component, ViewChild, ReflectiveInjector, ComponentFactoryResolver, ViewContainerRef, ApplicationRef, Injector,
-  Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
 import { FeeValue } from './fee-value.model';
 

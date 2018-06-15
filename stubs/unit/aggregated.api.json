@@ -2169,6 +2169,15 @@
                             "type": "MoneyGBP"
                           },
                           "security_classification": "PUBLIC"
+                        },
+                        {  
+                          "id":"FeeVersion",
+                          "label":"Fee Version",
+                          "field_type":{  
+                              "id":"Text",
+                              "type":"Text"
+                          },
+                          "security_classification":"PUBLIC"
                         }
                       ]
                     }
@@ -2184,21 +2193,24 @@
                   "value": {
                     "FeeAmount": "4545",
                     "FeeCode": "FEE0001",
-                    "FeeDescription": "First fee description"
+                    "FeeDescription": "First fee description",
+                    "FeeVersion": "1"
                   }
                 },
                 {
                   "value": {
                     "FeeAmount": "0455",
                     "FeeCode": "FEE0002",
-                    "FeeDescription": "Second fee description"
+                    "FeeDescription": "Second fee description",
+                    "FeeVersion": "1"
                   }
                 },
                 {
                   "value": {
                     "FeeAmount": "7055",
                     "FeeCode": "FEE0003",
-                    "FeeDescription": "Third fee description"
+                    "FeeDescription": "Third fee description",
+                    "FeeVersion": "1"
                   }
                 }
               ],
@@ -4048,6 +4060,15 @@
                         "type": "MoneyGBP"
                       },
                       "security_classification": "PUBLIC"
+                    },
+                    {  
+                      "id":"FeeVersion",
+                      "label":"Fee Version",
+                      "field_type":{  
+                          "id":"Text",
+                          "type":"Text"
+                      },
+                      "security_classification":"PUBLIC"
                     }
                   ]
                 }
@@ -4068,21 +4089,24 @@
               "value": {
                 "FeeAmount": "4545",
                 "FeeCode": "FEE0001",
-                "FeeDescription": "First fee description"
+                "FeeDescription": "First fee description",
+                "FeeVersion": "1"
               }
             },
             {
               "value": {
                 "FeeAmount": "0455",
                 "FeeCode": "FEE0002",
-                "FeeDescription": "Second fee description"
+                "FeeDescription": "Second fee description",
+                "FeeVersion": "1"
               }
             },
             {
               "value": {
                 "FeeAmount": "7055",
                 "FeeCode": "FEE0003",
-                "FeeDescription": "Third fee description"
+                "FeeDescription": "Third fee description",
+                "FeeVersion": "1"
               }
             }
           ],

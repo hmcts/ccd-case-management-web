@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadOrderSummaryFieldComponent } from './read-order-summary-field.component';
 import { OrderSummary } from './order-summary.model';
-import { DebugElement, Component, QueryList } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { FieldType } from '../../domain/definition/field-type.model';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { By } from '@angular/platform-browser';
@@ -24,14 +24,16 @@ describe('ReadOrderSummaryFieldComponent', () => {
         value: {
           FeeCode: 'FEE0001',
           FeeAmount: '4545',
-          FeeDescription: 'First fee description'
+          FeeDescription: 'First fee description',
+          FeeVersion: '1'
         }
       },
       {
         value: {
           FeeCode: 'FEE0002',
           FeeAmount: '0455',
-          FeeDescription: 'Second fee description'
+          FeeDescription: 'Second fee description',
+          FeeVersion: '2'
         }
       }
     ],

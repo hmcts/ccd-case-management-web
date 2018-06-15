@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
-import { CaseField } from '../../domain/definition/case-field.model';
 
 @Component({
   selector: 'ccd-read-money-gbp-field',

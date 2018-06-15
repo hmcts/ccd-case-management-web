@@ -11,8 +11,6 @@ import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError } from '../http/http-error.model';
 import { HttpErrorService } from '../http/http-error.service';
-import { CaseHistoryView } from './case-history-view.model';
-import { CaseViewEvent } from './case-view-event.model';
 
 describe('CasesService', () => {
 
@@ -20,9 +18,7 @@ describe('CasesService', () => {
   const JID = 'TEST';
   const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
-  const EVENT_ID = '10';
   const CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/` + CASE_ID;
-  const CASE_EVENT_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/events/${EVENT_ID}`;
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER_URL = API_URL
     + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
@@ -157,7 +153,7 @@ describe('CasesService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, 'true')
+        .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, 'true')
         .subscribe(data => {
           expect(data).toEqual(EVENT_TRIGGER);
         }, err => {
@@ -241,7 +237,7 @@ describe('CasesService', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
+        .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
         .subscribe(data => {
           expect(data).toEqual(EVENT_RESPONSE);
         }, err => {
@@ -310,7 +306,7 @@ describe('CasesService', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
+        .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
         .subscribe(data => {
           expect(data).toEqual(EVENT_RESPONSE);
         }, err => {
@@ -374,7 +370,7 @@ describe('CasesService', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .createCase(JID, CTID, CASE_EVENT_DATA)
+        .createCase(JID, CTID, CASE_EVENT_DATA)
         .subscribe(data => {
           expect(data).toEqual(CASE_RESPONSE);
         }, err => {
@@ -420,7 +416,7 @@ describe('CasesService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .getPrintDocuments(JID, CTID, CASE_ID)
+        .getPrintDocuments(JID, CTID, CASE_ID)
         .subscribe(data => {
           expect(data).toEqual(DOCUMENTS);
         }, err => {
@@ -428,69 +424,5 @@ describe('CasesService', () => {
           expect(errorService.setError).toHaveBeenCalledWith(ERROR);
         });
     });
-  });
-
-  describe('getCaseHistoryView()', () => {
-    const EVENT: CaseViewEvent = {
-      id: 5,
-      timestamp: '2017-05-10T10:00:00Z',
-      summary: 'Case updated again!',
-      comment: 'Latest update',
-      event_id: 'updateCase',
-      event_name: 'Update a case',
-      state_id: 'CaseUpdated',
-      state_name: 'Case Updated',
-      user_id: 0,
-      user_last_name: 'smith',
-      user_first_name: 'justin'
-    };
-    const CASE_HISTORY_VIEW: CaseHistoryView = {
-      case_id: '1',
-      case_type: {
-        id: 'TestAddressBookCase',
-        name: 'Test Address Book Case',
-        jurisdiction: {
-          id: 'TEST',
-          name: 'Test',
-        }
-      },
-      tabs: [],
-      event: EVENT
-    };
-
-    beforeEach(() => {
-      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-        body: JSON.stringify(CASE_HISTORY_VIEW)
-      }))));
-    });
-
-    it('should use HttpService::get with correct url', () => {
-      casesService
-        .getCaseHistoryView(JID, CTID, CASE_ID, EVENT_ID)
-        .subscribe();
-
-      expect(httpService.get).toHaveBeenCalledWith(CASE_EVENT_URL);
-    });
-
-    it('should retrieve case history from server', () => {
-      casesService
-        .getCaseHistoryView(JID, CTID, CASE_ID, EVENT_ID)
-        .subscribe(
-          caseData => expect(caseData).toEqual(CASE_HISTORY_VIEW)
-        );
-    });
-
-    it('should set error when error is thrown', () => {
-      httpService.get.and.returnValue(Observable.throw(ERROR));
-
-      casesService
-        .getCaseHistoryView(JID, CTID, CASE_ID, EVENT_ID)
-        .subscribe(() => {},
-            err => {
-              expect(err).toEqual(ERROR);
-              expect(errorService.setError).toHaveBeenCalledWith(ERROR);
-        });
-    });
-
   });
 });

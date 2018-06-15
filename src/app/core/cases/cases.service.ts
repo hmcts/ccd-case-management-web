@@ -11,7 +11,6 @@ import { WizardPageField } from '../../shared/domain/wizard-page-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
-import { CaseHistoryView } from './case-history-view.model';
 
 @Injectable()
 export class CasesService {
@@ -93,7 +92,7 @@ export class CasesService {
             return case_field;
           });
           wizardPage.getCol1Fields = () =>
-             wizardPage.case_fields.filter(f =>
+            wizardPage.case_fields.filter(f =>
               !f.wizardProps.page_column_no || f.wizardProps.page_column_no === 1);
           wizardPage.getCol2Fields = () =>
             wizardPage.case_fields.filter(f => f.wizardProps.page_column_no === 2);
@@ -143,7 +142,7 @@ export class CasesService {
     const url = this.appConfig.getCaseDataUrl()
       + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/cases?ignore-warning=${ignoreWarning}`;
 
-      return this.http
+    return this.http
       .post(url, eventData)
       .map(response => this.processResponse(response))
       .catch((error: any): any => {
@@ -159,26 +158,6 @@ export class CasesService {
       + `/case-types/${caseTypeId}`
       + `/cases/${caseId}`
       + `/documents`;
-
-    return this.http
-      .get(url)
-      .map(response => response.json())
-      .catch((error: any): any => {
-        this.errorService.setError(error);
-        return Observable.throw(error);
-      });
-  }
-
-  getCaseHistoryView(jurisdictionId: string,
-              caseTypeId: string,
-              caseId: string,
-              eventId: string): Observable<CaseHistoryView> {
-    const url = this.appConfig.getApiUrl()
-      + `/caseworkers/:uid`
-      + `/jurisdictions/${jurisdictionId}`
-      + `/case-types/${caseTypeId}`
-      + `/cases/${caseId}`
-      + `/events/${eventId}`;
 
     return this.http
       .get(url)

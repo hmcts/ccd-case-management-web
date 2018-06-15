@@ -1,7 +1,8 @@
 import { CaseTab } from './case-tab.model';
 import { CaseViewEvent } from './case-view-event.model';
+import { Type } from 'class-transformer';
 
-export class CaseHistoryView {
+export class CaseHistory {
   case_id?: string;
   case_type: {
     id: string,
@@ -13,6 +14,10 @@ export class CaseHistoryView {
       description?: string
     }
   };
+
+  @Type(() => CaseTab)
   tabs: CaseTab[];
+
+  @Type(() => CaseViewEvent)
   event: CaseViewEvent;
 }

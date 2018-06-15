@@ -139,7 +139,7 @@ describe('EventLogTableComponent', () => {
     let links = de.queryAll($TABLE_ROW_LINKS);
 
     expect(links.length).toBe(2);
-    expect(links[0].nativeElement.getAttribute('href')).toBe('/event/5');
-    expect(links[1].nativeElement.getAttribute('href')).toBe('/event/4');
+    expect(links[0].nativeElement.getAttribute('href')).toBe('/event/5/history');
+    expect(links[1].nativeElement.getAttribute('href')).toBe('/event/4/history');
   });
 });

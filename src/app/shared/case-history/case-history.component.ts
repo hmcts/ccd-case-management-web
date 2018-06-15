@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CaseHistoryView } from '../../core/cases/case-history-view.model';
+import { CaseHistory } from '../../core/cases/case-history.model';
 import { OrderService } from '../../core/order/order.service';
 import { CaseTab } from '../../core/cases/case-tab.model';
 import { ShowCondition } from '../conditional-show/conditional-show.model';
@@ -11,7 +11,7 @@ import { ShowCondition } from '../conditional-show/conditional-show.model';
 })
 export class CaseHistoryComponent implements OnInit {
 
-  caseHistory: CaseHistoryView;
+  caseHistory: CaseHistory;
   tabs: CaseTab[];
 
   constructor(

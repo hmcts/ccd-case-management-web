@@ -135,7 +135,7 @@ const routes: Routes = [
             ]
           },
           {
-            path: 'event/:eid',
+            path: 'event/:eid/history',
             resolve: {
               caseHistory: CaseHistoryResolver,
             },

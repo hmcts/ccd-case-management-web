@@ -1,7 +1,7 @@
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs/Observable';
 import { CaseHistoryResolver } from './case-history.resolver';
-import { CaseHistoryView } from '../../core/cases/case-history-view.model';
+import { CaseHistory } from '../../core/cases/case-history.model';
 
 describe('CaseHistoryResolver', () => {
   describe('resolve()', () => {
@@ -15,20 +15,20 @@ describe('CaseHistoryResolver', () => {
     const CASE_TYPE_ID = 'TEST_CASE_TYPE';
     const CASE_ID = '42';
     const EVENT_ID = '100';
-    const CASE_HISTORY: CaseHistoryView = createSpyObj<CaseHistoryView>('case', ['toString']);
-    const CASE_OBS: Observable<CaseHistoryView> = Observable.of(CASE_HISTORY);
+    const CASE_HISTORY: CaseHistory = createSpyObj<CaseHistory>('case', ['toString']);
+    const CASE_OBS: Observable<CaseHistory> = Observable.of(CASE_HISTORY);
 
     let caseHistoryResolver: CaseHistoryResolver;
 
-    let casesService: any;
+    let caseHistoryService: any;
     let route: any;
     let router: any;
 
     beforeEach(() => {
-      casesService = createSpyObj('casesService', ['getCaseHistoryView']);
+      caseHistoryService = createSpyObj('caseHistoryService', ['get']);
 
       router = createSpyObj('router', ['navigate']);
-      caseHistoryResolver = new CaseHistoryResolver(casesService, router);
+      caseHistoryResolver = new CaseHistoryResolver(caseHistoryService, router);
 
       route = {
         firstChild: {
@@ -40,7 +40,7 @@ describe('CaseHistoryResolver', () => {
     });
 
     it('should resolve case history when the route is the one for case history view', () => {
-      casesService.getCaseHistoryView.and.returnValue(CASE_OBS);
+      caseHistoryService.get.and.returnValue(CASE_OBS);
 
       caseHistoryResolver
         .resolve(route)
@@ -48,7 +48,7 @@ describe('CaseHistoryResolver', () => {
           expect(caseData).toBe(CASE_HISTORY);
         });
 
-      expect(casesService.getCaseHistoryView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID, EVENT_ID);
+      expect(caseHistoryService.get).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID, EVENT_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);
@@ -56,7 +56,7 @@ describe('CaseHistoryResolver', () => {
     });
 
     it('should redirect to error page when case history cannot be retrieved', () => {
-      casesService.getCaseHistoryView.and.returnValue(Observable.throw('Failed'));
+      caseHistoryService.get.and.returnValue(Observable.throw('Failed'));
 
       caseHistoryResolver
         .resolve(route)

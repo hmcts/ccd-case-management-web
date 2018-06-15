@@ -4,18 +4,18 @@ import { CaseHistoryComponent } from './case-history.component';
 import { FieldsUtils } from '../utils/fields.utils';
 import { PaletteUtilsModule } from '../palette/utils/utils.module';
 import { attr } from '../../test/helpers';
-import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { HttpError } from '../../core/http/http-error.model';
 import { LabelSubstitutorDirective } from '../substitutor/label-substitutor.directive';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LabelSubstitutionService } from '../case-editor/label-substitution.service';
-import createSpyObj = jasmine.createSpyObj;
-import { CaseHistoryView } from '../../core/cases/case-history-view.model';
-import any = jasmine.any;
+import { CaseHistory } from '../../core/cases/case-history.model';
 import { DebugElement } from '@angular/core';
 import { OrderService } from '../../core/order/order.service';
+import { createCaseHistory } from '../../core/cases/case-history.test.fixture';
+import createSpyObj = jasmine.createSpyObj;
+import any = jasmine.any;
 
 describe('CaseHistoryComponent', () => {
 
@@ -31,93 +31,8 @@ describe('CaseHistoryComponent', () => {
 
   // Page object selectors
   const $NAME_TAB_CONTENT = By.css('table#NameTab');
-
-  const EVENT: CaseViewEvent = {
-    id: 4,
-    timestamp: '2017-05-09T16:07:03.973',
-    summary: 'Case updated!',
-    comment: 'Plop plop',
-    event_id: 'updateCase',
-    event_name: 'Update a case',
-    state_id: 'CaseUpdated',
-    state_name: 'Case Updated',
-    user_id: 0,
-    user_last_name: 'Chan',
-    user_first_name: 'Phillip'
-  };
-
-  const CASE_HISTORY: CaseHistoryView = {
-    case_id: '1',
-    case_type: {
-      id: 'TestAddressBookCase',
-      name: 'Test Address Book Case',
-      jurisdiction: {
-        id: 'TEST',
-        name: 'Test',
-      }
-    },
-    tabs: [
-      {
-        id: 'AddressTab',
-        label: 'Address',
-        order: 2,
-        fields: [],
-        show_condition: 'PersonFirstName="Jane"'
-      },
-      {
-        id: 'NameTab',
-        label: 'Name',
-        order: 1,
-        fields: [
-          {
-            id: 'PersonFirstName',
-            label: 'First name',
-            display_context: 'OPTIONAL',
-            field_type: {
-              id: 'Text',
-              type: 'Text'
-            },
-            order: 2,
-            value: 'Janet',
-            show_condition: ''
-          },
-          {
-            id: 'PersonLastName',
-            label: 'Last name',
-            display_context: 'OPTIONAL',
-            field_type: {
-              id: 'Text',
-              type: 'Text'
-            },
-            order: 1,
-            value: 'Parker',
-            show_condition: 'PersonFirstName="Jane*"'
-          },
-          {
-            id: 'PersonComplex',
-            label: 'Complex field',
-            display_context: 'OPTIONAL',
-            field_type: {
-              id: 'Complex',
-              type: 'Complex',
-              complex_fields: []
-            },
-            order: 3,
-            show_condition: 'PersonFirstName="Park"'
-          }
-        ],
-        show_condition: 'PersonFirstName="Janet"'
-      },
-      {
-        id: 'SomeTab',
-        label: 'Some Tab',
-        order: 3,
-        fields: [],
-        show_condition: ''
-      },
-    ],
-    event: EVENT
-  };
+  
+  const CASE_HISTORY: CaseHistory = createCaseHistory();
   const FIELDS = CASE_HISTORY.tabs[1].fields;
   const SIMPLE_FIELDS = CASE_HISTORY.tabs[1].fields.slice(0, 2);
   const COMPLEX_FIELDS = CASE_HISTORY.tabs[1].fields.slice(2);

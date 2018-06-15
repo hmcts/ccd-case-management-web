@@ -20,6 +20,7 @@ import { CaseHistoryComponent } from './case-history/case-history.component';
 import { CaseHistoryResolver } from './case-history/case-history.resolver';
 import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
+import { CaseHistoryService } from '../core/cases/case-history.service';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { ConditionalShowModule } from './conditional-show/conditional-show.modul
     SearchResultViewItemComparatorFactory,
     CaseFieldService,
     CaseHistoryResolver,
+    CaseHistoryService,
   ],
   exports: [
     SearchResultComponent,

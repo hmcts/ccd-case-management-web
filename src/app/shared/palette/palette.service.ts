@@ -49,6 +49,7 @@ export class PaletteService {
       case 'PhoneUK':
         return write ? WritePhoneUKFieldComponent : ReadPhoneUKFieldComponent;
       case 'Date':
+      case 'DateTime':
         return write ? WriteDateFieldComponent : ReadDateFieldComponent;
       case 'MoneyGBP':
         return write ? WriteMoneyGbpFieldComponent : ReadMoneyGbpFieldComponent;

@@ -28,6 +28,7 @@ import { ReadDocumentFieldComponent } from './document/read-document-field.compo
 import { WriteDocumentFieldComponent } from './document/write-document-field.component';
 import { CaseField }  from '../domain/definition/case-field.model';
 import { WriteAddressFieldComponent } from './address/write-address-field.component';
+import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 
 describe('PaletteService', () => {
 
@@ -184,5 +185,10 @@ describe('PaletteService', () => {
     it('should get WriteAddressFieldComponent component class for Complex field with AddressGlobalUK complex type', () => {
       assertComponent('Complex', true, WriteAddressFieldComponent, 'AddressGlobalUK');
     });
+
+    it('should get ReadOrderSummaryFieldComponent component class for Complex field with OrderSummary complex type', () => {
+      assertComponent('Complex', false, ReadOrderSummaryFieldComponent, 'OrderSummary');
+    });
+
   });
 });

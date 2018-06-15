@@ -29,6 +29,7 @@ import { WriteDocumentFieldComponent } from './document/write-document-field.com
 import { LabelFieldComponent } from './label/label-field.component';
 import { WriteAddressFieldComponent } from './address/write-address-field.component';
 import { CaseField } from '../domain/definition/case-field.model';
+import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 
 @Injectable()
 export class PaletteService {
@@ -60,6 +61,8 @@ export class PaletteService {
           case 'AddressGlobalUK':
           case 'AddressUK':
             return write ? WriteAddressFieldComponent : ReadComplexFieldComponent;
+          case 'OrderSummary':
+            return ReadOrderSummaryFieldComponent;
           default:
             return write ? WriteComplexFieldComponent : ReadComplexFieldComponent;
         }

@@ -5,6 +5,7 @@ export type FieldTypeEnum =
   | 'Number'
   | 'YesOrNo'
   | 'Date'
+  | 'DateTime'
   | 'Email'
   | 'PhoneUK'
   | 'MoneyGBP'

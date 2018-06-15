@@ -1203,6 +1203,332 @@
       }
     ]
   },
+  "cases-page6": {
+    "columns": [
+      {
+        "case_field_id": "PersonFirstName",
+        "case_field_type": {
+          "id": "Text",
+          "type": "Text"
+        },
+        "label": "First name",
+        "order": 1
+      },
+      {
+        "case_field_id": "PersonLastName",
+        "case_field_type": {
+          "id": "Text",
+          "type": "Text"
+        },
+        "label": "Last name",
+        "order": 1
+      },
+      {
+        "case_field_id": "EvidenceLink",
+        "case_field_type": {
+          "id": "DocumentURL",
+          "type": "Document"
+        },
+        "label": "Link to evidence",
+        "order": 1
+      },
+      {
+        "case_field_id": "PersonAddress",
+        "case_field_type": {
+          "id": "Address",
+          "type": "Complex",
+          "min": null,
+          "max": null,
+          "regular_expression": null,
+          "fixed_list_items": null,
+          "complex_fields": [
+            {
+              "id": "AddressLine1",
+              "label": "Line 1",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "AddressLine2",
+              "label": "Line 2",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "AddressLine3",
+              "label": "Line 3",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "Postcode",
+              "label": "Post code",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "Country",
+              "label": "Country",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            }
+          ]
+        },
+        "label": "Address",
+        "order": 1
+      }
+    ],
+    "results": [
+      {
+        "case_id": "3333111122224426",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224427",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224428",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224429",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "1111222233334430",
+        "case_fields": {
+          "PersonFirstName": "Janet",
+          "PersonLastName": "Parker",
+          "EvidenceLink": {
+            "document_url": "https://api-gateway.dev.evidence.reform.hmcts.net/documents/36f6bf37-2d02-46ef-af54-12a5c43fb348",
+            "document_binary_url": "https://api-gateway.dev.evidence.reform.hmcts.net/documents/36f6bf37-2d02-46ef-af54-12a5c43fb348/binary",
+            "document_filename": "Example_filename.xyz"
+          },
+          "PersonAddress": {
+            "AddressLine1": 123,
+            "AddressLine2": "Fake Street",
+            "AddressLine3": "Hexton",
+            "Country": "England",
+            "Postcode": "HX08 UTG"
+          }
+        }
+      }
+    ]
+  },
+  "cases-page7": {
+    "columns": [
+      {
+        "case_field_id": "PersonFirstName",
+        "case_field_type": {
+          "id": "Text",
+          "type": "Text"
+        },
+        "label": "First name",
+        "order": 1
+      },
+      {
+        "case_field_id": "PersonLastName",
+        "case_field_type": {
+          "id": "Text",
+          "type": "Text"
+        },
+        "label": "Last name",
+        "order": 1
+      },
+      {
+        "case_field_id": "EvidenceLink",
+        "case_field_type": {
+          "id": "DocumentURL",
+          "type": "Document"
+        },
+        "label": "Link to evidence",
+        "order": 1
+      },
+      {
+        "case_field_id": "PersonAddress",
+        "case_field_type": {
+          "id": "Address",
+          "type": "Complex",
+          "min": null,
+          "max": null,
+          "regular_expression": null,
+          "fixed_list_items": null,
+          "complex_fields": [
+            {
+              "id": "AddressLine1",
+              "label": "Line 1",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "AddressLine2",
+              "label": "Line 2",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "AddressLine3",
+              "label": "Line 3",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "Postcode",
+              "label": "Post code",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "Country",
+              "label": "Country",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            }
+          ]
+        },
+        "label": "Address",
+        "order": 1
+      }
+    ],
+    "results": [
+      {
+        "case_id": "3333111122224431",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224432",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224433",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224434",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "1111222233334435",
+        "case_fields": {
+          "PersonFirstName": "Janet",
+          "PersonLastName": "Parker",
+          "EvidenceLink": {
+            "document_url": "https://api-gateway.dev.evidence.reform.hmcts.net/documents/36f6bf37-2d02-46ef-af54-12a5c43fb348",
+            "document_binary_url": "https://api-gateway.dev.evidence.reform.hmcts.net/documents/36f6bf37-2d02-46ef-af54-12a5c43fb348/binary",
+            "document_filename": "Example_filename.xyz"
+          },
+          "PersonAddress": {
+            "AddressLine1": 123,
+            "AddressLine2": "Fake Street",
+            "AddressLine3": "Hexton",
+            "Country": "England",
+            "Postcode": "HX08 UTG"
+          }
+        }
+      }
+    ]
+  },
   "cases-page8": {
     "columns": [
       {
@@ -1453,6 +1779,169 @@
     ],
     "results": [
       {
+        "case_id": "3333111122224436",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224437",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224438",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "3333111122224439",
+        "case_fields": {
+          "PersonFirstName": "Peter",
+          "PersonLastName": "Pullen",
+          "PersonAddress": {
+            "AddressLine1": "Governer House",
+            "AddressLine2": "1 Puddle Lane",
+            "AddressLine3": "London",
+            "Country": "England",
+            "Postcode": "SE1 4EE"
+          }
+        }
+      },
+      {
+        "case_id": "1111222233334440",
+        "case_fields": {
+          "PersonFirstName": "Janet",
+          "PersonLastName": "Parker",
+          "EvidenceLink": {
+            "document_url": "https://api-gateway.dev.evidence.reform.hmcts.net/documents/36f6bf37-2d02-46ef-af54-12a5c43fb348",
+            "document_binary_url": "https://api-gateway.dev.evidence.reform.hmcts.net/documents/36f6bf37-2d02-46ef-af54-12a5c43fb348/binary",
+            "document_filename": "Example_filename.xyz"
+          },
+          "PersonAddress": {
+            "AddressLine1": 123,
+            "AddressLine2": "Fake Street",
+            "AddressLine3": "Hexton",
+            "Country": "England",
+            "Postcode": "HX08 UTG"
+          }
+        }
+      }
+    ]
+  },
+  "cases-page10": {
+    "columns": [
+      {
+        "case_field_id": "PersonFirstName",
+        "case_field_type": {
+          "id": "Text",
+          "type": "Text"
+        },
+        "label": "First name",
+        "order": 1
+      },
+      {
+        "case_field_id": "PersonLastName",
+        "case_field_type": {
+          "id": "Text",
+          "type": "Text"
+        },
+        "label": "Last name",
+        "order": 1
+      },
+      {
+        "case_field_id": "EvidenceLink",
+        "case_field_type": {
+          "id": "DocumentURL",
+          "type": "Document"
+        },
+        "label": "Link to evidence",
+        "order": 1
+      },
+      {
+        "case_field_id": "PersonAddress",
+        "case_field_type": {
+          "id": "Address",
+          "type": "Complex",
+          "min": null,
+          "max": null,
+          "regular_expression": null,
+          "fixed_list_items": null,
+          "complex_fields": [
+            {
+              "id": "AddressLine1",
+              "label": "Line 1",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "AddressLine2",
+              "label": "Line 2",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "AddressLine3",
+              "label": "Line 3",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "Postcode",
+              "label": "Post code",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            },
+            {
+              "id": "Country",
+              "label": "Country",
+              "field_type": {
+                "id": "Text",
+                "type": "Text"
+              }
+            }
+          ]
+        },
+        "label": "Address",
+        "order": 1
+      }
+    ],
+    "results": [
+      {
         "case_id": "3333111122224441",
         "case_fields": {
           "PersonFirstName": "Peter",
@@ -1529,7 +2018,7 @@
       }
     ]
   },
-  "cases-page10": {
+  "cases-page11": {
     "columns": [
       {
         "case_field_id": "PersonFirstName",
@@ -1716,6 +2205,7 @@
       "ExamplesCollection": [],
       "MarritalStatus": "",
       "WhatIsYourAge": null
+      "HasOtherInfo": "No"
     },
     "event": {
       "id": "createCase",
@@ -3503,7 +3993,6 @@
               "validation_expr": null,
               "security_label": "PRIVATE",
               "order": null,
-              "display_context": "OPTIONAL",
               "show_condition": "Country=\"UK\"",
               "show_summary_change_option": true
             },
@@ -3814,7 +4303,7 @@
         "validation_expr": null,
         "security_label": "PRIVATE",
         "order": null,
-        "read_only": false,
+        "display_context": "OPTIONAL",
         "show_condition": null,
         "show_summary_change_option": true
       },
@@ -4120,7 +4609,7 @@
         "id": "createCaseStartPage",
         "label": "Required Information1",
         "order": 1,
-        "show_condition": "PersonFirstName=\"Jonny\"",
+        "show_condition": "",
         "wizard_page_fields": [
           {
             "case_field_id": "HasOtherInfo",

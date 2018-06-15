@@ -114,6 +114,14 @@ describe('PaletteService', () => {
       assertComponent('Date', true, WriteDateFieldComponent, 'AnID');
     });
 
+    it('should get ReadDateTimeField component class for DateTime input', () => {
+      assertComponent('DateTime', false, ReadDateFieldComponent, 'AnID');
+    });
+
+    it('should get WriteDateTimeField component class for DateTime input', () => {
+      assertComponent('DateTime', true, WriteDateFieldComponent, 'AnID');
+    });
+
     it('should get ReadFixedListField component class for FixedList input', () => {
       assertComponent('FixedList', false, ReadFixedListFieldComponent, 'AnID');
     });

@@ -84,7 +84,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   private checkOptionalField(caseField: CaseField, theControl: AbstractControl): boolean {
-    return this.caseFieldService.isOptional(caseField) || theControl.valid || theControl.disabled;
+    return (!theControl && this.caseFieldService.isOptional(caseField)) || theControl.valid || theControl.disabled;
   }
 
   private checkMandatoryField(caseField: CaseField, theControl: AbstractControl): boolean {

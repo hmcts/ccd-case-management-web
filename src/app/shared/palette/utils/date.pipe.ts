@@ -16,8 +16,9 @@ export class DatePipe implements PipeTransform {
     let resultDate = null;
     if (value) {
       let match: RegExpMatchArray = value.match(DatePipe.DATE_FORMAT);
-      let date = this.getDate(match);
-      let offsetDate = this.getOffsetDate(date);
+      // let date = this.getDate(match);
+      // RDM-1149 changed the pipe logic so that it doesn't add an hour to 'Summer Time' dates on DateTime field type
+      let offsetDate = this.getDate(match); // this.getOffsetDate(date);
 
       resultDate = `${offsetDate.getDate()} ${DatePipe.MONTHS[offsetDate.getMonth()]} ${offsetDate.getFullYear()}`;
       if (match[4] && match[5] && match[6] && format !== 'short') {

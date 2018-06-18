@@ -228,7 +228,15 @@ export class CaseEditSubmitComponent implements OnInit {
   }
 
   isEmail(field: CaseField): boolean {
-    return (this.summaryCaseField(field).value ? this.summaryCaseField(field).value.indexOf('@') !== -1 : false)
+
+    if (this.summaryCaseField(field) &&
+      this.summaryCaseField(field).field_type.type === 'Text' &&
+      this.summaryCaseField(field).value &&
+      this.summaryCaseField(field).value.indexOf('@') !== -1 ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

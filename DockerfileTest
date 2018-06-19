@@ -8,27 +8,27 @@ RUN apt-get update && \
     apt-get install -y \
         xvfb \
         x11-xkb-utils \
-        xfonts-100dpi \
-        xfonts-75dpi \
-        xfonts-scalable \
-        xfonts-cyrillic \
-        x11-apps \
-        clang \
-        libfontconfig \
-        libfreetype6 \
-        libdbus-1-dev \
-        libgtk2.0-dev \
-        libnotify-dev \
-        libgnome-keyring-dev \
-        libgconf2-dev \
-        libasound2-dev \
-        libcap-dev \
-        libcups2-dev \
-        libxtst-dev \
-        libxss1 \
-        libnss3-dev \
-        gcc-multilib \
-        g++-multilib \
+#        xfonts-100dpi \
+#        xfonts-75dpi \
+#        xfonts-scalable \
+#        xfonts-cyrillic \
+#        x11-apps \
+#        clang \
+#        libfontconfig \
+#        libfreetype6 \
+#        libdbus-1-dev \
+#        libgtk2.0-dev \
+#        libnotify-dev \
+#        libgnome-keyring-dev \
+#        libgconf2-dev \
+#        libasound2-dev \
+#        libcap-dev \
+#        libcups2-dev \
+#        libxtst-dev \
+#        libxss1 \
+#        libnss3-dev \
+#        gcc-multilib \
+#        g++-multilib \
         xauth \
         --no-install-recommends \
     && apt-get autoclean \
@@ -55,13 +55,7 @@ WORKDIR /protractor
 
 # Copy the run sript/s from local folder to the container's related folder
 
-COPY script/run-e2e-tests.sh /entrypoint.sh
-
-RUN git clone https://github.com/hmcts/ccd-case-management-web.git
-
-WORKDIR /protractor/ccd-case-management-web
-
-RUN yarn install
+COPY script/run-protractor-tests.sh /entrypoint.sh
 
 ENV HOME=/protractor
 

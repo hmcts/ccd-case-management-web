@@ -107,7 +107,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     dialogConfig.ariaLabel = 'Label';
     dialogConfig.height = '220px';
     dialogConfig.width = '550px';
-    dialogConfig.panelClass = 'replace-dialog';
+    dialogConfig.panelClass = 'dialog';
 
     dialogConfig.closeOnNavigation = false;
     dialogConfig.position = {

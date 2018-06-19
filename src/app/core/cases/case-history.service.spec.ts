@@ -6,6 +6,7 @@ import { HttpError } from '../http/http-error.model';
 import { CaseHistory } from './case-history.model';
 import { CaseHistoryService } from './case-history.service';
 import { createCaseHistory } from './case-history.test.fixture';
+import { HttpErrorService } from '../http/http-error.service';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('CaseHistoryService', () => {
@@ -22,6 +23,7 @@ describe('CaseHistoryService', () => {
 
   let appConfig: any;
   let httpService: any;
+  let httpErrorService: any;
 
   let caseHistoryService: CaseHistoryService;
 
@@ -30,8 +32,9 @@ describe('CaseHistoryService', () => {
     appConfig.getCaseHistoryUrl.and.returnValue(CASE_HISTORY_URL);
 
     httpService = createSpyObj<HttpService>('httpService', ['get']);
+    httpErrorService = createSpyObj<HttpErrorService>('errorService', ['setError']);
 
-    caseHistoryService = new CaseHistoryService(httpService, appConfig);
+    caseHistoryService = new CaseHistoryService(httpService, httpErrorService, appConfig);
   });
 
   describe('get()', () => {
@@ -57,6 +60,18 @@ describe('CaseHistoryService', () => {
         .subscribe(
           caseHistory => expect(caseHistory).toEqual(CASE_HISTORY)
         );
+    });
+
+    it('should set error when error is thrown', () => {
+      httpService.get.and.returnValue(Observable.throw(ERROR));
+
+      caseHistoryService
+        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .subscribe(() => {
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(httpErrorService.setError).toHaveBeenCalledWith(ERROR);
+        });
     });
 
   });

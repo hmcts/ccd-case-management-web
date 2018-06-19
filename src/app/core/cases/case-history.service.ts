@@ -4,11 +4,13 @@ import { AppConfig } from '../../app.config';
 import { HttpService } from '../http/http.service';
 import { CaseHistory } from './case-history.model';
 import { plainToClass } from 'class-transformer';
+import { HttpErrorService } from '../http/http-error.service';
 
 @Injectable()
 export class CaseHistoryService {
 
-  constructor(private http: HttpService,
+  constructor(private httpService: HttpService,
+              private httpErrorService: HttpErrorService,
               private appConfig: AppConfig) {}
 
   get(jurisdictionId: string,
@@ -18,9 +20,13 @@ export class CaseHistoryService {
 
     const url = this.appConfig.getCaseHistoryUrl(jurisdictionId, caseTypeId, caseId, eventId);
 
-    return this.http
+    return this.httpService
       .get(url)
       .map(response => response.json())
+      .catch((error: any): any => {
+        this.httpErrorService.setError(error);
+        return Observable.throw(error);
+      })
       .map((caseHistory: Object) => plainToClass(CaseHistory, caseHistory));
   }
 }

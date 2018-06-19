@@ -22,6 +22,9 @@ import { MarkdownModule } from '../../markdown/markdown.module';
   entryComponents: [
     ReadMoneyGbpFieldComponent,
     WriteMoneyGbpFieldComponent
+  ],
+  exports: [
+    ReadMoneyGbpFieldComponent
   ]
 })
 export class MoneyGbpModule {}

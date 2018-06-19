@@ -3,6 +3,8 @@ import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.
 import { FormControl, FormGroup } from '@angular/forms';
 import { DocumentManagementService } from '../../../core/documentManagement/documentManagement.service';
 import { HttpError } from '../../../core/http/http-error.model';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DocumentDialogComponent } from '../../document-dialog/document-dialog.component';
 
 @Component({
   selector: 'ccd-write-document-field',
@@ -11,10 +13,13 @@ import { HttpError } from '../../../core/http/http-error.model';
 export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   private uploadedDocument: FormGroup;
   private selectedFile: File;
+  private docExist = false;
+
   valid = true;
   uploadError: string;
+  private confirmReplaceResult: string;
 
-  constructor(private documentManagement: DocumentManagementService) {
+  constructor(private documentManagement: DocumentManagementService, private dialog: MatDialog) {
     super();
   }
 
@@ -82,4 +87,72 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
 
     return error.message;
   }
+
+  confirmReplace(fileInput: any) {
+/*    document.getElementById(this.id()).removeAttribute('disabled');
+    console.log('Id: ' + this.id());
+    console.log('doc Id: ' + document.getElementById(this.id()));
+    document.getElementById(this.id()).click();*/
+
+    console.log('Starting.................');
+
+    // Todo: Condition to check if the document already exist
+    if (1 === 1) {
+      this.docExist = true;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.ariaLabel = 'Label';
+    dialogConfig.height = '220px';
+    dialogConfig.width = '550px';
+    dialogConfig.panelClass = 'replace-dialog';
+
+    dialogConfig.closeOnNavigation = false;
+    dialogConfig.position = {
+      top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+    }
+
+    if (this.docExist) {
+      console.log('Doc Exist.');
+      // document.getElementById(this.id()).setAttribute('disabled', 'disabled');   // enable
+      this.openDialog(dialogConfig);
+    } else {
+      document.getElementById(this.id()).removeAttribute('disabled');
+      document.getElementById(this.id()).click();
+    }
+
+     // fileInput.preventDefault();
+     // this.triggerReplace();
+  }
+
+  private openDialog(dialogConfig) {
+    const dialogRef = this.dialog.open(DocumentDialogComponent, dialogConfig);
+     dialogRef.afterClosed().subscribe(result => {
+      this.confirmReplaceResult = result;
+      this.triggerReplace();
+    });
+  }
+
+  triggerReplace() {
+    if (this.confirmReplaceResult === 'Replace') {
+      console.log('Replace clicked.......' + this.confirmReplaceResult);
+      // document.getElementById(this.id()).removeAttribute('disabled');
+      console.log('clicking.......');
+      console.log('Id 2: ' + this.id());
+      document.getElementById(this.id()).click();
+      console.log('.......clicking');
+    } else if (this.confirmReplaceResult === 'Cancel') {
+      console.log('Cancel clicked.......' + this.confirmReplaceResult);
+      document.getElementById(this.id()).removeAttribute('disabled');  // enable
+    }
+  }
+
+  one(e) {
+    console.log('new ONE...');
+    document.getElementById(this.id()).click();
+    console.log('new ONE end...');
+  }
+
 }

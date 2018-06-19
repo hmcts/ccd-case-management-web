@@ -16,6 +16,7 @@ import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity
 import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';
 import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-activity-banner/ccd-activity-banner.component';
 import { CaseFieldService } from './domain/case-field.service';
+import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,9 @@ import { CaseFieldService } from './domain/case-field.service';
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
+    DocumentDialogComponent,
   ],
+  entryComponents: [DocumentDialogComponent],
   providers: [
     SearchResultViewItemComparatorFactory,
     CaseFieldService

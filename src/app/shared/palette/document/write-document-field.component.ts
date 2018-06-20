@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DocumentManagementService } from '../../../core/documentManagement/documentManagement.service';
@@ -14,6 +14,8 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
   private uploadedDocument: FormGroup;
   private selectedFile: File;
   private docExist = false;
+
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   valid = true;
   uploadError: string;
@@ -88,8 +90,14 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     return error.message;
   }
 
+  public openFileDialog(): void {
+    this.fileInput.nativeElement.click();
+  }
+
   confirmReplace(fileInput: any) {
-/*    document.getElementById(this.id()).removeAttribute('disabled');
+
+    // this.openFileDialog();
+   /* document.getElementById(this.id()).removeAttribute('disabled');
     console.log('Id: ' + this.id());
     console.log('doc Id: ' + document.getElementById(this.id()));
     document.getElementById(this.id()).click();*/
@@ -129,7 +137,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
 
   private openDialog(dialogConfig) {
     const dialogRef = this.dialog.open(DocumentDialogComponent, dialogConfig);
-     dialogRef.afterClosed().subscribe(result => {
+     dialogRef.beforeClose().subscribe(result => {
       this.confirmReplaceResult = result;
       this.triggerReplace();
     });
@@ -141,7 +149,8 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
       // document.getElementById(this.id()).removeAttribute('disabled');
       console.log('clicking.......');
       console.log('Id 2: ' + this.id());
-      document.getElementById(this.id()).click();
+      // document.getElementById(this.id()).click();
+      this.openFileDialog();
       console.log('.......clicking');
     } else if (this.confirmReplaceResult === 'Cancel') {
       console.log('Cancel clicked.......' + this.confirmReplaceResult);
@@ -151,7 +160,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
 
   one(e) {
     console.log('new ONE...');
-    document.getElementById(this.id()).click();
+    // document.getElementById(this.id()).click();
     console.log('new ONE end...');
   }
 

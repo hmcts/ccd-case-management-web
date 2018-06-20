@@ -15,7 +15,7 @@
 
   <div style='position:relative'>
     <div id='clickable' (click)="confirmReplace($event)" style="border: 1px solid red;"></div>
-    <input id=theButton class="form-control" [id]="id()" type="file" (click)="one($event)"/>
+    <input id=theButton class="form-control" [id]="id()" type="file" (click)="one($event)" #fileInput/>
   </div>
 
   <!--<div (click)="confirmReplace($event)" style="border: 1px solid blue;"><input class="form-control" style="z-index: -200;" [id]="id()" type="file"/></div>-->

@@ -12,7 +12,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  specs: ['../specs/*/*.*.spec.js'],
+  specs: ["../specs/*/*.*.spec.js"],
 
   exclude: [],
 
@@ -40,7 +40,7 @@ exports.config = {
     defaultTimeoutInterval: 400000
 
   },
-  
+
   useAllAngular2AppRoots: true,
-  
+
 };

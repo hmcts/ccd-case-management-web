@@ -12,7 +12,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  specs: ['./functional/specs/*/*.*.spec.js'],
+  specs: ["../specs/*/*.*.spec.js"],
 
   exclude: [],
 

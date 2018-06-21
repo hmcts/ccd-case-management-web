@@ -49,6 +49,12 @@ variable "ccd_print_service_url" {
   default = ""
 }
 
+variable "activity_enabled" {
+  type = "string"
+  description = "Should activity service be enabled?"
+  default = "false"
+}
+
 variable "external_host_name" {
   default = ""
 }

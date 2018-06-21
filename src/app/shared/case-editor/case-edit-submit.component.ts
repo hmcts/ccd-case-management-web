@@ -226,15 +226,4 @@ export class CaseEditSubmitComponent implements OnInit {
   getCaseId(): String {
     return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
   }
-
-  isEmail(field: CaseField): boolean {
-    let summaryField: CaseField = this.summaryCaseField(field);
-    if (summaryField && summaryField.field_type.type === 'Text' &&
-      summaryField.value && summaryField.value.indexOf('@') !== -1 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
 }

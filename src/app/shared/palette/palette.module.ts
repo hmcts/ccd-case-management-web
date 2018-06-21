@@ -32,6 +32,7 @@ import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
 import { OrderSummaryModule } from './order-summary/order-summary.module';
 import { CasePaymentHistoryViewerModule } from './payment/case-payment-history-viewer.module';
+import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { CasePaymentHistoryViewerModule } from './payment/case-payment-history-v
     MarkdownModule,
     OrderSummaryModule,
     CasePaymentHistoryViewerModule,
+    PaletteUtilsModule
   ],
   declarations: [
     UnsupportedFieldComponent,
@@ -85,6 +87,7 @@ import { CasePaymentHistoryViewerModule } from './payment/case-payment-history-v
     ReadPhoneUKFieldComponent,
     ReadDateFieldComponent,
     ReadCollectionFieldComponent,
+    ReadOrderSummaryFieldComponent,
 
     // Write
     WriteCollectionFieldComponent,

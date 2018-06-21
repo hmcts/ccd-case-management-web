@@ -4,6 +4,7 @@ import { PaletteContext } from './palette-context.enum';
 import { ContextMap } from '@hmcts/ccd-case-ui-toolkit';
 
 export class AbstractFieldReadComponent {
+
   @Input()
   caseField: CaseField;
 

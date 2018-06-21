@@ -5,6 +5,7 @@ export type FieldTypeEnum =
   | 'Number'
   | 'YesOrNo'
   | 'Date'
+  | 'DateTime'
   | 'Email'
   | 'PhoneUK'
   | 'MoneyGBP'
@@ -18,4 +19,4 @@ export type FieldTypeEnum =
   | 'AddressGlobalUK'
   | 'AddressUK'
   | 'CasePaymentHistoryViewer'
-  ;
+  | 'OrderSummary';

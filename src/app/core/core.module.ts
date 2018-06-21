@@ -56,7 +56,6 @@ import { ActivityResolver } from './activity/activity.resolver';
     PaginationService,
     RequestOptionsBuilder,
     HttpService,
-    HttpErrorService,
     JurisdictionService,
     ActivityService,
     ActivityResolver,

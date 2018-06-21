@@ -38,7 +38,7 @@ export class FormValueService {
     if (Array.isArray(rawValue)) {
       return this.sanitiseArray(rawValue);
     }
-
+console.log('rawValue=', rawValue);
     switch (typeof rawValue) {
       case 'object':
         return this.sanitiseObject(rawValue);

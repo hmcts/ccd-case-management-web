@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -89,6 +89,27 @@ export class AppConfig {
   public getSmartSurveyUrl() {
     return this.config.smart_survey_url;
   }
+
+  public getActivityNexPollRequestMs() {
+    return this.config.activity_next_poll_request_ms;
+  }
+
+  public getActivityRetry() {
+    return this.config.activity_retry;
+  }
+
+  public getActivityBatchCollectionDelayMs() {
+    return this.config.activity_batch_collection_delay_ms;
+  }
+
+  public getActivityMaxRequestPerBatch() {
+    return this.config.activity_max_request_per_batch;
+  }
+
+  public getPaymentsUrl() {
+    return this.config.payments_url;
+  }
+
 }
 
 export class Config {
@@ -106,4 +127,9 @@ export class Config {
   print_service_url: string;
   remote_print_service_url: string;
   smart_survey_url: string;
+  activity_next_poll_request_ms: number;
+  activity_retry: number;
+  activity_batch_collection_delay_ms: number;
+  activity_max_request_per_batch: number;
+  payments_url: string;
 }

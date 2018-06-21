@@ -13,6 +13,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
+import { ContextMap } from '@hmcts/ccd-case-ui-toolkit';
+import { AppConfig } from '../../app.config';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -35,7 +37,8 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
-    private activityPollingService: ActivityPollingService
+    private activityPollingService: ActivityPollingService,
+    private appConfig: AppConfig
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +96,13 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
         this.callbackErrorsSubject.next(this.error);
       }
     });
+  }
+
+  buildContextMap() {
+    let contextMap = new Map<string, string>();
+    contextMap.set(ContextMap.CASE_REFERENCE_KEY, this.caseDetails.case_id);
+    contextMap.set(ContextMap.PAYMENTS_BASE_URL_KEY, this.appConfig.getPaymentsUrl());
+    return contextMap;
   }
 
   callbackErrorsNotify(callbackErrorsContext: CallbackErrorsContext) {

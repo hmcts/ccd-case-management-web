@@ -31,7 +31,6 @@ export class OAuth2Service {
   }
 
   signOut(): void {
-    this.http.get(this.appConfig.getLogoutUrl()).subscribe();
-    this.authService.signIn();
+    this.http.get(this.appConfig.getLogoutUrl()).subscribe(() => this.authService.signIn());
   }
 }

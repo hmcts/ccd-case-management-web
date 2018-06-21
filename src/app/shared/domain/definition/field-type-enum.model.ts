@@ -5,6 +5,7 @@ export type FieldTypeEnum =
   | 'Number'
   | 'YesOrNo'
   | 'Date'
+  | 'DateTime'
   | 'Email'
   | 'PhoneUK'
   | 'MoneyGBP'
@@ -16,4 +17,5 @@ export type FieldTypeEnum =
   | 'Label'
   | 'AddressGlobal'
   | 'AddressGlobalUK'
-  | 'AddressUK';
+  | 'AddressUK'
+  | 'OrderSummary';

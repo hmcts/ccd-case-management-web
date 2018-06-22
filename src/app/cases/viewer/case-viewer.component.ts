@@ -16,6 +16,7 @@ import { ShowCondition } from '../../shared/conditional-show/conditional-show.mo
 import { AppConfig } from '../../app.config';
 import { CasePaymentHistoryViewerFieldComponent } from '../../shared/palette/payment/case-payment-history-viewer-field.component';
 import { ContextMap } from '../../shared/palette/context-map.model';
+import { Constants } from '../../shared/constants.model';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -101,7 +102,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
 
   buildContextMap(): ContextMap {
     let contextMap = new ContextMap();
-    contextMap.set(CasePaymentHistoryViewerFieldComponent.CASE_REFERENCE_KEY, this.caseDetails.case_id);
+    contextMap.set(Constants.CASE_REFERENCE_KEY, this.caseDetails.case_id);
     contextMap.set(CasePaymentHistoryViewerFieldComponent.PAYMENTS_BASE_URL_KEY, this.appConfig.getPaymentsUrl());
     return contextMap;
   }

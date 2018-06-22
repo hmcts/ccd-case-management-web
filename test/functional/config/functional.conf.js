@@ -1,7 +1,7 @@
 exports.config = {
 
   specs: [
-    '../specs/*/*.caselist.spec.js'
+    "../specs/*/*.caselist.spec.js"
   ],
   exclude: [],
 

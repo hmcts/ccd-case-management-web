@@ -13,7 +13,6 @@ import { DocumentDialogComponent } from '../../document-dialog/document-dialog.c
 export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   private uploadedDocument: FormGroup;
   private selectedFile: File;
-  private docExist = false;
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -90,25 +89,11 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     return error.message;
   }
 
-  public openFileDialog(): void {
+  private openFileDialog(): void {
     this.fileInput.nativeElement.click();
   }
 
-  confirmReplace(fileInput: any) {
-
-    // this.openFileDialog();
-   /* document.getElementById(this.id()).removeAttribute('disabled');
-    console.log('Id: ' + this.id());
-    console.log('doc Id: ' + document.getElementById(this.id()));
-    document.getElementById(this.id()).click();*/
-
-    console.log('Starting.................');
-
-    // Todo: Condition to check if the document already exist
-    if (1 === 1) {
-      this.docExist = true;
-    }
-
+  fileSelectEvent(fileInput: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -122,22 +107,16 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
       top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
 
-    if (this.docExist) {
-      console.log('Doc Exist.');
-      // document.getElementById(this.id()).setAttribute('disabled', 'disabled');   // enable
+    if (!this.caseField.value) {
       this.openDialog(dialogConfig);
     } else {
-      document.getElementById(this.id()).removeAttribute('disabled');
-      document.getElementById(this.id()).click();
+      this.openFileDialog();
     }
-
-     // fileInput.preventDefault();
-     // this.triggerReplace();
   }
 
   private openDialog(dialogConfig) {
     const dialogRef = this.dialog.open(DocumentDialogComponent, dialogConfig);
-     dialogRef.beforeClose().subscribe(result => {
+    dialogRef.beforeClose().subscribe(result => {
       this.confirmReplaceResult = result;
       this.triggerReplace();
     });
@@ -145,23 +124,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
 
   triggerReplace() {
     if (this.confirmReplaceResult === 'Replace') {
-      console.log('Replace clicked.......' + this.confirmReplaceResult);
-      // document.getElementById(this.id()).removeAttribute('disabled');
-      console.log('clicking.......');
-      console.log('Id 2: ' + this.id());
-      // document.getElementById(this.id()).click();
       this.openFileDialog();
-      console.log('.......clicking');
-    } else if (this.confirmReplaceResult === 'Cancel') {
-      console.log('Cancel clicked.......' + this.confirmReplaceResult);
-      document.getElementById(this.id()).removeAttribute('disabled');  // enable
     }
   }
-
-  one(e) {
-    console.log('new ONE...');
-    // document.getElementById(this.id()).click();
-    console.log('new ONE end...');
-  }
-
 }

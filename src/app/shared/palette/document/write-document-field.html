@@ -1,5 +1,4 @@
 <div class="form-group" [ngClass]="{'form-group-error': !valid}">
-
   <label [for]="id()">
     <span class="form-label-bold">{{caseField | ccdFieldLabel}}</span>
     <span class="form-hint" *ngIf="caseField.hint_text">{{caseField.hint_text}}</span>
@@ -10,16 +9,8 @@
     <ccd-read-document-field *ngIf="caseField" [caseField]="caseField"></ccd-read-document-field>
   </div>
 
-  <!--ORIGINAL   <input class="form-control" [id]="id()" type="file" (change)="fileChangeEvent($event)"/>-->
-
-
   <div style='position:relative'>
-    <div id='clickable' (click)="confirmReplace($event)" style="border: 1px solid red;"></div>
-    <input id=theButton class="form-control" [id]="id()" type="file" (click)="one($event)" #fileInput/>
+    <div id='fileInputWrapper' (click)="fileSelectEvent($event)"></div>
+    <input class="form-control" [id]="id()" type="file" (change)="fileChangeEvent($event)" #fileInput/>
   </div>
-
-  <!--<div (click)="confirmReplace($event)" style="border: 1px solid blue;"><input class="form-control" style="z-index: -200;" [id]="id()" type="file"/></div>-->
-  <!--<input class="form-control" [id]="id()" type="file" (click)="confirmReplace($event)"/>-->
-  <!--<p (click)="confirmReplace($event)"><input class="form-control" [id]="id()" type="file"/></p>-->
-
 </div>

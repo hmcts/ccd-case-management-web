@@ -12,6 +12,8 @@ import { FormGroup } from '@angular/forms';
 import { FieldLabelPipe } from '../utils/field-label.pipe';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { DocumentDialogComponent } from '../../document-dialog/document-dialog.component';
 
 describe('WriteDocumentFieldComponent', () => {
 
@@ -68,6 +70,8 @@ describe('WriteDocumentFieldComponent', () => {
     FORM_GROUP.addControl(FORM_GROUP_ID, control);
     return control;
   };
+  const $DIALOG_REPLACE_BUTTON = By.css('.button[title=Replace]');
+  const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
 
   let ReadDocumentComponent = MockComponent({
     selector: 'ccd-read-document-field',
@@ -79,12 +83,20 @@ describe('WriteDocumentFieldComponent', () => {
   let de: DebugElement;
   let mockDocumentManagementService: any;
 
+  let fixtureDialog: ComponentFixture<DocumentDialogComponent>;
+  let componentDialog: DocumentDialogComponent;
+  let deDialog: DebugElement;
+  let dialog: any;
+  let matDialogRef: MatDialogRef<DocumentDialogComponent>;
+
   beforeEach(() => {
     mockDocumentManagementService = createSpyObj<DocumentManagementService>('documentManagementService', ['uploadFile']);
     mockDocumentManagementService.uploadFile.and.returnValues(
       Observable.of(RESPONSE_FIRST_DOCUMENT),
       Observable.of(RESPONSE_SECOND_DOCUMENT)
     );
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    matDialogRef = createSpyObj<MatDialogRef<DocumentDialogComponent>>('matDialogRef', ['close']);
 
     TestBed
       .configureTestingModule({
@@ -92,12 +104,15 @@ describe('WriteDocumentFieldComponent', () => {
         declarations: [
           WriteDocumentFieldComponent,
           FieldLabelPipe,
-
+          DocumentDialogComponent,
           // Mock
           ReadDocumentComponent,
         ],
         providers: [
-          { provide: DocumentManagementService, useValue: mockDocumentManagementService }
+          { provide: DocumentManagementService, useValue: mockDocumentManagementService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatDialogRef, useValue: matDialogRef },
+          DocumentDialogComponent
         ]
       })
       .compileComponents();
@@ -110,6 +125,11 @@ describe('WriteDocumentFieldComponent', () => {
 
     de = fixture.debugElement;
     fixture.detectChanges();
+
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
   });
 
   it('should render an element for file selection', () => {
@@ -168,5 +188,19 @@ describe('WriteDocumentFieldComponent', () => {
       }
     });
     expect(component.valid).toBeTruthy();
+  });
+
+  it('should trigger the document replace even when replace button is clicked', () => {
+    let dialogReplacelButton = deDialog.query($DIALOG_REPLACE_BUTTON);
+    dialogReplacelButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Replace');
+    fixture.detectChanges();
+  });
+
+  it('should not trigger the document replace even when cancel button is clicked', () => {
+    let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
+    dialogCancelButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Cancel');
+    fixture.detectChanges();
   });
 });

@@ -13,8 +13,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
-import { ContextMap } from '@hmcts/ccd-case-ui-toolkit';
 import { AppConfig } from '../../app.config';
+import { CasePaymentHistoryViewerFieldComponent } from '../../shared/palette/payment/case-payment-history-viewer-field.component';
+import { ContextMap } from '../../shared/palette/context-map.model';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -98,10 +99,10 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  buildContextMap() {
-    let contextMap = new Map<string, string>();
-    contextMap.set(ContextMap.CASE_REFERENCE_KEY, this.caseDetails.case_id);
-    contextMap.set(ContextMap.PAYMENTS_BASE_URL_KEY, this.appConfig.getPaymentsUrl());
+  buildContextMap(): ContextMap {
+    let contextMap = new ContextMap();
+    contextMap.set(CasePaymentHistoryViewerFieldComponent.CASE_REFERENCE_KEY, this.caseDetails.case_id);
+    contextMap.set(CasePaymentHistoryViewerFieldComponent.PAYMENTS_BASE_URL_KEY, this.appConfig.getPaymentsUrl());
     return contextMap;
   }
 

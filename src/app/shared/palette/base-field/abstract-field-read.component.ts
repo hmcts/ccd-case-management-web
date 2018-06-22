@@ -1,7 +1,7 @@
 import { Input } from '@angular/core';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { PaletteContext } from './palette-context.enum';
-import { ContextMap } from '@hmcts/ccd-case-ui-toolkit';
+import { ContextMap } from '../context-map.model';
 
 export class AbstractFieldReadComponent {
 

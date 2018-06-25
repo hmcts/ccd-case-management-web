@@ -158,11 +158,15 @@ export class CaseEditSubmitComponent implements OnInit {
   }
 
   readOnlySummaryFieldsToDisplayExists(): boolean {
-    return this.eventTrigger.case_fields.some(field => field.show_summary_content_option >= 0 );
+    return this.eventTrigger.case_fields.some(field => this.hasValue(field.show_summary_content_option));
   }
 
   showEventNotes(): boolean {
     return this.eventTrigger.show_event_notes !== false;
+  }
+
+  private hasValue(value) {
+    return value !== undefined && value !== null && value !== '';
   }
 
   private getLastPageShown(): WizardPage {

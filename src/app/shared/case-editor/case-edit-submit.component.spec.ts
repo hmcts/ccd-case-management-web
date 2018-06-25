@@ -256,7 +256,29 @@ describe('CaseEditSubmitComponent', () => {
     expect(result).toBeFalsy();
   });
 
-  it('should return true when no Fields to Display exists and readOnlySummaryFieldsToDisplayExists is called', () => {
+  it('should return false when fields to Display exists with null value and readOnlySummaryFieldsToDisplayExists is called', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
+    caseField.show_summary_content_option = null;
+    comp.eventTrigger.case_fields = [caseField];
+    fixture.detectChanges();
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeFalsy();
+  });
+
+  it('should return false when fields to display exists with undefined value and readOnlySummaryFieldsToDisplayExists is called', () => {
+    let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
+    caseField.show_summary_content_option = undefined;
+    comp.eventTrigger.case_fields = [caseField];
+    fixture.detectChanges();
+
+    let result = comp.readOnlySummaryFieldsToDisplayExists();
+
+    expect(result).toBeFalsy();
+  });
+
+  it('should return true when fields to Display exists with content value and readOnlySummaryFieldsToDisplayExists is called', () => {
     let caseField: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
     caseField.show_summary_content_option = 3;
     comp.eventTrigger.case_fields = [caseField];

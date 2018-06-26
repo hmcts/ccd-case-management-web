@@ -1861,25 +1861,31 @@
   },
   "validate": {
     "data": {
-      "PersonFirstName": "Fred",
-      "HouseFlatNumber": null,
+      "PersonFirstName": "Freddy",
+      "HouseFlatNumber": "41A Queens Road",
       "PersonLastNameWithValidation": "Doe",
-      "HouseFlatPostcode": null,
-      "IsAddressForService": "",
+      "HouseFlatPostcode": "KT2 7SL",
+      "IsAddressForService": "No",
       "PetitionerServiceAddress": {
         "HouseFlatNumber2": null,
         "HouseFlatPostcode2": null
       },
       "DateOfBirth": null,
-      "ContactEmail": null,
       "YourPhoneUk": null,
-      "TotalMonthlyIncome": null,
-      "CantProvideNationalInsuranceNumber": null,
-      "WhatNationality": [],
-      "ExamplesCollection": [],
-      "MarritalStatus": "",
+      "TotalMonthlyIncome": "122200",
+      "CantProvideNationalInsuranceNumber": "34444RRRR",
+      "WhatNationality": [
+        "British"
+      ],
+      "ExamplesCollection": [
+        {
+          "id": null,
+          "value": "Collllect"
+        }
+      ],
+      "MarritalStatus": "CIVIL_PARTNERSHIP",
       "WhatIsYourAge": null,
-      "HasOtherInfo": "No"
+      "ContactEmail": ""
     },
     "event": {
       "id": "createCase",
@@ -2334,14 +2340,14 @@
                           },
                           "security_classification": "PUBLIC"
                         },
-                        {  
-                          "id":"FeeVersion",
-                          "label":"Fee Version",
-                          "field_type":{  
-                              "id":"Text",
-                              "type":"Text"
+                        {
+                          "id": "FeeVersion",
+                          "label": "Fee Version",
+                          "field_type": {
+                            "id": "Text",
+                            "type": "Text"
                           },
-                          "security_classification":"PUBLIC"
+                          "security_classification": "PUBLIC"
                         }
                       ]
                     }
@@ -4224,14 +4230,14 @@
                       },
                       "security_classification": "PUBLIC"
                     },
-                    {  
-                      "id":"FeeVersion",
-                      "label":"Fee Version",
-                      "field_type":{  
-                          "id":"Text",
-                          "type":"Text"
+                    {
+                      "id": "FeeVersion",
+                      "label": "Fee Version",
+                      "field_type": {
+                        "id": "Text",
+                        "type": "Text"
                       },
-                      "security_classification":"PUBLIC"
+                      "security_classification": "PUBLIC"
                     }
                   ]
                 }
@@ -4403,6 +4409,9 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "end_button_label": "Save & Next",
+    "can_save_draft": true
+  },
+  "drafts": []
 }

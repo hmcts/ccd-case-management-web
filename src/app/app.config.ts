@@ -90,6 +90,10 @@ export class AppConfig {
     return this.config.activity_url;
   }
 
+  public getDraftUrl() {
+    return this.config.draft_url;
+  }
+
   public getActivityNexPollRequestMs() {
     return this.config.activity_next_poll_request_ms;
   }
@@ -108,22 +112,23 @@ export class AppConfig {
 }
 
 export class Config {
-  login_url: string;
-  logout_url: string;
-  api_url: string;
-  case_data_url: string;
-  activity_url: string;
-  document_management_url: string;
-  remote_document_management_url: string;
-  pagination_page_size: number;
-  postcode_lookup_url: string;
-  oauth2_token_endpoint_url: string;
-  oauth2_client_id: string;
-  print_service_url: string;
-  remote_print_service_url: string;
-  smart_survey_url: string;
-  activity_next_poll_request_ms: number;
-  activity_retry: number;
   activity_batch_collection_delay_ms: number;
   activity_max_request_per_batch: number;
+  activity_next_poll_request_ms: number;
+  activity_retry: number;
+  activity_url: string;
+  api_url: string;
+  case_data_url: string;
+  document_management_url: string;
+  draft_url: string;
+  login_url: string;
+  logout_url: string;
+  oauth2_client_id: string;
+  oauth2_token_endpoint_url: string;
+  pagination_page_size: number;
+  postcode_lookup_url: string;
+  print_service_url: string;
+  remote_document_management_url: string;
+  remote_print_service_url: string;
+  smart_survey_url: string;
 }

@@ -95,14 +95,20 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     if (!this.isSubmitting) {
       this.isSubmitting = true;
       this.error = null;
-      let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields,
-        this.editForm.value);
+      let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields, this.editForm.value);
       let caseEventData: CaseEventData = this.formValueService.sanitise(currentPageFields) as CaseEventData;
       caseEventData.event_token = this.eventTrigger.event_token;
       caseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.validate(caseEventData)
-        .subscribe(() => this.next(),
-          error => {
+        .subscribe(() => {
+            let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+            draftCaseEventData.event_token = this.eventTrigger.event_token;
+            draftCaseEventData.ignore_warning = this.ignoreWarning;
+            this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+              (draft) => this.eventTrigger.draft_store_id = draft.id
+            );
+            this.next();
+          }, error => {
             this.isSubmitting = false;
             this.error = error;
             this.callbackErrorsSubject.next(this.error);
@@ -128,6 +134,12 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   previous(): Promise<boolean> {
     this.error = null;
+    let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+    draftCaseEventData.event_token = this.eventTrigger.event_token;
+    draftCaseEventData.ignore_warning = this.ignoreWarning;
+    this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+      (draft) => this.eventTrigger.draft_store_id = draft.id
+    );
     return this.caseEdit.previous(this.currentPage.id);
   }
 

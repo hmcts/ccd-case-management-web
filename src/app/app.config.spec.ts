@@ -11,6 +11,7 @@ describe('AppConfig', () => {
   const DATA_URL = 'http://api.ccd.reform';
   const ACTIVITY_URL = 'http://activity';
   const DOC_MANAGEMENT_URL = 'http://localhost:3453/documents';
+  const DRAFT_URL = 'http://localhost:3453/data';
   const REMOTE_DOC_MANAGEMENT_URL = 'http://evidence.ccd.reform/documents';
   const PAGINATION_PAGE_SIZE = 25;
   const POSTCODE_LOOKUP_URL = 'http://api.ccd.reform/addresses?postcode=';
@@ -30,6 +31,7 @@ describe('AppConfig', () => {
     api_url: API_URL,
     case_data_url: DATA_URL,
     document_management_url: DOC_MANAGEMENT_URL,
+    draft_url: DRAFT_URL,
     remote_document_management_url: REMOTE_DOC_MANAGEMENT_URL,
     pagination_page_size: PAGINATION_PAGE_SIZE,
     postcode_lookup_url: POSTCODE_LOOKUP_URL,
@@ -73,6 +75,7 @@ describe('AppConfig', () => {
             expect(appConfig.getApiUrl()).toEqual(API_URL);
             expect(appConfig.getCaseDataUrl()).toEqual(DATA_URL);
             expect(appConfig.getDocumentManagementUrl()).toEqual(DOC_MANAGEMENT_URL);
+            expect(appConfig.getDraftUrl()).toEqual(DRAFT_URL);
             expect(appConfig.getRemoteDocumentManagementUrl()).toEqual(REMOTE_DOC_MANAGEMENT_URL);
             expect(appConfig.getPaginationPageSize()).toEqual(PAGINATION_PAGE_SIZE);
             expect(appConfig.getPostcodeLookupUrl()).toEqual(POSTCODE_LOOKUP_URL);

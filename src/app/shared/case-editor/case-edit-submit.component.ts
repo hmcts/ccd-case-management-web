@@ -166,7 +166,7 @@ export class CaseEditSubmitComponent implements OnInit {
   }
 
   private hasValue(value) {
-    return value !== undefined && value !== null && value !== '';
+    return value ? true : false;
   }
 
   private getLastPageShown(): WizardPage {

@@ -1,3 +1,11 @@
+<!-- Current Page && Event trigger name -->
+<h1 class="heading-medium">{{ eventTrigger.name}}</h1>
+
+<!-- Case ID -->
+<h2 *ngIf="getCaseId()" class="heading-small">
+  #{{ getCaseId() | ccdCaseReference}}
+</h2>
+
 <form [formGroup]="formGroup" (submit)="submit()">
   <div id="confirmation-header" *ngIf="confirmation.getHeader()">
     <ccd-markdown [content]="confirmation.getHeader()"></ccd-markdown>

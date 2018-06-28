@@ -49,10 +49,20 @@ variable "ccd_print_service_url" {
   default = ""
 }
 
+variable "activity_enabled" {
+  type = "string"
+  description = "Should activity service be enabled?"
+  default = "false"
+}
+
 variable "external_host_name" {
   default = ""
 }
 
 variable "aat_gateway" {
   default = "https://ccd-api-gateway-web-aat.service.core-compute-aat.internal"
+}
+
+variable "https_only" {
+  default = "true"
 }

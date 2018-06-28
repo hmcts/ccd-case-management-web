@@ -3,6 +3,7 @@ import { CaseField } from '../../domain/definition/case-field.model';
 import { PaletteContext } from './palette-context.enum';
 
 export class AbstractFieldReadComponent {
+
   @Input()
   caseField: CaseField;
 

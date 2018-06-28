@@ -3,7 +3,8 @@ import { DatePipe } from './date.pipe';
 describe('DatePipe', () => {
 
   let datePipe: DatePipe;
-  const EXPECTED_OFFSET = - new Date().getTimezoneOffset() / 60;
+  // const EXPECTED_OFFSET = - new Date().getTimezoneOffset() / 60;
+  const EXPECTED_OFFSET = 0; // RDM-1149 changed the pipe logic
 
   beforeEach(() => {
     datePipe = new DatePipe();

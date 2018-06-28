@@ -368,16 +368,18 @@ describe('CaseViewerComponent', () => {
       .queryAll(By.css('tbody>tr.compound-field>td'));
 
     expect(cells.length).toEqual(COMPLEX_FIELDS.length);
-
-    cells.forEach(cell => {
-      expect(attr(cell, 'colspan')).toBe('2');
-    });
   });
 
   it('should render each field value using FieldReadComponent', () => {
-    let readFields = de
+    let readFields_fields = de
       .query($NAME_TAB_CONTENT)
       .queryAll(By.css('tbody>tr td>ccd-field-read'));
+
+    let readFields_compound = de
+      .query($NAME_TAB_CONTENT)
+      .queryAll(By.css('tbody>tr th>ccd-field-read'));
+
+    let readFields = readFields_fields.concat(readFields_compound);
 
     FIELDS.forEach(field => {
       expect(readFields.find(f => {

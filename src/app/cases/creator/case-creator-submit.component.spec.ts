@@ -130,7 +130,7 @@ describe('CaseCreatorSubmitComponent', () => {
 
   const DRAFT: Draft = {
     'id': '1234',
-    'document': [CREATED_CASE],
+    'document': CREATED_CASE,
     'type': 'dummy',
     'created': 'sometime',
     'updated': 'another time'

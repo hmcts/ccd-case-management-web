@@ -28,7 +28,6 @@ export class DraftService {
 
   createDraft(jid: string, ctid: string, eventData: CaseEventData): Observable<Draft> {
     const saveDraftEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/`;
-    console.log('Calling create draft');
     return this.http
       .post(saveDraftEndpoint, eventData)
       .map(response => response.json())
@@ -40,7 +39,6 @@ export class DraftService {
 
   updateDraft(jid: string, ctid: string, draftId: string, eventData: CaseEventData): Observable<Draft> {
     const saveDraftEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${draftId}`;
-    console.log('Calling update draft at -> ', saveDraftEndpoint);
     return this.http
       .put(saveDraftEndpoint, eventData)
       .map(response => response.json())

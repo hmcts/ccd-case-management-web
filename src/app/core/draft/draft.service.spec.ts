@@ -72,6 +72,31 @@ describe('Drafts Service', () => {
       httpService.put.and.returnValue(Observable.of(new Response(new ResponseOptions({
         body: JSON.stringify(DRAFT_RESPONSE)
       }))));
+      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+        body: JSON.stringify(DRAFT_RESPONSE)
+      }))));
+    });
+
+    it('should get drafts on server', () => {
+      draftService
+        .getDrafts(JID, CT_ID)
+        .subscribe(
+          data => expect(data).toEqual(DRAFT_RESPONSE)
+        );
+      expect(httpService.get).toHaveBeenCalledWith(DRAFT_URL);
+    });
+
+    it('should set error when error is thrown when creating draft', () => {
+      httpService.get.and.returnValue(Observable.throw(ERROR));
+
+      draftService.getDrafts(JID, CT_ID)
+        .subscribe(data => {
+          console.log('This should never be printed?');
+          expect(data).toEqual(DRAFT_RESPONSE);
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(errorService.setError).toHaveBeenCalledWith(ERROR);
+        });
     });
 
     it('should create a draft on server', () => {
@@ -83,16 +108,7 @@ describe('Drafts Service', () => {
       expect(httpService.post).toHaveBeenCalledWith(DRAFT_URL, CASE_EVENT_DATA);
     });
 
-    it('should update a draft on server', () => {
-      draftService
-        .updateDraft(JID, CT_ID, DRAFT_ID, CASE_EVENT_DATA)
-        .subscribe(
-          data => expect(data).toEqual(DRAFT_RESPONSE)
-        );
-      expect(httpService.put).toHaveBeenCalledWith(DRAFT_URL + DRAFT_ID, CASE_EVENT_DATA);
-    });
-
-    it('should set error when error is thrown', () => {
+    it('should set error when error is thrown when creating draft', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       draftService.createDraft(JID, CT_ID, CASE_EVENT_DATA)
@@ -104,5 +120,28 @@ describe('Drafts Service', () => {
           expect(errorService.setError).toHaveBeenCalledWith(ERROR);
         });
     });
+
+    it('should update a draft on server', () => {
+      draftService
+        .updateDraft(JID, CT_ID, DRAFT_ID, CASE_EVENT_DATA)
+        .subscribe(
+          data => expect(data).toEqual(DRAFT_RESPONSE)
+        );
+      expect(httpService.put).toHaveBeenCalledWith(DRAFT_URL + DRAFT_ID, CASE_EVENT_DATA);
+    });
+
+    it('should set error when error is thrown when updating draft', () => {
+      httpService.put.and.returnValue(Observable.throw(ERROR));
+
+      draftService.updateDraft(JID, CT_ID, DRAFT_ID, CASE_EVENT_DATA)
+        .subscribe(data => {
+          console.log('This should never be printed?');
+          expect(data).toEqual(DRAFT_RESPONSE);
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(errorService.setError).toHaveBeenCalledWith(ERROR);
+        });
+    });
+
   });
 });

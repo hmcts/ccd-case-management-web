@@ -14,11 +14,11 @@ export class DraftService {
     private errorService: HttpErrorService
   ) {}
 
-  getDrafts(): Observable<Draft> {
-    const saveDraftEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/drafts/`;
+  getDrafts(jid: string, ctid: string): Observable<Draft> {
+    const getDraftsEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/`;
 
     return this.http
-      .get(saveDraftEndpoint)
+      .get(getDraftsEndpoint)
       .map(response => response.json())
       .catch((error: any): any => {
         this.errorService.setError(error);

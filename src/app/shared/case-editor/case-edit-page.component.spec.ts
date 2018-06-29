@@ -13,6 +13,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CaseFieldService } from '../domain/case-field.service';
 import { aCaseField } from './case-edit.spec';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseEventData } from '../domain/case-event-data';
+import { Draft } from '../domain/draft';
+import { CaseDetails } from '../domain/case-details';
 
 describe('CaseEditPageComponent', () => {
 
@@ -28,6 +31,30 @@ describe('CaseEditPageComponent', () => {
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({'PersonLastName': new FormControl('Khaleesi')})
   });
+  const CASE_EVENT_DATA: CaseEventData = {
+    event: {
+      id: 'CreateCase',
+      summary: 'Some Event Summary',
+      description: 'Some Event Description'
+    },
+    data: FORM_GROUP,
+    event_token: 'some_ugly_token_string',
+    ignore_warning: true
+  };
+  const A_CASE: CaseDetails = {
+    id: '1234567890123456',
+    jurisdiction: 'Test',
+    case_type_id: 'TestCase',
+    state: 'CaseCreated'
+  };
+  let draft: Draft = {
+    id: '1',
+    document: A_CASE,
+    type: 'typeA'
+  };
+  let someObservable = {
+    'subscribe': () => new Draft()
+  };
 
   let caseEditComponentStub: any;
   beforeEach(async(() => {
@@ -38,11 +65,16 @@ describe('CaseEditPageComponent', () => {
       'eventTrigger': {'case_fields': []},
       'hasPrevious': () => true,
       'getPage': () => firstPage,
+      'next': () => true,
       'cancel': () => undefined,
+      'validate': (caseEventData: CaseEventData) => Observable.of(caseEventData),
+      'saveDraft': (caseEventData: CaseEventData) => Observable.of(someObservable),
     };
 
     formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
-    formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);
+    formErrorService.mapFieldErrors.and.returnValue('Ok');
+    formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise', 'filterCurrentPageFields']);
+    formValueService.sanitise.and.returnValue(CASE_EVENT_DATA);
     spyOn(caseEditComponentStub, 'cancel');
     TestBed.configureTestingModule({
       declarations: [CaseEditPageComponent],
@@ -136,5 +168,14 @@ describe('CaseEditPageComponent', () => {
     comp.currentPage = wizardPage;
     fixture.detectChanges();
     expect(comp.currentPageIsNotValid()).toBeTruthy();
+  });
+
+  it('should submit', () => {
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    comp.submit();
+    expect(formValueService.filterCurrentPageFields).toHaveBeenCalled();
+    expect(formValueService.sanitise).toHaveBeenCalled();
   });
 });

@@ -107,8 +107,10 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
             this.caseEdit.saveDraft(draftCaseEventData).subscribe(
               (draft) => this.eventTrigger.draft_store_id = draft.id
             );
+          console.log('********* in subscribe ');
             this.next();
           }, error => {
+            console.log('********* here');
             this.isSubmitting = false;
             this.error = error;
             this.callbackErrorsSubject.next(this.error);

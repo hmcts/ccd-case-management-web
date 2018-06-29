@@ -14,7 +14,7 @@
 <ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject"
                      (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
 
-<form [formGroup]="editForm" (submit)="submit()">
+<form class="check-your-answers" [formGroup]="editForm" (submit)="submit()">
   <ng-container *ngIf="checkYourAnswerFieldsToDisplayExists()">
 
     <h1 class="heading-small">Check your answers</h1>
@@ -32,7 +32,7 @@
                 <td class="form-cell">
                   <ccd-field-read [caseField]="summaryCaseField(field)" [context]="paletteContext"></ccd-field-read>
                 </td>
-                <td class="valign-top">
+                <td class="valign-top check-your-answers__change">
                   <a *ngIf="isChangeAllowed(field)" (click)="navigateToPage(page.id)"
                     href="javascript:void(0)">Change</a>
                 </td>

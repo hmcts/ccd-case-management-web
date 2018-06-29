@@ -1,6 +1,11 @@
-<!--<div [class.back-link-spacing]="!currentPage.label">
-  <a (click)="previous()" href="javascript:void(0)" class="back-link">&lt; Back</a>
-</div>-->
+<!-- Current Page && Event trigger name -->
+<h1 class="heading-medium" id="page-header"><span *ngIf="currentPage.label">{{currentPage.label}}&nbsp;-&nbsp;</span>{{ eventTrigger.name}}</h1>
+
+<!-- Case ID -->
+<h2 *ngIf="getCaseId()" class="heading-small">
+  #{{ getCaseId() | ccdCaseReference}}
+</h2>
+
 <div *ngIf="error" class="error-summary" role="group" aria-labelledby="edit-case-event_error-summary-heading" tabindex="-1">
   <h3 class="heading-medium error-summary-heading" id="edit-case-event_error-summary-heading">
     The event could not be created
@@ -11,7 +16,6 @@
   </ul>
 </div>
 <ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject" (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
-<h3 *ngIf="currentPage.label" class="heading-small">{{currentPage.label}}</h3>
 <form *ngIf="currentPage" class="form" [formGroup]="editForm" (submit)="submit()">
   <fieldset id="fieldset-case-data">
 

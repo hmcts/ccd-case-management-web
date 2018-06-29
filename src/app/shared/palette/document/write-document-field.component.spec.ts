@@ -125,11 +125,6 @@ describe('WriteDocumentFieldComponent', () => {
 
     de = fixture.debugElement;
     fixture.detectChanges();
-
-    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
-    componentDialog = fixtureDialog.componentInstance;
-    deDialog = fixtureDialog.debugElement;
-    fixtureDialog.detectChanges();
   });
 
   it('should render an element for file selection', () => {
@@ -190,14 +185,34 @@ describe('WriteDocumentFieldComponent', () => {
     expect(component.valid).toBeTruthy();
   });
 
-  it('should trigger the document replace even when replace button is clicked', () => {
+  it('should display dialog only if document exist', () => {
+    expect(component.caseField.value).toBeTruthy();
+    component.fileSelectEvent();
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+    let replaceElement = deDialog.query(By.css('.button[title=Replace]'));
+    expect(replaceElement).toBeTruthy();
+  });
+
+  it('should trigger the document replace event when replace button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
     let dialogReplacelButton = deDialog.query($DIALOG_REPLACE_BUTTON);
     dialogReplacelButton.nativeElement.click();
     expect(componentDialog.result).toEqual('Replace');
     fixture.detectChanges();
   });
 
-  it('should not trigger the document replace even when cancel button is clicked', () => {
+  it('should not trigger the document replace event when cancel button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
     let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
     dialogCancelButton.nativeElement.click();
     expect(componentDialog.result).toEqual('Cancel');

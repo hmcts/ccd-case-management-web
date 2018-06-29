@@ -93,7 +93,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     this.fileInput.nativeElement.click();
   }
 
-  fileSelectEvent(fileInput: any) {
+  fileSelectEvent() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

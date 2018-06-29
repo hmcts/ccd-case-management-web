@@ -10,7 +10,7 @@
   </div>
 
   <div style='position:relative'>
-    <div id='fileInputWrapper' (click)="fileSelectEvent($event)"></div>
+    <div id='fileInputWrapper' (click)="fileSelectEvent()"></div>
     <input class="form-control" [id]="id()" type="file" (change)="fileChangeEvent($event)" #fileInput/>
   </div>
 </div>

@@ -1861,31 +1861,25 @@
   },
   "validate": {
     "data": {
-      "PersonFirstName": "Freddy",
-      "HouseFlatNumber": "41A Queens Road",
+      "PersonFirstName": "Fred",
+      "HouseFlatNumber": null,
       "PersonLastNameWithValidation": "Doe",
-      "HouseFlatPostcode": "KT2 7SL",
-      "IsAddressForService": "No",
+      "HouseFlatPostcode": null,
+      "IsAddressForService": "",
       "PetitionerServiceAddress": {
         "HouseFlatNumber2": null,
         "HouseFlatPostcode2": null
       },
       "DateOfBirth": null,
+      "ContactEmail": null,
       "YourPhoneUk": null,
-      "TotalMonthlyIncome": "122200",
-      "CantProvideNationalInsuranceNumber": "34444RRRR",
-      "WhatNationality": [
-        "British"
-      ],
-      "ExamplesCollection": [
-        {
-          "id": null,
-          "value": "Collllect"
-        }
-      ],
-      "MarritalStatus": "CIVIL_PARTNERSHIP",
+      "TotalMonthlyIncome": null,
+      "CantProvideNationalInsuranceNumber": null,
+      "WhatNationality": [],
+      "ExamplesCollection": [],
+      "MarritalStatus": "",
       "WhatIsYourAge": null,
-      "ContactEmail": ""
+      "HasOtherInfo": "No"
     },
     "event": {
       "id": "createCase",

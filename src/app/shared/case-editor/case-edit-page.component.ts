@@ -101,16 +101,16 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       caseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.validate(caseEventData)
         .subscribe(() => {
-            let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-            draftCaseEventData.event_token = this.eventTrigger.event_token;
-            draftCaseEventData.ignore_warning = this.ignoreWarning;
-            this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-              (draft) => this.eventTrigger.draft_store_id = draft.id
-            );
-          console.log('********* in subscribe ');
+            if (this.eventTrigger.can_save_draft) {
+              let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+              draftCaseEventData.event_token = this.eventTrigger.event_token;
+              draftCaseEventData.ignore_warning = this.ignoreWarning;
+              this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+                (draft) => this.eventTrigger.draft_store_id = draft.id
+              );
+            }
             this.next();
           }, error => {
-            console.log('********* here');
             this.isSubmitting = false;
             this.error = error;
             this.callbackErrorsSubject.next(this.error);
@@ -136,12 +136,14 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   previous(): Promise<boolean> {
     this.error = null;
-    let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-    draftCaseEventData.event_token = this.eventTrigger.event_token;
-    draftCaseEventData.ignore_warning = this.ignoreWarning;
-    this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-      (draft) => this.eventTrigger.draft_store_id = draft.id
-    );
+    if (this.eventTrigger.can_save_draft) {
+      let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+      draftCaseEventData.event_token = this.eventTrigger.event_token;
+      draftCaseEventData.ignore_warning = this.ignoreWarning;
+      this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+        (draft) => this.eventTrigger.draft_store_id = draft.id
+      );
+    }
     return this.caseEdit.previous(this.currentPage.id);
   }
 

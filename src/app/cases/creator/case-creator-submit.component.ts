@@ -58,7 +58,9 @@ export class CaseCreatorSubmitComponent implements OnInit {
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
     if (this.canSaveDraft()) {
       if (this.isCreatingDraft()) {
-        return (caseEventData: CaseEventData) => this.draftService.createDraft(this.jurisdictionId, this.caseTypeId, caseEventData);
+        return (caseEventData: CaseEventData) => this.draftService.createDraft(this.jurisdictionId,
+          this.caseTypeId,
+          caseEventData);
       } else {
         return (caseEventData: CaseEventData) => this.draftService.updateDraft(this.jurisdictionId,
           this.caseTypeId,

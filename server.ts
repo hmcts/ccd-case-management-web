@@ -20,6 +20,7 @@ const CONFIG = {
   'logout_url': process.env['CCD_GW_LOGOUT_URL'] || 'http://localhost:3453/logout',
   'api_url': process.env['CCD_API_URL'] || 'http://localhost:3453/aggregated',
   'case_data_url': process.env['CCD_DATA_URL'] || 'http://localhost:3453/data',
+  'draft_url': process.env['CCD_DRAFT_URL'] || 'http://localhost:3453/data',
   'document_management_url': process.env['DM_URL'] || 'http://localhost:3453/documents',
   'remote_document_management_url': process.env['DM_URL_REMOTE'] || 'https://api-gateway.dev.dm.reform.hmcts.net/documents',
   'pagination_page_size': parseInt(process.env['CCD_PAGE_SIZE'], 10) || 25,

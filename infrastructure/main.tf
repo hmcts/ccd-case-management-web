@@ -41,6 +41,7 @@ module "case-management-web" {
   is_frontend = "${local.is_frontend}"
   additional_host_name = "${local.external_host_name}"
   https_only = "${var.https_only}"
+  common_tags  = "${var.common_tags}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

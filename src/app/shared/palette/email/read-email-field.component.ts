@@ -3,6 +3,8 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
 
 @Component({
   selector: 'ccd-read-email-field',
-  template: `{{caseField.value}}`
+  template: `
+    <a href=\"mailto:{{caseField.value}}\">{{caseField.value}}</a>
+  `
 })
 export class ReadEmailFieldComponent extends AbstractFieldReadComponent {}

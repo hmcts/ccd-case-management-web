@@ -7,7 +7,7 @@ import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 
 describe('EventTriggerHeaderComponent', () => {
 
-  const $HEADING = By.css('h3');
+  const $HEADING = By.css('h1');
 
   const EVENT_TRIGGER: CaseEventTrigger = {
     id: 'TEST_TRIGGER',

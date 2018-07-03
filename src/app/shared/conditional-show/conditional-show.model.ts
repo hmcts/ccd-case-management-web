@@ -19,7 +19,7 @@ export class ShowCondition {
     // console.log('expectedValue: ' + right);
     // console.log('value: ' + value);
     // changed from '===' to '==' to cover number field conditions
-    if (right.endsWith('*')) {
+    if (right.endsWith('*') && value) {
       return value.startsWith(this.removeStarChar(right));
     } else {
       return value == right; // tslint:disable-line

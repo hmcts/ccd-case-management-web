@@ -18,7 +18,7 @@ describe('ReadEmailFieldComponent', () => {
     field_type: FIELD_TYPE,
     value: VALUE
   };
-  const EMPTY = '';
+  const EMPTY = ' ';
 
   let fixture: ComponentFixture<ReadEmailFieldComponent>;
   let component: ReadEmailFieldComponent;
@@ -47,21 +47,20 @@ describe('ReadEmailFieldComponent', () => {
   it('render provided email as string', () => {
     component.caseField.value = VALUE;
     fixture.detectChanges();
-
-    expect(de.nativeElement.textContent).toEqual(VALUE);
+    expect(de.nativeElement.textContent).toContain(VALUE);
   });
 
   it('render undefined value as empty string', () => {
     component.caseField.value = undefined;
     fixture.detectChanges();
 
-    expect(de.nativeElement.textContent).toEqual(EMPTY);
+    expect(de.nativeElement.textContent).toContain(EMPTY);
   });
 
   it('render null value as empty string', () => {
     component.caseField.value = null;
     fixture.detectChanges();
 
-    expect(de.nativeElement.textContent).toEqual(EMPTY);
+    expect(de.nativeElement.textContent).toContain(EMPTY);
   });
 });

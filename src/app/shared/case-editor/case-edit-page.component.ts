@@ -146,4 +146,8 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   private scrollToTop(): void {
     window.scrollTo(0, 0);
   }
+
+  getCaseId(): String {
+    return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
+  }
 }

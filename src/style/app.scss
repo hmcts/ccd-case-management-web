@@ -39,7 +39,6 @@ $govuk-template-image-path: "/assets";
   padding-right: 210px;
 }
 
-
 @media (max-width: 991px) {
 
   // Add bottom margin when column are stacked up
@@ -95,4 +94,108 @@ table.form-table {
 
 .ccd-error-summary-li {
   margin-left: 40px;
+}
+select::-ms-expand {
+  display: none;
+}
+.ccd-dropdown {
+  background: url('../public/img/dropdown-arrow.PNG') no-repeat 98%;
+  background-size: 9px;
+  font-size: 16px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  height: 31px;
+  border-radius: 3px;
+  border: solid 1px #122337;
+  padding: 2px 30px 0 10px;
+  margin: 0 0 30px 0;
+}
+.cancel {
+  margin: 25px 0px 25px 0px;
+}
+.form-money { position: relative; width: 41%; }
+.form-money input { text-indent: 25px;}
+.form-money .form-currency {
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  font-size: 19px;
+  font-weight: bold;
+}
+.search-left {
+  float: left;
+  padding-left: 15px;
+  width: 19%;
+}
+.search-right {
+  float: right;
+  width: 77%;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+.screen-990 {
+  width: 990px;
+  margin: 0 auto;
+}
+.heading-small {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.heading-medium {
+  margin-top: 45px;
+}
+.heading-17 {
+  font-size: 17px;
+}
+.form-group, .bottom-0 {
+  margin-bottom: 0;
+}
+.bottom-30{
+  margin-bottom: 30px;
+}
+.panel .form-group {
+  margin-bottom: 15px;
+}
+.form-label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.form-hint {
+  font-size: 14px;
+}
+.multiple-choice {
+  [type=checkbox] + label::before {
+    border: 1px solid;
+  }
+}
+.form-control {
+  border: 1px solid;
+  font-size: 16px;
+  width: 100%;
+}
+.dropdown-50 {
+  width: 50%;
+}
+.dropdown-100 {
+  width: 100%;
+}
+.width-50 {
+  width: 50%;
+}
+.text-16, .error-message {
+  font-size: 16px;
+}
+.postcodeinput {
+  width: 49%;
+}
+.button-30 {
+  height: 30px;
+}
+.markdown h2, .markdown h3 {
+  font-size: 17px;
+  margin-top: 0px;
+}
+.markdown ul, .markdown p {
+  margin-bottom: 25px;
 }

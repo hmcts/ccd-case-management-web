@@ -3,12 +3,12 @@
 	<fieldset class="inline">
 
     <legend>
-			<span class="form-label-bold" *ngIf="caseField.label">{{caseField | ccdFieldLabel}}</span>
+      <span class="form-label" *ngIf="caseField.label">{{caseField | ccdFieldLabel}}</span>
       <span class="form-hint" *ngIf="caseField.hint_text">{{caseField.hint_text}}</span>
       <span class="error-message" *ngIf="yesNoControl.errors && yesNoControl.touched">{{yesNoControl.errors | ccdFirstError}}</span>
     </legend>
 
-    <div class="form-group">
+    <div class="form-group bottom-30">
 
   	  <div class="multiple-choice" *ngFor="let value of yesNoValues" [ngClass]="{selected: yesNoControl.value === value}">
   	    <input [id]="id()+'-'+value" [name]="id()" type="radio" [formControl]="yesNoControl" [value]="value">

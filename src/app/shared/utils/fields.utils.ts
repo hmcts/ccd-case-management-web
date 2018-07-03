@@ -71,11 +71,20 @@ export class FieldsUtils {
         }
         break;
       }
+      case 'Complex': {
+        switch (field.field_type.id) {
+          case 'OrderSummary': {
+            let fieldValue = (result[field.id] || field.value);
+            fieldValue.PaymentTotal = FieldsUtils.getMoneyGBP(fieldValue.PaymentTotal);
+            break;
+          }
+        }
+      }
     }
   };
 
   private static getMoneyGBP(fieldValue) {
-    return fieldValue ? FieldsUtils.currencyPipe.transform(fieldValue / 100, 'GBP', 'symbol') : fieldValue;
+    return fieldValue && !fieldValue.startsWith('£') ? FieldsUtils.currencyPipe.transform(fieldValue / 100, 'GBP', 'symbol') : fieldValue;
   }
 
   private static getDate(fieldValue) {

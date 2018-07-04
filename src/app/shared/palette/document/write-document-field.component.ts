@@ -13,6 +13,7 @@ import { DocumentDialogComponent } from '../../document-dialog/document-dialog.c
 export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   private uploadedDocument: FormGroup;
   private selectedFile: File;
+  private dialogConfig: MatDialogConfig;
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -24,7 +25,23 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     super();
   }
 
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.height = '220px';
+    this.dialogConfig.width = '550px';
+    this.dialogConfig.panelClass = 'dialog';
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+    }
+  }
+
   ngOnInit() {
+    this.initDialog();
     let document = this.caseField.value;
     if (document) {
       this.createDocumentGroup(
@@ -94,21 +111,8 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
   }
 
   fileSelectEvent() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.ariaLabel = 'Label';
-    dialogConfig.height = '220px';
-    dialogConfig.width = '550px';
-    dialogConfig.panelClass = 'dialog';
-
-    dialogConfig.closeOnNavigation = false;
-    dialogConfig.position = {
-      top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
-    }
-
     if (this.caseField.value) {
-      this.openDialog(dialogConfig);
+      this.openDialog(this.dialogConfig);
     } else {
       this.openFileDialog();
     }

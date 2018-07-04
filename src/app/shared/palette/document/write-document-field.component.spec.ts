@@ -12,7 +12,7 @@ import { FormGroup } from '@angular/forms';
 import { FieldLabelPipe } from '../utils/field-label.pipe';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { DocumentDialogComponent } from '../../document-dialog/document-dialog.component';
 
 describe('WriteDocumentFieldComponent', () => {
@@ -70,6 +70,7 @@ describe('WriteDocumentFieldComponent', () => {
     FORM_GROUP.addControl(FORM_GROUP_ID, control);
     return control;
   };
+  const DIALOG_CONFIG = new MatDialogConfig();
   const $DIALOG_REPLACE_BUTTON = By.css('.button[title=Replace]');
   const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
 
@@ -112,6 +113,7 @@ describe('WriteDocumentFieldComponent', () => {
           { provide: DocumentManagementService, useValue: mockDocumentManagementService },
           { provide: MatDialog, useValue: dialog },
           { provide: MatDialogRef, useValue: matDialogRef },
+          { provide: MatDialogConfig, useValue: DIALOG_CONFIG },
           DocumentDialogComponent
         ]
       })
@@ -187,7 +189,6 @@ describe('WriteDocumentFieldComponent', () => {
 
   it('should display dialog only if document exist', () => {
     expect(component.caseField.value).toBeTruthy();
-    component.fileSelectEvent();
     fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
     componentDialog = fixtureDialog.componentInstance;
     deDialog = fixtureDialog.debugElement;

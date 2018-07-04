@@ -107,7 +107,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
       top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
 
-    if (!this.caseField.value) {
+    if (this.caseField.value) {
       this.openDialog(dialogConfig);
     } else {
       this.openFileDialog();

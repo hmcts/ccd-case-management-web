@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.model';
-import { CaseState } from '../../../shared/domain/definition/case-state.model';
-import { CaseType } from '../../../shared/domain/definition/case-type.model';
+import { Jurisdiction } from '../../domain/definition/jurisdiction.model';
+import { CaseState } from '../../domain/definition/case-state.model';
+import { CaseType } from '../../domain/definition/case-type.model';
 import { SearchService } from '../../../core/search/search.service';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { FormGroup } from '@angular/forms';
 import { JurisdictionService } from '../../jurisdiction.service';
 import { OrderService } from '../../../core/order/order.service';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
-import { READ_ACCESS } from '../../../shared/domain/case-view/access-types.model';
+import { READ_ACCESS } from '../../domain/case-view/access-types.model';
 
 @Component({
   selector: 'ccd-search-filters',
@@ -33,7 +33,8 @@ export class SearchFiltersComponent implements OnInit {
     caseType?: CaseType,
     formGroup?: FormGroup,
     caseState?: CaseState,
-    page?: number
+    page?: number,
+    metadataFields?: string[]
   };
 
   selectedJurisdictionCaseTypes?: CaseType[];
@@ -59,7 +60,16 @@ export class SearchFiltersComponent implements OnInit {
   apply(): void {
     this.selected.formGroup = this.formGroup;
     this.selected.page = 1;
+    this.selected.metadataFields = this.getMetadataFields();
     this.onApply.emit(this.selected);
+  }
+
+  getMetadataFields(): string[] {
+    if (this.searchInputs) {
+      return this.searchInputs.filter(searchInput => searchInput.field.metadata === true).map(function (searchInput) {
+        return searchInput.field.id;
+      });
+    }
   }
 
   isSearchable(): boolean {

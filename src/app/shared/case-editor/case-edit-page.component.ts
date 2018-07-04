@@ -84,7 +84,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   private checkOptionalField(caseField: CaseField, theControl: AbstractControl): boolean {
-    return this.caseFieldService.isOptional(caseField) || theControl.valid || theControl.disabled;
+    return (!theControl && this.caseFieldService.isOptional(caseField)) || theControl.valid || theControl.disabled;
   }
 
   private checkMandatoryField(caseField: CaseField, theControl: AbstractControl): boolean {
@@ -145,5 +145,9 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   private scrollToTop(): void {
     window.scrollTo(0, 0);
+  }
+
+  getCaseId(): String {
+    return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
   }
 }

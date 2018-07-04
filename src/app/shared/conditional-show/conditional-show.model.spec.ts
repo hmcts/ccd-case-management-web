@@ -105,6 +105,15 @@ describe('conditional-show', () => {
 
       expect(matched).toBe(false);
     });
+
+    it('field starts with a string and does not exist', () => {
+      let sc = new ShowCondition('field="te*"');
+      let fields = {
+      };
+      let matched = sc.match(fields);
+
+      expect(matched).toBe(false);
+    });
   });
 
   describe('not matches ByCaseFields when', () => {

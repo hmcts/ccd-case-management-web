@@ -27,6 +27,8 @@ locals {
 
   is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
   external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
+
+  ccd_activity_url = "${local.ccd_gateway_url}/activity"
 }
 
 module "case-management-web" {
@@ -38,6 +40,7 @@ module "case-management-web" {
   subscription = "${var.subscription}"
   is_frontend = "${local.is_frontend}"
   additional_host_name = "${local.external_host_name}"
+  https_only = "${var.https_only}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"
@@ -53,7 +56,7 @@ module "case-management-web" {
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"
     PRINT_SERVICE_URL_REMOTE = "${local.ccd_print_service_url}"
     WEBSITE_NODE_DEFAULT_VERSION = "8.9.4"
-    CCD_ACTIVITY_URL = "" // Activity disabled until it's deployed on CNP
+    CCD_ACTIVITY_URL = "${var.activity_enabled == "true" ? local.ccd_activity_url : ""}"
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS = 5000
     CCD_ACTIVITY_RETRY = 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1

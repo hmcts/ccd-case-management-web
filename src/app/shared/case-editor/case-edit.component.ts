@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ShowCondition } from '../conditional-show/conditional-show.model';
 import { FieldsPurger } from '../utils/fields.purger';
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
+import { CaseView } from '../../core/cases/case-view.model';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -27,6 +28,9 @@ export class CaseEditComponent implements OnInit {
 
   @Input()
   validate: (CaseEventData) => Observable<object>;
+
+  @Input()
+  caseDetails: CaseView;
 
   @Output()
   cancelled: EventEmitter<any> = new EventEmitter();

@@ -12,16 +12,16 @@
         </tr>
       </table>
     </th>
-    <th *ngIf="activityEnabled()" style="width: 135px;">Case Activity</th>
+    <th *ngIf="activityEnabled()" style="width: 110px;"></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let result of resultView.results | ccdSortSearchResult : sortParameters | paginate: { itemsPerPage: paginationPageSize, currentPage: selected.page, totalItems: paginationMetadata.total_results_count }">
-    <td>
-      <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"><div [style.visibility]="hideRows ? 'hidden' : 'visible'">{{result.case_id | ccdCaseReference}}</div></a>
+    <td class="caseid-col">
+      <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"><div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">{{result.case_id | ccdCaseReference}}</div></a>
     </td>
     <td *ngFor="let col of resultView.columns">
-      <div [style.visibility]="hideRows ? 'hidden' : 'visible'">
+      <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">
         <ccd-field-read [caseField]="{
                 id: col.case_field_id,
                 label: col.label,

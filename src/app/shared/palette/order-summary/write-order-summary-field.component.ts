@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
-import { FormControl, FormGroup, AbstractControl, FormArray } from '@angular/forms';
-import { CaseField } from '../../domain/definition/case-field.model';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'ccd-write-order-summary-field',
@@ -12,26 +11,30 @@ export class WriteOrderSummaryFieldComponent extends AbstractFieldWriteComponent
   paymentReference: FormControl;
   paymentTotal: FormControl;
   feesArray: FormArray;
-  formGroup: FormGroup;
+  orderSummaryGroup: FormGroup;
 
   ngOnInit(): void {
-    this.formGroup = this.registerControl(new FormGroup({}));
+    this.orderSummaryGroup = this.registerControl(new FormGroup({}));
     this.paymentReference = new FormControl(this.caseField.value.PaymentReference);
-    this.formGroup.addControl('PaymentReference', this.paymentReference);
+    this.orderSummaryGroup.addControl('PaymentReference', this.paymentReference);
     this.paymentTotal = new FormControl(this.caseField.value.PaymentTotal);
-    this.formGroup.addControl('PaymentTotal', this.paymentTotal);
+    this.orderSummaryGroup.addControl('PaymentTotal', this.paymentTotal);
     this.feesArray = new FormArray([]);
     this.caseField.value.Fees.forEach((fee, index) => {
-      let feeGroup = new FormGroup({});
-      feeGroup.addControl('FeeCode', new FormControl(fee.value.FeeCode));
-      feeGroup.addControl('FeeAmount', new FormControl(fee.value.FeeAmount));
-      feeGroup.addControl('FeeDescription', new FormControl(fee.value.FeeDescription));
-      feeGroup.addControl('FeeVersion', new FormControl(fee.value.FeeVersion));
-      let feeValueGroup = new FormGroup({});
-      feeValueGroup.addControl('value', feeGroup);
-      this.feesArray.push(feeValueGroup);
+      this.feesArray.push(this.getFeeValue(fee.value));
     });
-    this.formGroup.addControl('Fees', this.feesArray);
+    this.orderSummaryGroup.addControl('Fees', this.feesArray);
+  }
+
+  private getFeeValue(feeValue): FormGroup {
+    let feeGroup = new FormGroup({});
+    feeGroup.addControl('FeeCode', new FormControl(feeValue.FeeCode));
+    feeGroup.addControl('FeeAmount', new FormControl(feeValue.FeeAmount));
+    feeGroup.addControl('FeeDescription', new FormControl(feeValue.FeeDescription));
+    feeGroup.addControl('FeeVersion', new FormControl(feeValue.FeeVersion));
+    let feeValueGroup = new FormGroup({});
+    feeValueGroup.addControl('value', feeGroup);
+    return feeValueGroup;
   }
 
 }

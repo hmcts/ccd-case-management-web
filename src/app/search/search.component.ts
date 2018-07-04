@@ -71,7 +71,7 @@ export class SearchComponent implements OnInit {
         this.caseType = filter.caseType;
         this.caseState = filter.caseState;
 
-        SearchComponent.scrollToTop();
+        this.scrollToTop();
       });
   }
 
@@ -93,7 +93,7 @@ export class SearchComponent implements OnInit {
     }
     for (let attributeName of Object.keys(formGroupValue)) {
       let value = formGroupValue[attributeName];
-      if (SearchComponent.isStringOrNumber(value)) {
+      if (this.isStringOrNumber(value)) {
         target[this.getFilterType(attributeName)][prefix + attributeName] = value;
       } else if (value) {
         this.buildFormDetails(attributeName, target, value);
@@ -101,11 +101,11 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  private static isStringOrNumber(value: any): boolean {
+  private isStringOrNumber(value: any): boolean {
     return (typeof value === 'string' && value.length !== 0) || (typeof value === 'number');
   }
 
-  private static scrollToTop(): void {
+  private scrollToTop(): void {
     window.scrollTo(0, 0);
   }
 

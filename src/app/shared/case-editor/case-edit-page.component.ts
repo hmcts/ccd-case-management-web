@@ -106,20 +106,11 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
               draftCaseEventData.event_token = this.eventTrigger.event_token;
               draftCaseEventData.ignore_warning = this.ignoreWarning;
               this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-                (draft) => this.eventTrigger.draft_store_id = draft.id
+                (draft) => this.eventTrigger.draft_store_id = draft.id, error => this.handleError(error)
               );
             }
             this.next();
-          }, error => {
-            this.isSubmitting = false;
-            this.error = error;
-            this.callbackErrorsSubject.next(this.error);
-            if (this.error.details) {
-              this.formErrorService
-                .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
-            }
-          }
-        );
+          }, error => this.handleError(error));
       this.scrollToTop();
     }
   }
@@ -141,7 +132,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       draftCaseEventData.event_token = this.eventTrigger.event_token;
       draftCaseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-        (draft) => this.eventTrigger.draft_store_id = draft.id
+        (draft) => this.eventTrigger.draft_store_id = draft.id, error => this.handleError(error)
       );
     }
     return this.caseEdit.previous(this.currentPage.id);
@@ -161,5 +152,15 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   private scrollToTop(): void {
     window.scrollTo(0, 0);
+  }
+
+  private handleError(error) {
+    this.isSubmitting = false;
+    this.error = error;
+    this.callbackErrorsSubject.next(this.error);
+    if (this.error.details) {
+      this.formErrorService
+        .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
+    }
   }
 }

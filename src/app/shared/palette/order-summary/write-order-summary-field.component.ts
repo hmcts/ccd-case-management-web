@@ -8,22 +8,22 @@ import { FormControl, FormGroup, FormArray } from '@angular/forms';
 })
 export class WriteOrderSummaryFieldComponent extends AbstractFieldWriteComponent implements OnInit {
 
-  paymentReference: FormControl;
-  paymentTotal: FormControl;
-  feesArray: FormArray;
-  orderSummaryGroup: FormGroup;
-
+  /*
+    These are implemented manually rather than using WriteComplexFieldComponent. The reason
+    is because the view is readonly the tree of form controls is not being built automatically
+    and has to be built manually.
+  */
   ngOnInit(): void {
-    this.orderSummaryGroup = this.registerControl(new FormGroup({}));
-    this.paymentReference = new FormControl(this.caseField.value.PaymentReference);
-    this.orderSummaryGroup.addControl('PaymentReference', this.paymentReference);
-    this.paymentTotal = new FormControl(this.caseField.value.PaymentTotal);
-    this.orderSummaryGroup.addControl('PaymentTotal', this.paymentTotal);
-    this.feesArray = new FormArray([]);
-    this.caseField.value.Fees.forEach((fee, index) => {
-      this.feesArray.push(this.getFeeValue(fee.value));
+    let orderSummaryGroup: FormGroup = this.registerControl(new FormGroup({}));
+    let paymentReference: FormControl = new FormControl(this.caseField.value.PaymentReference);
+    orderSummaryGroup.addControl('PaymentReference', paymentReference);
+    let paymentTotal: FormControl = new FormControl(this.caseField.value.PaymentTotal);
+    orderSummaryGroup.addControl('PaymentTotal', paymentTotal);
+    let feesArray: FormArray = new FormArray([]);
+    this.caseField.value.Fees.forEach((fee) => {
+      feesArray.push(this.getFeeValue(fee.value));
     });
-    this.orderSummaryGroup.addControl('Fees', this.feesArray);
+    orderSummaryGroup.addControl('Fees', feesArray);
   }
 
   private getFeeValue(feeValue): FormGroup {

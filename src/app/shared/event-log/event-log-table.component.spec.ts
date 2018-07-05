@@ -4,6 +4,7 @@ import { DebugElement } from '@angular/core';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '../palette/utils/date.pipe';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EventLogTableComponent', () => {
 
@@ -39,10 +40,11 @@ describe('EventLogTableComponent', () => {
 
   const $TABLE_HEADERS = By.css('table>thead>tr>th');
   const $TABLE_ROWS = By.css('table>tbody>tr');
+  const $TABLE_ROW_LINKS = By.css('table>tbody>tr>td>a');
 
-  const COL_DATE = 0;
-  const COL_AUTHOR = 1;
-  const COL_EVENT = 2;
+  const COL_EVENT = 0;
+  const COL_DATE = 1;
+  const COL_AUTHOR = 2;
 
   let fixture: ComponentFixture<EventLogTableComponent>;
   let component: EventLogTableComponent;
@@ -51,7 +53,7 @@ describe('EventLogTableComponent', () => {
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
-        imports: [],
+        imports: [RouterTestingModule],
         declarations: [
           EventLogTableComponent,
           DatePipe
@@ -75,9 +77,9 @@ describe('EventLogTableComponent', () => {
 
     expect(headers.length).toBe(3);
 
+    expect(headers[COL_EVENT].nativeElement.textContent).toBe('Event');
     expect(headers[COL_DATE].nativeElement.textContent).toBe('Date');
     expect(headers[COL_AUTHOR].nativeElement.textContent).toBe('Author');
-    expect(headers[COL_EVENT].nativeElement.textContent).toBe('Event');
   });
 
   it('should render a row for each event', () => {
@@ -90,18 +92,18 @@ describe('EventLogTableComponent', () => {
     expect(firstRowCells.length).toBe(3);
     let firstEvent = EVENTS[0];
 
+    expect(firstRowCells[COL_EVENT].nativeElement.textContent).toBe(firstEvent.event_name);
     expect(firstRowCells[COL_DATE].nativeElement.textContent).toBe('10 May 2017');
     expect(firstRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Justin SMITH');
-    expect(firstRowCells[COL_EVENT].nativeElement.textContent).toBe(firstEvent.event_name);
 
     let secondRowCells = rows[1].queryAll(By.css('td'));
 
     expect(secondRowCells.length).toBe(3);
     let secondEvent = EVENTS[1];
 
+    expect(secondRowCells[COL_EVENT].nativeElement.textContent).toBe(secondEvent.event_name);
     expect(secondRowCells[COL_DATE].nativeElement.textContent).toBe('9 May 2017');
     expect(secondRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Phillip CHAN');
-    expect(secondRowCells[COL_EVENT].nativeElement.textContent).toBe(secondEvent.event_name);
   });
 
   it('should highlight the row selected', () => {
@@ -131,5 +133,13 @@ describe('EventLogTableComponent', () => {
     fixture.detectChanges();
 
     expect(component.onSelect.emit).toHaveBeenCalledWith(EVENTS[1]);
+  });
+
+  it('should render hyperlink for each row and link to event id', () => {
+    let links = de.queryAll($TABLE_ROW_LINKS);
+
+    expect(links.length).toBe(2);
+    expect(links[0].nativeElement.getAttribute('href')).toBe('/event/5/history');
+    expect(links[1].nativeElement.getAttribute('href')).toBe('/event/4/history');
   });
 });

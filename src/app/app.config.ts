@@ -105,6 +105,19 @@ export class AppConfig {
   public getActivityMaxRequestPerBatch() {
     return this.config.activity_max_request_per_batch;
   }
+
+  public getCaseHistoryUrl(jurisdictionId: string,
+                           caseTypeId: string,
+                           caseId: string,
+                           eventId: string) {
+    return this.getApiUrl()
+      + `/caseworkers/:uid`
+      + `/jurisdictions/${jurisdictionId}`
+      + `/case-types/${caseTypeId}`
+      + `/cases/${caseId}`
+      + `/events/${eventId}`
+      + `/case-history`;
+  }
 }
 
 export class Config {

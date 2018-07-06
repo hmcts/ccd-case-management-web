@@ -46,7 +46,6 @@ module "case-management-web" {
     CCD_GW_LOGOUT_URL = "${local.ccd_gateway_url}/logout"
     CCD_API_URL = "${local.ccd_gateway_url}/aggregated"
     CCD_DATA_URL = "${local.ccd_gateway_url}/data"
-    CCD_DRAFT_URL = "${local.ccd_gateway_url}/data"
     CCD_GW_OAUTH2_URL = "${local.ccd_gateway_url}/oauth2"
     CCD_GW_OAUTH2_CLIENT_ID = "ccd_gateway"
     DM_URL = "${local.ccd_gateway_url}/documents"

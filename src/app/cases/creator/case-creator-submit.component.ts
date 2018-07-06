@@ -52,7 +52,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   private isCreatingDraft(): boolean {
-    return !this.eventTrigger.draft_store_id
+    return !this.eventTrigger.draft_store_id;
   }
 
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {

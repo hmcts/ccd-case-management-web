@@ -14,20 +14,8 @@ export class DraftService {
     private errorService: HttpErrorService
   ) {}
 
-  // getDrafts(jid: string, ctid: string): Observable<Draft> {
-  //   const getDraftsEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/`;
-  //
-  //   return this.http
-  //     .get(getDraftsEndpoint)
-  //     .map(response => response.json())
-  //     .catch((error: any): any => {
-  //       this.errorService.setError(error);
-  //       return Observable.throw(error);
-  //     });
-  // }
-  //
   createDraft(jid: string, ctid: string, eventData: CaseEventData): Observable<Draft> {
-    const saveDraftEndpoint = this.appConfig.getDraftUrl()
+    const saveDraftEndpoint = this.appConfig.getCaseDataUrl()
       + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
     return this.http
       .post(saveDraftEndpoint, eventData)
@@ -39,7 +27,7 @@ export class DraftService {
   }
 
   updateDraft(jid: string, ctid: string, draftId: string, eventData: CaseEventData): Observable<Draft> {
-    const saveDraftEndpoint = this.appConfig.getDraftUrl()
+    const saveDraftEndpoint = this.appConfig.getCaseDataUrl()
       + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/${draftId}`;
     return this.http
       .put(saveDraftEndpoint, eventData)

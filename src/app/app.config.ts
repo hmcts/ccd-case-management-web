@@ -90,10 +90,6 @@ export class AppConfig {
     return this.config.activity_url;
   }
 
-  public getDraftUrl() {
-    return this.config.draft_url;
-  }
-
   public getActivityNexPollRequestMs() {
     return this.config.activity_next_poll_request_ms;
   }
@@ -133,7 +129,6 @@ export class Config {
   api_url: string;
   case_data_url: string;
   document_management_url: string;
-  draft_url: string;
   login_url: string;
   logout_url: string;
   oauth2_client_id: string;

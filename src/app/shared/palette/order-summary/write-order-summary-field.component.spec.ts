@@ -1,16 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadOrderSummaryFieldComponent } from './read-order-summary-field.component';
 import { OrderSummary } from './order-summary.model';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Component, Input } from '@angular/core';
 import { FieldType } from '../../domain/definition/field-type.model';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { By } from '@angular/platform-browser';
 import { text } from '../../../test/helpers';
 import { ReadOrderSummaryRowComponent } from './read-order-summary-row.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, AbstractControl, FormGroup } from '@angular/forms';
 import { MoneyGbpModule } from '../money-gbp/money-gbp.module';
+import { WriteOrderSummaryFieldComponent } from './write-order-summary-field.component';
 
-describe('ReadOrderSummaryFieldComponent', () => {
+describe('WriteOrderSummaryFieldComponent', () => {
 
   const FIELD_TYPE: FieldType = {
     id: 'PersonOrderSummary',
@@ -42,24 +43,25 @@ describe('ReadOrderSummaryFieldComponent', () => {
 
   const EXPECTED_FEE_AMOUNTS = ['£45.45', '£4.55'];
   const EXPECTED_PAYMENT_TOTAL = '£50.00';
+  const ID = 'PersonOrderSummary';
   const CASE_FIELD: CaseField = {
-    id: 'x',
+    id: ID,
     label: 'X',
-    display_context: 'READONLY',
+    display_context: 'MANDATORY',
     field_type: FIELD_TYPE,
     value: VALUE
   };
   const UNDEFINED_CASE_FIELD: CaseField = {
     id: 'x',
     label: 'X',
-    display_context: 'READONLY',
+    display_context: 'MANDATORY',
     field_type: FIELD_TYPE,
     value: undefined
   };
   const NULL_CASE_FIELD: CaseField = {
     id: 'x',
     label: 'X',
-    display_context: 'READONLY',
+    display_context: 'MANDATORY',
     field_type: FIELD_TYPE,
     value: null
   };
@@ -68,9 +70,15 @@ describe('ReadOrderSummaryFieldComponent', () => {
   const $BODY = By.css('table>tbody');
 
   describe('Value exists', () => {
-    let fixture: ComponentFixture<ReadOrderSummaryFieldComponent>;
-    let component: ReadOrderSummaryFieldComponent;
+    let fixture: ComponentFixture<WriteOrderSummaryFieldComponent>;
+    let component: WriteOrderSummaryFieldComponent;
     let de: DebugElement;
+
+    const FORM_GROUP: FormGroup = new FormGroup({});
+    const REGISTER_CONTROL = (control) => {
+      FORM_GROUP.addControl(ID, control);
+      return control;
+    };
 
     beforeEach(async(() => {
       TestBed
@@ -80,49 +88,50 @@ describe('ReadOrderSummaryFieldComponent', () => {
             MoneyGbpModule
           ],
           declarations: [
+            WriteOrderSummaryFieldComponent,
+            // Mocks
             ReadOrderSummaryFieldComponent,
             ReadOrderSummaryRowComponent,
           ]
         })
         .compileComponents();
 
-      fixture = TestBed.createComponent(ReadOrderSummaryFieldComponent);
+      fixture = TestBed.createComponent(WriteOrderSummaryFieldComponent);
       component = fixture.componentInstance;
 
       component.caseField = CASE_FIELD;
+      component.registerControl = REGISTER_CONTROL;
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
 
     it('render provided order summary as a table', () => {
-
       let headRow = de.query($HEAD_ROW);
       expect(headRow.children.length).toBe(3);
       expect(text(headRow.children[0])).toBe('Code');
       expect(text(headRow.children[1])).toBe('Description');
-        expect(text(headRow.children[2])).toBe('Amount');
+      expect(text(headRow.children[2])).toBe('Amount');
 
-        let body = de.query($BODY);
-        expect(body.children.length).toEqual(VALUE.Fees.length + 1);
+      let body = de.query($BODY);
+      expect(body.children.length).toEqual(VALUE.Fees.length + 1);
 
-        for (let i = 1; i <= VALUE.Fees.length; i++) {
+      for (let i = 1; i <= VALUE.Fees.length; i++) {
 
-          let feeCode = text(de.query(By.css('table>tbody tr:nth-child(' + i + ') td:nth-child(1)')));
-          let feeDescription = text(de.query(By.css('table>tbody tr:nth-child(' + i + ') td:nth-child(2)')));
-          let feeAmount = text(de.query(By.css('table>tbody tr:nth-child(' + i + ') td:nth-child(3)')));
+        let feeCode = text(de.query(By.css('table>tbody tr:nth-child(' + i + ') td:nth-child(1)')));
+        let feeDescription = text(de.query(By.css('table>tbody tr:nth-child(' + i + ') td:nth-child(2)')));
+        let feeAmount = text(de.query(By.css('table>tbody tr:nth-child(' + i + ') td:nth-child(3)')));
 
-          expect(feeCode).toBe(VALUE.Fees[i - 1].value.FeeCode);
-          expect(feeDescription).toBe(VALUE.Fees[i - 1].value.FeeDescription);
-          expect(feeAmount).toBe(EXPECTED_FEE_AMOUNTS[i - 1]);
-        }
+        expect(feeCode).toBe(VALUE.Fees[i - 1].value.FeeCode);
+        expect(feeDescription).toBe(VALUE.Fees[i - 1].value.FeeDescription);
+        expect(feeAmount).toBe(EXPECTED_FEE_AMOUNTS[i - 1]);
+      }
 
-        let paymentTotalLabel = text(de.query(By.css('table>tbody tr:last-child td:nth-child(2)')))
-        expect(paymentTotalLabel).toBe('Total');
+      let paymentTotalLabel = text(de.query(By.css('table>tbody tr:last-child td:nth-child(2)')))
+      expect(paymentTotalLabel).toBe('Total');
 
-        let paymentTotalValue = text(de.query(By.css('table>tbody tr:last-child td:nth-child(3)')))
-        expect(paymentTotalValue).toBe(EXPECTED_PAYMENT_TOTAL);
-
-      });
+      let paymentTotalValue = text(de.query(By.css('table>tbody tr:last-child td:nth-child(3)')))
+      expect(paymentTotalValue).toBe(EXPECTED_PAYMENT_TOTAL);
+    });
   });
 
   describe('Undefined value', () => {

@@ -14,18 +14,18 @@ export class DraftService {
     private errorService: HttpErrorService
   ) {}
 
-  getDrafts(jid: string, ctid: string): Observable<Draft> {
-    const getDraftsEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/`;
-
-    return this.http
-      .get(getDraftsEndpoint)
-      .map(response => response.json())
-      .catch((error: any): any => {
-        this.errorService.setError(error);
-        return Observable.throw(error);
-      });
-  }
-
+  // getDrafts(jid: string, ctid: string): Observable<Draft> {
+  //   const getDraftsEndpoint = this.appConfig.getDraftUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/`;
+  //
+  //   return this.http
+  //     .get(getDraftsEndpoint)
+  //     .map(response => response.json())
+  //     .catch((error: any): any => {
+  //       this.errorService.setError(error);
+  //       return Observable.throw(error);
+  //     });
+  // }
+  //
   createDraft(jid: string, ctid: string, eventData: CaseEventData): Observable<Draft> {
     const saveDraftEndpoint = this.appConfig.getDraftUrl()
       + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;

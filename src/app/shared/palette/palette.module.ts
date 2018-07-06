@@ -30,7 +30,6 @@ import { DocumentModule } from './document/document.module';
 import { LabelFieldComponent } from './label/label-field.component';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
-import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 import { OrderSummaryModule } from './order-summary/order-summary.module';
 
 @NgModule({
@@ -48,8 +47,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     CaseUIToolkitModule,
     AddressModule,
     MarkdownModule,
-    OrderSummaryModule,
-    PaletteUtilsModule
+    OrderSummaryModule
   ],
   declarations: [
     UnsupportedFieldComponent,
@@ -85,7 +83,6 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     ReadPhoneUKFieldComponent,
     ReadDateFieldComponent,
     ReadCollectionFieldComponent,
-    ReadOrderSummaryFieldComponent,
 
     // Write
     WriteCollectionFieldComponent,

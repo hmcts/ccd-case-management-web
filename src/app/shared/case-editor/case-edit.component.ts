@@ -9,6 +9,7 @@ import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FieldsPurger } from '../utils/fields.purger';
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
+import { CaseView } from '../../core/cases/case-view.model';
 import { Draft } from '../domain/draft';
 
 @Component({
@@ -29,6 +30,9 @@ export class CaseEditComponent implements OnInit {
 
   @Input()
   saveDraft: (CaseEventData) => Observable<Draft>;
+
+  @Input()
+  caseDetails: CaseView;
 
   @Output()
   cancelled: EventEmitter<any> = new EventEmitter();

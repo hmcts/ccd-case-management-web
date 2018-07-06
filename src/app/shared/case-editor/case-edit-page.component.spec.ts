@@ -13,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CaseFieldService } from '../domain/case-field.service';
 import { aCaseField } from './case-edit.spec';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { CaseEventData } from '../domain/case-event-data';
 import { Draft } from '../domain/draft';
 import { CaseDetails } from '../domain/case-details';
@@ -62,13 +63,14 @@ describe('CaseEditPageComponent', () => {
     caseEditComponentStub = {
       'form': FORM_GROUP,
       'data': '',
-      'eventTrigger': {'case_fields': []},
+      'eventTrigger': {'case_fields': [], 'name': 'Test event trigger name' },
       'hasPrevious': () => true,
       'getPage': () => firstPage,
       'next': () => true,
       'cancel': () => undefined,
       'validate': (caseEventData: CaseEventData) => Observable.of(caseEventData),
       'saveDraft': (caseEventData: CaseEventData) => Observable.of(someObservable),
+      'caseDetails': { 'case_id': '1234567812345678' },
     };
 
     formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
@@ -77,7 +79,8 @@ describe('CaseEditPageComponent', () => {
     formValueService.sanitise.and.returnValue(CASE_EVENT_DATA);
     spyOn(caseEditComponentStub, 'cancel');
     TestBed.configureTestingModule({
-      declarations: [CaseEditPageComponent],
+      declarations: [CaseEditPageComponent,
+        CaseReferencePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {provide: FormValueService, useValue: formValueService},
@@ -96,6 +99,7 @@ describe('CaseEditPageComponent', () => {
     const FIELDS: CaseField[] = [readOnly];
     wizardPage = new WizardPage();
     wizardPage.case_fields = FIELDS;
+    wizardPage.label = 'Test Label';
     wizardPage.getCol1Fields = () => FIELDS;
     wizardPage.getCol2Fields = () => FIELDS;
   });
@@ -111,6 +115,24 @@ describe('CaseEditPageComponent', () => {
     expect(de.nativeElement.textContent).toBeDefined();
     de = fixture.debugElement.query(By.css('#caseEditForm2'));
     expect(de.nativeElement.textContent).toBeDefined();
+  });
+
+  it('should display a page label in the header', () => {
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+
+    de = fixture.debugElement.query(By.css('#page-header'));
+    expect(de).toBeNull(); // Header is removed
+  });
+
+  it('should display an event trigger in the header', () => {
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+
+    de = fixture.debugElement.query(By.css('#page-header'));
+    expect(de).toBeNull(); // Header is removed
   });
 
   it('should display a page with one column when wizard page is not multicolumn', () => {

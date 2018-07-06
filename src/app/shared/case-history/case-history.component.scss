@@ -1,3 +1,19 @@
+.CaseHistory {
+  th, td {
+    border-bottom: none;
+  }
+}
+
+.caseHistorySection {
+  margin-top: 40px;
+}
+
+.EventDetails {
+  th, td {
+    border-bottom: none;
+  }
+}
+
 th {
   width: 1%;
   white-space: nowrap;
@@ -11,9 +27,9 @@ th {
 }
 
 .case-viewer-controls {
-   margin-top: 47px;
-   margin-bottom: 20px;
- }
+  margin-top: 47px;
+  margin-bottom: 20px;
+}
 
 ccd-case-header {
   float: left;
@@ -27,6 +43,4 @@ ccd-event-trigger {
   min-width: 300px;
   white-space:normal;
 }
-.markdown h3 {
-  margin-bottom: 0px;
-}
+

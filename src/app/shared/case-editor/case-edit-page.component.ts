@@ -163,4 +163,8 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
         .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
     }
   }
+
+  getCaseId(): String {
+    return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
+  }
 }

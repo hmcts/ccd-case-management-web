@@ -66,9 +66,9 @@ export class SearchFiltersComponent implements OnInit {
 
   getMetadataFields(): string[] {
     if (this.searchInputs) {
-      return this.searchInputs.filter(searchInput => searchInput.field.metadata === true).map(function (searchInput) {
-        return searchInput.field.id;
-      });
+      return this.searchInputs
+        .filter(searchInput => searchInput.field.metadata === true)
+        .map(searchInput => searchInput.field.id);
     }
   }
 

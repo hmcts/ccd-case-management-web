@@ -17,5 +17,4 @@ export type FieldTypeEnum =
   | 'Label'
   | 'AddressGlobal'
   | 'AddressGlobalUK'
-  | 'AddressUK'
-  | 'OrderSummary';
+  | 'AddressUK';

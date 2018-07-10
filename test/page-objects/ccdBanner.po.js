@@ -7,11 +7,11 @@ class CCDBanner extends BrowserUtils {
        super("", false)
 
        this._bannerHeaderTitle = by.css('.global-header .title');
-       this._userName = by.css('.header-proposition .dropbtn')
-       this._userNameDropDown = by.css('.header-proposition .dropdown-content')
+       this._userName = by.css('div #user-name')
        this._menuItems = by.css('.global-navigation cut-nav-item a')
        this._searchBox = by.css('.global-navigation .cut-nav-bar #search')
        this._footer = by.css('.footer-wrapper')
+       this._signOut = by.css('div #sign-out')
 
     }
 
@@ -21,6 +21,10 @@ class CCDBanner extends BrowserUtils {
         this.waitForPageElemToLoad(element(this._bannerHeaderTitle))
         this.waitForPageElemToLoad(element(this._userName))
 
+    }
+
+    clickSignOut() {
+        element(this._signOut).click();
     }
 
     getTitleLabel() {

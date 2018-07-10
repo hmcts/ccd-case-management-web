@@ -17,6 +17,8 @@ yarn install
 
 # ls -l
 
+node -v
+
 ## X11 for Ubuntu is not configured! The following configurations are needed for XVFB.
 ## Make a new display :21 with virtual screen 0 with resolution 1024x768 24dpi
 

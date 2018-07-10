@@ -1,9 +1,9 @@
-<div class="form-group" [ngClass]="{'error': !checkboxes.valid && checkboxes.touched}">
+<div class="form-group bottom-30" [ngClass]="{'error': !checkboxes.valid && checkboxes.touched}">
 
   <fieldset>
 
     <legend>
-      <span class="form-label-bold" *ngIf="caseField.label">{{caseField | ccdFieldLabel}}</span>
+      <span class="form-label" *ngIf="caseField.label">{{caseField | ccdFieldLabel}}</span>
       <span *ngIf="caseField.hint_text" class="form-hint">{{caseField.hint_text}}</span>
       <span *ngIf="checkboxes.errors && checkboxes.touched" class="error-message">{{checkboxes.errors | ccdFirstError}}</span>
     </legend>

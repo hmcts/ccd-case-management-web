@@ -13,6 +13,8 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
+import { CaseField } from '../domain/definition/case-field.model';
+import { SearchResultViewItem } from './search-result-view-item.model';
 
 @Component({
   selector: 'ccd-search-result',
@@ -129,6 +131,16 @@ export class SearchResultComponent implements OnChanges {
 
   activityEnabled(): boolean {
     return this.activityService.isEnabled;
+  }
+
+  buildCaseField(col: SearchResultViewColumn, result: SearchResultViewItem): CaseField {
+    return {
+      id: col.case_field_id,
+      label: col.label,
+      field_type: col.case_field_type,
+      value: result.case_fields[col.case_field_id],
+      display_context: null,
+    };
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {

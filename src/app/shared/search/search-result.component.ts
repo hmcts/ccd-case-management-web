@@ -92,33 +92,41 @@ export class SearchResultComponent implements OnChanges {
         return a.order - b.order;
       });
 
-      this.resultView.results.forEach(result => {
-        let caseFields = [];
-
-        Object.keys(result.case_fields).forEach(fieldId => {
-
-          let field = result.case_fields[fieldId];
-          caseFields.push({
-            id: fieldId,
-            label: null,
-            field_type: {},
-            value: field,
-            display_context: null,
-          });
-        });
-
-        result.hydrated_case_fields = caseFields;
-
-        result.columns = {};
-
-        this.resultView.columns.forEach(col => {
-          result.columns[col.case_field_id] = this.buildCaseField(col, result);
-        });
-      });
+      this.hydrateResultView();
     }
     if (changes['page']) {
       this.selected.page = (changes['page']).currentValue;
     }
+  }
+
+  /**
+   * Hydrates result view with case field definitions.
+   */
+  // A longer term resolution is to move this piece of logic to the backend
+  hydrateResultView(): void {
+    this.resultView.results.forEach(result => {
+      const caseFields = [];
+
+      Object.keys(result.case_fields).forEach(fieldId => {
+
+        const field = result.case_fields[fieldId];
+        caseFields.push({
+          id: fieldId,
+          label: null,
+          field_type: {},
+          value: field,
+          display_context: null,
+        });
+      });
+
+      result.hydrated_case_fields = caseFields;
+
+      result.columns = {};
+
+      this.resultView.columns.forEach(col => {
+        result.columns[col.case_field_id] = this.buildCaseField(col, result);
+      });
+    });
   }
 
   goToPage(page): void {

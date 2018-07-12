@@ -18,6 +18,8 @@ class TestHostComponent {
     @Input() caseField: CaseField;
     @Input() eventFields: CaseField[];
     @Input() formGroup: FormGroup;
+    @Input() hydrated_case_fields?: CaseField[];
+    @Input() columns?: object;
 }
 
 let field = (id, value, fieldType, label?) => {

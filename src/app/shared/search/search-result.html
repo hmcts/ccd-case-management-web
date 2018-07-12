@@ -21,8 +21,8 @@
       <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"><div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">{{result.case_id | ccdCaseReference}}</div></a>
     </td>
     <td *ngFor="let col of resultView.columns">
-      <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'" ccdLabelSubstitutor [caseField]="buildCaseField(col, result)" [eventFields]="result.hydrated_case_fields">
-        <ccd-field-read [caseField]="buildCaseField(col, result)"></ccd-field-read>
+      <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'" ccdLabelSubstitutor [caseField]="result.columns[col.case_field_id]" [eventFields]="result.hydrated_case_fields">
+        <ccd-field-read [caseField]="result.columns[col.case_field_id]"></ccd-field-read>
       </div>
     </td>
     <td *ngIf="activityEnabled()">

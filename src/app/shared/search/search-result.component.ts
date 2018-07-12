@@ -96,9 +96,10 @@ export class SearchResultComponent implements OnChanges {
         let caseFields = [];
 
         Object.keys(result.case_fields).forEach(fieldId => {
+
           let field = result.case_fields[fieldId];
           caseFields.push({
-            id: null,
+            id: fieldId,
             label: null,
             field_type: {},
             value: field,
@@ -107,6 +108,12 @@ export class SearchResultComponent implements OnChanges {
         });
 
         result.hydrated_case_fields = caseFields;
+
+        result.columns = {};
+
+        this.resultView.columns.forEach(col => {
+          result.columns[col.case_field_id] = this.buildCaseField(col, result);
+        });
       });
     }
     if (changes['page']) {

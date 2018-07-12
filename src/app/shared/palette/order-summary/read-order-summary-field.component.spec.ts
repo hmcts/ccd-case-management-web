@@ -14,7 +14,7 @@ describe('ReadOrderSummaryFieldComponent', () => {
 
   const FIELD_TYPE: FieldType = {
     id: 'PersonOrderSummary',
-    type: 'OrderSummary'
+    type: 'Complex'
   };
 
   const VALUE: OrderSummary = {

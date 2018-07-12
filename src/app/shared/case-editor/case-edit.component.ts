@@ -4,13 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import { Wizard } from './wizard.model';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Confirmation } from './confirmation.model';
-import { Predicate } from '../predicate';
 import { WizardPage } from '../domain/wizard-page.model';
 import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ShowCondition } from '../conditional-show/conditional-show.model';
 import { FieldsPurger } from '../utils/fields.purger';
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
+import { CaseView } from '../../core/cases/case-view.model';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -27,6 +26,9 @@ export class CaseEditComponent implements OnInit {
 
   @Input()
   validate: (CaseEventData) => Observable<object>;
+
+  @Input()
+  caseDetails: CaseView;
 
   @Output()
   cancelled: EventEmitter<any> = new EventEmitter();

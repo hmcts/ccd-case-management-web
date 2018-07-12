@@ -16,6 +16,7 @@ import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
 import { OrderService } from '../../core/order/order.service';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -41,6 +42,7 @@ describe('CaseEditSubmitComponent', () => {
   let firstPage = pages[0];
   let wizard: Wizard = new Wizard(pages);
   let orderService;
+  let casesReferencePipe: any;
   let eventTrigger: CaseEventTrigger = new CaseEventTrigger();
   let caseField1: CaseField = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', 3);
   let caseField2: CaseField = aCaseField('field2', 'field2', 'Text', 'OPTIONAL', 2);
@@ -78,6 +80,8 @@ describe('CaseEditSubmitComponent', () => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
 
+    casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
+
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
@@ -97,7 +101,8 @@ describe('CaseEditSubmitComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CaseEditSubmitComponent,
-        IsCompoundPipe
+        IsCompoundPipe,
+        CaseReferencePipe
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -106,6 +111,7 @@ describe('CaseEditSubmitComponent', () => {
         {provide: FormErrorService, useValue: formErrorService},
         {provide: CaseFieldService, useValue: caseFieldService},
         {provide: FieldsUtils, useValue: fieldsUtils},
+        {provide: CaseReferencePipe, useValue: casesReferencePipe},
         {provide: ActivatedRoute, useValue: mockRoute},
         {provide: OrderService, useValue: orderService}
       ]
@@ -309,6 +315,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
 
   let formValueService: any;
   let formErrorService: any;
+  let casesReferencePipe: any;
   let caseFieldService = new CaseFieldService();
   let fieldsUtils: FieldsUtils = new FieldsUtils();
 
@@ -353,7 +360,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
   beforeEach(async(() => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
-
+    casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
     caseEditComponent = {
       'form': FORM_GROUP,
       'data': '',
@@ -373,7 +380,8 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
     TestBed.configureTestingModule({
       declarations: [
         CaseEditSubmitComponent,
-        IsCompoundPipe
+        IsCompoundPipe,
+        CaseReferencePipe
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -382,6 +390,7 @@ describe('CaseEditSubmitComponent without custom end button label', () => {
         { provide: FormErrorService, useValue: formErrorService },
         { provide: CaseFieldService, useValue: caseFieldService },
         { provide: FieldsUtils, useValue: fieldsUtils },
+        { provide: CaseReferencePipe, useValue: casesReferencePipe },
         { provide: ActivatedRoute, useValue: mockRoute },
         { provide: OrderService, useValue: orderService }
       ]

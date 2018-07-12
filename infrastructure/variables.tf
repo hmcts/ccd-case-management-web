@@ -62,3 +62,11 @@ variable "external_host_name" {
 variable "aat_gateway" {
   default = "https://ccd-api-gateway-web-aat.service.core-compute-aat.internal"
 }
+
+variable "https_only" {
+  default = "true"
+}
+
+variable "common_tags" {
+  type = "map"
+}

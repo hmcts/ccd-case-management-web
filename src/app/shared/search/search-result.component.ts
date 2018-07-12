@@ -91,6 +91,23 @@ export class SearchResultComponent implements OnChanges {
       this.resultView.columns = this.resultView.columns.sort((a: SearchResultViewColumn, b: SearchResultViewColumn) => {
         return a.order - b.order;
       });
+
+      this.resultView.results.forEach(result => {
+        let caseFields = [];
+
+        Object.keys(result.case_fields).forEach(fieldId => {
+          let field = result.case_fields[fieldId];
+          caseFields.push({
+            id: null,
+            label: null,
+            field_type: {},
+            value: field,
+            display_context: null,
+          });
+        });
+
+        result.hydrated_case_fields = caseFields;
+      });
     }
     if (changes['page']) {
       this.selected.page = (changes['page']).currentValue;

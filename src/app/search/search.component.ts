@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit {
 
     const filters = this.getCaseFilterFromFormGroup(filter.formGroup);
     const caseFilters = filters[SearchComponent.CASE_FILTER];
-    const metadataParams = Object.assign(searchParams, filters[SearchComponent.METADATA_FILTER]);
+    const metadataFilters = Object.assign(searchParams, filters[SearchComponent.METADATA_FILTER]);
     const metadataPaginationParams = Object.assign(paginationParams, filters[SearchComponent.METADATA_FILTER]);
 
     this.paginationService
@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit {
       });
 
     this.searchService
-      .search(filter.jurisdiction.id, filter.caseType.id, metadataParams, caseFilters)
+      .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
       .subscribe(resultView => {
         this.resultView = resultView;
 

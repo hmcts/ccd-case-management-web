@@ -911,7 +911,8 @@ function createObservableFrom<T>(param: T): Observable<T> {
   });
 }
 
-function createWBInput(theLabel: string, theOrder: number, theId: string, theType: FieldTypeEnum, theMetadata: boolean): WorkbasketInputModel {
+function createWBInput(theLabel: string, theOrder: number, theId: string,
+                       theType: FieldTypeEnum, theMetadata: boolean): WorkbasketInputModel {
   return {
     label: theLabel,
     order: theOrder,

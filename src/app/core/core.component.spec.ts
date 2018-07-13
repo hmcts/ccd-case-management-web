@@ -34,6 +34,10 @@ describe('CoreComponent', () => {
       'isSolicitor',
     ]});
 
+  let BrowserSupportComponent: any = MockComponent({ selector: 'ccd-browser-support', inputs: [
+      'isSolicitor',
+    ]});
+
   const TEMPLATE =
     `<div>
       <nav class="cut-nav-bar">
@@ -149,6 +153,7 @@ describe('CoreComponent', () => {
           PhaseComponent,
           FooterComponent,
           PhaseComponent,
+          BrowserSupportComponent,
           NavigationComponent,
           NavigationItemComponent,
           BlankComponent,

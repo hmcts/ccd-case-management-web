@@ -19,10 +19,15 @@ describe('AppConfig', () => {
   const PRINT_SERVICE_URL = 'http://print';
   const REMOTE_PRINT_SERVICE_URL = 'http://print.ccd.reform';
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
+  const UNSUPPORTED_BROWSER_URL = 'https://www.gov.uk/help/browsers';
   const ACTIVITY_NEXT_POLL_REQUEST_MS = 1;
   const ACTIVITY_RETRY = 1;
   const ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1;
   const ACTIVITY_MAX_REQUEST_PER_BATCH = 1;
+  const CHROME_VERSION = 67;
+  const IE_VERSION = 11;
+  const EDGE_VERSION = 17;
+  const FIREFOX_VERSION = 60;
   const CASE_HISTORY_URL = API_URL + '/caseworkers/:uid/jurisdictions/JID/case-types/CTID/cases/CID/events/EID/case-history';
 
   const MOCK_CONFIG: Config = {
@@ -39,10 +44,15 @@ describe('AppConfig', () => {
     print_service_url: PRINT_SERVICE_URL,
     remote_print_service_url: REMOTE_PRINT_SERVICE_URL,
     smart_survey_url: SMART_SURVEY_URL,
+    unsupported_browser_url: UNSUPPORTED_BROWSER_URL,
     activity_url: ACTIVITY_URL,
     activity_next_poll_request_ms: ACTIVITY_NEXT_POLL_REQUEST_MS,
     activity_retry: ACTIVITY_RETRY,
     activity_batch_collection_delay_ms: ACTIVITY_BATCH_COLLECTION_DELAY_MS,
+    chrome_version: CHROME_VERSION,
+    ie_version: IE_VERSION,
+    edge_version: EDGE_VERSION,
+    firefox_version: FIREFOX_VERSION,
     activity_max_request_per_batch: ACTIVITY_MAX_REQUEST_PER_BATCH
   };
 
@@ -81,11 +91,17 @@ describe('AppConfig', () => {
             expect(appConfig.getOAuth2ClientId()).toEqual(OAUTH2_CLIENT_ID);
             expect(appConfig.getPrintServiceUrl()).toEqual(PRINT_SERVICE_URL);
             expect(appConfig.getRemotePrintServiceUrl()).toEqual(REMOTE_PRINT_SERVICE_URL);
+            expect(appConfig.getSmartSurveyUrl()).toEqual(SMART_SURVEY_URL);
+            expect(appConfig.getUnsupportedBrowserUrl()).toEqual(UNSUPPORTED_BROWSER_URL);
             expect(appConfig.getActivityUrl()).toEqual(ACTIVITY_URL);
             expect(appConfig.getActivityBatchCollectionDelayMs()).toEqual(ACTIVITY_BATCH_COLLECTION_DELAY_MS);
             expect(appConfig.getActivityMaxRequestPerBatch()).toEqual(ACTIVITY_MAX_REQUEST_PER_BATCH);
             expect(appConfig.getActivityNexPollRequestMs()).toEqual(ACTIVITY_NEXT_POLL_REQUEST_MS);
             expect(appConfig.getActivityRetry()).toEqual(ACTIVITY_RETRY);
+            expect(appConfig.getChromeVersion()).toEqual(CHROME_VERSION);
+            expect(appConfig.getIEVersion()).toEqual(IE_VERSION);
+            expect(appConfig.getEdgeVersion()).toEqual(EDGE_VERSION);
+            expect(appConfig.getFirefoxVersion()).toEqual(FIREFOX_VERSION);
             expect(appConfig.getCaseHistoryUrl('JID', 'CTID', 'CID', 'EID'))
               .toEqual(CASE_HISTORY_URL);
           });

@@ -30,6 +30,7 @@ import { AuthService } from './auth/auth.service';
 import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
+import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { ActivityResolver } from './activity/activity.resolver';
     WorkbasketInputFilterService,
   ],
   declarations: [
-    CoreComponent
+    CoreComponent,
+    CcdBrowserSupportComponent
   ]
 })
 export class CoreModule { }

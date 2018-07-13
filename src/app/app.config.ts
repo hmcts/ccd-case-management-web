@@ -86,6 +86,10 @@ export class AppConfig {
     return this.config.smart_survey_url;
   }
 
+  public getUnsupportedBrowserUrl() {
+    return this.config.unsupported_browser_url;
+  }
+
   public getActivityUrl() {
     return this.config.activity_url;
   }
@@ -104,6 +108,22 @@ export class AppConfig {
 
   public getActivityMaxRequestPerBatch() {
     return this.config.activity_max_request_per_batch;
+  }
+
+  public getChromeVersion() {
+    return this.config.chrome_version;
+  }
+
+  public getIEVersion() {
+    return this.config.ie_version;
+  }
+
+  public getEdgeVersion() {
+    return this.config.edge_version;
+  }
+
+  public getFirefoxVersion() {
+    return this.config.firefox_version;
   }
 
   public getCaseHistoryUrl(jurisdictionId: string,
@@ -135,8 +155,13 @@ export class Config {
   print_service_url: string;
   remote_print_service_url: string;
   smart_survey_url: string;
+  unsupported_browser_url: string;
   activity_next_poll_request_ms: number;
   activity_retry: number;
   activity_batch_collection_delay_ms: number;
   activity_max_request_per_batch: number;
+  chrome_version: number;
+  ie_version: number;
+  edge_version: number;
+  firefox_version: number;
 }

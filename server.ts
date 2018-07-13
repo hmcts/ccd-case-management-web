@@ -29,11 +29,16 @@ const CONFIG = {
   'print_service_url': process.env['PRINT_SERVICE_URL'] || 'http://localhost:3453/print',
   'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net',
   'smart_survey_url': process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/',
+  'unsupported_browser_url': process.env['UNSUPPORTED_BROWSER_URL'] || 'https://www.gov.uk/help/browsers',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
   'activity_next_poll_request_ms': process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'] || 5000,
   'activity_retry': process.env['CCD_ACTIVITY_RETRY'] || 5,
   'activity_batch_collection_delay_ms': process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'] || 1,
-  'activity_max_request_per_batch': process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'] || 25
+  'activity_max_request_per_batch': process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'] || 25,
+  'chrome_version': process.env['CHROME_VERSION'] || 67,
+  'ie_version': process.env['IE_VERSION'] || 11,
+  'edge_version': process.env['EDGE_VERSION'] || 17,
+  'firefox_version': process.env['FIREFOX_VERSION'] || 60
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack

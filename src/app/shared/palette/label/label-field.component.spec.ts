@@ -20,7 +20,14 @@ describe('LabelFieldComponent', () => {
     label: 'Label Field Label',
     display_context: 'OPTIONAL',
     field_type: FIELD_TYPE,
-    value: 'Label Field Value'
+    value: undefined
+  };
+  const CASE_FIELD_VALUE_DEFINED: CaseField = {
+    id: 'label',
+    label: 'Label Field Label',
+    display_context: 'OPTIONAL',
+    field_type: FIELD_TYPE,
+    value: 'Value defined'
   };
   let MarkdownComponent: any = MockComponent({ selector: 'ccd-markdown', inputs: [
     'content'
@@ -44,15 +51,20 @@ describe('LabelFieldComponent', () => {
     fixture = TestBed.createComponent(LabelFieldComponent);
     component = fixture.componentInstance;
 
-    component.caseField = CASE_FIELD;
-
     de = fixture.debugElement;
-    fixture.detectChanges();
 
   }));
 
   it('Should render a table with the field label in the markdown tag in the header', () => {
+    component.caseField = CASE_FIELD;
+    fixture.detectChanges();
     expect(de.query($CONTENT).nativeElement.getAttribute('ng-reflect-content')).toBe(CASE_FIELD.label);
+  });
+
+  it('Should render a table with the field value in the markdown tag in the header', () => {
+    component.caseField = CASE_FIELD_VALUE_DEFINED;
+    fixture.detectChanges();
+    expect(de.query($CONTENT).nativeElement.getAttribute('ng-reflect-content')).toBe(CASE_FIELD_VALUE_DEFINED.value);
   });
 
 });

@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchResultComponent } from './search-result.component';
-import { Component, DebugElement, Input, SimpleChange, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, DebugElement, Input, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { SearchResultView } from './search-result-view.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { SortSearchResultPipe } from './sorting/sort-search-result.pipe';
 import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
-import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
+import { Jurisdiction } from '../domain/definition/jurisdiction.model';
 import { ActivityService } from '../../core/activity/activity.service';
 import { MockComponent } from 'ng2-mock-component';
 import { PaginationMetadata } from './pagination-metadata.model';
-import createSpyObj = jasmine.createSpyObj;
 import { PaginatePipe, PaginationService } from 'ngx-pagination';
-import { CaseState } from '../../shared/domain/definition/case-state.model';
+import { CaseState } from '../domain/definition/case-state.model';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
+import createSpyObj = jasmine.createSpyObj;
 
 @Component({
   selector: 'ccd-field-read',
@@ -64,7 +64,8 @@ describe('SearchResultComponent', () => {
             type: 'Text'
           },
           label: 'First name',
-          order: 2
+          order: 2,
+          metadata: false
         },
         {
           case_field_id: 'PersonLastName',
@@ -73,7 +74,8 @@ describe('SearchResultComponent', () => {
             type: 'Text'
           },
           label: 'Last name',
-          order: 1
+          order: 1,
+          metadata: false
         },
         {
           case_field_id: 'PersonAddress',
@@ -82,7 +84,8 @@ describe('SearchResultComponent', () => {
             type: 'Text'
           },
           label: 'Address',
-          order: 1
+          order: 1,
+          metadata: false
         }
       ],
       results: [
@@ -178,6 +181,7 @@ describe('SearchResultComponent', () => {
       component.paginationMetadata = PAGINATION_METADATA;
       component.caseFilterFG = new FormGroup({});
       component.ngOnChanges({ resultView: new SimpleChange(null, RESULT_VIEW, true) });
+      component.showCaseIdColumn = true;
 
       de = fixture.debugElement;
       fixture.detectChanges();
@@ -346,6 +350,211 @@ describe('SearchResultComponent', () => {
     });
   });
 
+  describe('with metadata field in results', () => {
+
+    const JURISDICTION: Jurisdiction = {
+      id: 'TEST',
+      name: 'Test',
+      description: 'Test Jurisdiction'
+    };
+    const CASE_TYPE: CaseType = {
+      id: 'TEST_CASE_TYPE',
+      name: 'Test Case Type',
+      description: 'A test Case Type',
+      states: [],
+      events: [],
+      case_fields: [],
+      jurisdiction: JURISDICTION
+    };
+    const CASE_STATE: CaseState = {
+      id: 'TEST_STATE',
+      name: 'Test Case State',
+      description: 'A test Case State'
+    };
+    const PAGINATION_METADATA: PaginationMetadata = {
+      total_results_count: 3,
+      total_pages_count: 1
+    };
+    const RESULT_VIEW: SearchResultView = {
+      columns: [
+        {
+          case_field_id: 'state',
+          case_field_type: {
+            id: 'Text',
+            type: 'Text'
+          },
+          label: 'State',
+          order: 1,
+          metadata: true
+        },
+        {
+          case_field_id: 'PersonFirstName',
+          case_field_type: {
+            id: 'Text',
+            type: 'Text'
+          },
+          label: 'First name',
+          order: 2,
+          metadata: false
+        },
+        {
+          case_field_id: 'PersonLastName',
+          case_field_type: {
+            id: 'Text',
+            type: 'Text'
+          },
+          label: 'Last name',
+          order: 3,
+          metadata: false
+        }
+      ],
+      results: [
+        {
+          case_id: '0000000000000000',
+          case_fields: {
+            state: 'State1',
+            PersonFirstName: 'Janet',
+            PersonLastName: 'Parker',
+          }
+        },
+        {
+          case_id: '0000000000000001',
+          case_fields: {
+            state: 'State2',
+            PersonFirstName: 'Steve',
+            PersonLastName: 'Jobs'
+          }
+        },
+        {
+          case_id: '0000000000000002',
+          case_fields: {
+            state: 'State3',
+            PersonFirstName: 'Bill',
+            PersonLastName: 'Gates'
+          }
+        }
+      ]
+    };
+
+    const switchMap = {
+      switchMap: () => ({
+        retryWhen: () => ({
+          subscribe: () => ({})
+        })
+      })
+    };
+
+    let fixture: ComponentFixture<SearchResultComponent>;
+    let component: SearchResultComponent;
+    let de: DebugElement;
+    let CaseActivityComponent: any = MockComponent({
+      selector: 'ccd-activity',
+      inputs: ['caseId', 'displayMode']
+    });
+    let activityService: any;
+    let searchHandler;
+    let appConfig: any;
+
+    beforeEach(async(() => {
+      activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
+      activityService.postActivity.and.returnValue(switchMap);
+      activityService.isEnabled = true;
+
+      searchHandler = createSpyObj('searchHandler', ['applyFilters']);
+
+      appConfig = createSpyObj('appConfig', ['getPaginationPageSize']);
+      appConfig.getPaginationPageSize.and.returnValue(25);
+
+      TestBed
+        .configureTestingModule({
+          imports: [
+            RouterTestingModule
+          ],
+          declarations: [
+            FieldReadComponent,
+            SearchResultComponent,
+            SortSearchResultPipe,
+            CaseReferencePipe,
+            // Mocks
+            CaseActivityComponent,
+            PaginatePipe
+          ],
+          schemas: [NO_ERRORS_SCHEMA],
+          providers: [
+            SearchResultViewItemComparatorFactory,
+            {provide: ActivityService, useValue: activityService},
+            PaginationService,
+            {provide: AppConfig, useValue: appConfig}
+          ]
+        })
+        .compileComponents();
+
+      fixture = TestBed.createComponent(SearchResultComponent);
+      component = fixture.componentInstance;
+
+      component.changePage.subscribe(searchHandler.applyFilters);
+      component.jurisdiction = JURISDICTION;
+      component.caseType = CASE_TYPE;
+      component.resultView = RESULT_VIEW;
+      component.caseState = CASE_STATE;
+      component.paginationMetadata = PAGINATION_METADATA;
+      component.caseFilterFG = new FormGroup({});
+      component.ngOnChanges({resultView: new SimpleChange(null, RESULT_VIEW, true)});
+      component.showCaseIdColumn = false;
+
+      de = fixture.debugElement;
+      fixture.detectChanges();
+    }));
+
+    it('should render a table <thead> and <tbody>', () => {
+      let table = de.query(By.css('div>table'));
+      expect(table.nativeElement.tagName).toBe('TABLE');
+      expect(table.children.length).toBe(2);
+      let thead = de.query(By.css('div>table>thead'));
+      expect(thead.nativeElement.tagName).toBe('THEAD');
+      expect(thead.children.length).toBe(1);
+      let tbody = de.query(By.css('div>table>tbody'));
+      expect(tbody.nativeElement.tagName).toBe('TBODY');
+    });
+
+    it('should render columns based on SearchResultView', () => {
+
+      let headRow = de.query(By.css('div>table>thead>tr'));
+      // added +1 for case activity column
+      expect(headRow.children.length).toBe(RESULT_VIEW.columns.length + 1);
+      RESULT_VIEW.columns.forEach(col => {
+        expect(headRow.children.find(c => c.nativeElement.textContent.trim().startsWith(col.label)))
+          .toBeTruthy(`Could not find header ${col.label}`);
+      });
+    });
+
+    it('should render required columns for each SearchResultViewItem row', () => {
+      let firstRow = de.query(By.css('div>table>tbody tr:nth-child(1)'));
+      let firstResult = RESULT_VIEW.results[0];
+
+      // added +1 for case activity column
+      expect(firstRow.children.length).toBe(RESULT_VIEW.columns.length + 1);
+      let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
+      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(new CaseReferencePipe().transform(firstResult.case_fields['state']));
+
+      let firstRowComponentChildren = firstRow.children.slice(1, 3);
+
+      expect(firstRowComponentChildren[0].children[0].children[0].componentInstance.caseField.value === RESULT_VIEW.results[0].case_fields['PersonFirstName'])
+        .toBeTruthy();
+      expect(firstRowComponentChildren[1].children[0].children[0].componentInstance.caseField.value === RESULT_VIEW.results[0].case_fields['PersonLastName'])
+        .toBeTruthy();
+    });
+
+    it('should render metadata column as first column with hyperlink when metadata field is first in results display order', () => {
+      let headRow = de.query(By.css('div>table>thead>tr th:nth-child(1)'));
+
+      expect(headRow.nativeElement.textContent).toContain('State');
+      let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
+      expect(firstRowFirstCol.nativeElement.getAttribute('href')).toBe('/case/TEST/TEST_CASE_TYPE/0000000000000000');
+    });
+
+  });
+
   describe('without results', () => {
     const PAGINATION_METADATA: PaginationMetadata = {
       total_results_count: 0,
@@ -360,7 +569,8 @@ describe('SearchResultComponent', () => {
             type: 'Text'
           },
           label: 'First name',
-          order: 2
+          order: 2,
+          metadata: false
         },
         {
           case_field_id: 'PersonLastName',
@@ -369,7 +579,8 @@ describe('SearchResultComponent', () => {
             type: 'Text'
           },
           label: 'Last name',
-          order: 1
+          order: 1,
+          metadata: false
         },
         {
           case_field_id: 'PersonAddress',
@@ -378,7 +589,8 @@ describe('SearchResultComponent', () => {
             type: 'Text'
           },
           label: 'Address',
-          order: 1
+          order: 1,
+          metadata: false
         }
       ],
       results: []
@@ -438,6 +650,7 @@ describe('SearchResultComponent', () => {
       component.resultView = RESULT_VIEW;
       component.paginationMetadata = PAGINATION_METADATA;
       component.ngOnChanges({ resultView: new SimpleChange(null, RESULT_VIEW, true) });
+      component.showCaseIdColumn = true;
 
       de = fixture.debugElement;
       fixture.detectChanges();

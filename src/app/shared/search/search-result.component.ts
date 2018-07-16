@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SearchResultView } from './search-result-view.model';
 import { PaginationMetadata } from './pagination-metadata.model';
 import { SearchResultViewColumn } from './search-result-view-column.model';
@@ -6,8 +6,8 @@ import { SearchResultViewItemComparator } from './sorting/search-result-view-ite
 import { SortParameters } from './sorting/sort-parameters';
 import { SortOrder } from './sorting/sort-order';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
-import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
-import { CaseState } from '../../shared/domain/definition/case-state.model';
+import { Jurisdiction } from '../domain/definition/jurisdiction.model';
+import { CaseState } from '../domain/definition/case-state.model';
 import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
@@ -20,10 +20,6 @@ import { ActivityService } from '../../core/activity/activity.service';
   styleUrls: ['./search-result.scss']
 })
 export class SearchResultComponent implements OnChanges {
-
-  public static readonly PARAM_JURISDICTION = 'jurisdiction';
-  public static readonly PARAM_CASE_TYPE = 'case-type';
-  public static readonly PARAM_CASE_STATE = 'case-state';
 
   ICON = DisplayMode.ICON;
 
@@ -55,6 +51,8 @@ export class SearchResultComponent implements OnChanges {
 
   hideRows: boolean;
 
+  showCaseIdColumn: boolean;
+
   selected: {
     init?: boolean,
     jurisdiction?: Jurisdiction,
@@ -72,6 +70,7 @@ export class SearchResultComponent implements OnChanges {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
+    this.showCaseIdColumn = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -89,6 +88,9 @@ export class SearchResultComponent implements OnChanges {
       this.resultView.columns = this.resultView.columns.sort((a: SearchResultViewColumn, b: SearchResultViewColumn) => {
         return a.order - b.order;
       });
+
+      // Show case id column when the first column in results in not a metadata field
+      this.showCaseIdColumn = !(this.resultView.columns.length > 0 && this.resultView.columns[0].metadata);
     }
     if (changes['page']) {
       this.selected.page = (changes['page']).currentValue;

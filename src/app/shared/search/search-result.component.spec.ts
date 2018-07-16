@@ -388,7 +388,7 @@ describe('SearchResultComponent', () => {
           metadata: true
         },
         {
-          case_field_id: 'PersonFirstName',
+          case_field_id: 'FirstName',
           case_field_type: {
             id: 'Text',
             type: 'Text'
@@ -398,7 +398,7 @@ describe('SearchResultComponent', () => {
           metadata: false
         },
         {
-          case_field_id: 'PersonLastName',
+          case_field_id: 'LastName',
           case_field_type: {
             id: 'Text',
             type: 'Text'
@@ -413,24 +413,24 @@ describe('SearchResultComponent', () => {
           case_id: '0000000000000000',
           case_fields: {
             state: 'State1',
-            PersonFirstName: 'Janet',
-            PersonLastName: 'Parker',
+            FirstName: 'Janet',
+            LastName: 'Parker',
           }
         },
         {
           case_id: '0000000000000001',
           case_fields: {
             state: 'State2',
-            PersonFirstName: 'Steve',
-            PersonLastName: 'Jobs'
+            FirstName: 'Steve',
+            LastName: 'Jobs'
           }
         },
         {
           case_id: '0000000000000002',
           case_fields: {
             state: 'State3',
-            PersonFirstName: 'Bill',
-            PersonLastName: 'Gates'
+            FirstName: 'Bill',
+            LastName: 'Gates'
           }
         }
       ]
@@ -537,11 +537,12 @@ describe('SearchResultComponent', () => {
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
       expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(new CaseReferencePipe().transform(firstResult.case_fields['state']));
 
-      let firstRowComponentChildren = firstRow.children.slice(1, 3);
+      let firstRowComponent = firstRow.children.slice(1, 3);
+      let firstRowResult = RESULT_VIEW.results[0];
 
-      expect(firstRowComponentChildren[0].children[0].children[0].componentInstance.caseField.value === RESULT_VIEW.results[0].case_fields['PersonFirstName'])
+      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value === firstRowResult.case_fields['FirstName'])
         .toBeTruthy();
-      expect(firstRowComponentChildren[1].children[0].children[0].componentInstance.caseField.value === RESULT_VIEW.results[0].case_fields['PersonLastName'])
+      expect(firstRowComponent[1].children[0].children[0].componentInstance.caseField.value === firstRowResult.case_fields['LastName'])
         .toBeTruthy();
     });
 

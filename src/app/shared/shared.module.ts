@@ -16,6 +16,11 @@ import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity
 import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';
 import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-activity-banner/ccd-activity-banner.component';
 import { CaseFieldService } from './domain/case-field.service';
+import { CaseHistoryComponent } from './case-history/case-history.component';
+import { CaseHistoryResolver } from './case-history/case-history.resolver';
+import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
+import { ConditionalShowModule } from './conditional-show/conditional-show.module';
+import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
 
 @NgModule({
@@ -26,7 +31,9 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    EventTriggerModule
+    EventTriggerModule,
+    LabelSubstitutorModule,
+    ConditionalShowModule
   ],
   declarations: [
     SearchResultComponent,
@@ -38,12 +45,15 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
+    CaseHistoryComponent,
     DocumentDialogComponent,
   ],
   entryComponents: [DocumentDialogComponent],
   providers: [
     SearchResultViewItemComparatorFactory,
-    CaseFieldService
+    CaseFieldService,
+    CaseHistoryResolver,
+    CaseHistoryService,
   ],
   exports: [
     SearchResultComponent,
@@ -55,6 +65,7 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
+    CaseHistoryComponent,
   ]
 })
 export class SharedModule {}

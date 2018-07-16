@@ -15,6 +15,7 @@ import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AlertService } from '../core/alert/alert.service';
 
 describe('WorkbasketComponent', () => {
 
@@ -122,6 +123,7 @@ describe('WorkbasketComponent', () => {
   let mockSearchService: any;
   let mockPaginationService: any;
   let mockJurisdictionService: JurisdictionService;
+  let alertService: AlertService;
 
   beforeEach(async(() => {
 
@@ -130,6 +132,7 @@ describe('WorkbasketComponent', () => {
     mockPaginationService = createSpyObj<PaginationService>('paginationService', ['getPaginationMetadata']);
     mockPaginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
     mockJurisdictionService = createSpyObj<JurisdictionService>('jurisdictionService', ['search']);
+    alertService = createSpyObj<AlertService>('alertService', ['warning']);
 
     TestBed
       .configureTestingModule({
@@ -146,7 +149,8 @@ describe('WorkbasketComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: SearchService, useValue: mockSearchService },
           { provide: PaginationService, useValue: mockPaginationService },
-          { provide: JurisdictionService, useValue: mockJurisdictionService }
+          { provide: JurisdictionService, useValue: mockJurisdictionService },
+          { provide: AlertService, useValue: alertService}
         ]
       })
       .compileComponents();  // compile template and css

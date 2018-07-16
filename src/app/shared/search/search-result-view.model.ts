@@ -4,4 +4,5 @@ import { SearchResultViewItem } from './search-result-view-item.model';
 export class SearchResultView {
   columns: SearchResultViewColumn[];
   results: SearchResultViewItem[];
+  result_error?: string;
 }

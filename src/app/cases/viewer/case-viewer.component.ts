@@ -105,4 +105,8 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       return acc.concat(tab.fields);
     }, []);
   }
+
+  isDraft(): boolean {
+    return this.caseDetails.case_id.length < 16;
+  }
 }

@@ -5,6 +5,7 @@ import { HttpErrorService } from '../http/http-error.service';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import { Observable } from '../../../../node_modules/rxjs';
 import { Draft } from '../../shared/domain/draft';
+import { CaseView } from '../cases/case-view.model';
 
 @Injectable()
 export class DraftService {
@@ -31,6 +32,23 @@ export class DraftService {
       + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/${draftId}`;
     return this.http
       .put(saveDraftEndpoint, eventData)
+      .map(response => response.json())
+      .catch((error: any): any => {
+        this.errorService.setError(error);
+        return Observable.throw(error);
+      });
+  }
+
+  getDraft(jurisdictionId: string,
+              caseTypeId: string,
+              draftId: string): Observable<CaseView> {
+    const url = this.appConfig.getApiUrl()
+      + `/caseworkers/:uid`
+      + `/jurisdictions/${jurisdictionId}`
+      + `/case-types/${caseTypeId}`
+      + `/drafts/${draftId.slice(5)}`;
+    return this.http
+      .get(url)
       .map(response => response.json())
       .catch((error: any): any => {
         this.errorService.setError(error);

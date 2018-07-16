@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SearchResultView } from './search-result-view.model';
 import { PaginationMetadata } from './pagination-metadata.model';
 import { SearchResultViewColumn } from './search-result-view-column.model';
@@ -6,13 +6,15 @@ import { SearchResultViewItemComparator } from './sorting/search-result-view-ite
 import { SortParameters } from './sorting/sort-parameters';
 import { SortOrder } from './sorting/sort-order';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
-import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
-import { CaseState } from '../../shared/domain/definition/case-state.model';
+import { Jurisdiction } from '../domain/definition/jurisdiction.model';
+import { CaseState } from '../domain/definition/case-state.model';
 import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
+import { SearchResultViewItem } from './search-result-view-item.model';
+import { CaseResolver } from '../../cases/case.resolver';
 
 @Component({
   selector: 'ccd-search-result',
@@ -111,6 +113,12 @@ export class SearchResultComponent implements OnChanges {
     return this.resultView.results.length && this.paginationMetadata.total_pages_count;
   }
 
+  hasDrafts(): boolean {
+    return this.resultView.results[0]
+      && this.resultView.results[0].case_id
+      && this.resultView.results[0].case_id.startsWith(CaseResolver.DRAFT);
+  }
+
   comparator(column: SearchResultViewColumn): SearchResultViewItemComparator {
     return this.searchResultViewItemComparatorFactory.createSearchResultViewItemComparator(column);
   }
@@ -150,5 +158,9 @@ export class SearchResultComponent implements OnChanges {
       }
     }
     return isAscending ? SortOrder.ASCENDING : isDescending ? SortOrder.DESCENDING : SortOrder.UNSORTED;
+  }
+
+  removeDraftId(resultViewItem: SearchResultViewItem): string {
+    return resultViewItem.case_id.startsWith(CaseResolver.DRAFT) ? CaseResolver.DRAFT : resultViewItem.case_id;
   }
 }

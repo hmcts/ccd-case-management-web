@@ -64,9 +64,11 @@ import { FieldsPurger } from '../shared/utils/fields.purger';
     CasePrinterComponent,
     CaseViewerComponent,
     CreateCaseFiltersComponent,
-    CallbackErrorsComponent,
     PrintUrlPipe,
     RemoveDialogComponent
+  ],
+  exports: [
+    CallbackErrorsComponent,
   ],
   entryComponents: [RemoveDialogComponent],
   providers: [

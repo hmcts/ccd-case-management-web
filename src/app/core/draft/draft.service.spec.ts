@@ -9,15 +9,17 @@ import createSpyObj = jasmine.createSpyObj;
 import { DraftService } from './draft.service';
 import { Draft } from '../../shared/domain/draft';
 import { CaseDetails } from '../../shared/domain/case-details';
+import { CaseView } from '../cases/case-view.model';
 
 describe('Drafts Service', () => {
 
   const DATA_URL = 'http://aggregated.ccd.reform';
   const JID = 'TEST';
   const CT_ID = 'TestAddressBookCase';
-  const DRAFT_ID = 'Draft#1';
+  const DRAFT_ID = 'Draft1';
   const EVENT_TRIGGER_ID = 'createCase';
   const DRAFT_URL = DATA_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CT_ID}/event-trigger/${EVENT_TRIGGER_ID}/drafts/`;
+  const GET_DRAFT_URL = DATA_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CT_ID}/drafts/`;
   const ERROR: HttpError = new HttpError();
   ERROR.message = 'Critical error!';
 
@@ -28,8 +30,9 @@ describe('Drafts Service', () => {
   let draftService: DraftService;
 
   beforeEach(() => {
-    appConfig = createSpyObj<AppConfig>('appConfig', ['getApiUrl', 'getCaseDataUrl']);
+    appConfig = createSpyObj<AppConfig>('appConfig', ['getApiUrl', 'getCaseDataUrl', 'getApiUrl']);
     appConfig.getCaseDataUrl.and.returnValue(DATA_URL);
+    appConfig.getApiUrl.and.returnValue(DATA_URL);
 
     httpService = createSpyObj<HttpService>('httpService', ['get', 'post', 'put']);
     errorService = createSpyObj<HttpErrorService>('errorService', ['setError']);
@@ -71,9 +74,6 @@ describe('Drafts Service', () => {
       httpService.put.and.returnValue(Observable.of(new Response(new ResponseOptions({
         body: JSON.stringify(DRAFT_RESPONSE)
       }))));
-      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-        body: JSON.stringify(DRAFT_RESPONSE)
-      }))));
     });
 
     it('should create a draft on server', () => {
@@ -89,7 +89,8 @@ describe('Drafts Service', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       draftService.createDraft(JID, CT_ID, CASE_EVENT_DATA)
-        .subscribe(data => {}, err => {
+        .subscribe(data => {
+        }, err => {
           expect(err).toEqual(ERROR);
           expect(errorService.setError).toHaveBeenCalledWith(ERROR);
         });
@@ -108,11 +109,58 @@ describe('Drafts Service', () => {
       httpService.put.and.returnValue(Observable.throw(ERROR));
 
       draftService.updateDraft(JID, CT_ID, DRAFT_ID, CASE_EVENT_DATA)
-        .subscribe(data => {}, err => {
+        .subscribe(data => {
+        }, err => {
           expect(err).toEqual(ERROR);
           expect(errorService.setError).toHaveBeenCalledWith(ERROR);
         });
     });
 
+  });
+  describe('getDraft()', () => {
+    const CASE_VIEW_DATA: CaseView = {
+      case_id: '11',
+      case_type: {
+        id: 'TestAddressBookCase',
+        name: 'TestAddressBookCase',
+        description: 'some case_type description',
+        jurisdiction: {
+          id: 'TEST',
+          name: 'TEST',
+          description: 'some jurisdiction description'
+        }
+      },
+      state: null,
+      channels: [],
+      tabs: [],
+      triggers: [],
+      events: []
+    };
+
+    beforeEach(() => {
+      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+        body: JSON.stringify(CASE_VIEW_DATA)
+      }))));
+    });
+
+    it('should get draft on server', () => {
+      draftService
+        .getDraft(JID, CT_ID, DRAFT_ID)
+        .subscribe(
+          data => expect(data).toEqual(CASE_VIEW_DATA)
+        );
+      expect(httpService.get).toHaveBeenCalledWith(GET_DRAFT_URL + '1');
+    });
+
+    it('should set error when error is thrown when getting draft', () => {
+      httpService.get.and.returnValue(Observable.throw(ERROR));
+      draftService
+        .getDraft(JID, CT_ID, DRAFT_ID)
+        .subscribe(data => {
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(errorService.setError).toHaveBeenCalledWith(ERROR);
+        });
+    });
   });
 });

@@ -14,12 +14,9 @@ import createSpyObj = jasmine.createSpyObj;
       <td ccdLabelSubstitutor [caseField]="caseField" [formGroup]="formGroup" [eventFields]="eventFields">{{caseField.label}}</td>`
 })
 class TestHostComponent {
-
     @Input() caseField: CaseField;
     @Input() eventFields: CaseField[];
-    @Input() formGroup: FormGroup;
-    @Input() hydrated_case_fields?: CaseField[];
-    @Input() columns?: object;
+    @Input() formGroup: FormGroup = new FormGroup({});
 }
 
 let field = (id, value, fieldType, label?) => {
@@ -56,9 +53,9 @@ describe('LabelSubstitutorDirective', () => {
 
     describe('simple type fields', () => {
 
-        it('should display label returned by label substitution service', () => {
+        it('should display label returned by label substitution service when value is undefined', () => {
             let label = 'Label B with valueA=${LabelA} and valueA=${LabelA}:';
-            comp.caseField = field('LabelB', '', {
+            comp.caseField = field('LabelB', undefined, {
                 id: 'LabelB',
                 type: 'Text'
             },  label);
@@ -69,16 +66,29 @@ describe('LabelSubstitutorDirective', () => {
             expect(el.innerText).toBe('Label B with valueA=ValueA and valueA=ValueA:');
         });
 
-        it('should pass case field value to substitute label when case field value but no form field value present', () => {
+      it('should display label when value is defined', () => {
+        let label = 'Label B with valueA=${LabelA} and valueA=${LabelA}:';
+        comp.caseField = field('LabelB', 'xxx', {
+          id: 'LabelB',
+          type: 'Text'
+        },  label);
+        comp.eventFields = [comp.caseField];
+        labelSubstitutionService.substituteLabel.and.returnValue('Label B with valueA=ValueA and valueA=ValueA:');
+        fixture.detectChanges();
+
+        expect(el.innerText).toBe(label);
+      });
+
+      it('should pass case field value to substitute label when case field value but no form field value present', () => {
             let label = 'someLabel:';
-            comp.caseField = field('LabelB', '', {
+            comp.caseField = field('LabelB', undefined, {
                 id: 'LabelB',
                 type: 'Text'
             },  label);
             comp.eventFields = [comp.caseField, field('LabelA', 'ValueA', '')];
             fixture.detectChanges();
 
-            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: '', LabelA: 'ValueA' }, label);
+            expect(labelSubstitutionService.substituteLabel).toHaveBeenCalledWith({ LabelB: undefined, LabelA: 'ValueA' }, label);
         });
 
         it('should pass form value to substitute label if both case field and form values exist for same field', () => {

@@ -59,9 +59,6 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 
 let xFrameOptions = require('x-frame-options');
 app.use(xFrameOptions());
-app.get('/', function (req, res) {
-  res.setHeader('X-Frame-Options', 'DENY');
-});
 
 app.get('/health', (req, res) => {
   res.status(200).json({

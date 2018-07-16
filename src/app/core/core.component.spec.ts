@@ -13,6 +13,7 @@ import { HttpService } from './http/http.service';
 import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 describe('CoreComponent', () => {
 
@@ -82,6 +83,8 @@ describe('CoreComponent', () => {
   let jurisdictionService: JurisdictionService;
   let httpService: any;
   let appConfig: any;
+  let deviceService: any;
+  let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
 
@@ -90,6 +93,7 @@ describe('CoreComponent', () => {
     jurisdictionService = new JurisdictionService();
     httpService = createSpyObj('HttpService', ['get']);
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    deviceService = new DeviceDetectorService(deviceServiceArg);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
 
@@ -164,6 +168,7 @@ describe('CoreComponent', () => {
           { provide: JurisdictionService, useValue: jurisdictionService },
           { provide: HttpService, useValue: httpService },
           { provide: AppConfig, useValue: appConfig },
+          { provide: DeviceDetectorService, useValue: deviceService },
           { provide: OAuth2Service, useValue: oauth2Service },
         ]
       })

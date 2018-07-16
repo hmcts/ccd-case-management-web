@@ -6,6 +6,7 @@ import { JurisdictionService } from '../shared/jurisdiction.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'ccd-core',
@@ -24,6 +25,7 @@ export class CoreComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private jurisdictionService: JurisdictionService,
               private appConfig: AppConfig,
+              private deviceService: DeviceDetectorService,
               private oauth2Service: OAuth2Service) {}
 
   ngOnInit(): void {
@@ -57,34 +59,21 @@ export class CoreComponent implements OnInit, OnDestroy {
 
   isUnsupportedBrowser(): boolean {
 
-    let ua = window.navigator.userAgent;
+    let browser = this.deviceService.browser;
+    let browser_full_version = this.deviceService.browser_version;
+    let browser_version = parseInt(browser_full_version.substring(0, browser_full_version.indexOf('.')), 10);
 
-    let chrome = ua.indexOf('Chrome/');
-    if (chrome > 0) {
-      if ( parseInt(ua.substring(chrome + 7, ua.indexOf('.', chrome)), 10) < this.appConfig.getChromeVersion() ) {
-        return true;
-      }
+    switch (browser) {
+      case 'chrome':
+        return ( browser_version < this.appConfig.getChromeVersion() ) ? true : false;
+      case 'ie':
+        return ( browser_version < this.appConfig.getIEVersion() ) ? true : false;
+      case 'firefox':
+        return ( browser_version < this.appConfig.getFirefoxVersion() ) ? true : false;
+      case 'ms-edge':
+        return ( browser_version < this.appConfig.getEdgeVersion() ) ? true : false;
+      default:
+        return false;
     }
-    let trident = ua.indexOf('Trident/');
-    if (trident > 0) {
-      let rv = ua.indexOf('rv:');
-      if ( parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10) < this.appConfig.getIEVersion() ) {
-        return true;
-      }
-    }
-    let edge = ua.indexOf('Edge/');
-    if (edge > 0) {
-      let rv = ua.indexOf('rv:');
-      if ( parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10) < this.appConfig.getEdgeVersion() ) {
-        return true;
-      }
-    }
-    let firefox = ua.indexOf('Firefox/');
-    if (firefox > 0) {
-      if ( parseInt(ua.substring(firefox + 8, ua.indexOf('.', firefox)), 10) < this.appConfig.getFirefoxVersion() ) {
-        return true;
-      }
-    }
-    return false;
   }
 }

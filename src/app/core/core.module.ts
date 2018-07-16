@@ -31,13 +31,15 @@ import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-fil
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     AlertModule,
-    CaseUIToolkitModule
+    CaseUIToolkitModule,
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     CasesService,

@@ -35,10 +35,10 @@ const CONFIG = {
   'activity_retry': process.env['CCD_ACTIVITY_RETRY'] || 5,
   'activity_batch_collection_delay_ms': process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'] || 1,
   'activity_max_request_per_batch': process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'] || 25,
-  'chrome_version': process.env['CHROME_VERSION'] || 67,
-  'ie_version': process.env['IE_VERSION'] || 11,
-  'edge_version': process.env['EDGE_VERSION'] || 17,
-  'firefox_version': process.env['FIREFOX_VERSION'] || 60
+  'chrome_min_required_version': process.env['CHROME_MIN_REQUIRED_VERSION'] || 67,
+  'ie_min_required_version': process.env['IE_MIN_REQUIRED_VERSION'] || 11,
+  'edge_min_required_version': process.env['EDGE_MIN_REQUIRED_VERSION'] || 17,
+  'firefox_min_required_version': process.env['FIREFOX_MIN_REQUIRED_VERSION'] || 60
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack

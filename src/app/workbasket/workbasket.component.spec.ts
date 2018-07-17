@@ -84,7 +84,8 @@ describe('WorkbasketComponent', () => {
 
   const RESULT_VIEW: SearchResultView = {
     columns: [],
-    results: []
+    results: [],
+    hasDrafts: () => false
   };
 
   const JURISDICTION: Jurisdiction = {

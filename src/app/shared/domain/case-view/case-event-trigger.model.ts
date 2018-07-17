@@ -14,5 +14,4 @@ export class CaseEventTrigger {
   show_event_notes?: boolean;
   end_button_label?: string;
   can_save_draft?: boolean;
-  draft_store_id?: string;
 }

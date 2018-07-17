@@ -85,7 +85,8 @@ export class SearchResultComponent implements OnChanges {
       // Clone `resultView` to prevent sorting the external variable
       this.resultView = {
         columns: this.resultView.columns.slice(0),
-        results: this.resultView.results.slice(0)
+        results: this.resultView.results.slice(0),
+        hasDrafts: this.resultView.hasDrafts
       };
 
       this.resultView.columns = this.resultView.columns.sort((a: SearchResultViewColumn, b: SearchResultViewColumn) => {
@@ -114,9 +115,7 @@ export class SearchResultComponent implements OnChanges {
   }
 
   hasDrafts(): boolean {
-    return this.resultView.results[0]
-      && this.resultView.results[0].case_id
-      && this.resultView.results[0].case_id.startsWith(CaseResolver.DRAFT);
+    return this.resultView.hasDrafts();
   }
 
   comparator(column: SearchResultViewColumn): SearchResultViewItemComparator {

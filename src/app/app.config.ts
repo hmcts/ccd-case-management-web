@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { environment } from '../environments/environment';
+import { CaseEventData } from './shared/domain/case-event-data';
 
 @Injectable()
 export class AppConfig {
@@ -117,6 +118,10 @@ export class AppConfig {
       + `/cases/${caseId}`
       + `/events/${eventId}`
       + `/case-history`;
+  }
+
+  public getDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
+    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
   }
 }
 

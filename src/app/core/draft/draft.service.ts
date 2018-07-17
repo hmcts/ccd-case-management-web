@@ -16,8 +16,7 @@ export class DraftService {
   ) {}
 
   createDraft(jid: string, ctid: string, eventData: CaseEventData): Observable<Draft> {
-    const saveDraftEndpoint = this.appConfig.getCaseDataUrl()
-      + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
+    const saveDraftEndpoint = this.appConfig.getDraftsUrl(jid, ctid, eventData);
     return this.http
       .post(saveDraftEndpoint, eventData)
       .map(response => response.json())
@@ -28,8 +27,7 @@ export class DraftService {
   }
 
   updateDraft(jid: string, ctid: string, draftId: string, eventData: CaseEventData): Observable<Draft> {
-    const saveDraftEndpoint = this.appConfig.getCaseDataUrl()
-      + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/${draftId}`;
+    const saveDraftEndpoint = this.appConfig.getDraftsUrl(jid, ctid, eventData) + draftId;
     return this.http
       .put(saveDraftEndpoint, eventData)
       .map(response => response.json())

@@ -9,6 +9,7 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
 import { DraftService } from '../../core/draft/draft.service';
 import { Draft } from '../../shared/domain/draft';
+import { CaseResolver } from '../case.resolver';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -47,16 +48,12 @@ export class CaseCreatorSubmitComponent implements OnInit {
     return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
   }
 
-  private canSaveDraft(): boolean {
-    return this.eventTrigger.can_save_draft === true;
-  }
-
   private isCreatingDraft(): boolean {
-    return !this.eventTrigger.draft_store_id;
+    return !this.eventTrigger.case_id;
   }
 
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
-    if (this.canSaveDraft()) {
+    if (this.eventTrigger.can_save_draft) {
       if (this.isCreatingDraft()) {
         return (caseEventData: CaseEventData) => this.draftService.createDraft(this.jurisdictionId,
           this.caseTypeId,
@@ -64,7 +61,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
       } else {
         return (caseEventData: CaseEventData) => this.draftService.updateDraft(this.jurisdictionId,
           this.caseTypeId,
-          this.eventTrigger.draft_store_id,
+          this.eventTrigger.case_id.slice(CaseResolver.DRAFT.length),
           caseEventData);
       }
     }

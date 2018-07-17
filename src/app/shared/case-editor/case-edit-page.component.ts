@@ -13,6 +13,7 @@ import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { CaseFieldService } from '../domain/case-field.service';
 import { CaseField } from '../domain/definition/case-field.model';
+import { CaseResolver } from '../../cases/case.resolver';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -102,12 +103,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       this.caseEdit.validate(caseEventData)
         .subscribe(() => {
             if (this.eventTrigger.can_save_draft) {
-              let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-              draftCaseEventData.event_token = this.eventTrigger.event_token;
-              draftCaseEventData.ignore_warning = this.ignoreWarning;
-              this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-                (draft) => this.eventTrigger.draft_store_id = draft.id, error => this.handleError(error)
-              );
+              this.saveDraft();
             }
             this.next();
           }, error => this.handleError(error));
@@ -128,12 +124,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   previous(): Promise<boolean> {
     this.error = null;
     if (this.eventTrigger.can_save_draft) {
-      let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-      draftCaseEventData.event_token = this.eventTrigger.event_token;
-      draftCaseEventData.ignore_warning = this.ignoreWarning;
-      this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-        (draft) => this.eventTrigger.draft_store_id = draft.id, error => this.handleError(error)
-      );
+      this.saveDraft();
     }
     return this.caseEdit.previous(this.currentPage.id);
   }
@@ -166,5 +157,14 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   getCaseId(): String {
     return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
+  }
+
+  private saveDraft() {
+    let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+    draftCaseEventData.event_token = this.eventTrigger.event_token;
+    draftCaseEventData.ignore_warning = this.ignoreWarning;
+    this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+      (draft) => this.eventTrigger.case_id = CaseResolver.DRAFT + draft.id, error => this.handleError(error)
+    );
   }
 }

@@ -18,6 +18,7 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import createSpyObj = jasmine.createSpyObj;
 import { Draft } from '../../shared/domain/draft';
 import { DraftService } from '../../core/draft/draft.service';
+import { CaseResolver } from '../case.resolver';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -90,7 +91,7 @@ describe('CaseCreatorSubmitComponent', () => {
     id: 'TEST_TRIGGER',
     name: 'Test Trigger',
     description: 'This is a test trigger',
-    case_id: '1234567890123456',
+    case_id: null,
     case_fields: [
       {
         id: 'PersonFirstName',
@@ -120,7 +121,7 @@ describe('CaseCreatorSubmitComponent', () => {
       'PersonLastName': 'Khaleesi'
     },
     event: {
-      id: EVENT_TRIGGER.id,
+      id: null,
       summary: 'Some summary',
       description: 'Some description'
     },
@@ -228,14 +229,14 @@ describe('CaseCreatorSubmitComponent', () => {
   });
 
   it('should update draft when saveDraft called with sanitised data for second time', () => {
-    const DRAFT_STORE_ID = '12345';
-    component.eventTrigger.draft_store_id = DRAFT_STORE_ID; // Set behaviour to draft has been saved before
+    const DRAFT_ID = '12345';
+    component.eventTrigger.case_id = CaseResolver.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
     draftService.createDraft.and.returnValue(DRAFT);
     draftService.updateDraft.and.returnValue(DRAFT);
     component.saveDraft()(SANITISED_EDIT_FORM);
 
     expect(draftService.createDraft).not.toHaveBeenCalled();
-    expect(draftService.updateDraft).toHaveBeenCalledWith(JID, CTID, DRAFT_STORE_ID, SANITISED_EDIT_FORM);
+    expect(draftService.updateDraft).toHaveBeenCalledWith(JID, CTID, DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {

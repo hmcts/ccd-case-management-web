@@ -30,8 +30,9 @@ describe('Drafts Service', () => {
   let draftService: DraftService;
 
   beforeEach(() => {
-    appConfig = createSpyObj<AppConfig>('appConfig', ['getApiUrl', 'getCaseDataUrl', 'getApiUrl']);
+    appConfig = createSpyObj<AppConfig>('appConfig', ['getDraftsUrl', 'getCaseDataUrl', 'getApiUrl']);
     appConfig.getCaseDataUrl.and.returnValue(DATA_URL);
+    appConfig.getDraftsUrl.and.returnValue(DRAFT_URL);
     appConfig.getApiUrl.and.returnValue(DATA_URL);
 
     httpService = createSpyObj<HttpService>('httpService', ['get', 'post', 'put']);
@@ -117,6 +118,7 @@ describe('Drafts Service', () => {
     });
 
   });
+
   describe('getDraft()', () => {
     const CASE_VIEW_DATA: CaseView = {
       case_id: '11',

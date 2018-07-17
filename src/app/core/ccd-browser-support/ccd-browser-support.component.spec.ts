@@ -9,10 +9,10 @@ describe('CcdBrowserSupportComponent', () => {
   let fixture: ComponentFixture<CcdBrowserSupportComponent>;
   let appConfig: any;
   const UNSUPPORTED_BROWSER_URL = 'https://www.gov.uk/help/browsers';
-  const CHROME_VERSION = 67;
-  const IE_VERSION = 11;
-  const EDGE_VERSION = 17;
-  const FIREFOX_VERSION = 60;
+  const CHROME_MIN_REQUIRED_VERSION = 67;
+  const IE_MIN_REQUIRED_VERSION = 11;
+  const EDGE_MIN_REQUIRED_VERSION = 17;
+  const FIREFOX_MIN_REQUIRED_VERSION = 60;
 
   beforeEach(async(() => {
     appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl']);

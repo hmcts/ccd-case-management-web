@@ -18,8 +18,8 @@
   "activity_retry": 5,
   "activity_batch_collection_delay_ms": 1,
   "activity_max_request_per_batch": 25,
-  "chrome_version": 67,
-  "ie_version": 11,
-  "edge_version": 17,
-  "firefox_version": 60
+  "chrome_min_required_version": 70,
+  "ie_min_required_version": 11,
+  "edge_min_required_version": 17,
+  "firefox_min_required_version": 60
 }

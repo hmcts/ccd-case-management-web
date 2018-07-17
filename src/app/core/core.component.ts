@@ -65,13 +65,13 @@ export class CoreComponent implements OnInit, OnDestroy {
 
     switch (browser) {
       case 'chrome':
-        return ( browser_version < this.appConfig.getChromeVersion() ) ? true : false;
+        return browser_version < this.appConfig.getChromeMinRequiredVersion();
       case 'ie':
-        return ( browser_version < this.appConfig.getIEVersion() ) ? true : false;
+        return browser_version < this.appConfig.getIEMinRequiredVersion();
       case 'firefox':
-        return ( browser_version < this.appConfig.getFirefoxVersion() ) ? true : false;
+        return browser_version < this.appConfig.getFirefoxMinRequiredVersion();
       case 'ms-edge':
-        return ( browser_version < this.appConfig.getEdgeVersion() ) ? true : false;
+        return browser_version < this.appConfig.getEdgeMinRequiredVersion();
       default:
         return false;
     }

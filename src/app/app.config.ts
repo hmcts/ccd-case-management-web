@@ -110,20 +110,20 @@ export class AppConfig {
     return this.config.activity_max_request_per_batch;
   }
 
-  public getChromeVersion() {
-    return this.config.chrome_version;
+  public getChromeMinRequiredVersion() {
+    return this.config.chrome_min_required_version;
   }
 
-  public getIEVersion() {
-    return this.config.ie_version;
+  public getIEMinRequiredVersion() {
+    return this.config.ie_min_required_version;
   }
 
-  public getEdgeVersion() {
-    return this.config.edge_version;
+  public getEdgeMinRequiredVersion() {
+    return this.config.edge_min_required_version;
   }
 
-  public getFirefoxVersion() {
-    return this.config.firefox_version;
+  public getFirefoxMinRequiredVersion() {
+    return this.config.firefox_min_required_version;
   }
 
   public getCaseHistoryUrl(jurisdictionId: string,
@@ -160,8 +160,8 @@ export class Config {
   activity_retry: number;
   activity_batch_collection_delay_ms: number;
   activity_max_request_per_batch: number;
-  chrome_version: number;
-  ie_version: number;
-  edge_version: number;
-  firefox_version: number;
+  chrome_min_required_version: number;
+  ie_min_required_version: number;
+  edge_min_required_version: number;
+  firefox_min_required_version: number;
 }

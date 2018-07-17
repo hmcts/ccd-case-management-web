@@ -24,10 +24,10 @@ describe('AppConfig', () => {
   const ACTIVITY_RETRY = 1;
   const ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1;
   const ACTIVITY_MAX_REQUEST_PER_BATCH = 1;
-  const CHROME_VERSION = 67;
-  const IE_VERSION = 11;
-  const EDGE_VERSION = 17;
-  const FIREFOX_VERSION = 60;
+  const CHROME_MIN_REQUIRED_VERSION = 67;
+  const IE_MIN_REQUIRED_VERSION = 11;
+  const EDGE_MIN_REQUIRED_VERSION = 17;
+  const FIREFOX_MIN_REQUIRED_VERSION = 60;
   const CASE_HISTORY_URL = API_URL + '/caseworkers/:uid/jurisdictions/JID/case-types/CTID/cases/CID/events/EID/case-history';
 
   const MOCK_CONFIG: Config = {
@@ -49,10 +49,10 @@ describe('AppConfig', () => {
     activity_next_poll_request_ms: ACTIVITY_NEXT_POLL_REQUEST_MS,
     activity_retry: ACTIVITY_RETRY,
     activity_batch_collection_delay_ms: ACTIVITY_BATCH_COLLECTION_DELAY_MS,
-    chrome_version: CHROME_VERSION,
-    ie_version: IE_VERSION,
-    edge_version: EDGE_VERSION,
-    firefox_version: FIREFOX_VERSION,
+    chrome_min_required_version: CHROME_MIN_REQUIRED_VERSION,
+    ie_min_required_version: IE_MIN_REQUIRED_VERSION,
+    edge_min_required_version: EDGE_MIN_REQUIRED_VERSION,
+    firefox_min_required_version: FIREFOX_MIN_REQUIRED_VERSION,
     activity_max_request_per_batch: ACTIVITY_MAX_REQUEST_PER_BATCH
   };
 
@@ -98,10 +98,10 @@ describe('AppConfig', () => {
             expect(appConfig.getActivityMaxRequestPerBatch()).toEqual(ACTIVITY_MAX_REQUEST_PER_BATCH);
             expect(appConfig.getActivityNexPollRequestMs()).toEqual(ACTIVITY_NEXT_POLL_REQUEST_MS);
             expect(appConfig.getActivityRetry()).toEqual(ACTIVITY_RETRY);
-            expect(appConfig.getChromeVersion()).toEqual(CHROME_VERSION);
-            expect(appConfig.getIEVersion()).toEqual(IE_VERSION);
-            expect(appConfig.getEdgeVersion()).toEqual(EDGE_VERSION);
-            expect(appConfig.getFirefoxVersion()).toEqual(FIREFOX_VERSION);
+            expect(appConfig.getChromeMinRequiredVersion()).toEqual(CHROME_MIN_REQUIRED_VERSION);
+            expect(appConfig.getIEMinRequiredVersion()).toEqual(IE_MIN_REQUIRED_VERSION);
+            expect(appConfig.getEdgeMinRequiredVersion()).toEqual(EDGE_MIN_REQUIRED_VERSION);
+            expect(appConfig.getFirefoxMinRequiredVersion()).toEqual(FIREFOX_MIN_REQUIRED_VERSION);
             expect(appConfig.getCaseHistoryUrl('JID', 'CTID', 'CID', 'EID'))
               .toEqual(CASE_HISTORY_URL);
           });

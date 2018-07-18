@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppConfig } from '../../app.config';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'ccd-browser-support',
@@ -13,7 +14,8 @@ export class CcdBrowserSupportComponent implements OnInit {
 
   showUnsupportedBrowser: boolean;
 
-  constructor(private appConfig: AppConfig) { }
+  constructor(private appConfig: AppConfig,
+              private deviceService: DeviceDetectorService) { }
 
   ngOnInit() {
     this.showUnsupportedBrowser = true;
@@ -25,5 +27,25 @@ export class CcdBrowserSupportComponent implements OnInit {
 
   hideUnsupportedBrowser() {
     this.showUnsupportedBrowser = false;
+  }
+
+  isUnsupportedBrowser(): boolean {
+
+    let browser = this.deviceService.browser;
+    let browser_full_version = this.deviceService.browser_version;
+    let browser_version = parseInt(browser_full_version.substring(0, browser_full_version.indexOf('.')), 10);
+
+    switch (browser) {
+      case 'chrome':
+        return browser_version < this.appConfig.getChromeMinRequiredVersion();
+      case 'ie':
+        return browser_version < this.appConfig.getIEMinRequiredVersion();
+      case 'firefox':
+        return browser_version < this.appConfig.getFirefoxMinRequiredVersion();
+      case 'ms-edge':
+        return browser_version < this.appConfig.getEdgeMinRequiredVersion();
+      default:
+        return false;
+    }
   }
 }

@@ -69,6 +69,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     AuthService,
     OAuth2Service,
     WorkbasketInputFilterService,
+    CcdBrowserSupportComponent,
   ],
   declarations: [
     CoreComponent,

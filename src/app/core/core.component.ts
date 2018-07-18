@@ -6,7 +6,7 @@ import { JurisdictionService } from '../shared/jurisdiction.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 
 @Component({
   selector: 'ccd-core',
@@ -25,8 +25,8 @@ export class CoreComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private jurisdictionService: JurisdictionService,
               private appConfig: AppConfig,
-              private deviceService: DeviceDetectorService,
-              private oauth2Service: OAuth2Service) {}
+              private oauth2Service: OAuth2Service,
+              private browserSupportComponent: CcdBrowserSupportComponent) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
@@ -58,22 +58,6 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
   isUnsupportedBrowser(): boolean {
-
-    let browser = this.deviceService.browser;
-    let browser_full_version = this.deviceService.browser_version;
-    let browser_version = parseInt(browser_full_version.substring(0, browser_full_version.indexOf('.')), 10);
-
-    switch (browser) {
-      case 'chrome':
-        return browser_version < this.appConfig.getChromeMinRequiredVersion();
-      case 'ie':
-        return browser_version < this.appConfig.getIEMinRequiredVersion();
-      case 'firefox':
-        return browser_version < this.appConfig.getFirefoxMinRequiredVersion();
-      case 'ms-edge':
-        return browser_version < this.appConfig.getEdgeMinRequiredVersion();
-      default:
-        return false;
-    }
+    return this.browserSupportComponent.isUnsupportedBrowser();
   }
 }

@@ -1,26 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfig } from '../../app.config';
 import createSpyObj = jasmine.createSpyObj;
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { CcdBrowserSupportComponent } from './ccd-browser-support.component';
 
 describe('CcdBrowserSupportComponent', () => {
   let component: CcdBrowserSupportComponent;
   let fixture: ComponentFixture<CcdBrowserSupportComponent>;
   let appConfig: any;
+  let deviceService: any;
+  let deviceServiceArg: any;
   const UNSUPPORTED_BROWSER_URL = 'https://www.gov.uk/help/browsers';
-  const CHROME_MIN_REQUIRED_VERSION = 67;
+  const CHROME_MIN_REQUIRED_VERSION = '67';
   const IE_MIN_REQUIRED_VERSION = 11;
   const EDGE_MIN_REQUIRED_VERSION = 17;
   const FIREFOX_MIN_REQUIRED_VERSION = 60;
 
   beforeEach(async(() => {
-    appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl', 'getChromeMinRequiredVersion']);
     appConfig.getUnsupportedBrowserUrl.and.returnValue(UNSUPPORTED_BROWSER_URL);
+    deviceService = createSpyObj('DeviceDetectorService', ['get', 'browser_version', 'browser']); // new DeviceDetectorService(deviceServiceArg);
     TestBed.configureTestingModule({
       declarations: [ CcdBrowserSupportComponent ],
       providers: [
         { provide: AppConfig, useValue: appConfig },
+        { provide: DeviceDetectorService, useValue: deviceService },
       ]
     })
     .compileComponents();

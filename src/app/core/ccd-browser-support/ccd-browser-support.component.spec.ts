@@ -19,7 +19,7 @@ describe('CcdBrowserSupportComponent', () => {
   beforeEach(async(() => {
     appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl', 'getChromeMinRequiredVersion']);
     appConfig.getUnsupportedBrowserUrl.and.returnValue(UNSUPPORTED_BROWSER_URL);
-    deviceService = createSpyObj('DeviceDetectorService', ['get', 'browser_version', 'browser']); // new DeviceDetectorService(deviceServiceArg);
+    deviceService = createSpyObj('DeviceDetectorService', ['get', 'browser_version', 'browser']);
     TestBed.configureTestingModule({
       declarations: [ CcdBrowserSupportComponent ],
       providers: [

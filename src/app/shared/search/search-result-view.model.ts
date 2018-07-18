@@ -1,9 +1,13 @@
 import { SearchResultViewColumn } from './search-result-view-column.model';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { CaseResolver } from '../../cases/case.resolver';
+import { Type } from 'class-transformer';
 
 export class SearchResultView {
+  @Type(() => SearchResultViewColumn)
   columns: SearchResultViewColumn[];
+
+  @Type(() => SearchResultViewItem)
   results: SearchResultViewItem[];
   result_error?: string;
 

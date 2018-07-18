@@ -13,8 +13,6 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { SearchResultViewItem } from './search-result-view-item.model';
-import { CaseResolver } from '../../cases/case.resolver';
 
 @Component({
   selector: 'ccd-search-result',
@@ -70,7 +68,8 @@ export class SearchResultComponent implements OnChanges {
   searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory;
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
-    appConfig: AppConfig, private activityService: ActivityService) {
+              appConfig: AppConfig,
+              private activityService: ActivityService) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -157,9 +156,5 @@ export class SearchResultComponent implements OnChanges {
       }
     }
     return isAscending ? SortOrder.ASCENDING : isDescending ? SortOrder.DESCENDING : SortOrder.UNSORTED;
-  }
-
-  removeDraftId(resultViewItem: SearchResultViewItem): string {
-    return resultViewItem.case_id.startsWith(CaseResolver.DRAFT) ? CaseResolver.DRAFT : resultViewItem.case_id;
   }
 }

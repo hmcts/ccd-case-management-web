@@ -10,6 +10,7 @@ import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import { AlertService } from '../core/alert/alert.service';
+import { plainToClass } from 'class-transformer';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -59,7 +60,7 @@ export class SearchComponent implements OnInit {
     this.searchService
       .search(filter.jurisdiction.id, filter.caseType.id, searchParams, caseFilters)
       .subscribe(resultView => {
-        this.resultView = resultView;
+        this.resultView = plainToClass(SearchResultView, resultView);
         if (this.resultView.result_error) {
           this.alertService.warning(this.resultView.result_error);
         }

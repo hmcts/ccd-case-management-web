@@ -32,7 +32,13 @@ export class WriteComplexFieldComponent extends AbstractFieldWriteComponent impl
       if (this.complexGroup.get(caseField.id)) {
         return this.complexGroup.get(caseField.id);
       }
-      if (!this.ignoreMandatory) {
+      // checks validators are required before calling formValidatorsService
+      const validatorsRequired = function () {
+        return ['AddressLine1'].some(x => x === caseField.id)
+          && this.formValidatorsService.MANDATORY === caseField.display_context
+          || !this.ignoreMandatory;
+      }
+      if (validatorsRequired.call(this)) {
         this.formValidatorsService.addValidators(caseField, control);
       }
       this.complexGroup.addControl(caseField.id, control);

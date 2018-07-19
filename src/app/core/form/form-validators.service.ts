@@ -5,12 +5,13 @@ import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.mo
 
 @Injectable()
 export class FormValidatorsService {
+  readonly MANDATORY: string = 'MANDATORY';
   private readonly CUSTOM_VALIDATED_TYPES: FieldTypeEnum[] = [
     'Date', 'MoneyGBP'
   ];
 
   addValidators(caseField: CaseField, control: FormControl): FormControl {
-    if (caseField.display_context === 'MANDATORY'
+    if (caseField.display_context === this.MANDATORY
       && this.CUSTOM_VALIDATED_TYPES.indexOf(caseField.field_type.type) === -1) {
       let validators = [Validators.required];
       if (control.validator) {

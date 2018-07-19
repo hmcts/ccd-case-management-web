@@ -35,10 +35,12 @@ export class WriteComplexFieldComponent extends AbstractFieldWriteComponent impl
       // checks validators are required before calling formValidatorsService
       const validatorsRequired = function () {
         return ['AddressLine1'].some(x => x === caseField.id)
+          && 'TextMax150' === caseField.field_type.id
           && this.formValidatorsService.MANDATORY === caseField.display_context
           || !this.ignoreMandatory;
       }
       if (validatorsRequired.call(this)) {
+        // console.log('WriteComplexFieldComponent add validators for caseField', caseField);
         this.formValidatorsService.addValidators(caseField, control);
       }
       this.complexGroup.addControl(caseField.id, control);

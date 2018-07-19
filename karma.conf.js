@@ -21,13 +21,13 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly', 'json' ],
       fixWebpackSourcePaths: true
     },
-    
+
     reporters: ['mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    autoWatch: false,
     browsers: ['PhantomJS'],
-    singleRun: false
+    singleRun: true
   });
 };

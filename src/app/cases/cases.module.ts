@@ -9,7 +9,7 @@ import { PaletteModule } from '../shared/palette/palette.module';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaletteUtilsModule } from '../shared/palette/utils/utils.module';
 import { CaseCreatorComponent } from './creator/case-creator.component';
 import { CreateCaseFiltersComponent } from './creator/filters/create-case-filters.component';
@@ -64,9 +64,11 @@ import { FieldsPurger } from '../shared/utils/fields.purger';
     CasePrinterComponent,
     CaseViewerComponent,
     CreateCaseFiltersComponent,
-    CallbackErrorsComponent,
     PrintUrlPipe,
     RemoveDialogComponent
+  ],
+  exports: [
+    CallbackErrorsComponent,
   ],
   entryComponents: [RemoveDialogComponent],
   providers: [
@@ -75,8 +77,8 @@ import { FieldsPurger } from '../shared/utils/fields.purger';
     CaseResolver,
     CreateCaseFieldsResolver,
     EventTriggerResolver,
+    FieldsPurger,
     LabelSubstitutionService,
-    FieldsPurger
   ]
 })
 export class CasesModule {}

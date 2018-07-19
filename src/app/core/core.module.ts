@@ -30,6 +30,7 @@ import { AuthService } from './auth/auth.service';
 import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
+import { DraftService } from './draft/draft.service';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { ActivityResolver } from './activity/activity.resolver';
   ],
   providers: [
     CasesService,
+    DraftService,
     HttpErrorService,
     DefinitionsService,
     DocumentService,

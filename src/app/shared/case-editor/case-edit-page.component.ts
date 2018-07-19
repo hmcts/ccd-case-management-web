@@ -13,6 +13,7 @@ import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { CaseFieldService } from '../domain/case-field.service';
 import { CaseField } from '../domain/definition/case-field.model';
+import { CaseResolver } from '../../cases/case.resolver';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -95,23 +96,17 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     if (!this.isSubmitting) {
       this.isSubmitting = true;
       this.error = null;
-      let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields,
-        this.editForm.value);
+      let currentPageFields = this.formValueService.filterCurrentPageFields(this.currentPage.case_fields, this.editForm.value);
       let caseEventData: CaseEventData = this.formValueService.sanitise(currentPageFields) as CaseEventData;
       caseEventData.event_token = this.eventTrigger.event_token;
       caseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.validate(caseEventData)
-        .subscribe(() => this.next(),
-          error => {
-            this.isSubmitting = false;
-            this.error = error;
-            this.callbackErrorsSubject.next(this.error);
-            if (this.error.details) {
-              this.formErrorService
-                .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
+        .subscribe(() => {
+            if (this.eventTrigger.can_save_draft) {
+              this.saveDraft();
             }
-          }
-        );
+            this.next();
+          }, error => this.handleError(error));
       this.scrollToTop();
     }
   }
@@ -128,6 +123,9 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   previous(): Promise<boolean> {
     this.error = null;
+    if (this.eventTrigger.can_save_draft) {
+      this.saveDraft();
+    }
     return this.caseEdit.previous(this.currentPage.id);
   }
 
@@ -147,7 +145,26 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     window.scrollTo(0, 0);
   }
 
+  private handleError(error) {
+    this.isSubmitting = false;
+    this.error = error;
+    this.callbackErrorsSubject.next(this.error);
+    if (this.error.details) {
+      this.formErrorService
+        .mapFieldErrors(this.error.details.field_errors, this.editForm.controls['data'] as FormGroup, 'validation');
+    }
+  }
+
   getCaseId(): String {
     return (this.caseEdit.caseDetails ? this.caseEdit.caseDetails.case_id : '');
+  }
+
+  private saveDraft() {
+    let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+    draftCaseEventData.event_token = this.eventTrigger.event_token;
+    draftCaseEventData.ignore_warning = this.ignoreWarning;
+    this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+      (draft) => this.eventTrigger.case_id = CaseResolver.DRAFT + draft.id, error => this.handleError(error)
+    );
   }
 }

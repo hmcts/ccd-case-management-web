@@ -12,6 +12,8 @@ import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { SearchResultComponent } from '../shared/search/search-result.component';
 import { Observable } from 'rxjs/Observable';
+import { AlertService } from '../core/alert/alert.service';
+import { plainToClass } from 'class-transformer';
 
 const ATTRIBUTE_SEPARATOR = '.';
 
@@ -20,15 +22,19 @@ const ATTRIBUTE_SEPARATOR = '.';
   styleUrls: ['./workbasket.scss']
 })
 export class WorkbasketComponent implements OnInit {
+
+  private static readonly CASE_FILTER = 'caseFilter';
+  private static readonly METADATA_FILTER = 'metadataFilter';
+
   profile: Profile;
   jurisdiction: Jurisdiction;
   caseType: CaseType;
   caseState: CaseState;
   resultView: SearchResultView;
-  caseTypes: CaseType[];
   page: number;
   paginationMetadata: PaginationMetadata;
   caseFilterFG: FormGroup;
+  metaDataFields: string[];
 
   @ViewChild('searchResults')
   searchResults: SearchResultComponent;
@@ -36,7 +42,8 @@ export class WorkbasketComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private searchService: SearchService,
               private paginationService: PaginationService,
-              private jurisdictionService: JurisdictionService) { }
+              private jurisdictionService: JurisdictionService,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
@@ -51,7 +58,8 @@ export class WorkbasketComponent implements OnInit {
     }
 
     this.caseFilterFG = filter.formGroup;
-    const caseFilters = this.getCaseFilterFromFormGroup(filter.formGroup);
+    this.metaDataFields = filter.metadataFields;
+
     const paginationParams = {};
     const searchParams = {};
 
@@ -68,20 +76,28 @@ export class WorkbasketComponent implements OnInit {
       searchParams['page'] = filter.page;
     }
 
+    const filters = this.getCaseFilterFromFormGroup(filter.formGroup);
+    const caseFilters = filters[WorkbasketComponent.CASE_FILTER];
+    const metadataFilters = Object.assign(searchParams, filters[WorkbasketComponent.METADATA_FILTER]);
+    const metadataPaginationParams = Object.assign(paginationParams, filters[WorkbasketComponent.METADATA_FILTER]);
+
     let searchObservable = this.searchService
-      .search(filter.jurisdiction.id, filter.caseType.id, searchParams, caseFilters, SearchService.VIEW_WORKBASKET);
+      .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters, SearchService.VIEW_WORKBASKET);
 
     let paginationMetadataObservable = this.paginationService
-    .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, paginationParams, caseFilters);
+      .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters);
 
     Observable.forkJoin(searchObservable, paginationMetadataObservable)
         .subscribe(results => {
-          this.resultView = results[0];
+          this.resultView = plainToClass(SearchResultView, results[0]);
           this.jurisdiction = filter.jurisdiction;
           this.caseType = filter.caseType;
           this.caseState = filter.caseState;
           this.page = filter.page;
           this.paginationMetadata = results[1];
+          if (this.resultView.result_error) {
+            this.alertService.warning(this.resultView.result_error);
+          }
         });
 
     this.scrollToTop();
@@ -89,6 +105,9 @@ export class WorkbasketComponent implements OnInit {
 
   private getCaseFilterFromFormGroup(formGroup?: FormGroup): object {
     const result = {};
+    result[WorkbasketComponent.METADATA_FILTER] = {};
+    result[WorkbasketComponent.CASE_FILTER] = {};
+
     if (formGroup) {
       this.buildSearchCaseDetails('', result, formGroup.value);
     }
@@ -102,16 +121,16 @@ export class WorkbasketComponent implements OnInit {
     }
     for (let attributeName of Object.keys(formGroupValue)) {
       let value = formGroupValue[attributeName];
-      if (this.isString(value)) {
-        target[prefix + attributeName] = value;
+      if (this.isStringOrNumber(value)) {
+        target[this.getFilterType(attributeName)][prefix + attributeName] = value;
       } else if (value) {
         this.buildSearchCaseDetails(attributeName, target, value);
       }
     }
   }
 
-  private isString(value: any): boolean {
-    return (typeof value === 'string');
+  private isStringOrNumber(value: any): boolean {
+    return (typeof value === 'string' && value.length !== 0) || (typeof value === 'number');
   }
 
   private notifyDefaultJurisdiction() {
@@ -124,5 +143,10 @@ export class WorkbasketComponent implements OnInit {
 
   private scrollToTop(): void {
     window.scrollTo(0, 0);
+  }
+
+  private getFilterType(fieldName: string): string {
+    return (this.metaDataFields && (this.metaDataFields.indexOf(fieldName) > -1)) ?
+      WorkbasketComponent.METADATA_FILTER : WorkbasketComponent.CASE_FILTER;
   }
 }

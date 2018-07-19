@@ -12,5 +12,7 @@
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/alpha/inputs": "/inputs-address-book",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/inputs": "/inputs",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=read": "/case-types",
-  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=create": "/case-types"
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=create": "/case-types",
+  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/drafts/": "/drafts",
+  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/drafts/:id": "/drafts/:id"
 }

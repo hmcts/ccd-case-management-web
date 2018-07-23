@@ -1,11 +1,11 @@
 import { async } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { Observable } from 'rxjs/Rx';
-import createSpyObj = jasmine.createSpyObj;
 import { CaseState } from '../shared/domain/definition/case-state.model';
 import { CaseType } from '../shared/domain/definition/case-type.model';
+import createSpyObj = jasmine.createSpyObj;
 
 const JURISDICTION: Jurisdiction = {
     id: 'J1',
@@ -38,13 +38,15 @@ describe('SearchComponent', () => {
     let subject: SearchComponent;
     let searchService;
     let paginationService;
+    let alertService;
 
     beforeEach(async(() => {
         searchService = createSpyObj('searchService', ['search']);
         searchService.search.and.returnValue(Observable.of({}));
         paginationService = createSpyObj('paginationService', ['getPaginationMetadata']);
         paginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
-        subject = new SearchComponent(null, searchService, paginationService);
+        alertService = createSpyObj('alertService', ['warning']);
+        subject = new SearchComponent(null, searchService, paginationService, alertService);
     }));
 
     it('should make inputs fields turn into query parameters', () => {

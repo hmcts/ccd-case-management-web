@@ -13,6 +13,7 @@ import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { CaseFieldService } from '../domain/case-field.service';
 import { CaseField } from '../domain/definition/case-field.model';
+import { ShowCondition } from '../conditional-show/conditional-show.model';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -72,7 +73,8 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       .filter(caseField => !this.caseFieldService.isReadOnly(caseField))
       .every(caseField => {
         let theControl = this.editForm.controls['data'].get(caseField.id);
-        return this.checkDocumentField(caseField, theControl) && this.checkOptionalField(caseField, theControl);
+        return this.isHidden(caseField, this.editForm.getRawValue())
+          || (this.checkDocumentField(caseField, theControl) && this.checkOptionalField(caseField, theControl));
       });
   }
 
@@ -81,6 +83,11 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       return true;
     }
     return !(this.checkMandatoryField(caseField, theControl));
+  }
+
+  private isHidden(caseField, formFields) {
+    let condition = new ShowCondition(caseField.show_condition);
+    return !condition.match(formFields.data);
   }
 
   private checkOptionalField(caseField: CaseField, theControl: AbstractControl): boolean {

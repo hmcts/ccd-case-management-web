@@ -13,6 +13,8 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
 export class WriteComplexFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   complexGroup: FormGroup;
 
+  readonly MANDATORY: string = 'MANDATORY';
+
   @Input()
   renderLabel = true;
 
@@ -36,7 +38,7 @@ export class WriteComplexFieldComponent extends AbstractFieldWriteComponent impl
       const validatorsRequired = function () {
         return ['AddressLine1'].some(x => x === caseField.id)
           && 'TextMax150' === caseField.field_type.id
-          && this.formValidatorsService.MANDATORY === caseField.display_context
+          && this.MANDATORY === caseField.display_context
           || !this.ignoreMandatory;
       }
       if (validatorsRequired.call(this)) {

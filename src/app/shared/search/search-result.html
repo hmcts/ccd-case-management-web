@@ -23,7 +23,7 @@
                   id: col.case_field_id,
                   label: col.label,
                   field_type: col.case_field_type,
-                  value: !result.case_fields[col.case_field_id] || col.case_field_id === 'case_reference' ? (result.case_id | ccdCaseReference) : result.case_fields[col.case_field_id]
+                  value: result.case_fields[col.case_field_id]? col.case_field_id === 'case_reference' ? (result.case_fields[col.case_field_id] | ccdCaseReference) : result.case_fields[col.case_field_id] : (result.case_id | ccdCaseReference)
             }"></ccd-field-read>
         </div>
       </a>

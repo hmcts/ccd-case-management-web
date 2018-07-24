@@ -453,10 +453,6 @@ describe('WriteComplexFieldComponent', () => {
       field_type: FIELD_TYPE_WITH_VALUES
     };
 
-    const LINE_1 = 0;
-    const LINE_2 = 1;
-    const POSTCODE = 2;
-
     const FORM_GROUP: FormGroup = new FormGroup({});
     const REGISTER_CONTROL = (control) => {
       FORM_GROUP.addControl(FIELD_ID, control);

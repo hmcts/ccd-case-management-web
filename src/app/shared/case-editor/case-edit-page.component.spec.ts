@@ -13,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CaseFieldService } from '../domain/case-field.service';
 import { aCaseField } from './case-edit.spec';
 import { CaseReferencePipe } from '../utils/case-reference.pipe';
+import { PageValidationService } from './page-validation.service';
 
 describe('CaseEditPageComponent', () => {
 
@@ -25,6 +26,7 @@ describe('CaseEditPageComponent', () => {
   let formErrorService = new FormErrorService();
   let firstPage = new WizardPage();
   let caseFieldService = new CaseFieldService();
+  let pageValidationService = new PageValidationService(caseFieldService);
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({'field1': new FormControl('SOME_VALUE')})
   });
@@ -51,7 +53,7 @@ describe('CaseEditPageComponent', () => {
         {provide: FormValueService, useValue: formValueService},
         {provide: FormErrorService, useValue: formErrorService},
         {provide: CaseEditComponent, useValue: caseEditComponentStub},
-        {provide: CaseFieldService, useValue: caseFieldService},
+        {provide: PageValidationService, useValue: pageValidationService},
         {provide: ActivatedRoute, useValue: {params: Observable.of({id: 123})}}
       ]
     }).compileComponents();
@@ -139,66 +141,5 @@ describe('CaseEditPageComponent', () => {
     comp.currentPage = wizardPage;
     fixture.detectChanges();
     expect(comp.currentPageIsNotValid()).toBeFalsy();
-  });
-
-  it('should not allow empty document fields when MANDATORY and field is not hidden', () => {
-    let field1 = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
-    let field2 = aCaseField('field2', 'field2', 'Document', 'MANDATORY', null);
-    field2.show_condition = 'field1="SOME_VALUE"';
-
-    wizardPage.case_fields.push(field1, field2);
-    wizardPage.isMultiColumn = () => false;
-    comp.currentPage = wizardPage;
-    fixture.detectChanges();
-    expect(comp.currentPageIsNotValid()).toBeTruthy();
-  });
-
-  it('should allow empty document fields when MANDATORY and field is hidden', () => {
-    let field1 = aCaseField('field1', 'field1', 'Text', 'OPTIONAL', null);
-    let field2 = aCaseField('field2', 'field2', 'Document', 'MANDATORY', null);
-    field2.show_condition = 'field1="SOME_OTHER_VALUE"';
-    wizardPage.case_fields.push(field1, field2);
-    wizardPage.isMultiColumn = () => false;
-    comp.currentPage = wizardPage;
-    fixture.detectChanges();
-    expect(comp.currentPageIsNotValid()).toBeFalsy();
-  });
-
-  it('should allow empty document fields when OPTIONAL and field is not hidden', () => {
-    let field1 = aCaseField('Text', 'field1', 'Text', 'OPTIONAL', null);
-    let field2 = aCaseField('Document', 'field2', 'Document', 'OPTIONAL', null);
-    field2.show_condition = 'field1="SOME_VALUE"';
-    wizardPage.case_fields.push(field1, field2);
-    wizardPage.isMultiColumn = () => false;
-    comp.currentPage = wizardPage;
-    fixture.detectChanges();
-    expect(comp.currentPageIsNotValid()).toBeFalsy();
-  });
-
-  it('should allow empty document fields when OPTIONAL and field is hidden', () => {
-    let field1 = aCaseField('Text', 'field1', 'Text', 'OPTIONAL', null);
-    let field2 = aCaseField('Document', 'field2', 'Document', 'OPTIONAL', null);
-    field2.show_condition = 'field1="SOME_OTHER_VALUE"';
-    wizardPage.case_fields.push(field1, field2);
-    wizardPage.isMultiColumn = () => false;
-    comp.currentPage = wizardPage;
-    fixture.detectChanges();
-    expect(comp.currentPageIsNotValid()).toBeFalsy();
-  });
-
-  it('should allow empty document fields when OPTIONAL', () => {
-    wizardPage.case_fields.push(aCaseField('fieldX', 'fieldX', 'Document', 'OPTIONAL', null));
-    wizardPage.isMultiColumn = () => false;
-    comp.currentPage = wizardPage;
-    fixture.detectChanges();
-    expect(comp.currentPageIsNotValid()).toBeFalsy();
-  });
-
-  it('should not allow empty document fields when MANDATORY', () => {
-    wizardPage.case_fields.push(aCaseField('fieldX', 'fieldX', 'Document', 'MANDATORY', null));
-    wizardPage.isMultiColumn = () => false;
-    comp.currentPage = wizardPage;
-    fixture.detectChanges();
-    expect(comp.currentPageIsNotValid()).toBeTruthy();
   });
 });

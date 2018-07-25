@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { WizardPage } from '../domain/wizard-page.model';
@@ -11,8 +11,7 @@ import { Subject } from 'rxjs/Subject';
 import { HttpError } from '../../core/http/http-error.model';
 import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
-import { CaseFieldService } from '../domain/case-field.service';
-import { CaseField } from '../domain/definition/case-field.model';
+import { PageValidationService } from './page-validation.service';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -35,7 +34,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     private formValueService: FormValueService,
     private formErrorService: FormErrorService,
     private cdRef: ChangeDetectorRef,
-    private caseFieldService: CaseFieldService,
+    private pageValidationService: PageValidationService,
   ) {}
 
   ngOnInit(): void {
@@ -68,27 +67,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   currentPageIsNotValid(): boolean {
-    return !this.currentPage.case_fields
-      .filter(caseField => !this.caseFieldService.isReadOnly(caseField))
-      .every(caseField => {
-        let theControl = this.editForm.controls['data'].get(caseField.id);
-        return this.checkDocumentField(caseField, theControl) && this.checkOptionalField(caseField, theControl);
-      });
-  }
-
-  private checkDocumentField(caseField: CaseField, theControl: AbstractControl): boolean {
-    if (caseField.field_type.id !== 'Document') {
-      return true;
-    }
-    return !(this.checkMandatoryField(caseField, theControl));
-  }
-
-  private checkOptionalField(caseField: CaseField, theControl: AbstractControl): boolean {
-    return (!theControl && this.caseFieldService.isOptional(caseField)) || theControl.valid || theControl.disabled;
-  }
-
-  private checkMandatoryField(caseField: CaseField, theControl: AbstractControl): boolean {
-    return this.caseFieldService.isMandatory(caseField) && theControl === null;
+    return !this.pageValidationService.isPageValid(this.currentPage, this.editForm);
   }
 
   submit() {

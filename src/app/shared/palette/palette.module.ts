@@ -51,7 +51,6 @@ import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summa
     MarkdownModule,
     OrderSummaryModule,
     CasePaymentHistoryViewerModule,
-    PaletteUtilsModule
   ],
   declarations: [
     UnsupportedFieldComponent,
@@ -87,7 +86,6 @@ import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summa
     ReadPhoneUKFieldComponent,
     ReadDateFieldComponent,
     ReadCollectionFieldComponent,
-    ReadOrderSummaryFieldComponent,
 
     // Write
     WriteCollectionFieldComponent,

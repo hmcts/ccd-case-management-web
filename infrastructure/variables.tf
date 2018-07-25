@@ -66,3 +66,7 @@ variable "aat_gateway" {
 variable "https_only" {
   default = "true"
 }
+
+variable "common_tags" {
+  type = "map"
+}

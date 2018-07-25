@@ -29,6 +29,7 @@ import { WriteDocumentFieldComponent } from './document/write-document-field.com
 import { LabelFieldComponent } from './label/label-field.component';
 import { WriteAddressFieldComponent } from './address/write-address-field.component';
 import { CaseField } from '../domain/definition/case-field.model';
+import { WriteOrderSummaryFieldComponent } from './order-summary/write-order-summary-field.component';
 import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 import { CasePaymentHistoryViewerFieldComponent } from './payment/case-payment-history-viewer-field.component';
 
@@ -63,7 +64,7 @@ export class PaletteService {
           case 'AddressUK':
             return write ? WriteAddressFieldComponent : ReadComplexFieldComponent;
           case 'OrderSummary':
-            return ReadOrderSummaryFieldComponent;
+            return write ? WriteOrderSummaryFieldComponent : ReadOrderSummaryFieldComponent;
           default:
             return write ? WriteComplexFieldComponent : ReadComplexFieldComponent;
         }

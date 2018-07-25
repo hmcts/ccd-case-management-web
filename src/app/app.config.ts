@@ -110,6 +110,18 @@ export class AppConfig {
     return this.config.payments_url;
   }
 
+  public getCaseHistoryUrl(jurisdictionId: string,
+                           caseTypeId: string,
+                           caseId: string,
+                           eventId: string) {
+    return this.getApiUrl()
+      + `/caseworkers/:uid`
+      + `/jurisdictions/${jurisdictionId}`
+      + `/case-types/${caseTypeId}`
+      + `/cases/${caseId}`
+      + `/events/${eventId}`
+      + `/case-history`;
+  }
 }
 
 export class Config {

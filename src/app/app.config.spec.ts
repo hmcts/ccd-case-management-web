@@ -24,6 +24,7 @@ describe('AppConfig', () => {
   const ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1;
   const ACTIVITY_MAX_REQUEST_PER_BATCH = 1;
   const PAYMENTS_URL = 'http://payments.reform';
+  const CASE_HISTORY_URL = API_URL + '/caseworkers/:uid/jurisdictions/JID/case-types/CTID/cases/CID/events/EID/case-history';
 
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,
@@ -88,6 +89,8 @@ describe('AppConfig', () => {
             expect(appConfig.getActivityNexPollRequestMs()).toEqual(ACTIVITY_NEXT_POLL_REQUEST_MS);
             expect(appConfig.getActivityRetry()).toEqual(ACTIVITY_RETRY);
             expect(appConfig.getPaymentsUrl()).toEqual(PAYMENTS_URL);
+            expect(appConfig.getCaseHistoryUrl('JID', 'CTID', 'CID', 'EID'))
+              .toEqual(CASE_HISTORY_URL);
           });
       })));
   });

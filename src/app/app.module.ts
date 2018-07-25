@@ -16,7 +16,6 @@ import { SharedModule } from './shared/shared.module';
 import { isPlatformBrowser } from '@angular/common';
 import { OAuth2RedirectModule } from './oauth2/oauth2-redirect.module';
 import { AppConfigGuard } from './app.config.guard';
-import { PaymentLibModule } from '@hmcts/ccpay-web-component';
 
 @NgModule({
   imports: [
@@ -30,7 +29,6 @@ import { PaymentLibModule } from '@hmcts/ccpay-web-component';
     CasesModule,
     SharedModule,
     OAuth2RedirectModule,
-    PaymentLibModule,
   ],
   declarations: [
     AppComponent,

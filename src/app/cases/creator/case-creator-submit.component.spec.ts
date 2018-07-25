@@ -15,10 +15,9 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { CaseView } from '../../core/cases/case-view.model';
 import { CaseDetails } from '../../shared/domain/case-details';
 import { CaseEventData } from '../../shared/domain/case-event-data';
-import createSpyObj = jasmine.createSpyObj;
 import { Draft } from '../../shared/domain/draft';
 import { DraftService } from '../../core/draft/draft.service';
-import { CaseResolver } from '../case.resolver';
+import createSpyObj = jasmine.createSpyObj;
 
 @Component({
   selector: 'ccd-case-edit',
@@ -230,7 +229,7 @@ describe('CaseCreatorSubmitComponent', () => {
 
   it('should update draft when saveDraft called with sanitised data for second time', () => {
     const DRAFT_ID = '12345';
-    component.eventTrigger.case_id = CaseResolver.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
+    component.eventTrigger.case_id = Draft.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
     draftService.createDraft.and.returnValue(DRAFT);
     draftService.updateDraft.and.returnValue(DRAFT);
     component.saveDraft()(SANITISED_EDIT_FORM);

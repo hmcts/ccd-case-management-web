@@ -89,7 +89,7 @@ describe('CreateCaseFieldsResolver', () => {
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
     expect(route.paramMap.get).toHaveBeenCalledTimes(3);
-    expect(route.queryParamMap.get).toHaveBeenCalledTimes(1);
+    expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
   });
 
   it('should create error alert when event trigger cannot be retrieved', done => {

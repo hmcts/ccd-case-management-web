@@ -1,8 +1,10 @@
-// These are important and needed before anything else
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-
 import { enableProdMode } from '@angular/core';
+// Express Engine
+import {ngExpressEngine} from '@nguniversal/express-engine';
+// Import module map for lazy loading
+import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
@@ -30,20 +32,16 @@ const CONFIG = {
   'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net',
   'smart_survey_url': process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
-  'activity_next_poll_request_ms': process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'] || 5000,
-  'activity_retry': process.env['CCD_ACTIVITY_RETRY'] || 5,
-  'activity_batch_collection_delay_ms': process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'] || 1,
-  'activity_max_request_per_batch': process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'] || 25,
-  'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:8080/payments'
+  'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:8080/payments',
+  'activity_next_poll_request_ms': parseInt(process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'], 10) || 5000,
+  'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
+  'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
+  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 
-// Express Engine
-import { ngExpressEngine } from '@nguniversal/express-engine';
-// Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import { AppConfig } from './src/app/app.config';
 import { AppServerConfig } from './src/app/app.server.config';
 
@@ -74,20 +72,17 @@ app.get('/config', (req, res) => {
   res.status(200).json(CONFIG);
 });
 
-// TODO: implement data requests securely
-app.get('/api/*', (req, res) => {
-  res.status(404).send('data requests are not supported');
-});
-
 // Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
+  maxAge: '1y'
+}));
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req });
+  res.render('index', { req });
 });
 
 // Start up the Node server
 app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node Express server listening on http://localhost:${PORT}`);
 });

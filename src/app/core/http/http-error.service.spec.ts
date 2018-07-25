@@ -1,5 +1,4 @@
 import { HttpErrorService } from './http-error.service';
-import { Observable } from 'rxjs/Observable';
 import { HttpError } from './http-error.model';
 import { Headers, Response, ResponseOptions } from '@angular/http';
 import { AuthService } from '../auth/auth.service';
@@ -87,38 +86,66 @@ describe('HttpErrorService', () => {
 
   describe('handle()', () => {
 
-    it('should return default error when no error given', () => {
-      let obsError = errorService.handle(null);
-
-      expect(obsError).toEqual(Observable.throw(new HttpError()));
+    it('should return default error when no error given', (done) => {
+      errorService.handle(null)
+        .subscribe(
+          () => fail('no error'),
+          error => {
+            expect(error).not.toBeNull();
+            expect(error.error).toEqual('Unknown error');
+            expect(error.message).toEqual('Something unexpected happened, our technical staff have been automatically notified');
+            done();
+          }
+        );
     });
 
-    it('should convert a valid Response error into an HttpError', () => {
-      let obsError = errorService.handle(VALID_ERROR_RESPONSE);
-
-      expect(obsError).toEqual(Observable.throw(HttpError.from(VALID_ERROR_BODY)));
+    it('should convert a valid Response error into an HttpError', (done) => {
+      errorService.handle(VALID_ERROR_RESPONSE)
+        .subscribe(
+          () => fail('no error'),
+          error => {
+            expect(error).toEqual(HttpError.from(VALID_ERROR_BODY));
+            done();
+          }
+        );
     });
 
-    it('should handle a valid Response with charsetInfo', () => {
-      let obsError = errorService.handle(VALID_ERROR_RESPONSE_WITH_CHARSET);
-
-      expect(obsError).toEqual(Observable.throw(HttpError.from(VALID_ERROR_BODY)));
+    it('should handle a valid Response with charsetInfo', (done) => {
+      errorService.handle(VALID_ERROR_RESPONSE_WITH_CHARSET)
+        .subscribe(
+          () => fail('no error'),
+          error => {
+            expect(error).toEqual(HttpError.from(VALID_ERROR_BODY));
+            done();
+          }
+        );
     });
 
-    it('should convert a non-valid Response error into an HttpError', () => {
-      let obsError = errorService.handle(NOT_VALID_ERROR_RESPONSE);
-
-      expect(obsError).toEqual(Observable.throw(new HttpError()));
+    it('should convert a non-valid Response error into an HttpError', (done) => {
+      errorService.handle(NOT_VALID_ERROR_RESPONSE)
+        .subscribe(
+          () => fail('no error'),
+          error => {
+            expect(error).toEqual(new HttpError());
+            done();
+          }
+        );
     });
 
-    it('should use message when error is an unknown object with a message property', () => {
-      let obsError = errorService.handle({
-        message: ERROR_MESSAGE
-      });
-
+    it('should use message when error is an unknown object with a message property', (done) => {
       let expectedError = new HttpError();
       expectedError.message = ERROR_MESSAGE;
-      expect(obsError).toEqual(Observable.throw(expectedError));
+
+      errorService.handle({
+        message: ERROR_MESSAGE
+      })
+        .subscribe(
+          () => fail('no error'),
+          error => {
+            expect(error).toEqual(expectedError);
+            done();
+          }
+        );
     });
 
     it('should trigger sign-in when IDAM returns HTTP-401 as response', () => {

@@ -1,4 +1,12 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ReflectiveInjector, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Injector,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { PaletteService } from '../palette.service';
 import { AbstractFieldReadComponent } from './abstract-field-read.component';
 
@@ -20,8 +28,7 @@ export class FieldReadComponent extends AbstractFieldReadComponent implements On
 
   ngOnInit(): void {
     let componentClass = this.paletteService.getFieldComponentClass(this.caseField, false);
-    let resolvedInputs = ReflectiveInjector.resolve([]);
-    let injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.fieldContainer.parentInjector);
+    let injector = Injector.create([], this.fieldContainer.parentInjector);
     let component = this.resolver.resolveComponentFactory(componentClass).create(injector);
 
     // Provide component @Inputs

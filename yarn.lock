@@ -5578,7 +5578,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^0.3.9:
+marked@^0.3.19:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 
@@ -5970,12 +5970,13 @@ ng2-mock-component@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ng2-mock-component/-/ng2-mock-component-0.1.1.tgz#5980e8887523754f855febc0c11f6c20f016d865"
 
-ngx-md@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ngx-md/-/ngx-md-3.1.1.tgz#41310ac862713cb4cc6b4f455743d948943ed728"
+ngx-md@~6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-md/-/ngx-md-6.0.0.tgz#67c9a1ac49f4608d43d5b309d8d7ecc8ae7a6898"
   dependencies:
-    marked "^0.3.9"
-    prismjs "^1.9.0"
+    marked "^0.3.19"
+    prismjs "^1.14.0"
+    tslib "^1.9.0"
 
 ngx-pagination@^3.0.3:
   version "3.1.1"
@@ -6787,9 +6788,9 @@ pretty-error@^2.0.2:
     renderkid "^2.0.1"
     utila "~0.4"
 
-prismjs@^1.9.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.14.0.tgz#bbccfdb8be5d850d26453933cb50122ca0362ae0"
+prismjs@^1.14.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.15.0.tgz#8801d332e472091ba8def94976c8877ad60398d9"
   optionalDependencies:
     clipboard "^2.0.0"
 

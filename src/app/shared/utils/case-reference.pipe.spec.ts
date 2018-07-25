@@ -13,6 +13,6 @@ describe('CaseReferencePipe', () => {
   });
 
   it('should return DRAFT case reference looks like a draft Id', () => {
-    expect(caseReference.transform('123456789')).toBe('DRAFT');
+    expect(caseReference.transform('DRAFT123456789')).toBe('DRAFT');
   });
 });

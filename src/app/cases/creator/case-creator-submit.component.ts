@@ -9,7 +9,6 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
 import { DraftService } from '../../core/draft/draft.service';
 import { Draft } from '../../shared/domain/draft';
-import { CaseResolver } from '../case.resolver';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -61,7 +60,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
       } else {
         return (caseEventData: CaseEventData) => this.draftService.updateDraft(this.jurisdictionId,
           this.caseTypeId,
-          this.eventTrigger.case_id.slice(CaseResolver.DRAFT.length),
+          Draft.stripDraftId(this.eventTrigger.case_id),
           caseEventData);
       }
     }

@@ -58,7 +58,10 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
 
   private goToFirst(wizard: Wizard, canShowPredicate: Predicate<WizardPage>, route: ActivatedRouteSnapshot): Promise<boolean> {
     let firstPage = wizard.firstPage(canShowPredicate);
-    return this.router.navigate([...this.parentUrlSegments(route), firstPage ? firstPage.id : 'submit']);
+    // If there’s no specific wizard page called, it makes another navigation to either the first page available or to the submit page
+    // TODO should find a way to navigate to target page without going through the whole loop (and make a second call to BE) again
+    return this.router.navigate([...this.parentUrlSegments(route), firstPage ? firstPage.id : 'submit'],
+      { queryParams: route.queryParams });
   }
 
   private buildState(caseFields: CaseField[]): any {

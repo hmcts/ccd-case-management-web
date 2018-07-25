@@ -7,6 +7,7 @@ import { HttpError } from '../../core/http/http-error.model';
 import { CasesService } from '../../core/cases/cases.service';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import { Draft } from '../../shared/domain/draft';
 
 @Injectable()
 export class CreateCaseFieldsResolver implements Resolve<CaseEventTrigger> {
@@ -27,13 +28,17 @@ export class CreateCaseFieldsResolver implements Resolve<CaseEventTrigger> {
     let caseTypeId = route.paramMap.get(CreateCaseFieldsResolver.PARAM_CASE_TYPE_ID);
     let eventTriggerId = route.paramMap.get(CreateCaseFieldsResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(CreateCaseFieldsResolver.QUERY_PARAM_IGNORE_WARNING);
+    let draftId = route.queryParamMap.get(Draft.DRAFT);
+    let caseId = undefined;
 
     if (-1 === CreateCaseFieldsResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {
       ignoreWarning = 'false';
     }
-
+    if (draftId && Draft.isDraft(draftId)) {
+      caseId = Draft.stripDraftId(draftId);
+    }
     return this.casesService
-      .getEventTrigger(jurisdictionId, caseTypeId, eventTriggerId, undefined, ignoreWarning)
+      .getEventTrigger(jurisdictionId, caseTypeId, eventTriggerId, caseId, ignoreWarning)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);
 

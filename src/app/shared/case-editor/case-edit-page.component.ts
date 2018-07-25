@@ -13,7 +13,7 @@ import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { CaseFieldService } from '../domain/case-field.service';
 import { CaseField } from '../domain/definition/case-field.model';
-import { CaseResolver } from '../../cases/case.resolver';
+import { Draft } from '../domain/draft';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -164,7 +164,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     draftCaseEventData.event_token = this.eventTrigger.event_token;
     draftCaseEventData.ignore_warning = this.ignoreWarning;
     this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-      (draft) => this.eventTrigger.case_id = CaseResolver.DRAFT + draft.id, error => this.handleError(error)
+      (draft) => this.eventTrigger.case_id = Draft.DRAFT + draft.id, error => this.handleError(error)
     );
   }
 }

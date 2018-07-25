@@ -50,7 +50,7 @@ import { PageValidationService } from '../shared/case-editor/page-validation.ser
     ReactiveFormsModule,
     SharedModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   declarations: [
     CallbackErrorsComponent,

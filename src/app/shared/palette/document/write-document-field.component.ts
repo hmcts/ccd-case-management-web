@@ -37,7 +37,6 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
       let documentUpload: FormData = new FormData();
       documentUpload.append('files', this.selectedFile, this.selectedFile.name);
       documentUpload.append('classification', 'PUBLIC');
-      this.caseField.value = this.selectedFile.name;
       this.documentManagement.uploadFile(documentUpload).subscribe(result => {
         if (!this.uploadedDocument) {
           this.createDocumentGroup();
@@ -49,7 +48,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
           document._links.binary.href,
           document.originalDocumentName,
         );
-
+        this.caseField.value = this.selectedFile.name;
         this.valid = true;
       }, (error: HttpError) => {
         this.uploadError = this.getErrorMessage(error);

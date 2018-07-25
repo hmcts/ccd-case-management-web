@@ -7484,9 +7484,9 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rx-polling@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/rx-polling/-/rx-polling-0.2.3.tgz#4148e1a581d6e1e37fe23466fd68caf3ea781d76"
+rx-polling@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rx-polling/-/rx-polling-1.0.0.tgz#47914b934e8f7c934e0d016ef7eb9019c55c9d48"
 
 rxjs-compat@^6.0.0-rc.0:
   version "6.2.1"

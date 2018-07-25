@@ -37,6 +37,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
       let documentUpload: FormData = new FormData();
       documentUpload.append('files', this.selectedFile, this.selectedFile.name);
       documentUpload.append('classification', 'PUBLIC');
+      this.caseField.value = this.selectedFile.name;
       this.documentManagement.uploadFile(documentUpload).subscribe(result => {
         if (!this.uploadedDocument) {
           this.createDocumentGroup();

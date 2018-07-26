@@ -48,7 +48,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
           document._links.binary.href,
           document.originalDocumentName,
         );
-
+        this.caseField.value = this.selectedFile.name;
         this.valid = true;
       }, (error: HttpError) => {
         this.uploadError = this.getErrorMessage(error);

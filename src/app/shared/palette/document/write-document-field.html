@@ -8,6 +8,7 @@
 
   <div>
     <ccd-read-document-field *ngIf="caseField" [caseField]="caseField"></ccd-read-document-field>
+    <div class="chosen-file" *ngIf="selectedFile && selectedFile.name && caseField.value">Chosen file: {{ caseField.value }}</div>
   </div>
 
   <input class="form-control bottom-30" [id]="id()" type="file" (change)="fileChangeEvent($event)"/>

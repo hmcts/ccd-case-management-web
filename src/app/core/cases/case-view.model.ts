@@ -18,6 +18,7 @@ export class CaseView {
     id: string,
     name: string,
     description?: string
+    title_display?: string
   };
   channels: string[];
   tabs: CaseTab[];

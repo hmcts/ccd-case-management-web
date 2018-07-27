@@ -18,10 +18,13 @@ describe('CasesService', () => {
   const JID = 'TEST';
   const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
+  const DRAFT_ID = 'DRAFT1';
   const CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/` + CASE_ID;
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER_URL = API_URL
     + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
+  const EVENT_TRIGGER_DRAFT_URL = API_URL
+    + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/drafts/${DRAFT_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
   const CREATE_EVENT_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/events`;
   const VALIDATE_CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/validate`;
   const PRINT_DOCUMENTS_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/documents`;
@@ -131,6 +134,14 @@ describe('CasesService', () => {
         .subscribe();
 
       expect(httpService.get).toHaveBeenCalledWith(EVENT_TRIGGER_URL);
+    });
+
+    it('should use HttpService::get with correct url for DRAFTS', () => {
+      casesService
+        .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, DRAFT_ID, 'true')
+        .subscribe();
+
+      expect(httpService.get).toHaveBeenCalledWith(EVENT_TRIGGER_DRAFT_URL);
     });
 
     it('should retrieve event trigger from server by case id', () => {

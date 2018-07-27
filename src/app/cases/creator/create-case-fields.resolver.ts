@@ -35,7 +35,7 @@ export class CreateCaseFieldsResolver implements Resolve<CaseEventTrigger> {
       ignoreWarning = 'false';
     }
     if (draftId && Draft.isDraft(draftId)) {
-      caseId = Draft.stripDraftId(draftId);
+      caseId = draftId;
     }
     return this.casesService
       .getEventTrigger(jurisdictionId, caseTypeId, eventTriggerId, caseId, ignoreWarning)

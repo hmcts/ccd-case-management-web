@@ -11,6 +11,7 @@ import { WizardPageField } from '../../shared/domain/wizard-page-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
+import { Draft } from '../../shared/domain/draft';
 
 @Injectable()
 export class CasesService {
@@ -56,22 +57,7 @@ export class CasesService {
     // console.log('retrieve event trigger');
     ignoreWarning = undefined !== ignoreWarning ? ignoreWarning : 'false';
 
-    let url =  this.appConfig.getApiUrl()
-      + `/caseworkers/:uid`
-      + `/jurisdictions/${jurisdictionId}`
-      + `/case-types/${caseTypeId}`
-      + `/cases/${caseId}`
-      + `/event-triggers/${eventTriggerId}`
-      + `?ignore-warning=${ignoreWarning}`;
-
-    if (caseId === undefined || caseId === null) {
-      url = this.appConfig.getApiUrl()
-        + `/caseworkers/:uid`
-        + `/jurisdictions/${jurisdictionId}`
-        + `/case-types/${caseTypeId}`
-        + `/event-triggers/${eventTriggerId}`
-        + `?ignore-warning=${ignoreWarning}`;
-    }
+    let url =  this.buildEventTriggerUrl(jurisdictionId, caseTypeId, eventTriggerId, caseId, ignoreWarning);
 
     return this.http
       .get(url)
@@ -166,6 +152,31 @@ export class CasesService {
         this.errorService.setError(error);
         return Observable.throw(error);
       });
+  }
+
+  private buildEventTriggerUrl(jurisdictionId: string,
+                              caseTypeId: string,
+                              eventTriggerId: string,
+                              caseId?: string,
+                              ignoreWarning?: string): string {
+    let url = this.appConfig.getApiUrl()
+      + `/caseworkers/:uid`
+      + `/jurisdictions/${jurisdictionId}`
+      + `/case-types/${caseTypeId}`;
+
+    if (caseId === undefined || caseId === null) {
+      url += `/event-triggers/${eventTriggerId}`
+        + `?ignore-warning=${ignoreWarning}`;
+    } else if (Draft.isDraft(caseId)) {
+      url += `/drafts/${caseId}`
+        + `/event-triggers/${eventTriggerId}`
+        + `?ignore-warning=${ignoreWarning}`
+    } else {
+      url += `/cases/${caseId}`
+        + `/event-triggers/${eventTriggerId}`
+        + `?ignore-warning=${ignoreWarning}`
+    }
+    return url;
   }
 
   private processResponse(response) {

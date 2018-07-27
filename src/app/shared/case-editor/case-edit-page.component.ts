@@ -81,11 +81,9 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       caseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.validate(caseEventData)
         .subscribe(() => {
-            if (this.eventTrigger.can_save_draft) {
-              this.saveDraft();
-            }
-            this.next();
-          }, error => this.handleError(error));
+          this.saveDraft();
+          this.next();
+        }, error => this.handleError(error));
       this.scrollToTop();
     }
   }
@@ -102,9 +100,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   previous(): Promise<boolean> {
     this.error = null;
-    if (this.eventTrigger.can_save_draft) {
-      this.saveDraft();
-    }
+    this.saveDraft();
     return this.caseEdit.previous(this.currentPage.id);
   }
 
@@ -139,11 +135,13 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   private saveDraft() {
-    let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-    draftCaseEventData.event_token = this.eventTrigger.event_token;
-    draftCaseEventData.ignore_warning = this.ignoreWarning;
-    this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-      (draft) => this.eventTrigger.case_id = Draft.DRAFT + draft.id, error => this.handleError(error)
-    );
+    if (this.eventTrigger.can_save_draft) {
+      let draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+      draftCaseEventData.event_token = this.eventTrigger.event_token;
+      draftCaseEventData.ignore_warning = this.ignoreWarning;
+      this.caseEdit.saveDraft(draftCaseEventData).subscribe(
+        (draft) => this.eventTrigger.case_id = Draft.DRAFT + draft.id, error => this.handleError(error)
+      );
+    }
   }
 }

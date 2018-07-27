@@ -16,8 +16,8 @@ import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
-import createSpyObj = jasmine.createSpyObj;
 import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
+import createSpyObj = jasmine.createSpyObj;
 
 @Component({
   selector: 'ccd-field-write',
@@ -146,9 +146,11 @@ describe('WorkbasketFiltersComponent', () => {
   }];
 
   const TEST_WORKBASKET_INPUTS: WorkbasketInputModel[] = [
-    createWBInput('Label 1', 1, 'PersonFirstName', 'Text'),
-    createWBInput('Label 2', 2, 'PersonLastName', 'Text')
+    createWBInput('Label 1', 1, 'PersonFirstName', 'Text', false),
+    createWBInput('Label 2', 2, 'PersonLastName', 'Text', true)
   ];
+
+  const METADATA_FIELDS = ['PersonLastName'];
 
   const $APPLY_BUTTON = By.css('button');
 
@@ -355,7 +357,8 @@ describe('WorkbasketFiltersComponent', () => {
         caseState: DEFAULT_CASE_STATE,
         init: false,
         page: 1,
-        formGroup: jasmine.any(Object)
+        formGroup: jasmine.any(Object),
+        metadataFields: METADATA_FIELDS
       });
 
       expect(workbasketHandler.applyFilters).toHaveBeenCalledTimes(1);
@@ -375,7 +378,8 @@ describe('WorkbasketFiltersComponent', () => {
         caseState: DEFAULT_CASE_STATE,
         init: true,
         page: 1,
-        formGroup: jasmine.any(Object)
+        formGroup: jasmine.any(Object),
+        metadataFields: METADATA_FIELDS
       });
       expect(workbasketHandler.applyFilters).toHaveBeenCalledTimes(1);
       expect(alertService.setPreserveAlerts).toHaveBeenCalledWith(false);
@@ -410,6 +414,14 @@ describe('WorkbasketFiltersComponent', () => {
       component.apply(true);
       expect(workbasketHandler.applyFilters).toHaveBeenCalledWith(component.selected);
       expect(component.selected.formGroup.value).toEqual(TEST_FORM_GROUP.value);
+    }));
+
+    it('should have metadata fields added when apply button is clicked', async(() => {
+      component.workbasketInputs = TEST_WORKBASKET_INPUTS;
+
+      component.apply(true);
+
+      expect(component.selected.metadataFields).toEqual(METADATA_FIELDS);
     }));
 
     it('should update search input when case type is reset', async(() => {
@@ -899,7 +911,8 @@ function createObservableFrom<T>(param: T): Observable<T> {
   });
 }
 
-function createWBInput(theLabel: string, theOrder: number, theId: string, theType: FieldTypeEnum): WorkbasketInputModel {
+function createWBInput(theLabel: string, theOrder: number, theId: string,
+                       theType: FieldTypeEnum, theMetadata: boolean): WorkbasketInputModel {
   return {
     label: theLabel,
     order: theOrder,
@@ -908,7 +921,8 @@ function createWBInput(theLabel: string, theOrder: number, theId: string, theTyp
       field_type: {
         id: theType,
         type: theType
-      }
+      },
+      metadata: theMetadata
     }
-  };
+  }
 }

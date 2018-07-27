@@ -4,7 +4,7 @@ import { FieldsUtils } from '../utils/fields.utils';
 @Injectable()
 export class LabelSubstitutionService {
 
-    private static readonly LABEL_ID_PATTERN = /^[a-zA-Z0-9_.]+$/;
+    private static readonly LABEL_ID_PATTERN = /^[a-zA-Z0-9_.\]\[]+$/;
     private static readonly STARTING_PLACEHOLDER = '$';
     private static readonly OPENING_PLACEHOLDER = '{';
     private static readonly CLOSING_PLACEHOLDER = '}';

@@ -19,7 +19,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
 
   valid = true;
   uploadError: string;
-  private confirmReplaceResult: string;
+  confirmReplaceResult: string;
 
   constructor(private documentManagement: DocumentManagementService, private dialog: MatDialog) {
     super();
@@ -106,7 +106,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     return error.message;
   }
 
-  private openFileDialog(): void {
+  openFileDialog(): void {
     this.fileInput.nativeElement.click();
   }
 
@@ -118,7 +118,7 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     }
   }
 
-  private openDialog(dialogConfig) {
+  openDialog(dialogConfig) {
     const dialogRef = this.dialog.open(DocumentDialogComponent, dialogConfig);
     dialogRef.beforeClose().subscribe(result => {
       this.confirmReplaceResult = result;

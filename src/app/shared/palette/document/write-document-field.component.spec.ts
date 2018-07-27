@@ -147,6 +147,14 @@ describe('WriteDocumentFieldComponent', () => {
     expect(FORM_GROUP.controls[FORM_GROUP_ID].value.document_filename).toBe(VALUE.document_filename);
   });
 
+  it('should open file dialog if document does not exist', () => {
+    component.caseField.value = null;
+    expect(component.caseField.value).toBeFalsy();
+    component.fileSelectEvent();
+    component.confirmReplaceResult = 'Replace';
+    expect(component.triggerReplace()).toBeFalsy();
+  });
+
   it('should upload given document', () => {
     let file = {
       name: 'test.pdf'
@@ -188,6 +196,7 @@ describe('WriteDocumentFieldComponent', () => {
   });
 
   it('should display dialog only if document exist', () => {
+    component.caseField.value = VALUE;
     expect(component.caseField.value).toBeTruthy();
     fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
     componentDialog = fixtureDialog.componentInstance;

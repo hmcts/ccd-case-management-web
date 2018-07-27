@@ -47,22 +47,12 @@ export class CaseCreatorSubmitComponent implements OnInit {
     return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
   }
 
-  private isCreatingDraft(): boolean {
-    return !this.eventTrigger.case_id;
-  }
-
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
     if (this.eventTrigger.can_save_draft) {
-      if (this.isCreatingDraft()) {
-        return (caseEventData: CaseEventData) => this.draftService.createDraft(this.jurisdictionId,
-          this.caseTypeId,
-          caseEventData);
-      } else {
-        return (caseEventData: CaseEventData) => this.draftService.updateDraft(this.jurisdictionId,
-          this.caseTypeId,
-          Draft.stripDraftId(this.eventTrigger.case_id),
-          caseEventData);
-      }
+      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.jurisdictionId,
+        this.caseTypeId,
+        this.eventTrigger.case_id,
+        caseEventData);
     }
   }
 

@@ -159,7 +159,7 @@ describe('CaseCreatorSubmitComponent', () => {
   beforeEach(async(() => {
     casesService = createSpyObj<CasesService>('casesService', ['createCase', 'validateCase']);
     casesService.createCase.and.returnValue(Observable.of(CASE_DETAILS));
-    draftService = createSpyObj<DraftService>('draftService', ['createDraft', 'updateDraft']);
+    draftService = createSpyObj<DraftService>('draftService', ['createOrUpdateDraft']);
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
@@ -220,22 +220,19 @@ describe('CaseCreatorSubmitComponent', () => {
     expect(casesService.validateCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
   });
 
-  it('should create a draft when saveDraft called with sanitised data for the first time', () => {
-    draftService.createDraft.and.returnValue(DRAFT);
+  it('should create a draft when saveDraft called with sanitised data', () => {
+    component.eventTrigger.case_id = undefined;
     component.saveDraft()(SANITISED_EDIT_FORM);
 
-    expect(draftService.createDraft).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, undefined, SANITISED_EDIT_FORM);
   });
 
   it('should update draft when saveDraft called with sanitised data for second time', () => {
     const DRAFT_ID = '12345';
     component.eventTrigger.case_id = Draft.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
-    draftService.createDraft.and.returnValue(DRAFT);
-    draftService.updateDraft.and.returnValue(DRAFT);
     component.saveDraft()(SANITISED_EDIT_FORM);
 
-    expect(draftService.createDraft).not.toHaveBeenCalled();
-    expect(draftService.updateDraft).toHaveBeenCalledWith(JID, CTID, DRAFT_ID, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, Draft.DRAFT + DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {

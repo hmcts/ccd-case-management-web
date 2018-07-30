@@ -80,6 +80,6 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
       return 'Document upload facility is not available at the moment';
     }
 
-    return error.message;
+    return error.error;
   }
 }

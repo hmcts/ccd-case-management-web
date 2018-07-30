@@ -92,7 +92,7 @@ export class CasesService {
             return case_field;
           });
           wizardPage.getCol1Fields = () =>
-             wizardPage.case_fields.filter(f =>
+            wizardPage.case_fields.filter(f =>
               !f.wizardProps.page_column_no || f.wizardProps.page_column_no === 1);
           wizardPage.getCol2Fields = () =>
             wizardPage.case_fields.filter(f => f.wizardProps.page_column_no === 2);
@@ -142,7 +142,7 @@ export class CasesService {
     const url = this.appConfig.getCaseDataUrl()
       + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/cases?ignore-warning=${ignoreWarning}`;
 
-      return this.http
+    return this.http
       .post(url, eventData)
       .map(response => this.processResponse(response))
       .catch((error: any): any => {

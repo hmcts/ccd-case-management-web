@@ -9,19 +9,17 @@ import { OrderService } from '../../core/order/order.service';
 import { Observable } from 'rxjs/Observable';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
-import { attr } from '../../test/helpers';
+import { attr, text } from '../../test/helpers';
 import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
-import createSpyObj = jasmine.createSpyObj;
-import any = jasmine.any;
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { HttpError } from '../../core/http/http-error.model';
-import { text } from '../../test/helpers';
-import { ActivityService } from '../../core/activity/activity.service';
 import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
+import createSpyObj = jasmine.createSpyObj;
+import any = jasmine.any;
 
 @Component({
   // tslint:disable-next-line
@@ -368,16 +366,18 @@ describe('CaseViewerComponent', () => {
       .queryAll(By.css('tbody>tr.compound-field>td'));
 
     expect(cells.length).toEqual(COMPLEX_FIELDS.length);
-
-    cells.forEach(cell => {
-      expect(attr(cell, 'colspan')).toBe('2');
-    });
   });
 
   it('should render each field value using FieldReadComponent', () => {
-    let readFields = de
+    let readFields_fields = de
       .query($NAME_TAB_CONTENT)
       .queryAll(By.css('tbody>tr td>ccd-field-read'));
+
+    let readFields_compound = de
+      .query($NAME_TAB_CONTENT)
+      .queryAll(By.css('tbody>tr th>ccd-field-read'));
+
+    let readFields = readFields_fields.concat(readFields_compound);
 
     FIELDS.forEach(field => {
       expect(readFields.find(f => {

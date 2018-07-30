@@ -8,6 +8,7 @@ import { CaseEditConfirmComponent } from './case-edit-confirm.component';
 import { WizardPage } from '../domain/wizard-page.model';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { By } from '@angular/platform-browser';
+import { CaseReferencePipe } from '../utils/case-reference.pipe';
 
 describe('CaseEditConfirmComponent', () => {
   let fixture: ComponentFixture<CaseEditConfirmComponent>;
@@ -51,7 +52,7 @@ describe('CaseEditConfirmComponent', () => {
         ],
         declarations: [
           CaseEditConfirmComponent,
-
+          CaseReferencePipe,
           // Mock
         ],
         providers: [
@@ -70,7 +71,7 @@ describe('CaseEditConfirmComponent', () => {
   beforeEach(() => {
   });
 
-  it('should render an confirmation-header', () => {
+  it('should render a confirmation-header', () => {
     de = fixture.debugElement.query(By.css('#confirmation-header'));
     expect(de.nativeElement.textContent).toBeDefined();
     expect(de.nativeElement.textContent.trim()).toEqual('Header');
@@ -106,7 +107,7 @@ describe('CaseEditConfirmComponent', () => {
         ],
         declarations: [
           CaseEditConfirmComponent,
-
+          CaseReferencePipe,
           // Mock
         ],
         providers: [

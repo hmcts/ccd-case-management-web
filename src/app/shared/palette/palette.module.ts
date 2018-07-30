@@ -30,6 +30,7 @@ import { DocumentModule } from './document/document.module';
 import { LabelFieldComponent } from './label/label-field.component';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
+import { OrderSummaryModule } from './order-summary/order-summary.module';
 
 @NgModule({
   imports: [
@@ -46,7 +47,7 @@ import { FormValidatorsService } from '../../core/form/form-validators.service';
     CaseUIToolkitModule,
     AddressModule,
     MarkdownModule,
-    PaletteUtilsModule
+    OrderSummaryModule
   ],
   declarations: [
     UnsupportedFieldComponent,

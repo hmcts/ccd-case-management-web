@@ -153,7 +153,7 @@ describe('CasesService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, 'true')
+        .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, 'true')
         .subscribe(data => {
           expect(data).toEqual(EVENT_TRIGGER);
         }, err => {
@@ -237,7 +237,7 @@ describe('CasesService', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
+        .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
         .subscribe(data => {
           expect(data).toEqual(EVENT_RESPONSE);
         }, err => {
@@ -306,7 +306,7 @@ describe('CasesService', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
+        .createEvent(CASE_DETAILS, CASE_EVENT_DATA)
         .subscribe(data => {
           expect(data).toEqual(EVENT_RESPONSE);
         }, err => {
@@ -370,7 +370,7 @@ describe('CasesService', () => {
       httpService.post.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .createCase(JID, CTID, CASE_EVENT_DATA)
+        .createCase(JID, CTID, CASE_EVENT_DATA)
         .subscribe(data => {
           expect(data).toEqual(CASE_RESPONSE);
         }, err => {
@@ -416,7 +416,7 @@ describe('CasesService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       casesService
-      .getPrintDocuments(JID, CTID, CASE_ID)
+        .getPrintDocuments(JID, CTID, CASE_ID)
         .subscribe(data => {
           expect(data).toEqual(DOCUMENTS);
         }, err => {

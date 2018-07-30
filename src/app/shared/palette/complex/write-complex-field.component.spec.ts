@@ -165,13 +165,12 @@ describe('WriteComplexFieldComponent', () => {
       fixture.detectChanges();
     }));
 
-    it('should render a form group with a header for the complex type', () => {
+    it('should not render a form group with a header for the complex type', () => {
       let panelTitle = de
         .query($COMPLEX_PANEL)
         .query($COMPLEX_PANEL_TITLE);
 
-      expect(panelTitle).toBeTruthy();
-      expect(panelTitle.nativeElement.textContent).toBe(CASE_FIELD.label + ' (Optional)');
+      expect(panelTitle).toBeNull();
     });
 
     it('should render a field write component for each field in the complex type', () => {

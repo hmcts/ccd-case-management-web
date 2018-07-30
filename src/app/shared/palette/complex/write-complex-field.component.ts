@@ -14,7 +14,7 @@ export class WriteComplexFieldComponent extends AbstractFieldWriteComponent impl
   complexGroup: FormGroup;
 
   @Input()
-  renderLabel = true;
+  renderLabel = false;
 
   @Input()
   ignoreMandatory = false;

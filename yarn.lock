@@ -260,9 +260,9 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.1.6.tgz#63f5a76ee28f02d3114f2f7869ef12de82b4b5b3"
+"@hmcts/ccd-case-ui-toolkit@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.1.tgz#fae2a3c9efb7795c970982425d3d336a4c3b1651"
   dependencies:
     govuk-elements-sass "^3.1.2"
 
@@ -6522,9 +6522,9 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rx-polling@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/rx-polling/-/rx-polling-0.2.3.tgz#4148e1a581d6e1e37fe23466fd68caf3ea781d76"
+rx-polling@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rx-polling/-/rx-polling-1.0.0.tgz#47914b934e8f7c934e0d016ef7eb9019c55c9d48"
 
 rxjs@^5.5.0, rxjs@^5.5.2, rxjs@^5.5.6:
   version "5.5.11"

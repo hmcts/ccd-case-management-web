@@ -51,15 +51,13 @@ describe('CaseHeaderComponent', () => {
   }));
 
   it('should render a header as case reference when title display is empty', () => {
-    CASE_DETAILS.state.title_display = '';
     let header = de.query($HEADING);
     expect(header).toBeTruthy();
     expect(text(header)).toEqual('#1234-5678-9012-3456');
   });
 
   it('should render a header as markdown element when title display is not empty', () => {
-    CASE_DETAILS.state.title_display = '${PersonFirstName}';
-    component.caseDetails = CASE_DETAILS;
+    component.caseDetails.state.title_display = 'Title';
     component.ngOnInit();
     fixture.detectChanges();
 

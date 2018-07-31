@@ -27,7 +27,6 @@ export class CaseHeaderComponent {
       return acc.concat(tab.fields);
     }, []);
 
-    return caseDataFields;
-    //return Object.assign(caseDataFields, this.caseDetails.metadataFields);
+    return Object.assign(caseDataFields, this.caseDetails.metadataFields);
   }
 }

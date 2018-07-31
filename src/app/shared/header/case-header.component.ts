@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CaseView } from '../../core/cases/case-view.model';
 import { CaseField } from '../domain/definition/case-field.model';
 
@@ -7,7 +7,7 @@ import { CaseField } from '../domain/definition/case-field.model';
   templateUrl: './case-header.html',
   styleUrls: ['./case-header.scss']
 })
-export class CaseHeaderComponent {
+export class CaseHeaderComponent implements OnInit {
 
   @Input()
   caseDetails: CaseView;

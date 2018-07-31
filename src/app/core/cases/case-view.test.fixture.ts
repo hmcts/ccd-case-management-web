@@ -1,5 +1,5 @@
 import { CaseView } from './case-view.model';
-import { createCaseTabArray } from "./case-tab.test.fixture";
+import { createCaseTabArray } from './case-tab.test.fixture';
 
 export let createCaseView = () => {
   const caseView = new CaseView();

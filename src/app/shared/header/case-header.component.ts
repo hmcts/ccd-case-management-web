@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CaseView } from '../../core/cases/case-view.model';
-import { CaseField } from "../domain/definition/case-field.model";
+import { CaseField } from '../domain/definition/case-field.model';
 
 @Component({
   selector: 'ccd-case-header',

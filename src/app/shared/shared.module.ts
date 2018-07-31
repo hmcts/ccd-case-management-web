@@ -22,7 +22,7 @@ import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
-import { MarkdownModule } from "./markdown/markdown.module";
+import { MarkdownModule } from './markdown/markdown.module';
 
 @NgModule({
   imports: [

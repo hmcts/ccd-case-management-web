@@ -5,7 +5,7 @@ import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { By } from '@angular/platform-browser';
 import { text } from '../../test/helpers';
 import { createCaseView } from '../../core/cases/case-view.test.fixture';
-import { MockComponent } from "ng2-mock-component";
+import { MockComponent } from 'ng2-mock-component';
 import { LabelSubstitutorDirective } from '../substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../utils/fields.utils';
 import { LabelSubstitutionService } from '../case-editor/label-substitution.service';

@@ -30,9 +30,8 @@ export class CcdBrowserSupportComponent implements OnInit {
   }
 
   isUnsupportedBrowser(): boolean {
-
-    let browser = this.deviceService.browser;
-    let browser_full_version = this.deviceService.browser_version;
+    let browser = this.deviceService.getDeviceInfo().browser;
+    let browser_full_version = this.deviceService.getDeviceInfo().browser_version;
     let browser_version = parseInt(browser_full_version.substring(0, browser_full_version.indexOf('.')), 10);
 
     switch (browser) {

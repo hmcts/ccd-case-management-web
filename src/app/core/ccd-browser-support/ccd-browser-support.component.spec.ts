@@ -19,7 +19,16 @@ describe('CcdBrowserSupportComponent', () => {
   beforeEach(async(() => {
     appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl', 'getChromeMinRequiredVersion']);
     appConfig.getUnsupportedBrowserUrl.and.returnValue(UNSUPPORTED_BROWSER_URL);
-    deviceService = createSpyObj('DeviceDetectorService', ['get', 'browser_version', 'browser']);
+    deviceService = createSpyObj('DeviceDetectorService', ['getDeviceInfo']);
+    const deviceInfo = {
+      'userAgent': 'nghcilwoy',
+      'os': 'XJO',
+      'browser': 'chrome',
+      'device': 'green tea',
+      'os_version': '10.5',
+      'browser_version': '67.0'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
     TestBed.configureTestingModule({
       declarations: [ CcdBrowserSupportComponent ],
       providers: [
@@ -49,5 +58,9 @@ describe('CcdBrowserSupportComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should not display if unsupported browser', function () {
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
   });
 });

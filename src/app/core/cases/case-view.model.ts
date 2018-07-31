@@ -1,6 +1,7 @@
 import { CaseTab } from './case-tab.model';
 import { CaseViewEvent } from './case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
+import { CaseField } from '../../shared/domain/definition/case-field.model';
 
 export class CaseView {
   case_id?: string;
@@ -24,4 +25,5 @@ export class CaseView {
   tabs: CaseTab[];
   triggers: CaseViewTrigger[];
   events: CaseViewEvent[];
+  metadataFields?: CaseField[];
 }

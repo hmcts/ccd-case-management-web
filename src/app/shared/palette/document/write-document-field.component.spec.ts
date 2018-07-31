@@ -12,6 +12,8 @@ import { FormGroup } from '@angular/forms';
 import { FieldLabelPipe } from '../utils/field-label.pipe';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
+import { DocumentDialogComponent } from '../../document-dialog/document-dialog.component';
 
 describe('WriteDocumentFieldComponent', () => {
 
@@ -68,6 +70,9 @@ describe('WriteDocumentFieldComponent', () => {
     FORM_GROUP.addControl(FORM_GROUP_ID, control);
     return control;
   };
+  const DIALOG_CONFIG = new MatDialogConfig();
+  const $DIALOG_REPLACE_BUTTON = By.css('.button[title=Replace]');
+  const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
 
   let ReadDocumentComponent = MockComponent({
     selector: 'ccd-read-document-field',
@@ -79,12 +84,20 @@ describe('WriteDocumentFieldComponent', () => {
   let de: DebugElement;
   let mockDocumentManagementService: any;
 
+  let fixtureDialog: ComponentFixture<DocumentDialogComponent>;
+  let componentDialog: DocumentDialogComponent;
+  let deDialog: DebugElement;
+  let dialog: any;
+  let matDialogRef: MatDialogRef<DocumentDialogComponent>;
+
   beforeEach(() => {
     mockDocumentManagementService = createSpyObj<DocumentManagementService>('documentManagementService', ['uploadFile']);
     mockDocumentManagementService.uploadFile.and.returnValues(
       Observable.of(RESPONSE_FIRST_DOCUMENT),
       Observable.of(RESPONSE_SECOND_DOCUMENT)
     );
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    matDialogRef = createSpyObj<MatDialogRef<DocumentDialogComponent>>('matDialogRef', ['close']);
 
     TestBed
       .configureTestingModule({
@@ -92,12 +105,16 @@ describe('WriteDocumentFieldComponent', () => {
         declarations: [
           WriteDocumentFieldComponent,
           FieldLabelPipe,
-
+          DocumentDialogComponent,
           // Mock
           ReadDocumentComponent,
         ],
         providers: [
-          { provide: DocumentManagementService, useValue: mockDocumentManagementService }
+          { provide: DocumentManagementService, useValue: mockDocumentManagementService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatDialogRef, useValue: matDialogRef },
+          { provide: MatDialogConfig, useValue: DIALOG_CONFIG },
+          DocumentDialogComponent
         ]
       })
       .compileComponents();
@@ -128,6 +145,14 @@ describe('WriteDocumentFieldComponent', () => {
     expect(FORM_GROUP.controls[FORM_GROUP_ID].value.document_url).toBe(VALUE.document_url);
     expect(FORM_GROUP.controls[FORM_GROUP_ID].value.document_binary_url).toBe(VALUE.document_binary_url);
     expect(FORM_GROUP.controls[FORM_GROUP_ID].value.document_filename).toBe(VALUE.document_filename);
+  });
+
+  it('should open file dialog if document does not exist', () => {
+    component.caseField.value = null;
+    expect(component.caseField.value).toBeFalsy();
+    component.fileSelectEvent();
+    component.confirmReplaceResult = 'Replace';
+    expect(component.triggerReplace()).toBeFalsy();
   });
 
   it('should upload given document', () => {
@@ -168,5 +193,39 @@ describe('WriteDocumentFieldComponent', () => {
       }
     });
     expect(component.valid).toBeTruthy();
+  });
+
+  it('should display dialog only if document exist', () => {
+    component.caseField.value = VALUE;
+    expect(component.caseField.value).toBeTruthy();
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+    let replaceElement = deDialog.query(By.css('.button[title=Replace]'));
+    expect(replaceElement).toBeTruthy();
+  });
+
+  it('should trigger the document replace event when replace button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogReplacelButton = deDialog.query($DIALOG_REPLACE_BUTTON);
+    dialogReplacelButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Replace');
+    fixture.detectChanges();
+  });
+
+  it('should not trigger the document replace event when cancel button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DocumentDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+    let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
+    dialogCancelButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Cancel');
+    fixture.detectChanges();
   });
 });

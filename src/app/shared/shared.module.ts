@@ -21,6 +21,7 @@ import { CaseHistoryResolver } from './case-history/case-history.resolver';
 import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
+import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
 import { MarkdownModule } from "./markdown/markdown.module";
 
 @NgModule({
@@ -47,7 +48,9 @@ import { MarkdownModule } from "./markdown/markdown.module";
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
     CaseHistoryComponent,
+    DocumentDialogComponent,
   ],
+  entryComponents: [DocumentDialogComponent],
   providers: [
     SearchResultViewItemComparatorFactory,
     CaseFieldService,

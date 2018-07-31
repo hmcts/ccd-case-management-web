@@ -240,7 +240,7 @@ describe('WorkbasketComponent', () => {
 
     const filterContents = {
       'name': nameControl1,
-      'meta': nameControl2
+      '[META]': nameControl2
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
@@ -248,7 +248,7 @@ describe('WorkbasketComponent', () => {
       jurisdiction: JURISDICTION,
       caseType: CASE_TYPES[0],
       page: 1,
-      metadataFields: ['meta']
+      metadataFields: ['[META]']
     };
 
     comp.applyFilter(filter);

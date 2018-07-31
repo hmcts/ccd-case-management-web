@@ -43,7 +43,7 @@
     "@angular/platform-browser-dynamic": "~5.2.0",
     "@angular/platform-server": "~5.2.0",
     "@angular/router": "~5.2.0",
-    "@angular/upgrade": "~5.2.0",
+    "@angular/upgrade": "~6.1.0",
     "@hmcts/ccd-case-ui-toolkit": "1.2.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",

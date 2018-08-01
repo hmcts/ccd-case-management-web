@@ -28,7 +28,8 @@ export class CaseEventTrigger {
   }
 
   hasPages(): boolean {
-    console.log('hasPages', this.case_fields && this.case_fields.length !== 0)
+    console.log('thePages', this.wizard_pages)
+    console.log('hasPages', this.wizard_pages && this.wizard_pages.length !== 0)
     return this.wizard_pages && this.wizard_pages.length !== 0;
   }
 }

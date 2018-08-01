@@ -59,7 +59,7 @@ describe('CaseEditWizardGuard', () => {
     wizardGuard = new CaseEditWizardGuard(router, routerHelper, wizardFactory, alertService);
   });
 
-  fit('by default, should not redirect', () => {
+  it('by default, should not redirect', () => {
     wizardGuard.resolve(route);
 
     expect(router.navigate).not.toHaveBeenCalled();

@@ -77,6 +77,10 @@ export class CasesService {
     return this.http
       .get(url)
       .map(response => response.json())
+      .catch((error: any): any => {
+        this.errorService.setError(error);
+        return Observable.throw(error);
+      })
       .map((p: Object) => plainToClass(CaseEventTrigger, p))
       .do(eventTrigger => {
         if (!eventTrigger.wizard_pages) {
@@ -100,11 +104,7 @@ export class CasesService {
             wizardPage.case_fields.filter(f => f.wizardProps.page_column_no === 2);
           wizardPage.isMultiColumn = () => wizardPage.getCol2Fields().length > 0;
         });
-      })
-      // .catch((error: any): any => {
-      //   this.errorService.setError(error);
-      //   return Observable.throw(error);
-      // });
+      });
   }
 
   createEvent(caseDetails: CaseView, eventData: CaseEventData): Observable<object> {

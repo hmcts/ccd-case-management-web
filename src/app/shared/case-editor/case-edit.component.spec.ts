@@ -20,6 +20,7 @@ import { CaseField } from '../domain/definition/case-field.model';
 import { FieldsPurger } from '../utils/fields.purger';
 import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
+import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
 
 describe('CaseEditComponent', () => {
 
@@ -162,6 +163,7 @@ describe('CaseEditComponent', () => {
           FieldWrite
         ],
         providers: [
+          WizardFactoryService,
           { provide: FormErrorService, useValue: formErrorService },
           { provide: FormValueService, useValue: formValueService },
           { provide: FieldsUtils, useValue: fieldsUtils },

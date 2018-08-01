@@ -24,7 +24,6 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
     ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
-    console.log('EventTriggerResolver resolve');
     return this.isRootTriggerEventRoute(route) ? this.getAndCacheEventTrigger(route)
         : this.cachedEventTrigger ? Observable.of(this.cachedEventTrigger)
         : this.getAndCacheEventTrigger(route);

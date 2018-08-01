@@ -9,19 +9,18 @@ import { OrderService } from '../../core/order/order.service';
 import { Observable } from 'rxjs/Observable';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
-import { attr } from '../../test/helpers';
+import { attr, text } from '../../test/helpers';
 import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
-import createSpyObj = jasmine.createSpyObj;
-import any = jasmine.any;
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { HttpError } from '../../core/http/http-error.model';
-import { text } from '../../test/helpers';
-import { ActivityService } from '../../core/activity/activity.service';
 import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
+import { CaseField } from '../../shared/domain/definition/case-field.model';
+import createSpyObj = jasmine.createSpyObj;
+import any = jasmine.any;
 
 @Component({
   // tslint:disable-next-line
@@ -124,6 +123,141 @@ describe('CaseViewerComponent', () => {
     }
   ];
 
+  const METADATA: CaseField[] = [
+    {
+     id: '[CASE_REFERENCE]',
+     label: 'Case Reference',
+     value: 1533032330714079,
+     hint_text: null,
+     field_type: {
+       id: 'Number',
+       type: 'Number',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[CASE_TYPE]',
+     label: 'Case Type',
+     value: 'DIVORCE',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[CREATED_DATE]',
+     label: 'Created Date',
+     value: '2018-07-31T10:18:50.737',
+     hint_text: null,
+     field_type: {
+       id: 'Date',
+       type: 'Date',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[JURISDICTION]',
+     label: 'Jurisdiction',
+     value: 'DIVORCE',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[LAST_MODIFIED_DATE]',
+     label: 'Last Modified Date',
+     value: '2018-07-31T10:18:50.737',
+     hint_text: null,
+     field_type: {
+       id: 'Date',
+       type: 'Date',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[SECURITY_CLASSIFICATION]',
+     label: 'Security Classification',
+     value: 'PUBLIC',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   }
+  ];
+
   const CASE_VIEW: CaseView = {
     case_id: '1',
     case_type: {
@@ -200,7 +334,8 @@ describe('CaseViewerComponent', () => {
       },
     ],
     triggers: TRIGGERS,
-    events: EVENTS
+    events: EVENTS,
+    metadataFields: METADATA,
   };
   const FIELDS = CASE_VIEW.tabs[1].fields;
   const SIMPLE_FIELDS = CASE_VIEW.tabs[1].fields.slice(0, 2);

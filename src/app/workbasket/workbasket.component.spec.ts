@@ -9,12 +9,12 @@ import { SearchService } from '../core/search/search.service';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { Observable } from 'rxjs/Observable';
-import createSpyObj = jasmine.createSpyObj;
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('WorkbasketComponent', () => {
 
@@ -227,5 +227,38 @@ describe('WorkbasketComponent', () => {
     };
     comp.applyFilter(filter);
     expect(mockSearchService.search).not.toHaveBeenCalled();
+  });
+
+  it('should make metadata inputs fields turn into query parameters', () => {
+    const nameControl1 = new FormControl();
+    const NAME_VALUE1 = 'something';
+    nameControl1.setValue(NAME_VALUE1);
+
+    const nameControl2 = new FormControl();
+    const NAME_VALUE2 = 100;
+    nameControl2.setValue(NAME_VALUE2);
+
+    const filterContents = {
+      'name': nameControl1,
+      '[META]': nameControl2
+    };
+    let formGroup = new FormGroup(filterContents);
+    let filter = {
+      formGroup: formGroup,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      page: 1,
+      metadataFields: ['[META]']
+    };
+
+    comp.applyFilter(filter);
+
+    expect(mockPaginationService.getPaginationMetadata).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {meta: NAME_VALUE2}, {
+      'name': NAME_VALUE1
+    });
+
+    expect(mockSearchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {page: 1, meta: NAME_VALUE2},
+      {'name': NAME_VALUE1}, SearchService.VIEW_WORKBASKET);
+
   });
 });

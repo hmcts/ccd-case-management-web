@@ -1,26 +1,24 @@
 .collection-field-table {
-
   tr:first-child>td {
     padding-top: 0;
   }
-
   tr:last-child>td {
     border-bottom: none;
   }
-
   td.collection-actions {
     width: 1px;
     white-space: nowrap;
   }
 }
 .error-spacing {
-  margin-top: 0px;
+  margin-top: 10px;
 }
 .collection-title{
-  height: 25px;
+  height: 51px;
 }
 .float-left {
   float: left;
+  padding-top: 8px;
 }
 .float-right {
   float: right;

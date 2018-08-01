@@ -27,6 +27,5 @@ export class CasePaymentHistoryViewerFieldComponent extends AbstractFieldReadCom
 
   getCaseReference() {
     return this.caseViewContext.get(Constants.CASE_REFERENCE_KEY);
-
   }
 }

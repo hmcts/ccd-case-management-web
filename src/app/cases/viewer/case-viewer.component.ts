@@ -103,7 +103,6 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   buildContextMap(): ContextMap {
     let contextMap = new ContextMap();
     contextMap.set(Constants.CASE_REFERENCE_KEY, this.caseDetails.case_id);
-    contextMap.set(CasePaymentHistoryViewerFieldComponent.PAYMENTS_BASE_URL_KEY, this.appConfig.getPaymentsUrl());
     return contextMap;
   }
 

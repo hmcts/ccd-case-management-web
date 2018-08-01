@@ -12,9 +12,6 @@ export class CasePaymentHistoryViewerFieldComponent extends AbstractFieldReadCom
 
   public static readonly PAYMENTS_BASE_URL_KEY = 'payments_url';
 
-  payments_url: string;
-  case_reference: string;
-
   constructor(
     private appConfig: AppConfig
   ) {
@@ -25,7 +22,4 @@ export class CasePaymentHistoryViewerFieldComponent extends AbstractFieldReadCom
     return this.appConfig.getPaymentsUrl();
   }
 
-  getCaseReference() {
-    return this.caseViewContext.get(Constants.CASE_REFERENCE_KEY);
-  }
 }

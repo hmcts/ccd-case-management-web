@@ -38,10 +38,10 @@
                   <th>
                     <div class="case-viewer-label">{{field.label}}</div>
                   </th>
-                  <td><ccd-field-read [caseField]="field" [caseViewContext]="buildContextMap()"></ccd-field-read></td>
+                  <td><ccd-field-read [caseField]="field" [caseReference]="caseDetails.case_id"></ccd-field-read></td>
                 </tr>
                 <tr *ngSwitchCase="false" class="compound-field">
-                  <td colspan="2"><ccd-field-read [caseField]="field" [caseViewContext]="buildContextMap()"></ccd-field-read></td>
+                  <td colspan="2"><ccd-field-read [caseField]="field" [caseReference]="caseDetails.case_id"></ccd-field-read></td>
                 </tr>
               </ng-container>
             </div>

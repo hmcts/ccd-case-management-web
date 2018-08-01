@@ -15,7 +15,6 @@ import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { AppConfig } from '../../app.config';
 import { CasePaymentHistoryViewerFieldComponent } from '../../shared/palette/payment/case-payment-history-viewer-field.component';
-import { ContextMap } from '../../shared/palette/context-map.model';
 import { Constants } from '../../shared/constants.model';
 
 @Component({
@@ -98,12 +97,6 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
         this.callbackErrorsSubject.next(this.error);
       }
     });
-  }
-
-  buildContextMap(): ContextMap {
-    let contextMap = new ContextMap();
-    contextMap.set(Constants.CASE_REFERENCE_KEY, this.caseDetails.case_id);
-    return contextMap;
   }
 
   callbackErrorsNotify(callbackErrorsContext: CallbackErrorsContext) {

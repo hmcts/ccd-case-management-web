@@ -54,7 +54,7 @@ export class CasesService {
                   eventTriggerId: string,
                   caseId?: string,
                   ignoreWarning?: string): Observable<CaseEventTrigger> {
-    console.log('retrieve event trigger');
+    // console.log('retrieve event trigger');
     ignoreWarning = undefined !== ignoreWarning ? ignoreWarning : 'false';
 
     let url =  this.appConfig.getApiUrl()

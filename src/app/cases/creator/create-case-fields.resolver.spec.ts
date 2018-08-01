@@ -1,15 +1,15 @@
 import { Observable } from 'rxjs/Observable';
 import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
 import { HttpError } from '../../core/http/http-error.model';
-import { CreateCaseFieldsResolver } from './create-case-fields.resolver';
+import { CreateCaseEventTriggerResolver } from './create-case-fields.resolver';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('CreateCaseFieldsResolver', () => {
 
-  const PARAM_JURISDICTION_ID = CreateCaseFieldsResolver.PARAM_JURISDICTION_ID;
-  const PARAM_CASE_TYPE_ID = CreateCaseFieldsResolver.PARAM_CASE_TYPE_ID;
-  const PARAM_EVENT_ID = CreateCaseFieldsResolver.PARAM_EVENT_ID;
-  const QUERY_PARAM_IGNORE_WARNINGS = CreateCaseFieldsResolver.QUERY_PARAM_IGNORE_WARNING;
+  const PARAM_JURISDICTION_ID = CreateCaseEventTriggerResolver.PARAM_JURISDICTION_ID;
+  const PARAM_CASE_TYPE_ID = CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID;
+  const PARAM_EVENT_ID = CreateCaseEventTriggerResolver.PARAM_EVENT_ID;
+  const QUERY_PARAM_IGNORE_WARNINGS = CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING;
   const JURISDICTION = 'TEST';
   const IGNORE_WARNINGS = false;
   const CASE_TYPE = 'TestAddressBookCase';
@@ -32,7 +32,7 @@ describe('CreateCaseFieldsResolver', () => {
     path: ''
   };
 
-  let createCaseFieldsResolver: CreateCaseFieldsResolver;
+  let createCaseFieldsResolver: CreateCaseEventTriggerResolver;
 
   let casesService: any;
   let alertService: any;
@@ -47,7 +47,7 @@ describe('CreateCaseFieldsResolver', () => {
 
     router = createSpyObj('router', ['navigate']);
 
-    createCaseFieldsResolver = new CreateCaseFieldsResolver(casesService, alertService);
+    createCaseFieldsResolver = new CreateCaseEventTriggerResolver(casesService, alertService);
 
     route = {
       paramMap: createSpyObj('paramMap', ['get']),

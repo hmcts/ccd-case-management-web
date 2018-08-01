@@ -9,7 +9,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class CreateCaseFieldsResolver implements Resolve<CaseEventTrigger> {
+export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger> {
 
   public static readonly PARAM_JURISDICTION_ID = 'jid';
   public static readonly PARAM_CASE_TYPE_ID = 'ctid';
@@ -36,12 +36,12 @@ export class CreateCaseFieldsResolver implements Resolve<CaseEventTrigger> {
   }
 
   getAndCacheEventTrigger(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
-    let jurisdictionId = route.paramMap.get(CreateCaseFieldsResolver.PARAM_JURISDICTION_ID);
-    let caseTypeId = route.paramMap.get(CreateCaseFieldsResolver.PARAM_CASE_TYPE_ID);
-    let eventTriggerId = route.paramMap.get(CreateCaseFieldsResolver.PARAM_EVENT_ID);
-    let ignoreWarning = route.queryParamMap.get(CreateCaseFieldsResolver.QUERY_PARAM_IGNORE_WARNING);
+    let jurisdictionId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_JURISDICTION_ID);
+    let caseTypeId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID);
+    let eventTriggerId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_EVENT_ID);
+    let ignoreWarning = route.queryParamMap.get(CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING);
 
-    if (-1 === CreateCaseFieldsResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {
+    if (-1 === CreateCaseEventTriggerResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {
       ignoreWarning = 'false';
     }
 

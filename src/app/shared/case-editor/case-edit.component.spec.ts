@@ -18,16 +18,17 @@ import createSpyObj = jasmine.createSpyObj;
 import { WizardPageField } from '../domain/wizard-page-field.model';
 import { CaseField } from '../domain/definition/case-field.model';
 import { FieldsPurger } from '../utils/fields.purger';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 
 describe('CaseEditComponent', () => {
 
-  const EVENT_TOKEN = 'test-token';
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: 'TEST_TRIGGER',
-    name: 'Test Trigger',
-    description: 'This is a test trigger',
-    case_fields: [
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(
+    'TEST_TRIGGER',
+    'Test Trigger',
+    'caseId',
+    false,
+    [
       {
         id: 'PersonFirstName',
         label: 'First name',
@@ -40,10 +41,8 @@ describe('CaseEditComponent', () => {
         field_type: null,
         display_context: 'OPTIONAL'
       }
-    ],
-    wizard_pages: [],
-    event_token: EVENT_TOKEN
-  };
+    ]
+  );
 
   const WIZARD_PAGE_FIELD_WITH_SHOW_CONDITION: WizardPageField = {
     case_field_id: 'PersonFirstName'

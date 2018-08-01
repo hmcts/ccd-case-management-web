@@ -23,7 +23,7 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
   resolve(route: ActivatedRouteSnapshot): Promise<boolean> {
     let eventTrigger: CaseEventTrigger = route.parent.data.eventTrigger;
 
-    if (!eventTrigger.hasFields() && !eventTrigger.hasPages()) {
+    if (!eventTrigger.hasFields() || !eventTrigger.hasPages()) {
       this.goToSubmit(route);
       return Promise.resolve(false);
     }

@@ -32,6 +32,7 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
   private isTriggerEventRoute(route: ActivatedRouteSnapshot) {
     // if route is 'trigger/:eid'
     // this strategy to detect if route is the trigger event route is a bit fragile
+    console.log('isTrigger event route: ' + !route.firstChild || !route.firstChild.url.length)
     return !route.firstChild || !route.firstChild.url.length;
   }
 

@@ -1,11 +1,14 @@
 import { Orderable } from '../../../core/order/orderable.model';
 import { FieldType } from './field-type.model';
 import { WizardPageField } from '../wizard-page-field.model';
+import { Type } from 'class-transformer';
 
 export class CaseField implements Orderable {
   id: string;
   label: string;
   order?: number;
+
+  @Type(() => FieldType)
   field_type: FieldType;
   value?: any;
 
@@ -15,5 +18,7 @@ export class CaseField implements Orderable {
   show_condition?: string;
   show_summary_change_option?: boolean;
   show_summary_content_option?: number;
+
+  @Type(() => WizardPageField)
   wizardProps?: WizardPageField;
 }

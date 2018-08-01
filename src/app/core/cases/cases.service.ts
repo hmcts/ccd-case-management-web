@@ -11,6 +11,7 @@ import { WizardPageField } from '../../shared/domain/wizard-page-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class CasesService {
@@ -53,7 +54,7 @@ export class CasesService {
                   eventTriggerId: string,
                   caseId?: string,
                   ignoreWarning?: string): Observable<CaseEventTrigger> {
-    // console.log('retrieve event trigger');
+    console.log('retrieve event trigger');
     ignoreWarning = undefined !== ignoreWarning ? ignoreWarning : 'false';
 
     let url =  this.appConfig.getApiUrl()
@@ -76,6 +77,7 @@ export class CasesService {
     return this.http
       .get(url)
       .map(response => response.json())
+      .map((p: Object) => plainToClass(CaseEventTrigger, p))
       .do(eventTrigger => {
         if (!eventTrigger.wizard_pages) {
           eventTrigger.wizard_pages = [];
@@ -99,10 +101,10 @@ export class CasesService {
           wizardPage.isMultiColumn = () => wizardPage.getCol2Fields().length > 0;
         });
       })
-      .catch((error: any): any => {
-        this.errorService.setError(error);
-        return Observable.throw(error);
-      });
+      // .catch((error: any): any => {
+      //   this.errorService.setError(error);
+      //   return Observable.throw(error);
+      // });
   }
 
   createEvent(caseDetails: CaseView, eventData: CaseEventData): Observable<object> {

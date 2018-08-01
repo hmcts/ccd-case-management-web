@@ -23,11 +23,8 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
   resolve(route: ActivatedRouteSnapshot): Promise<boolean> {
     let eventTrigger: CaseEventTrigger = route.parent.data.eventTrigger;
 
-    if (!eventTrigger.case_fields
-        || !eventTrigger.case_fields.length
-        || !eventTrigger.wizard_pages
-        || !eventTrigger.wizard_pages.length) {
-      this.router.navigate([...this.parentUrlSegments(route), 'submit']);
+    if (!eventTrigger.hasFields() && !eventTrigger.hasPages()) {
+      this.goToSubmit(route);
       return Promise.resolve(false);
     }
 
@@ -59,6 +56,10 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
   private goToFirst(wizard: Wizard, canShowPredicate: Predicate<WizardPage>, route: ActivatedRouteSnapshot): Promise<boolean> {
     let firstPage = wizard.firstPage(canShowPredicate);
     return this.router.navigate([...this.parentUrlSegments(route), firstPage ? firstPage.id : 'submit']);
+  }
+
+  private goToSubmit(route: ActivatedRouteSnapshot): Promise<boolean> {
+    return this.router.navigate([...this.parentUrlSegments(route), 'submit']);
   }
 
   private buildState(caseFields: CaseField[]): any {

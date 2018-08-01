@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FieldsPurger } from '../utils/fields.purger';
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 import { CaseView } from '../../core/cases/case-view.model';
+import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -49,10 +50,11 @@ export class CaseEditComponent implements OnInit {
     private fieldsUtils: FieldsUtils,
     private fieldsPurger: FieldsPurger,
     private registrarService: ConditionalShowRegistrarService,
+    private wizardFactory: WizardFactoryService
   ) {}
 
   ngOnInit(): void {
-    this.wizard = new Wizard(this.eventTrigger.wizard_pages);
+    this.wizard = this.wizardFactory.create(this.eventTrigger);
 
     this.form = this.fb.group({
       'data': new FormGroup({}),

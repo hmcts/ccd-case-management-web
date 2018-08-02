@@ -3,6 +3,14 @@ import { CaseField } from './definition/case-field.model';
 import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
 import { WizardPageField } from './wizard-page-field.model';
 
+let createField = (colNumber: number): CaseField => {
+  let field = new CaseField();
+  let wizardProps = new WizardPageField();
+  wizardProps.page_column_no = colNumber;
+  field.wizardProps = wizardProps;
+  return field;
+}
+
 describe('WizardPage', () => {
 
     it('isMultiColumn is false when only col1 fields', () => {
@@ -33,11 +41,3 @@ describe('WizardPage', () => {
 
     });
 });
-
-let createField = (colNumber: number): CaseField => {
-  let field = new CaseField();
-  let wizardProps = new WizardPageField();
-  wizardProps.page_column_no = colNumber;
-  field.wizardProps = wizardProps;
-  return field;
-}

@@ -18,11 +18,17 @@ export class WizardPage implements Orderable {
 
   show_condition?: string;
 
-  @Type(() => ShowCondition)
   parsedShowCondition: ShowCondition;
 
-  getCol1Fields: () => CaseField[];
-  getCol2Fields: () => CaseField[];
-  isMultiColumn: () => Boolean;
+  getCol1Fields(): CaseField[] {
+    return this.case_fields.filter(f =>
+      !f.wizardProps.page_column_no || f.wizardProps.page_column_no === 1);
+  }
+  getCol2Fields(): CaseField[] {
+    return this.case_fields.filter(f => f.wizardProps.page_column_no === 2);
+  }
 
+  isMultiColumn(): Boolean {
+    return this.getCol2Fields().length > 0;
+  }
 }

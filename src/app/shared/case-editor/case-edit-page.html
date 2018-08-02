@@ -19,12 +19,10 @@
 <div class="width-50">
 <form *ngIf="currentPage" class="form" [formGroup]="editForm" (submit)="submit()">
   <fieldset id="fieldset-case-data">
-
-    <ng-container [ngSwitch]="currentPage.isMultiColumn()">
       <!-- single column -->
-      <ccd-case-edit-form id='caseEditForm' *ngSwitchCase="false" [fields]="currentPage.getCol1Fields()" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields"></ccd-case-edit-form>
+      <ccd-case-edit-form id='caseEditForm' *ngIf="!currentPage.isMultiColumn()" [fields]="currentPage.getCol1Fields()" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields"></ccd-case-edit-form>
       <!-- two columns -->
-      <div *ngSwitchCase="true" class="grid-row">
+      <div *ngIf="currentPage.isMultiColumn()" class="grid-row">
           <div class="column-two-thirds rightBorderSeparator">
             <ccd-case-edit-form id='caseEditForm1' [fields]="currentPage.getCol1Fields()" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields"></ccd-case-edit-form>
           </div>
@@ -32,7 +30,6 @@
             <ccd-case-edit-form id='caseEditForm2' [fields]="currentPage.getCol2Fields()" [formGroup]="editForm.controls['data']" [eventFields]="eventTrigger.case_fields"></ccd-case-edit-form>
           </div>
       </div>
-    </ng-container>
   </fieldset>
 
   <div class="form-group form-group-related">

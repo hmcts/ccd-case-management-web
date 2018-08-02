@@ -13,10 +13,8 @@ export let createCaseEventTrigger = (id: string,
   eventTrigger.name = name;
   eventTrigger.case_id = case_id;
   eventTrigger.show_summary = show_summary;
-  eventTrigger.case_fields = [];
-  eventTrigger.wizard_pages = [];
+  eventTrigger.wizard_pages = wizard_pages;
   eventTrigger.event_token = 'test-token';
   eventTrigger.case_fields = case_fields;
-  eventTrigger.wizard_pages = wizard_pages;
   return eventTrigger;
 };

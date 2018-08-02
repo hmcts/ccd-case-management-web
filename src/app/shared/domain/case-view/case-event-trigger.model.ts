@@ -22,14 +22,10 @@ export class CaseEventTrigger {
   end_button_label?: string;
 
   hasFields(): boolean {
-    console.log('the fields', this.case_fields)
-    console.log('hasFields', this.case_fields && this.case_fields.length !== 0)
     return this.case_fields && this.case_fields.length !== 0;
   }
 
   hasPages(): boolean {
-    console.log('thePages', this.wizard_pages)
-    console.log('hasPages', this.wizard_pages && this.wizard_pages.length !== 0)
     return this.wizard_pages && this.wizard_pages.length !== 0;
   }
 }

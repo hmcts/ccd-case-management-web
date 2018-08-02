@@ -1,4 +1,4 @@
-import { FieldType } from '../../shared/domain/definition/field-type.model';
+import { FieldType } from '../domain/definition/field-type.model';
 
 export class SearchResultViewColumn {
   case_field_id: string;

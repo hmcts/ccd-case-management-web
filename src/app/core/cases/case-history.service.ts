@@ -27,5 +27,6 @@ export class CaseHistoryService {
         this.httpErrorService.setError(error);
         return Observable.throw(error);
       })
+      .map((caseHistory: Object) => plainToClass(CaseHistory, caseHistory));
   }
 }

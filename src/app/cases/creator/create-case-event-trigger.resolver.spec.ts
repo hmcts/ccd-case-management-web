@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
 import { HttpError } from '../../core/http/http-error.model';
-import { CreateCaseEventTriggerResolver } from './create-case-fields.resolver';
+import { CreateCaseEventTriggerResolver } from './create-case-event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
 import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 

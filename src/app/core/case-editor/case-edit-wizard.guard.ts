@@ -22,13 +22,11 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
 
   resolve(route: ActivatedRouteSnapshot): Promise<boolean> {
     let eventTrigger: CaseEventTrigger = route.parent.data.eventTrigger;
-    console.log('eventTrigger', eventTrigger);
     if (!eventTrigger.hasFields() || !eventTrigger.hasPages()) {
       this.goToSubmit(route);
-      console.log('go to sumbit')
       return Promise.resolve(false);
     }
-    console.log('one');
+
     let wizard = this.wizardFactory.create(eventTrigger);
     let currentState = this.buildState(eventTrigger.case_fields);
     // TODO Extract predicate and state creation in a factory
@@ -37,8 +35,6 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
     };
 
     if (!route.params['page']) {
-      console.log('no page go to first');
-
       this.goToFirst(wizard, canShowPredicate, route);
       return Promise.resolve(false);
     }
@@ -46,15 +42,12 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
     let pageId = route.params['page'];
 
     if (!wizard.hasPage(pageId)) {
-      console.log('wizard no page go to first');
-
       this.goToFirst(wizard, canShowPredicate, route)
         .then(() => {
           this.alertService.error(`No page could be found for '${pageId}'`);
         });
       return Promise.resolve(false);
     }
-    console.log('finish');
 
     return Promise.resolve(true);
   }

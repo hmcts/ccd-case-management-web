@@ -30,11 +30,6 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
     : this.getAndCacheEventTrigger(route);
   }
 
-  private isRootCreateRoute(route: ActivatedRouteSnapshot) {
-    // if route is ':jid/:ctid/:eid'
-    return !route.firstChild || !route.firstChild.url.length;
-  }
-
   getAndCacheEventTrigger(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
     let jurisdictionId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_JURISDICTION_ID);
     let caseTypeId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID);
@@ -55,4 +50,8 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
       });
   }
 
+  private isRootCreateRoute(route: ActivatedRouteSnapshot) {
+    // if route is ':jid/:ctid/:eid'
+    return !route.firstChild || !route.firstChild.url.length;
+  }
 }

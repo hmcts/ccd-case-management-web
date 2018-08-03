@@ -4,7 +4,7 @@ class Login extends BrowserUtils {
 
     constructor() {
 
-        super(by.css('.button'), true)
+        super(by.css('.button'), true);
 
         this._userNameField = by.css('#username');
         this._passwordField = by.css('#password');

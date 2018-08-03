@@ -4,14 +4,14 @@ class CaseView extends BrowserUtils {
 
     constructor(){
 
-        super(by.css('ng-component ccd-case-header'), true)
+        super(by.css('ng-component ccd-case-header'), true);
 
-        this._caseHeader = by.css('ng-component ccd-case-header')
-        this._caseTabs = by.css('.grid-row .tabs-list-item')
-        this._caseTabTitle = by.css('heading-medium')
-        this._caseTabHeading = by.css('.tabs-content .heading-medium')
+        this._caseHeader = by.css('ng-component ccd-case-header');
+        this._caseTabs = by.css('.grid-row .tabs-list-item');
+        this._caseTabTitle = by.css('heading-medium');
+        this._caseTabHeading = by.css('.tabs-content .heading-medium');
 
-        this._selectedTabDetailRows = null
+        this._selectedTabDetailRows = null;
 
     }
 

@@ -75,13 +75,13 @@ describe('ReadDocumentFieldComponent', () => {
     component.caseField.value = undefined;
     fixture.detectChanges();
 
-    expect(text(de)).toEqual('');
+    expect(de.nativeElement.textContent).toEqual('');
   });
 
   it('should render null value as empty string', () => {
     component.caseField.value = null;
     fixture.detectChanges();
 
-    expect(text(de)).toEqual('');
+    expect(de.nativeElement.textContent).toEqual('');
   });
 });

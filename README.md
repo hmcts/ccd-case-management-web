@@ -151,7 +151,7 @@ To build your application, run:
 
 You can now go to `/dist` and deploy that to your server!
 
-## Documentation
+## Documentation.
 
 You can generate api docs (using [TypeDoc](http://typedoc.org/)) for your code with the following:
 

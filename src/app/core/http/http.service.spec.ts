@@ -2,8 +2,8 @@ import { HttpService } from './http.service';
 import { Headers, Http, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
-import { Observable } from 'rxjs/Observable';
 import { HttpErrorService } from './http-error.service';
+import { Observable, of, throwError } from 'rxjs';
 
 describe('HttpService', () => {
 
@@ -26,7 +26,7 @@ describe('HttpService', () => {
   HEADERS_WITH_CONTENT_TYPE_DEFINED.append(ACCEPT_HEADER, ACCEPT_HEADER_VALUE);
   HEADERS_WITH_CONTENT_TYPE_NULL.append(CONTENT_TYPE_HEADER, null);
   HEADERS_WITH_CONTENT_TYPE_NULL.append(ACCEPT_HEADER, null);
-  const EXPECTED_RESPONSE = Observable.of(new Response(new ResponseOptions()));
+  const EXPECTED_RESPONSE = of(new Response(new ResponseOptions()));
 
   let httpService: HttpService;
 
@@ -35,15 +35,17 @@ describe('HttpService', () => {
   let catchObservable: any;
 
   beforeEach(() => {
-    catchObservable = createSpyObj<Observable<Response>>('observable', ['catch']);
-    catchObservable.catch.and.returnValue(EXPECTED_RESPONSE);
+    catchObservable = createSpyObj<Observable<Response>>('observable', ['pipe']);
+    catchObservable.pipe.and.returnValue(EXPECTED_RESPONSE);
 
     httpMock = createSpyObj<Http>('http', ['get', 'post', 'put', 'delete']);
     httpMock.get.and.returnValue(catchObservable);
     httpMock.post.and.returnValue(catchObservable);
     httpMock.put.and.returnValue(catchObservable);
     httpMock.delete.and.returnValue(catchObservable);
+
     httpErrorService = createSpyObj<HttpErrorService>('httpErrorService', ['handle']);
+    httpErrorService.handle.and.returnValue(throwError(error));
 
     httpService = new HttpService(httpMock, httpErrorService);
   });
@@ -119,7 +121,7 @@ describe('HttpService', () => {
     });
 
     it('should catch with http-error service', () => {
-      httpMock.get.and.returnValue(Observable.throw(error));
+      httpMock.get.and.returnValue(throwError(error));
       httpService.get(URL).subscribe(() => {}, () => {});
       expect(httpErrorService.handle).toHaveBeenCalledWith(error, true);
     });

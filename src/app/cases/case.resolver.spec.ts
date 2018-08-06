@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { CaseView } from '../core/cases/case-view.model';
 import { AlertService } from '../core/alert/alert.service';
 
-fdescribe('CaseResolver', () => {
+describe('CaseResolver', () => {
   describe('resolve()', () => {
 
     const PARAM_JURISDICTION_ID = CaseResolver.PARAM_JURISDICTION_ID;

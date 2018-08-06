@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { CaseView } from '../core/cases/case-view.model';
 import { AlertService } from '../core/alert/alert.service';
 
-describe('CaseResolver', () => {
+fdescribe('CaseResolver', () => {
   describe('resolve()', () => {
 
     const PARAM_JURISDICTION_ID = CaseResolver.PARAM_JURISDICTION_ID;
@@ -56,6 +56,50 @@ describe('CaseResolver', () => {
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);
+      // allows to access private cachedCaseView field
+      expect(caseResolver['cachedCaseView']).toBe(CASE);
+    });
+
+    it('should return cached case view when the route is a case view tab and cached view exists', () => {
+      caseResolver['cachedCaseView'] = CASE_CACHED;
+      casesService.getCaseView.and.returnValue(CASE_OBS);
+      route = {
+        firstChild: {
+          url: [],
+          fragment: 'someFragment'
+        },
+        paramMap: createSpyObj('paramMap', ['get'])
+      };
+      route.paramMap.get.and.returnValues(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+
+      caseResolver
+        .resolve(route)
+        .subscribe(caseData => {
+          expect(caseData).toBe(CASE_CACHED);
+        });
+      expect(casesService.getCaseView).not.toHaveBeenCalled();
+      expect(caseResolver['cachedCaseView']).toBe(CASE_CACHED);
+    });
+
+    it('should return retrieve case view when the route is a case view tab but empty cache', () => {
+      caseResolver['cachedCaseView'] = null;
+      casesService.getCaseView.and.returnValue(CASE_OBS);
+      route = {
+        firstChild: {
+          url: [],
+          fragment: 'someFragment'
+        },
+        paramMap: createSpyObj('paramMap', ['get'])
+      };
+      route.paramMap.get.and.returnValues(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+
+      caseResolver
+        .resolve(route)
+        .subscribe(caseData => {
+          expect(caseData).toBe(CASE);
+        });
+
+      expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
       // allows to access private cachedCaseView field
       expect(caseResolver['cachedCaseView']).toBe(CASE);
     });

@@ -4,7 +4,6 @@ import { ActivityService } from './activity.service';
 import { Observable, Subscription } from 'rxjs';
 import { Subject } from 'rxjs';
 import { NgZone } from '@angular/core';
-import { SubjectSubscriber } from 'rxjs/Subject';
 import polling, { IOptions } from 'rx-polling';
 import { AppConfig } from '../../app.config';
 

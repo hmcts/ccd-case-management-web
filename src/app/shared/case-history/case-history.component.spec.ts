@@ -193,7 +193,7 @@ describe('CaseHistoryComponent', () => {
     expect(headers[0].nativeElement.textContent.trim()).toBe(FIELDS[1].label);
   });
 
-  it('should render case history sections in ascending order as tabs', () => {
+  it('should render case history sections in ascending order of tabs', () => {
     let headers = fixture.nativeElement.querySelectorAll($CASE_DETAIL_HEADERS);
 
     expect(headers[0].textContent).toBe(CASE_HISTORY.tabs[1].label);

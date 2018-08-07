@@ -11,7 +11,7 @@ beforeEach(function(){
    let browserUtils = new BrowserUtils("", false)
 
    browser.ignoreSynchronization = true
-   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451').then(function()
+   browser.get(process.env.TEST_URL || 'http://localhost:3451').then(function()
       { let loginPage = new Login
         loginPage.signInTo()
       })

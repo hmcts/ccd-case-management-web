@@ -19,8 +19,8 @@ beforeEach(function(){
 
 afterEach(function(){
 
-  let browserUtils = new BrowserUtils("", false)
-  browserUtils.signOut()
+  let ccdBannerPage = new CCDBanner
+  ccdBannerPage.clickSignOut();
 
 });
 
@@ -37,7 +37,10 @@ it('Should display banner', function() {
    failedOnMissingFooterItem = 'footer item missing on case list page'
 
    expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1', failedOnPageTitle)
-   expect(ccdBannerPage.getUserNameLabel()).toContain('Auto Test ▼', failedOnUserSignedIn)
+   expect(ccdBannerPage.getUserNameLabel()).toContain('Ccd Auto Test', failedOnUserSignedIn)
+
+   ccdBannerPage.getMenuItemsLabels().then(function(a) { console.log(a) })
+
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List', failedOnMissingMenuItem)
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search', failedOnMissingMenuItem)
    expect(ccdBannerPage.getSearchBoxLabel()).toBe('Search', failedOnMissingMenuItem)

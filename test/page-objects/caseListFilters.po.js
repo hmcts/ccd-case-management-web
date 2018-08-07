@@ -4,21 +4,21 @@ class CaseListFilters extends BrowserUtils{
 
     constructor() {
 
-       super("", false)
+       super("", false);
 
        this._clfJurisdiction = by.css('#wb-jurisdiction');
-       this._clfJurisdictionCss = '#wb-jurisdiction'
-       this._clfJurisdictionOptions = by.css('#wb-jurisdiction option')
+       this._clfJurisdictionCss = '#wb-jurisdiction';
+       this._clfJurisdictionOptions = by.css('#wb-jurisdiction option');
 
        this._clfCaseType = by.css('#wb-case-type');
-       this._clfCaseTypeCss = '#wb-case-type'
-       this._clfCaseTypeOptions = by.css('#wb-case-type option')
+       this._clfCaseTypeCss = '#wb-case-type';
+       this._clfCaseTypeOptions = by.css('#wb-case-type option');
 
        this._clfState = by.css('#wb-case-state');
-       this._clfStateCss = '#wb-case-state'
-       this._clfStateOptions = by.css('#wb-case-state option')
+       this._clfStateCss = '#wb-case-state';
+       this._clfStateOptions = by.css('#wb-case-state option');
 
-       this._pageTitle = by.css('.global-display > cut-body > div h1')
+       this._pageTitle = by.css('.global-display > cut-body > div h1');
 
        this._clfApplyButton = by.css('.global-display .display-left button');
 

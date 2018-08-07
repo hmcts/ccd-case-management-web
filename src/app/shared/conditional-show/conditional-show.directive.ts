@@ -100,6 +100,9 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
 
   private show() {
     this.el.nativeElement.hidden = false;
+    if (this.caseField && this.caseField.field_type && this.caseField.field_type.type !== 'Collection') {
+      this.el.nativeElement.classList.add('show-condition-gray-bar');
+    }
   }
 
   private shouldToggleToHide(fields, forced) {

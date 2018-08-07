@@ -11,6 +11,7 @@ import { WizardPageField } from '../../shared/domain/wizard-page-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class CasesService {
@@ -45,7 +46,8 @@ export class CasesService {
       .catch((error: any): any => {
         this.errorService.setError(error);
         return Observable.throw(error);
-      });
+      })
+      .map((caseView: Object) => plainToClass(CaseView, caseView));
   }
 
   getEventTrigger(jurisdictionId: string,

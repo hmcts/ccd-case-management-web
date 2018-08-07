@@ -1,5 +1,7 @@
 import { CaseView } from './case-view.model';
 import { createCaseTabArray } from './case-tab.test.fixture';
+import { CaseField } from '../../shared/domain/definition/case-field.model';
+import { FieldType } from '../../shared/domain/definition/field-type.model';
 
 export let createCaseView = () => {
   const caseView = new CaseView();
@@ -19,18 +21,17 @@ export let createCaseView = () => {
 
   caseView.tabs = createCaseTabArray();
 
-  caseView.metadataFields = [{
-    id: '[STATE]',
-    label: 'State',
-    display_context: 'READONLY',
-    field_type: {
-      id: 'Text',
-      type: 'Text'
-    },
-    order: 2,
-    value: 'State1',
-    show_condition: ''
-  }];
+  const metadataField = new CaseField();
+  metadataField.id = '[STATE]';
+  metadataField.label = 'State';
+  metadataField.display_context = 'READONLY';
+  const fieldType = new FieldType();
+  fieldType.id = 'Text';
+  fieldType.type = 'Text';
+  metadataField.field_type = fieldType;
+  metadataField.order = 2;
+  metadataField.value = 'State1';
+  caseView.metadataFields = [metadataField];
 
   return caseView;
 };

@@ -9,6 +9,7 @@ import { MockComponent } from 'ng2-mock-component';
 import { LabelSubstitutorDirective } from '../substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../utils/fields.utils';
 import { LabelSubstitutionService } from '../case-editor/label-substitution.service';
+import { LabelFieldComponent } from '../palette/label/label-field.component';
 
 describe('CaseHeaderComponent', () => {
 
@@ -18,7 +19,7 @@ describe('CaseHeaderComponent', () => {
   });
 
   const $HEADING = By.css('h2');
-  const $MARKDOWN = By.css('ccd-markdown');
+  const $MARKDOWN = By.css('dl>dt ccd-markdown');
   const CASE_DETAILS = createCaseView();
 
   let fixture: ComponentFixture<CaseHeaderComponent>;
@@ -32,6 +33,7 @@ describe('CaseHeaderComponent', () => {
           CaseHeaderComponent,
           CaseReferencePipe,
           LabelSubstitutorDirective,
+          LabelFieldComponent,
           // Mock
           MarkdownComponent
         ],
@@ -63,6 +65,7 @@ describe('CaseHeaderComponent', () => {
 
     let header = de.query($MARKDOWN);
     expect(header).toBeTruthy();
+    expect(header.nativeElement.getAttribute('ng-reflect-content')).toEqual('Title');
   });
 
 });

@@ -1,8 +1,9 @@
-<h2 *ngIf="!caseTitle.label; else case_title" class="heading-large">
+<h2 *ngIf="showCaseReference(); else custom_case_title" class="heading-large">
   #{{ caseDetails.case_id | ccdCaseReference}}
 </h2>
-<ng-template #case_title ccdLabelSubstitutor [caseField]="caseTitle" [eventFields]="caseFields">
+
+<ng-template #custom_case_title>
   <div class="case-title">
-    <ccd-markdown [content]="caseTitle.label"></ccd-markdown>
+    <label-field [caseField]="caseTitle" [eventFields]="caseFields"></label-field>
   </div>
 </ng-template>

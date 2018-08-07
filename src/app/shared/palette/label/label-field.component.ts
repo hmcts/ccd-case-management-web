@@ -3,7 +3,7 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
 import { CaseField } from '../../domain/definition/case-field.model';
 
 @Component({
-  selector: 'label-field',
+  selector: 'ccd-label-field',
   templateUrl: './label-field.html'
 })
 export class LabelFieldComponent extends AbstractFieldReadComponent {

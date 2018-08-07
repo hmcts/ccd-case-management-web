@@ -64,7 +64,7 @@ describe('LabelFieldComponent', () => {
     fixture = TestBed.createComponent(LabelFieldComponent);
   }));
 
-  describe('LabelFieldComponent', () => {
+  describe('LabelFieldComponent without label substitution', () => {
     beforeEach(() => {
       component = fixture.componentInstance;
       component.caseField = CASE_FIELD;
@@ -78,7 +78,7 @@ describe('LabelFieldComponent', () => {
     });
   });
 
-  describe('LabelFieldComponent', () => {
+  describe('LabelFieldComponent with label substitution', () => {
     beforeEach(() => {
       component = fixture.componentInstance;
 

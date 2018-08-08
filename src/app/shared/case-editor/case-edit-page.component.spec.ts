@@ -172,7 +172,6 @@ describe('CaseEditPageComponent', () => {
     expect(caseEditComponentStub.previous).toHaveBeenCalled();
   });
 
-
   it('should allow empty values when field is OPTIONAL', () => {
     wizardPage.case_fields.push(aCaseField('fieldX', 'fieldX', 'Text', 'OPTIONAL', null));
     wizardPage.isMultiColumn = () => false;

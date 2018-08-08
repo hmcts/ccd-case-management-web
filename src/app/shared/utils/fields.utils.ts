@@ -80,7 +80,7 @@ export class FieldsUtils {
 
   private static getDate(fieldValue) {
     try {
-      return FieldsUtils.datePipe.transform(fieldValue, 'dd-MM-yyyy');
+      return FieldsUtils.datePipe.transform(fieldValue, null, 'dd-MM-yyyy');
     } catch (e) {
       return this.textForInvalidField('Date', fieldValue);
     }

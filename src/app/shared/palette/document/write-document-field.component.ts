@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DocumentManagementService } from '../../../core/documentManagement/documentManagement.service';
 import { HttpError } from '../../../core/http/http-error.model';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DocumentDialogComponent } from '../../document-dialog/document-dialog.component';
 
 @Component({
   selector: 'ccd-write-document-field',
@@ -11,14 +13,35 @@ import { HttpError } from '../../../core/http/http-error.model';
 export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   private uploadedDocument: FormGroup;
   private selectedFile: File;
+  private dialogConfig: MatDialogConfig;
+
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   valid = true;
   uploadError: string;
+  confirmReplaceResult: string;
 
-  constructor(private documentManagement: DocumentManagementService) {
+  constructor(private documentManagement: DocumentManagementService, private dialog: MatDialog) {
     super();
   }
 
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.height = '245px';
+    this.dialogConfig.width = '550px';
+    this.dialogConfig.panelClass = 'dialog';
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+    }
+  }
+
   ngOnInit() {
+    this.initDialog();
     let document = this.caseField.value;
     if (document) {
       this.createDocumentGroup(
@@ -81,5 +104,31 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     }
 
     return error.error;
+  }
+
+  openFileDialog(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  fileSelectEvent() {
+    if (this.caseField.value) {
+      this.openDialog(this.dialogConfig);
+    } else {
+      this.openFileDialog();
+    }
+  }
+
+  openDialog(dialogConfig) {
+    const dialogRef = this.dialog.open(DocumentDialogComponent, dialogConfig);
+    dialogRef.beforeClose().subscribe(result => {
+      this.confirmReplaceResult = result;
+      this.triggerReplace();
+    });
+  }
+
+  triggerReplace() {
+    if (this.confirmReplaceResult === 'Replace') {
+      this.openFileDialog();
+    }
   }
 }

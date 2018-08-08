@@ -122,7 +122,9 @@ export class WorkbasketComponent implements OnInit {
     for (let attributeName of Object.keys(formGroupValue)) {
       let value = formGroupValue[attributeName];
       if (this.isStringOrNumber(value)) {
-        target[this.getFilterType(attributeName)][prefix + attributeName] = value;
+        const filterType = this.getFilterType(attributeName);
+        attributeName = this.sanitiseMetadataFieldName(filterType, attributeName);
+        target[filterType][prefix + attributeName] = value;
       } else if (value) {
         this.buildSearchCaseDetails(attributeName, target, value);
       }
@@ -148,5 +150,12 @@ export class WorkbasketComponent implements OnInit {
   private getFilterType(fieldName: string): string {
     return (this.metaDataFields && (this.metaDataFields.indexOf(fieldName) > -1)) ?
       WorkbasketComponent.METADATA_FILTER : WorkbasketComponent.CASE_FILTER;
+  }
+
+  private sanitiseMetadataFieldName(filterType: string, fieldName: string): string {
+    if (filterType === WorkbasketComponent.METADATA_FILTER) {
+      fieldName = fieldName.replace(/\[(.*?)]/g, '$1').toLocaleLowerCase();
+    }
+    return fieldName;
   }
 }

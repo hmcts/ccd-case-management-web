@@ -115,7 +115,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       return acc.concat(tab.fields);
     }, []);
 
-    return Object.assign(caseDataFields, this.caseDetails.metadataFields);
+    return caseDataFields.concat(this.caseDetails.metadataFields);
   }
 
   isDraft(): boolean {

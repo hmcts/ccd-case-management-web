@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpError } from './http-error.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
 import { Response } from '@angular/http';
 import { AuthService } from '../auth/auth.service';
 
@@ -25,7 +25,7 @@ export class HttpErrorService {
       return error;
   }
 
-  handle(error: Response | any, redirectIfNotAuthorised = true) {
+  handle(error: Response | any, redirectIfNotAuthorised = true): Observable<never> {
     let httpError = new HttpError();
     if (error instanceof Response) {
       if (error.headers
@@ -51,6 +51,7 @@ export class HttpErrorService {
     if (redirectIfNotAuthorised && (httpError.status === 401 || httpError.status === 403)) {
       this.authService.signIn();
     }
-    return Observable.throw(httpError);
+
+    return throwError(httpError);
   }
 }

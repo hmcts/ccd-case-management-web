@@ -4,10 +4,10 @@ class CaseCreateCYA extends BrowserUtils {
 
     constructor() {
 
-       super('.form-group.form-group-related button[type="submit"]', false)
+       super('.form-group.form-group-related button[type="submit"]', false);
 
-       this._formRows = by.css('.form-table tr')
-       this._submitButton = by.css('.form-group.form-group-related button[type="submit"]')
+       this._formRows = by.css('.form-table tr');
+       this._submitButton = by.css('.form-group.form-group-related button[type="submit"]');
 
     }
 

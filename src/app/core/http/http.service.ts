@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
 import { Headers, Http, RequestOptionsArgs, Response } from '@angular/http';
 import { HttpErrorService } from './http-error.service';
 import 'rxjs/add/operator/catch';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {
@@ -25,7 +26,11 @@ export class HttpService {
   public get(url: string, options?: RequestOptionsArgs, redirectIfNotAuthorised = true): Observable<Response> {
     return this.http
       .get(url, this.sanitiseOptions(options))
-      .catch(res => this.httpErrorService.handle(res, redirectIfNotAuthorised));
+      .pipe(
+        catchError(res => {
+          return this.httpErrorService.handle(res, redirectIfNotAuthorised);
+        })
+      );
   }
 
   /**
@@ -39,7 +44,11 @@ export class HttpService {
   public post(url: string, body: any, options?: RequestOptionsArgs, redirectIfNotAuthorised = true): Observable<Response> {
     return this.http
       .post(url, body, this.sanitiseOptions(options))
-      .catch(res => this.httpErrorService.handle(res, redirectIfNotAuthorised));
+      .pipe(
+        catchError(res => {
+          return this.httpErrorService.handle(res, redirectIfNotAuthorised);
+        })
+      );
   }
 
   /**
@@ -53,7 +62,11 @@ export class HttpService {
   public put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     return this.http
       .put(url, body, this.sanitiseOptions(options))
-      .catch(res => this.httpErrorService.handle(res));
+      .pipe(
+        catchError(res => {
+          return this.httpErrorService.handle(res);
+        })
+      );
   }
 
   /**
@@ -66,7 +79,11 @@ export class HttpService {
   public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
     return this.http
       .delete(url, this.sanitiseOptions(options))
-      .catch(res => this.httpErrorService.handle(res));
+      .pipe(
+        catchError(res => {
+          return this.httpErrorService.handle(res);
+        })
+      );
   }
 
   private sanitiseOptions(options?: RequestOptionsArgs): RequestOptionsArgs {

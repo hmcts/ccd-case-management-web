@@ -4,7 +4,7 @@ class Login extends BrowserUtils {
 
     constructor() {
 
-        super(by.css('.button'), true)
+        super(by.css('.button'), true);
 
         this._userNameField = by.css('#username');
         this._passwordField = by.css('#password');
@@ -47,7 +47,7 @@ class Login extends BrowserUtils {
         this.inputCredentials(process.env.CCD_CASEWORKER_AUTOTEST_EMAIL, process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD);
         this.clickSignIn()
         this.waitForUrlToChangeTo(RegExp("list"))
-        browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
+      //  browser.sleep(1000).then(function() { browser.ignoreSynchronization = false })
 
     }
 

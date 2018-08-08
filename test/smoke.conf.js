@@ -31,14 +31,13 @@ exports.config = {
      "browserName": "chrome",
      /**
       * Chrome is not allowed to create a SUID sandbox when running inside Docker
-      */
-    
-     'proxy': {
-      'proxyType': 'manual',
-      'httpProxy': 'http://proxy.uk:8080'
-      'httpsProxy': 'http://proxy.uk:8080'
-      'noProxy': ''
-             } 
+      */    
+//   'proxy': {
+//    'proxyType': 'manual',
+//    'httpProxy': 'http://proxy.uk:8080'
+//    'httpsProxy': 'http://proxy.uk:8080'
+//    'noProxy': ''
+//           } 
  
      "chromeOptions": {
          "args": [
@@ -55,9 +54,9 @@ exports.config = {
 //      'acceptInsecureCerts': true,
 //      'marionette': false,
 //      'browserName': 'firefox'
-////      'moz:firefoxOptions': {
-////              args: [ "--headless" ]
-////            }
+//      'moz:firefoxOptions': {
+//            args: [ "--headless" ]
+//                 }
 //  },
 
   jasmineNodeOpts: {

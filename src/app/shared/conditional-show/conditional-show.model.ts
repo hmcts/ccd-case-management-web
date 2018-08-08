@@ -3,7 +3,7 @@ import { FieldsUtils } from '../utils/fields.utils';
 
 export class ShowCondition {
 
-  private static readonly AND_CONDITION_REGEX = ' AND ';
+  private static readonly AND_CONDITION_REGEX = ' .AND. ';
 
   // Expects a show condition of the form: <fieldName>="string"
   constructor(public condition: string) {

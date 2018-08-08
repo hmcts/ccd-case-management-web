@@ -132,4 +132,21 @@ describe('conditional-show', () => {
       expect(matched).toBe(false);
     });
   });
+
+  describe('multiple AND conditions', () => {
+    it('should return true when all conditions are true', () => {
+      let sc = new ShowCondition('field1="s1" AND field2=3 AND field3="te*"');
+
+      let matched = sc.matchByCaseFields(caseFields);
+
+      expect(matched).toBe(true);
+    });
+
+    it('should return false when any condition is false', () => {
+      let sc = new ShowCondition('field1="s1" AND field2=3 AND field3="no-match"');
+      let matched = sc.matchByCaseFields(caseFields);
+
+      expect(matched).toBe(false);
+    });
+  });
 });

@@ -18,7 +18,7 @@ export class ShowCondition {
 
   private matchAndConditions(fields: any, condition: string): boolean {
     let andConditions = condition.split(ShowCondition.AND_CONDITION_REGEX);
-    return andConditions.every(condition => this.matchEqualityCondition(fields, condition));
+    return andConditions.every(andCondition => this.matchEqualityCondition(fields, andCondition));
   }
 
   private matchEqualityCondition(fields: any, condition: string): boolean {

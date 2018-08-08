@@ -42,10 +42,12 @@ describe('CaseEditPageComponent', () => {
     caseEditComponentStub = {
       'form': FORM_GROUP,
       'data': '',
-      'eventTrigger': {'case_fields': [], 'name': 'Test event trigger name' },
+      'eventTrigger': {'case_fields': [], 'name': 'Test event trigger name', 'can_save_draft': false },
       'hasPrevious': () => true,
       'getPage': () => firstPage,
+      'first': () => true,
       'next': () => true,
+      'previous': () => true,
       'cancel': () => undefined,
       'validate': (caseEventData: CaseEventData) => Observable.of(caseEventData),
       'saveDraft': (caseEventData: CaseEventData) => Observable.of(someObservable),
@@ -53,6 +55,9 @@ describe('CaseEditPageComponent', () => {
     };
 
     spyOn(caseEditComponentStub, 'cancel');
+    spyOn(caseEditComponentStub, 'first');
+    spyOn(caseEditComponentStub, 'next');
+    spyOn(caseEditComponentStub, 'previous');
     TestBed.configureTestingModule({
       declarations: [CaseEditPageComponent,
         CaseReferencePipe],
@@ -142,6 +147,31 @@ describe('CaseEditPageComponent', () => {
     comp.cancel();
     expect(caseEditComponentStub.cancel).toHaveBeenCalled();
   });
+
+  it('should delegate first calls to caseEditComponent', () => {
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    comp.first();
+    expect(caseEditComponentStub.first).toHaveBeenCalled();
+  });
+
+  it('should delegate next calls to caseEditComponent', () => {
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    comp.next();
+    expect(caseEditComponentStub.next).toHaveBeenCalled();
+  });
+
+  it('should delegate prev calls to caseEditComponent', () => {
+    wizardPage.isMultiColumn = () => false;
+    comp.currentPage = wizardPage;
+    fixture.detectChanges();
+    comp.previous();
+    expect(caseEditComponentStub.previous).toHaveBeenCalled();
+  });
+
 
   it('should allow empty values when field is OPTIONAL', () => {
     wizardPage.case_fields.push(aCaseField('fieldX', 'fieldX', 'Text', 'OPTIONAL', null));

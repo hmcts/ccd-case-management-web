@@ -11,6 +11,6 @@ def type = "angular"
 def product = "ccd"
 def app = "case-management-web"
 
-withNightlyPipeline(type, product, component) {
+withNightlyPipeline(type, product, app) {
     enableSlackNotifications('#ccd-nightly-builds')
 }

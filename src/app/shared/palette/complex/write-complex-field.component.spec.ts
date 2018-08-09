@@ -165,13 +165,12 @@ describe('WriteComplexFieldComponent', () => {
       fixture.detectChanges();
     }));
 
-    it('should render a form group with a header for the complex type', () => {
+    it('should not render a form group with a header for the complex type', () => {
       let panelTitle = de
         .query($COMPLEX_PANEL)
         .query($COMPLEX_PANEL_TITLE);
 
-      expect(panelTitle).toBeTruthy();
-      expect(panelTitle.nativeElement.textContent).toBe(CASE_FIELD.label + ' (Optional)');
+      expect(panelTitle).toBeNull();
     });
 
     it('should render a field write component for each field in the complex type', () => {
@@ -321,7 +320,6 @@ describe('WriteComplexFieldComponent', () => {
 
     beforeEach(async(() => {
       formValidatorService = createSpyObj<FormValidatorsService>('formValidatorService', ['addValidators']);
-
       formGroup = new FormGroup({});
 
       TestBed
@@ -410,6 +408,179 @@ describe('WriteComplexFieldComponent', () => {
 
       expect(labels[LINE_1].componentInstance.caseField.label).toBe(FIELD_TYPE.complex_fields[LINE_1].label);
       expect(labels[LINE_2].componentInstance.caseField.label).toBe(FIELD_TYPE.complex_fields[LINE_2].label);
+    });
+  });
+
+  describe('when display_context of AddressLine1 is MANDATORY', () => {
+    const FIELD_TYPE_WITH_MISSING_VALUE: FieldType = {
+      id: 'IAmVeryComplex',
+      type: 'Complex',
+      complex_fields: [
+        {
+          id: 'AddressLine1',
+          label: 'Line 1',
+          display_context: 'MANDATORY',
+          field_type: {
+            id: '"TextMax150"',
+            type: 'Text'
+          },
+          value: ''
+        },
+        {
+          id: 'AddressLine2',
+          label: 'Line 2',
+          display_context: 'OPTIONAL',
+          field_type: {
+            id: 'Text',
+            type: 'Text'
+          },
+          value: '111 East India road'
+        }
+      ]
+    };
+
+    const FIELD_TYPE_WITH_VALUES: FieldType = {
+      id: 'TextMax150',
+      type: 'Text'
+    };
+
+    const FIELD_ID = 'AComplexField';
+    const CASE_FIELD_M: CaseField = {
+      id: FIELD_ID,
+      label: 'Complex Field',
+      display_context: 'MANDATORY',
+      field_type: FIELD_TYPE_WITH_VALUES
+    };
+
+    const FORM_GROUP: FormGroup = new FormGroup({});
+    const REGISTER_CONTROL = (control) => {
+      FORM_GROUP.addControl(FIELD_ID, control);
+      return control;
+    };
+
+    beforeEach(async(() => {
+      formValidatorService = createSpyObj<FormValidatorsService>('formValidatorService', ['addValidators']);
+
+      TestBed
+        .configureTestingModule({
+          imports: [
+            PaletteUtilsModule,
+            ConditionalShowModule
+          ],
+          declarations: [
+            WriteComplexFieldComponent,
+            FieldsFilterPipe,
+
+            // Mock
+            FieldWriteComponent,
+          ],
+          providers: [
+            IsCompoundPipe,
+            { provide: FormValidatorsService, useValue: formValidatorService }
+          ]
+        })
+        .compileComponents();
+
+      fixture = TestBed.createComponent(WriteComplexFieldComponent);
+      component = fixture.componentInstance;
+
+      component.caseField = CASE_FIELD_M;
+      component.registerControl = REGISTER_CONTROL;
+      component.ignoreMandatory = true;
+
+      de = fixture.debugElement;
+      fixture.detectChanges();
+    }));
+
+    it('should not add control when case field is not AddressLine1 and TextMax150', () => {
+      const CASE_FIELD_1: CaseField = {
+        id: 'anotherComplexField',
+        label: 'Complex Field',
+        display_context: 'MANDATORY',
+        field_type: FIELD_TYPE_WITH_MISSING_VALUE
+      };
+      const firstControl = new FormControl();
+      const formGroup = new FormGroup({});
+      formGroup.addControl('first', firstControl);
+      component.complexGroup = formGroup;
+
+      const returned = component.buildControlRegistrer(CASE_FIELD_1) (firstControl);
+      expect(returned).toBe(firstControl);
+      expect(component.complexGroup.get(CASE_FIELD_1.id)).toBeTruthy();
+      expect(component.complexGroup.get('first')).toBeTruthy();
+      expect(formValidatorService.addValidators).toHaveBeenCalledTimes(0);
+    });
+
+    it('should add control when case field is AddressLine1 and TextMax150', () => {
+      component.caseField = {
+        id: 'AddressLine1',
+        label: 'x',
+        display_context: 'MANDATORY',
+        field_type: FIELD_TYPE_WITH_VALUES,
+        value: {
+          'AddressLine1': 'Flat 9'
+        }
+      };
+      const firstControl = new FormControl();
+      const formGroup = new FormGroup({});
+      formGroup.addControl('first', firstControl);
+      component.complexGroup = formGroup;
+
+      const returned = component.buildControlRegistrer(component.caseField) (firstControl);
+      expect(returned).toBe(firstControl);
+      expect(component.complexGroup.get(component.caseField.id)).toBeTruthy();
+      expect(component.complexGroup.get('first')).toBeTruthy();
+      expect(formValidatorService.addValidators).toHaveBeenCalledWith(component.caseField, firstControl);
+    });
+
+    it('should not add control when case field is AddressLine1 but NOT TextMax150', () => {
+      component.caseField = {
+        id: 'AddressLine1',
+        label: 'x',
+        display_context: 'MANDATORY',
+        field_type: {
+          id: 'TextMax151',
+          type: 'Text'
+        },
+        value: {
+          'AddressLine1': 'Flat 9'
+        }
+      };
+      const firstControl = new FormControl();
+      const formGroup = new FormGroup({});
+      formGroup.addControl('first', firstControl);
+      component.complexGroup = formGroup;
+
+      const returned = component.buildControlRegistrer(component.caseField) (firstControl);
+      expect(returned).toBe(firstControl);
+      expect(component.complexGroup.get(component.caseField.id)).toBeTruthy();
+      expect(component.complexGroup.get('first')).toBeTruthy();
+      expect(formValidatorService.addValidators).toHaveBeenCalledTimes(0);
+    });
+
+    it('should not add control when case field is NOT AddressLine1', () => {
+      component.caseField = {
+        id: 'AddressLine2',
+        label: 'x',
+        display_context: 'MANDATORY',
+        field_type: {
+          id: 'TextMax150',
+          type: 'Text'
+        },
+        value: {
+          'AddressLine1': 'Flat 9'
+        }
+      };
+      const firstControl = new FormControl();
+      const formGroup = new FormGroup({});
+      formGroup.addControl('first', firstControl);
+      component.complexGroup = formGroup;
+
+      const returned = component.buildControlRegistrer(component.caseField) (firstControl);
+      expect(returned).toBe(firstControl);
+      expect(component.complexGroup.get(component.caseField.id)).toBeTruthy();
+      expect(component.complexGroup.get('first')).toBeTruthy();
+      expect(formValidatorService.addValidators).toHaveBeenCalledTimes(0);
     });
   });
 

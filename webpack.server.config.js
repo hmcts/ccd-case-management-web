@@ -1,30 +1,46 @@
-const path = require('path');
-const webpack = require('webpack');
+// Work around for https://github.com/angular/angular-cli/issues/7200
+
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: { server: './server.ts' },
-  resolve: { extensions: ['.js', '.ts'] },
-  target: 'node',
-  // this makes sure we include node_modules and other 3rd party libraries
-  externals: [/(node_modules|main\..*\.js)/],
+  mode: "none",
+  entry: {
+    server: "./server.ts"
+  },
+  target: "node",
+  resolve: { extensions: [".js", ".ts"] },
+  // Make sure we don"t include all node_modules
+  externals: [/node_modules/],
+  optimization: {
+    minimize: false
+  },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    path: path.join(__dirname, "dist"),
+    filename: "[name].js"
   },
   module: {
-    rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
+    rules: [
+      { test: /\.ts$/, loader: "ts-loader" },
+      {
+        // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
+        // Removing this will cause deprecation warnings to appear.
+        test: /(\\|\/)@angular(\\|\/)core(\\|\/).+\.js$/,
+        parser: { system: true },
+      },
+    ]
   },
   plugins: [
-    // Temporary Fix for issue: https://github.com/angular/angular/issues/11580
-    // for 'WARNING Critical dependency: the request of a dependency is an expression'
     new webpack.ContextReplacementPlugin(
+      // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?angular(\\|\/)core(.+)?/,
-      path.join(__dirname, 'src'), // location of your src
+      path.join(__dirname, "src"), // location of your src
       {} // a map of your routes
     ),
     new webpack.ContextReplacementPlugin(
+      // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?express(\\|\/)(.+)?/,
-      path.join(__dirname, 'src'),
+      path.join(__dirname, "src"),
       {}
     )
   ]

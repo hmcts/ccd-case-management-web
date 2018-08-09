@@ -112,4 +112,38 @@ describe('SearchComponent', () => {
 
     });
 
+  it('should make metadata inputs fields turn into query parameters', () => {
+    const nameControl1 = new FormControl();
+    const NAME_VALUE1 = 'something';
+    nameControl1.setValue(NAME_VALUE1);
+
+    const nameControl2 = new FormControl();
+    const NAME_VALUE2 = 100;
+    nameControl2.setValue(NAME_VALUE2);
+
+    const filterContents = {
+      'name': nameControl1,
+      '[META]': nameControl2
+    };
+    let formGroup = new FormGroup(filterContents);
+    let filter = {
+      formGroup: formGroup,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      page: 1,
+      metadataFields: ['[META]']
+    };
+
+    subject.applyFilter(filter);
+
+    expect(paginationService.getPaginationMetadata).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {meta: NAME_VALUE2}, {
+      'name': NAME_VALUE1
+    });
+
+    expect(searchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {page: 1, meta: NAME_VALUE2}, {
+      'name': NAME_VALUE1
+    });
+
+  });
+
 });

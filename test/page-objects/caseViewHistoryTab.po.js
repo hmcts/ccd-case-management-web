@@ -5,15 +5,15 @@ class CaseViewHistoryTab extends BrowserUtils {
 
     constructor(){
 
-        super(by.css('ccd-event-log-table .EventLogTable'), true)
+        super(by.css('ccd-event-log-table .EventLogTable'), true);
 
-        this._caseViewHistoryColumns = by.css('.tabs-content .grid-row .column-one-half')
-        this._caseViewHistoryEventLogColumnNames = by.css('ccd-event-log-table thead tr th')
-        this._caseViewHistoryEventLogRow = by.css('ccd-event-log-table tbody tr')
-        this._caseViewHistoryEventLogDetail = by.css('ccd-event-log-details .EventLogDetails tbody tr')
+        this._caseViewHistoryColumns = by.css('.tabs-content .grid-row .column-one-half');
+        this._caseViewHistoryEventLogColumnNames = by.css('ccd-event-log-table thead tr th');
+        this._caseViewHistoryEventLogRow = by.css('ccd-event-log-table tbody tr');
+        this._caseViewHistoryEventLogDetail = by.css('ccd-event-log-details .EventLogDetails tbody tr');
         // partial locators
 
-        this._caseViewSubHeading = by.css('h3')
+        this._caseViewSubHeading = by.css('h3');
 
     }
 

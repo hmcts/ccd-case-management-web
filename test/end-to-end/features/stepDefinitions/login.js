@@ -2,33 +2,37 @@ let Login = require('../../../page-objects/login.po.js')
 let CCDBanner = require('../../../page-objects/ccdBanner.po.js')
 let CaseListFilters = require('../../../page-objects/caseListFilters.po.js')
 let CaseListResults = require('../../../page-objects/caseListResults.po.js')
+// var chai = require('chai');
+// var chaiAsPromised = require('chai-as-promised');
+// chai.use(chaiAsPromised);
+// var expect = chai.expect;
 
-describe('user - sign in and landing page', function() {
+var { defineSupportCode } = require("cucumber");
 
-beforeEach(function(){
+defineSupportCode(function ({ Given, When, Then }) {
+//module.exports = function() {
 
-   let browserUtils = new BrowserUtils("", false)
-
+Given(/^I login to CCD$/, function () {
+//this.Given(/^I login to CCD$/, function() {
    browser.ignoreSynchronization = true
-   browser.get(process.env.TEST_URL || 'http://localhost:3451').then(function()
-      { let loginPage = new Login
-        loginPage.signInTo()
-      })
+   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451')
+   //browser.sleep(1000);
+   loginPage = new Login
+   loginPage.isLoaded()
+   loginPage.signInAs('caseworker-autotest1')
+
+   browserUtils = new BrowserUtils
+   browserUtils.waitForUrlToChangeTo(RegExp("list"))
+   browser.sleep(500).then(function() { browser.ignoreSynchronization = false })
+//   browser.waitForAngular()
 
 });
 
-afterEach(function(){
-
-  let ccdBannerPage = new CCDBanner
-  ccdBannerPage.clickSignOut();
-
-});
+Then(/^I should see CCD case list page$/, function () {
+//this.Then(/^I should see CCD case list page$/, function() {
 
 
-it('Should display banner', function() {
-
-   let ccdBannerPage = new CCDBanner
-
+   ccdBannerPage = new CCDBanner
    ccdBannerPage.isLoaded()
 
    failedOnPageTitle = 'page not titled on case list page'
@@ -37,10 +41,7 @@ it('Should display banner', function() {
    failedOnMissingFooterItem = 'footer item missing on case list page'
 
    expect(ccdBannerPage.getTitleLabel()).toBe('Auto Test 1', failedOnPageTitle)
-   expect(ccdBannerPage.getUserNameLabel()).toContain('Ccd Auto Test', failedOnUserSignedIn)
-
-   ccdBannerPage.getMenuItemsLabels().then(function(a) { console.log(a) })
-
+   expect(ccdBannerPage.getUserNameLabel()).toContain('Autotest Cnp ▼', failedOnUserSignedIn)
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Case List', failedOnMissingMenuItem)
    expect(ccdBannerPage.getMenuItemsLabels()).toContain('Search', failedOnMissingMenuItem)
    expect(ccdBannerPage.getSearchBoxLabel()).toBe('Search', failedOnMissingMenuItem)
@@ -50,30 +51,6 @@ it('Should display banner', function() {
    expect(ccdBannerPage.getFooterText()).toContain('Monday to Friday', failedOnMissingFooterItem)
 
 
-
- });
-
-it('Should display case list filters', function() {
-
-   let caseListFiltersPage = new CaseListFilters
-
-   caseListFiltersPage.isLoaded()
-
-   failedOnPageTitle = 'page not titled on case list page'
-   failedOnMissingDropDownFilter = 'drop down filter missing on case list page'
-   failedOnMissingButton = 'button missing on case list page'
-
-   expect(caseListFiltersPage.getPageTitleLabel()).toBe('Case List')
-   expect(caseListFiltersPage.jurisdictionDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
-   expect(caseListFiltersPage.caseTypeDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
-   expect(caseListFiltersPage.stateDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
-   expect(caseListFiltersPage.applyButtonIsClickable()).toBeTruthy(failedOnMissingButton);
-
- });
-
-
-it('Should display case list results', function() {
-
    let caseListResultsPage = new CaseListResults
 
    caseListResultsPage.isLoaded()
@@ -82,6 +59,6 @@ it('Should display case list results', function() {
 
    expect(caseListResultsPage.hasCreateCaseButton()).toBe(true, failedOnEmptyCaseList)
 
- });
+});
 
 });

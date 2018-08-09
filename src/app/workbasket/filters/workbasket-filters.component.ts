@@ -42,7 +42,8 @@ export class WorkbasketFiltersComponent implements OnInit {
     caseType?: CaseType,
     caseState?: CaseState,
     formGroup?: FormGroup,
-    page?: number
+    page?: number,
+    metadataFields?: string[]
   };
 
   formGroup: FormGroup = new FormGroup({});
@@ -91,8 +92,18 @@ export class WorkbasketFiltersComponent implements OnInit {
     this.selected.formGroup = this.formGroup;
     this.selected.init = init;
     this.selected.page = 1;
+    this.selected.metadataFields = this.getMetadataFields();
+
     // Apply filters
     this.onApply.emit(this.selected);
+  }
+
+  getMetadataFields(): string[] {
+    if (this.workbasketInputs) {
+      return this.workbasketInputs
+        .filter(workbasketInput => workbasketInput.field.metadata === true)
+        .map(workbasketInput => workbasketInput.field.id);
+    }
   }
 
   onJurisdictionIdChange() {

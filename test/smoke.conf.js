@@ -1,4 +1,3 @@
-var HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
 
@@ -23,19 +22,27 @@ exports.config = {
 
   directConnect: true,
 
-  framework: 'jasmine2',
+  framework: "jasmine2",
 
   capabilities: {
-     'shardTestFiles': true,
-     'maxInstances': 2,
-     'browserName': 'chrome',
+     "shardTestFiles": true,
+     "acceptInsecureCerts": true,
+     "maxInstances": 1,
+     "browserName": "chrome",
      /**
       * Chrome is not allowed to create a SUID sandbox when running inside Docker
-      */
-     'chromeOptions': {
-         'args': [
-            'no-sandbox',
-            '--disable-web-security'
+      */    
+//   'proxy': {
+//    'proxyType': 'manual',
+//    'httpProxy': 'http://proxy.uk:8080'
+//    'httpsProxy': 'http://proxy.uk:8080'
+//    'noProxy': ''
+//           } 
+ 
+     "chromeOptions": {
+         "args": [
+            "no-sandbox",
+            "--disable-web-security"
          ]
      }
   },
@@ -47,9 +54,9 @@ exports.config = {
 //      'acceptInsecureCerts': true,
 //      'marionette': false,
 //      'browserName': 'firefox'
-////      'moz:firefoxOptions': {
-////              args: [ "--headless" ]
-////            }
+//      'moz:firefoxOptions': {
+//            args: [ "--headless" ]
+//                 }
 //  },
 
   jasmineNodeOpts: {
@@ -63,23 +70,22 @@ exports.config = {
 
   useAllAngular2AppRoots: true,
 
-  onCleanUp: function (results) {
-  },
 
-  onPrepare: function () {
+  plugins: [{
+        package: "protractor-screenshoter-plugin",
+        screenshotPath: "./test/reports/e2e",
+        screenshotOnExpect: "failure+success",
+        screenshotOnSpec: "none",
+        withLogs: true,
+        writeReportFreq: "asap",
+        clearFoldersBeforeTest: true
+    }],
 
-    var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-
-      jasmine.getEnv().addReporter(new HtmlReporter({
-         baseDirectory: 'test/end-to-end/test-report/screenshots',
-         excludeSkippedSpecs: true,
-         takeScreenShotsOnlyForFailedSpecs: true,
-         docTitle: 'case-management-web test report',
-         docName: 'index.html',
-      }).getJasmine2Reporter());
-  },
-
-  afterLaunch: function() {
-  }
+      onPrepare: function() {
+          // returning the promise makes protractor wait for the reporter config before executing tests
+          return global.browser.getProcessedConfig().then(function(config) {
+              //it is ok to be empty
+          });
+      }
 
 };

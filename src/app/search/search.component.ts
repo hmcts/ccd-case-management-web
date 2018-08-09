@@ -16,6 +16,10 @@ const ATTRIBUTE_SEPERATOR = '.';
   templateUrl: 'search.component.html'
 })
 export class SearchComponent implements OnInit {
+
+  private static readonly CASE_FILTER = 'caseFilter';
+  private static readonly METADATA_FILTER = 'metadataFilter';
+
   jurisdiction: Jurisdiction;
   caseType: CaseType;
   caseState: CaseState;
@@ -23,6 +27,7 @@ export class SearchComponent implements OnInit {
   profile: Profile;
   resultView: SearchResultView;
   paginationMetadata: PaginationMetadata;
+  metaDataFields: string[];
 
   constructor(private route: ActivatedRoute, private searchService: SearchService, private paginationService: PaginationService) { }
 
@@ -35,25 +40,30 @@ export class SearchComponent implements OnInit {
     const searchParams = {};
 
     this.caseFilterFG = filter.formGroup;
-    const caseFilters = this.getCaseFilterFromFormGroup(filter.formGroup);
+    this.metaDataFields = filter.metadataFields;
 
     if (filter.caseState) {
       paginationParams['state'] = filter.caseState.id;
       searchParams['state'] = filter.caseState.id;
     }
 
-    this.paginationService
-      .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, paginationParams, caseFilters)
-      .subscribe(paginationMetadataResult => {
-        this.paginationMetadata = paginationMetadataResult;
-      });
-
     if (filter.page) {
       searchParams['page'] = filter.page;
     }
 
+    const filters = this.getCaseFilterFromFormGroup(filter.formGroup);
+    const caseFilters = filters[SearchComponent.CASE_FILTER];
+    const metadataFilters = Object.assign(searchParams, filters[SearchComponent.METADATA_FILTER]);
+    const metadataPaginationParams = Object.assign(paginationParams, filters[SearchComponent.METADATA_FILTER]);
+
+    this.paginationService
+      .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters)
+      .subscribe(paginationMetadataResult => {
+        this.paginationMetadata = paginationMetadataResult;
+      });
+
     this.searchService
-      .search(filter.jurisdiction.id, filter.caseType.id, searchParams, caseFilters)
+      .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
       .subscribe(resultView => {
         this.resultView = resultView;
 
@@ -67,6 +77,9 @@ export class SearchComponent implements OnInit {
 
   private getCaseFilterFromFormGroup(formGroup?: FormGroup): object {
     const result = {};
+    result[SearchComponent.METADATA_FILTER] = {};
+    result[SearchComponent.CASE_FILTER] = {};
+
     if (formGroup) {
       this.buildFormDetails('', result, formGroup.value);
     }
@@ -80,20 +93,33 @@ export class SearchComponent implements OnInit {
     }
     for (let attributeName of Object.keys(formGroupValue)) {
       let value = formGroupValue[attributeName];
-      if (this.isString(value)) {
-        target[prefix + attributeName] = value;
+      if (this.isStringOrNumber(value)) {
+        const filterType = this.getFilterType(attributeName);
+        attributeName = this.sanitiseMetadataFieldName(filterType, attributeName);
+        target[filterType][prefix + attributeName] = value;
       } else if (value) {
         this.buildFormDetails(attributeName, target, value);
       }
     }
   }
 
-  private isString(value: any): boolean {
-    return (typeof value === 'string');
+  private isStringOrNumber(value: any): boolean {
+    return (typeof value === 'string' && value.length !== 0) || (typeof value === 'number');
   }
 
   private scrollToTop(): void {
     window.scrollTo(0, 0);
   }
 
+  private getFilterType(fieldName: string): string {
+    return (this.metaDataFields && (this.metaDataFields.indexOf(fieldName) > -1)) ?
+      SearchComponent.METADATA_FILTER : SearchComponent.CASE_FILTER;
+  }
+
+  private sanitiseMetadataFieldName(filterType: string, fieldName: string): string {
+    if (filterType === SearchComponent.METADATA_FILTER) {
+      fieldName = fieldName.replace(/\[(.*?)]/g, '$1').toLocaleLowerCase();
+    }
+    return fieldName;
+  }
 }

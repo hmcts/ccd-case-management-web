@@ -7,7 +7,7 @@ describe('Case List - Basic Page Structure', function() {
 
 beforeEach(function(){
 
-   browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451')
+   browser.get(process.env.TEST_FRONTEND_URL || "http://localhost:3451")
    let browserUtils = new BrowserUtils("", false)
    browserUtils.waitForUrlToChangeTo(RegExp("list"))
 

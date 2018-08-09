@@ -4,38 +4,38 @@ class CaseCreateStep extends BrowserUtils {
 
     constructor() {
 
-      super(by.css('.ng-untouched.ng-pristine.ng-valid p a'), false)
+      super(by.css('.ng-untouched.ng-pristine.ng-valid p a'), false);
 
-       this._pageTitle = by.css('ccd-event-trigger-header h3')
-       this._continueButton = by.css('.form-group.form-group-related .button[type=submit]')
-       this._previousButton = by.css('.form-group.form-group-related .button[type="button"]')
-       this._cancelLink = by.css('.ng-untouched.ng-pristine.ng-valid p a')
+       this._pageTitle = by.css('ccd-event-trigger-header h3');
+       this._continueButton = by.css('.form-group.form-group-related .button[type=submit]');
+       this._previousButton = by.css('.form-group.form-group-related .button[type="button"]');
+       this._cancelLink = by.css('.ng-untouched.ng-pristine.ng-valid p a');
 
-       this._textInputFieldLabel = by.css('ccd-write-text-field div .form-label-bold')
-       this._textInputFieldHint = by.css('ccd-write-text-field div .form-hint')
-       this._textInputFieldBox = by.css('ccd-write-text-field div input')
-       this._textInputFieldBoxCss = 'ccd-write-text-field div input'
+       this._textInputFieldLabel = by.css('ccd-write-text-field div .form-label-bold');
+       this._textInputFieldHint = by.css('ccd-write-text-field div .form-hint');
+       this._textInputFieldBox = by.css('ccd-write-text-field div input');
+       this._textInputFieldBoxCss = 'ccd-write-text-field div input';
 
-       this._emailInputFieldLabel = by.css('ccd-write-email-field div .form-label-bold')
-       this._emailInputFieldHint = by.css('ccd-write-email-field div .form-hint')
-       this._emailInputFieldBox = by.css('ccd-write-email-field div input')
-       this._emailInputFieldBoxCss = 'ccd-write-email-field div input'
+       this._emailInputFieldLabel = by.css('ccd-write-email-field div .form-label-bold');
+       this._emailInputFieldHint = by.css('ccd-write-email-field div .form-hint');
+       this._emailInputFieldBox = by.css('ccd-write-email-field div input');
+       this._emailInputFieldBoxCss = 'ccd-write-email-field div input';
 
-       this._numberInputFieldLabel = by.css('ccd-write-number-field div .form-label-bold')
-       this._numberInputFieldHint = by.css('ccd-write-number-field div .form-hint')
-       this._numberInputFieldBox = by.css('ccd-write-number-field div input')
-       this._numberInputFieldBoxCss = 'ccd-write-number-field div input'
+       this._numberInputFieldLabel = by.css('ccd-write-number-field div .form-label-bold');
+       this._numberInputFieldHint = by.css('ccd-write-number-field div .form-hint');
+       this._numberInputFieldBox = by.css('ccd-write-number-field div input');
+       this._numberInputFieldBoxCss = 'ccd-write-number-field div input';
 
-       this._phoneNumberInputFieldLabel = by.css('ccd-write-phone-uk-field div .form-label-bold')
-       this._phoneNumberInputFieldHint = by.css('ccd-write-phone-uk-field div .form-hint')
-       this._phoneNumberInputFieldBox = by.css('ccd-write-phone-uk-field div input')
-       this._phoneNumberInputFieldBoxCss = 'ccd-write-phone-uk-field div input'
+       this._phoneNumberInputFieldLabel = by.css('ccd-write-phone-uk-field div .form-label-bold');
+       this._phoneNumberInputFieldHint = by.css('ccd-write-phone-uk-field div .form-hint');
+       this._phoneNumberInputFieldBox = by.css('ccd-write-phone-uk-field div input');
+       this._phoneNumberInputFieldBoxCss = 'ccd-write-phone-uk-field div input';
 
-       this._yesOrNoButtonsLabel = by.css('ccd-write-yes-no-field div legend .form-label-bold')
-       this._yesOrNoButtonsHint = by.css('ccd-write-yes-no-field div legend .form-hint')
-       this._yesOrNoButton_YesOption = by.css('ccd-write-yes-no-field div #YesOrNoField-Yes')
-       this._yesOrNoButton_NoOption = by.css('ccd-write-yes-no-field div #YesOrNoField-No')
-       this._yesOrNoButtonSelected = by.css('ccd-write-yes-no-field div .multiple-choice.selected')
+       this._yesOrNoButtonsLabel = by.css('ccd-write-yes-no-field div legend .form-label-bold');
+       this._yesOrNoButtonsHint = by.css('ccd-write-yes-no-field div legend .form-hint');
+       this._yesOrNoButton_YesOption = by.css('ccd-write-yes-no-field div #YesOrNoField-Yes');
+       this._yesOrNoButton_NoOption = by.css('ccd-write-yes-no-field div #YesOrNoField-No');
+       this._yesOrNoButtonSelected = by.css('ccd-write-yes-no-field div .multiple-choice.selected');
 
     }
 

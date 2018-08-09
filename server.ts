@@ -2,12 +2,13 @@ import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 import { enableProdMode } from '@angular/core';
 // Express Engine
-import {ngExpressEngine} from '@nguniversal/express-engine';
+import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
-import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
+import { xFrameOptions } from 'x-frame-options';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -59,6 +60,8 @@ app.engine('html', ngExpressEngine({
 
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
+
+app.use(xFrameOptions());
 
 app.get('/health', (req, res) => {
   res.status(200).json({

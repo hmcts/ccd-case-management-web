@@ -99,9 +99,9 @@ describe('CaseResolver', () => {
           expect(caseData).toBe(CASE);
         });
 
-      expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+          expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
       // allows to access private cachedCaseView field
-      expect(caseResolver['cachedCaseView']).toBe(CASE);
+          expect(caseResolver['cachedCaseView']).toBe(CASE);
     });
 
     it('should return cached case view when the route is not the one for case view and cached view exists', () => {

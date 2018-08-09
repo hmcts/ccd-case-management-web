@@ -1,9 +1,9 @@
 #!groovy
 
-properties(
+properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
     pipelineTriggers([cron('H 05 * * *')])
-)
+])
 
 @Library("Infrastructure")
 
@@ -11,6 +11,6 @@ def type = "angular"
 def product = "ccd"
 def app = "case-management-web"
 
-withPipeline(type, product, app) {
+withNightlyPipeline(type, product, app) {
     enableSlackNotifications('#ccd-nightly-builds')
 }

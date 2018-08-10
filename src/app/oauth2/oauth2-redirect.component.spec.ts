@@ -76,7 +76,7 @@ describe('OAuth2RedirectComponent', () => {
     });
   });
 
-  describe('when query param `code` is provided', () => {
+  describe('when query param `code` is NOT provided', () => {
     beforeEach(() => {
       mockOAuth2Service = createSpyObj<OAuth2Service>('oauth2Service', ['getAccessToken']);
       mockOAuth2Service.getAccessToken.and.returnValue(Observable.of(true));

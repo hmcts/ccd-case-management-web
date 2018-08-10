@@ -22,7 +22,7 @@ export class OAuth2RedirectComponent implements OnInit {
     let oauth2Code = this.route.snapshot.queryParams.code;
 
     if (oauth2Code) {
-      this.oauth2Service.getAccessToken(this.route.snapshot.queryParams.code).subscribe(() => {
+      this.oauth2Service.getAccessToken(oauth2Code).subscribe(() => {
         // Navigate to / (index)
         this.router.navigate(['/'], { replaceUrl: true });
       }, error => {

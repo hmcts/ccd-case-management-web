@@ -10,11 +10,11 @@ import { SearchInput } from '../../../core/search/search-input.model';
 import { OrderService } from '../../../core/order/order.service';
 import { AbstractFieldWriteComponent } from '../../palette/base-field/abstract-field-write.component';
 import { JurisdictionService } from '../../jurisdiction.service';
-import { READ_ACCESS } from '../../../shared/domain/case-view/access-types.model';
-
-import createSpyObj = jasmine.createSpyObj;
+import { READ_ACCESS } from '../../domain/case-view/access-types.model';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { CaseType } from '../../domain/definition/case-type.model';
+import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
+import createSpyObj = jasmine.createSpyObj;
 
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
@@ -98,30 +98,7 @@ const CRUD_FILTERED_CASE_TYPES: CaseType[] = [
   }
 ];
 
-const TEST_SEARCH_INPUTS: SearchInput[] = [
-  {
-    label: 'Label 1',
-    order: 1,
-    field: {
-      id: 'PersonFirstName',
-      field_type: {
-        id: 'Text',
-        type: 'Text'
-      }
-    }
-  },
-  {
-    label: 'Label 2',
-    order: 2,
-    field: {
-      id: 'PersonLastName',
-      field_type: {
-        id: 'Text',
-        type: 'Text'
-      }
-    }
-  }
-];
+const TEST_SEARCH_INPUTS: SearchInput[] = createSearchInputs();
 
 @Component({
   selector: 'ccd-field-write',
@@ -146,6 +123,7 @@ let orderService;
 let definitionsService;
 
 const TEST_FORM_GROUP = new FormGroup({});
+const METADATA_FIELDS = ['PersonLastName'];
 
 describe('SearchFiltersComponent', () => {
 
@@ -325,6 +303,14 @@ describe('SearchFiltersComponent', () => {
     component.apply();
     expect(searchHandler.applyFilters).toHaveBeenCalledWith(component.selected);
     expect(component.selected.formGroup.value).toEqual(TEST_FORM_GROUP.value);
+  }));
+
+  it('should have metadata fields added when apply button is clicked', async(() => {
+    component.searchInputs = TEST_SEARCH_INPUTS;
+
+    component.apply();
+
+    expect(component.selected.metadataFields).toEqual(METADATA_FIELDS);
   }));
 
   it('should update search input when case type is reset', async(() => {

@@ -55,13 +55,7 @@ WORKDIR /protractor
 
 # Copy the run sript/s from local folder to the container's related folder
 
-COPY script/run-e2e-tests.sh /entrypoint.sh
-
-RUN git clone https://github.com/hmcts/ccd-case-management-web.git
-
-WORKDIR /protractor/ccd-case-management-web
-
-RUN yarn install
+COPY script/run-protractor-tests.sh /entrypoint.sh
 
 ENV HOME=/protractor
 

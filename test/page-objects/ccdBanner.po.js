@@ -4,14 +4,14 @@ class CCDBanner extends BrowserUtils {
 
     constructor() {
 
-       super("", false)
+       super("", false);
 
-       this._bannerHeaderTitle = by.css('.header-title');
-       this._userName = by.css('.dropbtn')
-       this._userNameDropDown = by.css('.dropdown-content')
-       this._menuItems = by.css('.global-navigation cut-nav-item a')
-       this._searchBox = by.css('.global-navigation .cut-nav-bar #search')
-       this._footer = by.css('#footer-wrapper')
+       this._bannerHeaderTitle = by.css('.global-header .title span');
+       this._userName = by.css('div #user-name');
+       this._menuItems = by.css('.global-navigation cut-nav-item a');
+       this._searchBox = by.css('.global-navigation .cut-nav-bar #search');
+       this._footer = by.css('.footer-wrapper');
+       this._signOut = by.css('div #sign-out');
 
     }
 
@@ -21,6 +21,10 @@ class CCDBanner extends BrowserUtils {
         this.waitForPageElemToLoad(element(this._bannerHeaderTitle))
         this.waitForPageElemToLoad(element(this._userName))
 
+    }
+
+    clickSignOut() {
+        element(this._signOut).click();
     }
 
     getTitleLabel() {

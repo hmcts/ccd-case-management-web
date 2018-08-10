@@ -10,7 +10,7 @@ import { AuthService } from '../core/auth/auth.service';
   ]
 })
 export class OAuth2RedirectComponent implements OnInit {
-  
+
   constructor(
     private route: ActivatedRoute,
     private oauth2Service: OAuth2Service,

@@ -2,7 +2,11 @@
   <tbody>
     <tr>
       <th>Date</th>
-      <td>{{event.timestamp | ccdDate}}</td>
+      <td>
+        <div class="tooltip">{{event.timestamp | ccdDate : 'local'}}
+          <span class="tooltiptext">UTC: {{event.timestamp | ccdDate : 'utc'}}</span>
+        </div>
+      </td>
     </tr>
     <tr>
       <th>Author</th>

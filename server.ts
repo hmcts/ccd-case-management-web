@@ -8,7 +8,7 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
-import { xFrameOptions } from 'x-frame-options';
+import * as xFrameOptions from 'x-frame-options';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();

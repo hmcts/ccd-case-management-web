@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PaletteUtilsModule } from '../utils/utils.module';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 import { PaymentLibModule } from '@hmcts/ccpay-web-component';
+import { SharedUtilsModule } from '../../utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { PaymentLibModule } from '@hmcts/ccpay-web-component';
     PaletteUtilsModule,
     CaseUIToolkitModule,
     PaymentLibModule,
+    SharedUtilsModule,
   ],
   declarations: [
     CasePaymentHistoryViewerFieldComponent

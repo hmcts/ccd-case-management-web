@@ -307,7 +307,7 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@^1.2.1":
+"@hmcts/ccd-case-ui-toolkit@1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.1.tgz#fae2a3c9efb7795c970982425d3d336a4c3b1651"
   dependencies:

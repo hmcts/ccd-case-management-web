@@ -5,7 +5,6 @@ import { AppConfig } from '../../../app.config';
 @Component({
   selector: 'ccd-case-payment-history-viewer-field',
   templateUrl: 'case-payment-history-viewer-field.html',
-  styleUrls: ['case-payment-history-viewer-field.scss']
 })
 export class CasePaymentHistoryViewerFieldComponent extends AbstractFieldReadComponent {
 

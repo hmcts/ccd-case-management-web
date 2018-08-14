@@ -81,11 +81,10 @@ export class CaseCreatorSubmitComponent implements OnInit {
   private alertSuccess(eventStatus, caseReference) {
     switch (eventStatus) {
       case EventStatusService.CALLBACK_STATUS_COMPLETE:
-        this.alertService.success(`Case #${caseReference} has been created with event: ${this.eventTrigger.name}`);
+        this.alertService.success(`Case #${caseReference} has been created.`);
         break;
       case EventStatusService.DELETE_DRAFT_STATUS_COMPLETE:
-        this.alertService.success(`Case #${caseReference} has been created with event: ${this.eventTrigger.name}. `
-        + `The draft has been successfully deleted`);
+        this.alertService.success(`Case #${caseReference} has been created. The draft has been successfully deleted`);
         break;
     }
   }
@@ -93,13 +92,10 @@ export class CaseCreatorSubmitComponent implements OnInit {
   private alertFailure(eventStatus, caseReference) {
     switch (eventStatus) {
       case EventStatusService.CALLBACK_STATUS_INCOMPLETE:
-        this.alertService.warning(`Case #${caseReference} has been created with event: ${this.eventTrigger.name} `
-        + `but the callback service cannot be completed`);
+        this.alertService.warning(`Case #${caseReference} has been created but the callback service cannot be completed`);
         break;
       case EventStatusService.DELETE_DRAFT_STATUS_INCOMPLETE:
-        this.alertService.warning(`Case #${caseReference} has been created with event: ${this.eventTrigger.name} `
-        + `but unable to delete draft as the draft service is temporarily down. The draft is `
-        + `placed in a queue and will be deleted shortly`);
+        this.alertService.warning(`Case #${caseReference} has been created. The draft is placed in a queue and will be deleted shortly`);
         break;
     }
   }

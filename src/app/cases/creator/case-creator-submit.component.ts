@@ -40,7 +40,10 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   submit(): (sanitizedEditForm: CaseEventData) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData) => this.casesService.createCase(this.jurisdictionId, this.caseTypeId , sanitizedEditForm);
+    return (sanitizedEditForm: CaseEventData) => {
+      sanitizedEditForm.draft_id = this.eventTrigger.case_id;
+      return this.casesService.createCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+    }
   }
 
   validate(): (sanitizedEditForm: CaseEventData) => Observable<object> {
@@ -64,10 +67,9 @@ export class CaseCreatorSubmitComponent implements OnInit {
       .then(() => {
         let caseReference = this.caseReferencePipe.transform(String(caseId));
         if (EventStatusService.isIncomplete(eventStatus)) {
-          this.alertService.warning(`Case #${caseReference} has been created with event: ${this.eventTrigger.name} `
-            + `but the callback service cannot be completed`);
+          this.alertFailure(eventStatus, caseReference);
         } else {
-          this.alertService.success(`Case #${caseReference} has been created with event: ${this.eventTrigger.name}`);
+          this.alertSuccess(eventStatus, caseReference);
         }
     });
   }
@@ -76,4 +78,29 @@ export class CaseCreatorSubmitComponent implements OnInit {
     return this.router.navigate(['/create/case']);
   }
 
+  private alertSuccess(eventStatus, caseReference) {
+    switch (eventStatus) {
+      case EventStatusService.CALLBACK_STATUS_COMPLETE:
+        this.alertService.success(`Case #${caseReference} has been created with event: ${this.eventTrigger.name}`);
+        break;
+      case EventStatusService.DELETE_DRAFT_STATUS_COMPLETE:
+        this.alertService.success(`Case #${caseReference} has been created with event: ${this.eventTrigger.name}. `
+        + `The draft has been successfully deleted`);
+        break;
+    }
+  }
+
+  private alertFailure(eventStatus, caseReference) {
+    switch (eventStatus) {
+      case EventStatusService.CALLBACK_STATUS_INCOMPLETE:
+        this.alertService.warning(`Case #${caseReference} has been created with event: ${this.eventTrigger.name} `
+        + `but the callback service cannot be completed`);
+        break;
+      case EventStatusService.DELETE_DRAFT_STATUS_INCOMPLETE:
+        this.alertService.warning(`Case #${caseReference} has been created with event: ${this.eventTrigger.name} `
+        + `but unable to delete draft as the draft service is temporarily down. The draft is `
+        + `placed in a queue and will be deleted shortly`);
+        break;
+    }
+  }
 }

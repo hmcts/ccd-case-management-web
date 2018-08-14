@@ -33,7 +33,7 @@ const CONFIG = {
   'remote_print_service_url': process.env['PRINT_SERVICE_URL_REMOTE'] || 'https://return-case-doc.dev.ccd.reform.hmcts.net',
   'smart_survey_url': process.env['SMART_SURVEY_URL'] || 'https://www.smartsurvey.co.uk/s/CCDfeedback/',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
-  'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:8080/payments',
+  'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:3453/payments',
   'activity_next_poll_request_ms': parseInt(process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'], 10) || 5000,
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,

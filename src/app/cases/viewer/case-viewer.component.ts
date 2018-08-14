@@ -13,9 +13,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
-import { AppConfig } from '../../app.config';
-import { CasePaymentHistoryViewerFieldComponent } from '../../shared/palette/payment/case-payment-history-viewer-field.component';
-import { Constants } from '../../shared/constants.model';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -39,7 +36,6 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private router: Router,
     private orderService: OrderService,
     private activityPollingService: ActivityPollingService,
-    private appConfig: AppConfig
   ) {}
 
   ngOnInit(): void {

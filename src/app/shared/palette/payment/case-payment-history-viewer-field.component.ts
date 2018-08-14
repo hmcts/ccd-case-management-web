@@ -1,6 +1,5 @@
 import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.component';
 import { Component } from '@angular/core';
-import { Constants } from '../../constants.model';
 import { AppConfig } from '../../../app.config';
 
 @Component({
@@ -9,8 +8,6 @@ import { AppConfig } from '../../../app.config';
   styleUrls: ['case-payment-history-viewer-field.scss']
 })
 export class CasePaymentHistoryViewerFieldComponent extends AbstractFieldReadComponent {
-
-  public static readonly PAYMENTS_BASE_URL_KEY = 'payments_url';
 
   constructor(
     private appConfig: AppConfig

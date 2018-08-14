@@ -367,7 +367,8 @@ describe('CaseViewerComponent', () => {
   });
 
   let FieldReadComponent: any = MockComponent({ selector: 'ccd-field-read', inputs: [
-    'caseField'
+    'caseField',
+    'caseReference'
   ]});
 
   let LinkComponent: any = MockComponent({ selector: 'a', inputs: [

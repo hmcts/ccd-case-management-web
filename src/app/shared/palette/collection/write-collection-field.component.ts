@@ -5,6 +5,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/for
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.component';
+import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
   selector: 'ccd-write-collection-field',
@@ -14,7 +15,10 @@ import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.compone
 export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   formArray: FormArray;
 
-  constructor(private formValidatorsService: FormValidatorsService, private dialog: MatDialog) {
+  constructor(private formValidatorsService: FormValidatorsService,
+              private dialog: MatDialog,
+              private scrollToService: ScrollToService,
+              ) {
     super();
   }
 
@@ -62,6 +66,15 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     // Manually resetting errors is required to prevent `ExpressionChangedAfterItHasBeenCheckedError`
     this.formArray.setErrors(null);
     this.caseField.value.push({value: null});
+
+    let lastIndex = this.caseField.value.length - 1;
+
+    setTimeout(() => {
+      this.scrollToService.scrollTo({
+        target: this.buildIdPrefix(lastIndex) + lastIndex,
+        offset: -50,
+      });
+    });
   }
 
   removeItem(index: number): void {

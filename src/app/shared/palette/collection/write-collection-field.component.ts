@@ -76,6 +76,7 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     setTimeout(() => {
       this.scrollToService.scrollTo({
           target: this.buildIdPrefix(lastIndex) + lastIndex,
+          duration: 1000,
           offset: -50,
         })
         .pipe(finalize(() => {this.focusLastItem()}))

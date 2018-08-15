@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -6,6 +6,7 @@ import { FormValidatorsService } from '../../../core/form/form-validators.servic
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.component';
 import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'ccd-write-collection-field',
@@ -14,6 +15,9 @@ import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 })
 export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   formArray: FormArray;
+
+  @ViewChildren('collectionItem')
+  private items: QueryList<ElementRef>;
 
   constructor(private formValidatorsService: FormValidatorsService,
               private dialog: MatDialog,
@@ -71,10 +75,16 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
 
     setTimeout(() => {
       this.scrollToService.scrollTo({
-        target: this.buildIdPrefix(lastIndex) + lastIndex,
-        offset: -50,
-      });
+          target: this.buildIdPrefix(lastIndex) + lastIndex,
+          offset: -50,
+        })
+        .pipe(finalize(() => {this.focusLastItem()}))
+        .subscribe(null, console.error);
     });
+  }
+
+  private focusLastItem() {
+    this.items.last.nativeElement.querySelector('input').focus();
   }
 
   removeItem(index: number): void {

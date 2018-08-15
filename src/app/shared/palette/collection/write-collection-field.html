@@ -13,7 +13,7 @@
 
     <div class="form-group" *ngIf="caseField.value && caseField.value.length">
 
-      <div class="form-group" *ngFor="let item of caseField.value; let i = index">
+      <div class="form-group" *ngFor="let item of caseField.value; let i = index" #collectionItem>
         <div class="collection-title">
           <div class="float-left">
             <label class="form-label" [for]="buildIdPrefix(i) + i">{{itemLabel(i)}}</label>

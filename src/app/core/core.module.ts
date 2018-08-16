@@ -30,6 +30,9 @@ import { AuthService } from './auth/auth.service';
 import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
+import { CookiesComponent } from '../footer-nav/cookies.component';
+import { PrivacyComponent } from '../footer-nav/privacy.component';
+import { TcComponent } from '../footer-nav/tc.component';
 
 @NgModule({
   imports: [
@@ -68,7 +71,10 @@ import { ActivityResolver } from './activity/activity.resolver';
     WorkbasketInputFilterService,
   ],
   declarations: [
-    CoreComponent
+    CoreComponent,
+    CookiesComponent,
+    PrivacyComponent,
+    TcComponent
   ]
 })
 export class CoreModule { }

@@ -66,22 +66,27 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     }
   }
 
-  addItem(): void {
+  addItem(doScroll: boolean): void {
     // Manually resetting errors is required to prevent `ExpressionChangedAfterItHasBeenCheckedError`
     this.formArray.setErrors(null);
     this.caseField.value.push({value: null});
 
     let lastIndex = this.caseField.value.length - 1;
 
-    setTimeout(() => {
-      this.scrollToService.scrollTo({
-          target: this.buildIdPrefix(lastIndex) + lastIndex,
-          duration: 1000,
-          offset: -50,
-        })
-        .pipe(finalize(() => {this.focusLastItem()}))
-        .subscribe(null, console.error);
-    });
+    // Timeout is required for the collection item to be rendered before it can be scrolled to or focused.
+    if (doScroll) {
+      setTimeout(() => {
+        this.scrollToService.scrollTo({
+            target: this.buildIdPrefix(lastIndex) + lastIndex,
+            duration: 1000,
+            offset: -50,
+          })
+          .pipe(finalize(() => this.focusLastItem()))
+          .subscribe(null, console.error);
+      });
+    } else {
+      setTimeout(() => this.focusLastItem());
+    }
   }
 
   private focusLastItem() {

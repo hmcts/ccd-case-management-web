@@ -79,7 +79,7 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
         this.scrollToService.scrollTo({
             target: this.buildIdPrefix(lastIndex) + lastIndex,
             duration: 1000,
-            offset: -50,
+            offset: -150,
           })
           .pipe(finalize(() => this.focusLastItem()))
           .subscribe(null, console.error);

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 import { Observable } from 'rxjs/Observable';
 import { Wizard } from './wizard.model';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Confirmation } from './confirmation.model';
 import { WizardPage } from '../domain/wizard-page.model';
 import { FieldsUtils } from '../utils/fields.utils';
@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FieldsPurger } from '../utils/fields.purger';
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 import { CaseView } from '../../core/cases/case-view.model';
+import { Draft } from '../domain/draft';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -26,6 +27,9 @@ export class CaseEditComponent implements OnInit {
 
   @Input()
   validate: (CaseEventData) => Observable<object>;
+
+  @Input()
+  saveDraft: (CaseEventData) => Observable<Draft>;
 
   @Input()
   caseDetails: CaseView;

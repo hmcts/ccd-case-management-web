@@ -13,4 +13,5 @@ export class CaseEventTrigger {
   show_summary?: boolean;
   show_event_notes?: boolean;
   end_button_label?: string;
+  can_save_draft?: boolean;
 }

@@ -4,23 +4,23 @@ class CaseCreateStart extends BrowserUtils {
 
     constructor() {
 
-       super(by.css('.container-fluid .button'), true)
+       super(by.css('.container-fluid .button'), true);
 
        this._jurisdiction = by.css('#cc-jurisdiction');
-       this._jurisdictionCss = '#cc-jurisdiction'
-       this._jurisdictionOptions = by.css('#cc-jurisdiction option')
+       this._jurisdictionCss = '#cc-jurisdiction';
+       this._jurisdictionOptions = by.css('#cc-jurisdiction option');
 
        this._caseType = by.css('#cc-case-type');
-       this._caseTypeCss = '#cc-case-type'
-       this._caseTypeOptions = by.css('#cc-case-type option')
+       this._caseTypeCss = '#cc-case-type';
+       this._caseTypeOptions = by.css('#cc-case-type option');
 
        this._event = by.css('#cc-event');
-       this._evenCss = '#cc-event'
-       this._evenOptions = by.css('##cc-event option')
+       this._evenCss = '#cc-event';
+       this._evenOptions = by.css('##cc-event option');
 
-       this._pageTitle = by.css('.container-fluid h1')
+       this._pageTitle = by.css('.container-fluid h1');
 
-       this._submitButton = by.css('.container-fluid .button')
+       this._submitButton = by.css('.container-fluid .button');
 
     }
 

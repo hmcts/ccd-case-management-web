@@ -11,7 +11,7 @@
 </div>
 <ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject" (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
 <ccd-activity [caseId]="caseDetails.case_id" [displayMode]="BANNER"></ccd-activity>
-<div class="grid-row screen-990">
+<div class="grid-row">
   <div class="column-one-half">
     <ccd-case-header [caseDetails]="caseDetails"></ccd-case-header>
     <div class="case-viewer-controls" *ngIf="!isDraft()">
@@ -22,7 +22,7 @@
     <ccd-event-trigger [callbackErrorsSubject]="callbackErrorsSubject" [triggers]="caseDetails.triggers" [triggerText]="triggerText" (change)="clearErrorsAndWarnings()" (onTrigger)="applyTrigger($event)"></ccd-event-trigger>
   </div>
 </div>
-<div class="grid-row screen-990">
+<div class="grid-row">
   <div class="column-full">
     <cut-tabs>
       <cut-tab [id]="'History'" [title]="'History'">

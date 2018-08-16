@@ -20,7 +20,8 @@ describe('SearchService', () => {
 
   const SEARCH_VIEW = {
     columns: [],
-    results: []
+    results: [],
+    hasDrafts: () => false
   };
 
   const TEST_FIELD_TYPE_NAME = 'Text';

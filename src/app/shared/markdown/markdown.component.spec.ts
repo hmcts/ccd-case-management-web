@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { MarkdownComponent as CCDMarkDownComponent } from './markdown.component';
-import { MarkdownModule, MarkdownComponent } from 'ngx-md';
+import { NgxMdModule, NgxMdComponent } from 'ngx-md';
 import { By } from '@angular/platform-browser';
 
 describe('MarkdownComponent', () => {
@@ -49,13 +49,13 @@ describe('MarkdownComponent', () => {
     TestBed
       .configureTestingModule({
         imports: [
-          MarkdownModule.forRoot()
+          NgxMdModule.forRoot()
         ],
         declarations: [
           CCDMarkDownComponent,
         ],
         providers: [
-          MarkdownComponent
+          NgxMdComponent
         ]
       })
       .compileComponents();

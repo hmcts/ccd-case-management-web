@@ -33,6 +33,7 @@ import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RemoveDialogComponent } from '../shared/remove-dialog/remove-dialog.component';
 import { FieldsPurger } from '../shared/utils/fields.purger';
+import { PageValidationService } from '../shared/case-editor/page-validation.service';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { FieldsPurger } from '../shared/utils/fields.purger';
     EventTriggerResolver,
     FieldsPurger,
     LabelSubstitutionService,
+    PageValidationService,
   ]
 })
 export class CasesModule {}

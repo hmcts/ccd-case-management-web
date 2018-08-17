@@ -102,9 +102,11 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   }
 
   private getTabFields(): CaseField[] {
-    return this.sortedTabs.reduce((acc, tab) => {
+    const caseDataFields = this.sortedTabs.reduce((acc, tab) => {
       return acc.concat(tab.fields);
     }, []);
+
+    return caseDataFields.concat(this.caseDetails.metadataFields);
   }
 
   isDraft(): boolean {

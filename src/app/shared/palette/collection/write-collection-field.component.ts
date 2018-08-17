@@ -81,7 +81,7 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     dialogConfig.ariaLabel = 'Label';
     dialogConfig.height = '220px';
     dialogConfig.width = '550px';
-    dialogConfig.panelClass = 'remove-dialog';
+    dialogConfig.panelClass = 'dialog';
 
     dialogConfig.closeOnNavigation = false;
     dialogConfig.position = {

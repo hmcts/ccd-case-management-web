@@ -115,7 +115,7 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     dialogConfig.closeOnNavigation = false;
     dialogConfig.position = {
       top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
-    }
+    };
 
     const dialogRef = this.dialog.open(RemoveDialogComponent, dialogConfig);
 

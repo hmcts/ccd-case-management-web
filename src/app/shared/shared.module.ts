@@ -22,6 +22,8 @@ import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
+import { MarkdownModule } from './markdown/markdown.module';
+import { LabelFieldComponent } from './palette/label/label-field.component';
 
 @NgModule({
   imports: [
@@ -33,7 +35,8 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     ReactiveFormsModule,
     EventTriggerModule,
     LabelSubstitutorModule,
-    ConditionalShowModule
+    ConditionalShowModule,
+    MarkdownModule
   ],
   declarations: [
     SearchResultComponent,
@@ -47,8 +50,12 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     CcdActivityBannerComponent,
     CaseHistoryComponent,
     DocumentDialogComponent,
+    LabelFieldComponent,
   ],
-  entryComponents: [DocumentDialogComponent],
+  entryComponents: [
+    DocumentDialogComponent,
+    LabelFieldComponent
+  ],
   providers: [
     SearchResultViewItemComparatorFactory,
     CaseFieldService,

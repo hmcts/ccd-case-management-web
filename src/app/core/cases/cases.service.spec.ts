@@ -1,4 +1,4 @@
-import { Response, ResponseOptions, Headers } from '@angular/http';
+import { Headers, Response, ResponseOptions } from '@angular/http';
 import { AppConfig } from '../../app.config';
 import { CasesService } from './cases.service';
 import { CaseView } from './case-view.model';
@@ -8,9 +8,10 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { OrderService } from '../order/order.service';
-import createSpyObj = jasmine.createSpyObj;
 import { HttpError } from '../http/http-error.model';
 import { HttpErrorService } from '../http/http-error.service';
+import { createCaseView } from './case-view.test.fixture';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('CasesService', () => {
 
@@ -51,25 +52,7 @@ describe('CasesService', () => {
 
   describe('getCaseView()', () => {
 
-    const CASE_VIEW: CaseView = {
-      case_id: '1',
-      case_type: {
-        id: 'TestAddressBookCase',
-        name: 'Test Address Book Case',
-        jurisdiction: {
-          id: 'TEST',
-          name: 'Test',
-        }
-      },
-      channels: [],
-      state: {
-        id: 'CaseCreated',
-        name: 'Case created'
-      },
-      tabs: [],
-      triggers: [],
-      events: []
-    };
+    const CASE_VIEW: CaseView = createCaseView();
 
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({

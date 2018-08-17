@@ -38,6 +38,7 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
       this.updateVisibility(this.getReadOnlyAndFormFields());
       this.subscribeToFormChanges();
       this.registry.register(this);
+      this.showGrayBar();
     }
   }
 
@@ -100,6 +101,9 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
 
   private show() {
     this.el.nativeElement.hidden = false;
+  }
+
+  private showGrayBar() {
     if (this.caseField && this.caseField.field_type && this.caseField.field_type.type !== 'Collection') {
       if (this.el.nativeElement.closest('ccd-write-complex-type-field')) {
         this.el.nativeElement.children[0].children[0].classList.add('show-condition-gray-bar');

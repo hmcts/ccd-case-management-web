@@ -1,5 +1,5 @@
 import { CaseView } from '../core/cases/case-view.model';
-import { ActivatedRouteSnapshot, Resolve, Router, ParamMap } from '@angular/router';
+import { ActivatedRouteSnapshot, ParamMap, Resolve, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { CasesService } from '../core/cases/cases.service';
@@ -7,6 +7,7 @@ import { Response } from '@angular/http';
 import { AlertService } from '../core/alert/alert.service';
 
 import 'rxjs/add/operator/catch';
+import { DraftService } from '../core/draft/draft.service';
 
 @Injectable()
 export class CaseResolver implements Resolve<CaseView> {
@@ -15,6 +16,7 @@ export class CaseResolver implements Resolve<CaseView> {
   public static readonly PARAM_CASE_TYPE_ID = 'ctid';
   public static readonly PARAM_CASE_ID = 'cid';
   public static readonly CASE_CREATED_MSG = 'The case has been created successfully';
+  public static readonly DRAFT = 'DRAFT';
 
   // we need to run the CaseResolver on every child route of 'case/:jid/:ctid/:cid'
   // this is achieved with runGuardsAndResolvers: 'always' configuration
@@ -22,6 +24,7 @@ export class CaseResolver implements Resolve<CaseView> {
   public cachedCaseView: CaseView;
 
   constructor(private casesService: CasesService,
+               private draftService: DraftService,
                private router: Router,
                private alertService: AlertService) {}
 
@@ -64,16 +67,29 @@ export class CaseResolver implements Resolve<CaseView> {
   }
 
   private getAndCacheCaseView(jid, ctid, cid): Observable<CaseView> {
+    if (cid.startsWith(CaseResolver.DRAFT)) {
+      return this.getAndCacheDraft(jid, ctid, cid);
+    } else {
     return this.casesService
           .getCaseView(jid, ctid, cid)
           .do(caseView => this.cachedCaseView = caseView)
-          .catch((error: Response | any) => {
-            // TODO Should be logged to remote logging infrastructure
-            console.error(error);
-            if (error.status !== 401 && error.status !== 403) {
-              this.router.navigate(['/error']);
-            }
-            return Observable.throw(error);
-          });
+          .catch((error: Response | any) => this.checkAuthorizationError(error));
+    }
+  }
+
+  private getAndCacheDraft(jid, ctid, cid): Observable<CaseView> {
+    return this.draftService
+      .getDraft(jid, ctid, cid)
+      .do(caseView => this.cachedCaseView = caseView)
+      .catch((error: Response | any) => this.checkAuthorizationError(error));
+  }
+
+  private checkAuthorizationError(error: any) {
+    // TODO Should be logged to remote logging infrastructure
+    console.error(error);
+    if (error.status !== 401 && error.status !== 403) {
+      this.router.navigate(['/error']);
+    }
+    return Observable.throw(error);
   }
 }

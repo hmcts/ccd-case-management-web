@@ -3,6 +3,7 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { HttpError } from '../../core/http/http-error.model';
 import { CreateCaseFieldsResolver } from './create-case-fields.resolver';
 import createSpyObj = jasmine.createSpyObj;
+import { Draft } from '../../shared/domain/draft';
 
 describe('CreateCaseFieldsResolver', () => {
 
@@ -14,6 +15,7 @@ describe('CreateCaseFieldsResolver', () => {
   const IGNORE_WARNINGS = false;
   const CASE_TYPE = 'TestAddressBookCase';
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
+  const DRAFT_ID = Draft.DRAFT + '12345';
   const EVENT_TRIGGER: CaseEventTrigger = {
     id: EVENT_TRIGGER_ID,
     name: 'Into legacy',
@@ -84,6 +86,33 @@ describe('CreateCaseFieldsResolver', () => {
 
     expect(casesService.getEventTrigger).toHaveBeenCalledWith(
       JURISDICTION, CASE_TYPE, EVENT_TRIGGER_ID, undefined, String(IGNORE_WARNINGS));
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
+    expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
+    expect(route.paramMap.get).toHaveBeenCalledTimes(3);
+    expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
+  });
+
+  it('should use draftId when resuming create event ', () => {
+    route.queryParamMap.get.and.callFake(key => {
+      switch (key) {
+        case QUERY_PARAM_IGNORE_WARNINGS:
+          return IGNORE_WARNINGS;
+        case Draft.DRAFT:
+          return DRAFT_ID;
+      }
+    });
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
+
+    createCaseFieldsResolver
+      .resolve(route)
+      .subscribe(triggerData => {
+        expect(triggerData).toBe(EVENT_TRIGGER);
+      });
+
+    expect(casesService.getEventTrigger).toHaveBeenCalledWith(
+      JURISDICTION, CASE_TYPE, EVENT_TRIGGER_ID, DRAFT_ID, String(IGNORE_WARNINGS));
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);

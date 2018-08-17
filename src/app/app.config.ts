@@ -87,6 +87,10 @@ export class AppConfig {
     return this.config.smart_survey_url;
   }
 
+  public getUnsupportedBrowserUrl() {
+    return this.config.unsupported_browser_url;
+  }
+
   public getActivityUrl() {
     return this.config.activity_url;
   }
@@ -105,6 +109,22 @@ export class AppConfig {
 
   public getActivityMaxRequestPerBatch() {
     return this.config.activity_max_request_per_batch;
+  }
+
+  public getChromeMinRequiredVersion() {
+    return this.config.chrome_min_required_version;
+  }
+
+  public getIEMinRequiredVersion() {
+    return this.config.ie_min_required_version;
+  }
+
+  public getEdgeMinRequiredVersion() {
+    return this.config.edge_min_required_version;
+  }
+
+  public getFirefoxMinRequiredVersion() {
+    return this.config.firefox_min_required_version;
   }
 
   public getCaseHistoryUrl(jurisdictionId: string,
@@ -144,4 +164,9 @@ export class Config {
   remote_document_management_url: string;
   remote_print_service_url: string;
   smart_survey_url: string;
+  unsupported_browser_url: string;
+  chrome_min_required_version: number;
+  ie_min_required_version: number;
+  edge_min_required_version: number;
+  firefox_min_required_version: number;
 }

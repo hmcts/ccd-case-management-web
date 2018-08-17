@@ -1,0 +1,36 @@
+.browser-support {
+  display: block;
+  height: 20px;
+  margin: 7px auto;
+  background: #912b88;
+  text-align: left;
+  color: white;
+  font-size: 16px;
+  padding: 10px 0 10px 0;
+  a {
+    color: white;
+  }
+}
+.browser-support-left {
+  width: 20px;
+  height: 20px;
+  float:left;
+  margin: 0 10px 0 15px;
+  vertical-align: center;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.browser-support-right {
+  text-align: right;
+}
+.hide-link {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-right: 15px;
+}
+.hide {
+  display: none;
+}

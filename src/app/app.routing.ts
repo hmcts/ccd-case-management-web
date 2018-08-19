@@ -148,8 +148,8 @@ const routes: Routes = [
       },
       { path: 'search', component: SearchComponent},
       { path: 'cookies', component: CookiesComponent },
-      { path: 'privacy', component: PrivacyComponent },
-      { path: 'tc', component: TcComponent },
+      { path: 'privacy-policy', component: PrivacyComponent },
+      { path: 'terms-and-conditions', component: TcComponent },
     ]
   }
 ];

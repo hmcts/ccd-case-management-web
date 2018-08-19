@@ -1,11 +1,7 @@
 .back-link-div {
   margin-top: 30px;
 }
-.back-link {
-  font-size: 14px;
-  text-decoration: underline;
-}
-.back-link:hover {
+.link-back:hover {
   cursor: pointer;
 }
 li {
@@ -13,10 +9,15 @@ li {
   padding-left: 15px;
   margin-top: 5px;
 }
-.footer-row {
+.table-col-1, .table-col-3 {
   float: left;
+  width: 25%;
 }
-.heading-medium {
+.table-col-2 {
+  float: left;
+  width: 50%;
+}
+.heading-medium, .heading-large {
   margin-top: 30px;
 }
 .heading-small {
@@ -26,4 +27,3 @@ li {
 .para {
   margin-bottom: 10px;
 }
-

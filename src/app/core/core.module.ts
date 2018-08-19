@@ -33,6 +33,7 @@ import { ActivityResolver } from './activity/activity.resolver';
 import { CookiesComponent } from '../footer-nav/cookies.component';
 import { PrivacyComponent } from '../footer-nav/privacy.component';
 import { TcComponent } from '../footer-nav/tc.component';
+import { AccordionComponent } from '../shared/accordion/accordion.component';
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import { TcComponent } from '../footer-nav/tc.component';
     CoreComponent,
     CookiesComponent,
     PrivacyComponent,
-    TcComponent
+    TcComponent,
+    AccordionComponent,
   ]
 })
 export class CoreModule { }

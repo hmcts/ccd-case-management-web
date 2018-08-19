@@ -74,13 +74,21 @@
 </div>
 <!-- Main area : End -->
 
-<div class="footer-menu" style="width: 100%;">
-  <a [routerLink]="'/cookies'" style="margin-right: 30px;">Cookies</a>
-  <a [routerLink]="'/privacy'" style="margin-right: 30px;">Privacy Policy</a>
-  <a [routerLink]="'/tc'" style="margin-right: 30px;">Terms and conditions</a>
-  <a [routerLink]="'/tc'" style="margin-right: 30px;">Contact us</a>
-</div>
-
 <!-- Footer : Start -->
-<cut-footer-bar [isSolicitor]="isSolicitor()" email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)"></cut-footer-bar>
+<cut-footer-bar [isSolicitor]="isSolicitor()" email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)">
+  <div footerNavLinks>
+      <div class="footer-menu">
+        <a [routerLink]="'/cookies'">Cookies</a>
+      </div>
+      <div class="footer-menu">
+        <a [routerLink]="'/privacy-policy'">Privacy policy</a>
+      </div>
+      <div class="footer-menu">
+        <a [routerLink]="'/terms-and-conditions'">Terms and conditions</a>
+      </div>
+    <div class="footer-menu">
+      <a [routerLink]="'/contact-us'">Contact us</a>
+    </div>
+  </div>
+</cut-footer-bar>
 <!-- Footer : End -->

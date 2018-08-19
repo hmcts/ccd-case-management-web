@@ -1,0 +1,16 @@
+<div class="accordion-wrapper">
+
+  <div class="accordion-heading">
+    <div style="float: left">
+      <h2 class="heading-small">{{ title }}</h2>
+    </div>
+    <div style="float: right;">
+      <img src="{{ getImage() }}" class="accordion-image" (click)="isHidden = !isHidden"/>
+    </div>
+  </div>
+
+  <div class="accordion-body" [hidden]="isHidden">
+    <ng-content select=".accordion-body"></ng-content>
+  </div>
+
+</div>

@@ -31,6 +31,9 @@ import { LabelFieldComponent } from './label/label-field.component';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
 import { OrderSummaryModule } from './order-summary/order-summary.module';
+import { ReadCaseLinkFieldComponent } from './case-link/read-case-link-field.component';
+import { WriteCaseLinkFieldComponent } from './case-link/write-case-link-field.component';
+import { SharedUtilsModule } from '../utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -45,6 +48,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     PaletteUtilsModule,
     DocumentModule,
     CaseUIToolkitModule,
+    SharedUtilsModule,
     AddressModule,
     MarkdownModule,
     OrderSummaryModule
@@ -61,6 +65,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     ReadPhoneUKFieldComponent,
     ReadDateFieldComponent,
     ReadCollectionFieldComponent,
+    ReadCaseLinkFieldComponent,
 
     // Write
     WriteCollectionFieldComponent,
@@ -70,6 +75,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     WriteNumberFieldComponent,
     WriteEmailFieldComponent,
     WriteDateFieldComponent,
+    WriteCaseLinkFieldComponent
   ],
   entryComponents: [
     UnsupportedFieldComponent,
@@ -83,6 +89,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     ReadPhoneUKFieldComponent,
     ReadDateFieldComponent,
     ReadCollectionFieldComponent,
+    ReadCaseLinkFieldComponent,
 
     // Write
     WriteCollectionFieldComponent,
@@ -92,6 +99,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     WriteNumberFieldComponent,
     WriteEmailFieldComponent,
     WriteDateFieldComponent,
+    WriteCaseLinkFieldComponent,
   ],
   exports: [
     BaseFieldModule,

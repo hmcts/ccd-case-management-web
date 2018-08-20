@@ -10,7 +10,6 @@ import { EventTriggerModule } from './event-trigger/event-trigger.module';
 import { CaseHeaderComponent } from './header/case-header.component';
 import { EventTriggerHeaderComponent } from './header/event-trigger-header.component';
 import { SortSearchResultPipe } from './search/sorting/sort-search-result.pipe';
-import { CaseReferencePipe } from './utils/case-reference.pipe';
 import { SearchResultViewItemComparatorFactory } from './search/sorting/search-result-view-item-comparator-factory';
 import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity.component';
 import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';
@@ -22,6 +21,7 @@ import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
+import { SharedUtilsModule } from './utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -30,6 +30,7 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     PaletteModule,
     RouterModule,
     FormsModule,
+    SharedUtilsModule,
     ReactiveFormsModule,
     EventTriggerModule,
     LabelSubstitutorModule,
@@ -41,7 +42,6 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     SortSearchResultPipe,
-    CaseReferencePipe,
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
@@ -61,7 +61,7 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     EventTriggerModule,
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
-    CaseReferencePipe,
+    SharedUtilsModule,
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,

@@ -17,6 +17,9 @@ import { CaseDetails } from '../../shared/domain/case-details';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import createSpyObj = jasmine.createSpyObj;
+import { Draft } from '../../shared/domain/draft';
+import { DraftService } from '../../core/draft/draft.service';
+import { CaseResolver } from '../case.resolver';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -32,6 +35,9 @@ class CaseEditComponent {
 
   @Input()
   validate: (CaseEventData) => Observable<object>;
+
+  @Input()
+  saveDraft: (CaseEventData) => Observable<Draft>;
 
   @Output()
   cancelled: EventEmitter<any> = new EventEmitter();
@@ -113,12 +119,20 @@ describe('CaseCreatorSubmitComponent', () => {
       'PersonLastName': 'Khaleesi'
     },
     event: {
-      id: EVENT_TRIGGER.id,
+      id: null,
       summary: 'Some summary',
       description: 'Some description'
     },
     event_token: 'test-token',
     ignore_warning: false
+  };
+
+  const DRAFT: Draft = {
+    'id': '1234',
+    'document': CREATED_CASE,
+    'type': 'dummy',
+    'created': 'sometime',
+    'updated': 'another time'
   };
 
   let mockRoute: any = {
@@ -136,6 +150,7 @@ describe('CaseCreatorSubmitComponent', () => {
   let router: any;
   let alertService: any;
   let casesService: any;
+  let draftService: any;
   let formErrorService: any;
   let formValueService: any;
   let casesReferencePipe: any;
@@ -143,6 +158,7 @@ describe('CaseCreatorSubmitComponent', () => {
   beforeEach(async(() => {
     casesService = createSpyObj<CasesService>('casesService', ['createCase', 'validateCase']);
     casesService.createCase.and.returnValue(Observable.of(CASE_DETAILS));
+    draftService = createSpyObj<DraftService>('draftService', ['createDraft', 'updateDraft']);
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
@@ -172,6 +188,7 @@ describe('CaseCreatorSubmitComponent', () => {
         providers: [
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: CasesService, useValue: casesService },
+          { provide: DraftService, useValue: draftService },
           { provide: Router, useValue: router },
           { provide: AlertService, useValue: alertService },
           { provide: FormErrorService, useValue: formErrorService },
@@ -200,6 +217,24 @@ describe('CaseCreatorSubmitComponent', () => {
     component.validate()(SANITISED_EDIT_FORM);
 
     expect(casesService.validateCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+  });
+
+  it('should create a draft when saveDraft called with sanitised data for the first time', () => {
+    draftService.createDraft.and.returnValue(DRAFT);
+    component.saveDraft()(SANITISED_EDIT_FORM);
+
+    expect(draftService.createDraft).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+  });
+
+  it('should update draft when saveDraft called with sanitised data for second time', () => {
+    const DRAFT_ID = '12345';
+    component.eventTrigger.case_id = CaseResolver.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
+    draftService.createDraft.and.returnValue(DRAFT);
+    draftService.updateDraft.and.returnValue(DRAFT);
+    component.saveDraft()(SANITISED_EDIT_FORM);
+
+    expect(draftService.createDraft).not.toHaveBeenCalled();
+    expect(draftService.updateDraft).toHaveBeenCalledWith(JID, CTID, DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {

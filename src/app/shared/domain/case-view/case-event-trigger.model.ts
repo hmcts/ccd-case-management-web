@@ -20,6 +20,7 @@ export class CaseEventTrigger {
   show_summary?: boolean;
   show_event_notes?: boolean;
   end_button_label?: string;
+  can_save_draft?: boolean;
 
   hasFields(): boolean {
     return this.case_fields && this.case_fields.length !== 0;

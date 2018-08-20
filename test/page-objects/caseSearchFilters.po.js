@@ -4,21 +4,21 @@ class CaseSearchFilters extends BrowserUtils {
 
     constructor() {
 
-       super(by.css('#s-jurisdiction'), true)
+       super(by.css('#s-jurisdiction'), true);
 
        this._clfJurisdiction = by.css('#s-jurisdiction');
-       this._clfJurisdictionCss = '#s-jurisdiction'
-       this._clfJurisdictionOptions = by.css('#s-jurisdiction option')
+       this._clfJurisdictionCss = '#s-jurisdiction';
+       this._clfJurisdictionOptions = by.css('#s-jurisdiction option');
 
        this._clfCaseType = by.css('#s-case-type');
-       this._clfCaseTypeCss = '#s-case-type'
-       this._clfCaseTypeOptions = by.css('#s-case-type option')
+       this._clfCaseTypeCss = '#s-case-type';
+       this._clfCaseTypeOptions = by.css('#s-case-type option');
 
        this._clfState = by.css('#s-case-state');
-       this._clfStateCss = '#s-case-state'
-       this._clfStateOptions = by.css('#s-case-state option')
+       this._clfStateCss = '#s-case-state';
+       this._clfStateOptions = by.css('#s-case-state option');
 
-       this._pageTitle = by.css('.container-fluid ng-component h3')
+       this._pageTitle = by.css('.container-fluid ng-component h3');
 
        this._clfApplyButton = by.css('.ng-pristine.ng-valid.ng-touched .button');
 

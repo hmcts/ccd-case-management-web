@@ -30,13 +30,13 @@ export class WriteDocumentFieldComponent extends AbstractFieldWriteComponent imp
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.ariaLabel = 'Label';
-    this.dialogConfig.height = '220px';
+    this.dialogConfig.height = '245px';
     this.dialogConfig.width = '550px';
     this.dialogConfig.panelClass = 'dialog';
 
     this.dialogConfig.closeOnNavigation = false;
     this.dialogConfig.position = {
-      top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
   }
 

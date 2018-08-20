@@ -4,20 +4,20 @@ class CaseListResults extends BrowserUtils {
 
     constructor() {
 
-       super(by.css('.right-in-heading .button'), true)
+       super(by.css('div .display-right'), true);
 
-       this._display_right = by.css('div .display-right')
-       this._pagination_current_page = by.css('.ngx-pagination .current div')
-       this._resultsListColumnHeadings = by.css('ccd-core cut-body .global-display .display-right thead th')
-       this._resultsListResultRows = by.css('ccd-core cut-body .global-display .display-right ccd-search-result tbody  tr[_ngcontent-c10]')
-       this._resultsListResultFirstRowFirstColumn = by.css('ccd-core cut-body .global-display .display-right tbody :nth-child(1) td a div')
-       this._createCaseButton = by.css('.right-in-heading .button')
+       this._display_right = by.css('div .display-right');
+       this._pagination_current_page = by.css('.ngx-pagination .current div');
+       this._resultsListColumnHeadings = by.css('ccd-core cut-body .global-display .display-right thead th');
+       this._resultsListResultRows = by.css('ccd-core cut-body .global-display .display-right ccd-search-result tbody  tr[_ngcontent-c10]');
+       this._resultsListResultFirstRowFirstColumn = by.css('ccd-core cut-body .global-display .display-right tbody :nth-child(1) td a div');
+       this._createCaseButton = by.css('.global-display .heading-top .button');
 
     }
 
     isLoaded() {
 
-        this.waitForPageElemToLoad(element(this._display_right))
+       this.waitForPageElemToLoad(element(this._display_right))
 
     }
 

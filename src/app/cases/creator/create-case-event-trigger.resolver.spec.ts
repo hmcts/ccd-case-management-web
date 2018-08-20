@@ -1,20 +1,23 @@
 import { Observable } from 'rxjs/Observable';
 import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
 import { HttpError } from '../../core/http/http-error.model';
-import { CreateCaseFieldsResolver } from './create-case-fields.resolver';
+import { CreateCaseEventTriggerResolver } from './create-case-event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { Draft } from '../../shared/domain/draft';
 
 describe('CreateCaseFieldsResolver', () => {
 
-  const PARAM_JURISDICTION_ID = CreateCaseFieldsResolver.PARAM_JURISDICTION_ID;
-  const PARAM_CASE_TYPE_ID = CreateCaseFieldsResolver.PARAM_CASE_TYPE_ID;
-  const PARAM_EVENT_ID = CreateCaseFieldsResolver.PARAM_EVENT_ID;
-  const QUERY_PARAM_IGNORE_WARNINGS = CreateCaseFieldsResolver.QUERY_PARAM_IGNORE_WARNING;
+  const PARAM_JURISDICTION_ID = CreateCaseEventTriggerResolver.PARAM_JURISDICTION_ID;
+  const PARAM_CASE_TYPE_ID = CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID;
+  const PARAM_EVENT_ID = CreateCaseEventTriggerResolver.PARAM_EVENT_ID;
+  const QUERY_PARAM_IGNORE_WARNINGS = CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING;
   const JURISDICTION = 'TEST';
   const IGNORE_WARNINGS = false;
   const CASE_TYPE = 'TestAddressBookCase';
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(EVENT_TRIGGER_ID, 'Into legacy', 'caseId', true, []);
+
   const DRAFT_ID = Draft.DRAFT + '12345';
   const EVENT_TRIGGER: CaseEventTrigger = {
     id: EVENT_TRIGGER_ID,
@@ -34,7 +37,7 @@ describe('CreateCaseFieldsResolver', () => {
     path: ''
   };
 
-  let createCaseFieldsResolver: CreateCaseFieldsResolver;
+  let createCaseFieldsResolver: CreateCaseEventTriggerResolver;
 
   let casesService: any;
   let alertService: any;
@@ -49,7 +52,7 @@ describe('CreateCaseFieldsResolver', () => {
 
     router = createSpyObj('router', ['navigate']);
 
-    createCaseFieldsResolver = new CreateCaseFieldsResolver(casesService, alertService);
+    createCaseFieldsResolver = new CreateCaseEventTriggerResolver(casesService, alertService);
 
     route = {
       paramMap: createSpyObj('paramMap', ['get']),
@@ -75,8 +78,9 @@ describe('CreateCaseFieldsResolver', () => {
     });
   });
 
-  it('should resolve event trigger using case service', () => {
+  it('should resolve event trigger and cache when route is :jid/:ctid/:eid', () => {
     casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
+    expect(createCaseFieldsResolver['cachedEventTrigger']).toBeUndefined();
 
     createCaseFieldsResolver
       .resolve(route)
@@ -91,6 +95,51 @@ describe('CreateCaseFieldsResolver', () => {
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
     expect(route.paramMap.get).toHaveBeenCalledTimes(3);
+    expect(route.queryParamMap.get).toHaveBeenCalledTimes(1);
+    expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
+  });
+
+  it('should resolve event trigger when route is not :jid/:ctid/:eid but cache is empty', () => {
+    route = {
+      firstChild: {
+          url: ['someChild']
+        },
+      queryParamMap : createSpyObj('queryParamMap', ['get']),
+      paramMap: createSpyObj('paramMap', ['get'])
+    };
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
+    expect(createCaseFieldsResolver['cachedEventTrigger']).toBeUndefined();
+
+    createCaseFieldsResolver
+      .resolve(route)
+      .subscribe(triggerData => {
+        expect(triggerData).toBe(EVENT_TRIGGER);
+      });
+
+    expect(casesService.getEventTrigger).toHaveBeenCalled();
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
+    expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
+  });
+
+  it('should return cached event trigger when route is not :jid/:ctid/:eid if cache is not empty', () => {
+    route = {
+      firstChild: {
+          url: ['someChild']
+        },
+      queryParamMap : createSpyObj('queryParamMap', ['get']),
+      paramMap: createSpyObj('paramMap', ['get'])
+    };
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
+    createCaseFieldsResolver['cachedEventTrigger'] = EVENT_TRIGGER;
+
+    createCaseFieldsResolver
+      .resolve(route)
+      .subscribe(triggerData => {
+        expect(triggerData).toBe(EVENT_TRIGGER);
+      });
+
+    expect(casesService.getEventTrigger).not.toHaveBeenCalled();
+    expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
     expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
   });
 

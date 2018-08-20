@@ -24,14 +24,13 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
     ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
-    return this.isTriggerEventRoute(route) ? this.getAndCacheEventTrigger(route)
+    return this.isRootTriggerEventRoute(route) ? this.getAndCacheEventTrigger(route)
         : this.cachedEventTrigger ? Observable.of(this.cachedEventTrigger)
         : this.getAndCacheEventTrigger(route);
   }
 
-  private isTriggerEventRoute(route: ActivatedRouteSnapshot) {
+  private isRootTriggerEventRoute(route: ActivatedRouteSnapshot) {
     // if route is 'trigger/:eid'
-    // this strategy to detect if route is the trigger event route is a bit fragile
     return !route.firstChild || !route.firstChild.url.length;
   }
 

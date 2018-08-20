@@ -9,6 +9,7 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { HttpError } from '../http/http-error.model';
 import { HttpErrorService } from '../http/http-error.service';
 
@@ -113,14 +114,7 @@ describe('CasesService', () => {
 
   describe('getEventTrigger()', () => {
 
-    const EVENT_TRIGGER: CaseEventTrigger = {
-      id: '',
-      name: '',
-      case_id: '',
-      case_fields: [],
-      event_token: 'test-token',
-      wizard_pages: []
-    };
+    const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger('', '', '', false, []);
 
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({

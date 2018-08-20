@@ -38,7 +38,7 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
       this.updateVisibility(this.getReadOnlyAndFormFields());
       this.subscribeToFormChanges();
       this.registry.register(this);
-      this.showGrayBar();
+      this.fieldsUtils.showGrayBar(this.caseField, this.el.nativeElement);
     }
   }
 
@@ -100,22 +100,12 @@ export class ConditionalShowDirective implements AfterViewInit, OnDestroy {
   }
 
   private show() {
+    this.showField();
+    this.fieldsUtils.showGrayBar(this.caseField, this.el.nativeElement);
+  }
+
+  private showField() {
     this.el.nativeElement.hidden = false;
-    this.showGrayBarForComplexType();
-  }
-
-  private showGrayBar() {
-    if (this.caseField && this.caseField.field_type && this.caseField.field_type.type !== 'Collection') {
-      this.el.nativeElement.classList.add('show-condition-gray-bar');
-    }
-  }
-
-  private showGrayBarForComplexType() {
-    if (this.caseField && this.caseField.field_type && this.caseField.field_type.type !== 'Collection') {
-      if (this.el.nativeElement.closest('ccd-write-complex-type-field')) {
-        this.el.nativeElement.children[0].children[0].classList.add('show-condition-gray-bar');
-      }
-    }
   }
 
   private shouldToggleToHide(fields, forced) {

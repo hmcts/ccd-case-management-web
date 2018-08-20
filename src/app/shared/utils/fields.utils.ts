@@ -122,4 +122,12 @@ export class FieldsUtils {
     return Object.assign({}, obj);
   }
 
+  showGrayBar(caseField: CaseField, element: any) {
+    if (caseField && caseField.field_type && caseField.field_type.type !== 'Collection') {
+      let divSelector = element.querySelector('div');
+      if (divSelector) {
+        divSelector.classList.add('panel');
+      }
+    }
+  }
 }

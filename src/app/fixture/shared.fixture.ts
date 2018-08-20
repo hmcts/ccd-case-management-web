@@ -6,7 +6,8 @@ export let createCaseEventTrigger = (id: string,
                                       case_id: string,
                                       show_summary: boolean,
                                       case_fields: CaseField[],
-                                      wizard_pages = []) => {
+                                      wizard_pages = [],
+                                      can_save_draft = false) => {
   const eventTrigger = new CaseEventTrigger();
 
   eventTrigger.id = id;
@@ -16,5 +17,6 @@ export let createCaseEventTrigger = (id: string,
   eventTrigger.wizard_pages = wizard_pages;
   eventTrigger.event_token = 'test-token';
   eventTrigger.case_fields = case_fields;
+  eventTrigger.can_save_draft = can_save_draft;
   return eventTrigger;
 };

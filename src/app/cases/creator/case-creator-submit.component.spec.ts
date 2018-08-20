@@ -91,7 +91,7 @@ describe('CaseCreatorSubmitComponent', () => {
   const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(
     'TEST_TRIGGER',
     'Test Trigger',
-    '1234567890123456',
+    null,
     false,
     [
       {
@@ -106,7 +106,9 @@ describe('CaseCreatorSubmitComponent', () => {
         field_type: null,
         display_context: 'OPTIONAL'
       }
-    ]
+    ],
+    [],
+    true
   );
 
   const PARAMS: Params = {

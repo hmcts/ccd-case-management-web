@@ -127,6 +127,10 @@ export class AppConfig {
     return this.config.firefox_min_required_version;
   }
 
+  public getContactUsUrl() {
+    return this.config.contact_us_url;
+  }
+
   public getCaseHistoryUrl(jurisdictionId: string,
                            caseTypeId: string,
                            caseId: string,
@@ -169,4 +173,5 @@ export class Config {
   ie_min_required_version: number;
   edge_min_required_version: number;
   firefox_min_required_version: number;
+  contact_us_url: string;
 }

@@ -87,15 +87,17 @@ describe('CoreComponent', () => {
   let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
+  const CONTACT_US_URL = 'https://hmcts-access.service.gov.uk/contact-us';
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
     httpService = createSpyObj('HttpService', ['get']);
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getContactUsUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
+    appConfig.getContactUsUrl.and.returnValue(CONTACT_US_URL);
 
     profile = {
       user: {

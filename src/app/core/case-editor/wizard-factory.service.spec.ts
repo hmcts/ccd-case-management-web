@@ -1,6 +1,7 @@
 import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { WizardFactoryService } from './wizard-factory.service';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 
 describe('WizardFactoryService', () => {
 
@@ -14,13 +15,14 @@ describe('WizardFactoryService', () => {
   let wizardFactory: WizardFactoryService;
 
   beforeEach(() => {
-    eventTrigger = {
-      id: 'editCase',
-      name: 'Edit case',
-      case_fields: [],
-      event_token: 'xxx',
-      wizard_pages: [ PAGE_1, PAGE_2 ],
-    };
+    eventTrigger = createCaseEventTrigger(
+      'editCase',
+      'Edit case',
+      'caseId',
+      false,
+      [],
+      [ PAGE_1, PAGE_2 ],
+    );
 
     wizardFactory = new WizardFactoryService();
   });

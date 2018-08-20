@@ -2334,14 +2334,14 @@
                           },
                           "security_classification": "PUBLIC"
                         },
-                        {  
-                          "id":"FeeVersion",
-                          "label":"Fee Version",
-                          "field_type":{  
-                              "id":"Text",
-                              "type":"Text"
+                        {
+                          "id": "FeeVersion",
+                          "label": "Fee Version",
+                          "field_type": {
+                            "id": "Text",
+                            "type": "Text"
                           },
-                          "security_classification":"PUBLIC"
+                          "security_classification": "PUBLIC"
                         }
                       ]
                     }
@@ -4224,14 +4224,14 @@
                       },
                       "security_classification": "PUBLIC"
                     },
-                    {  
-                      "id":"FeeVersion",
-                      "label":"Fee Version",
-                      "field_type":{  
-                          "id":"Text",
-                          "type":"Text"
+                    {
+                      "id": "FeeVersion",
+                      "label": "Fee Version",
+                      "field_type": {
+                        "id": "Text",
+                        "type": "Text"
                       },
-                      "security_classification":"PUBLIC"
+                      "security_classification": "PUBLIC"
                     }
                   ]
                 }
@@ -4403,6 +4403,9 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "end_button_label": "Save & Next",
+    "can_save_draft": true
+  },
+  "drafts": []
 }

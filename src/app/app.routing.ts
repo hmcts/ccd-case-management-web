@@ -13,7 +13,7 @@ import { CaseCreatorComponent } from './cases/creator/case-creator.component';
 import { CasePrinterComponent } from './cases/printer/case-printer.component';
 import { CasePrintDocumentsResolver } from './cases/printer/case-print-documents.resolver';
 import { CaseCreatorSubmitComponent } from './cases/creator/case-creator-submit.component';
-import { CreateCaseFieldsResolver } from './cases/creator/create-case-fields.resolver';
+import { CreateCaseEventTriggerResolver } from './cases/creator/create-case-event-trigger.resolver';
 import { CaseEditSubmitComponent } from './shared/case-editor/case-edit-submit.component';
 import { CaseEditPageComponent } from './shared/case-editor/case-edit-page.component';
 import { CaseEditWizardGuard } from './core/case-editor/case-edit-wizard.guard';
@@ -59,7 +59,7 @@ const routes: Routes = [
             path: ':jid/:ctid/:eid',
             component: CaseCreatorSubmitComponent,
             resolve: {
-              eventTrigger: CreateCaseFieldsResolver
+              eventTrigger: CreateCaseEventTriggerResolver
             },
             children: [
               {

@@ -30,6 +30,8 @@ import { CaseField }  from '../domain/definition/case-field.model';
 import { WriteAddressFieldComponent } from './address/write-address-field.component';
 import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 import { WriteOrderSummaryFieldComponent } from './order-summary/write-order-summary-field.component';
+import { ReadCaseLinkFieldComponent } from './case-link/read-case-link-field.component';
+import { WriteCaseLinkFieldComponent } from './case-link/write-case-link-field.component';
 
 describe('PaletteService', () => {
 
@@ -195,5 +197,12 @@ describe('PaletteService', () => {
       assertComponent('Complex', true, WriteOrderSummaryFieldComponent, 'OrderSummary');
     });
 
+    it('should get ReadCaseLinkFieldComponent component class for Complex field with CaseLink complex type', () => {
+      assertComponent('Complex', false, ReadCaseLinkFieldComponent, 'CaseLink');
+    });
+
+    it('should get WriteCaseLinkFieldComponent component class for Complex field with CaseLink complex type', () => {
+      assertComponent('Complex', true, WriteCaseLinkFieldComponent, 'CaseLink');
+    });
   });
 });

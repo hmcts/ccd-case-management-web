@@ -15,6 +15,7 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { CaseView } from '../../core/cases/case-view.model';
 import { CaseDetails } from '../../shared/domain/case-details';
 import { CaseEventData } from '../../shared/domain/case-event-data';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import createSpyObj = jasmine.createSpyObj;
 import { Draft } from '../../shared/domain/draft';
 import { DraftService } from '../../core/draft/draft.service';
@@ -87,12 +88,12 @@ describe('CaseCreatorSubmitComponent', () => {
   const CASE_DETAILS: CaseView = new CaseView();
   CASE_DETAILS.case_id = '42';
 
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: 'TEST_TRIGGER',
-    name: 'Test Trigger',
-    description: 'This is a test trigger',
-    case_id: null,
-    case_fields: [
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(
+    'TEST_TRIGGER',
+    'Test Trigger',
+    null,
+    false,
+    [
       {
         id: 'PersonFirstName',
         label: 'First name',
@@ -106,10 +107,9 @@ describe('CaseCreatorSubmitComponent', () => {
         display_context: 'OPTIONAL'
       }
     ],
-    event_token: 'test-token',
-    wizard_pages: [],
-    can_save_draft: true
-  };
+    [],
+    true
+  );
 
   const PARAMS: Params = {
     jid: JID,

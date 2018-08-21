@@ -13,4 +13,9 @@ def app = "case-management-web"
 
 withNightlyPipeline(type, product, app) {
     enableSlackNotifications('#ccd-nightly-builds')
+
+    afterCheckout {
+        sh "yarn cache clean"
+    }
+
 }

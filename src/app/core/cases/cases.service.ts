@@ -11,6 +11,7 @@ import { WizardPageField } from '../../shared/domain/wizard-page-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class CasesService {
@@ -76,33 +77,12 @@ export class CasesService {
     return this.http
       .get(url)
       .map(response => response.json())
-      .do(eventTrigger => {
-        if (!eventTrigger.wizard_pages) {
-          eventTrigger.wizard_pages = [];
-        }
-        /* FIXME: we need to move this code and provide a better way to map json response to our
-        domain objects. We should call WizardPage constructor instead of manually assigning methods
-        and properties */
-        eventTrigger.wizard_pages.forEach((wizardPage: WizardPage) => {
-          wizardPage.parsedShowCondition = new ShowCondition(wizardPage.show_condition);
-          let orderedWPFields = this.orderService.sort(wizardPage.wizard_page_fields);
-          wizardPage.case_fields = orderedWPFields.map((wizardField: WizardPageField) => {
-            let case_field = eventTrigger.case_fields.find(cf => cf.id === wizardField.case_field_id);
-            case_field.wizardProps = wizardField;
-            return case_field;
-          });
-          wizardPage.getCol1Fields = () =>
-            wizardPage.case_fields.filter(f =>
-              !f.wizardProps.page_column_no || f.wizardProps.page_column_no === 1);
-          wizardPage.getCol2Fields = () =>
-            wizardPage.case_fields.filter(f => f.wizardProps.page_column_no === 2);
-          wizardPage.isMultiColumn = () => wizardPage.getCol2Fields().length > 0;
-        });
-      })
       .catch((error: any): any => {
         this.errorService.setError(error);
         return Observable.throw(error);
-      });
+      })
+      .map((p: Object) => plainToClass(CaseEventTrigger, p))
+      .do(eventTrigger => this.initialiseEventTrigger(eventTrigger));
   }
 
   createEvent(caseDetails: CaseView, eventData: CaseEventData): Observable<object> {
@@ -173,5 +153,21 @@ export class CasesService {
       return response.json();
     }
     return {'id': ''};
+  }
+
+  private initialiseEventTrigger(eventTrigger: CaseEventTrigger) {
+    if (!eventTrigger.wizard_pages) {
+      eventTrigger.wizard_pages = [];
+    }
+    /* FIXME: find a better place for this code */
+    eventTrigger.wizard_pages.forEach((wizardPage: WizardPage) => {
+      wizardPage.parsedShowCondition = new ShowCondition(wizardPage.show_condition);
+      let orderedWPFields = this.orderService.sort(wizardPage.wizard_page_fields);
+      wizardPage.case_fields = orderedWPFields.map((wizardField: WizardPageField) => {
+        let case_field = eventTrigger.case_fields.find(cf => cf.id === wizardField.case_field_id);
+        case_field.wizardProps = wizardField;
+        return case_field;
+      });
+    });
   }
 }

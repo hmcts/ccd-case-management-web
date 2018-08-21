@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { CasesService } from '../core/cases/cases.service';
 import { Response } from '@angular/http';
 import { AlertService } from '../core/alert/alert.service';
-
 import 'rxjs/add/operator/catch';
 import { DraftService } from '../core/draft/draft.service';
 import { Draft } from '../shared/domain/draft';

@@ -28,4 +28,8 @@ withPipeline("angular", product, component) {
 
    loadVaultSecrets(secrets)
 
+    afterCheckout {
+        sh "yarn cache clean"
+    }
+
 }

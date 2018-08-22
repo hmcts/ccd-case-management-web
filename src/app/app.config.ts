@@ -168,10 +168,6 @@ export class Config {
   remote_document_management_url: string;
   remote_print_service_url: string;
   smart_survey_url: string;
-  activity_next_poll_request_ms: number;
-  activity_retry: number;
-  activity_batch_collection_delay_ms: number;
-  activity_max_request_per_batch: number;
   payments_url: string;
   unsupported_browser_url: string;
   chrome_min_required_version: number;

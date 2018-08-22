@@ -114,7 +114,7 @@ export class AppConfig {
   public getPaymentsUrl() {
     return this.config.payments_url;
   }
-  
+
   public getChromeMinRequiredVersion() {
     return this.config.chrome_min_required_version;
   }

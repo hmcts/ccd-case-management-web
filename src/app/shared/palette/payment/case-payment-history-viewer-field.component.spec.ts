@@ -6,7 +6,6 @@ import { CasePaymentHistoryViewerFieldComponent } from './case-payment-history-v
 import { AppConfig } from '../../../app.config';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
-import { CaseReferencePipe } from '../../utils/case-reference.pipe';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('CasePaymentHistoryViewerFieldComponent', () => {
@@ -22,7 +21,6 @@ describe('CasePaymentHistoryViewerFieldComponent', () => {
     field_type: FIELD_TYPE,
   };
   const CASE_REFERENCE = '1234123412341234';
-  const CASE_REFERENCE_FORMATTED = '1234-1234-1234-1234';
   const PAYMENTS_URL = 'http://payment-api:123';
 
   let appConfig;
@@ -48,8 +46,7 @@ describe('CasePaymentHistoryViewerFieldComponent', () => {
           CasePaymentHistoryViewerFieldComponent,
 
           // Mocks
-          PaymentWebComponent,
-          CaseReferencePipe
+          PaymentWebComponent
         ],
         providers: [
           { provide: AppConfig, useValue: appConfig },
@@ -74,6 +71,6 @@ describe('CasePaymentHistoryViewerFieldComponent', () => {
 
     let paymentComponent = paymentDe.componentInstance;
     expect(paymentComponent.API_ROOT).toEqual(PAYMENTS_URL);
-    expect(paymentComponent.CCD_CASE_NUMBER).toEqual(CASE_REFERENCE_FORMATTED);
+    expect(paymentComponent.CCD_CASE_NUMBER).toEqual(CASE_REFERENCE);
   });
 });

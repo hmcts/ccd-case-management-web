@@ -6,6 +6,10 @@ describe('CaseReferenceValidator', () => {
   const formValueService: FormValueService = new FormValueService();
   const validator: ValidatorFn = CaseReferenceValidator(formValueService);
 
+  class TestComponent {
+    caseReferenceControl: FormControl = new FormControl();
+  }
+
   let component: TestComponent;
 
   beforeEach(() => {
@@ -28,7 +32,3 @@ describe('CaseReferenceValidator', () => {
     expect(component.caseReferenceControl.valid).toBeTruthy();
   });
 });
-
-class TestComponent {
-  caseReferenceControl: FormControl = new FormControl();
-}

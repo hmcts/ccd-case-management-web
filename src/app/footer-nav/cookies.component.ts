@@ -7,14 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './cookies.component.html',
   styleUrls: ['./footer-nav.component.scss']
 })
-export class CookiesComponent implements OnInit {
+export class CookiesComponent {
 
-  constructor(public router: Router,
-              private route: ActivatedRoute,
-              private location: Location) { }
-
-  ngOnInit() {
-  }
+  constructor(private location: Location) { }
 
   back() {
     this.location.back();

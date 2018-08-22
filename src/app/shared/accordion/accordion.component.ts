@@ -5,17 +5,12 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss']
 })
-export class AccordionComponent implements OnInit {
+export class AccordionComponent {
 
   @Input() title: string;
   isHidden = true;
 
   @Input() lastAccordion: boolean;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   getImage() {
     if (this.isHidden) {

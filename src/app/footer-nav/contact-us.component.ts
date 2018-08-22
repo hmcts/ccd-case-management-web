@@ -7,14 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './contact-us.component.html',
   styleUrls: ['./footer-nav.component.scss']
 })
-export class ContactUsComponent implements OnInit {
+export class ContactUsComponent {
 
-  constructor(public router: Router,
-              private route: ActivatedRoute,
-              private location: Location) { }
-
-  ngOnInit() {
-  }
+  constructor(private location: Location) { }
 
   back() {
     this.location.back();

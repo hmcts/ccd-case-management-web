@@ -7,14 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './privacy.component.html',
   styleUrls: ['./footer-nav.component.scss']
 })
-export class PrivacyComponent implements OnInit {
+export class PrivacyComponent {
 
-  constructor(public router: Router,
-              private route: ActivatedRoute,
-              private location: Location) { }
-
-  ngOnInit() {
-  }
+  constructor(private location: Location) { }
 
   back() {
     this.location.back();

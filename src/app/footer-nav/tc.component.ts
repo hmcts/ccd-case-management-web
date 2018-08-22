@@ -7,14 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './tc.component.html',
   styleUrls: ['./footer-nav.component.scss']
 })
-export class TcComponent implements OnInit {
+export class TcComponent {
 
-  constructor(public router: Router,
-              private route: ActivatedRoute,
-              private location: Location) { }
-
-  ngOnInit() {
-  }
+  constructor(private location: Location) { }
 
   back() {
     this.location.back();

@@ -59,8 +59,5 @@ COPY script/run-protractor-tests.sh /entrypoint.sh
 
 ENV HOME=/protractor
 
-# ENV HTTP_PROXY "http://proxyout.reform.hmcts.net:8080"
-# ENV HTTPS_PROXY "http://proxyout.reform.hmcts.net:8080"
-
 # Container entry point
 ENTRYPOINT ["/entrypoint.sh"]

@@ -51,10 +51,6 @@ export class AppConfig {
     return this.config.case_data_url;
   }
 
-  public getActivityUrl() {
-    return this.config.activity_url;
-  }
-
   public getDocumentManagementUrl() {
     return this.config.document_management_url;
   }
@@ -98,7 +94,7 @@ export class AppConfig {
   public getActivityUrl() {
     return this.config.activity_url;
   }
-  
+
   public getActivityNexPollRequestMs() {
     return this.config.activity_next_poll_request_ms;
   }

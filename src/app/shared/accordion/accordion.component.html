@@ -1,15 +1,15 @@
 <div class="accordion-wrapper">
 
-  <div class="accordion-heading">
+  <div class="accordion-heading" (click)="isHidden = !isHidden" [class.last-accordion]="lastAccordion && isHidden">
     <div style="float: left">
-      <h2 class="heading-small">{{ title }}</h2>
+      <h3 class="heading-medium">{{ title }}</h3>
     </div>
     <div style="float: right;">
-      <img src="{{ getImage() }}" class="accordion-image" (click)="isHidden = !isHidden"/>
+      <img src="{{ getImage() }}" class="accordion-image"/>
     </div>
   </div>
 
-  <div class="accordion-body" [hidden]="isHidden">
+  <div class="accordion-body" [hidden]="isHidden" [class.last-accordion]="lastAccordion">
     <ng-content select=".accordion-body"></ng-content>
   </div>
 

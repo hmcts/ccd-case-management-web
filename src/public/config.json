@@ -21,6 +21,5 @@
   "chrome_min_required_version": 67,
   "ie_min_required_version": 11,
   "edge_min_required_version": 17,
-  "firefox_min_required_version": 60,
-  "contact_us_url": "https://hmcts-access.service.gov.uk/contact-us"
+  "firefox_min_required_version": 60
 }

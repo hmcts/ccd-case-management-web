@@ -3,11 +3,11 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'ccd-cookies',
-  templateUrl: './cookies.component.html',
+  selector: 'ccd-contact-us',
+  templateUrl: './contact-us.component.html',
   styleUrls: ['./footer-nav.component.scss']
 })
-export class CookiesComponent implements OnInit {
+export class ContactUsComponent implements OnInit {
 
   constructor(public router: Router,
               private route: ActivatedRoute,

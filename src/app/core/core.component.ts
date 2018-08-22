@@ -45,10 +45,6 @@ export class CoreComponent implements OnInit, OnDestroy {
     return this.appConfig.getSmartSurveyUrl();
   }
 
-  getContactUsUrl(): string {
-    return this.appConfig.getContactUsUrl();
-  }
-
   signOut(): void {
     this.oauth2Service.signOut();
   }

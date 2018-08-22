@@ -33,6 +33,7 @@ import { ActivityResolver } from './activity/activity.resolver';
 import { CookiesComponent } from '../footer-nav/cookies.component';
 import { PrivacyComponent } from '../footer-nav/privacy.component';
 import { TcComponent } from '../footer-nav/tc.component';
+import { ContactUsComponent } from '../footer-nav/contact-us.component';
 import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { DraftService } from './draft/draft.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
@@ -82,6 +83,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     CookiesComponent,
     PrivacyComponent,
     TcComponent,
+    ContactUsComponent,
     AccordionComponent,
     CcdBrowserSupportComponent
   ]

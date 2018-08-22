@@ -26,6 +26,7 @@ import { CaseHistoryResolver } from './shared/case-history/case-history.resolver
 import { CookiesComponent } from './footer-nav/cookies.component';
 import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
+import { ContactUsComponent } from './footer-nav/contact-us.component';
 
 const routes: Routes = [
   {
@@ -150,6 +151,7 @@ const routes: Routes = [
       { path: 'cookies', component: CookiesComponent },
       { path: 'privacy-policy', component: PrivacyComponent },
       { path: 'terms-and-conditions', component: TcComponent },
+      { path: 'contact-us', component: ContactUsComponent },
     ]
   }
 ];

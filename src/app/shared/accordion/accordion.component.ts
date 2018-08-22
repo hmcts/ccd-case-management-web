@@ -10,6 +10,8 @@ export class AccordionComponent implements OnInit {
   @Input() title: string;
   isHidden = true;
 
+  @Input() lastAccordion: boolean;
+
   constructor() { }
 
   ngOnInit() {

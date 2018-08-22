@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'ccd-tc',
@@ -8,7 +9,9 @@ import { Location } from '@angular/common';
 })
 export class TcComponent implements OnInit {
 
-  constructor(private location: Location) { }
+  constructor(public router: Router,
+              private route: ActivatedRoute,
+              private location: Location) { }
 
   ngOnInit() {
   }

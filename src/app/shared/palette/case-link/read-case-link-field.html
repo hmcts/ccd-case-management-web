@@ -1,8 +1,12 @@
-<tr _ngcontent-c8>
-  <td>
-  <div _ngcontent-c8 class="case-viwer-label">Case Reference</div>
-  </td>
-  <td>
-    {{caseField.value.case_reference ? (caseField.value.case_reference | ccdCaseReference) : ''}}
-  </td>
-</tr>
+<div class="complex-panel" *ngIf="caseField.value.case_reference">
+  <table class="complex-panel-table">
+    <tbody>
+    <tr class="complex-panel-simple-field">
+      <th>Case Reference</th>
+      <td>
+        {{caseField.value.case_reference | ccdCaseReference}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -15,8 +15,8 @@ export class FormValueService {
 
     let sanitisedObject = {};
     Object.keys(rawObject).forEach(key => {
-      if ('case_reference' === key) {
-        sanitisedObject[key] = this.sanitiseValue(this.sanitiseCaseReference(String(rawObject[key])));
+      if ('case_reference' === key && 'string' === typeof rawObject[key]) {
+        sanitisedObject[key] = this.sanitiseValue(this.sanitiseCaseReference(rawObject[key]));
       } else {
         sanitisedObject[key] = this.sanitiseValue(rawObject[key]);
       }

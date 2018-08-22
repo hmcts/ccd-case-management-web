@@ -69,4 +69,40 @@ describe('FormValueService', () => {
       'number': '42'
     } as object);
   });
+
+  it ('should extract last 16 digits from a case reference', () => {
+    const value = formValueService.sanitise({
+      'case_link': {
+        'case_reference': '   https://ng.uk:5678/uni/corn/1234567822345678   '
+      },
+      'case_reference': '   #1234-5678-2234-5678   ',
+      'ngitb': {
+        'case_reference': '   #1234-LessThan16Digits   '
+      }
+    });
+    expect(value).toEqual({
+      'case_link': {
+        'case_reference': '1234567822345678'
+      },
+      'case_reference': '1234567822345678',
+      'ngitb': {
+        'case_reference': '123416'
+      }
+    } as object);
+  });
+
+  it ('should process case reference nested object as in other objects', () => {
+    const value = formValueService.sanitise({
+      'case_reference': {
+        'case_link': '   https://ng.uk:5678/uni/corn/1234567822345678   ',
+        'case_reference': ' #1234-5678-2234-5678   '
+      }
+    });
+    expect(value).toEqual({
+      'case_reference': {
+        'case_link': 'https://ng.uk:5678/uni/corn/1234567822345678',
+        'case_reference': '1234567822345678'
+      }
+    } as object);
+  });
 });

@@ -101,7 +101,9 @@ export class SearchComponent implements OnInit {
     for (let attributeName of Object.keys(formGroupValue)) {
       let value = formGroupValue[attributeName];
       if (this.isStringOrNumber(value)) {
-        target[this.getFilterType(attributeName)][prefix + attributeName] = value;
+        const filterType = this.getFilterType(attributeName);
+        attributeName = this.sanitiseMetadataFieldName(filterType, attributeName);
+        target[filterType][prefix + attributeName] = value;
       } else if (value) {
         this.buildFormDetails(attributeName, target, value);
       }
@@ -119,5 +121,12 @@ export class SearchComponent implements OnInit {
   private getFilterType(fieldName: string): string {
     return (this.metaDataFields && (this.metaDataFields.indexOf(fieldName) > -1)) ?
       SearchComponent.METADATA_FILTER : SearchComponent.CASE_FILTER;
+  }
+
+  private sanitiseMetadataFieldName(filterType: string, fieldName: string): string {
+    if (filterType === SearchComponent.METADATA_FILTER) {
+      fieldName = fieldName.replace(/\[(.*?)]/g, '$1').toLocaleLowerCase();
+    }
+    return fieldName;
   }
 }

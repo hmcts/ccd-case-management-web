@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { CasesService } from '../core/cases/cases.service';
 import { Response } from '@angular/http';
 import { AlertService } from '../core/alert/alert.service';
-
 import 'rxjs/add/operator/catch';
 import { DraftService } from '../core/draft/draft.service';
 import { Draft } from '../shared/domain/draft';
@@ -37,7 +36,7 @@ export class CaseResolver implements Resolve<CaseView> {
       // the post returns no id
       this.navigateToCaseList();
     } else {
-      return this.isCaseViewRoute(route) ? this.getAndCacheCaseView(jid, ctid, cid)
+      return this.isRootCaseViewRoute(route) ? this.getAndCacheCaseView(jid, ctid, cid)
         : this.cachedCaseView ? Observable.of(this.cachedCaseView)
         : this.getAndCacheCaseView(jid, ctid, cid);
     }
@@ -56,9 +55,14 @@ export class CaseResolver implements Resolve<CaseView> {
     .then(() => this.alertService.success(CaseResolver.CASE_CREATED_MSG));
   }
 
-  private isCaseViewRoute(route: ActivatedRouteSnapshot) {
-    // this strategy to detect if route is the case view route is a bit fragile
-    return !route.firstChild || !route.firstChild.url.length;
+  private isRootCaseViewRoute(route: ActivatedRouteSnapshot) {
+    // is route case/:jid/:ctid/:cid
+    return ((!route.firstChild || !route.firstChild.url.length) && !this.isTabViewRoute(route));
+  }
+
+  private isTabViewRoute(route: ActivatedRouteSnapshot) {
+    // is route case/:jid/:ctid/:cid#fragment
+    return route.firstChild && route.firstChild.fragment;
   }
 
   private getAndCacheCaseView(jid, ctid, cid): Observable<CaseView> {

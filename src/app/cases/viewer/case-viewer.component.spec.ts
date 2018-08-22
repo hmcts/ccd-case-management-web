@@ -18,6 +18,7 @@ import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substi
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
+import { CaseField } from '../../shared/domain/definition/case-field.model';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 
@@ -103,6 +104,11 @@ describe('CaseViewerComponent', () => {
       id: 'EDIT',
       name: 'Edit',
       description: 'Edit a case'
+    },
+    {
+      id: 'RESUME',
+      name: 'Resume',
+      description: 'Resume Draft'
     }
   ];
 
@@ -120,6 +126,141 @@ describe('CaseViewerComponent', () => {
       user_last_name: 'Chan',
       user_first_name: 'Phillip'
     }
+  ];
+
+  const METADATA: CaseField[] = [
+    {
+     id: '[CASE_REFERENCE]',
+     label: 'Case Reference',
+     value: 1533032330714079,
+     hint_text: null,
+     field_type: {
+       id: 'Number',
+       type: 'Number',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[CASE_TYPE]',
+     label: 'Case Type',
+     value: 'DIVORCE',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[CREATED_DATE]',
+     label: 'Created Date',
+     value: '2018-07-31T10:18:50.737',
+     hint_text: null,
+     field_type: {
+       id: 'Date',
+       type: 'Date',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[JURISDICTION]',
+     label: 'Jurisdiction',
+     value: 'DIVORCE',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[LAST_MODIFIED_DATE]',
+     label: 'Last Modified Date',
+     value: '2018-07-31T10:18:50.737',
+     hint_text: null,
+     field_type: {
+       id: 'Date',
+       type: 'Date',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[SECURITY_CLASSIFICATION]',
+     label: 'Security Classification',
+     value: 'PUBLIC',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   }
   ];
 
   const CASE_VIEW: CaseView = {
@@ -198,7 +339,8 @@ describe('CaseViewerComponent', () => {
       },
     ],
     triggers: TRIGGERS,
-    events: EVENTS
+    events: EVENTS,
+    metadataFields: METADATA,
   };
   const FIELDS = CASE_VIEW.tabs[1].fields;
   const SIMPLE_FIELDS = CASE_VIEW.tabs[1].fields.slice(0, 2);
@@ -431,10 +573,18 @@ describe('CaseViewerComponent', () => {
 
   it('should navigate to event trigger view on trigger emit', () => {
     component.applyTrigger(TRIGGERS[0]);
-
     expect(router.navigate).toHaveBeenCalledWith(['trigger', TRIGGERS[0].id], {
       queryParams: { },
       relativeTo: mockRoute
+    });
+  });
+
+  it('should navigate to resume draft trigger view on trigger emit', () => {
+    component.ignoreWarning = true;
+    component.caseDetails.case_id = 'DRAFT123';
+    component.applyTrigger(TRIGGERS[1]);
+    expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
+      queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
     });
   });
 

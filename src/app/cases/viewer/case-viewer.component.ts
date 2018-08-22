@@ -38,8 +38,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private router: Router,
     private orderService: OrderService,
     private activityPollingService: ActivityPollingService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.caseDetails = this.route.snapshot.data.case;
@@ -115,7 +114,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       return acc.concat(tab.fields);
     }, []);
 
-    return Object.assign(caseDataFields, this.caseDetails.metadataFields);
+    return caseDataFields.concat(this.caseDetails.metadataFields);
   }
 
   isDraft(): boolean {

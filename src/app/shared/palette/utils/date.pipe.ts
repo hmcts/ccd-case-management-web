@@ -12,13 +12,19 @@ export class DatePipe implements PipeTransform {
     ['Jan'], ['Feb'], ['Mar'], ['Apr'], ['May'], ['Jun'], ['Jul'], ['Aug'], ['Sep'], ['Oct'], ['Nov'], ['Dec'],
   ];
 
-  transform(value: string, format: string): string {
+  transform(value: string, zone: string, format: string): string {
     let resultDate = null;
+    let offsetDate = null;
+
     if (value) {
       let match: RegExpMatchArray = value.match(DatePipe.DATE_FORMAT);
-      // let date = this.getDate(match);
+      if (zone === 'local') {
+        let date = this.getDate(match);
+        offsetDate = this.getOffsetDate(date);
+      } else {
+        offsetDate = this.getDate(match);
+      }
       // RDM-1149 changed the pipe logic so that it doesn't add an hour to 'Summer Time' dates on DateTime field type
-      let offsetDate = this.getDate(match); // this.getOffsetDate(date);
 
       resultDate = `${offsetDate.getDate()} ${DatePipe.MONTHS[offsetDate.getMonth()]} ${offsetDate.getFullYear()}`;
       if (match[4] && match[5] && match[6] && format !== 'short') {

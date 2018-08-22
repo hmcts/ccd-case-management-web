@@ -31,6 +31,7 @@ describe('CaseHistoryComponent', () => {
 
   // Page object selectors
   const $NAME_TAB_CONTENT = By.css('table#NameTab');
+  const $CASE_DETAIL_HEADERS = 'h3';
 
   const CASE_HISTORY: CaseHistory = createCaseHistory();
   const FIELDS = CASE_HISTORY.tabs[1].fields;
@@ -108,7 +109,7 @@ describe('CaseHistoryComponent', () => {
 
   it('should render the correct case details based on show_condition', () => {
     // we expect address section not to be rendered
-    let headers = fixture.nativeElement.querySelectorAll('h3');
+    let headers = fixture.nativeElement.querySelectorAll($CASE_DETAIL_HEADERS);
 
     expect(headers.length).toBe(CASE_HISTORY.tabs.length - 1);
     expect(headers[0].textContent).toBe(CASE_HISTORY.tabs[1].label);
@@ -190,6 +191,14 @@ describe('CaseHistoryComponent', () => {
       .queryAll(By.css('tbody>tr>th'));
 
     expect(headers[0].nativeElement.textContent.trim()).toBe(FIELDS[1].label);
+  });
+
+  it('should render case history sections in ascending order of tabs', () => {
+    let headers = fixture.nativeElement.querySelectorAll($CASE_DETAIL_HEADERS);
+
+    expect(headers[0].textContent).toBe(CASE_HISTORY.tabs[1].label);
+    expect(headers[1].textContent).toBe(CASE_HISTORY.tabs[2].label);
+    expect(orderService.sort).toHaveBeenCalledWith(CASE_HISTORY.tabs);
   });
 
 });

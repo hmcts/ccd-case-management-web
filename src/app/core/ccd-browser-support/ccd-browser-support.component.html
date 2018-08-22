@@ -1,0 +1,13 @@
+<div class="browser-support" [class.screen-990]="isSolicitor" [class.hide]="!showUnsupportedBrowser">
+  <div class="browser-support-left">
+    <img src="img/warning.png"/>
+  </div>
+  <div class="browser-support-right" style="">
+    <div style="float: left;">
+      <span class="text-16">You are not using the latest version of your browser, please click on this link to <a href="{{getUnsupportedBrowserUrl()}}" target="_blank">download the latest version</a></span>
+    </div>
+    <div style="float: right;">
+      <span (click)="hideUnsupportedBrowser()" class="text-16 hide-link">Hide</span>
+    </div>
+  </div>
+</div>

@@ -259,7 +259,7 @@ describe('CaseViewerComponent', () => {
   ];
 
   const CASE_VIEW: CaseView = {
-    case_id: '1',
+    case_id: '1234567890123456',
     case_type: {
       id: 'TestAddressBookCase',
       name: 'Test Address Book Case',
@@ -647,4 +647,11 @@ describe('CaseViewerComponent', () => {
     expect(printLink.componentInstance.routerLink).toEqual('print');
   });
 
+  it('should not contain a print link if Draft', () => {
+    component.caseDetails.case_id = 'DRAFT123';
+    fixture.detectChanges();
+    let printLink = de.query($PRINT_LINK);
+
+    expect(printLink).toBeFalsy();
+  });
 });

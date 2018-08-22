@@ -5,6 +5,7 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { CaseResolver } from '../case.resolver';
 import { HttpError } from '../../core/http/http-error.model';
 import { CaseView } from '../../core/cases/case-view.model';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 
 describe('EventTriggerResolver', () => {
 
@@ -16,15 +17,7 @@ describe('EventTriggerResolver', () => {
   const CASE_TYPE = 'TestAddressBookCase';
   const CASE_ID = '42';
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: EVENT_TRIGGER_ID,
-    name: 'Into legacy',
-    case_id: CASE_ID,
-    case_fields: [],
-    event_token: 'test-token',
-    wizard_pages: [],
-    show_summary: true
-  };
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(EVENT_TRIGGER_ID, 'Into legacy', CASE_ID, true, []);
   const EVENT_TRIGGER_OBS: Observable<CaseEventTrigger> = Observable.of(EVENT_TRIGGER);
   const ERROR: HttpError = {
     timestamp: '',

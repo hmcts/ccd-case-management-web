@@ -20,7 +20,8 @@ export class CaseHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.caseHistory = this.route.snapshot.data.caseHistory;
-    this.tabs = this.sortTabFieldsAndFilterTabs(this.caseHistory.tabs);
+    this.tabs = this.orderService.sort(this.caseHistory.tabs);
+    this.tabs = this.sortTabFieldsAndFilterTabs(this.tabs);
   }
 
   private sortTabFieldsAndFilterTabs(tabs: CaseTab[]): CaseTab[] {

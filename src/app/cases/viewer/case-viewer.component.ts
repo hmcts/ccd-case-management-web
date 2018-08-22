@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
+import { CaseResolver } from '../case.resolver';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -106,5 +107,9 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     }, []);
 
     return caseDataFields.concat(this.caseDetails.metadataFields);
+  }
+
+  isDraft(): boolean {
+    return this.caseDetails.case_id.startsWith(CaseResolver.DRAFT);
   }
 }

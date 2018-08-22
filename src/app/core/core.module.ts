@@ -30,16 +30,21 @@ import { AuthService } from './auth/auth.service';
 import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
+import { DraftService } from './draft/draft.service';
+import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     AlertModule,
-    CaseUIToolkitModule
+    CaseUIToolkitModule,
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     CasesService,
+    DraftService,
     HttpErrorService,
     DefinitionsService,
     DocumentService,
@@ -65,9 +70,11 @@ import { ActivityResolver } from './activity/activity.resolver';
     AuthService,
     OAuth2Service,
     WorkbasketInputFilterService,
+    CcdBrowserSupportComponent,
   ],
   declarations: [
-    CoreComponent
+    CoreComponent,
+    CcdBrowserSupportComponent
   ]
 })
 export class CoreModule { }

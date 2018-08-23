@@ -14,6 +14,8 @@ import { CaseFieldService } from '../domain/case-field.service';
 import { aCaseField } from './case-edit.spec';
 import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { PageValidationService } from './page-validation.service';
+import { CaseEventData } from '../domain/case-event-data';
+import { Draft } from '../domain/draft';
 
 describe('CaseEditPageComponent', () => {
 
@@ -30,6 +32,9 @@ describe('CaseEditPageComponent', () => {
   const FORM_GROUP = new FormGroup({
     'data': new FormGroup({'field1': new FormControl('SOME_VALUE')})
   });
+  let someObservable = {
+    'subscribe': () => new Draft()
+  };
 
   let caseEditComponentStub: any;
   beforeEach(async(() => {
@@ -40,7 +45,10 @@ describe('CaseEditPageComponent', () => {
       'eventTrigger': {'case_fields': [], 'name': 'Test event trigger name' },
       'hasPrevious': () => true,
       'getPage': () => firstPage,
+      'next': () => true,
       'cancel': () => undefined,
+      'validate': (caseEventData: CaseEventData) => Observable.of(caseEventData),
+      'saveDraft': (caseEventData: CaseEventData) => Observable.of(someObservable),
       'caseDetails': { 'case_id': '1234567812345678' },
     };
 

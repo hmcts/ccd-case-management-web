@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchResultComponent } from './search-result.component';
-import { Component, DebugElement, Input, SimpleChange, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, DebugElement, Input, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { SearchResultView } from './search-result-view.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
@@ -11,13 +11,13 @@ import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model'
 import { ActivityService } from '../../core/activity/activity.service';
 import { MockComponent } from 'ng2-mock-component';
 import { PaginationMetadata } from './pagination-metadata.model';
-import createSpyObj = jasmine.createSpyObj;
 import { PaginatePipe, PaginationService } from 'ngx-pagination';
 import { CaseState } from '../../shared/domain/definition/case-state.model';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
+import createSpyObj = jasmine.createSpyObj;
 
 @Component({
   selector: 'ccd-field-read',
@@ -110,7 +110,8 @@ describe('SearchResultComponent', () => {
             PersonAddress: 'Thames Valley Park, Sonning, Reading, England, RG6 1WA'
           }
         }
-      ]
+      ],
+      hasDrafts: () => false
     };
     const STATIC_COLUMNS_COUNT = 1;
 
@@ -381,7 +382,8 @@ describe('SearchResultComponent', () => {
           order: 1
         }
       ],
-      results: []
+      results: [],
+      hasDrafts: () => false
     };
 
     let fixture: ComponentFixture<SearchResultComponent>;

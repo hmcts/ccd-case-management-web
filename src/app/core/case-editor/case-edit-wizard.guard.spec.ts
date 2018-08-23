@@ -6,6 +6,7 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { AlertService } from '../alert/alert.service';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 
 describe('CaseEditWizardGuard', () => {
 
@@ -27,13 +28,7 @@ describe('CaseEditWizardGuard', () => {
 
   beforeEach(() => {
 
-    eventTrigger = {
-      id: 'editCase',
-      name: 'Edit case',
-      case_fields: [ new CaseField() ],
-      event_token: 'xxx',
-      wizard_pages: [ page('pageX') ],
-    };
+    eventTrigger = createCaseEventTrigger('editCase', 'Edit case', 'caseId', false, [ new CaseField() ], [ page('pageX') ]);
 
     routeParams = {
       'page': 'pageX'

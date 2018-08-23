@@ -3,11 +3,10 @@ import { FormValueService } from '../../../core/form/form-value.service'
 import { CaseReferenceValidator } from './case-reference.validator'
 describe('CaseReferenceValidator', () => {
 
-  const formValueService: FormValueService = new FormValueService();
-  const validator: ValidatorFn = CaseReferenceValidator(formValueService);
+  const validator: ValidatorFn = CaseReferenceValidator(new FormValueService());
 
   class TestComponent {
-    caseReferenceControl: FormControl = new FormControl();
+    caseReferenceControl: FormControl = new FormControl(CaseReferenceValidator(new FormValueService()));
   }
 
   let component: TestComponent;

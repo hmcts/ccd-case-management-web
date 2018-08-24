@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { AbstractFieldWriteComponent } from '../base-field/abstract-field-write.component';
 import { CaseField } from '../../domain/definition/case-field.model';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormValidatorsService } from '../../../core/form/form-validators.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.component';
+import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'ccd-write-collection-field',
@@ -14,7 +16,13 @@ import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.compone
 export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent implements OnInit {
   formArray: FormArray;
 
-  constructor(private formValidatorsService: FormValidatorsService, private dialog: MatDialog) {
+  @ViewChildren('collectionItem')
+  private items: QueryList<ElementRef>;
+
+  constructor(private formValidatorsService: FormValidatorsService,
+              private dialog: MatDialog,
+              private scrollToService: ScrollToService,
+              ) {
     super();
   }
 
@@ -58,10 +66,31 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     }
   }
 
-  addItem(): void {
+  addItem(doScroll: boolean): void {
     // Manually resetting errors is required to prevent `ExpressionChangedAfterItHasBeenCheckedError`
     this.formArray.setErrors(null);
     this.caseField.value.push({value: null});
+
+    let lastIndex = this.caseField.value.length - 1;
+
+    // Timeout is required for the collection item to be rendered before it can be scrolled to or focused.
+    if (doScroll) {
+      setTimeout(() => {
+        this.scrollToService.scrollTo({
+            target: this.buildIdPrefix(lastIndex) + lastIndex,
+            duration: 1000,
+            offset: -150,
+          })
+          .pipe(finalize(() => this.focusLastItem()))
+          .subscribe(null, console.error);
+      });
+    } else {
+      setTimeout(() => this.focusLastItem());
+    }
+  }
+
+  private focusLastItem() {
+    this.items.last.nativeElement.querySelector('input').focus();
   }
 
   removeItem(index: number): void {
@@ -86,7 +115,7 @@ export class WriteCollectionFieldComponent extends AbstractFieldWriteComponent i
     dialogConfig.closeOnNavigation = false;
     dialogConfig.position = {
       top: window.innerHeight / 2 - 110 + 'px', left: window.innerWidth / 2 - 275 + 'px'
-    }
+    };
 
     const dialogRef = this.dialog.open(RemoveDialogComponent, dialogConfig);
 

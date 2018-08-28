@@ -104,6 +104,11 @@ describe('CaseViewerComponent', () => {
       id: 'EDIT',
       name: 'Edit',
       description: 'Edit a case'
+    },
+    {
+      id: 'RESUME',
+      name: 'Resume',
+      description: 'Resume Draft'
     }
   ];
 
@@ -259,7 +264,7 @@ describe('CaseViewerComponent', () => {
   ];
 
   const CASE_VIEW: CaseView = {
-    case_id: '1',
+    case_id: '1234567890123456',
     case_type: {
       id: 'TestAddressBookCase',
       name: 'Test Address Book Case',
@@ -568,10 +573,18 @@ describe('CaseViewerComponent', () => {
 
   it('should navigate to event trigger view on trigger emit', () => {
     component.applyTrigger(TRIGGERS[0]);
-
     expect(router.navigate).toHaveBeenCalledWith(['trigger', TRIGGERS[0].id], {
       queryParams: { },
       relativeTo: mockRoute
+    });
+  });
+
+  it('should navigate to resume draft trigger view on trigger emit', () => {
+    component.ignoreWarning = true;
+    component.caseDetails.case_id = 'DRAFT123';
+    component.applyTrigger(TRIGGERS[1]);
+    expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
+      queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
     });
   });
 
@@ -646,4 +659,11 @@ describe('CaseViewerComponent', () => {
     expect(printLink.componentInstance.routerLink).toEqual('print');
   });
 
+  it('should not contain a print link if Draft', () => {
+    component.caseDetails.case_id = 'DRAFT123';
+    fixture.detectChanges();
+    let printLink = de.query($PRINT_LINK);
+
+    expect(printLink).toBeFalsy();
+  });
 });

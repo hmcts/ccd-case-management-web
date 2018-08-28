@@ -9,6 +9,8 @@ import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
+import { AlertService } from '../core/alert/alert.service';
+import { plainToClass } from 'class-transformer';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -29,7 +31,10 @@ export class SearchComponent implements OnInit {
   paginationMetadata: PaginationMetadata;
   metaDataFields: string[];
 
-  constructor(private route: ActivatedRoute, private searchService: SearchService, private paginationService: PaginationService) { }
+  constructor(private route: ActivatedRoute,
+              private searchService: SearchService,
+              private paginationService: PaginationService,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
@@ -65,8 +70,10 @@ export class SearchComponent implements OnInit {
     this.searchService
       .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
       .subscribe(resultView => {
-        this.resultView = resultView;
-
+        this.resultView = plainToClass(SearchResultView, resultView);
+        if (this.resultView.result_error) {
+          this.alertService.warning(this.resultView.result_error);
+        }
         this.jurisdiction = filter.jurisdiction;
         this.caseType = filter.caseType;
         this.caseState = filter.caseState;

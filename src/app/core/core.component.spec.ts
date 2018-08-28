@@ -13,6 +13,7 @@ import { HttpService } from './http/http.service';
 import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
+import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
 
 describe('CoreComponent', () => {
 
@@ -31,6 +32,10 @@ describe('CoreComponent', () => {
   let PhaseComponent: any = MockComponent({ selector: 'cut-phase-bar', inputs: [
       'phaseLabel',
       'phaseLink',
+      'isSolicitor',
+    ]});
+
+  let BrowserSupportComponent: any = MockComponent({ selector: 'ccd-browser-support', inputs: [
       'isSolicitor',
     ]});
 
@@ -78,6 +83,8 @@ describe('CoreComponent', () => {
   let jurisdictionService: JurisdictionService;
   let httpService: any;
   let appConfig: any;
+  let browserSupport: any;
+  let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
 
@@ -86,6 +93,7 @@ describe('CoreComponent', () => {
     jurisdictionService = new JurisdictionService();
     httpService = createSpyObj('HttpService', ['get']);
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
 
@@ -149,6 +157,7 @@ describe('CoreComponent', () => {
           PhaseComponent,
           FooterComponent,
           PhaseComponent,
+          BrowserSupportComponent,
           NavigationComponent,
           NavigationItemComponent,
           BlankComponent,
@@ -160,6 +169,7 @@ describe('CoreComponent', () => {
           { provide: HttpService, useValue: httpService },
           { provide: AppConfig, useValue: appConfig },
           { provide: OAuth2Service, useValue: oauth2Service },
+          { provide: CcdBrowserSupportComponent, useValue: browserSupport },
         ]
       })
       .compileComponents();  // compile template and css

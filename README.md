@@ -9,7 +9,6 @@
 An Angular front-end for Core Case Data.
 
 ### Quick start
-
 ```bash
 # install the dependencies with Yarn
 $ yarn install

@@ -22,12 +22,8 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
 
   resolve(route: ActivatedRouteSnapshot): Promise<boolean> {
     let eventTrigger: CaseEventTrigger = route.parent.data.eventTrigger;
-
-    if (!eventTrigger.case_fields
-        || !eventTrigger.case_fields.length
-        || !eventTrigger.wizard_pages
-        || !eventTrigger.wizard_pages.length) {
-      this.router.navigate([...this.parentUrlSegments(route), 'submit']);
+    if (!eventTrigger.hasFields() || !eventTrigger.hasPages()) {
+      this.goToSubmit(route);
       return Promise.resolve(false);
     }
 
@@ -58,7 +54,14 @@ export class CaseEditWizardGuard implements Resolve<boolean> {
 
   private goToFirst(wizard: Wizard, canShowPredicate: Predicate<WizardPage>, route: ActivatedRouteSnapshot): Promise<boolean> {
     let firstPage = wizard.firstPage(canShowPredicate);
-    return this.router.navigate([...this.parentUrlSegments(route), firstPage ? firstPage.id : 'submit']);
+    // If there’s no specific wizard page called, it makes another navigation to either the first page available or to the submit page
+    // TODO should find a way to navigate to target page without going through the whole loop (and make a second call to BE) again
+    return this.router.navigate([...this.parentUrlSegments(route), firstPage ? firstPage.id : 'submit'],
+      { queryParams: route.queryParams });
+  }
+
+  private goToSubmit(route: ActivatedRouteSnapshot): Promise<boolean> {
+    return this.router.navigate([...this.parentUrlSegments(route), 'submit']);
   }
 
   private buildState(caseFields: CaseField[]): any {

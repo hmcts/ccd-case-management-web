@@ -6,6 +6,7 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { AlertService } from '../alert/alert.service';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 
 describe('CaseEditWizardGuard', () => {
 
@@ -18,6 +19,7 @@ describe('CaseEditWizardGuard', () => {
 
   let eventTrigger: CaseEventTrigger;
   let routeParams: any;
+  let queryParams: any;
 
   let wizardFactory: any;
   let wizard: any;
@@ -27,17 +29,13 @@ describe('CaseEditWizardGuard', () => {
 
   beforeEach(() => {
 
-    eventTrigger = {
-      id: 'editCase',
-      name: 'Edit case',
-      case_fields: [ new CaseField() ],
-      event_token: 'xxx',
-      wizard_pages: [ page('pageX') ],
-    };
+    eventTrigger = createCaseEventTrigger('editCase', 'Edit case', 'caseId', false, [ new CaseField() ], [ page('pageX') ]);
 
     routeParams = {
       'page': 'pageX'
     };
+
+    queryParams = { queryParams: [] };
 
     router = createSpyObj('router', ['navigate']);
     router.navigate.and.returnValue(Promise.resolve(true));
@@ -145,7 +143,7 @@ describe('CaseEditWizardGuard', () => {
     it('should redirect to first visible page of wizard', () => {
       wizardGuard.resolve(route);
 
-      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'page1']);
+      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'page1'], queryParams);
       expect(wizard.firstPage).toHaveBeenCalled();
     });
 
@@ -161,7 +159,7 @@ describe('CaseEditWizardGuard', () => {
 
       wizardGuard.resolve(route);
 
-      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'page1']);
+      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'page1'], queryParams);
     });
 
     it('should redirect to submit when all pages hidden', () => {
@@ -169,7 +167,7 @@ describe('CaseEditWizardGuard', () => {
 
       wizardGuard.resolve(route);
 
-      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'submit']);
+      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'submit'], queryParams);
     });
   });
 
@@ -185,7 +183,7 @@ describe('CaseEditWizardGuard', () => {
       wizardGuard.resolve(route);
 
       expect(wizard.hasPage).toHaveBeenCalledWith('unknown');
-      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'page1']);
+      expect(router.navigate).toHaveBeenCalledWith([...PARENT_URL_SEGMENTS, 'page1'], queryParams);
     });
 
     it('should alert error', done => {

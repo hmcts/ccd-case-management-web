@@ -4,20 +4,13 @@ import { DebugElement } from '@angular/core';
 import { text } from '../../test/helpers';
 import { By } from '@angular/platform-browser';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 
 describe('EventTriggerHeaderComponent', () => {
 
   const $HEADING = By.css('h1');
 
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: 'TEST_TRIGGER',
-    name: 'Test Trigger',
-    description: 'This is a test trigger',
-    case_id: '456',
-    case_fields: [],
-    event_token: 'test-token',
-    wizard_pages: []
-  };
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger('TEST_TRIGGER', 'Test Trigger', '456', false, []);
 
   let fixture: ComponentFixture<EventTriggerHeaderComponent>;
   let component: EventTriggerHeaderComponent;

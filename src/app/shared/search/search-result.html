@@ -1,4 +1,4 @@
-<table *ngIf="hasResults()">
+<table *ngIf="hasResults() || hasDrafts()">
   <thead>
   <tr>
     <th class="search-result-column-label">Case reference</th>
@@ -18,7 +18,7 @@
   <tbody>
   <tr *ngFor="let result of resultView.results | ccdSortSearchResult : sortParameters | paginate: { itemsPerPage: paginationPageSize, currentPage: selected.page, totalItems: paginationMetadata.total_results_count }">
     <td class="caseid-col">
-      <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"><div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">{{result.case_id | ccdCaseReference}}</div></a>
+      <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"><div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">{{ result.case_id | ccdCaseReference }}</div></a>
     </td>
     <td *ngFor="let col of resultView.columns">
       <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'" ccdLabelSubstitutor [caseField]="result.columns[col.case_field_id]" [eventFields]="result.hydrated_case_fields">
@@ -34,6 +34,6 @@
   </tbody>
 </table>
 <pagination-controls [style.visibility]="hideRows ? 'hidden' : 'visible'" *ngIf="hasResults()" class="pagination" (pageChange)="goToPage($event)" autoHide="true" maxSize="8" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
-<div *ngIf="!resultView.results.length || !paginationMetadata.total_pages_count" class="notification">
+<div *ngIf="!(hasResults() || hasDrafts())" class="notification">
   No cases found. Try using different filters.
 </div>

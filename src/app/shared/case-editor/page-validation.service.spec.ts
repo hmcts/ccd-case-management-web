@@ -1,4 +1,3 @@
-import { CaseEditPageComponent } from './case-edit-page.component';
 import { async } from '@angular/core/testing';
 import { WizardPage } from '../domain/wizard-page.model';
 import { CaseField } from '../domain/definition/case-field.model';

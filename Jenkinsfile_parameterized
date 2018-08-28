@@ -10,4 +10,8 @@ properties([
 
 withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRONMENT, 'sandbox') {
 
+    afterCheckout {
+        sh "yarn cache clean"
+    }
+
 }

@@ -64,6 +64,9 @@
 <!-- BETA : For Solicitor -->
 <cut-phase-bar [isSolicitor]="isSolicitor()" *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="{{getSmartSurveyUrl()}}"></cut-phase-bar>
 
+<!-- Unsupported browser help link -->
+<ccd-browser-support [isSolicitor]="isSolicitor()" *ngIf="unsupportedBrowser"></ccd-browser-support>
+
 <!-- Main area : Start -->
 <div class="container-fluid">
   <ccd-alert></ccd-alert>

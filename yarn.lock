@@ -320,6 +320,12 @@
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-6.0.0.tgz#0dd26c3f1c26d17bb21b8dfc0da53d82b7f11028"
 
+"@nicky-lenaers/ngx-scroll-to@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nicky-lenaers/ngx-scroll-to/-/ngx-scroll-to-1.0.0.tgz#2afdc03e5b3218bbb5e19ec69fb1e7f7c8eb83dc"
+  dependencies:
+    tslib "^1.9.0"
+
 "@nodelib/fs.stat@^1.0.1":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
@@ -6192,6 +6198,10 @@ ng2-mock-component@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ng2-mock-component/-/ng2-mock-component-0.1.1.tgz#5980e8887523754f855febc0c11f6c20f016d865"
 
+ngx-device-detector@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ngx-device-detector/-/ngx-device-detector-1.3.0.tgz#df36e034572ee4b3e68dda26f2c57c67f0280f2d"
+
 ngx-md@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/ngx-md/-/ngx-md-6.0.0.tgz#67c9a1ac49f4608d43d5b309d8d7ecc8ae7a6898"
@@ -9486,6 +9496,10 @@ ws@1.1.2:
 wtf-8@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wtf-8/-/wtf-8-1.0.0.tgz#392d8ba2d0f1c34d1ee2d630f15d0efb68e1048a"
+
+x-frame-options@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/x-frame-options/-/x-frame-options-1.0.0.tgz#ff9c1ca944b916a9bc27d6672a8b39b5b08b427f"
 
 xdg-basedir@^3.0.0:
   version "3.0.0"

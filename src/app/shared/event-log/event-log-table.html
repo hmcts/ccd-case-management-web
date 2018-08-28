@@ -12,7 +12,9 @@
            [target]="'_blank'"
            *ngIf="event.state_id !== 'Draft'">{{event.event_name}}</a><span
       *ngIf="event.state_id === 'Draft'" class="text-16">{{event.event_name}}</span></td>
-    <td><span class="text-16">{{event.timestamp | ccdDate: 'short'}}</span></td>
+    <td><div class="tooltip">{{event.timestamp | ccdDate : 'local'}}
+      <span class="tooltiptext">UTC: {{event.timestamp | ccdDate : 'utc'}}</span>
+    </div></td>
     <td><span class="text-16">{{event.user_first_name | titlecase}} {{event.user_last_name | uppercase}}</span></td>
   </tr>
   </tbody>

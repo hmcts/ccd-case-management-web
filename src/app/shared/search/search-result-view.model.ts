@@ -1,7 +1,7 @@
 import { SearchResultViewColumn } from './search-result-view-column.model';
 import { SearchResultViewItem } from './search-result-view-item.model';
-import { CaseResolver } from '../../cases/case.resolver';
 import { Type } from 'class-transformer';
+import { Draft } from '../domain/draft';
 
 export class SearchResultView {
   @Type(() => SearchResultViewColumn)
@@ -14,6 +14,6 @@ export class SearchResultView {
   hasDrafts() {
     return this.results[0]
     && this.results[0].case_id
-    && this.results[0].case_id.startsWith(CaseResolver.DRAFT);
+    && Draft.isDraft(this.results[0].case_id);
   }
 }

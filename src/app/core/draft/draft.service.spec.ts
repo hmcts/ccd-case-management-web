@@ -78,8 +78,9 @@ describe('Drafts Service', () => {
     });
 
     it('should create a draft on server', () => {
+      let UNDEFINED_DRAFT_ID = undefined;
       draftService
-        .createDraft(JID, CT_ID, CASE_EVENT_DATA)
+        .createOrUpdateDraft(JID, CT_ID, UNDEFINED_DRAFT_ID, CASE_EVENT_DATA)
         .subscribe(
           data => expect(data).toEqual(DRAFT_RESPONSE)
         );
@@ -99,11 +100,11 @@ describe('Drafts Service', () => {
 
     it('should update a draft on server', () => {
       draftService
-        .updateDraft(JID, CT_ID, DRAFT_ID, CASE_EVENT_DATA)
+        .createOrUpdateDraft(JID, CT_ID, DRAFT_ID, CASE_EVENT_DATA)
         .subscribe(
           data => expect(data).toEqual(DRAFT_RESPONSE)
         );
-      expect(httpService.put).toHaveBeenCalledWith(DRAFT_URL + DRAFT_ID, CASE_EVENT_DATA);
+      expect(httpService.put).toHaveBeenCalledWith(DRAFT_URL + Draft.stripDraftId(DRAFT_ID), CASE_EVENT_DATA);
     });
 
     it('should set error when error is thrown when updating draft', () => {

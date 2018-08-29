@@ -125,8 +125,8 @@ export class FieldsUtils {
   showGrayBar(caseField: CaseField, element: any) {
     if (caseField && caseField.field_type && caseField.field_type.type !== 'Collection') {
       let divSelector = element.querySelector('div');
-      let cyaSelector = element.querySelectorAll('form.check-your-answers');
-      if (divSelector && cyaSelector.length === 0) {
+      let cyaSelector = element.closest('form.check-your-answers');
+      if (divSelector && !cyaSelector) {
         divSelector.classList.add('panel');
       }
     }

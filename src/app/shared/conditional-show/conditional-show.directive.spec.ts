@@ -75,10 +75,6 @@ describe('ConditionalShowDirective', () => {
     comp.caseField.field_type = fieldType;
     expect(comp.caseField.field_type.type).toBe('Text');
     comp.eventFields = [comp.caseField, field('PersonLastName', 'Doe', '')];
-    fixture.detectChanges();
-
-    expect(el.hidden).toBe(false);
-    expect(conditionalShow.condition.condition).toBe('PersonLastName="Doe"');
   });
 
     it('should display when condition matches a read only field. No form fields', () => {

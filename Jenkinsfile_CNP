@@ -26,6 +26,10 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withPipeline("angular", product, component) {
 
-   //loadVaultSecrets(secrets)
+   loadVaultSecrets(secrets)
+
+    afterCheckout {
+        sh "yarn cache clean"
+    }
 
 }

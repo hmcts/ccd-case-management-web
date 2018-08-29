@@ -3,7 +3,7 @@ import { HttpService } from '../http/http.service';
 import { AppConfig } from '../../app.config';
 import { HttpErrorService } from '../http/http-error.service';
 import { CaseEventData } from '../../shared/domain/case-event-data';
-import { Observable } from '../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { Draft } from '../../shared/domain/draft';
 import { CaseView } from '../cases/case-view.model';
 
@@ -52,5 +52,13 @@ export class DraftService {
         this.errorService.setError(error);
         return Observable.throw(error);
       });
+  }
+
+  createOrUpdateDraft(jurisdictionId: string, caseTypeId: string, draftId: string, caseEventData: CaseEventData): Observable<Draft> {
+    if (!draftId) {
+      return this.createDraft(jurisdictionId, caseTypeId, caseEventData);
+    } else {
+      return this.updateDraft(jurisdictionId, caseTypeId, Draft.stripDraftId(draftId), caseEventData);
+    }
   }
 }

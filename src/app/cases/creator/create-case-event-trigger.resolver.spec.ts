@@ -4,6 +4,7 @@ import { HttpError } from '../../core/http/http-error.model';
 import { CreateCaseEventTriggerResolver } from './create-case-event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
 import { createCaseEventTrigger } from '../../fixture/shared.fixture'
+import { Draft } from '../../shared/domain/draft';
 
 describe('CreateCaseFieldsResolver', () => {
 
@@ -17,6 +18,7 @@ describe('CreateCaseFieldsResolver', () => {
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(EVENT_TRIGGER_ID, 'Into legacy', 'caseId', true, []);
 
+  const DRAFT_ID = Draft.DRAFT + '12345';
   const EVENT_TRIGGER_OBS: Observable<CaseEventTrigger> = Observable.of(EVENT_TRIGGER);
   const ERROR: HttpError = {
     timestamp: '',
@@ -84,8 +86,9 @@ describe('CreateCaseFieldsResolver', () => {
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
+    expect(route.queryParamMap.get).toHaveBeenCalledWith(Draft.DRAFT);
     expect(route.paramMap.get).toHaveBeenCalledTimes(3);
-    expect(route.queryParamMap.get).toHaveBeenCalledTimes(1);
+    expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
     expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
   });
 
@@ -130,6 +133,33 @@ describe('CreateCaseFieldsResolver', () => {
 
     expect(casesService.getEventTrigger).not.toHaveBeenCalled();
     expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
+  });
+
+  it('should use draftId when resuming create event ', () => {
+    route.queryParamMap.get.and.callFake(key => {
+      switch (key) {
+        case QUERY_PARAM_IGNORE_WARNINGS:
+          return IGNORE_WARNINGS;
+        case Draft.DRAFT:
+          return DRAFT_ID;
+      }
+    });
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
+
+    createCaseFieldsResolver
+      .resolve(route)
+      .subscribe(triggerData => {
+        expect(triggerData).toBe(EVENT_TRIGGER);
+      });
+
+    expect(casesService.getEventTrigger).toHaveBeenCalledWith(
+      JURISDICTION, CASE_TYPE, EVENT_TRIGGER_ID, DRAFT_ID, String(IGNORE_WARNINGS));
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
+    expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
+    expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
+    expect(route.paramMap.get).toHaveBeenCalledTimes(3);
+    expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
   });
 
   it('should create error alert when event trigger cannot be retrieved', done => {

@@ -59,7 +59,6 @@
     "chai-like": "^0.2.14",
     "class-transformer": "^0.1.8",
     "core-js": "^2.4.1",
-    "chai": "^4.1.2",
 	  "chai-as-promised": "^7.1.1",
 	  "chai-like": "^0.2.14",
     "cucumber": "^2.2.0",

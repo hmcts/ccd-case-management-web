@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-docker ps
+docker ps -a
 
 docker-compose -f docker-compose.tests.yml stop protractor
 

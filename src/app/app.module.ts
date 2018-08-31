@@ -2,6 +2,7 @@ import { APP_ID, Inject, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to'
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -23,12 +24,13 @@ import { AppConfigGuard } from './app.config.guard';
     HttpModule,
     FormsModule,
     routing,
+    ScrollToModule.forRoot(),
     CoreModule,
     WorkbasketModule,
     SearchModule,
     CasesModule,
     SharedModule,
-    OAuth2RedirectModule
+    OAuth2RedirectModule,
   ],
   declarations: [
     AppComponent,

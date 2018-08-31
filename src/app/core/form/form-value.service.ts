@@ -24,13 +24,21 @@ export class FormValueService {
     return sanitisedObject;
   }
 
+  /**
+   * Sanitise a case reference, if possible, given a string.
+   * @param {string} reference - case reference
+   * @returns {string}
+   */
   public sanitiseCaseReference(reference: string): string {
-    // strip non digits
-    const s: string = reference.replace(/[\D]/g, '');
-    if (s.length > 16) {
-      return s.substr(s.length - 16, 16);
+    const regex = /#?[\d-]*/g;
+    const found = reference.match(regex).filter(s => s.length > 0).reverse();
+    if (found[0]) {
+      const s: string = found[0].replace(/[\D]/g, '');
+      if (16 === s.length) {
+        return s;
+      }
     }
-    return s;
+    return reference;
   }
 
   private sanitiseArray(rawArray: any[]): any[] {

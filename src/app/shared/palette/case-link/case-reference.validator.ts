@@ -9,7 +9,7 @@ export function CaseReferenceValidator(formValueService: FormValueService): Vali
       if (validUID(sanitise(control.value, formValueService))) {
         return null;
       }
-      return {'error': ''};
+      return {'error': 'The data entered is not valid for this type of field, please delete and re-enter using only valid data'};
     }
     return null;
   };

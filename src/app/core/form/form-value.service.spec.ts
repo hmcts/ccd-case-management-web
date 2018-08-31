@@ -86,7 +86,7 @@ describe('FormValueService', () => {
       },
       'case_reference': '1234567822345678',
       'ngitb': {
-        'case_reference': '123416'
+        'case_reference': '#1234-LessThan16Digits'
       }
     } as object);
   });

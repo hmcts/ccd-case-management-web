@@ -31,6 +31,7 @@ import { WriteAddressFieldComponent } from './address/write-address-field.compon
 import { CaseField } from '../domain/definition/case-field.model';
 import { WriteOrderSummaryFieldComponent } from './order-summary/write-order-summary-field.component';
 import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
+import { CasePaymentHistoryViewerFieldComponent } from './payment/case-payment-history-viewer-field.component';
 
 @Injectable()
 export class PaletteService {
@@ -75,6 +76,8 @@ export class PaletteService {
         return write ? WriteDocumentFieldComponent : ReadDocumentFieldComponent;
       case 'Label':
         return LabelFieldComponent;
+      case 'CasePaymentHistoryViewer':
+        return CasePaymentHistoryViewerFieldComponent;
       default:
         return UnsupportedFieldComponent;
     }

@@ -66,7 +66,6 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     PaginationService,
     RequestOptionsBuilder,
     HttpService,
-    HttpErrorService,
     JurisdictionService,
     ActivityService,
     ActivityResolver,

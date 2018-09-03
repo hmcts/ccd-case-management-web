@@ -31,6 +31,8 @@ import { LabelFieldComponent } from './label/label-field.component';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
 import { OrderSummaryModule } from './order-summary/order-summary.module';
+import { CasePaymentHistoryViewerModule } from './payment/case-payment-history-viewer.module';
+import { SharedUtilsModule } from '../utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -47,7 +49,9 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
     CaseUIToolkitModule,
     AddressModule,
     MarkdownModule,
-    OrderSummaryModule
+    OrderSummaryModule,
+    CasePaymentHistoryViewerModule,
+    SharedUtilsModule,
   ],
   declarations: [
     UnsupportedFieldComponent,
@@ -99,7 +103,7 @@ import { OrderSummaryModule } from './order-summary/order-summary.module';
   ],
   providers: [
     PaletteService,
-    FormValidatorsService
+    FormValidatorsService,
   ]
 })
 export class PaletteModule {}

@@ -30,7 +30,7 @@ import { AppConfigGuard } from './app.config.guard';
     SearchModule,
     CasesModule,
     SharedModule,
-    OAuth2RedirectModule
+    OAuth2RedirectModule,
   ],
   declarations: [
     AppComponent,

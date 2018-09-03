@@ -30,6 +30,7 @@ import { CaseField }  from '../domain/definition/case-field.model';
 import { WriteAddressFieldComponent } from './address/write-address-field.component';
 import { ReadOrderSummaryFieldComponent } from './order-summary/read-order-summary-field.component';
 import { WriteOrderSummaryFieldComponent } from './order-summary/write-order-summary-field.component';
+import { CasePaymentHistoryViewerFieldComponent } from './payment/case-payment-history-viewer-field.component';
 
 describe('PaletteService', () => {
 
@@ -193,6 +194,11 @@ describe('PaletteService', () => {
 
     it('should get WriteOrderSummaryFieldComponent component class for Complex field with OrderSummary complex type', () => {
       assertComponent('Complex', true, WriteOrderSummaryFieldComponent, 'OrderSummary');
+    });
+
+    it('should get CasePaymentHistoryViewerFieldComponent component class for CasePaymentHistoryViewer regardless of read/write', () => {
+      assertComponent('CasePaymentHistoryViewer', true, CasePaymentHistoryViewerFieldComponent, 'AnID');
+      assertComponent('CasePaymentHistoryViewer', false, CasePaymentHistoryViewerFieldComponent, 'AnID');
     });
 
   });

@@ -24,6 +24,7 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
 import { MarkdownModule } from './markdown/markdown.module';
 import { LabelFieldComponent } from './palette/label/label-field.component';
+import { SharedUtilsModule } from './utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { LabelFieldComponent } from './palette/label/label-field.component';
     LabelSubstitutorModule,
     ConditionalShowModule,
     MarkdownModule
+    SharedUtilsModule,
   ],
   declarations: [
     SearchResultComponent,
@@ -44,7 +46,6 @@ import { LabelFieldComponent } from './palette/label/label-field.component';
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     SortSearchResultPipe,
-    CaseReferencePipe,
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
@@ -68,7 +69,7 @@ import { LabelFieldComponent } from './palette/label/label-field.component';
     EventTriggerModule,
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
-    CaseReferencePipe,
+    SharedUtilsModule,
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,

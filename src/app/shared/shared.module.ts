@@ -10,7 +10,6 @@ import { EventTriggerModule } from './event-trigger/event-trigger.module';
 import { CaseHeaderComponent } from './header/case-header.component';
 import { EventTriggerHeaderComponent } from './header/event-trigger-header.component';
 import { SortSearchResultPipe } from './search/sorting/sort-search-result.pipe';
-import { CaseReferencePipe } from './utils/case-reference.pipe';
 import { SearchResultViewItemComparatorFactory } from './search/sorting/search-result-view-item-comparator-factory';
 import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity.component';
 import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';

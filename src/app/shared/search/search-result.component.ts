@@ -157,4 +157,14 @@ export class SearchResultComponent implements OnChanges {
     }
     return isAscending ? SortOrder.ASCENDING : isDescending ? SortOrder.DESCENDING : SortOrder.UNSORTED;
   }
+
+  getFirstResult(): number {
+    let currentPage = (this.selected.page ? this.selected.page : 1);
+    return ( (currentPage - 1) * this.paginationPageSize ) + 1
+  }
+
+  getLastResult(): number {
+    let currentPage = (this.selected.page ? this.selected.page : 1);
+    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length;
+  }
 }

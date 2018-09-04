@@ -37,7 +37,7 @@ import { SharedUtilsModule } from './utils/shared-utils.module';
     EventTriggerModule,
     LabelSubstitutorModule,
     ConditionalShowModule,
-    MarkdownModule
+    MarkdownModule,
     SharedUtilsModule,
   ],
   declarations: [

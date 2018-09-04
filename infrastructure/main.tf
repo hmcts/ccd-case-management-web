@@ -15,19 +15,24 @@ locals {
   document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
 
   // Vault name
-  previewVaultName = "${var.product}-mgmt-web"
-  nonPreviewVaultName = "ccd-case-web-${var.env}"
+  previewVaultName = "${var.raw_product}-aat"
+  nonPreviewVaultName = "${var.raw_product}-${var.env}"
   vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
 
-  // Vault URI
-  previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
-  nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
-  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+  // Shared Resource Group
+  previewResourceGroup = "${var.raw_product}-shared-aat"
+  nonPreviewResourceGroup = "${var.raw_product}-shared-${var.env}"
+  sharedResourceGroup = "${(var.env == "preview" || var.env == "spreview") ? local.previewResourceGroup : local.nonPreviewResourceGroup}"
 
   is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
   external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 
   ccd_activity_url = "${local.ccd_gateway_url}/activity"
+}
+
+data "azurerm_key_vault" "ccd_shared_key_vault" {
+  name = "${local.vaultName}"
+  resource_group_name = "${local.sharedResourceGroup}"
 }
 
 module "case-management-web" {

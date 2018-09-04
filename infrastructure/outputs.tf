@@ -3,7 +3,7 @@ output "case_management_web_deployment_endpoint" {
 }
 
 output "vaultUri" {
-  value = "${local.vaultUri}"
+  value = "${data.azurerm_key_vault.ccd_shared_key_vault.vault_uri}"
 }
 
 output "vaultName" {

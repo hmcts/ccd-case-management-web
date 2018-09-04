@@ -9,6 +9,7 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { HttpError } from '../http/http-error.model';
 import { HttpErrorService } from '../http/http-error.service';
 
@@ -18,10 +19,13 @@ describe('CasesService', () => {
   const JID = 'TEST';
   const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
+  const DRAFT_ID = 'DRAFT1';
   const CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/` + CASE_ID;
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER_URL = API_URL
     + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
+  const EVENT_TRIGGER_DRAFT_URL = API_URL
+    + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/drafts/${DRAFT_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
   const CREATE_EVENT_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/events`;
   const VALIDATE_CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/validate`;
   const PRINT_DOCUMENTS_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/documents`;
@@ -110,14 +114,7 @@ describe('CasesService', () => {
 
   describe('getEventTrigger()', () => {
 
-    const EVENT_TRIGGER: CaseEventTrigger = {
-      id: '',
-      name: '',
-      case_id: '',
-      case_fields: [],
-      event_token: 'test-token',
-      wizard_pages: []
-    };
+    const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger('', '', '', false, []);
 
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
@@ -131,6 +128,14 @@ describe('CasesService', () => {
         .subscribe();
 
       expect(httpService.get).toHaveBeenCalledWith(EVENT_TRIGGER_URL);
+    });
+
+    it('should use HttpService::get with correct url for DRAFTS', () => {
+      casesService
+        .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, DRAFT_ID, 'true')
+        .subscribe();
+
+      expect(httpService.get).toHaveBeenCalledWith(EVENT_TRIGGER_DRAFT_URL);
     });
 
     it('should retrieve event trigger from server by case id', () => {

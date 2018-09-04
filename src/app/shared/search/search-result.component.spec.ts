@@ -109,7 +109,8 @@ describe('SearchResultComponent', () => {
             PersonAddress: 'Thames Valley Park, Sonning, Reading, England, RG6 1WA'
           }
         }
-      ]
+      ],
+      hasDrafts: () => false
     };
 
     const switchMap = {
@@ -378,7 +379,8 @@ describe('SearchResultComponent', () => {
           order: 1
         }
       ],
-      results: []
+      results: [],
+      hasDrafts: () => false
     };
 
     let fixture: ComponentFixture<SearchResultComponent>;

@@ -1,8 +1,9 @@
 import { CaseResolver } from './case.resolver';
-import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs/Observable';
 import { CaseView } from '../core/cases/case-view.model';
 import { AlertService } from '../core/alert/alert.service';
+import { DraftService } from '../core/draft/draft.service';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('CaseResolver', () => {
   describe('resolve()', () => {
@@ -19,6 +20,7 @@ describe('CaseResolver', () => {
     const CASE_OBS: Observable<CaseView> = Observable.of(CASE);
 
     let caseResolver: CaseResolver;
+    let draftService: DraftService;
 
     let casesService: any;
     let alertService: AlertService;
@@ -28,17 +30,18 @@ describe('CaseResolver', () => {
 
     beforeEach(() => {
       casesService = createSpyObj('casesService', ['getCaseView']);
+      draftService = createSpyObj('draftService', ['getDraft']);
 
       router = createSpyObj('router', ['navigate']);
       alertService = createSpyObj('alertService', ['success']);
-      caseResolver = new CaseResolver(casesService, router, alertService);
+      caseResolver = new CaseResolver(casesService, draftService, router, alertService);
 
       route = {
         firstChild: {
           url: []
         },
         paramMap: createSpyObj('paramMap', ['get'])
-      } ;
+      };
       route.paramMap.get.and.returnValues(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
     });
 
@@ -58,6 +61,50 @@ describe('CaseResolver', () => {
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);
       // allows to access private cachedCaseView field
       expect(caseResolver['cachedCaseView']).toBe(CASE);
+    });
+
+    it('should return cached case view when the route is a case view tab and cached view exists', () => {
+      caseResolver['cachedCaseView'] = CASE_CACHED;
+      casesService.getCaseView.and.returnValue(CASE_OBS);
+      route = {
+        firstChild: {
+          url: [],
+          fragment: 'someFragment'
+        },
+        paramMap: createSpyObj('paramMap', ['get'])
+      };
+      route.paramMap.get.and.returnValues(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+
+      caseResolver
+        .resolve(route)
+        .subscribe(caseData => {
+          expect(caseData).toBe(CASE_CACHED);
+        });
+      expect(casesService.getCaseView).not.toHaveBeenCalled();
+      expect(caseResolver['cachedCaseView']).toBe(CASE_CACHED);
+    });
+
+    it('should return retrieve case view when the route is a case view tab but empty cache', () => {
+      caseResolver['cachedCaseView'] = null;
+      casesService.getCaseView.and.returnValue(CASE_OBS);
+      route = {
+        firstChild: {
+          url: [],
+          fragment: 'someFragment'
+        },
+        paramMap: createSpyObj('paramMap', ['get'])
+      };
+      route.paramMap.get.and.returnValues(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+
+      caseResolver
+        .resolve(route)
+        .subscribe(caseData => {
+          expect(caseData).toBe(CASE);
+        });
+
+          expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+      // allows to access private cachedCaseView field
+          expect(caseResolver['cachedCaseView']).toBe(CASE);
     });
 
     it('should return cached case view when the route is not the one for case view and cached view exists', () => {
@@ -128,6 +175,63 @@ describe('CaseResolver', () => {
       navigationResult.then(() => {
         expect(alertService.success).toHaveBeenCalledWith(CaseResolver.CASE_CREATED_MSG);
       });
+    });
+  });
+
+  describe('resolve()', () => {
+
+    const PARAM_JURISDICTION_ID = CaseResolver.PARAM_JURISDICTION_ID;
+    const PARAM_CASE_TYPE_ID = CaseResolver.PARAM_CASE_TYPE_ID;
+    const PARAM_CASE_ID = CaseResolver.PARAM_CASE_ID;
+
+    const JURISDICTION_ID = 'TEST';
+    const CASE_TYPE_ID = 'TEST_CASE_TYPE';
+    const DRAFT_ID = 'DRAFT42';
+    const DRAFT: CaseView = createSpyObj<CaseView>('draft', ['toString']);
+    const DRAFT_CACHED: CaseView = createSpyObj<CaseView>('draftCached', ['toString']);
+    const DRAFT_OBS: Observable<CaseView> = Observable.of(DRAFT);
+
+    let caseResolver: CaseResolver;
+    let draftService: any;
+
+    let casesService: any;
+    let alertService: AlertService;
+    let route: any;
+
+    let router: any;
+
+    beforeEach(() => {
+      casesService = createSpyObj('casesService', ['getCaseView']);
+      draftService = createSpyObj('draftService', ['getDraft']);
+      draftService.getDraft.and.returnValue(DRAFT_OBS);
+      router = createSpyObj('router', ['navigate']);
+      alertService = createSpyObj('alertService', ['success']);
+      caseResolver = new CaseResolver(casesService, draftService, router, alertService);
+
+      route = {
+        firstChild: {
+          url: []
+        },
+        paramMap: createSpyObj('paramMap', ['get'])
+      };
+      route.paramMap.get.and.returnValues(JURISDICTION_ID, CASE_TYPE_ID, DRAFT_ID);
+    });
+
+    it('should resolve draft and cache when the route is the one for case DRAFT', () => {
+      caseResolver['cachedCaseView'] = DRAFT_CACHED;
+
+      caseResolver
+        .resolve(route)
+        .subscribe(caseData => {
+          expect(caseData).toBe(DRAFT);
+        });
+
+      expect(draftService.getDraft).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, DRAFT_ID);
+      expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
+      expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
+      expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);
+      // allows to access private cachedCaseView field
+      expect(caseResolver['cachedCaseView']).toBe(DRAFT);
     });
   });
 });

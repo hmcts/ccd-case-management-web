@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CaseView } from '../../core/cases/case-view.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CaseTab } from '../../core/cases/case-tab.model';
 import { OrderService } from '../../core/order/order.service';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
@@ -13,6 +13,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
+import { HttpError } from '../../core/http/http-error.model';
+import { Draft } from '../../shared/domain/draft';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -35,7 +37,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
-    private activityPollingService: ActivityPollingService
+    private activityPollingService: ActivityPollingService,
   ) {}
 
   ngOnInit(): void {
@@ -76,23 +78,30 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   applyTrigger(trigger: CaseViewTrigger): Promise<boolean | void> {
     this.error = null;
 
-    let queryParams = {};
+    let theQueryParams: Params = {};
 
     if (this.ignoreWarning) {
-      queryParams['ignoreWarning'] = this.ignoreWarning;
+      theQueryParams['ignoreWarning'] = this.ignoreWarning;
     }
 
-    return this.router.navigate(['trigger', trigger.id], {
-      queryParams,
-      relativeTo: this.route
-    }).catch(error => {
-      if (error.status !== 401 && error.status !== 403) {
-        this.error = error;
-        console.log('error during triggering event:', trigger.id);
-        console.log(error);
-        this.callbackErrorsSubject.next(this.error);
-      }
-    });
+    // we may need to take care of different triggers in the future
+    if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
+      theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
+      return this.router.navigate(
+        ['create/case',
+          this.caseDetails.case_type.jurisdiction.id,
+          this.caseDetails.case_type.id,
+          trigger.id], { queryParams: theQueryParams } ).catch(error => {
+        this.handleError(error, trigger)
+      });
+    } else {
+      return this.router.navigate(['trigger', trigger.id], {
+        queryParams: theQueryParams,
+        relativeTo: this.route
+      }).catch(error => {
+        this.handleError(error, trigger)
+      });
+    }
   }
 
   callbackErrorsNotify(callbackErrorsContext: CallbackErrorsContext) {
@@ -106,5 +115,18 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     }, []);
 
     return caseDataFields.concat(this.caseDetails.metadataFields);
+  }
+
+  isDraft(): boolean {
+    return Draft.isDraft(this.caseDetails.case_id);
+  }
+
+  private handleError(error: HttpError, trigger: CaseViewTrigger) {
+    if (error.status !== 401 && error.status !== 403) {
+      this.error = error;
+      console.log('error during triggering event:', trigger.id);
+      console.log(error);
+      this.callbackErrorsSubject.next(this.error);
+    }
   }
 }

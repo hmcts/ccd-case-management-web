@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { environment } from '../environments/environment';
+import { CaseEventData } from './shared/domain/case-event-data';
 
 @Injectable()
 export class AppConfig {
@@ -86,6 +87,10 @@ export class AppConfig {
     return this.config.smart_survey_url;
   }
 
+  public getUnsupportedBrowserUrl() {
+    return this.config.unsupported_browser_url;
+  }
+
   public getActivityUrl() {
     return this.config.activity_url;
   }
@@ -106,6 +111,26 @@ export class AppConfig {
     return this.config.activity_max_request_per_batch;
   }
 
+  public getPaymentsUrl() {
+    return this.config.payments_url;
+  }
+
+  public getChromeMinRequiredVersion() {
+    return this.config.chrome_min_required_version;
+  }
+
+  public getIEMinRequiredVersion() {
+    return this.config.ie_min_required_version;
+  }
+
+  public getEdgeMinRequiredVersion() {
+    return this.config.edge_min_required_version;
+  }
+
+  public getFirefoxMinRequiredVersion() {
+    return this.config.firefox_min_required_version;
+  }
+
   public getCaseHistoryUrl(jurisdictionId: string,
                            caseTypeId: string,
                            caseId: string,
@@ -118,25 +143,35 @@ export class AppConfig {
       + `/events/${eventId}`
       + `/case-history`;
   }
+
+  public getDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
+    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
+  }
 }
 
 export class Config {
-  login_url: string;
-  logout_url: string;
-  api_url: string;
-  case_data_url: string;
-  activity_url: string;
-  document_management_url: string;
-  remote_document_management_url: string;
-  pagination_page_size: number;
-  postcode_lookup_url: string;
-  oauth2_token_endpoint_url: string;
-  oauth2_client_id: string;
-  print_service_url: string;
-  remote_print_service_url: string;
-  smart_survey_url: string;
-  activity_next_poll_request_ms: number;
-  activity_retry: number;
   activity_batch_collection_delay_ms: number;
   activity_max_request_per_batch: number;
+  activity_next_poll_request_ms: number;
+  activity_retry: number;
+  activity_url: string;
+  api_url: string;
+  case_data_url: string;
+  document_management_url: string;
+  login_url: string;
+  logout_url: string;
+  oauth2_client_id: string;
+  oauth2_token_endpoint_url: string;
+  pagination_page_size: number;
+  postcode_lookup_url: string;
+  print_service_url: string;
+  remote_document_management_url: string;
+  remote_print_service_url: string;
+  smart_survey_url: string;
+  payments_url: string;
+  unsupported_browser_url: string;
+  chrome_min_required_version: number;
+  ie_min_required_version: number;
+  edge_min_required_version: number;
+  firefox_min_required_version: number;
 }

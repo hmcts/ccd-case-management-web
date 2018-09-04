@@ -38,13 +38,15 @@ describe('SearchComponent', () => {
     let subject: SearchComponent;
     let searchService;
     let paginationService;
+    let alertService;
 
     beforeEach(async(() => {
         searchService = createSpyObj('searchService', ['search']);
         searchService.search.and.returnValue(Observable.of({}));
         paginationService = createSpyObj('paginationService', ['getPaginationMetadata']);
         paginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
-        subject = new SearchComponent(null, searchService, paginationService);
+        alertService = createSpyObj('alertService', ['warning']);
+        subject = new SearchComponent(null, searchService, paginationService, alertService);
     }));
 
     it('should make inputs fields turn into query parameters', () => {

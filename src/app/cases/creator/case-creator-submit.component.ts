@@ -7,6 +7,8 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { Observable } from 'rxjs/Observable';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
+import { DraftService } from '../../core/draft/draft.service';
+import { Draft } from '../../shared/domain/draft';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -21,6 +23,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
 
   constructor(
     private casesService: CasesService,
+    private draftService: DraftService,
     private router: Router,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -42,6 +45,15 @@ export class CaseCreatorSubmitComponent implements OnInit {
 
   validate(): (sanitizedEditForm: CaseEventData) => Observable<object> {
     return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+  }
+
+  saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
+    if (this.eventTrigger.can_save_draft) {
+      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.jurisdictionId,
+        this.caseTypeId,
+        this.eventTrigger.case_id,
+        caseEventData);
+    }
   }
 
   submitted(event: any): void {

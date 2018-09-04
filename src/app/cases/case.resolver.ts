@@ -1,12 +1,13 @@
 import { CaseView } from '../core/cases/case-view.model';
-import { ActivatedRouteSnapshot, Resolve, Router, ParamMap } from '@angular/router';
+import { ActivatedRouteSnapshot, ParamMap, Resolve, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { CasesService } from '../core/cases/cases.service';
 import { Response } from '@angular/http';
 import { AlertService } from '../core/alert/alert.service';
-
 import 'rxjs/add/operator/catch';
+import { DraftService } from '../core/draft/draft.service';
+import { Draft } from '../shared/domain/draft';
 
 @Injectable()
 export class CaseResolver implements Resolve<CaseView> {
@@ -22,6 +23,7 @@ export class CaseResolver implements Resolve<CaseView> {
   public cachedCaseView: CaseView;
 
   constructor(private casesService: CasesService,
+               private draftService: DraftService,
                private router: Router,
                private alertService: AlertService) {}
 
@@ -34,7 +36,7 @@ export class CaseResolver implements Resolve<CaseView> {
       // the post returns no id
       this.navigateToCaseList();
     } else {
-      return this.isCaseViewRoute(route) ? this.getAndCacheCaseView(jid, ctid, cid)
+      return this.isRootCaseViewRoute(route) ? this.getAndCacheCaseView(jid, ctid, cid)
         : this.cachedCaseView ? Observable.of(this.cachedCaseView)
         : this.getAndCacheCaseView(jid, ctid, cid);
     }
@@ -53,22 +55,40 @@ export class CaseResolver implements Resolve<CaseView> {
     .then(() => this.alertService.success(CaseResolver.CASE_CREATED_MSG));
   }
 
-  private isCaseViewRoute(route: ActivatedRouteSnapshot) {
-    // this strategy to detect if route is the case view route is a bit fragile
-    return !route.firstChild || !route.firstChild.url.length;
+  private isRootCaseViewRoute(route: ActivatedRouteSnapshot) {
+    // is route case/:jid/:ctid/:cid
+    return ((!route.firstChild || !route.firstChild.url.length) && !this.isTabViewRoute(route));
+  }
+
+  private isTabViewRoute(route: ActivatedRouteSnapshot) {
+    // is route case/:jid/:ctid/:cid#fragment
+    return route.firstChild && route.firstChild.fragment;
   }
 
   private getAndCacheCaseView(jid, ctid, cid): Observable<CaseView> {
+    if (Draft.isDraft(cid)) {
+      return this.getAndCacheDraft(jid, ctid, cid);
+    } else {
     return this.casesService
           .getCaseView(jid, ctid, cid)
           .do(caseView => this.cachedCaseView = caseView)
-          .catch((error: Response | any) => {
-            // TODO Should be logged to remote logging infrastructure
-            console.error(error);
-            if (error.status !== 401 && error.status !== 403) {
-              this.router.navigate(['/error']);
-            }
-            return Observable.throw(error);
-          });
+          .catch((error: Response | any) => this.checkAuthorizationError(error));
+    }
+  }
+
+  private getAndCacheDraft(jid, ctid, cid): Observable<CaseView> {
+    return this.draftService
+      .getDraft(jid, ctid, cid)
+      .do(caseView => this.cachedCaseView = caseView)
+      .catch((error: Response | any) => this.checkAuthorizationError(error));
+  }
+
+  private checkAuthorizationError(error: any) {
+    // TODO Should be logged to remote logging infrastructure
+    console.error(error);
+    if (error.status !== 401 && error.status !== 403) {
+      this.router.navigate(['/error']);
+    }
+    return Observable.throw(error);
   }
 }

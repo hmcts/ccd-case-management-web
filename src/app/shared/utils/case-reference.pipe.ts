@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Draft } from '../domain/draft';
 
 @Pipe({
   name: 'ccdCaseReference'
@@ -6,6 +7,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CaseReferencePipe implements PipeTransform {
 
   transform(caseReference: string): string {
-    return caseReference.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
+    if (Draft.isDraft(caseReference)) {
+      return Draft.DRAFT;
+    } else {
+      return caseReference.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
+    }
   }
 }

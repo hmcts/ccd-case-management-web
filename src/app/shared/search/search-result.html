@@ -16,15 +16,6 @@
   </thead>
   <tbody>
   <tr *ngFor="let result of resultView.results | ccdSortSearchResult : sortParameters | paginate: { itemsPerPage: paginationPageSize, currentPage: selected.page, totalItems: paginationMetadata.total_results_count }">
-    <td class="caseid-col">
-      <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}">
-        <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">{{ result.case_id | ccdCaseReference
-          }}
-        </div>
-      </a>
-    </td>
-    <td *ngFor="let col of resultView.columns">
-      <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">
     <td *ngFor="let col of resultView.columns; let colIndex = index">
       <a *ngIf="colIndex == 0" routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}">
         <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">

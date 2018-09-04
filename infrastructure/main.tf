@@ -69,14 +69,3 @@ module "case-management-web" {
     PAYMENTS_URL = "${local.ccd_gateway_url}/payments"
   }
 }
-
-module "ccd-case-management-web-vault" {
-  source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "${local.vaultName}" // Max 24 characters
-  product             = "${var.product}"
-  env                 = "${var.env}"
-  tenant_id           = "${var.tenant_id}"
-  object_id           = "${var.jenkins_AAD_objectId}"
-  resource_group_name = "${module.case-management-web.resource_group_name}"
-  product_group_object_id = "be8b3850-998a-4a66-8578-da268b8abd6b"
-}

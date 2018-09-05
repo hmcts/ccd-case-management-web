@@ -22,6 +22,7 @@ import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
+import { SharedUtilsModule } from './utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     ReactiveFormsModule,
     EventTriggerModule,
     LabelSubstitutorModule,
-    ConditionalShowModule
+    ConditionalShowModule,
+    SharedUtilsModule,
   ],
   declarations: [
     SearchResultComponent,
@@ -41,7 +43,6 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     SortSearchResultPipe,
-    CaseReferencePipe,
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
@@ -61,7 +62,7 @@ import { DocumentDialogComponent } from './document-dialog/document-dialog.compo
     EventTriggerModule,
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
-    CaseReferencePipe,
+    SharedUtilsModule,
     CcdActivityComponent,
     CcdActivityIconComponent,
     CcdActivityBannerComponent,

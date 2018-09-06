@@ -1,7 +1,7 @@
 exports.config = {
 
   specs: [
-    '../features/*.feature'
+    '../end-to-end/features/*.feature'
   ],
 
   exclude: [],
@@ -23,7 +23,7 @@ exports.config = {
 
   cucumberOpts: {
     require: [
-      '../end-to-end/features/stepDefinitions/login.js'
+      '../end-to-end/features/stepDefinitions/*.js'
     ],
     tags: false,
     format: 'pretty',

@@ -159,12 +159,12 @@ export class SearchResultComponent implements OnChanges {
   }
 
   getFirstResult(): number {
-    let currentPage = (this.selected.page ? this.selected.page : 1);
+    const currentPage = (this.selected.page ? this.selected.page : 1);
     return ( (currentPage - 1) * this.paginationPageSize ) + 1
   }
 
   getLastResult(): number {
-    let currentPage = (this.selected.page ? this.selected.page : 1);
+    const currentPage = (this.selected.page ? this.selected.page : 1);
     return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length;
   }
 }

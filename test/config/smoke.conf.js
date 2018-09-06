@@ -10,7 +10,7 @@ exports.config = {
   */
 
   specs: [
-    "./end-to-end/specs/*/login.*.spec.js"
+    "../end-to-end/specs/*/login.*.spec.js"
   ],
 
   exclude: [],
@@ -68,7 +68,7 @@ exports.config = {
 
   plugins: [{
         package: "protractor-screenshoter-plugin",
-        screenshotPath: "./smoke-output/",
+        screenshotPath: "../smoke-output/",
         screenshotOnExpect: "failure+success",
         screenshotOnSpec: "none",
         withLogs: true,

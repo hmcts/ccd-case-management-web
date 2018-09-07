@@ -48,7 +48,7 @@
     "@angular/platform-browser-dynamic": "~6.0.6",
     "@angular/platform-server": "~6.0.6",
     "@angular/router": "~6.0.6",
-    "@angular/upgrade": "~6.0.6",
+    "@angular/upgrade": "~6.1.7",
     "@hmcts/ccd-case-ui-toolkit": "1.2.4",
     "@hmcts/ccpay-web-component": "~1.5.0",
     "@nguniversal/express-engine": "^6.0.0",

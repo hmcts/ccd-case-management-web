@@ -4,6 +4,10 @@ variable "product" {
   description           = "The name of your application"
 }
 
+variable "raw_product" {
+  default               = "ccd" // jenkins-library overrides product for PRs and adds e.g. pr-118-ccd
+}
+
 variable "location" {
   type                  = "string"
   default               = "UK South"

@@ -19,7 +19,8 @@ import createSpyObj = jasmine.createSpyObj;
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
-  description: ''
+  description: '',
+  caseTypes: []
 };
 const CASE_TYPE_1: CaseType = {
   id: 'CT0',
@@ -33,7 +34,8 @@ const CASE_TYPE_1: CaseType = {
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
-  description: ''
+  description: '',
+  caseTypes: []
 };
 
 const CASE_TYPES_2: CaseType[] = [

@@ -132,9 +132,9 @@ export class CreateCaseFiltersComponent implements OnInit {
     }
   }
 
-  private selectCaseType(jurisdictions: Jurisdiction[], filterCaseTypeControl: FormControl) {
-    if (jurisdictions.length === 1) {
-      filterCaseTypeControl.setValue(jurisdictions[0].id);
+  private selectCaseType(caseTypes: CaseType[], filterCaseTypeControl: FormControl) {
+    if (caseTypes.length === 1) {
+      filterCaseTypeControl.setValue(caseTypes[0].id);
       this.onCaseTypeIdChange();
     }
   }

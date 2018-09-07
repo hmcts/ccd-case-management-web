@@ -35,7 +35,8 @@ describe('SearchResultComponent', () => {
     const JURISDICTION: Jurisdiction = {
       id: 'TEST',
       name: 'Test',
-      description: 'Test Jurisdiction'
+      description: 'Test Jurisdiction',
+      caseTypes: []
     };
     const CASE_TYPE: CaseType = {
       id: 'TEST_CASE_TYPE',

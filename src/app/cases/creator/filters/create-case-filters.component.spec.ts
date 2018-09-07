@@ -29,7 +29,8 @@ const EVENT_NAME_3 = 'Event three';
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
-  description: ''
+  description: '',
+  caseTypes: []
 };
 
 const CASE_TYPES_1: CaseType[] = [
@@ -72,7 +73,8 @@ const CASE_TYPES_1: CaseType[] = [
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
-  description: ''
+  description: '',
+  caseTypes: []
 };
 
 const CASE_TYPES_2: CaseType[] = [
@@ -208,6 +210,7 @@ const CASE_TYPE: CaseType = {
     id: 'PROBATE',
     name: 'Probate',
     description: 'Content for the Test Jurisdiction.',
+    caseTypes: []
   }
 };
 

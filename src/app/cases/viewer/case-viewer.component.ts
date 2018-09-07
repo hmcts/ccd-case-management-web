@@ -37,7 +37,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
-    private activityPollingService: ActivityPollingService
+    private activityPollingService: ActivityPollingService,
   ) {}
 
   ngOnInit(): void {

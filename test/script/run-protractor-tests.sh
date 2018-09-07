@@ -7,6 +7,10 @@ if [ -z "$CCD_CASEWORKER_AUTOTEST_EMAIL" ] ; then echo "CCD_CASEWORKER_AUTOTEST_
 if [ -z "$CCD_CASEWORKER_AUTOTEST_PASSWORD" ]; then echo "CCD_CASEWORKER_AUTOTEST_PASSWORD null"; fi;
 if [ -z "$TEST_URL" ]; then echo "TEST_URL null"; fi;
 
+## Check proxy accessible
+
+ping -c 2 proxyout.reform.hmcts.net
+
 # ls -l
 
 yarn install

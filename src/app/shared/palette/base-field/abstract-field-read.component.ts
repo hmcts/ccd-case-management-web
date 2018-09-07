@@ -7,6 +7,9 @@ export class AbstractFieldReadComponent {
   @Input()
   caseField: CaseField;
 
+  @Input()
+  caseReference: string;
+
   /**
    * Optional. Enable context-aware rendering of fields.
    */

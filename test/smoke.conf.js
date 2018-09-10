@@ -29,16 +29,12 @@ exports.config = {
      "acceptInsecureCerts": true,
      "maxInstances": 1,
      "browserName": "chrome",
-     /**
-      * Chrome is not allowed to create a SUID sandbox when running inside Docker
-      */    
-//   'proxy': {
-//    'proxyType': 'manual',
-//    'httpProxy': 'http://proxy.uk:8080'
-//    'httpsProxy': 'http://proxy.uk:8080'
-//    'noProxy': ''
-//           } 
- 
+     'proxy': {
+         'proxyType': 'manual',
+         'httpProxy': 'proxyout.reform.hmcts.net:8080',
+         'sslProxy': 'proxyout.reform.hmcts.net:8080',
+         'noProxy': ''
+     },
      "chromeOptions": {
          "args": [
             "no-sandbox",
@@ -73,7 +69,7 @@ exports.config = {
 
   plugins: [{
         package: "protractor-screenshoter-plugin",
-        screenshotPath: "./test/reports/e2e",
+        screenshotPath: "./smoke-output/",
         screenshotOnExpect: "failure+success",
         screenshotOnSpec: "none",
         withLogs: true,

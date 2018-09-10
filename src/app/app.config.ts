@@ -111,6 +111,10 @@ export class AppConfig {
     return this.config.activity_max_request_per_batch;
   }
 
+  public getPaymentsUrl() {
+    return this.config.payments_url;
+  }
+
   public getChromeMinRequiredVersion() {
     return this.config.chrome_min_required_version;
   }
@@ -164,6 +168,7 @@ export class Config {
   remote_document_management_url: string;
   remote_print_service_url: string;
   smart_survey_url: string;
+  payments_url: string;
   unsupported_browser_url: string;
   chrome_min_required_version: number;
   ie_min_required_version: number;

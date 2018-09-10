@@ -1,7 +1,3 @@
-provider "vault" {
-  address = "https://vault.reform.hmcts.net:6200"
-}
-
 locals {
   env_ase_url = "${var.env}.service.${data.terraform_remote_state.core_apps_compute.ase_name[0]}.internal"
 
@@ -15,19 +11,24 @@ locals {
   document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
 
   // Vault name
-  previewVaultName = "${var.product}-mgmt-web"
-  nonPreviewVaultName = "ccd-case-web-${var.env}"
+  previewVaultName = "${var.raw_product}-aat"
+  nonPreviewVaultName = "${var.raw_product}-${var.env}"
   vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
 
-  // Vault URI
-  previewVaultUri = "https://ccd-case-web-aat.vault.azure.net/"
-  nonPreviewVaultUri = "${module.ccd-case-management-web-vault.key_vault_uri}"
-  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+  // Shared Resource Group
+  previewResourceGroup = "${var.raw_product}-shared-aat"
+  nonPreviewResourceGroup = "${var.raw_product}-shared-${var.env}"
+  sharedResourceGroup = "${(var.env == "preview" || var.env == "spreview") ? local.previewResourceGroup : local.nonPreviewResourceGroup}"
 
   is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
   external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 
   ccd_activity_url = "${local.ccd_gateway_url}/activity"
+}
+
+data "azurerm_key_vault" "ccd_shared_key_vault" {
+  name = "${local.vaultName}"
+  resource_group_name = "${local.sharedResourceGroup}"
 }
 
 module "case-management-web" {
@@ -61,16 +62,6 @@ module "case-management-web" {
     CCD_ACTIVITY_RETRY = 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1
     CCD_ACTIVITY_MAX_REQUEST_PER_BATCH = 25 // Better have this same as CCD_PAGE_SIZE
+    PAYMENTS_URL = "${local.ccd_gateway_url}/payments"
   }
-}
-
-module "ccd-case-management-web-vault" {
-  source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "${local.vaultName}" // Max 24 characters
-  product             = "${var.product}"
-  env                 = "${var.env}"
-  tenant_id           = "${var.tenant_id}"
-  object_id           = "${var.jenkins_AAD_objectId}"
-  resource_group_name = "${module.case-management-web.resource_group_name}"
-  product_group_object_id = "be8b3850-998a-4a66-8578-da268b8abd6b"
 }

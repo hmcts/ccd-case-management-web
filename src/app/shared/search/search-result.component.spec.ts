@@ -303,7 +303,7 @@ describe('SearchResultComponent', () => {
                        caseType : CASE_TYPE,
                        caseState : CASE_STATE,
                        formGroup: jasmine.any(Object),
-        metadataFields: METADATA_FIELDS,
+                       metadataFields: METADATA_FIELDS,
                        page : 2 };
 
       expect(component.selected.page).toBe(2);

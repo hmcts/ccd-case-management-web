@@ -3,6 +3,8 @@ import { FieldsUtils } from '../utils/fields.utils';
 
 export class ShowCondition {
 
+  private static readonly AND_CONDITION_REGEX = /\sAND\s(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/g;
+
   // Expects a show condition of the form: <fieldName>="string"
   constructor(public condition: string) {
   }
@@ -11,17 +13,23 @@ export class ShowCondition {
     if (!this.condition) {
       return true;
     }
-    // console.log('evaluating show condition: ' + this.condition);
-    let field = this.condition.split('=')[0];
-    let right = this.unquoted(this.condition.split('=')[1]);
+    return this.matchAndConditions(fields, this.condition);
+  }
+
+  private matchAndConditions(fields: any, condition: string): boolean {
+    let andConditions = condition.split(ShowCondition.AND_CONDITION_REGEX);
+    return andConditions.every(andCondition => this.matchEqualityCondition(fields, andCondition));
+  }
+
+  private matchEqualityCondition(fields: any, condition: string): boolean {
+    let field = condition.split('=')[0];
+    let right = this.unquoted(condition.split('=')[1]);
     let value = fields[field];
-    // console.log('field: ' + field);
-    // console.log('expectedValue: ' + right);
-    // console.log('value: ' + value);
-    // changed from '===' to '==' to cover number field conditions
+
     if (right.endsWith('*') && value) {
       return value.startsWith(this.removeStarChar(right));
     } else {
+      // changed from '===' to '==' to cover number field conditions
       return value == right; // tslint:disable-line
     }
   }

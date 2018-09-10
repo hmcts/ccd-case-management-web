@@ -27,7 +27,6 @@ import { WriteTextAreaFieldComponent } from './text-area/write-text-area-field.c
 import { MultiSelectListModule } from './multi-select-list/multi-select-list.module';
 import { WriteDateFieldComponent } from './date/write-date-field.component';
 import { DocumentModule } from './document/document.module';
-import { LabelFieldComponent } from './label/label-field.component';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { FormValidatorsService } from '../../core/form/form-validators.service';
 import { OrderSummaryModule } from './order-summary/order-summary.module';
@@ -55,7 +54,6 @@ import { SharedUtilsModule } from '../utils/shared-utils.module';
   ],
   declarations: [
     UnsupportedFieldComponent,
-    LabelFieldComponent,
 
     // Read
     ReadTextFieldComponent,
@@ -77,7 +75,6 @@ import { SharedUtilsModule } from '../utils/shared-utils.module';
   ],
   entryComponents: [
     UnsupportedFieldComponent,
-    LabelFieldComponent,
 
     // Read
     ReadTextFieldComponent,

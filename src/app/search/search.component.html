@@ -11,6 +11,7 @@
   </div>
   <div class="search-right">
     <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
-                       [caseFilterFG]="caseFilterFG" [paginationMetadata]="paginationMetadata" (changePage)="applyFilter($event)"></ccd-search-result>
+                       [caseFilterFG]="caseFilterFG" [paginationMetadata]="paginationMetadata"
+                       [metadataFields]="metadataFields" (changePage)="applyFilter($event)"></ccd-search-result>
   </div>
 </div>

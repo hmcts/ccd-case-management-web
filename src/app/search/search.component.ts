@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
   profile: Profile;
   resultView: SearchResultView;
   paginationMetadata: PaginationMetadata;
-  metaDataFields: string[];
+  metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
               private searchService: SearchService,
@@ -45,7 +45,7 @@ export class SearchComponent implements OnInit {
     const searchParams = {};
 
     this.caseFilterFG = filter.formGroup;
-    this.metaDataFields = filter.metadataFields;
+    this.metadataFields = filter.metadataFields;
 
     if (filter.caseState) {
       paginationParams['state'] = filter.caseState.id;
@@ -119,7 +119,7 @@ export class SearchComponent implements OnInit {
   }
 
   private getFilterType(fieldName: string): string {
-    return (this.metaDataFields && (this.metaDataFields.indexOf(fieldName) > -1)) ?
+    return (this.metadataFields && (this.metadataFields.indexOf(fieldName) > -1)) ?
       SearchComponent.METADATA_FILTER : SearchComponent.CASE_FILTER;
   }
 

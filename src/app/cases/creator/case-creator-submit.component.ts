@@ -79,6 +79,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   private alertSuccess(eventStatus, caseReference) {
+    eventStatus = eventStatus || EventStatusService.CALLBACK_STATUS_COMPLETE;
     switch (eventStatus) {
       case EventStatusService.CALLBACK_STATUS_COMPLETE:
         this.alertService.success(`Case #${caseReference} has been created.`);

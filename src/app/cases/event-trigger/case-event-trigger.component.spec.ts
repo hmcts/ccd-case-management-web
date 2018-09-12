@@ -231,7 +231,7 @@ describe('CaseEventTriggerComponent', () => {
   it('should alert warning message after navigation upon successful event creation but incomplete call back', () => {
     casesService.createEvent.and.returnValue(Observable.of({}));
 
-    component.submitted({caseId: 123, status: 'INCOMPLETE'});
+    component.submitted({caseId: 123, status: 'INCOMPLETE_CALLBACK'});
 
     expect(alertService.warning).toHaveBeenCalled();
   });

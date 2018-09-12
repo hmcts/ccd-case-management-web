@@ -34,7 +34,7 @@ export class WorkbasketComponent implements OnInit {
   page: number;
   paginationMetadata: PaginationMetadata;
   caseFilterFG: FormGroup;
-  metaDataFields: string[];
+  metadataFields: string[];
 
   @ViewChild('searchResults')
   searchResults: SearchResultComponent;
@@ -58,7 +58,7 @@ export class WorkbasketComponent implements OnInit {
     }
 
     this.caseFilterFG = filter.formGroup;
-    this.metaDataFields = filter.metadataFields;
+    this.metadataFields = filter.metadataFields;
 
     const paginationParams = {};
     const searchParams = {};
@@ -148,7 +148,7 @@ export class WorkbasketComponent implements OnInit {
   }
 
   private getFilterType(fieldName: string): string {
-    return (this.metaDataFields && (this.metaDataFields.indexOf(fieldName) > -1)) ?
+    return (this.metadataFields && (this.metadataFields.indexOf(fieldName) > -1)) ?
       WorkbasketComponent.METADATA_FILTER : WorkbasketComponent.CASE_FILTER;
   }
 

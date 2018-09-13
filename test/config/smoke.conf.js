@@ -35,21 +35,22 @@ exports.config = {
          'noProxy': ''
      },
    
-    //Headless chrome
-    chromeOptions: {
-     args: process.env.HEADLESS
-       ? [‘--headless’, ‘--no-sandbox’, ‘--disable-dev-shm-usage’]
-       : [],
-     binary: process.env.HEADLESS ? puppeteer.executablePath() : undefined,
-   }, 
+//     //Headless chrome
+//     chromeOptions: {
+//      args: process.env.HEADLESS
+//        ? [‘--headless’, ‘--no-sandbox’, ‘--disable-dev-shm-usage’]
+//        : [],
+//      binary: process.env.HEADLESS ? puppeteer.executablePath() : undefined,
+//    }, 
     
-//     "chromeOptions": {
-//          "args": [
-//             "no-sandbox",
-//             "--disable-web-security"
-//          ]
-//      }
-//   },
+    "chromeOptions": {
+         "args": [
+            "--headless",
+            "no-sandbox",
+            "--disable-web-security"
+         ]
+     }
+  },
 
 //  capabilities: {
 //

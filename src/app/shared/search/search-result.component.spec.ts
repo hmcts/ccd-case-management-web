@@ -55,6 +55,7 @@ describe('SearchResultComponent', () => {
       total_results_count: 3,
       total_pages_count: 1
     };
+    const METADATA_FIELDS: string[] = ['state'];
     const RESULT_VIEW: SearchResultView = {
       columns: [
         {
@@ -178,6 +179,7 @@ describe('SearchResultComponent', () => {
       component.caseState = CASE_STATE;
       component.paginationMetadata = PAGINATION_METADATA;
       component.caseFilterFG = new FormGroup({});
+      component.metadataFields = METADATA_FIELDS;
       component.ngOnChanges({ resultView: new SimpleChange(null, RESULT_VIEW, true) });
 
       de = fixture.debugElement;
@@ -301,6 +303,7 @@ describe('SearchResultComponent', () => {
                        caseType : CASE_TYPE,
                        caseState : CASE_STATE,
                        formGroup: jasmine.any(Object),
+                       metadataFields: METADATA_FIELDS,
                        page : 2 };
 
       expect(component.selected.page).toBe(2);

@@ -20,7 +20,7 @@
     "test:cucumber": "protractor test/config/cucumber.conf.js",
     "test:smoke": "echo 'To-do'",
     "test:smokeTests": "protractor test/config/smoke.conf.js",
-    "test:functional": "echo 'TODO: Enable functional tests' || ./bin/runFunctionalTests.sh",
+    "test:functional": "./bin/runFunctionalTests.sh",
     "test:functionalTests": "protractor test/config/functional.conf.js",
     "lint": "ng lint ccd-case-management-web",
     "e2e": "ng e2e",

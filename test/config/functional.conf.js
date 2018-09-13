@@ -10,7 +10,7 @@ exports.config = {
   */
 
   specs: [
-    './functional/specs/**/*.spec.js'
+    '../functional/specs/**/*.spec.js'
   ],
   exclude: [],
 

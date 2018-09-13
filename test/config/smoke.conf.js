@@ -34,7 +34,8 @@ exports.config = {
          'sslProxy': 'proxyout.reform.hmcts.net:8080',
          'noProxy': ''
      },
-    
+   
+    //Headless chrome
     chromeOptions: {
      args: process.env.HEADLESS
        ? [‘--headless’, ‘--no-sandbox’, ‘--disable-dev-shm-usage’]

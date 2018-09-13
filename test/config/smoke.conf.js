@@ -34,8 +34,18 @@ exports.config = {
          'sslProxy': 'proxyout.reform.hmcts.net:8080',
          'noProxy': ''
      },
-     "chromeOptions": {
+   
+//     //Headless chrome
+//     chromeOptions: {
+//      args: process.env.HEADLESS
+//        ? [‘--headless’, ‘--no-sandbox’, ‘--disable-dev-shm-usage’]
+//        : [],
+//      binary: process.env.HEADLESS ? puppeteer.executablePath() : undefined,
+//    }, 
+    
+    "chromeOptions": {
          "args": [
+            "--headless",
             "no-sandbox",
             "--disable-web-security"
          ]

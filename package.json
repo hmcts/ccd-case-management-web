@@ -105,6 +105,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "prettier": "^1.7.4",
     "protractor": "^5.4.0",
+    "puppeteer": "^1.6.0",
     "protractor-beautiful-reporter": "^1.2.1",
     "protractor-cucumber-framework": "^4.2.0",
     "protractor-screenshoter-plugin": "^0.10.1",

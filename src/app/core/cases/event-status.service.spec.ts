@@ -17,8 +17,13 @@ describe('EventStatusService', () => {
       .toBeFalsy();
   });
 
-  it('should identify incomplete eventStatus as INCOMPLETE', () => {
-    expect(EventStatusService.isIncomplete('INCOMPLETE'))
+  it('should identify incomplete eventStatus as INCOMPLETE_CALLBACK', () => {
+    expect(EventStatusService.isIncomplete('INCOMPLETE_CALLBACK'))
+      .toBeTruthy();
+  });
+
+  it('should identify incomplete eventStatus as INCOMPLETE_DELETE_DRAFT', () => {
+    expect(EventStatusService.isIncomplete('INCOMPLETE_DELETE_DRAFT'))
       .toBeTruthy();
   });
 

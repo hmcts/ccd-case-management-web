@@ -48,6 +48,9 @@ export class SearchResultComponent implements OnChanges {
   @Input()
   paginationMetadata: PaginationMetadata;
 
+  @Input()
+  metadataFields: string[];
+
   @Output()
   changePage: EventEmitter<any> = new EventEmitter();
 
@@ -61,6 +64,7 @@ export class SearchResultComponent implements OnChanges {
     caseType?: CaseType,
     caseState?: CaseState,
     formGroup?: FormGroup,
+    metadataFields?: string[],
     page?: number
   } = {};
 
@@ -104,6 +108,7 @@ export class SearchResultComponent implements OnChanges {
     this.selected.caseType = this.caseType;
     this.selected.caseState = this.caseState;
     this.selected.formGroup = this.caseFilterFG;
+    this.selected.metadataFields = this.metadataFields;
     this.selected.page = page;
     // Apply filters
     this.changePage.emit(this.selected);

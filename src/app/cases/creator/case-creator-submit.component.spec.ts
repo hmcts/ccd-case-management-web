@@ -254,7 +254,7 @@ describe('CaseCreatorSubmitComponent', () => {
   it('should alert success message after navigation upon successful event creation and call back', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'happy'});
+    component.submitted({caseId: 123, status: 'CALLBACK_COMPLETED'});
 
     expect(alertService.success).toHaveBeenCalled();
   });
@@ -262,7 +262,15 @@ describe('CaseCreatorSubmitComponent', () => {
   it('should alert warning message after navigation upon successful event creation but incomplete call back', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'INCOMPLETE'});
+    component.submitted({caseId: 123, status: 'INCOMPLETE_CALLBACK'});
+
+    expect(alertService.warning).toHaveBeenCalled();
+  });
+
+  it('should alert warning message after navigation upon successful event creation but incomplete delete draft', () => {
+    casesService.createCase.and.returnValue(CREATED_CASE_OBS);
+
+    component.submitted({caseId: 123, status: 'INCOMPLETE_DELETE_DRAFT'});
 
     expect(alertService.warning).toHaveBeenCalled();
   });

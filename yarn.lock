@@ -270,7 +270,7 @@
     chalk "^2.0.0"
     esutils "^2.0.2"
     js-tokens "^3.0.0"
-
+    
 "@babel/parser@7.0.0-beta.51":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.51.tgz#27cec2df409df60af58270ed8f6aa55409ea86f6"
@@ -307,9 +307,9 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.4.tgz#8dd3aad8f918424eae423496c833e0dda161feda"
+"@hmcts/ccd-case-ui-toolkit@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.3.tgz#a9666ae633553beaddc7885e5b1a150a3adee4ed"
   dependencies:
     govuk-elements-sass "^3.1.2"
     karma-jasmine-html-reporter "^1.2.0"
@@ -3749,6 +3749,10 @@ get-func-name@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.0.tgz#ead774abee72e20409433a066366023dd6887a41"
 
+get-func-name@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.0.tgz#ead774abee72e20409433a066366023dd6887a41"
+
 get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
@@ -5015,6 +5019,7 @@ jasmine@2.8.0:
 jasminewd2@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
+
 
 jest-diff@^23.5.0:
   version "23.5.0"
@@ -7003,6 +7008,10 @@ preserve@^0.2.0:
 prettier@^1.12.1:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.0.tgz#847c235522035fd988100f1f43cf20a7d24f9372"
+
+prettier@^1.7.4:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
 
 prettier@^1.7.4:
   version "1.14.2"

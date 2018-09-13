@@ -10,6 +10,8 @@ import { SearchInput } from '../../../core/search/search-input.model';
 import { OrderService } from '../../../core/order/order.service';
 import { AbstractFieldWriteComponent } from '../../palette/base-field/abstract-field-write.component';
 import { JurisdictionService } from '../../jurisdiction.service';
+import { READ_ACCESS } from '../../domain/case-view/access-types.model';
+import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { CaseType } from '../../domain/definition/case-type.model';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
@@ -17,8 +19,7 @@ import createSpyObj = jasmine.createSpyObj;
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
-  description: '',
-  caseTypes: []
+  description: ''
 };
 const CASE_TYPE_1: CaseType = {
   id: 'CT0',
@@ -32,8 +33,7 @@ const CASE_TYPE_1: CaseType = {
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
-  description: '',
-  caseTypes: []
+  description: ''
 };
 
 const CASE_TYPES_2: CaseType[] = [
@@ -120,6 +120,7 @@ function createObservableFrom<T>(param: T): Observable<T> {
 let searchHandler;
 let mockSearchService;
 let orderService;
+let definitionsService;
 
 const TEST_FORM_GROUP = new FormGroup({});
 const METADATA_FIELDS = ['PersonLastName'];
@@ -135,6 +136,8 @@ describe('SearchFiltersComponent', () => {
 
     searchHandler = createSpyObj('searchHandler', ['applyFilters']);
     mockSearchService = createSpyObj('mockSearchService', ['getSearchInputs']);
+    definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
+    definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
     orderService = createSpyObj('orderService', ['sortAsc']);
     jurisdictionService = new JurisdictionService();
 
@@ -151,6 +154,7 @@ describe('SearchFiltersComponent', () => {
           { provide: SearchService, useValue: mockSearchService },
           { provide: OrderService, useValue: orderService },
           { provide: JurisdictionService, useValue: jurisdictionService },
+          { provide: DefinitionsService, useValue: definitionsService }
         ]
       })
       .compileComponents();
@@ -179,7 +183,7 @@ describe('SearchFiltersComponent', () => {
   });
 
   it('should select the caseType if there is only one caseType', () => {
-    resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1]);
+    definitionsService.getCaseTypes.and.returnValue(Observable.of([CASE_TYPE_1]));
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
     fixture.detectChanges();
@@ -213,36 +217,38 @@ describe('SearchFiltersComponent', () => {
       .then(() => {
         expect(selector.nativeElement.selectedIndex).toEqual(0);
         expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+        expect(definitionsService.getCaseTypes).toHaveBeenCalledWith(JURISDICTION_1.id, READ_ACCESS);
       });
   }));
 
   it('should populate case types dropdown with CRUD filtered case types', async(() => {
-    let selector = de.query(By.css('#s-case-type'));
-    expect(selector.children.length).toEqual(0);
+      let selector = de.query(By.css('#s-case-type'));
+      expect(selector.children.length).toEqual(0);
 
-    resetCaseTypes(JURISDICTION_1, CRUD_FILTERED_CASE_TYPES);
-    component.selected.jurisdiction = JURISDICTION_1;
-    component.onJurisdictionIdChange();
-    fixture.detectChanges();
+      definitionsService.getCaseTypes.and.returnValue(Observable.of(CRUD_FILTERED_CASE_TYPES));
+      component.selected.jurisdiction = JURISDICTION_1;
+      component.onJurisdictionIdChange();
+      fixture.detectChanges();
 
-    fixture
-      .whenStable()
-      .then(() => {
-        expect(selector.children.length).toEqual(2);
+      fixture
+        .whenStable()
+        .then(() => {
+          expect(selector.children.length).toEqual(2);
 
-        let juris1 = selector.children[0];
-        expect(juris1.nativeElement.textContent).toEqual(CRUD_FILTERED_CASE_TYPES[0].name);
+          let juris1 = selector.children[0];
+          expect(juris1.nativeElement.textContent).toEqual(CRUD_FILTERED_CASE_TYPES[0].name);
 
-        let juris2 = selector.children[1];
-        expect(juris2.nativeElement.textContent).toEqual(CRUD_FILTERED_CASE_TYPES[1].name);
+          let juris2 = selector.children[1];
+          expect(juris2.nativeElement.textContent).toEqual(CRUD_FILTERED_CASE_TYPES[1].name);
       });
   }));
 
   it('should initialise case type selector with types from selected jurisdiction', () => {
     component.selected.jurisdiction = JURISDICTION_2;
-    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.onJurisdictionIdChange();
     fixture.detectChanges();
+
+    expect(definitionsService.getCaseTypes).toHaveBeenCalledWith(JURISDICTION_2.id, READ_ACCESS);
 
     let selector = de.query(By.css('#s-case-type'));
 
@@ -391,8 +397,3 @@ describe('SearchFiltersComponent', () => {
   }));
 
 });
-
-function resetCaseTypes(jurisdiction: Jurisdiction, caseTypes: CaseType[]) {
-  jurisdiction.caseTypes.splice(0, jurisdiction.caseTypes.length);
-  caseTypes.forEach(caseType => jurisdiction.caseTypes.push(caseType));
-}

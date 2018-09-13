@@ -43,7 +43,8 @@ export class SearchFiltersComponent implements OnInit {
 
   constructor(private searchService: SearchService,
               private orderService: OrderService,
-              private jurisdictionService: JurisdictionService) { }
+              private jurisdictionService: JurisdictionService,
+              private definitionsService: DefinitionsService) { }
 
   ngOnInit(): void {
     this.selected = {};
@@ -85,8 +86,11 @@ export class SearchFiltersComponent implements OnInit {
   onJurisdictionIdChange(): void {
     this.selected.caseType = null;
     this.jurisdictionService.announceSelectedJurisdiction(this.selected.jurisdiction);
-      this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
+    this.definitionsService.getCaseTypes(this.selected.jurisdiction.id, READ_ACCESS)
+    .subscribe(caseTypes => {
+      this.selectedJurisdictionCaseTypes = caseTypes;
       this.selectCaseType(this.selectedJurisdictionCaseTypes);
+    });
   }
 
   onCaseTypeIdChange(): void {

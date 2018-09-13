@@ -4,7 +4,7 @@
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases?view=WORKBASKET&state=CaseCreated&page=1": "/cases",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:id": "/case",
   "/data/caseworkers/:uid/profile": "/profile",
-  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/work-basket-inputs": "/work-basket-inputs",
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/work-basket-inputs": "/profile",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/event-triggers/:etid": "/event-trigger",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:cid/event-triggers/:etid": "/event-trigger",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/event-triggers/:etid" : "/create-case-event-trigger",

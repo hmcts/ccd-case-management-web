@@ -62,8 +62,7 @@ describe('DefinitionsService', () => {
         jurisdiction: {
           id: 'PROBATE',
           name: 'Probate',
-          description: 'Content for the Test Jurisdiction.',
-          caseTypes: []
+          description: 'Content for the Test Jurisdiction.'
         }
       };
     }

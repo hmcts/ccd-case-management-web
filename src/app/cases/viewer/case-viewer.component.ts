@@ -50,7 +50,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initDialog();
-    console.log('HERE !!!!!!!!!!!');
+
     this.caseDetails = this.route.snapshot.data.case;
 
     // Clone and sort tabs array
@@ -63,7 +63,6 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));
     });
-    console.log('HERE !!!!!!!!!!! 222222');
   }
 
   ngOnDestroy() {
@@ -96,12 +95,9 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     }
 
     // we may need to take care of different triggers in the future
-    console.log('trigger.id=', trigger.id);
     if (trigger.id === CaseViewTrigger.DELETE) {
       const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
-      console.log('dialogRef=', dialogRef);
       dialogRef.afterClosed().subscribe(result => {
-        console.log('result=', result);
         if (result === 'Delete case') {
           this.draftService.deleteDraft(this.caseDetails.case_type.jurisdiction.id,
             this.caseDetails.case_type.id,

@@ -13,7 +13,7 @@ export class DeleteOrCancelDialogComponent {
   constructor(private matDialogRef: MatDialogRef<DeleteOrCancelDialogComponent>) {}
 
   delete() {
-    this.result = 'Delete case';
+    this.result = 'Delete';
     this.matDialogRef.close(this.result);
   }
   cancel() {

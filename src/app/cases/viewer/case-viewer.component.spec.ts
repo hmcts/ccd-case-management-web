@@ -272,13 +272,16 @@ describe('CaseViewerComponent', () => {
    }
   ];
 
+  const JID = 'TEST';
+  const CTID = 'TestAddressBookCase';
+  const CID = '1234567890123456';
   const CASE_VIEW: CaseView = {
-    case_id: '1234567890123456',
+    case_id: CID,
     case_type: {
-      id: 'TestAddressBookCase',
+      id: CTID,
       name: 'Test Address Book Case',
       jurisdiction: {
-        id: 'TEST',
+        id: JID,
         name: 'Test',
       }
     },
@@ -365,14 +368,6 @@ describe('CaseViewerComponent', () => {
   let component: CaseViewerComponent;
   let de: DebugElement;
 
-  class MatDialogMock {
-    open() {
-      return {
-        afterClosed: () => Observable.of('Delete case')
-      };
-    }
-  };
-
   let mockRoute: any = {
     snapshot: {
       data: {
@@ -389,9 +384,8 @@ describe('CaseViewerComponent', () => {
   let alertService: any;
   let dialog: any;
   let matDialogRef: any;
-  let afterCloseCallback: any;
 
-  const $DIALOG_DELETE_BUTTON = By.css('.button[title=Delete case]');
+  const $DIALOG_DELETE_BUTTON = By.css('.button[title=Delete]');
   const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
   const DIALOG_CONFIG = new MatDialogConfig();
 
@@ -423,10 +417,6 @@ describe('CaseViewerComponent', () => {
 
     dialog = createSpyObj<MatDialog>('dialog', ['open']);
     matDialogRef = createSpyObj<MatDialogRef<DeleteOrCancelDialogComponent>>('matDialogRef', ['afterClosed', 'close']);
-    dialog.open.and.returnValue(matDialogRef);
-
-    afterCloseCallback = jasmine.createSpy('afterClose callback');
-    // matDialogRef.afterClosed().subscribe(afterCloseCallback)
 
     activityService = createSpyObj<ActivityPollingService>('activityPollingService', ['postViewActivity']);
     activityService.postViewActivity.and.returnValue(Observable.of());
@@ -640,19 +630,7 @@ describe('CaseViewerComponent', () => {
     });
   });
 
-  xit('should display dialog when DELETE action on trigger emit', () => {
-    component.applyTrigger(TRIGGERS[2]);
-    spyOn(dialog, 'open').and.callThrough();
-
-    const editButton = de.query(By.css('button[title=Delete case]'));
-    editButton.triggerEventHandler('click', null);
-
-    expect(dialog.open).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
-  });
-
-  xit('should trigger the delete case event when delete case button is clicked', () => {
-    component.applyTrigger(TRIGGERS[2]);
+  it('should trigger the delete case event when delete case button is clicked', () => {
     fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
     componentDialog = fixtureDialog.componentInstance;
     deDialog = fixtureDialog.debugElement;
@@ -660,11 +638,12 @@ describe('CaseViewerComponent', () => {
 
     let dialogDeleteButton = deDialog.query($DIALOG_DELETE_BUTTON);
     dialogDeleteButton.nativeElement.click();
-    expect(componentDialog.result).toEqual('Delete case');
+
+    expect(componentDialog.result).toEqual('Delete');
     fixture.detectChanges();
   });
 
-  xit('should not trigger the delete case event when cancel button is clicked', () => {
+  it('should not trigger the delete case event when cancel button is clicked', () => {
     fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
     componentDialog = fixtureDialog.componentInstance;
     deDialog = fixtureDialog.debugElement;
@@ -672,6 +651,7 @@ describe('CaseViewerComponent', () => {
 
     let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
     dialogCancelButton.nativeElement.click();
+
     expect(componentDialog.result).toEqual('Cancel');
     fixture.detectChanges();
   });

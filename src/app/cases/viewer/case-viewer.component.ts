@@ -98,7 +98,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     if (trigger.id === CaseViewTrigger.DELETE) {
       const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
-        if (result === 'Delete case') {
+        if (result === 'Delete') {
           this.draftService.deleteDraft(this.caseDetails.case_type.jurisdiction.id,
             this.caseDetails.case_type.id,
             this.caseDetails.case_id)

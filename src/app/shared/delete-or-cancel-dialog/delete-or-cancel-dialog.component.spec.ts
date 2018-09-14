@@ -7,7 +7,7 @@ import { DebugElement } from '@angular/core';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('DeleteOrCancelDialogComponent', () => {
-  const DELETE_BUTTON = By.css('button[title="Delete case"]');
+  const DELETE_BUTTON = By.css('button[title="Delete"]');
   const CANCEL_BUTTON = By.css('button[title="Cancel"]');
 
   let component: DeleteOrCancelDialogComponent;
@@ -38,13 +38,13 @@ describe('DeleteOrCancelDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should close dialog with `Delete case` when delete button clicked', () => {
+  it('should close dialog with `Delete` when delete button clicked', () => {
     let deleteButton = de.query(DELETE_BUTTON);
 
     deleteButton.nativeElement.click();
     fixture.detectChanges();
 
-    expect(matDialogRef.close).toHaveBeenCalledWith('Delete case');
+    expect(matDialogRef.close).toHaveBeenCalledWith('Delete');
   });
 
   it('should close dialog with `Cancel` when cancel button clicked', () => {

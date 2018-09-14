@@ -78,7 +78,7 @@ exports.config = {
 
   plugins: [{
         package: "protractor-screenshoter-plugin",
-        screenshotPath: "build/smoke-output/",
+        screenshotPath: "/build/smoke-output/",
         screenshotOnExpect: "failure+success",
         screenshotOnSpec: "none",
         withLogs: true,

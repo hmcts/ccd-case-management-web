@@ -20,7 +20,8 @@ describe('CoreComponent', () => {
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
     name: 'Divorce',
-    description: 'Divorce description'
+    description: 'Divorce description',
+    caseTypes: []
   };
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [

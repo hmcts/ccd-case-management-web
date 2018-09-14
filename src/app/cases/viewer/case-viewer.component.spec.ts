@@ -21,6 +21,10 @@ import { ActivityPollingService } from '../../core/activity/activity.polling.ser
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
+import { DraftService } from '../../core/draft/draft.service';
+import { AlertService } from '../../core/alert/alert.service';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line
@@ -109,6 +113,11 @@ describe('CaseViewerComponent', () => {
       id: 'RESUME',
       name: 'Resume',
       description: 'Resume Draft'
+    },
+    {
+      id: 'DELETE',
+      name: 'Delete',
+      description: 'Delete Draft'
     }
   ];
 
@@ -350,8 +359,19 @@ describe('CaseViewerComponent', () => {
   ERROR.message = 'Critical error!';
 
   let fixture: ComponentFixture<CaseViewerComponent>;
+  let fixtureDialog: ComponentFixture<DeleteOrCancelDialogComponent>;
+  let componentDialog: DeleteOrCancelDialogComponent;
+  let deDialog: DebugElement;
   let component: CaseViewerComponent;
   let de: DebugElement;
+
+  class MatDialogMock {
+    open() {
+      return {
+        afterClosed: () => Observable.of('Delete case')
+      };
+    }
+  };
 
   let mockRoute: any = {
     snapshot: {
@@ -365,6 +385,15 @@ describe('CaseViewerComponent', () => {
   let router: any;
   let mockCallbackErrorSubject: any;
   let activityService: any;
+  let draftService: any;
+  let alertService: any;
+  let dialog: any;
+  let matDialogRef: any;
+  let afterCloseCallback: any;
+
+  const $DIALOG_DELETE_BUTTON = By.css('.button[title=Delete case]');
+  const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
+  const DIALOG_CONFIG = new MatDialogConfig();
 
   let CaseActivityComponent: any = MockComponent({
     selector: 'ccd-activity',
@@ -384,6 +413,21 @@ describe('CaseViewerComponent', () => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
 
+    draftService = createSpyObj('draftService', ['deleteDraft']);
+    draftService.deleteDraft.and.returnValue(Observable.of({}));
+
+    alertService = createSpyObj('draftService', ['setPreserveAlerts', 'success', 'warning']);
+    alertService.setPreserveAlerts.and.returnValue(Observable.of({}));
+    alertService.success.and.returnValue(Observable.of({}));
+    alertService.warning.and.returnValue(Observable.of({}));
+
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    matDialogRef = createSpyObj<MatDialogRef<DeleteOrCancelDialogComponent>>('matDialogRef', ['afterClosed', 'close']);
+    dialog.open.and.returnValue(matDialogRef);
+
+    afterCloseCallback = jasmine.createSpy('afterClose callback');
+    // matDialogRef.afterClosed().subscribe(afterCloseCallback)
+
     activityService = createSpyObj<ActivityPollingService>('activityPollingService', ['postViewActivity']);
     activityService.postViewActivity.and.returnValue(Observable.of());
 
@@ -399,6 +443,7 @@ describe('CaseViewerComponent', () => {
         declarations: [
           CaseViewerComponent,
           LabelSubstitutorDirective,
+          DeleteOrCancelDialogComponent,
           // Mock
           CaseActivityComponent,
           FieldReadComponent,
@@ -409,7 +454,7 @@ describe('CaseViewerComponent', () => {
           CallbackErrorsComponent,
           TabsComponent,
           TabComponent,
-          MarkdownComponent
+          MarkdownComponent,
         ],
         providers: [
           FieldsUtils,
@@ -417,7 +462,13 @@ describe('CaseViewerComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router },
-          { provide: ActivityPollingService, useValue: activityService }
+          { provide: ActivityPollingService, useValue: activityService },
+          { provide: DraftService, useValue: draftService },
+          { provide: AlertService, useValue: alertService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatDialogRef, useValue: matDialogRef },
+          { provide: MatDialogConfig, useValue: DIALOG_CONFIG },
+          DeleteOrCancelDialogComponent
         ]
       })
       .compileComponents();
@@ -587,6 +638,42 @@ describe('CaseViewerComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
       queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
     });
+  });
+
+  xit('should display dialog when DELETE action on trigger emit', () => {
+    component.applyTrigger(TRIGGERS[2]);
+    spyOn(dialog, 'open').and.callThrough();
+
+    const editButton = de.query(By.css('button[title=Delete case]'));
+    editButton.triggerEventHandler('click', null);
+
+    expect(dialog.open).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  xit('should trigger the delete case event when delete case button is clicked', () => {
+    component.applyTrigger(TRIGGERS[2]);
+    fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogDeleteButton = deDialog.query($DIALOG_DELETE_BUTTON);
+    dialogDeleteButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Delete case');
+    fixture.detectChanges();
+  });
+
+  xit('should not trigger the delete case event when cancel button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
+    dialogCancelButton.nativeElement.click();
+    expect(componentDialog.result).toEqual('Cancel');
+    fixture.detectChanges();
   });
 
   it('should notify user about errors/warnings when trigger applied and response with callback warnings/errors', () => {

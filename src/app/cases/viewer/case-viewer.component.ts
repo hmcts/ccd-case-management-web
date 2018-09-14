@@ -14,7 +14,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
 import { HttpError } from '../../core/http/http-error.model';
+import { DraftService } from '../../core/draft/draft.service';
 import { Draft } from '../../shared/domain/draft';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -30,6 +34,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   ignoreWarning = false;
   subscription: Subscription;
+  dialogConfig: MatDialogConfig;
 
   callbackErrorsSubject: Subject<any> = new Subject();
 
@@ -38,9 +43,14 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private router: Router,
     private orderService: OrderService,
     private activityPollingService: ActivityPollingService,
+    private dialog: MatDialog,
+    private alertService: AlertService,
+    private draftService: DraftService
   ) {}
 
   ngOnInit(): void {
+    this.initDialog();
+    console.log('HERE !!!!!!!!!!!');
     this.caseDetails = this.route.snapshot.data.case;
 
     // Clone and sort tabs array
@@ -53,6 +63,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));
     });
+    console.log('HERE !!!!!!!!!!! 222222');
   }
 
   ngOnDestroy() {
@@ -85,7 +96,34 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     }
 
     // we may need to take care of different triggers in the future
-    if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
+    console.log('trigger.id=', trigger.id);
+    if (trigger.id === CaseViewTrigger.DELETE) {
+      const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
+      console.log('dialogRef=', dialogRef);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('result=', result);
+        if (result === 'Delete case') {
+          this.draftService.deleteDraft(this.caseDetails.case_type.jurisdiction.id,
+            this.caseDetails.case_type.id,
+            this.caseDetails.case_id)
+            .subscribe(_ => {
+              return this.router.navigate(['list/case'])
+                .then(() => {
+                  this.alertService.setPreserveAlerts(true);
+                  this.alertService.success(`The draft has been successfully deleted`);
+                })
+                .catch(error => {
+                  this.handleError(error, trigger)
+                });
+            }, _ => {
+              return this.router.navigate(['list/case'])
+              .catch(error => {
+                this.handleError(error, trigger)
+              });
+            });
+        }
+      });
+    } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
       theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
       return this.router.navigate(
         ['create/case',
@@ -101,6 +139,21 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       }).catch(error => {
         this.handleError(error, trigger)
       });
+    }
+  }
+
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.height = '245px';
+    this.dialogConfig.width = '550px';
+    this.dialogConfig.panelClass = 'dialog';
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
   }
 

@@ -10,7 +10,7 @@ export class Draft {
   updated?: string;
 
   public static stripDraftId (draftId: string): string {
-    return draftId.slice(5);
+    return draftId.slice(Draft.DRAFT.length);
   }
 
   public static isDraft (id: string): boolean {

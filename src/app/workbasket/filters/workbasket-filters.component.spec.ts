@@ -17,6 +17,7 @@ import { WorkbasketInputFilterService } from '../workbasket-input-filter.service
 import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
+import { NavigationStart } from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({
@@ -176,7 +177,7 @@ describe('WorkbasketFiltersComponent', () => {
       router.navigate.and.returnValue(Promise.resolve('someResult'));
       definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
       definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -508,7 +509,7 @@ describe('WorkbasketFiltersComponent', () => {
       router.navigate.and.returnValue(Promise.resolve('someResult'));
       definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
       definitionsService.getCaseTypes.and.returnValue(Observable.of(CRUD_FILTERED_CASE_TYPES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -602,7 +603,7 @@ describe('WorkbasketFiltersComponent', () => {
       router.navigate.and.returnValue(Promise.resolve('someResult'));
       definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
       definitionsService.getCaseTypes.and.returnValue(Observable.of(EMPTY_CASE_TYPES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -673,7 +674,7 @@ describe('WorkbasketFiltersComponent', () => {
       router.navigate.and.returnValue(Promise.resolve('someResult'));
       definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
       definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPE_WITH_EMPTY_STATES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -755,7 +756,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
         snapshot: {
@@ -844,7 +845,7 @@ describe('WorkbasketFiltersComponent', () => {
       router.navigate.and.returnValue(Promise.resolve('someResult'));
       definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
       definitionsService.getCaseTypes.and.returnValue(Observable.of(EMPTY_CASE_TYPES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));

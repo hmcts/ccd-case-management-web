@@ -30,12 +30,12 @@ describe('Drafts Service', () => {
   let draftService: DraftService;
 
   beforeEach(() => {
-    appConfig = createSpyObj<AppConfig>('appConfig', ['getDraftsUrl', 'getCaseDataUrl', 'getApiUrl']);
+    appConfig = createSpyObj<AppConfig>('appConfig', ['getCreateOrUpdateDraftsUrl', 'getViewOrDeleteDraftsUrl', 'getCaseDataUrl']);
     appConfig.getCaseDataUrl.and.returnValue(DATA_URL);
-    appConfig.getDraftsUrl.and.returnValue(DRAFT_URL);
-    appConfig.getApiUrl.and.returnValue(DATA_URL);
+    appConfig.getCreateOrUpdateDraftsUrl.and.returnValue(DRAFT_URL);
+    appConfig.getViewOrDeleteDraftsUrl.and.returnValue(GET_DRAFT_URL);
 
-    httpService = createSpyObj<HttpService>('httpService', ['get', 'post', 'put']);
+    httpService = createSpyObj<HttpService>('httpService', ['get', 'post', 'put', 'delete']);
     errorService = createSpyObj<HttpErrorService>('errorService', ['setError']);
 
     draftService = new DraftService(httpService, appConfig, errorService);
@@ -159,6 +159,31 @@ describe('Drafts Service', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
       draftService
         .getDraft(JID, CT_ID, DRAFT_ID)
+        .subscribe(data => {
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(errorService.setError).toHaveBeenCalledWith(ERROR);
+        });
+    });
+  });
+
+  describe('deleteDraft()', () => {
+
+    beforeEach(() => {
+      httpService.delete.and.returnValue(Observable.of(new Response(new ResponseOptions())));
+    });
+
+    it('should delete draft on server', () => {
+      draftService
+        .deleteDraft(JID, CT_ID, DRAFT_ID);
+
+      expect(httpService.delete).toHaveBeenCalledWith(GET_DRAFT_URL + '1');
+    });
+
+    it('should set error when error is thrown when deleting draft', () => {
+      httpService.delete.and.returnValue(Observable.throw(ERROR));
+      draftService
+        .deleteDraft(JID, CT_ID, DRAFT_ID)
         .subscribe(data => {
         }, err => {
           expect(err).toEqual(ERROR);

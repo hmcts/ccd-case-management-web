@@ -68,8 +68,7 @@ app.use(helmet.contentSecurityPolicy({
             '\'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU=\'',
             '\'sha256-AaA9Rn5LTFZ5vKyp3xOfFcP4YbyOjvWn2up8IKHVAKk=\'',
             '\'sha256-G29/qSW/JHHANtFhlrZVDZW1HOkCDRc78ggbqwwIJ2g=\'',
-            'www.google-analytics.com',
-            `'nonce-${uuid}'`
+            'www.google-analytics.com'
         ],
         connectSrc: ['\'self\''],
         mediaSrc: ['\'self\''],

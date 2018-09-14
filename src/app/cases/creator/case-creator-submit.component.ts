@@ -96,7 +96,8 @@ export class CaseCreatorSubmitComponent implements OnInit {
         this.alertService.warning(`Case #${caseReference} has been created but the callback service cannot be completed`);
         break;
       case EventStatusService.DELETE_DRAFT_STATUS_INCOMPLETE:
-        this.alertService.warning(`Case #${caseReference} has been created. The draft has not been deleted.`);
+        this.alertService.warning(`Case #${caseReference} has been created. The draft store is currently down so the draft
+         was not deleted.`);
         break;
     }
   }

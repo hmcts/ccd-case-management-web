@@ -80,7 +80,7 @@ exports.config = {
         package: "protractor-screenshoter-plugin",
         screenshotPath: "/build/smoke-output/",
         screenshotOnExpect: "failure+success",
-        screenshotOnSpec: "none",
+        screenshotOnSpec: "failure+success",
         withLogs: true,
         writeReportFreq: "asap",
         clearFoldersBeforeTest: true

@@ -3,7 +3,6 @@ import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.mod
 import { CaseType } from '../../../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CaseEvent } from '../../../shared/domain/definition/case-event.model';
-import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { OrderService } from '../../../core/order/order.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
@@ -11,7 +10,6 @@ import { CallbackErrorsContext } from '../../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../../shared/error/callback-errors.component';
 import { HttpError } from '../../../core/http/http-error.model';
 import { AlertService } from '../../../core/alert/alert.service';
-import { CREATE_ACCESS } from '../../../shared/domain/case-view/access-types.model';
 
 @Component({
   selector: 'ccd-create-case-filters',
@@ -47,9 +45,9 @@ export class CreateCaseFiltersComponent implements OnInit {
   error: HttpError;
 
   constructor(private router: Router,
-              private definitionsService: DefinitionsService,
               private orderService: OrderService,
-              private alertService: AlertService) { }
+              private alertService: AlertService) {
+  }
 
   ngOnInit(): void {
     this.selected = {};
@@ -63,11 +61,8 @@ export class CreateCaseFiltersComponent implements OnInit {
     if (this.filterJurisdictionControl.value !== '') {
       this.formGroup.controls['caseType'].enable();
       this.selected.jurisdiction = this.findJurisdiction(this.jurisdictions, this.filterJurisdictionControl.value);
-      this.definitionsService.getCaseTypes(this.selected.jurisdiction.id, CREATE_ACCESS)
-          .subscribe(caseTypes => {
-            this.selectedJurisdictionCaseTypes = caseTypes;
-            this.selectCaseType(this.selectedJurisdictionCaseTypes, this.filterCaseTypeControl);
-      });
+      this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
+      this.selectCaseType(this.selectedJurisdictionCaseTypes, this.filterCaseTypeControl);
     }
   }
 
@@ -132,9 +127,9 @@ export class CreateCaseFiltersComponent implements OnInit {
     }
   }
 
-  private selectCaseType(jurisdictions: Jurisdiction[], filterCaseTypeControl: FormControl) {
-    if (jurisdictions.length === 1) {
-      filterCaseTypeControl.setValue(jurisdictions[0].id);
+  private selectCaseType(caseTypes: CaseType[], filterCaseTypeControl: FormControl) {
+    if (caseTypes.length === 1) {
+      filterCaseTypeControl.setValue(caseTypes[0].id);
       this.onCaseTypeIdChange();
     }
   }
@@ -161,9 +156,9 @@ export class CreateCaseFiltersComponent implements OnInit {
   private initControls(): void {
     this.filterJurisdictionControl = new FormControl('');
     this.formGroup.addControl('jurisdiction', this.filterJurisdictionControl);
-    this.filterCaseTypeControl = new FormControl({value: '', disabled: true});
+    this.filterCaseTypeControl = new FormControl({ value: '', disabled: true });
     this.formGroup.addControl('caseType', this.filterCaseTypeControl);
-    this.filterEventControl = new FormControl({value: '', disabled: true});
+    this.filterEventControl = new FormControl({ value: '', disabled: true });
     this.formGroup.addControl('event', this.filterEventControl);
   }
 

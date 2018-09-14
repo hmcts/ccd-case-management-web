@@ -56,6 +56,7 @@ app.enable('trust proxy');
 
 // Security library helmet to verify 11 smaller middleware functions
 app.use(helmet());
+app.use(helmet.hidePoweredBy({ setTo: 'Blood Sweat Tears' }));
 
 // Content security policy to allow just assets from same domain
 app.use(helmet.contentSecurityPolicy({

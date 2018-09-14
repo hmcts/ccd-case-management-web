@@ -12,7 +12,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  specs: ["../specs/*/*.*.spec.js"],
+  specs: ["../end-to-end/specs/*/login.*.spec.js"],
 
   exclude: [],
 
@@ -23,13 +23,14 @@ exports.config = {
   framework: 'jasmine2',
 
   multiCapabilities: [{
-        browserName: 'chrome',
+        browserName: 'firefox',
         version: 'latest',
         platform: 'Windows 7',
         name: "chrome-tests",
         shardTestFiles: true,
         maxInstances: 1,
-        "tunnel-identifier": 'saucelabs-crossbrowser'
+        "tunnel-identifier": 'reformtunnel',
+        "tags":'ccd-crossbrowser'
     }],
 
   jasmineNodeOpts: {

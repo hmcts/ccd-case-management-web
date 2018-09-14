@@ -13,6 +13,7 @@ exports.config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
   specs: ["../end-to-end/specs/*/login.*.spec.js"],
+  //seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
 
   exclude: [],
 
@@ -30,7 +31,9 @@ exports.config = {
         shardTestFiles: true,
         maxInstances: 1,
         "tunnel-identifier": 'reformtunnel',
-        "tags":'ccd-crossbrowser'
+        host: 'ondemand.saucelabs.com',
+        port: 80,
+        tags:'ccd-crossbrowser'
     }],
 
   jasmineNodeOpts: {

@@ -17,7 +17,6 @@ export class CaseHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.caseTitle = new CaseField();
-    console.log('caseDetails=', this.caseDetails);
     if (!this.isDraft() && this.caseDetails.state.title_display) {
       this.caseTitle.label = this.caseDetails.state.title_display;
       this.caseFields = this.getCaseFields();

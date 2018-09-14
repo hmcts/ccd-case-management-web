@@ -11,9 +11,12 @@ import { ConditionalShowRegistrarService } from './conditional-show-registrar.se
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({
-    template: `
-      <tr ccdConditionalShow [caseField]="caseField" [formGroup]="formGroup" [eventFields]="eventFields"></tr>`
+  template: `
+    <tr ccdConditionalShow [caseField]="caseField" [formGroup]="formGroup" [eventFields]="eventFields">
+      <div>Target conditional element to display</div>
+    </tr>`
 })
+
 class TestHostComponent {
 
     @Input() caseField: CaseField;
@@ -67,15 +70,17 @@ describe('ConditionalShowDirective', () => {
         expect(conditionalShow.condition).toBeUndefined();
     });
 
-  it('should display when condition matches a non collection field', () => {
-    comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
-    let fieldType = new FieldType();
-    fieldType.id = 'fieldId';
-    fieldType.type = 'Text';
-    comp.caseField.field_type = fieldType;
-    expect(comp.caseField.field_type.type).toBe('Text');
-    comp.eventFields = [comp.caseField, field('PersonLastName', 'Doe', '')];
-  });
+    it('should display gray bar when condition matches', () => {
+      comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
+      let fieldType = new FieldType();
+      fieldType.id = 'fieldId';
+      fieldType.type = 'Text';
+      comp.caseField.field_type = fieldType;
+      expect(comp.caseField.field_type.type).toBe('Text');
+      comp.eventFields = [comp.caseField, field('PersonLastName', 'Doe', '')];
+      fixture.detectChanges();
+      expect(el.hidden).toBe(false);
+    });
 
     it('should display when condition matches a read only field. No form fields', () => {
         comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');

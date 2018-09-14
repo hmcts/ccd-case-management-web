@@ -122,12 +122,23 @@ export class FieldsUtils {
     return Object.assign({}, obj);
   }
 
-  showGrayBar(caseField: CaseField, element: any) {
+  showGrayBar(caseField: CaseField, element: HTMLElement) {
     if (caseField && caseField.field_type && caseField.field_type.type !== 'Collection') {
       let divSelector = element.querySelector('div');
-      let cyaSelector = element.closest('form.check-your-answers');
-      if (divSelector && !cyaSelector) {
-        divSelector.classList.add('panel');
+      let cyaSelector = false;
+      if (divSelector) {
+        let ele = divSelector.parentElement;
+        while (ele.parentElement) {
+          if (ele.tagName === 'FORM') {
+            if (ele.classList.contains('check-your-answers')) {
+              cyaSelector = true;
+            }
+          }
+          ele = ele.parentElement;
+        }
+        if (!cyaSelector) {
+          divSelector.classList.add('panel');
+        }
       }
     }
   }

@@ -17,7 +17,6 @@ import { WorkbasketInputFilterService } from '../workbasket-input-filter.service
 import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
-import { NavigationStart } from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({

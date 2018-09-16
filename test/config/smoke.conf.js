@@ -34,8 +34,18 @@ exports.config = {
          'sslProxy': 'proxyout.reform.hmcts.net:8080',
          'noProxy': ''
      },
-     "chromeOptions": {
+   
+//     //Headless chrome
+//     chromeOptions: {
+//      args: process.env.HEADLESS
+//        ? [‘--headless’, ‘--no-sandbox’, ‘--disable-dev-shm-usage’]
+//        : [],
+//      binary: process.env.HEADLESS ? puppeteer.executablePath() : undefined,
+//    }, 
+    
+    "chromeOptions": {
          "args": [
+            "--headless",
             "no-sandbox",
             "--disable-web-security"
          ]
@@ -68,9 +78,9 @@ exports.config = {
 
   plugins: [{
         package: "protractor-screenshoter-plugin",
-        screenshotPath: "../smoke-output/",
+        screenshotPath: "./smoke-output",
         screenshotOnExpect: "failure+success",
-        screenshotOnSpec: "none",
+        screenshotOnSpec: "failure+success",
         withLogs: true,
         writeReportFreq: "asap",
         clearFoldersBeforeTest: true

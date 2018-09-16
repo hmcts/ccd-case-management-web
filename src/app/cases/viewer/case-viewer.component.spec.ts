@@ -555,11 +555,11 @@ describe('CaseViewerComponent', () => {
   it('should render each field value using FieldReadComponent', () => {
     let readFields_fields = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr td>ccd-field-read'));
+      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
 
     let readFields_compound = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr th>ccd-field-read'));
+      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
 
     let readFields = readFields_fields.concat(readFields_compound);
 
@@ -570,7 +570,7 @@ describe('CaseViewerComponent', () => {
         }))
         .toBeTruthy(`Could not find field with type ${field.field_type}`);
     });
-    expect(FIELDS.length).toBe(readFields.length);
+    expect(FIELDS.length).toBe(readFields_fields.length);
   });
 
   it('should render fields in ascending order', () => {

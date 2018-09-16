@@ -4,12 +4,9 @@ import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.model';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCaseFiltersComponent } from './create-case-filters.component';
-import { DefinitionsService } from '../../../core/definitions/definitions.service';
-import { Observable } from 'rxjs/Observable';
 import { OrderService } from '../../../core/order/order.service';
 import { CaseEvent } from '../../../shared/domain/definition/case-event.model';
 import { Router } from '@angular/router';
-import createSpyObj = jasmine.createSpyObj;
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../../shared/error/error-context';
 import { attr, text } from '../../../test/helpers';
@@ -17,7 +14,7 @@ import { HttpError } from '../../../core/http/http-error.model';
 import { AlertService } from '../../../core/alert/alert.service';
 import { CaseType } from '../../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../../shared/jurisdiction.service';
-import { CREATE_ACCESS } from '../../../shared/domain/case-view/access-types.model';
+import createSpyObj = jasmine.createSpyObj;
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';
@@ -29,7 +26,8 @@ const EVENT_NAME_3 = 'Event three';
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
-  description: ''
+  description: '',
+  caseTypes: []
 };
 
 const CASE_TYPES_1: CaseType[] = [
@@ -72,7 +70,8 @@ const CASE_TYPES_1: CaseType[] = [
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
-  description: ''
+  description: '',
+  caseTypes: []
 };
 
 const CASE_TYPES_2: CaseType[] = [
@@ -208,6 +207,7 @@ const CASE_TYPE: CaseType = {
     id: 'PROBATE',
     name: 'Probate',
     description: 'Content for the Test Jurisdiction.',
+    caseTypes: []
   }
 };
 
@@ -248,7 +248,6 @@ class CallbackErrorsComponent {
 
 }
 
-let mockDefinitionsService;
 let mockRouter: any;
 let mockOrderService: any;
 let mockCallbackErrorSubject: any;
@@ -275,8 +274,6 @@ describe('CreateCaseFiltersComponent', () => {
   beforeEach(async(() => {
     mockOrderService = createSpyObj<OrderService>('orderService', ['sort']);
     mockOrderService.sort.and.returnValue(SORTED_CASE_EVENTS);
-    mockDefinitionsService = createSpyObj('mockDefinitionsService', ['getCaseTypes']);
-    mockDefinitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
     mockRouter = createSpyObj<Router>('router', ['navigate']);
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<Router>('callbackErrorSubject', ['next']);
@@ -293,7 +290,6 @@ describe('CreateCaseFiltersComponent', () => {
           CreateCaseFiltersComponent,
           CallbackErrorsComponent
         ], providers: [
-          { provide: DefinitionsService, useValue: mockDefinitionsService },
           { provide: Router, useValue: mockRouter },
           { provide: OrderService, useValue: mockOrderService },
           { provide: AlertService, useValue: mockAlertService },
@@ -325,8 +321,8 @@ describe('CreateCaseFiltersComponent', () => {
   });
 
   it('should select the caseType if there is only one caseType', () => {
-    mockDefinitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_1));
     component.jurisdictions = [JURISDICTION_1];
+    resetCaseTypes(JURISDICTION_1, CASE_TYPES_1);
     fixture.detectChanges();
     component.ngOnInit();
     fixture.detectChanges();
@@ -336,7 +332,7 @@ describe('CreateCaseFiltersComponent', () => {
 
   it('should select the event if there is only one event', () => {
     component.jurisdictions = [JURISDICTION_1];
-    mockDefinitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_1_SINGLE_EVENT));
+    resetCaseTypes(JURISDICTION_1, CASE_TYPES_1_SINGLE_EVENT);
     mockOrderService.sort.and.returnValue(SINGLE_EVENT);
     fixture.detectChanges();
     component.ngOnInit();
@@ -347,7 +343,7 @@ describe('CreateCaseFiltersComponent', () => {
   });
 
   it('should sort events', () => {
-    mockDefinitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_1));
+    resetCaseTypes(JURISDICTION_1, CASE_TYPES_1);
     component.filterJurisdictionControl.setValue(JURISDICTION_1.id);
     component.onJurisdictionIdChange();
     component.filterCaseTypeControl.setValue(CASE_TYPES_1[0].id);
@@ -377,7 +373,7 @@ describe('CreateCaseFiltersComponent', () => {
   });
 
   it('should update selected jurisdiction', async(() => {
-    mockDefinitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_1_SINGLE_EVENT));
+    resetCaseTypes(JURISDICTION_1, CASE_TYPES_1_SINGLE_EVENT);
     component.filterJurisdictionControl.setValue(JURISDICTION_1.id);
     component.onJurisdictionIdChange();
     fixture.detectChanges();
@@ -389,11 +385,11 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should initialise case type selector with types from selected jurisdiction but no events', async(() => {
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     fixture.detectChanges();
 
-    expect(mockDefinitionsService.getCaseTypes).toHaveBeenCalledWith(JURISDICTION_2.id, CREATE_ACCESS);
     let selector = de.query($SELECT_CASE_TYPE);
 
     expect(selector.children.length).toEqual(4);
@@ -415,6 +411,7 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should update selected case type', async(() => {
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     component.filterCaseTypeControl.setValue(CASE_TYPES_2[2].id);
@@ -426,6 +423,8 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should disable case type and event if jurisdiction not selected', async(() => {
+    resetCaseTypes(JURISDICTION_1, CASE_TYPES_1);
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue('');
     component.onJurisdictionIdChange();
 
@@ -453,14 +452,13 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should initialise event selector from case type with no pre states', async(() => {
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     component.filterCaseTypeControl.setValue(CASE_TYPES_2[2].id);
     component.onCaseTypeIdChange();
 
     fixture.detectChanges();
-
-    expect(mockDefinitionsService.getCaseTypes).toHaveBeenCalledWith('J2', CREATE_ACCESS);
 
     let selector = de.query($SELECT_EVENT);
 
@@ -492,11 +490,11 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should reset case type back to empty disabled if set before and jurisdiction changed to empty', async(() => {
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     fixture.detectChanges();
 
-    expect(mockDefinitionsService.getCaseTypes).toHaveBeenCalledWith('J2', CREATE_ACCESS);
     let caseTypeSelector = de.query($SELECT_CASE_TYPE);
     expect(caseTypeSelector.children.length).toEqual(4);
     let eventSelector = de.query($SELECT_EVENT);
@@ -517,14 +515,13 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should reset event back to default if set before and case type changed', async(() => {
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     component.filterCaseTypeControl.setValue(CASE_TYPES_2[0].id);
     component.onCaseTypeIdChange();
 
     fixture.detectChanges();
-
-    expect(mockDefinitionsService.getCaseTypes).toHaveBeenCalledWith('J2', CREATE_ACCESS);
 
     let eventSelector = de.query($SELECT_EVENT);
     expect(eventSelector.children.length).toEqual(3);
@@ -550,15 +547,13 @@ describe('CreateCaseFiltersComponent', () => {
   }));
 
   it('should reset event back to default if set before and jurisdiction changed', async(() => {
-    mockDefinitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
+    resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.filterJurisdictionControl.setValue(JURISDICTION_2.id);
     component.onJurisdictionIdChange();
     component.filterCaseTypeControl.setValue(CASE_TYPES_2[0].id);
     component.onCaseTypeIdChange();
 
     fixture.detectChanges();
-
-    expect(mockDefinitionsService.getCaseTypes).toHaveBeenCalledWith('J2', CREATE_ACCESS);
 
     let eventSelector = de.query($SELECT_EVENT);
     expect(eventSelector.children.length).toEqual(3);
@@ -905,3 +900,8 @@ describe('CreateCaseFiltersComponent', () => {
   });
 
 });
+
+function resetCaseTypes(jurisdiction: Jurisdiction, caseTypes: CaseType[]) {
+  jurisdiction.caseTypes.splice(0, jurisdiction.caseTypes.length);
+  caseTypes.forEach(caseType => jurisdiction.caseTypes.push(caseType));
+}

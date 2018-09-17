@@ -147,6 +147,65 @@ const routes: Routes = [
           }
         ]
       },
+      // While CCD is progressively moving to case ID only endpoints, routes have to be duplicated.
+      {
+        path: 'v2/case/:cid',
+        resolve: {
+          case: CaseResolver
+        },
+        runGuardsAndResolvers: 'always',
+        children: [
+          {
+            path: '',
+            component: CaseViewerComponent
+          },
+          {
+            path: 'print',
+            component: CasePrinterComponent,
+            resolve: {
+              documents: CasePrintDocumentsResolver
+            },
+          },
+          {
+            path: 'trigger/:eid',
+            resolve: {
+              eventTrigger: EventTriggerResolver
+            },
+            component: CaseEventTriggerComponent,
+            children: [
+              {
+                path: '',
+                resolve: {
+                  caseEditWizardGuard: CaseEditWizardGuard,
+                },
+                component: CaseEditPageComponent,
+              },
+              {
+                path: 'submit',
+                component: CaseEditSubmitComponent,
+              },
+              {
+                path: 'confirm',
+                component: CaseEditConfirmComponent,
+              },
+              {
+                path: ':page',
+                resolve: {
+                  caseEditWizardGuard: CaseEditWizardGuard,
+                },
+                component: CaseEditPageComponent,
+              }
+            ]
+          },
+          {
+            path: 'event/:eid/history',
+            resolve: {
+              caseHistory: CaseHistoryResolver,
+            },
+            component: CaseHistoryComponent,
+          }
+        ]
+      },
       { path: 'search', component: SearchComponent},
       { path: 'cookies', component: CookiesComponent },
       { path: 'privacy-policy', component: PrivacyComponent },

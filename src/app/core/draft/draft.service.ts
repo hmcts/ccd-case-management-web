@@ -39,7 +39,7 @@ export class DraftService {
   }
 
   getDraft(jid: string, ctid: string, draftId: string): Observable<CaseView> {
-    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid) + draftId.slice(Draft.DRAFT.length);
+    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid, draftId.slice(Draft.DRAFT.length));
     return this.http
       .get(url)
       .map(response => response.json())
@@ -50,7 +50,7 @@ export class DraftService {
   }
 
   deleteDraft(jid: string, ctid: string, draftId: string): Observable<{} | Response> {
-    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid) + draftId.slice(Draft.DRAFT.length);
+    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid, draftId.slice(Draft.DRAFT.length));
     return this.http
       .delete(url)
       .catch((error: any): any => {

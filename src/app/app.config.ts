@@ -148,8 +148,8 @@ export class AppConfig {
     return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
   }
 
-  public getViewOrDeleteDraftsUrl(jid: string, ctid: string) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/`;
+  public getViewOrDeleteDraftsUrl(jid: string, ctid: string, did: string) {
+    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${did}`;
   }
 }
 

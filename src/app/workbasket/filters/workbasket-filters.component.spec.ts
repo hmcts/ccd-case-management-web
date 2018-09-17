@@ -173,8 +173,6 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
@@ -496,8 +494,6 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CRUD_FILTERED_CASE_TYPES));
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, CRUD_FILTERED_CASE_TYPES);
       orderService = createSpyObj('orderService', ['sortAsc']);
@@ -590,8 +586,6 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(EMPTY_CASE_TYPES));
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, EMPTY_CASE_TYPES);
       orderService = createSpyObj('orderService', ['sortAsc']);
@@ -661,8 +655,6 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPE_WITH_EMPTY_STATES));
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, CASE_TYPE_WITH_EMPTY_STATES);
       orderService = createSpyObj('orderService', ['sortAsc']);
@@ -830,8 +822,6 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(EMPTY_CASE_TYPES));
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, EMPTY_CASE_TYPES);
       orderService = createSpyObj('orderService', ['sortAsc']);

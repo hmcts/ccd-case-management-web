@@ -22,6 +22,7 @@ import { ConditionalShowModule } from './conditional-show/conditional-show.modul
 import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
 import { DeleteOrCancelDialogComponent } from './delete-or-cancel-dialog/delete-or-cancel-dialog.component';
+import { SaveOrDiscardDialogComponent } from './save-or-discard-dialog/save-or-discard-dialog.component';
 import { MarkdownModule } from './markdown/markdown.module';
 import { LabelFieldComponent } from './palette/label/label-field.component';
 import { SharedUtilsModule } from './utils/shared-utils.module';
@@ -52,11 +53,13 @@ import { SharedUtilsModule } from './utils/shared-utils.module';
     CaseHistoryComponent,
     DocumentDialogComponent,
     DeleteOrCancelDialogComponent,
+    SaveOrDiscardDialogComponent,
     LabelFieldComponent,
   ],
   entryComponents: [
     DocumentDialogComponent,
     DeleteOrCancelDialogComponent,
+    SaveOrDiscardDialogComponent,
     LabelFieldComponent
   ],
   providers: [

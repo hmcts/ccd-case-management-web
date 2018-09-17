@@ -7,8 +7,6 @@ import { SearchInput } from '../../../core/search/search-input.model';
 import { FormGroup } from '@angular/forms';
 import { JurisdictionService } from '../../jurisdiction.service';
 import { OrderService } from '../../../core/order/order.service';
-import { DefinitionsService } from '../../../core/definitions/definitions.service';
-import { READ_ACCESS } from '../../domain/case-view/access-types.model';
 
 @Component({
   selector: 'ccd-search-filters',

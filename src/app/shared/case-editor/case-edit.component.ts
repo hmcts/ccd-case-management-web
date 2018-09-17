@@ -61,8 +61,6 @@ export class CaseEditComponent implements AfterViewInit, OnInit {
 
   dialogConfig: MatDialogConfig;
 
-  callbackErrorsSubject: Subject<any> = new Subject();
-
   formValuesChanged = false;
 
   jurisdictionId: string;

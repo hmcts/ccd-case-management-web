@@ -31,7 +31,7 @@ export class CaseResolver implements Resolve<CaseView> {
 
     let {jid, ctid, cid} = this.getParams(route.paramMap);
 
-    if (jid && ctid && !cid) {
+    if (!cid) {
       // when redirected to case view after a case created, and the user has no READ access,
       // the post returns no id
       this.navigateToCaseList();
@@ -70,7 +70,7 @@ export class CaseResolver implements Resolve<CaseView> {
       return this.getAndCacheDraft(jid, ctid, cid);
     } else {
     return this.casesService
-          .getCaseView(jid, ctid, cid)
+          .getCaseViewV2(cid)
           .do(caseView => this.cachedCaseView = caseView)
           .catch((error: Response | any) => this.checkAuthorizationError(error));
     }

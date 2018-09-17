@@ -29,6 +29,16 @@ const CASE_TYPE_1: CaseType = {
   case_fields: [],
   jurisdiction: JURISDICTION_1
 };
+
+const CASE_TYPE_2: CaseType = {
+  id: 'CT2',
+  name: 'Case type 2',
+  description: '',
+  states: [],
+  events: [],
+  case_fields: [],
+  jurisdiction: JURISDICTION_1
+};
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
@@ -178,8 +188,8 @@ describe('SearchFiltersComponent', () => {
     expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
   });
 
-  it('should select the caseType if there is only one caseType', () => {
-    resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1]);
+  it('should select the first caseType', () => {
+    resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
     fixture.detectChanges();

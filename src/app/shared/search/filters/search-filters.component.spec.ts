@@ -39,6 +39,7 @@ const CASE_TYPE_2: CaseType = {
   case_fields: [],
   jurisdiction: JURISDICTION_1
 };
+
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',

@@ -260,7 +260,6 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
 
     let selector = de.query(By.css('#s-case-type'));
-
     expect(selector.children.length).toEqual(3);
 
     let ct1 = selector.children[0];
@@ -350,7 +349,6 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
 
     let dynamicFilters = de.query(By.css('#dynamicFilters'));
-
     expect(dynamicFilters.children.length).toBe(TEST_SEARCH_INPUTS.length);
   });
 
@@ -386,6 +384,7 @@ describe('SearchFiltersComponent', () => {
     const formControls = {
       'name': control
     };
+    
     let formGroup = new FormGroup(formControls);
 
     component.onCaseTypeIdChange();

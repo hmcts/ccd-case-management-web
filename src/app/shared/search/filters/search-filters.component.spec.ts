@@ -190,7 +190,7 @@ describe('SearchFiltersComponent', () => {
     expect(component.selected.caseType).toBe(null);
   });
 
-  it('should select the first caseType', () => {
+  it('should select the first caseType ', () => {
     resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];

@@ -1,3 +1,5 @@
+const baseUrl = (process.env.TEST_URL || 'http://localhost:3451/').replace('https', 'http');
+
 exports.config = {
 
   /*
@@ -33,6 +35,16 @@ exports.config = {
         maxInstances: 1,
         "tunnel-identifier": 'reformtunnel',
         tags:'ccd-crossbrowser'
+    }],
+  
+    plugins: [{
+        package: "protractor-screenshoter-plugin",
+        screenshotPath: "./smoke-output",
+        screenshotOnExpect: "failure+success",
+        screenshotOnSpec: "failure+success",
+        withLogs: true,
+        writeReportFreq: "asap",
+        clearFoldersBeforeTest: true
     }],
 
   jasmineNodeOpts: {

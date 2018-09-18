@@ -187,6 +187,7 @@ describe('SearchFiltersComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
     expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+    expect(component.selected.caseType).toBe(null);
   });
 
   it('should select the first caseType', () => {
@@ -198,6 +199,7 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
     expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
     expect(component.selected.caseType).toBe(CASE_TYPE_1);
+    expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
   });
 
   it('should initialise jurisdiction selector with given jurisdictions', () => {
@@ -228,6 +230,7 @@ describe('SearchFiltersComponent', () => {
   }));
 
   it('should populate case types dropdown with CRUD filtered case types', async(() => {
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     let selector = de.query(By.css('#s-case-type'));
     expect(selector.children.length).toEqual(0);
 
@@ -250,6 +253,7 @@ describe('SearchFiltersComponent', () => {
   }));
 
   it('should initialise case type selector with types from selected jurisdiction', () => {
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.selected.jurisdiction = JURISDICTION_2;
     resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.onJurisdictionIdChange();

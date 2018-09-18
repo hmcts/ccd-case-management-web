@@ -10,7 +10,6 @@ import { EventStatusService } from '../../core/cases/event-status.service';
 import { DraftService } from '../../core/draft/draft.service';
 import { Draft } from '../../shared/domain/draft';
 import { CaseEditComponent } from '../../shared/case-editor/case-edit.component';
-import { FormValueService } from '../../core/form/form-value.service';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -81,12 +80,9 @@ export class CaseCreatorSubmitComponent implements OnInit {
       case CaseEditComponent.NEW_FORM_EMPTY_DISCARD:
       case CaseEditComponent.NEW_FORM_CHANGED_DISCARD:
         return this.router.navigate(['/create/case']);
-        break;
       case CaseEditComponent.RESUMED_FORM_NO_CHANGE_DISCARD:
       case CaseEditComponent.RESUMED_FORM_CHANGED_DISCARD:
         return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
-        break;
-        break;
       case CaseEditComponent.NEW_FORM_CHANGED_SAVE: {
         this.saveDraft().call(undefined, event.data).subscribe(_ => {
         return this.router.navigate(['/create/case'])

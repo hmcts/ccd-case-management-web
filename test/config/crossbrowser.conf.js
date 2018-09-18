@@ -11,6 +11,7 @@ exports.config = {
 
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
+  sauceSeleniumAddress: 'ondemand.saucelabs.com:443/wd/hub',
 
   specs: ["../end-to-end/specs/*/login.*.spec.js"],
   //seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
@@ -26,13 +27,11 @@ exports.config = {
   multiCapabilities: [{
         browserName: 'chrome',
         version: 'latest',
-        platform: 'Windows 7',
+        platform: 'Windows 10',
         name: "chrome-tests",
         shardTestFiles: true,
         maxInstances: 1,
         "tunnel-identifier": 'reformtunnel',
-        host: 'ondemand.saucelabs.com',
-        port: 80,
         tags:'ccd-crossbrowser'
     }],
 

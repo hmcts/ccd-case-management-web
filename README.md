@@ -124,7 +124,15 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 
 ### 2. Smoke Tests
 
-The smoke tests are run within a docker container.
+On the pipeline the Smoke tests are run with out docker, smoke test script available in package.json
+
+``` test:smoke": "protractor test/config/smoke.conf.js", ```
+
+environment variables listed below to be used.   
+
+The smoke tests can also run within a docker container.
+
+ ``` "test:smokeDocker": "./bin/runSmokeTests.sh", ```
 
 To create an image to run execute the following command in the test directory:
 
@@ -159,3 +167,4 @@ You can generate api docs (using [TypeDoc](http://typedoc.org/)) for your code w
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+ 

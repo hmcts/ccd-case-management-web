@@ -24,7 +24,7 @@ exports.config = {
   framework: 'jasmine2',
 
   multiCapabilities: [{
-        browserName: 'firefox',
+        browserName: 'chrome',
         version: 'latest',
         platform: 'Windows 7',
         name: "chrome-tests",

@@ -7,8 +7,6 @@ import { SearchInput } from '../../../core/search/search-input.model';
 import { FormGroup } from '@angular/forms';
 import { JurisdictionService } from '../../jurisdiction.service';
 import { OrderService } from '../../../core/order/order.service';
-import { DefinitionsService } from '../../../core/definitions/definitions.service';
-import { READ_ACCESS } from '../../domain/case-view/access-types.model';
 
 @Component({
   selector: 'ccd-search-filters',
@@ -85,8 +83,8 @@ export class SearchFiltersComponent implements OnInit {
   onJurisdictionIdChange(): void {
     this.selected.caseType = null;
     this.jurisdictionService.announceSelectedJurisdiction(this.selected.jurisdiction);
-      this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
-      this.selectCaseType(this.selectedJurisdictionCaseTypes);
+    this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
+    this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
   }
 
   onCaseTypeIdChange(): void {
@@ -107,12 +105,5 @@ export class SearchFiltersComponent implements OnInit {
   isJurisdictionSelected(): boolean {
     return this.selected.jurisdiction === null  ||
            this.selected.jurisdiction === undefined;
-  }
-
-  private selectCaseType(caseTypes: CaseType[]) {
-    if (caseTypes.length === 1) {
-      this.selected.caseType = caseTypes[0];
-      this.onCaseTypeIdChange();
-    }
   }
 }

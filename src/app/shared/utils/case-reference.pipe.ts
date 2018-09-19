@@ -10,7 +10,7 @@ export class CaseReferencePipe implements PipeTransform {
     if (Draft.isDraft(caseReference)) {
       return Draft.DRAFT;
     } else {
-      return caseReference.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
+      return String(caseReference).replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
     }
   }
 }

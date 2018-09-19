@@ -133,6 +133,7 @@ describe('SearchResultComponent', () => {
     let activityService: any;
     let searchHandler;
     let appConfig: any;
+    let caseReferencePipe = new CaseReferencePipe();
 
     beforeEach(async(() => {
       activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
@@ -163,7 +164,8 @@ describe('SearchResultComponent', () => {
             SearchResultViewItemComparatorFactory,
             { provide: ActivityService, useValue: activityService },
             PaginationService,
-            { provide: AppConfig, useValue: appConfig }
+            { provide: AppConfig, useValue: appConfig },
+            { provide: CaseReferencePipe, useValue: caseReferencePipe }
           ]
         })
         .compileComponents();
@@ -405,6 +407,7 @@ describe('SearchResultComponent', () => {
     });
     let activityService: any;
     let appConfig: any;
+    let caseReferencePipe = new CaseReferencePipe();
 
     beforeEach(async(() => {
       activityService = createSpyObj<ActivityService>('activityService', ['postActivity']);
@@ -430,7 +433,8 @@ describe('SearchResultComponent', () => {
             SearchResultViewItemComparatorFactory,
             { provide: ActivityService, useValue: activityService },
             PaginationService,
-            { provide: AppConfig, useValue: appConfig }
+            { provide: AppConfig, useValue: appConfig },
+            { provide: CaseReferencePipe, useValue: caseReferencePipe }
           ]
         })
         .compileComponents();

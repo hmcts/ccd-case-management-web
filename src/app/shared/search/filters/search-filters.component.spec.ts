@@ -384,7 +384,7 @@ describe('SearchFiltersComponent', () => {
     const formControls = {
       'name': control
     };
-    
+
     let formGroup = new FormGroup(formControls);
 
     component.onCaseTypeIdChange();

@@ -14,8 +14,8 @@ import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
-import createSpyObj = jasmine.createSpyObj;
 import { AlertService } from '../core/alert/alert.service';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('WorkbasketComponent', () => {
 
@@ -43,7 +43,8 @@ describe('WorkbasketComponent', () => {
        'resultView',
        'paginationMetadata',
        'page',
-       'caseFilterFG'
+       'caseFilterFG',
+       'metadataFields'
   ]});
 
   const  JURISDICTIONS = [
@@ -91,7 +92,8 @@ describe('WorkbasketComponent', () => {
   const JURISDICTION: Jurisdiction = {
     id: 'J1',
     name: 'Jurisdiction 1',
-    description: ''
+    description: '',
+    caseTypes: []
   };
 
   const CASE_TYPES: CaseType[] = [

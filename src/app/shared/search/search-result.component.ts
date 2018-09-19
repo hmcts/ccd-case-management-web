@@ -13,6 +13,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
+import { CaseReferencePipe } from '../utils/case-reference.pipe';
 
 @Component({
   selector: 'ccd-search-result',
@@ -48,6 +49,9 @@ export class SearchResultComponent implements OnChanges {
   @Input()
   paginationMetadata: PaginationMetadata;
 
+  @Input()
+  metadataFields: string[];
+
   @Output()
   changePage: EventEmitter<any> = new EventEmitter();
 
@@ -61,6 +65,7 @@ export class SearchResultComponent implements OnChanges {
     caseType?: CaseType,
     caseState?: CaseState,
     formGroup?: FormGroup,
+    metadataFields?: string[],
     page?: number
   } = {};
 
@@ -69,7 +74,8 @@ export class SearchResultComponent implements OnChanges {
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
               appConfig: AppConfig,
-              private activityService: ActivityService) {
+              private activityService: ActivityService,
+              private caseReferencePipe: CaseReferencePipe) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -104,6 +110,7 @@ export class SearchResultComponent implements OnChanges {
     this.selected.caseType = this.caseType;
     this.selected.caseState = this.caseState;
     this.selected.formGroup = this.caseFilterFG;
+    this.selected.metadataFields = this.metadataFields;
     this.selected.page = page;
     // Apply filters
     this.changePage.emit(this.selected);
@@ -135,6 +142,12 @@ export class SearchResultComponent implements OnChanges {
 
   activityEnabled(): boolean {
     return this.activityService.isEnabled;
+  }
+
+  hyphenateIfCaseReferenceOrGet(col, result): any {
+    return col.case_field_id === '[CASE_REFERENCE]' ?
+      this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
+      : result.case_fields[col.case_field_id];
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {

@@ -93,13 +93,15 @@ table.form-table {
 }
 .tooltip {
   position: relative;
+  text-decoration: underline;
 }
 .tooltip .tooltiptext {
   visibility: hidden;
-  background-color: black;
+  background-color: #005ea5;
   color: #fff;
+  font-size: 12px;
   text-align: center;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 5px 15px;
   position: absolute;
   z-index: 1;
@@ -114,7 +116,7 @@ table.form-table {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: black transparent transparent transparent;
+  border-color: #005ea5 transparent transparent transparent;
 }
 .tooltip:hover .tooltiptext {
   visibility: visible;
@@ -209,6 +211,7 @@ select::-ms-expand {
 }
 .text-16, .error-message {
   font-size: 16px;
+  font-family: "nta", Arial, sans-serif;
 }
 .postcodeinput {
   width: 49%;

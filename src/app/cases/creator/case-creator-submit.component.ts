@@ -9,7 +9,7 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
 import { DraftService } from '../../core/draft/draft.service';
 import { Draft } from '../../shared/domain/draft';
-import { CaseEditComponent } from '../../shared/case-editor/case-edit.component';
+import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -77,15 +77,27 @@ export class CaseCreatorSubmitComponent implements OnInit {
 
   cancel(event: any): Promise<boolean> {
     switch (event.status) {
-      case CaseEditComponent.NEW_FORM_EMPTY_DISCARD:
-      case CaseEditComponent.NEW_FORM_CHANGED_DISCARD:
-        return this.router.navigate(['/create/case']);
-      case CaseEditComponent.RESUMED_FORM_NO_CHANGE_DISCARD:
-      case CaseEditComponent.RESUMED_FORM_CHANGED_DISCARD:
+      case CaseEditPageComponent.NEW_FORM_DISCARD:
+        return this.router.navigate(['list/case']);
+      case CaseEditPageComponent.RESUMED_FORM_DISCARD:
         return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
-      case CaseEditComponent.NEW_FORM_CHANGED_SAVE: {
+      case CaseEditPageComponent.RESUMED_FORM_SAVE:
+      this.saveDraft().call(undefined, event.data).subscribe(_ => {
+        return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
+          .then(() => {
+            this.alertService.setPreserveAlerts(true);
+            this.alertService.success(`The draft has been successfully saved`);
+          })
+          .catch(error => {
+            console.log('error=', error);
+            this.alertService.setPreserveAlerts(true);
+            this.alertService.warning(error.message);
+          });
+        });
+        break;
+      case CaseEditPageComponent.NEW_FORM_SAVE:
         this.saveDraft().call(undefined, event.data).subscribe(_ => {
-        return this.router.navigate(['/create/case'])
+          return this.router.navigate(['list/case'])
             .then(() => {
               this.alertService.setPreserveAlerts(true);
               this.alertService.success(`The draft has been successfully saved`);
@@ -95,23 +107,8 @@ export class CaseCreatorSubmitComponent implements OnInit {
               this.alertService.setPreserveAlerts(true);
               this.alertService.warning(error.message);
             });
-          });
-          break;
-      }
-      case CaseEditComponent.RESUMED_FORM_CHANGED_SAVE:
-        this.saveDraft().call(undefined, event.data).subscribe(_ => {
-        return this.router.navigate(['list/case'])
-            .then(() => {
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.success(`The draft has been successfully saved`);
-            })
-            .catch(error => {
-              console.log('error=', error);
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.warning(error.message);
-            });
-          });
-          break;
+        });
+        break;
     }
   }
 

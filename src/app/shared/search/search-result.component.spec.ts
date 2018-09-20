@@ -187,6 +187,12 @@ describe('SearchResultComponent', () => {
       fixture.detectChanges();
     }));
 
+    it('should render pagination header', () => {
+      let pagination = de.query(By.css('div.pagination-top'));
+      expect(pagination).toBeTruthy();
+      expect(pagination.nativeElement.textContent.trim()).toBe('Displaying 1 - 3 out of 3 applications');
+    });
+
     it('should render a table <thead> and <tbody>', () => {
       let table = de.query(By.css('div>table'));
       expect(table.nativeElement.tagName).toBe('TABLE');
@@ -502,6 +508,16 @@ describe('SearchResultComponent', () => {
 
       expect(pagination.length).toBeFalsy();
     });
+
+    it('should not display pagination header when no metadata', () => {
+      component.resultView.results.push(new SearchResultViewItem());
+
+      fixture.detectChanges();
+
+      let pagination = de.query(By.css('div.pagination-top'));
+      expect(pagination).toBeFalsy();
+    });
+
   });
 
 });

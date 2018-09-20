@@ -1,3 +1,6 @@
+<div *ngIf="(hasResults() || hasDrafts())" class="pagination-top">
+  <span class="text-16">Displaying {{ getFirstResult() }} - {{ getLastResult() }} out of {{ paginationMetadata.total_results_count }} applications</span>
+</div>
 <table *ngIf="hasResults() || hasDrafts()">
   <thead>
   <tr>

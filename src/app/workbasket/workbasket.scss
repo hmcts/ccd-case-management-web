@@ -38,7 +38,7 @@ $black: #231F20;
     float: left;
 
     @include media(desktop){
-      width: 18%;
+      width: 17%;
     }
     @media screen and (max-width: 379px) {
       width: auto;

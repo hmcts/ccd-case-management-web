@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
+import { ninvoke } from 'q';
 
 @Injectable()
 export class FormValueService {
@@ -99,11 +100,15 @@ export class FormValueService {
       return this.sanitiseArray(rawValue);
     }
 
+    if (null === rawValue) {
+      return null;
+    }
+
     switch (typeof rawValue) {
       case 'object':
-        return rawValue ? this.sanitiseObject(rawValue) : '';
+        return this.sanitiseObject(rawValue);
       case 'string':
-        return rawValue.trim();
+        return '' === rawValue ? null : rawValue.trim();
       case 'number':
         return String(rawValue);
       default:

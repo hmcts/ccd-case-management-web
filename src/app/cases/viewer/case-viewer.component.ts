@@ -121,6 +121,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       });
     } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
       theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
+      theQueryParams['ORIGIN'] = 'viewDraft';
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,

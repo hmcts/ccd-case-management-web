@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, AfterViewChecked } from '@angular
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { WizardPage } from '../domain/wizard-page.model';
 import { CaseEventData } from '../domain/case-event-data';
 import { FormValueService } from '../../core/form/form-value.service';
@@ -26,7 +26,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   static readonly RESUMED_FORM_DISCARD = 'RESUMED_FORM_DISCARD';
   static readonly NEW_FORM_DISCARD = 'NEW_FORM_DISCARD';
   static readonly NEW_FORM_SAVE = 'NEW_FORM_CHANGED_SAVE';
-  static readonly RESUMED_FORM_SAVE = 'RESUMED_FORM_CHANGED_SAVE';
+  static readonly RESUMED_FORM_SAVE = 'RESUMED_FORM_SAVE';
 
   eventTrigger: CaseEventTrigger;
   editForm: FormGroup;
@@ -44,7 +44,6 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   constructor(
     private caseEdit: CaseEditComponent,
     private route: ActivatedRoute,
-    private router: Router,
     private formValueService: FormValueService,
     private formErrorService: FormErrorService,
     private cdRef: ChangeDetectorRef,
@@ -149,12 +148,13 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   cancel(): void {
     if (this.formValuesChanged) {
       const dialogRef = this.dialog.open(SaveOrDiscardDialogComponent, this.dialogConfig);
+      console.log('dialogRef=', dialogRef);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'Discard') {
           this.discard();
         } else if (result === 'Save') {
           const draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-          if (this.router.url.includes('DRAFT=DRAFT')) {
+          if (this.route.snapshot.queryParamMap.get('ORIGIN') === 'viewDraft') {
             this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data: draftCaseEventData});
           } else {
             this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_SAVE, data: draftCaseEventData});
@@ -167,7 +167,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   private discard() {
-    if (this.router.url.includes('DRAFT=DRAFT')) {
+    if (this.route.snapshot.queryParamMap.get('ORIGIN') === 'viewDraft') {
       this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_DISCARD});
     } else {
       this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_DISCARD});

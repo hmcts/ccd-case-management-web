@@ -626,7 +626,7 @@ describe('CaseViewerComponent', () => {
     component.caseDetails.case_id = 'DRAFT123';
     component.applyTrigger(TRIGGERS[1]);
     expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
-      queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
+      queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123', ORIGIN: 'viewDraft' }
     });
   });
 

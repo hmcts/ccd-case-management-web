@@ -81,8 +81,28 @@ export class CaseCreatorSubmitComponent implements OnInit {
         return this.router.navigate(['list/case']);
       case CaseEditPageComponent.RESUMED_FORM_DISCARD:
         return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
+      case CaseEditPageComponent.NEW_FORM_SAVE:
+        this.saveDraft().call(null, event.data).subscribe(_ => {
+          return this.router.navigate(['list/case'])
+            .then(() => {
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.success(`The draft has been successfully saved`);
+            })
+            .catch(error => {
+              console.log('error=', error);
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.warning(error.message);
+              this.router.navigate(['list/case'])
+            });
+        }, error => {
+          console.log('error=', error);
+          this.alertService.setPreserveAlerts(true);
+          this.alertService.warning(error.message);
+          this.router.navigate(['list/case'])
+        });
+        break;
       case CaseEditPageComponent.RESUMED_FORM_SAVE:
-      this.saveDraft().call(undefined, event.data).subscribe(_ => {
+      this.saveDraft().call(null, event.data).subscribe(_ => {
         return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
           .then(() => {
             this.alertService.setPreserveAlerts(true);
@@ -93,20 +113,10 @@ export class CaseCreatorSubmitComponent implements OnInit {
             this.alertService.setPreserveAlerts(true);
             this.alertService.warning(error.message);
           });
-        });
-        break;
-      case CaseEditPageComponent.NEW_FORM_SAVE:
-        this.saveDraft().call(undefined, event.data).subscribe(_ => {
-          return this.router.navigate(['list/case'])
-            .then(() => {
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.success(`The draft has been successfully saved`);
-            })
-            .catch(error => {
-              console.log('error=', error);
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.warning(error.message);
-            });
+        }, error => {
+          console.log('error=', error);
+          this.alertService.setPreserveAlerts(true);
+          this.alertService.warning(error.message);
         });
         break;
     }

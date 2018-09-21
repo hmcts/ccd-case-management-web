@@ -47,6 +47,8 @@ export class CaseEditComponent implements OnInit {
 
   confirmation: Confirmation;
 
+  navigationOrigin: any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -68,6 +70,10 @@ export class CaseEditComponent implements OnInit {
         'description': ['']
       })
     });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      this.navigationOrigin = params['ORIGIN'];
+    });
   }
 
   getPage(pageId: string): WizardPage {
@@ -88,8 +94,10 @@ export class CaseEditComponent implements OnInit {
     this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
     this.registrarService.reset();
 
+    console.log('router.url=', this.router.url);
+    console.log('navigationOrigin=', this.navigationOrigin);
     let theQueryParams: Params = {};
-    theQueryParams[Draft.DRAFT] = this.eventTrigger.case_id;
+    theQueryParams['ORIGIN'] = this.navigationOrigin;
     let nextPage = this.wizard.nextPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     return this.router.navigate([nextPage ? nextPage.id : 'submit'], { queryParams: theQueryParams, relativeTo: this.route });
   }
@@ -104,7 +112,7 @@ export class CaseEditComponent implements OnInit {
     }
 
     let theQueryParams: Params = {};
-    theQueryParams[Draft.DRAFT] = this.eventTrigger.case_id;
+    theQueryParams['ORIGIN'] = this.navigationOrigin;
     return this.router.navigate([previousPage.id], { queryParams: theQueryParams, relativeTo: this.route });
   }
 

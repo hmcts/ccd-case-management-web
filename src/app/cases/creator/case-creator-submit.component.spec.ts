@@ -19,6 +19,7 @@ import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { Draft } from '../../shared/domain/draft';
 import { DraftService } from '../../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -160,6 +161,7 @@ describe('CaseCreatorSubmitComponent', () => {
     casesService = createSpyObj<CasesService>('casesService', ['createCase', 'validateCase']);
     casesService.createCase.and.returnValue(Observable.of(CASE_DETAILS));
     draftService = createSpyObj<DraftService>('draftService', ['createOrUpdateDraft']);
+    draftService.createOrUpdateDraft.and.returnValue(Observable.of(DRAFT));
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
@@ -275,10 +277,30 @@ describe('CaseCreatorSubmitComponent', () => {
     expect(alertService.warning).toHaveBeenCalled();
   });
 
-  it('should have a cancel button going back to the create case', () => {
-    component.cancel();
+  it('should have a cancel button going back to the case list for discard new draft', () => {
+    component.cancel({status: CaseEditPageComponent.NEW_FORM_DISCARD, data: {field1 : 'value1'}});
 
-    expect(router.navigate).toHaveBeenCalledWith(['/create/case']);
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  it('should have a cancel button going back to the view draft for discard existing draft', () => {
+    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_DISCARD, data: {field1 : 'value1'}});
+
+    expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
+  });
+
+  it('should have a cancel button saving draft going back to the case list for save new draft', () => {
+    component.cancel({status: CaseEditPageComponent.NEW_FORM_SAVE, data : SANITISED_EDIT_FORM});
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  it('should have a cancel button saving draft and going back to the view draft for save existing draft', () => {
+    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data : SANITISED_EDIT_FORM});
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
 
 });

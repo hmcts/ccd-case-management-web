@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CaseField } from '../../shared/domain/definition/case-field.model';
-import { ninvoke } from 'q';
 
 @Injectable()
 export class FormValueService {
-
-  public isEmpty(rawValue: object): boolean {
-    return this.isEmptyObject(rawValue);
-  }
 
   public sanitise(rawValue: object): object {
     return this.sanitiseObject(rawValue);
@@ -23,18 +18,6 @@ export class FormValueService {
     return cloneForm;
   }
 
-  private isEmptyObject(rawObject: object): boolean {
-    if (!rawObject) {
-      return true;
-    }
-
-    let isEmpty = true;
-    Object.keys(rawObject).forEach(key => {
-      isEmpty = isEmpty && this.isEmptyValue(rawObject[key]);
-    });
-    return isEmpty;
-  }
-
   private sanitiseObject(rawObject: object): object {
     if (!rawObject) {
       return rawObject;
@@ -45,21 +28,6 @@ export class FormValueService {
       sanitisedObject[key] = this.sanitiseValue(rawObject[key]);
     });
     return sanitisedObject;
-  }
-
-  private isEmptyArray(rawArray: any[]): boolean {
-    if (!rawArray) {
-      return true;
-    }
-
-    let isEmpty = true;
-    rawArray.forEach(item => {
-      if (item.hasOwnProperty('value')) {
-        isEmpty = isEmpty && this.isEmptyValue(item.value);
-      }
-    });
-
-    return isEmpty;
   }
 
   private sanitiseArray(rawArray: any[]): any[] {
@@ -74,25 +42,6 @@ export class FormValueService {
     });
 
     return rawArray;
-  }
-
-  private isEmptyValue(rawValue: any): boolean {
-    let isEmpty = true;
-    if (Array.isArray(rawValue)) {
-      isEmpty = this.isEmptyArray(rawValue);
-    }
-
-    switch (typeof rawValue) {
-      case 'object':
-        isEmpty = this.isEmptyObject(rawValue);
-        break;
-      case 'number':
-        isEmpty = String(rawValue) ? false : true;
-        break;
-      default:
-        isEmpty = rawValue ? false : true;
-    }
-    return isEmpty;
   }
 
   private sanitiseValue(rawValue: any): any {

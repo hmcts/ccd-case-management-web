@@ -33,16 +33,11 @@ describe('CreateCaseFieldsResolver', () => {
 
   let casesService: any;
   let alertService: any;
-
   let route: any;
-
-  let router: any;
 
   beforeEach(() => {
     casesService = createSpyObj('casesService', ['getEventTrigger']);
     alertService = createSpyObj('alertService', ['error']);
-
-    router = createSpyObj('router', ['navigate']);
 
     createCaseFieldsResolver = new CreateCaseEventTriggerResolver(casesService, alertService);
 

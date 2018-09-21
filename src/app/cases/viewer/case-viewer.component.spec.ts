@@ -410,7 +410,7 @@ describe('CaseViewerComponent', () => {
     draftService = createSpyObj('draftService', ['deleteDraft']);
     draftService.deleteDraft.and.returnValue(Observable.of({}));
 
-    alertService = createSpyObj('draftService', ['setPreserveAlerts', 'success', 'warning']);
+    alertService = createSpyObj('alertService', ['setPreserveAlerts', 'success', 'warning']);
     alertService.setPreserveAlerts.and.returnValue(Observable.of({}));
     alertService.success.and.returnValue(Observable.of({}));
     alertService.warning.and.returnValue(Observable.of({}));

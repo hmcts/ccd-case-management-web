@@ -64,7 +64,6 @@ describe('CaseCreatorSubmitComponent', () => {
 
   let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
   let component: CaseCreatorSubmitComponent;
-  let de: DebugElement;
 
   let EventTriggerHeaderComponent: any = MockComponent({
     selector: 'ccd-event-trigger-header',
@@ -164,7 +163,7 @@ describe('CaseCreatorSubmitComponent', () => {
     draftService.createOrUpdateDraft.and.returnValue(Observable.of(DRAFT));
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
-    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
+    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning', 'setPreserveAlerts']);
 
     router = createSpyObj('router', ['navigate']);
     router.navigate.and.returnValue({then: f => f()});
@@ -204,7 +203,6 @@ describe('CaseCreatorSubmitComponent', () => {
     fixture = TestBed.createComponent(CaseCreatorSubmitComponent);
     component = fixture.componentInstance;
 
-    de = fixture.debugElement;
     fixture.detectChanges();
   }));
 

@@ -88,12 +88,6 @@ export class CaseCreatorSubmitComponent implements OnInit {
               this.alertService.setPreserveAlerts(true);
               this.alertService.success(`The draft has been successfully saved`);
             })
-            .catch(error => {
-              console.log('error=', error);
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.warning(error.message);
-              this.router.navigate(['list/case'])
-            });
         }, error => {
           console.log('error=', error);
           this.alertService.setPreserveAlerts(true);
@@ -108,11 +102,6 @@ export class CaseCreatorSubmitComponent implements OnInit {
             this.alertService.setPreserveAlerts(true);
             this.alertService.success(`The draft has been successfully saved`);
           })
-          .catch(error => {
-            console.log('error=', error);
-            this.alertService.setPreserveAlerts(true);
-            this.alertService.warning(error.message);
-          });
         }, error => {
           console.log('error=', error);
           this.alertService.setPreserveAlerts(true);

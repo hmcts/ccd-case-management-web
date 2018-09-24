@@ -155,11 +155,11 @@ select::-ms-expand {
 .search-left {
   float: left;
   padding-left: 15px;
-  width: 19%;
+  width: 17%;
 }
 .search-right {
   float: right;
-  width: 77%;
+  width: 80%;
   padding-right: 15px;
   box-sizing: border-box;
 }
@@ -170,9 +170,6 @@ select::-ms-expand {
 .heading-small {
   margin-top: 30px;
   margin-bottom: 20px;
-}
-.heading-medium {
-  margin-top: 45px;
 }
 .heading-17 {
   font-size: 17px;
@@ -248,4 +245,8 @@ select::-ms-expand {
   font-size: 16px;
   font-family: "nta", Arial, sans-serif;
   font-weight: bold;
+}
+.pagination-top {
+  float: left;
+  margin-bottom: 10px;
 }

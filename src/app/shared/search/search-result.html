@@ -19,7 +19,7 @@
   <tr *ngFor="let result of resultView.results | ccdSortSearchResult : sortParameters | paginate: { itemsPerPage: paginationPageSize, currentPage: selected.page, totalItems: paginationMetadata.total_results_count }">
     <td class="caseid-col">
       <a routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"
-         title="go to case with Case reference:{{ result.case_id | ccdCaseReference }}">
+         attr.aria-label="go to case with Case reference:{{ result.case_id | ccdCaseReference }}">
         <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">{{ result.case_id | ccdCaseReference }}</div>
       </a>
     </td>

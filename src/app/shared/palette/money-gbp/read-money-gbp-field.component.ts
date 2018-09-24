@@ -3,7 +3,10 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
 
 @Component({
   selector: 'ccd-read-money-gbp-field',
-  template: `<ng-container *ngIf="isNumber()">{{value / 100 | currency:'GBP':'symbol'}}</ng-container>`
+  template: `<ng-container *ngIf="isNumber(); else noMoney">{{value / 100 | currency:'GBP':'symbol'}}</ng-container>
+             <ng-template #noMoney>
+               <span class="sr-only">-</span>
+             </ng-template>`
 })
 export class ReadMoneyGbpFieldComponent extends AbstractFieldReadComponent implements OnInit {
 

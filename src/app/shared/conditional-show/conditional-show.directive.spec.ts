@@ -26,9 +26,13 @@ class TestHostComponent {
 
 let field = (id, value, showCondition?) => {
     let caseField = new CaseField();
+    let fieldType = new FieldType();
+    fieldType.id = 'fieldId';
+    fieldType.type = 'Text';
     caseField.id = id;
     caseField.value = value;
     caseField.show_condition = showCondition;
+    caseField.field_type = fieldType;
     return caseField;
 };
 
@@ -72,10 +76,6 @@ describe('ConditionalShowDirective', () => {
 
     it('should display gray bar when the field is on the same page', () => {
       comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
-      let fieldType = new FieldType();
-      fieldType.id = 'fieldId';
-      fieldType.type = 'Text';
-      comp.caseField.field_type = fieldType;
       expect(comp.caseField.field_type.type).toBe('Text');
       comp.eventFields = [comp.caseField, field('PersonLastName', 'Doe', '')];
       fixture.detectChanges();
@@ -84,10 +84,6 @@ describe('ConditionalShowDirective', () => {
 
     it('should display gray bar when the field is not on the same page', () => {
       comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
-      let fieldType = new FieldType();
-      fieldType.id = 'fieldId';
-      fieldType.type = 'Text';
-      comp.caseField.field_type = fieldType;
       expect(comp.caseField.field_type.type).toBe('Text');
       comp.eventFields = [comp.caseField, field('OtherField', 'Doe', '')];
       fixture.detectChanges();

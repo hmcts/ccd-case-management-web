@@ -123,7 +123,7 @@ export class FieldsUtils {
   }
 
   showGrayBar(caseField: CaseField, element: HTMLElement) {
-    if (caseField && caseField.field_type && caseField.field_type.type !== 'Collection') {
+    if (caseField.field_type.type !== 'Collection') {
       let divSelector = element.querySelector('div');
       let samePage = true;
       let cyaSelector = false;

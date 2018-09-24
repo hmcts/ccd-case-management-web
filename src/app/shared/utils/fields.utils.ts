@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CaseField } from '../domain/definition/case-field.model';
-import { CurrencyPipe, } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { DatePipe } from '../palette/utils/date.pipe';
 import { WizardPage } from '../domain/wizard-page.model';
 import { Predicate } from '../predicate';
@@ -125,21 +125,32 @@ export class FieldsUtils {
   showGrayBar(caseField: CaseField, element: HTMLElement) {
     if (caseField && caseField.field_type && caseField.field_type.type !== 'Collection') {
       let divSelector = element.querySelector('div');
+      let samePage = true;
       let cyaSelector = false;
+      this.getConditionFields(caseField.show_condition).forEach(
+        field => { samePage = document.querySelector('#' + field) ? true : false; }
+      );
       if (divSelector) {
-        let ele = divSelector.parentElement;
-        while (ele.parentElement) {
-          if (ele.tagName === 'FORM') {
-            if (ele.classList.contains('check-your-answers')) {
+        let tempElement = divSelector.parentElement;
+        while (tempElement.parentElement) {
+          if (tempElement.tagName === 'FORM') {
+            if (tempElement.classList.contains('check-your-answers')) {
               cyaSelector = true;
             }
           }
-          ele = ele.parentElement;
+          tempElement = tempElement.parentElement;
         }
-        if (!cyaSelector) {
+        if (!cyaSelector && samePage) {
           divSelector.classList.add('panel');
         }
       }
     }
+  }
+
+  getConditionFields(condition: string): any[] {
+    let condFields = [];
+    let conditions = condition.split('AND');
+    conditions.forEach(cond => condFields.push(cond.split('=')[0].trim()));
+    return condFields;
   }
 }

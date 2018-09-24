@@ -70,7 +70,7 @@ describe('ConditionalShowDirective', () => {
         expect(conditionalShow.condition).toBeUndefined();
     });
 
-    it('should display gray bar when condition matches', () => {
+    it('should display gray bar when the field is on the same page', () => {
       comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
       let fieldType = new FieldType();
       fieldType.id = 'fieldId';
@@ -80,6 +80,18 @@ describe('ConditionalShowDirective', () => {
       comp.eventFields = [comp.caseField, field('PersonLastName', 'Doe', '')];
       fixture.detectChanges();
       expect(el.hidden).toBe(false);
+    });
+
+    it('should display gray bar when the field is not on the same page', () => {
+      comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
+      let fieldType = new FieldType();
+      fieldType.id = 'fieldId';
+      fieldType.type = 'Text';
+      comp.caseField.field_type = fieldType;
+      expect(comp.caseField.field_type.type).toBe('Text');
+      comp.eventFields = [comp.caseField, field('OtherField', 'Doe', '')];
+      fixture.detectChanges();
+      expect(el.hidden).toBe(true);
     });
 
     it('should display when condition matches a read only field. No form fields', () => {

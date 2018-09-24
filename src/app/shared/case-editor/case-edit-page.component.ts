@@ -148,7 +148,6 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   cancel(): void {
     if (this.formValuesChanged) {
       const dialogRef = this.dialog.open(SaveOrDiscardDialogComponent, this.dialogConfig);
-      console.log('dialogRef=', dialogRef);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'Discard') {
           this.discard();

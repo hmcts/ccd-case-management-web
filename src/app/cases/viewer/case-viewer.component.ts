@@ -108,15 +108,9 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
                 .then(() => {
                   this.alertService.setPreserveAlerts(true);
                   this.alertService.success(`The draft has been successfully deleted`);
-                })
-                .catch(error => {
-                  this.handleError(error, trigger)
                 });
             }, _ => {
-              return this.router.navigate(['list/case'])
-              .catch(error => {
-                this.handleError(error, trigger)
-              });
+              return this.router.navigate(['list/case']);
             });
         }
       });

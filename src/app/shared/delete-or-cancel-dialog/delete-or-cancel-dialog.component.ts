@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material';
 @Component({
   selector: 'ccd-delete-or-cancel-dialog',
   templateUrl: './delete-or-cancel-dialog.component.html',
-  styleUrls: ['./delete-or-cancel-dialog.component.scss']
+  styleUrls: ['../action-dialog.component.scss']
 })
 export class DeleteOrCancelDialogComponent {
 

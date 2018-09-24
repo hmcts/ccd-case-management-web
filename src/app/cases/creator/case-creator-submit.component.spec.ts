@@ -229,10 +229,10 @@ describe('CaseCreatorSubmitComponent', () => {
 
   it('should update draft when saveDraft called with sanitised data for second time', () => {
     const DRAFT_ID = '12345';
-    component.eventTrigger.case_id = Draft.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
+    component.eventTrigger.case_id = Draft.DRAFT_PREFIX + DRAFT_ID; // Set behaviour to draft has been saved before
     component.saveDraft()(SANITISED_EDIT_FORM);
 
-    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, Draft.DRAFT + DRAFT_ID, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, Draft.DRAFT_PREFIX + DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {

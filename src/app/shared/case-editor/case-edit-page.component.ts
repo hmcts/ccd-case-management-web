@@ -15,6 +15,7 @@ import { PageValidationService } from './page-validation.service';
 import { Draft } from '../domain/draft';
 import { SaveOrDiscardDialogComponent } from '../save-or-discard-dialog/save-or-discard-dialog.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
+import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -153,7 +154,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
           this.discard();
         } else if (result === 'Save') {
           const draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-          if (this.route.snapshot.queryParamMap.get('ORIGIN') === 'viewDraft') {
+          if (this.route.snapshot.queryParamMap.get(CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
             this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data: draftCaseEventData});
           } else {
             this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_SAVE, data: draftCaseEventData});
@@ -166,7 +167,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   private discard() {
-    if (this.route.snapshot.queryParamMap.get('ORIGIN') === 'viewDraft') {
+    if (this.route.snapshot.queryParamMap.get(CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
       this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_DISCARD});
     } else {
       this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_DISCARD});
@@ -201,7 +202,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       draftCaseEventData.event_token = this.eventTrigger.event_token;
       draftCaseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-        (draft) => this.eventTrigger.case_id = Draft.DRAFT + draft.id, error => this.handleError(error)
+        (draft) => this.eventTrigger.case_id = Draft.DRAFT_PREFIX + draft.id, error => this.handleError(error)
       );
     }
   }

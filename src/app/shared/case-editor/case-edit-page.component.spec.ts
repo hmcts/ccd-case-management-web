@@ -19,6 +19,7 @@ import { Draft } from '../domain/draft';
 import createSpyObj = jasmine.createSpyObj;
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { SaveOrDiscardDialogComponent } from '../save-or-discard-dialog/save-or-discard-dialog.component';
+import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
 
 describe('CaseEditPageComponent', () => {
 
@@ -171,7 +172,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = false;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case 'ORIGIN':
+        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });
@@ -199,7 +200,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = true;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case 'ORIGIN':
+        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });
@@ -229,7 +230,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = true;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case 'ORIGIN':
+        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });

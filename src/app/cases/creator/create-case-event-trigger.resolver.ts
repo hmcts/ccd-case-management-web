@@ -36,7 +36,7 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
     let caseTypeId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID);
     let eventTriggerId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING);
-    let draftId = route.queryParamMap.get(Draft.DRAFT);
+    let draftId = route.queryParamMap.get(Draft.DRAFT_QUERY_PARAM);
     let caseId = undefined;
 
     if (-1 === CreateCaseEventTriggerResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {

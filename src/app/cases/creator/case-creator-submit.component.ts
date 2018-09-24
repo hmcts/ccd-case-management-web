@@ -96,16 +96,16 @@ export class CaseCreatorSubmitComponent implements OnInit {
         });
         break;
       case CaseEditPageComponent.RESUMED_FORM_SAVE:
-      this.saveDraft().call(null, event.data).subscribe(_ => {
-        return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
-          .then(() => {
+        this.saveDraft().call(null, event.data).subscribe(_ => {
+          return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
+            .then(() => {
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.success(`The draft has been successfully saved`);
+            })
+          }, error => {
+            console.log('error=', error);
             this.alertService.setPreserveAlerts(true);
-            this.alertService.success(`The draft has been successfully saved`);
-          })
-        }, error => {
-          console.log('error=', error);
-          this.alertService.setPreserveAlerts(true);
-          this.alertService.warning(error.message);
+            this.alertService.warning(error.message);
         });
         break;
     }

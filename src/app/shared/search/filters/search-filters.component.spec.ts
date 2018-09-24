@@ -187,9 +187,10 @@ describe('SearchFiltersComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
     expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+    expect(component.selected.caseType).toBe(null);
   });
 
-  it('should select the first caseType', () => {
+  it('should select the first caseType ', () => {
     resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
@@ -198,6 +199,7 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
     expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
     expect(component.selected.caseType).toBe(CASE_TYPE_1);
+    expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
   });
 
   it('should initialise jurisdiction selector with given jurisdictions', () => {
@@ -228,6 +230,7 @@ describe('SearchFiltersComponent', () => {
   }));
 
   it('should populate case types dropdown with CRUD filtered case types', async(() => {
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     let selector = de.query(By.css('#s-case-type'));
     expect(selector.children.length).toEqual(0);
 
@@ -250,13 +253,13 @@ describe('SearchFiltersComponent', () => {
   }));
 
   it('should initialise case type selector with types from selected jurisdiction', () => {
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.selected.jurisdiction = JURISDICTION_2;
     resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
     component.onJurisdictionIdChange();
     fixture.detectChanges();
 
     let selector = de.query(By.css('#s-case-type'));
-
     expect(selector.children.length).toEqual(3);
 
     let ct1 = selector.children[0];
@@ -346,7 +349,6 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
 
     let dynamicFilters = de.query(By.css('#dynamicFilters'));
-
     expect(dynamicFilters.children.length).toBe(TEST_SEARCH_INPUTS.length);
   });
 
@@ -382,6 +384,7 @@ describe('SearchFiltersComponent', () => {
     const formControls = {
       'name': control
     };
+
     let formGroup = new FormGroup(formControls);
 
     component.onCaseTypeIdChange();

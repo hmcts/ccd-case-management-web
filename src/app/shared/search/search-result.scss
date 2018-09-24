@@ -10,18 +10,12 @@ $black: #231F20;
 table {
 
   thead tr th {
-    padding-left: 10px;
-    padding-right: 10px;
     vertical-align: top;
   }
 
   tbody tr td {
-    padding-left: 10px;
-    padding-right: 10px;
     @include core-14pt;
-
     word-wrap: break-word;
-
     a {
       color: $blue_table;
       background-color: $white;

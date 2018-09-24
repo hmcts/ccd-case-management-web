@@ -14,6 +14,7 @@ import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
 import { CaseReferencePipe } from '../utils/case-reference.pipe';
+import { Draft } from '../domain/draft';
 
 @Component({
   selector: 'ccd-search-result',
@@ -150,6 +151,10 @@ export class SearchResultComponent implements OnChanges {
       : result.case_fields[col.case_field_id];
   }
 
+  draftPrefixOrGet(col, result): any {
+    return result.case_id.startsWith(Draft.DRAFT) ? Draft.DRAFT : this.hyphenateIfCaseReferenceOrGet(col, result);
+  }
+
   private isSortAscending(column: SearchResultViewColumn): boolean {
     let currentSortOrder = this.currentSortOrder(column);
     return currentSortOrder === SortOrder.UNSORTED || currentSortOrder === SortOrder.DESCENDING;
@@ -178,6 +183,10 @@ export class SearchResultComponent implements OnChanges {
 
   getLastResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length;
+    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length - this.numberOfDrafts();
+  }
+
+  private numberOfDrafts(): number {
+    return this.resultView.results.filter(_ => _.case_id.startsWith(Draft.DRAFT)).length;
   }
 }

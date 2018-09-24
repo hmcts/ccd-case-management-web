@@ -118,7 +118,7 @@ export class CaseEditComponent implements OnInit {
     return this.wizard.hasPreviousPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
   }
 
-  cancel(): void  {
+  cancel(): void {
     this.cancelled.emit();
   }
 

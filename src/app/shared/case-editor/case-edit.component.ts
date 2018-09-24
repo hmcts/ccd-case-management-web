@@ -94,8 +94,6 @@ export class CaseEditComponent implements OnInit {
     this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
     this.registrarService.reset();
 
-    console.log('router.url=', this.router.url);
-    console.log('navigationOrigin=', this.navigationOrigin);
     let theQueryParams: Params = {};
     theQueryParams['ORIGIN'] = this.navigationOrigin;
     let nextPage = this.wizard.nextPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));

@@ -26,7 +26,7 @@
                   id: col.case_field_id,
                   label: col.label,
                   field_type: col.case_field_type,
-                  value: result.case_fields[col.case_field_id]
+                  value: hyphenateIfCaseReferenceOrGet(col, result)
             }"></ccd-field-read>
           <ng-template #case_reference>{{result.case_id | ccdCaseReference}}</ng-template>
         </div>

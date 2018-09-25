@@ -4,7 +4,6 @@ let CaseListFilters = require('../../../page-objects/caseListFilters.po.js')
 let CaseListResults = require('../../../page-objects/caseListResults.po.js')
 let CaseSearchFilters = require('../../../page-objects/caseSearchFilters.po.js')
 
-
 describe('user - sign in and landing page', function() {
 
 beforeEach(function(){
@@ -25,7 +24,6 @@ afterEach(function(){
   ccdBannerPage.clickSignOut();
 
 });
-
 
 it('Should display banner', function() {
 
@@ -73,7 +71,6 @@ it('Should display case list filters', function() {
 
  });
 
-
 it('Should display case list results', function() {
 
    let caseListResultsPage = new CaseListResults
@@ -105,5 +102,4 @@ it('Should display case list results', function() {
     expect(caseSearchFiltersPage.applyButtonIsClickable()).toBeTruthy(failedOnMissingButton);
 
   });
-
 });

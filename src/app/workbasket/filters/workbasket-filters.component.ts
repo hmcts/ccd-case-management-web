@@ -4,8 +4,6 @@ import { CaseState } from '../../shared/domain/definition/case-state.model';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { DefinitionsService } from '../../core/definitions/definitions.service';
-import { READ_ACCESS } from '../../shared/domain/case-view/access-types.model';
 import { FormGroup } from '@angular/forms';
 import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
@@ -108,12 +106,12 @@ export class WorkbasketFiltersComponent implements OnInit {
   onJurisdictionIdChange() {
     this.jurisdictionService.announceSelectedJurisdiction(this.selected.jurisdiction);
     this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes.length > 0 ? this.selected.jurisdiction.caseTypes : null;
-      this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
-      this.selected.caseState = this.selected.caseType ? this.selected.caseType.states[0] : null;
-      this.clearWorkbasketInputs();
-      if (!this.isApplyButtonDisabled()) {
-        this.onCaseTypeIdChange();
-      }
+    this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
+    this.selected.caseState = this.selected.caseType ? this.selected.caseType.states[0] : null;
+    this.clearWorkbasketInputs();
+    if (!this.isApplyButtonDisabled()) {
+      this.onCaseTypeIdChange();
+    }
   }
 
   onCaseTypeIdChange(): void {

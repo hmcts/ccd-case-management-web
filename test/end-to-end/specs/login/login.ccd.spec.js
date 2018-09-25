@@ -2,6 +2,8 @@ let Login = require('../../../page-objects/login.po.js')
 let CCDBanner = require('../../../page-objects/ccdBanner.po.js')
 let CaseListFilters = require('../../../page-objects/caseListFilters.po.js')
 let CaseListResults = require('../../../page-objects/caseListResults.po.js')
+let CaseSearchFilters = require('../../../page-objects/caseSearchFilters.po.js')
+
 
 describe('user - sign in and landing page', function() {
 
@@ -83,5 +85,25 @@ it('Should display case list results', function() {
    expect(caseListResultsPage.hasCreateCaseButton()).toBe(true, failedOnEmptyCaseList)
 
  });
+
+ it('Should display Search list filters', function() {
+
+    let ccdBannerPage = new CCDBanner
+    let caseSearchFiltersPage = new CaseSearchFilters
+
+    ccdBannerPage.isLoaded()
+    ccdBannerPage.clickSearchBoxLabel()
+    caseSearchFiltersPage.isLoaded()
+
+    failedOnPageTitle = 'page not titled on Search list page'
+    failedOnMissingDropDownFilter = 'drop down filter missing on Search list page'
+    failedOnMissingButton = 'Apply button missing on Search list page'
+
+    expect(caseSearchFiltersPage.getPageTitleLabel()).toBe('Search')
+    expect(caseSearchFiltersPage.jurisdictionDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
+    expect(caseSearchFiltersPage.caseTypeDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
+    expect(caseSearchFiltersPage.applyButtonIsClickable()).toBeTruthy(failedOnMissingButton);
+
+  });
 
 });

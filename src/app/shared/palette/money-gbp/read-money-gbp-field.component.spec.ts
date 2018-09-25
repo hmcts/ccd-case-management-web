@@ -11,6 +11,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
       type: 'MoneyGBP'
     };
     const VALUE = 4220;
+    const EMPTY = '-';
     const CASE_FIELD: CaseField = {
       id: 'x',
       label: 'X',
@@ -74,7 +75,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(de.nativeElement.textContent).toEqual('');
+        expect(de.nativeElement.textContent).toEqual(EMPTY);
       });
 
       it('should render null value as empty string', () => {
@@ -82,7 +83,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(de.nativeElement.textContent).toEqual('');
+        expect(de.nativeElement.textContent).toEqual(EMPTY);
       });
 
       it('should render unsupported values as empty string', () => {
@@ -90,7 +91,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(de.nativeElement.textContent).toEqual('');
+        expect(de.nativeElement.textContent).toEqual(EMPTY);
       });
   });
 
@@ -124,7 +125,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(de.nativeElement.textContent).toEqual('');
+        expect(de.nativeElement.textContent).toEqual(EMPTY);
       });
 
       it('should render null value as empty string', () => {
@@ -132,7 +133,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(de.nativeElement.textContent).toEqual('');
+        expect(de.nativeElement.textContent).toEqual(EMPTY);
       });
 
       it('should render unsupported values as empty string', () => {
@@ -140,7 +141,7 @@ describe('ReadMoneyGBPFieldComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(de.nativeElement.textContent).toEqual('');
+        expect(de.nativeElement.textContent).toEqual(EMPTY);
       });
   });
 

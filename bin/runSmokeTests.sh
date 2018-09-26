@@ -17,4 +17,4 @@ then echo "TEST_URL null";
 else echo "TEST_URL $TEST_URL";
 fi;
 
-yarn run test:smoke
+yarn run test:smokeTest

@@ -8,6 +8,7 @@ import { Draft } from '../domain/draft';
   templateUrl: './case-header.html',
   styleUrls: ['./case-header.scss']
 })
+
 export class CaseHeaderComponent implements OnInit {
 
   @Input()

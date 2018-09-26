@@ -13,6 +13,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
+import { CaseReferencePipe } from '../utils/case-reference.pipe';
 
 @Component({
   selector: 'ccd-search-result',
@@ -73,7 +74,8 @@ export class SearchResultComponent implements OnChanges {
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
               appConfig: AppConfig,
-              private activityService: ActivityService) {
+              private activityService: ActivityService,
+              private caseReferencePipe: CaseReferencePipe) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -142,6 +144,12 @@ export class SearchResultComponent implements OnChanges {
     return this.activityService.isEnabled;
   }
 
+  hyphenateIfCaseReferenceOrGet(col, result): any {
+    return col.case_field_id === '[CASE_REFERENCE]' ?
+      this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
+      : result.case_fields[col.case_field_id];
+  }
+
   private isSortAscending(column: SearchResultViewColumn): boolean {
     let currentSortOrder = this.currentSortOrder(column);
     return currentSortOrder === SortOrder.UNSORTED || currentSortOrder === SortOrder.DESCENDING;
@@ -161,5 +169,15 @@ export class SearchResultComponent implements OnChanges {
       }
     }
     return isAscending ? SortOrder.ASCENDING : isDescending ? SortOrder.DESCENDING : SortOrder.UNSORTED;
+  }
+
+  getFirstResult(): number {
+    const currentPage = (this.selected.page ? this.selected.page : 1);
+    return ( (currentPage - 1) * this.paginationPageSize ) + 1
+  }
+
+  getLastResult(): number {
+    const currentPage = (this.selected.page ? this.selected.page : 1);
+    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length;
   }
 }

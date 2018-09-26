@@ -47,6 +47,7 @@ module "case-management-web" {
   common_tags  = "${var.common_tags}"
   asp_name = "${(var.asp_name == "use_shared") ? local.sharedAppServicePlan : var.asp_name}"
   asp_rg = "${(var.asp_rg == "use_shared") ? local.sharedASPResourceGroup : var.asp_rg}"
+  website_local_cache_sizeinmb = 500
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

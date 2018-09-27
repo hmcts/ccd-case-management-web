@@ -10,6 +10,8 @@ properties([
 
 withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRONMENT, 'sandbox') {
 
+    enableSlackNotifications('#ccd-param-builds')
+
     afterCheckout {
         sh "yarn cache clean"
     }

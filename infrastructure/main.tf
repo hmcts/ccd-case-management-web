@@ -21,6 +21,7 @@ locals {
   sharedResourceGroup = "${(var.env == "preview" || var.env == "spreview") ? local.previewResourceGroup : local.nonPreviewResourceGroup}"
 
   sharedAppServicePlan = "${var.raw_product}-${var.env}"
+  sharedASPResourceGroup = "${var.raw_product}-shared-${var.env}"
 
   is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
   external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
@@ -45,7 +46,8 @@ module "case-management-web" {
   https_only = "${var.https_only}"
   common_tags  = "${var.common_tags}"
   asp_name = "${(var.asp_name == "use_shared") ? local.sharedAppServicePlan : var.asp_name}"
-  asp_rg = "${(var.asp_rg == "use_shared") ? local.sharedResourceGroup : var.asp_rg}"
+  asp_rg = "${(var.asp_rg == "use_shared") ? local.sharedASPResourceGroup : var.asp_rg}"
+  website_local_cache_sizeinmb = 500
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

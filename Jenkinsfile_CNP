@@ -26,7 +26,17 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withPipeline("angular", product, component) {
 
-   loadVaultSecrets(secrets)
+    loadVaultSecrets(secrets)
+
+    onMaster {
+        enableSlackNotifications('#ccd-master-builds')
+    }
+    onDemo {
+        enableSlackNotifications('#ccd-demo-builds')
+    }
+    onPR {
+        enableSlackNotifications('#ccd-pr-builds')
+    }
 
     afterCheckout {
         sh "yarn cache clean"

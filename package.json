@@ -2,6 +2,9 @@
   "name": "case-management-web",
   "version": "1.2.0",
   "private": true,
+  "engines": {
+    "node": "^8.9.4"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

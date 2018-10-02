@@ -32,4 +32,19 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
         sh "yarn cache clean"
     }
 
+    after('functionalTest:saat'){
+        archiveArtifacts 'test/results/index.html'
+
+        publishHTML target: [
+                       reportDir            : “test/results/“,
+                       reportFiles          : “index.html”,
+                       reportName           : “SAAT Functional Tests”,
+                       alwaysLinkToLastBuild: true
+               ]
+           }
+    }
+
+
+
+
 }

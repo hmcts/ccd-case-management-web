@@ -42,4 +42,13 @@ withPipeline("angular", product, component) {
         sh "yarn cache clean"
     }
 
+    after('functionalTest:aat'){
+        archiveArtifacts 'test/results/index.html'
+    }
+
+    after('functionalTest:preview'){
+        archiveArtifacts 'test/results/index.html'
+    }
+
+
 }

@@ -2,7 +2,7 @@
 !package.json
 !yarn.lock
 !.snyk
-!src/
+!src/**
 !docker/
 !angular.json
 !tsconfig.json

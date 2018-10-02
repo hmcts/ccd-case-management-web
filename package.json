@@ -53,7 +53,7 @@
     "@angular/router": "~6.0.6",
     "@angular/upgrade": "~6.0.6",
     "@hmcts/ccd-case-ui-toolkit": "1.2.5",
-    "@hmcts/ccpay-web-component": "~1.5.0",
+    "@hmcts/ccpay-web-component": "~1.6.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^1.0.0",

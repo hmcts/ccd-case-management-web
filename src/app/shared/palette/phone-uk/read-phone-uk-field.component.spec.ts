@@ -11,7 +11,7 @@ describe('ReadPhoneUKFieldComponent', () => {
     type: 'PhoneUK'
   };
   const VALUE = '07123456789';
-  const EMPTY = '';
+  const EMPTY = '-';
   const CASE_FIELD: CaseField = {
     id: 'x',
     label: 'X',
@@ -51,14 +51,14 @@ describe('ReadPhoneUKFieldComponent', () => {
     expect(de.nativeElement.textContent).toEqual(VALUE);
   });
 
-  it('render undefined value as empty string', () => {
+  it('render undefined value as hyphen string', () => {
     component.caseField.value = undefined;
     fixture.detectChanges();
 
     expect(de.nativeElement.textContent).toEqual(EMPTY);
   });
 
-  it('render null value as empty string', () => {
+  it('render null value as hyphen string', () => {
     component.caseField.value = null;
     fixture.detectChanges();
 

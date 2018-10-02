@@ -1,6 +1,5 @@
 BasePage = require('./basePage.js')
-const selfUrlPath = '/list';
-
+NavBar = require('./ccd-components/globalNavBar.js');
 
 class CaseListPage extends BasePage {
 
@@ -14,33 +13,28 @@ class CaseListPage extends BasePage {
       this._searchBox = by.css('.global-navigation .cut-nav-bar #search');
       this._footer = by.css('.footer-wrapper');
       this._signOut = by.css('div #sign-out');
-
-      let EC = protractor.ExpectedConditions;
-      browser.wait(EC.urlContains(selfUrlPath),30000)
-        .catch(err => console.log('page not loaded'));
-
-
-    //As we are now on the CCD landing page, we can set this to false and make use of protractor angular functionality
-    //   browser.ignoreSynchronization = false;
-
-  }
-
-  waitForPagetoLoad() {
-      this.waitForElementToBeVisible(element(this._bannerHeaderTitle))
-      this.waitForElementToBeVisible(element(this._userName))
-  }
-
-  async getTitleLabel() {
-      return await element(this._bannerHeaderTitle).getText();
   }
 
   /**
-   * Check the workbasket filters are displayed on the case list landing page
+   * Waits for workbasket search filters to be visible then checks if it is now visible
+   *
+   * This method is primarily used to wait for the landing page to fully load, once it has loaded we set
+   * ignoreSynchronization = false as we can be dure we are now on an angluar page
    * @returns {Promise<boolean>}
    */
   async isFiltersDisplayed(){
-      await this.waitForElementToBeVisible(element(this._landingPageFilters));
-      return await element(this._landingPageFilters).isDisplayed()
+    await this.waitForElementToBeVisible(element(this._landingPageFilters), 10000);
+    browser.ignoreSynchronization = false;
+    return await element(this._landingPageFilters).isDisplayed()
+  }
+
+  /**
+   * Return a new instance of the Navigation bar component which is common to many
+   * pages and abstracted into it's own class
+   * @returns {NavBar|*}
+   */
+  getNavBarComponent(){
+      return new NavBar;
   }
 
 }

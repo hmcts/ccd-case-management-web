@@ -1,6 +1,10 @@
 
-let Login = require('../pageObjects/loginPage.js')
-let CaseListPage = require('../pageObjects/caseListPage.js')
+let Login = require('../pageObjects/loginPage.js');
+let CaseListPage = require('../pageObjects/caseListPage.js');
+let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
+let NavBar = require('../pageObjects/ccd-components/globalNavBar.js');
+
+
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
 
@@ -24,6 +28,14 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Then(/^I should see CCD case list page$/, async function () {
       caseListPage = new CaseListPage();
       failedOnPageTitle = 'page not titled on case list page';
+
+      expect (await caseListPage.isFiltersDisplayed()).to.be.true
+  });
+
+  Given(/^I have logged in$/, async function () {
+      loginPage = await Login.open();
+      caseListPage = await loginPage.loginToApp(); //why does returning a new object like this not work?
+      // caseListPage = new CaseListPage();
 
       expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });

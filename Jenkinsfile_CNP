@@ -27,6 +27,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withPipeline("angular", product, component) {
 
+    loadVaultSecrets(secrets)
+
     onMaster {
         enableSlackNotifications('#ccd-master-builds')
     }

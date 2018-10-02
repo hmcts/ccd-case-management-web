@@ -29,7 +29,7 @@ describe('CaseResolver', () => {
     let router: any;
 
     beforeEach(() => {
-      casesService = createSpyObj('casesService', ['getCaseView']);
+      casesService = createSpyObj('casesService', ['getCaseViewV2']);
       draftService = createSpyObj('draftService', ['getDraft']);
 
       router = createSpyObj('router', ['navigate']);
@@ -47,7 +47,7 @@ describe('CaseResolver', () => {
 
     it('should resolve case and cache when the route is the one for case view', () => {
       caseResolver['cachedCaseView'] = CASE_CACHED;
-      casesService.getCaseView.and.returnValue(CASE_OBS);
+      casesService.getCaseViewV2.and.returnValue(CASE_OBS);
 
       caseResolver
         .resolve(route)
@@ -55,7 +55,7 @@ describe('CaseResolver', () => {
           expect(caseData).toBe(CASE);
         });
 
-      expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+      expect(casesService.getCaseViewV2).toHaveBeenCalledWith(CASE_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);
@@ -65,7 +65,7 @@ describe('CaseResolver', () => {
 
     it('should return cached case view when the route is a case view tab and cached view exists', () => {
       caseResolver['cachedCaseView'] = CASE_CACHED;
-      casesService.getCaseView.and.returnValue(CASE_OBS);
+      casesService.getCaseViewV2.and.returnValue(CASE_OBS);
       route = {
         firstChild: {
           url: [],
@@ -80,13 +80,13 @@ describe('CaseResolver', () => {
         .subscribe(caseData => {
           expect(caseData).toBe(CASE_CACHED);
         });
-      expect(casesService.getCaseView).not.toHaveBeenCalled();
+      expect(casesService.getCaseViewV2).not.toHaveBeenCalled();
       expect(caseResolver['cachedCaseView']).toBe(CASE_CACHED);
     });
 
     it('should return retrieve case view when the route is a case view tab but empty cache', () => {
       caseResolver['cachedCaseView'] = null;
-      casesService.getCaseView.and.returnValue(CASE_OBS);
+      casesService.getCaseViewV2.and.returnValue(CASE_OBS);
       route = {
         firstChild: {
           url: [],
@@ -102,14 +102,14 @@ describe('CaseResolver', () => {
           expect(caseData).toBe(CASE);
         });
 
-          expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+          expect(casesService.getCaseViewV2).toHaveBeenCalledWith(CASE_ID);
       // allows to access private cachedCaseView field
           expect(caseResolver['cachedCaseView']).toBe(CASE);
     });
 
     it('should return cached case view when the route is not the one for case view and cached view exists', () => {
       caseResolver['cachedCaseView'] = CASE_CACHED;
-      casesService.getCaseView.and.returnValue(CASE_OBS);
+      casesService.getCaseViewV2.and.returnValue(CASE_OBS);
       route = {
         firstChild: {
           url: ['someUrlSegment']
@@ -123,13 +123,13 @@ describe('CaseResolver', () => {
         .subscribe(caseData => {
           expect(caseData).toBe(CASE_CACHED);
         });
-      expect(casesService.getCaseView).not.toHaveBeenCalled();
+      expect(casesService.getCaseViewV2).not.toHaveBeenCalled();
       expect(caseResolver['cachedCaseView']).toBe(CASE_CACHED);
     });
 
     it('should retrieve case view when the route is not the one for case view and cached is empty', () => {
       caseResolver['cachedCaseView'] = null;
-      casesService.getCaseView.and.returnValue(CASE_OBS);
+      casesService.getCaseViewV2.and.returnValue(CASE_OBS);
       route = {
         firstChild: {
           url: ['someUrlSegment']
@@ -144,13 +144,13 @@ describe('CaseResolver', () => {
           expect(caseData).toBe(CASE);
         });
 
-      expect(casesService.getCaseView).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID);
+      expect(casesService.getCaseViewV2).toHaveBeenCalledWith(CASE_ID);
       // allows to access private cachedCaseView field
       expect(caseResolver['cachedCaseView']).toBe(CASE);
     });
 
     it('should redirect to error page when case cannot be retrieved', () => {
-      casesService.getCaseView.and.returnValue(Observable.throw('Failed'));
+      casesService.getCaseViewV2.and.returnValue(Observable.throw('Failed'));
 
       caseResolver
         .resolve(route)
@@ -201,7 +201,7 @@ describe('CaseResolver', () => {
     let router: any;
 
     beforeEach(() => {
-      casesService = createSpyObj('casesService', ['getCaseView']);
+      casesService = createSpyObj('casesService', ['getCaseViewV2']);
       draftService = createSpyObj('draftService', ['getDraft']);
       draftService.getDraft.and.returnValue(DRAFT_OBS);
       router = createSpyObj('router', ['navigate']);

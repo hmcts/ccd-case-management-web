@@ -47,6 +47,7 @@ module "case-management-web" {
   common_tags  = "${var.common_tags}"
   asp_name = "${(var.asp_name == "use_shared") ? local.sharedAppServicePlan : var.asp_name}"
   asp_rg = "${(var.asp_rg == "use_shared") ? local.sharedASPResourceGroup : var.asp_rg}"
+  website_local_cache_sizeinmb = 500
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"
@@ -61,7 +62,6 @@ module "case-management-web" {
     POSTCODE_LOOKUP_URL = "${local.ccd_gateway_url}/addresses?postcode=$${postcode}"
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"
     PRINT_SERVICE_URL_REMOTE = "${local.ccd_print_service_url}"
-    WEBSITE_NODE_DEFAULT_VERSION = "8.9.4"
     CCD_ACTIVITY_URL = "${var.activity_enabled == "true" ? local.ccd_activity_url : ""}"
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS = 5000
     CCD_ACTIVITY_RETRY = 5

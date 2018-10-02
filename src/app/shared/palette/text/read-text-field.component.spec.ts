@@ -11,6 +11,7 @@ describe('ReadTextFieldComponent', () => {
     type: 'Text'
   };
   const VALUE = 'Hello world';
+  const EMPTY = '-';
   const CASE_FIELD: CaseField = {
     id: 'x',
     label: 'X',
@@ -50,17 +51,17 @@ describe('ReadTextFieldComponent', () => {
     expect(de.nativeElement.textContent).toEqual(VALUE.toString());
   });
 
-  it('render undefined value as empty string', () => {
+  it('render undefined value as hyphen string', () => {
     component.caseField.value = undefined;
     fixture.detectChanges();
 
-    expect(de.nativeElement.textContent).toEqual('');
+    expect(de.nativeElement.textContent).toEqual(EMPTY);
   });
 
-  it('render null value as empty string', () => {
+  it('render null value as hyphen string', () => {
     component.caseField.value = null;
     fixture.detectChanges();
 
-    expect(de.nativeElement.textContent).toEqual('');
+    expect(de.nativeElement.textContent).toEqual(EMPTY);
   });
 });

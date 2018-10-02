@@ -82,7 +82,7 @@ describe('ConditionalShowDirective', () => {
       expect(el.hidden).toBe(false);
     });
 
-    it('should display gray bar when the field is not on the same page', () => {
+    it('should not display gray bar when the field is not on the same page', () => {
       comp.caseField = field('PersonSecondAddress', '', 'PersonLastName="Doe"');
       expect(comp.caseField.field_type.type).toBe('Text');
       comp.eventFields = [comp.caseField, field('OtherField', 'Doe', '')];

@@ -128,7 +128,7 @@ export class FieldsUtils {
       let samePage = true;
       let cyaSelector = false;
       this.getConditionFields(caseField.show_condition).forEach(
-        field => { samePage = document.querySelector('#' + field) ? true : false; }
+        field => { samePage = document.querySelector('[id*=field]') ? true : false; }
       );
       if (divSelector) {
         let tempElement = divSelector.parentElement;

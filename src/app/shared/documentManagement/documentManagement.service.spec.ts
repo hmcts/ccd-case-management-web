@@ -1,10 +1,8 @@
 import { DocumentManagementService } from './documentManagement.service';
 import createSpyObj = jasmine.createSpyObj;
-import { HttpService } from '../http/http.service';
-import { DocumentData } from '../../shared/domain/document/document-data.model';
 import { of } from 'rxjs';
 import { Response, ResponseOptions } from '@angular/http';
-import { AbstractAppConfig } from '../../app.config';
+import { AbstractAppConfig, DocumentData, HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('DocumentManagementService', () => {
   const DOCUMENT_MANAGEMENT_URL = 'http://docmanagement.ccd.reform/documents';

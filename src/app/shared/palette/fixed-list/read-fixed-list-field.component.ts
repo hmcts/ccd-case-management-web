@@ -3,6 +3,13 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'ccd-read-fixed-list-field',
-  template: '{{caseField.value | ccdFixedList:caseField.field_type.fixed_list_items}}',
+  template: `<span class="sr-only" *ngIf="isFieldValueEmpty(); else fixedList">-</span>
+  <ng-template #fixedList>{{caseField.value | ccdFixedList:caseField.field_type.fixed_list_items}}</ng-template>`
 })
-export class ReadFixedListFieldComponent extends AbstractFieldReadComponent {}
+export class ReadFixedListFieldComponent extends AbstractFieldReadComponent {
+
+  isFieldValueEmpty(): boolean {
+    return (!this.caseField.value);
+  }
+
+}

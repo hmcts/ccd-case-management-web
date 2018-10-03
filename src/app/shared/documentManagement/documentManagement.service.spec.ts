@@ -1,10 +1,10 @@
 import { DocumentManagementService } from './documentManagement.service';
 import createSpyObj = jasmine.createSpyObj;
-import { AppConfig } from '../../app.config';
 import { HttpService } from '../http/http.service';
 import { DocumentData } from '../../shared/domain/document/document-data.model';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { Response, ResponseOptions } from '@angular/http';
+import { AbstractAppConfig } from '../../app.config';
 
 describe('DocumentManagementService', () => {
   const DOCUMENT_MANAGEMENT_URL = 'http://docmanagement.ccd.reform/documents';
@@ -15,7 +15,7 @@ describe('DocumentManagementService', () => {
   let documentManagementService: DocumentManagementService;
 
   beforeEach(() => {
-    appConfig = createSpyObj<AppConfig>('appConfig', ['getDocumentManagementUrl']);
+    appConfig = createSpyObj<AbstractAppConfig>('appConfig', ['getDocumentManagementUrl']);
     appConfig.getDocumentManagementUrl.and.returnValue(DOCUMENT_MANAGEMENT_URL);
 
     httpService = createSpyObj<HttpService>('httpService', ['post']);
@@ -40,7 +40,7 @@ describe('DocumentManagementService', () => {
     };
 
     beforeEach(() => {
-      httpService.post.and.returnValue(Observable.of(new Response(new ResponseOptions({
+      httpService.post.and.returnValue(of(new Response(new ResponseOptions({
         body: JSON.stringify(RESPONSE)
       }))));
     });

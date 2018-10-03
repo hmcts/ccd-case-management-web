@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { HttpError } from '../../core/http/http-error.model';
+import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from './error-context';
 

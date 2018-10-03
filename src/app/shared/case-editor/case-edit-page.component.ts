@@ -1,18 +1,13 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { CaseEventTrigger, WizardPage, CaseEventData, FormValueService, FormErrorService, DRAFT,
+  HttpError } from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
-import { WizardPage } from '../domain/wizard-page.model';
-import { CaseEventData } from '../domain/case-event-data';
-import { FormValueService } from '../../core/form/form-value.service';
 import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { Subject } from 'rxjs/Subject';
-import { HttpError } from '../../core/http/http-error.model';
-import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { PageValidationService } from './page-validation.service';
-import { Draft } from '../domain/draft';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -140,7 +135,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       draftCaseEventData.event_token = this.eventTrigger.event_token;
       draftCaseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-        (draft) => this.eventTrigger.case_id = Draft.DRAFT + draft.id, error => this.handleError(error)
+        (draft) => this.eventTrigger.case_id = DRAFT + draft.id, error => this.handleError(error)
       );
     }
   }

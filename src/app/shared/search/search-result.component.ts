@@ -13,7 +13,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
+import { CaseReferencePipe } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',

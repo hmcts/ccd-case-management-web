@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Orderable } from './orderable.model';
+import { Orderable } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class OrderService {

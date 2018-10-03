@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CaseField } from '../domain/definition/case-field.model';
+import { CaseField } from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 
 @Component({

@@ -1,4 +1,4 @@
-import { WizardPage } from '../domain/wizard-page.model';
+import { WizardPage } from '@hmcts/ccd-case-ui-toolkit';
 import { Predicate } from '../predicate';
 import { OrderService } from '../../core/order/order.service';
 

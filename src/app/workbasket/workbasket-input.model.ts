@@ -1,4 +1,4 @@
-import { Orderable } from '../core/order/orderable.model';
+import { Orderable } from '@hmcts/ccd-case-ui-toolkit';
 import { Field } from '../core/search/field.model';
 
 export class WorkbasketInputModel implements Orderable {

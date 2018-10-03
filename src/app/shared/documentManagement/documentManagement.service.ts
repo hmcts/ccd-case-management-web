@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import { DocumentData, AbstractDocumentManagementService, HttpService } from '@hmcts/ccd-case-ui-toolkit';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
-import { DocumentData } from '../../shared/domain/document/document-data.model';
 
 @Injectable()
-export class DocumentManagementService {
+export class DocumentManagementService implements AbstractDocumentManagementService {
   private static readonly HEADER_ACCEPT = 'Accept';
   private static readonly HEADER_CONTENT_TYPE = 'Content-Type';
 

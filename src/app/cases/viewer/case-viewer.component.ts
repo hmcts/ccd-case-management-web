@@ -11,10 +11,7 @@ import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
-import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
-import { HttpError } from '../../core/http/http-error.model';
-import { Draft } from '../../shared/domain/draft';
+import { CaseField, ShowCondition, Draft, DRAFT, HttpError } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -86,7 +83,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
 
     // we may need to take care of different triggers in the future
     if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
-      theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
+      theQueryParams[DRAFT] = this.caseDetails.case_id;
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,

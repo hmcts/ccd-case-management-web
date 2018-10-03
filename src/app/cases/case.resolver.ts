@@ -7,7 +7,7 @@ import { Response } from '@angular/http';
 import { AlertService } from '../core/alert/alert.service';
 import 'rxjs/add/operator/catch';
 import { DraftService } from '../core/draft/draft.service';
-import { Draft } from '../shared/domain/draft';
+import { Draft } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class CaseResolver implements Resolve<CaseView> {

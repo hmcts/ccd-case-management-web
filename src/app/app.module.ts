@@ -17,8 +17,7 @@ import { SharedModule } from './shared/shared.module';
 import { isPlatformBrowser } from '@angular/common';
 import { OAuth2RedirectModule } from './oauth2/oauth2-redirect.module';
 import { AppConfigGuard } from './app.config.guard';
-import { AbstractAppConfig } from '@hmcts/ccd-case-ui-toolkit';
-import { AppServerConfig } from './app.server.config';
+import { AbstractAppConfig, Config } from '@hmcts/ccd-case-ui-toolkit';
 
 @NgModule({
   imports: [
@@ -43,7 +42,7 @@ import { AppServerConfig } from './app.server.config';
     AppConfigGuard,
     {
       provide: AbstractAppConfig,
-      useClass: AppConfig
+      useValue: AppConfig
     }
   ],
   bootstrap: [AppComponent]

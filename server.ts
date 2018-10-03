@@ -45,8 +45,6 @@ const CONFIG = {
   'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25
 };
 
-const APP_SERVER_CONFIG = new AppServerConfig(CONFIG);
-
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 
@@ -57,7 +55,7 @@ app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
     provideModuleMap(LAZY_MODULE_MAP),
-    { provide: AppConfig, useValue: APP_SERVER_CONFIG },
+    { provide: AppConfig, useValue: new AppServerConfig(CONFIG) },
   ]
 }));
 

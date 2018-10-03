@@ -34,5 +34,4 @@ withNightlyPipeline(type, product, app) {
     afterCheckout {
         sh "yarn cache clean"
     }
-
 }

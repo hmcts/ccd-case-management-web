@@ -10,11 +10,7 @@ export class AppConfigGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return this.appConfig.load()
-      .then(() => {
-        console.log('2appConfig', this.appConfig);
-        console.log('2abstractAppConfig', this.abstractAppConfig);
-        return true;
-      });
+      .then(() => true);
   }
 
 }

@@ -29,7 +29,7 @@ export class AppConfig extends AbstractAppConfig {
         })
         .subscribe((config: Config) => {
           this.config = config;
-          console.log('Loading app config: OK, config=', this.config);
+          console.log('Loading app config: OK');
           resolve();
         });
     });

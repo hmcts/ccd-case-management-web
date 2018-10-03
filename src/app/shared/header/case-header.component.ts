@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CaseView } from '../../core/cases/case-view.model';
-import { CaseField } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseField, Draft } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-case-header',
@@ -16,10 +16,14 @@ export class CaseHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.caseTitle = new CaseField();
-    if (this.caseDetails.state.title_display) {
+    if (!this.isDraft() && this.caseDetails.state.title_display) {
       this.caseTitle.label = this.caseDetails.state.title_display;
       this.caseFields = this.getCaseFields();
     }
+  }
+
+  isDraft(): boolean {
+    return Draft.isDraft(this.caseDetails.case_id);
   }
 
   showCaseReference(): boolean {

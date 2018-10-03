@@ -42,7 +42,7 @@ import { AbstractAppConfig, Config } from '@hmcts/ccd-case-ui-toolkit';
     AppConfigGuard,
     {
       provide: AbstractAppConfig,
-      useValue: AppConfig
+      useClass: AppConfig
     }
   ],
   bootstrap: [AppComponent]

@@ -125,11 +125,39 @@ export class FieldsUtils {
   showGrayBar(caseField: CaseField, element: HTMLElement) {
     if (caseField.field_type.type !== 'Collection') {
       let divSelector = element.querySelector('div');
-      let samePage = true;
       let cyaSelector = false;
-      this.getConditionFields(caseField.show_condition).forEach(
-        field => { samePage = document.querySelector('[id*=field]') ? true : false; }
-      );
+
+      if (divSelector) {
+        let tempElement = divSelector.parentElement;
+        while (tempElement.parentElement) {
+          if (tempElement.tagName === 'FORM') {
+            if (tempElement.classList.contains('check-your-answers')) {
+              cyaSelector = true;
+            }
+          }
+          tempElement = tempElement.parentElement;
+        }
+        if (!cyaSelector) {
+          divSelector.classList.add('panel');
+        }
+      }
+    }
+  }
+
+/*
+  showGrayBar(caseField: CaseField, element: HTMLElement) {
+    if (caseField.field_type.type !== 'Collection') {
+      let divSelector = element.querySelector('div');
+      let cyaSelector = false;
+      let idElements = null;
+      idElements = document.querySelectorAll('*[id]');
+      let idList = [];
+      for (let i = 0; i < idElements.length ; i++) {
+        idList.push(idElements[i].id.replace(/-yes|-no/gi, ''));
+      }
+      let condFields = this.getConditionFields(caseField.show_condition);
+      let samePage = condFields.every(r => idList.includes(r));
+
       if (divSelector) {
         let tempElement = divSelector.parentElement;
         while (tempElement.parentElement) {
@@ -146,6 +174,7 @@ export class FieldsUtils {
       }
     }
   }
+  */
 
   getConditionFields(condition: string): any[] {
     let condFields = [];

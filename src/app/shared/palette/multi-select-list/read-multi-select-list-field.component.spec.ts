@@ -89,20 +89,23 @@ describe('ReadMultiSelectListFieldComponent', () => {
     component.caseField.value = undefined;
     fixture.detectChanges();
 
-    expect(de.children.length).toBe(0);
+    // length is 1 as we display - for empty value
+    expect(de.children.length).toBe(1);
   });
 
   it('should NOT render anything when value is null', () => {
     component.caseField.value = null;
     fixture.detectChanges();
 
-    expect(de.children.length).toBe(0);
+    // length is 1 as we display - for empty value
+    expect(de.children.length).toBe(1);
   });
 
   it('should NOT render anything when value is empty array', () => {
     component.caseField.value = [];
     fixture.detectChanges();
 
-    expect(de.children.length).toBe(0);
+    // length is 1 as we display - for empty value
+    expect(de.children.length).toBe(1);
   });
 });

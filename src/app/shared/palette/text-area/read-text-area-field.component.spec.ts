@@ -15,6 +15,7 @@ describe('ReadTextAreaFieldComponent', () => {
     type: 'Text'
   };
   const VALUE = 'Hello world';
+  const EMPTY = '-';
   const CASE_FIELD: CaseField = {
     id: 'x',
     label: 'X',
@@ -56,22 +57,22 @@ describe('ReadTextAreaFieldComponent', () => {
     expect(text(span)).toEqual(VALUE.toString());
   });
 
-  it('render undefined value as empty string', () => {
+  it('render undefined value as hyphen string', () => {
     component.caseField.value = undefined;
     fixture.detectChanges();
 
     let span = de.query($SPAN);
 
-    expect(text(span)).toBeNull();
+    expect(text(span)).toEqual(EMPTY);
   });
 
-  it('render null value as empty string', () => {
+  it('render null value as hyphen string', () => {
     component.caseField.value = null;
     fixture.detectChanges();
 
     let span = de.query($SPAN);
 
-    expect(text(span)).toBeNull();
+    expect(text(span)).toEqual(EMPTY);
   });
 
   it('render text using `pre-wrap` styling to render line breaks', () => {

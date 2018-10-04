@@ -40,7 +40,7 @@ describe('WriteOrderSummaryFieldComponent', () => {
     ],
     PaymentTotal: '5000'
   };
-
+  const EMPTY = '-';
   const EXPECTED_FEE_AMOUNTS = ['£45.45', '£4.55'];
   const EXPECTED_PAYMENT_TOTAL = '£50.00';
   const ID = 'PersonOrderSummary';
@@ -175,7 +175,7 @@ describe('WriteOrderSummaryFieldComponent', () => {
       expect(paymentTotalLabel).toBe('Total');
 
       let paymentTotal = text(de.query(By.css('table>tbody tr:last-child td:nth-child(3)')))
-      expect(paymentTotal).toBeNull();
+      expect(paymentTotal).toBe(EMPTY);
     });
   });
 
@@ -221,7 +221,7 @@ describe('WriteOrderSummaryFieldComponent', () => {
       expect(paymentTotalLabel).toBe('Total');
 
       let paymentTotal = text(de.query(By.css('table>tbody tr:last-child td:nth-child(3)')))
-      expect(paymentTotal).toBeNull();
+      expect(paymentTotal).toBe(EMPTY);
     });
   });
 });

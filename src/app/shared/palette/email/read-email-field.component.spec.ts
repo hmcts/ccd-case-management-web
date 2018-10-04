@@ -19,7 +19,7 @@ describe('ReadEmailFieldComponent', () => {
     field_type: FIELD_TYPE,
     value: VALUE
   };
-  const EMPTY = '';
+  const EMPTY = '-';
 
   let fixture: ComponentFixture<ReadEmailFieldComponent>;
   let component: ReadEmailFieldComponent;

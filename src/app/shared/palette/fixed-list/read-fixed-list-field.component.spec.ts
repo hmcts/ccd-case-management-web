@@ -34,7 +34,7 @@ describe('ReadFixedListFieldComponent', () => {
     field_type: FIELD_TYPE,
     value: VALUE
   };
-  const EMPTY = '';
+  const EMPTY = '-';
 
   let fixture: ComponentFixture<ReadFixedListFieldComponent>;
   let component: ReadFixedListFieldComponent;

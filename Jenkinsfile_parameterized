@@ -8,7 +8,25 @@ properties([
   pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
 
+List<LinkedHashMap<String, Object>> secrets = [
+    secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
+    secret('ccd-caseworker-autotest-password', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
 withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRONMENT, 'sandbox') {
+    
+    loadVaultSecrets(secrets)
+
+    enableSlackNotifications('#ccd-param-builds')
 
     afterCheckout {
         sh "yarn cache clean"

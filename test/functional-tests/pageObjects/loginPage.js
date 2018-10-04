@@ -18,8 +18,8 @@ class LoginPage extends BasePage {
    * @returns {Promise<LoginPage>} new instance of the LoginPage
    */
   static async open(){
-      await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
-      // await browser.get(process.env.TEST_FRONTEND_URL || 'http://localhost:3451');
+      //await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
+      await browser.get(process.env.TEST_URL || 'http://localhost:3451');
       return new LoginPage
   }
 

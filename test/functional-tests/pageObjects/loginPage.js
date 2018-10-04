@@ -62,7 +62,7 @@ class LoginPage extends BasePage {
    */
   async clickSignIn() {
       await element(this._signIn).submit();
-      browser.ignoreSynchronization = false;
+      browser.waitForAngular();
       return new CCDBanner
   }
 

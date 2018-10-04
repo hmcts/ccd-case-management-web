@@ -12,6 +12,8 @@ class CaseListPage extends BasePage {
       this._searchBox = by.css('.global-navigation .cut-nav-bar #search');
       this._footer = by.css('.footer-wrapper');
       this._signOut = by.css('div #sign-out');
+    browser.ignoreSynchronization = false;
+
   }
 
   waitForPagetoLoad() {

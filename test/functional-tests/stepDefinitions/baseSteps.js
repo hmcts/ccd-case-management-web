@@ -1,6 +1,9 @@
 const {Before,After, Status , Given, When, Then} = require('cucumber');
 let fs = require('fs');
 
+let {setDefaultTimeout} = require('cucumber');
+setDefaultTimeout(60 * 1000);
+
     Before(async () => {
         browser.ignoreSynchronization = true
     });

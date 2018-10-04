@@ -19,10 +19,13 @@ class LoginPage extends BasePage {
    */
   static async open(){
       //await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
-      await browser.get(process.env.TEST_URL || 'http://localhost:3451');
+    console.log('opening browser and navigating to url...')
+      await browser.get(process.env.TEST_URL || 'http://localhost:3451',30000);
+    console.log('waiting for url to be /login')
       let EC = protractor.ExpectedConditions;
       let currentURL = await browser.getCurrentUrl();
-      await browser.wait(EC.urlContains(selfUrlPath)).catch(err => console.log(I`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
+      await browser.wait(EC.urlContains(selfUrlPath),10000).catch(err => console.log(I`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
+      console.log('finsihed waiting for /login and moving on')
       return new LoginPage
   }
 

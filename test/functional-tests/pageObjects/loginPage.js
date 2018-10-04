@@ -1,6 +1,6 @@
 BasePage = require('./basePage.js')
 let CCDBanner = require('./caseListPage.js')
-const selfUrlPath = '/logqqqqqin';
+const selfUrlPath = '/login';
 
 
 class LoginPage extends BasePage {
@@ -20,6 +20,9 @@ class LoginPage extends BasePage {
   static async open(){
       //await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
       await browser.get(process.env.TEST_URL || 'http://localhost:3451');
+      let EC = protractor.ExpectedConditions;
+      let currentURL = await browser.getCurrentUrl();
+      await browser.wait(EC.urlContains(selfUrlPath)).catch(err => console.log(I`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
       return new LoginPage
   }
 
@@ -31,7 +34,20 @@ class LoginPage extends BasePage {
    * @returns {Promise<void>}
    */
   async inputCredentials(username, password) {
+     console.log("coming into input Credentials");
       await element(this._userNameField).sendKeys(username);
+      if (username){
+        console.log('username is not empty')
+      }else{
+        console.log('username is empty')
+      }
+
+      if (password){
+        console.log('password is not empty')
+      }else{
+        console.log('password is empty')
+      }
+
       await element(this._passwordField).sendKeys(password);
   }
 

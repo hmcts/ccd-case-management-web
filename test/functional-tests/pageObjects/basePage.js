@@ -14,11 +14,22 @@ class BasePage {
         browser.wait(EC.visibilityOf(element), TIMEOUT);
     }
 
+    async waitForElementToBeVisible(element, timeout){
+        let EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element), timeout);
+    }
+
     async waitForElementToBeVisibleByLocator(locator){
         let EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element(locator)), TIMEOUT);
     }
 
+    async waitForUrl(expectedUrlRegex){
+      let currentURL = await browser.getCurrentUrl();
+      let EC = protractor.ExpectedConditions;
+      await browser.wait(EC.urlContains(expectedUrlRegex))
+        .catch(err => console.log(I`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
+    }
 
     waitForUrlToChangeTo(urlRegex) {
         var currentUrl;

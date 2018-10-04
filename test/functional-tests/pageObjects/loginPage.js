@@ -31,7 +31,20 @@ class LoginPage extends BasePage {
    * @returns {Promise<void>}
    */
   async inputCredentials(username, password) {
+     console.log("coming into input Credentials");
       await element(this._userNameField).sendKeys(username);
+      if (username){
+        console.log('username is not empty')
+      }else{
+        console.log('username is empty')
+      }
+
+      if (password){
+        console.log('password is not empty')
+      }else{
+        console.log('password is empty')
+      }
+
       await element(this._passwordField).sendKeys(password);
   }
 

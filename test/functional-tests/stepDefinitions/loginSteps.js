@@ -19,7 +19,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
       console.log(await browser.getCurrentUrl());
       await browser.sleep(5000)
-      console.log(await browser.getCurrentUrl());
       await loginPage.inputCredentials(username, password);
       await loginPage.clickSignIn();
   });

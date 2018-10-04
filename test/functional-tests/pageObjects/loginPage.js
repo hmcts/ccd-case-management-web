@@ -23,9 +23,9 @@ class LoginPage extends BasePage {
       await browser.get(process.env.TEST_URL || 'http://localhost:3451',30000);
       let EC = protractor.ExpectedConditions;
       let currentURL = await browser.getCurrentUrl();
-    console.log(I`waiting for url to be /login | current url is ${currentURL}`)
+    console.log(`waiting for url to be /login | current url is ${currentURL}`)
 
-    await browser.wait(EC.urlContains(selfUrlPath),10000).catch(err => console.log(I`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
+    await browser.wait(EC.urlContains(selfUrlPath),10000).catch(err => console.log(`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
       console.log('finsihed waiting for /login and moving on')
       return new LoginPage
   }

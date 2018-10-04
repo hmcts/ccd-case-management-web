@@ -17,7 +17,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
       let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
 
-      console.log(username);
+      console.log(await browser.getCurrentUrl());
+      await brower.sleep(5000)
+      console.log(await browser.getCurrentUrl());
       await loginPage.inputCredentials(username, password);
       await loginPage.clickSignIn();
   });

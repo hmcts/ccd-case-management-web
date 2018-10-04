@@ -43,11 +43,11 @@ withPipeline("angular", product, component) {
     }
 
     after('functionalTest:aat'){
-        archiveArtifacts 'test/results/index.html'
+        archiveArtifacts 'test/functional-tests/results/index.html'
     }
 
     after('functionalTest:preview'){
-        archiveArtifacts 'test/results/index.html'
+        archiveArtifacts 'test/functional-tests/results/index.html'
     }
 
 

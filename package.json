@@ -22,6 +22,8 @@
     "test:nsp": "nsp check",
     "test:cucumber": "protractor test/config/cucumber.conf.js",
     "test:smoke": "echo 'all smoke tests have magically passed!'",
+    "test:crossbrowser": "protractor test/config/crossbrowser.conf.js",
+    "test:smoke": "./bin/runSmokeTests.sh",
     "test:smokeTest": "protractor test/config/smoke.conf.js",
     "test:functional": "./bin/runFunctionalTests.sh",
     "test:functionalTests": "webdriver-manager update --versions.chrome 2.40 && protractor test/functional-tests/config/conf.js",

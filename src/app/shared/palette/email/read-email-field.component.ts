@@ -4,8 +4,10 @@ import { AbstractFieldReadComponent } from '../base-field/abstract-field-read.co
 @Component({
   selector: 'ccd-read-email-field',
   template: `
-    <a *ngIf="!isFieldValueEmpty()" href=\"mailto:{{caseField.value}}\">{{caseField.value}}</a>
-  `
+    <span class="sr-only" *ngIf="isFieldValueEmpty(); else showEmail">-</span>
+    <ng-template #showEmail>
+      <a href="mailto:{{caseField.value}}">{{caseField.value}}</a>
+    </ng-template>`
 })
 export class ReadEmailFieldComponent extends AbstractFieldReadComponent {
 

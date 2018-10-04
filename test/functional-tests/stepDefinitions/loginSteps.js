@@ -25,7 +25,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       caseListPage = new CaseListPage();
       failedOnPageTitle = 'page not titled on case list page';
 
-      expect (await caseListPage.isFiltersDisplayed()).to.be.false
+      expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });
 
 });

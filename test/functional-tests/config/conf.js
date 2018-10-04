@@ -32,7 +32,7 @@ exports.config = {
       '../stepDefinitions/*.js'
     ],
     tags: false,
-    format: 'json:../results/results.json',
+    format: 'json:test/functional-tests/results/results.json',
     profile: false,
     'no-source': true,
     plugin: 'json:test/cucumber.json'
@@ -41,8 +41,8 @@ exports.config = {
   plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{
-      jsonOutputPath: '../results/',
-      reportPath: '../results/',
+      jsonOutputPath: 'test/functional-tests/results/',
+      reportPath: 'test/functional-tests/results/',
 
       automaticallyGenerateReport: true,
       removeExistingJsonReportFile: true,

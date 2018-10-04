@@ -19,5 +19,7 @@ let fs = require('fs');
               .then(() => {
                   done();
               });
+        } else {
+          done();
         }
     });

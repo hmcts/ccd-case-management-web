@@ -1,6 +1,9 @@
 #!groovy
 
 properties([
+    parameters([
+    choice(name: 'ENVIRONMENT', choices: 'aat\nsaat\nsprod\nsandbox', description: 'Environment where code should be build and deployed')
+  ]),
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
     pipelineTriggers([cron('H 05 * * *')])
 ])
@@ -26,7 +29,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
     
-withNightlyPipeline(type, product, app) {
+withNightlyPipeline('angular', 'ccd', 'case-management-web', 'saat') {
     
     loadVaultSecrets(secrets)
     
@@ -39,7 +42,7 @@ withNightlyPipeline(type, product, app) {
         sh "yarn cache clean"
     }
     
-    after('functionalTest') {
+    after('fullfunctionalTest') {
         //archiveArtifacts 'test/functional-tests/results/index.html'
 
         publishHTML(target:[

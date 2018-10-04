@@ -18,16 +18,19 @@ class LoginPage extends BasePage {
    * @returns {Promise<LoginPage>} new instance of the LoginPage
    */
   static async open(){
-    console.log('opening browser and navigating to url: https://ccd-case-management-web-saat.service.core-compute-saat.internal/')
-
-    await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
+      //open browser and navigate to url
+      await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
       // await browser.get(process.env.TEST_URL || 'http://localhost:3451',30000);
+
+      //wait for browser url to be correct
       let EC = protractor.ExpectedConditions;
       let currentURL = await browser.getCurrentUrl();
-    console.log(`waiting for url to be /login | current url is ${currentURL}`)
+      let errorMessage = `Failed to load page, Expected URL fragment: ${selfUrlPath} | Actual URL: ${currentURL}`;
 
-    await browser.wait(EC.urlContains(selfUrlPath),10000).catch(err => console.log(`Failed to load page, Expected URL fragment: ${selfUrlPath} | Actual URL: ${currentURL}`));
-      console.log('finsihed waiting for /login and moving on')
+      await browser.wait(EC.urlContains(selfUrlPath),10000)
+        .catch(err => console.log(errorMessage));
+
+      //return new instance of the login page
       return new LoginPage
   }
 
@@ -39,20 +42,7 @@ class LoginPage extends BasePage {
    * @returns {Promise<void>}
    */
   async inputCredentials(username, password) {
-     console.log("coming into input Credentials");
       await element(this._userNameField).sendKeys(username);
-      if (username){
-        console.log('username is not empty')
-      }else{
-        console.log('username is empty')
-      }
-
-      if (password){
-        console.log('password is not empty')
-      }else{
-        console.log('password is empty')
-      }
-
       await element(this._passwordField).sendKeys(password);
   }
 
@@ -73,6 +63,7 @@ class LoginPage extends BasePage {
   async loginToApp(){
       let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
       let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
+
       await inputCredentials(username,password);
       await clickSignIn();
   }

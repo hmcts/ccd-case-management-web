@@ -38,7 +38,7 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
         publishHTML(target:[
                reportDir            : "test/functional-tests/results/",
                reportFiles          : "index.html",
-               reportName           : "git Functional Tests",
+               reportName           : "Functional Tests",
                alwaysLinkToLastBuild: true
        ])
 

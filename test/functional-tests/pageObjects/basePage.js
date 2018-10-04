@@ -1,6 +1,8 @@
 const TIMEOUT = 5000;
+const EC = protractor.ExpectedConditions;
 
 class BasePage {
+
 
     constructor(locator) {
         if (locator != null){
@@ -10,25 +12,21 @@ class BasePage {
     }
 
     async waitForElementToBeVisible(element){
-        let EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element), TIMEOUT);
     }
 
     async waitForElementToBeVisible(element, timeout){
-        let EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element), timeout);
     }
 
     async waitForElementToBeVisibleByLocator(locator){
-        let EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element(locator)), TIMEOUT);
     }
 
     async waitForUrl(expectedUrlRegex){
       let currentURL = await browser.getCurrentUrl();
-      let EC = protractor.ExpectedConditions;
       await browser.wait(EC.urlContains(expectedUrlRegex))
-        .catch(err => console.log(I`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
+        .catch(err => console.log(`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
     }
 
     waitForUrlToChangeTo(urlRegex) {

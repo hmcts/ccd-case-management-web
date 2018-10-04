@@ -10,14 +10,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^I am on the CCD login page$/, async function () {
       loginPage = await Login.open();
-
   });
 
   When(/^I login with correct credentials$/, async function () {
       let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
       let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
 
-      console.log(await browser.getCurrentUrl());
       await loginPage.inputCredentials(username, password);
       await loginPage.clickSignIn();
   });

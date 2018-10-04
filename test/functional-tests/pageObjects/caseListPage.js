@@ -12,7 +12,9 @@ class CaseListPage extends BasePage {
       this._searchBox = by.css('.global-navigation .cut-nav-bar #search');
       this._footer = by.css('.footer-wrapper');
       this._signOut = by.css('div #sign-out');
-    browser.ignoreSynchronization = false;
+
+      //As we are now on the CCD landing page, we can set this to false and make use of protractor angular functionality
+      browser.ignoreSynchronization = false;
 
   }
 

@@ -1,10 +1,7 @@
 import { async } from '@angular/core/testing';
-import { WizardPage } from '../domain/wizard-page.model';
-import { CaseField } from '../domain/definition/case-field.model';
-import { CaseFieldService } from '../domain/case-field.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PageValidationService } from './page-validation.service';
-import { aCaseField } from './case-edit.spec';
+import { WizardPage, aCaseField, CaseField, CaseFieldService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('PageValidationService', () => {
 

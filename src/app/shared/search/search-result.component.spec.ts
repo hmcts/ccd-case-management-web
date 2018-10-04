@@ -5,7 +5,6 @@ import { SearchResultView } from './search-result-view.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { SortSearchResultPipe } from './sorting/sort-search-result.pipe';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
 import { Jurisdiction } from '../domain/definition/jurisdiction.model';
 import { ActivityService } from '../../core/activity/activity.service';
@@ -18,6 +17,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseReferencePipe } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-read',

@@ -12,10 +12,9 @@ import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { AlertService } from '../../core/alert/alert.service';
 import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
-import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
-import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
 import createSpyObj = jasmine.createSpyObj;
+import { AbstractFieldWriteComponent, FieldTypeEnum } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-write',

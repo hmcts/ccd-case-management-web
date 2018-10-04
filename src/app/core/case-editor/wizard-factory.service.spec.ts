@@ -1,7 +1,5 @@
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { WizardFactoryService } from './wizard-factory.service';
-import { createCaseEventTrigger } from '../../fixture/shared.fixture'
+import { CaseEventTrigger, WizardPage, createCaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('WizardFactoryService', () => {
 

@@ -1,10 +1,7 @@
 import { Observable } from 'rxjs/Observable';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { HttpError } from '../../core/http/http-error.model';
 import { CreateCaseEventTriggerResolver } from './create-case-event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
-import { createCaseEventTrigger } from '../../fixture/shared.fixture'
-import { Draft } from '../../shared/domain/draft';
+import { DRAFT, createCaseEventTrigger, HttpError, CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CreateCaseFieldsResolver', () => {
 
@@ -18,7 +15,7 @@ describe('CreateCaseFieldsResolver', () => {
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(EVENT_TRIGGER_ID, 'Into legacy', 'caseId', true, []);
 
-  const DRAFT_ID = Draft.DRAFT + '12345';
+  const DRAFT_ID = DRAFT + '12345';
   const EVENT_TRIGGER_OBS: Observable<CaseEventTrigger> = Observable.of(EVENT_TRIGGER);
   const ERROR: HttpError = {
     timestamp: '',
@@ -86,7 +83,7 @@ describe('CreateCaseFieldsResolver', () => {
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
-    expect(route.queryParamMap.get).toHaveBeenCalledWith(Draft.DRAFT);
+    expect(route.queryParamMap.get).toHaveBeenCalledWith(DRAFT);
     expect(route.paramMap.get).toHaveBeenCalledTimes(3);
     expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
     expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
@@ -140,7 +137,7 @@ describe('CreateCaseFieldsResolver', () => {
       switch (key) {
         case QUERY_PARAM_IGNORE_WARNINGS:
           return IGNORE_WARNINGS;
-        case Draft.DRAFT:
+        case DRAFT:
           return DRAFT_ID;
       }
     });

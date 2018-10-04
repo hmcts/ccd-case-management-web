@@ -1,7 +1,8 @@
-import { AppConfig, Config } from './app.config';
+import { AppConfig } from './app.config';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { Config } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('AppConfig', () => {
 

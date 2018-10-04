@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsComponent } from './callback-errors.component';
-import { HttpError } from '../../core/http/http-error.model';
 import createSpyObj = jasmine.createSpyObj;
 import { CallbackErrorsContext } from './error-context';
 import { By } from '@angular/platform-browser';
 import { text } from '../../test/helpers';
+import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CallbackErrorsComponent', () => {
 

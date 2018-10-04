@@ -8,11 +8,11 @@ import { SearchService } from '../../../core/search/search.service';
 import { Observable } from 'rxjs/Rx';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { OrderService } from '../../../core/order/order.service';
-import { AbstractFieldWriteComponent } from '../../palette/base-field/abstract-field-write.component';
 import { JurisdictionService } from '../../jurisdiction.service';
 import { CaseType } from '../../domain/definition/case-type.model';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
+import { AbstractFieldWriteComponent } from '@hmcts/ccd-case-ui-toolkit';
 
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',

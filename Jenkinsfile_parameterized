@@ -35,7 +35,7 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
     after('functionalTest:saat') {
         //archiveArtifacts 'test/functional-tests/results/index.html'
 
-        publishHTML([
+        publishHTML(target:[
                reportDir            : "test/functional-tests/results/",
                reportFiles          : "index.html",
                reportName           : "git Functional Tests",

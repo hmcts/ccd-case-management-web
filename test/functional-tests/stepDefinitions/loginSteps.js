@@ -18,8 +18,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
 
       console.log(await browser.getCurrentUrl());
-      await browser.sleep(5000)
-      console.log(await browser.getCurrentUrl());
       await loginPage.inputCredentials(username, password);
       await loginPage.clickSignIn();
   });

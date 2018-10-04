@@ -30,7 +30,7 @@ withNightlyPipeline(type, product, app) {
     loadVaultSecrets(secrets)
     
     enableSlackNotifications('#ccd-nightly-builds')
-    enableFullFunctionalTest()
+    enableFunctionalTest()
     //enablesmokeTest()
     //enableCrossBrowserTest()
 
@@ -38,7 +38,7 @@ withNightlyPipeline(type, product, app) {
         sh "yarn cache clean"
     }
     
-    after('functionalTest:saat') {
+    after('functionalTest') {
         //archiveArtifacts 'test/functional-tests/results/index.html'
 
         publishHTML(target:[

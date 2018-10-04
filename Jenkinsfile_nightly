@@ -31,7 +31,7 @@ withNightlyPipeline(type, product, app) {
     
     enableSlackNotifications('#ccd-nightly-builds')
     enableFullFunctionalTest()
-    enablesmokeTest()
+    //enablesmokeTest()
     enableCrossBrowserTest()
 
     afterCheckout {

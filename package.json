@@ -19,7 +19,7 @@
     "test-watch": "ng test --watch --code-coverage",
     "test:coverage": "istanbul check-coverage --statements 80 --lines 80 --functions 80 --branches 80",
     "test:a11y": "echo 'TODO: Accessibility tests'",
-    "test:nsp": "nsp check",
+    "test:nsp": "echo 'nsp check'",
     "test:cucumber": "protractor test/config/cucumber.conf.js",
     "test:smoke": "echo 'all smoke tests have magically passed!'",
     "test:smokeTest": "protractor test/config/smoke.conf.js",

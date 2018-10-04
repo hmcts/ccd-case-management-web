@@ -28,6 +28,58 @@ import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
 
+const caseViewChildRoutes: Routes = [
+  {
+    path: '',
+    component: CaseViewerComponent
+  },
+  {
+    path: 'print',
+    component: CasePrinterComponent,
+    resolve: {
+      documents: CasePrintDocumentsResolver
+    },
+  },
+  {
+    path: 'trigger/:eid',
+    resolve: {
+      eventTrigger: EventTriggerResolver
+    },
+    component: CaseEventTriggerComponent,
+    children: [
+      {
+        path: '',
+        resolve: {
+          caseEditWizardGuard: CaseEditWizardGuard,
+        },
+        component: CaseEditPageComponent,
+      },
+      {
+        path: 'submit',
+        component: CaseEditSubmitComponent,
+      },
+      {
+        path: 'confirm',
+        component: CaseEditConfirmComponent,
+      },
+      {
+        path: ':page',
+        resolve: {
+          caseEditWizardGuard: CaseEditWizardGuard,
+        },
+        component: CaseEditPageComponent,
+      }
+    ]
+  },
+  {
+    path: 'event/:eid/history',
+    resolve: {
+      caseHistory: CaseHistoryResolver,
+    },
+    component: CaseHistoryComponent,
+  }
+];
+
 const routes: Routes = [
   {
     path: 'oauth2redirect',
@@ -95,57 +147,16 @@ const routes: Routes = [
           case: CaseResolver
         },
         runGuardsAndResolvers: 'always',
-        children: [
-          {
-            path: '',
-            component: CaseViewerComponent
-          },
-          {
-            path: 'print',
-            component: CasePrinterComponent,
-            resolve: {
-              documents: CasePrintDocumentsResolver
-            },
-          },
-          {
-            path: 'trigger/:eid',
-            resolve: {
-              eventTrigger: EventTriggerResolver
-            },
-            component: CaseEventTriggerComponent,
-            children: [
-              {
-                path: '',
-                resolve: {
-                  caseEditWizardGuard: CaseEditWizardGuard,
-                },
-                component: CaseEditPageComponent,
-              },
-              {
-                path: 'submit',
-                component: CaseEditSubmitComponent,
-              },
-              {
-                path: 'confirm',
-                component: CaseEditConfirmComponent,
-              },
-              {
-                path: ':page',
-                resolve: {
-                  caseEditWizardGuard: CaseEditWizardGuard,
-                },
-                component: CaseEditPageComponent,
-              }
-            ]
-          },
-          {
-            path: 'event/:eid/history',
-            resolve: {
-              caseHistory: CaseHistoryResolver,
-            },
-            component: CaseHistoryComponent,
-          }
-        ]
+        children: caseViewChildRoutes,
+      },
+      // While CCD is progressively moving to case ID only endpoints, routes have to be duplicated.
+      {
+        path: 'v2/case/:cid',
+        resolve: {
+          case: CaseResolver
+        },
+        runGuardsAndResolvers: 'always',
+        children: caseViewChildRoutes,
       },
       { path: 'search', component: SearchComponent},
       { path: 'cookies', component: CookiesComponent },

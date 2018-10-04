@@ -26,6 +26,7 @@
     "test:smoke": "./bin/runSmokeTests.sh",
     "test:smokeTest": "protractor test/config/smoke.conf.js",
     "test:functional": "./bin/runFunctionalTests.sh",
+    "test:fullfunctional": "./bin/runFunctionalTests.sh",
     "test:functionalTests": "webdriver-manager update --versions.chrome 2.40 && protractor test/functional-tests/config/conf.js",
     "lint": "ng lint ccd-case-management-web",
     "e2e": "ng e2e",

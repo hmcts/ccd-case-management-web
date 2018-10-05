@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppConfig } from '../../app.config';
 import { Response, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpService, AuthService } from '@hmcts/ccd-case-ui-toolkit';
 
 /**

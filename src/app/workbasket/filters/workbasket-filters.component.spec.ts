@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { CaseType } from '../../shared/domain/definition/case-type.model';

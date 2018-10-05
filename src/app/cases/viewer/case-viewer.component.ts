@@ -9,7 +9,7 @@ import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField, ShowCondition, Draft, DRAFT, HttpError } from '@hmcts/ccd-case-ui-toolkit';
 

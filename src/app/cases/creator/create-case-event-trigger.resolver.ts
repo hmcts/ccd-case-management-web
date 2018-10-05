@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseEventTrigger, Draft, DRAFT, HttpError } from '@hmcts/ccd-case-ui-toolkit';
 import { AlertService } from '../../core/alert/alert.service';
 import { CasesService } from '../../core/cases/cases.service';

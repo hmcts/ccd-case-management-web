@@ -4,7 +4,7 @@ import { AppConfig } from '../../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import { SearchInput } from './search-input.model';
 import { Field } from './field.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RequestOptionsBuilder } from '../request.options.builder';
 import { HttpService, FieldType } from '@hmcts/ccd-case-ui-toolkit';
 

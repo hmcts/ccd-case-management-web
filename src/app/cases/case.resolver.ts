@@ -1,7 +1,7 @@
 import { CaseView } from '../core/cases/case-view.model';
 import { ActivatedRouteSnapshot, ParamMap, Resolve, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CasesService } from '../core/cases/cases.service';
 import { Response } from '@angular/http';
 import { AlertService } from '../core/alert/alert.service';

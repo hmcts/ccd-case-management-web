@@ -1,6 +1,6 @@
 import { Response, ResponseOptions } from '@angular/http';
 import { AppConfig } from '../../app.config';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseHistory } from './case-history.model';
 import { CaseHistoryService } from './case-history.service';
 import { createCaseHistory } from './case-history.test.fixture';

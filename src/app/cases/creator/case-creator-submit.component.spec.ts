@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CasesService } from '../../core/cases/cases.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AlertService } from '../../core/alert/alert.service';
 import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import { CaseView } from '../../core/cases/case-view.model';

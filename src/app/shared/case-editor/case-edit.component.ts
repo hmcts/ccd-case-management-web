@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CaseEventTrigger, WizardPage, ConditionalShowRegistrarService, Draft, FieldsUtils,
   FieldsPurger } from '@hmcts/ccd-case-ui-toolkit';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Wizard } from './wizard.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Confirmation } from './confirmation.model';

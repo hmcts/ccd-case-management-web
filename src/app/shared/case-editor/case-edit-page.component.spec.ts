@@ -4,7 +4,7 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PageValidationService } from './page-validation.service';
 import { WizardPage, CaseField, FormValueService, FormErrorService, CaseFieldService, aCaseField,

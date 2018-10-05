@@ -6,7 +6,7 @@ import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
 import { OrderService } from '../../core/order/order.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { attr, text } from '../../test/helpers';

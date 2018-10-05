@@ -5,7 +5,7 @@ import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CaseView } from '../../core/cases/case-view.model';
 import { CasesService } from '../../core/cases/cases.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AlertService } from '../../core/alert/alert.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';

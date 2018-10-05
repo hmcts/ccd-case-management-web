@@ -2,7 +2,7 @@ import { Response, ResponseOptions, Headers } from '@angular/http';
 import { AppConfig } from '../../app.config';
 import { CasesService } from './cases.service';
 import { CaseView } from './case-view.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;

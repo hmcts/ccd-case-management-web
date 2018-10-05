@@ -1,5 +1,5 @@
 import { Response, ResponseOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
 import { WorkbasketInputModel } from './workbasket-input.model';

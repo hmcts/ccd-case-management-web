@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { DocumentData, AbstractDocumentManagementService, HttpService } from '@hmcts/ccd-case-ui-toolkit';
 import { AppConfig } from '../../app.config';

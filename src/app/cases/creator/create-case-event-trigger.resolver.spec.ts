@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CreateCaseEventTriggerResolver } from './create-case-event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
 import { DRAFT, createCaseEventTrigger, HttpError, CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';

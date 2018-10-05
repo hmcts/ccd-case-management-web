@@ -1,5 +1,5 @@
 import { CasePrintDocumentsResolver } from './case-print-documents.resolver';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseResolver } from '../case.resolver';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import createSpyObj = jasmine.createSpyObj;

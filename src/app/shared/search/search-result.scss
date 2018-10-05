@@ -55,14 +55,15 @@ table {
   text-align: center;
   padding: 30px 0px 30px 0px;
 }
-
+a:hover {
+  color: $blue_table;
+}
 .search-result-column-header {
   width: unset;
   table-layout: normal;
   div {
     display: table-cell;
     width: auto;
-    padding: 0px;
     @media screen and (max-width: 379px) {
       display: block;
       float: right;
@@ -75,6 +76,7 @@ table {
   font-weight: bold;
   word-wrap: break-word;
   cursor: pointer;
+  padding-right: 15px;
 }
 
 .search-result-column-sort {
@@ -83,7 +85,8 @@ table {
 
 .sort-widget {
   cursor: pointer;
-  padding-left: 15px;
+  text-decoration: none;
+  color: $black;
 }
 
 

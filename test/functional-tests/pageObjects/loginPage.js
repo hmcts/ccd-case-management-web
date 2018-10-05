@@ -21,8 +21,8 @@ class LoginPage extends BasePage {
       //open browser and navigate to url
       await browser.get('https://ccd-case-management-web-saat.service.core-compute-saat.internal/');
 
-      //await browser.get(process.env.TEST_URL || 'http://localhost:3451',30000);
-       console.log("TEST URL..."+ process.env.TEST_URL);
+      await browser.get(process.env.TEST_URL || 'http://localhost:3451',30000);
+      console.log("TEST URL..."+ process.env.TEST_URL);
 
       //wait for browser url to be correct
       let EC = protractor.ExpectedConditions;

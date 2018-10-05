@@ -33,10 +33,10 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
     }
 
     after('functionalTest:saat') {
-        archiveArtifacts 'test/functional-tests/results/index.html'
+        archiveArtifacts 'test/functional-tests/results/*'
 
         publishHTML(target:[
-               reportDir            : "test/functional-tests/results/",
+               reportDir            : "test/functional-tests/results/*",
                reportFiles          : "index.html",
                reportName           : "Functional Tests",
                alwaysLinkToLastBuild: true

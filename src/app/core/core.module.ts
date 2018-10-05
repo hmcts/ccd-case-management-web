@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
+  DocumentManagementService } from '@hmcts/ccd-case-ui-toolkit';
 import { CasesService } from './cases/cases.service';
 import { DefinitionsService } from './definitions/definitions.service';
 import { WindowService } from './utils/window.service';
@@ -31,7 +32,6 @@ import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { DraftService } from './draft/draft.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
-import { DocumentManagementService } from '../shared/documentManagement/documentManagement.service';
 
 @NgModule({
   imports: [

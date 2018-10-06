@@ -122,6 +122,7 @@
     "protractor-screenshoter-plugin": "^0.10.1",
     "puppeteer": "^1.6.0",
     "sass-loader": "^7.1.0",
+    "shx": "^0.3.2",
     "sonar-scanner": "^3.0.3",
     "ts-loader": "^4.2.0",
     "ts-node": "^3.3.0",

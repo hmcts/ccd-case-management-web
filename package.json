@@ -20,7 +20,7 @@
     "test-watch": "ng test --watch --code-coverage",
     "test:coverage": "istanbul check-coverage --statements 80 --lines 80 --functions 80 --branches 80",
     "test:a11y": "echo 'TODO: Accessibility tests'",
-    "test:nsp": "nsp check",
+    "test:nsp": "npm run check-audit",
     "test:cucumber": "protractor test/config/cucumber.conf.js",
     "test:smoke": "./bin/runSmokeTests.sh",
     "test:smokeTest": "webdriver-manager update --versions.chrome 2.40 && protractor test/functional-tests/config/conf.js --cucumberOpts.tags=@smoke",
@@ -40,6 +40,8 @@
     "stub-api": "json-server -p 3453 --delay 800 --routes stubs/api/aggregated.routes.json --watch stubs/api/aggregated.api.json",
     "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json",
     "snyk-protect": "snyk protect",
+    "check-audit": "npm i --package-lock-only && check-audit && shx rm -f package-lock.json",
+    "resolve-audit": "npm i --package-lock-only && resolve-audit && shx rm -f package-lock.json",
     "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
@@ -112,7 +114,7 @@
     "mocha": "^5.0.5",
     "ng2-mock-component": "^0.1.1",
     "node-sass": "^4.9.3",
-    "nsp": "^3.2.1",
+    "npm-audit-resolver": "^1.4.0",
     "phantomjs-prebuilt": "^2.1.16",
     "prettier": "^1.7.4",
     "protractor": "^5.4.1",

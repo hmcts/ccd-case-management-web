@@ -12,7 +12,6 @@ import { ProfileResolver } from './profile/profile.resolver';
 import { ProfileService } from './profile/profile.service';
 import { SearchService } from './search/search.service';
 import { PaginationService } from './pagination/pagination.service';
-import { OrderService } from './order/order.service';
 import { AlertModule } from './alert/alert.module';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { ActivityService } from './activity/activity.service';
@@ -32,6 +31,7 @@ import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { DraftService } from './draft/draft.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @NgModule({
   imports: [

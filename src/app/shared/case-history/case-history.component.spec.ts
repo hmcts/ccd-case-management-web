@@ -7,12 +7,12 @@ import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CaseHistory } from '../../core/cases/case-history.model';
 import { DebugElement } from '@angular/core';
-import { OrderService } from '../../core/order/order.service';
 import { createCaseHistory } from '../../core/cases/case-history.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
   LabelSubstitutionService } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 describe('CaseHistoryComponent', () => {
 

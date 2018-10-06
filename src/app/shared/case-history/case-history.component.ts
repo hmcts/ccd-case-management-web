@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CaseHistory } from '../../core/cases/case-history.model';
-import { OrderService } from '../../core/order/order.service';
 import { CaseTab } from '../../core/cases/case-tab.model';
 import { ShowCondition } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   templateUrl: './case-history.component.html',

@@ -4,10 +4,10 @@ import { CasesService } from './cases.service';
 import { CaseView } from './case-view.model';
 import { Observable } from 'rxjs';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
-import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpErrorService, HttpError, HttpService, CaseEventTrigger, CaseEventData,
   createCaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 describe('CasesService', () => {
 

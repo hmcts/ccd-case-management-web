@@ -4,7 +4,6 @@ import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.model';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCaseFiltersComponent } from './create-case-filters.component';
-import { OrderService } from '../../../core/order/order.service';
 import { CaseEvent } from '../../../shared/domain/definition/case-event.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
@@ -15,6 +14,7 @@ import { CaseType } from '../../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../../shared/jurisdiction.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';

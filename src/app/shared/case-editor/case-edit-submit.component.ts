@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Profile } from '../../core/profile/profile.model';
 import { Confirmation } from './confirmation.model';
 import { Wizard } from './wizard.model';
-import { OrderService } from '../../core/order/order.service';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   selector: 'ccd-case-edit-submit',

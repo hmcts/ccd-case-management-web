@@ -10,11 +10,11 @@ import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { AlertService } from '../../core/alert/alert.service';
-import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
 import { AbstractFieldWriteComponent, FieldTypeEnum } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   selector: 'ccd-field-write',

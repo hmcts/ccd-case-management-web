@@ -6,10 +6,10 @@ import { By } from '@angular/platform-browser';
 import { attr, text } from '../../test/helpers';
 import { ReactiveFormsModule } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
-import { OrderService } from '../../core/order/order.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { Subject } from 'rxjs/Subject';
 import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 describe('EventTriggerComponent', () => {
 

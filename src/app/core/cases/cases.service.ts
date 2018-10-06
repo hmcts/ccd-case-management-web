@@ -5,8 +5,8 @@ import { AppConfig } from '../../app.config';
 import { CaseEventTrigger, CaseEventData, WizardPage, WizardPageField, ShowCondition, Draft, HttpService,
   HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
-import { OrderService } from '../order/order.service';
 import { plainToClass } from 'class-transformer';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Injectable()
 export class CasesService {

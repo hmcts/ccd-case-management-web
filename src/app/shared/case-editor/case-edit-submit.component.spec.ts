@@ -6,12 +6,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Wizard } from './wizard.model';
-import { OrderService } from '../../core/order/order.service';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseFieldService, CaseReferencePipe, CaseEventTrigger, aCaseField, CaseField,
   IsCompoundPipe, FieldsUtils, WizardPage, FormErrorService, FormValueService } from '@hmcts/ccd-case-ui-toolkit';
 import { aWizardPage } from './case-edit.spec';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 describe('CaseEditSubmitComponent', () => {
   let comp: CaseEditSubmitComponent;

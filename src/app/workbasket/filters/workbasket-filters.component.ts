@@ -82,6 +82,9 @@ export class WorkbasketFiltersComponent implements OnInit {
     if (this.selected.caseState) {
       queryParams[WorkbasketFiltersComponent.PARAM_CASE_STATE] = this.selected.caseState.id;
     }
+    if (init) {
+      this.windowService.setLocalStorage('savedQueryParams', JSON.stringify(queryParams));
+    }
     // without explicitly preserving alerts any message on the page
     // would be cleared out because of this initial navigation.
     this.alertService.setPreserveAlerts(!this.initialised);
@@ -159,8 +162,12 @@ export class WorkbasketFiltersComponent implements OnInit {
    * Query parameters, when available, take precedence over workbasket defaults.
    */
   private initFilters() {
-    let routeSnapshot: ActivatedRouteSnapshot = this.route.snapshot;
+    const savedQueryParams = this.windowService.getLocalStorage('savedQueryParams');
 
+    let routeSnapshot: ActivatedRouteSnapshot = this.route.snapshot;
+    if (savedQueryParams) {
+      routeSnapshot.queryParams = JSON.parse(savedQueryParams);
+    }
     let selectedJurisdictionId = routeSnapshot.queryParams[WorkbasketFiltersComponent.PARAM_JURISDICTION] || this.defaults.jurisdiction_id;
     this.selected.jurisdiction = this.jurisdictions.find(j => selectedJurisdictionId === j.id);
     if (this.selected.jurisdiction && this.selected.jurisdiction.caseTypes.length > 0) {

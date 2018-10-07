@@ -24,15 +24,16 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
   @Input()
   formGroup: FormGroup;
 
-  @ViewChild('fieldContainer', {read: ViewContainerRef})
+  @ViewChild('fieldContainer', { read: ViewContainerRef })
   fieldContainer: ViewContainerRef;
 
-  private  defaultControlRegistrer(formGroup: FormGroup,
-                                   caseField: CaseField): (control: FormControl) => AbstractControl {
+  private defaultControlRegistrer(formGroup: FormGroup,
+    caseField: CaseField): (control: FormControl) => AbstractControl {
     return control => {
       if (formGroup.controls[caseField.id]) {
         return formGroup.get(caseField.id);
       }
+      console.log("CaseField", caseField);
       this.formValidatorsService.addValidators(caseField, control);
       formGroup.addControl(caseField.id, control);
       return control;
@@ -40,8 +41,8 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
   }
 
   constructor(private resolver: ComponentFactoryResolver,
-              private paletteService: PaletteService,
-              private formValidatorsService: FormValidatorsService) {
+    private paletteService: PaletteService,
+    private formValidatorsService: FormValidatorsService) {
     super();
   }
 

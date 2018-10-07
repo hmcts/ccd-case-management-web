@@ -92,9 +92,7 @@ export class WorkbasketFiltersComponent implements OnInit {
     this.selected.init = init;
     this.selected.page = 1;
     this.selected.metadataFields = this.getMetadataFields();
-    console.log("this.selected.metadataFields", this.selected.metadataFields);
     if (init) {
-      console.log("Check local", this.formGroup.value);
       this.windowService.setLocalStorage('workbasket-filter-form-group-value', JSON.stringify(this.formGroup.value));
     }
     // Apply filters
@@ -103,7 +101,6 @@ export class WorkbasketFiltersComponent implements OnInit {
 
   getMetadataFields(): string[] {
     if (this.workbasketInputs) {
-      console.log("this.workbasketInputs", this.workbasketInputs);
       return this.workbasketInputs
         .filter(workbasketInput => workbasketInput.field.metadata === true)
         .map(workbasketInput => workbasketInput.field.id);
@@ -134,8 +131,6 @@ export class WorkbasketFiltersComponent implements OnInit {
             .sort(this.orderService.sortAsc);
           const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
           const formValueObject = JSON.parse(formValue);
-          console.log("VAlue", formValueObject);
-          console.log("workbasketInputs", workbasketInputs);
           workbasketInputs.forEach(item => {
             item.field.label = item.label;
             item.field.value = formValueObject[item.field.id];

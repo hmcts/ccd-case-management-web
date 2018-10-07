@@ -33,7 +33,6 @@ export class FieldWriteComponent extends AbstractFieldWriteComponent implements 
       if (formGroup.controls[caseField.id]) {
         return formGroup.get(caseField.id);
       }
-      console.log("CaseField", caseField);
       this.formValidatorsService.addValidators(caseField, control);
       formGroup.addControl(caseField.id, control);
       return control;

@@ -109,7 +109,7 @@ export class WorkbasketComponent implements OnInit {
     const result = {};
     result[WorkbasketComponent.METADATA_FILTER] = {};
     result[WorkbasketComponent.CASE_FILTER] = {};
-    console.log("isFormApply", isFormApply)
+
     if (isFormApply) {
       const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
       let formValueObject = JSON.parse(formValue);
@@ -127,10 +127,9 @@ export class WorkbasketComponent implements OnInit {
     if (parentPrefix && parentPrefix.length > 0) {
       prefix = parentPrefix + ATTRIBUTE_SEPARATOR;
     }
-    console.log("formGroupValue", formGroupValue)
+
     for (let attributeName of Object.keys(formGroupValue)) {
       let value = formGroupValue[attributeName];
-      console.log(attributeName + " " + value)
       if (this.isStringOrNumber(value)) {
         const filterType = this.getFilterType(attributeName);
         attributeName = this.sanitiseMetadataFieldName(filterType, attributeName);

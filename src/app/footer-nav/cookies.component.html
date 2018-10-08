@@ -254,7 +254,7 @@
   </ccd-accordion>
 
   <!-- Divorce Accordion stuff... -->
-  <ccd-accordion [title]="'Divorce'" [lastAccordion]="true">
+  <ccd-accordion [title]="'Divorce'" [lastAccordion]="false">
     <div class="accordion-body">
 
       <!-- Divorce Start -->
@@ -476,6 +476,234 @@
         </div>
       </div>
       <!-- Divorce End -->
+
+    </div>
+  </ccd-accordion>
+
+  <!-- Financial Remedy Accordion stuff... -->
+  <ccd-accordion [title]="'Financial Remedy'" [lastAccordion]="true">
+    <div class="accordion-body">
+
+      <!-- Financial Remedy Start -->
+      <div class="para">
+        <span class="text-16">A cookie is a small piece of data that’s stored on your computer, tablet,
+        or phone when you visit a website. Most websites need cookies to work properly.</span>
+      </div>
+
+      <h3 class="heading-medium">How cookies are used in the this service</h3>
+
+      <div class="para">
+        <span class="text-16">The service uses them to:</span>
+        <ul style="list-style-type: disc;">
+          <li>measure how you use the service so it can be improved</li>
+          <li>remember the notifications you've seen so that you're not shown them again</li>
+          <li>temporarily store the answers you give</li>
+        </ul>
+      </div>
+      <div class="para">
+        <span class="text-16">
+          Find out more about <a href="https://www.aboutcookies.org/" target="_blank">
+            how to manage cookies</a>.</span>
+      </div>
+
+      <h3 class="heading-medium">Cookies used to measure website usage</h3>
+      <div class="para">
+        <span class="text-16">We use Google Analytics software to collect information about
+        how you use this service.  We do this to help make sure the service is meeting the
+        needs of its users and to help us make improvements, for example improving site search.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Google Analytics stores information about:</span>
+        <ul style="list-style-type: disc;">
+          <li>the pages you visit</li>
+          <li>how long you spend on each page</li>
+          <li>how you got to the service</li>
+          <li>what you click on while you’re visiting the service. We allow Google to use or share our
+            analytics data. You can find out more about how Google use this information in their
+            <a [routerLink]="'/privacy-policy'" target="_blank">privacy policy</a>. You can
+            <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">opt out of Google Analytics</a>
+            if you do not want Google to have access to your information.</li>
+        </ul>
+      </div>
+
+      <div class="para">
+        <span class="text-16">Google Analytics sets the following cookies:</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Cookies used to measure website usage</span>
+      </div>
+      <div class="table-row" style="height: 25px;">
+        <div class="table-col-1">
+          <span class="label-text">Cookie name</span>
+        </div>
+        <div class="table-col-2">
+          <span class="label-text">What this cookie is for</span>
+        </div>
+        <div class="table-col-3">
+          <span class="label-text">Expires after</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 48px;">
+        <div class="table-col-1">
+          <span class="text-16">_ga</span>
+        </div>
+        <div class="table-col-2">
+          <div style="margin-right: 25px;">
+            <span class="text-16">This helps us count how many people visit the service by tracking if you've
+              visited before</span>
+          </div>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">2 years</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 27px;">
+        <div class="table-col-1">
+          <span class="text-16">_gat</span>
+        </div>
+        <div class="table-col-2">
+          <span class="text-16">Manages the rate at which page view requests are made</span>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">10 minutes</span>
+        </div>
+      </div>
+
+      <h3 class="heading-medium">Cookies used to turn our introductory message off</h3>
+      <div class="para">
+        <span class="text-16">You may see a welcome message when you first visit the service. We'll store
+          a cookie so that your computer knows not to show this message again.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Cookies used to turn our introductory message off.</span>
+      </div>
+      <div class="table-row" style="height: 25px;">
+        <div class="table-col-1">
+          <span class="label-text">Cookie name</span>
+        </div>
+        <div class="table-col-2">
+          <span class="label-text">What this cookie is for</span>
+        </div>
+        <div class="table-col-3">
+          <span class="label-text">Expires after</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 48px;">
+        <div class="table-col-1">
+          <span class="text-16">seen_cookie_message</span>
+        </div>
+        <div class="table-col-2">
+          <span class="text-16">Saves a message to let us know that you've seen our cookie message</span>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">1 month</span>
+        </div>
+      </div>
+
+      <h3 class="heading-medium">Cookies used to store the answers you've given during your visit (known as
+        a 'session')</h3>
+      <div class="para">
+        <span class="text-16">Session cookies are stored on your computer as you travel through a website,
+          and let the website know what you've seen and done so far.  There are temporary cookies and are
+          automatically deleted a short while after you leave the website.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Cookies used to store the answers you've given during your visit (known as
+        a 'session')</span>
+      </div>
+      <div class="table-row" style="height: 25px;">
+        <div class="table-col-1">
+          <span class="label-text">Cookie name</span>
+        </div>
+        <div class="table-col-2">
+          <span class="label-text">What this cookie is for</span>
+        </div>
+        <div class="table-col-3">
+          <span class="label-text">Expires after</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 27px;">
+        <div class="table-col-1">
+          <span class="text-16">connect.sid</span>
+        </div>
+        <div class="table-col-2">
+          <span class="text-16">Carries details of your current session</span>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">When you close your browser</span>
+        </div>
+      </div>
+
+      <h3 class="heading-medium">Cookies used to identify you when you come back to the service</h3>
+      <div class="para">
+        <span class="text-16">We use authentication cookies to identify you when you return to the service.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Cookies used to identify you when you come back to the service</span>
+      </div>
+      <div class="table-row" style="height: 25px;">
+        <div class="table-col-1">
+          <span class="label-text">Cookie name</span>
+        </div>
+        <div class="table-col-2">
+          <span class="label-text">What this cookie is for</span>
+        </div>
+        <div class="table-col-3">
+          <span class="label-text">Expires after</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 27px;">
+        <div class="table-col-1">
+          <span class="text-16">__auth-token</span>
+        </div>
+        <div class="table-col-2">
+          <span class="text-16">Identifies you to the service</span>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">When you close your browser</span>
+        </div>
+      </div>
+
+      <h3 class="heading-medium">Cookies used to make the service more secure</h3>
+      <div class="para">
+        <span class="text-16">We set cookies which prevent attackers from modifying the contents of the
+          other cookies we set.  This makes the service more secure and protects your personal
+          information.</span>
+      </div>
+      <div class="table-row" style="height: 25px;">
+        <div class="table-col-1">
+          <span class="label-text">Cookie name</span>
+        </div>
+        <div class="table-col-2">
+          <span class="label-text">What this cookie is for</span>
+        </div>
+        <div class="table-col-3">
+          <span class="label-text">Expires after</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 27px;">
+        <div class="table-col-1">
+          <span class="text-16">TS01842b02</span>
+        </div>
+        <div class="table-col-2">
+          <span class="text-16">Protects your session from tampering</span>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">When you close your browser</span>
+        </div>
+      </div>
+      <div class="table-row" style="height: 27px;">
+        <div class="table-col-1">
+          <span class="text-16">__state</span>
+        </div>
+        <div class="table-col-2">
+          <span class="text-16">Identifies you to the service and secures your authentication</span>
+        </div>
+        <div class="table-col-3">
+          <span class="text-16">When you close your browser</span>
+        </div>
+      </div>
+      <!-- Financial Remedy End -->
 
     </div>
   </ccd-accordion>

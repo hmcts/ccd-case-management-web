@@ -189,6 +189,8 @@ select::-ms-expand {
 }
 .form-hint {
   font-size: 14px;
+  margin-top: 10px;
+  font-family: "nta", Arial, sans-serif;
 }
 .multiple-choice {
   [type=checkbox] + label::before {

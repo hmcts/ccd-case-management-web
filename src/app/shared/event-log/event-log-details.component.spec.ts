@@ -18,7 +18,12 @@ describe('EventLogDetails', () => {
     state_name: 'Case Updated',
     user_id: 0,
     user_last_name: 'smith',
-    user_first_name: 'justin'
+    user_first_name: 'justin',
+    significant_item: {
+      type: 'DOCUMENT',
+      description: 'First document description',
+      url: 'https://google.com'
+    }
   };
 
   const EVENT_WITH_EMPTY_SUMMARY_AND_COMMENT: CaseViewEvent = {
@@ -32,7 +37,12 @@ describe('EventLogDetails', () => {
     state_name: 'Case Updated',
     user_id: 0,
     user_last_name: 'smith',
-    user_first_name: 'justin'
+    user_first_name: 'justin',
+    significant_item: {
+      type: 'DOCUMENT',
+      description: 'First document description',
+      url: 'https://google.com'
+    }
   };
 
   const $TABLE_ROWS = By.css('table>tbody>tr');

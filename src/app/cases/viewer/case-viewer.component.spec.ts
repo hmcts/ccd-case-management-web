@@ -119,7 +119,12 @@ describe('CaseViewerComponent', () => {
       state_name: 'Case Updated',
       user_id: 0,
       user_last_name: 'Chan',
-      user_first_name: 'Phillip'
+      user_first_name: 'Phillip',
+      significant_item: {
+        type: 'DOCUMENT',
+        description: 'First document description',
+        url: 'https://google.com'
+      }
     }
   ];
 

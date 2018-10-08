@@ -10,4 +10,9 @@ export class CaseViewEvent {
   user_id: number;
   user_last_name: string;
   user_first_name: string;
+  significant_item: {
+    type: string,
+    description: string,
+    url: string
+  };
 }

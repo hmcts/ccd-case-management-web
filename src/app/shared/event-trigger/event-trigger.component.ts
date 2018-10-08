@@ -4,8 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../core/alert/alert.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-event-trigger',

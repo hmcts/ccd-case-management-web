@@ -7,9 +7,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../../shared/error/callback-errors.component';
-import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { AlertService } from '../../../core/alert/alert.service';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   selector: 'ccd-create-case-filters',

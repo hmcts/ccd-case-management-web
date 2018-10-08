@@ -15,8 +15,7 @@ import { ActivityPollingService } from '../../core/activity/activity.polling.ser
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
-  LabelSubstitutorDirective, HttpError } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+  LabelSubstitutorDirective, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   // tslint:disable-next-line

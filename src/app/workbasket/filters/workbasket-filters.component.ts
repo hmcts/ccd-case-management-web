@@ -9,7 +9,7 @@ import { WorkbasketInputFilterService } from '../workbasket-input-filter.service
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import { AlertService } from '../../core/alert/alert.service';
 import 'rxjs/add/operator/do';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-workbasket-filters',

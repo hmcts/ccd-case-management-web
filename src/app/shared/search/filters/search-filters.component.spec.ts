@@ -11,8 +11,7 @@ import { JurisdictionService } from '../../jurisdiction.service';
 import { CaseType } from '../../domain/definition/case-type.model';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
-import { AbstractFieldWriteComponent } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { AbstractFieldWriteComponent, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',

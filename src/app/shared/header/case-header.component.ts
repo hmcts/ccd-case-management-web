@@ -7,6 +7,7 @@ import { CaseField, Draft } from '@hmcts/ccd-case-ui-toolkit';
   templateUrl: './case-header.html',
   styleUrls: ['./case-header.scss']
 })
+
 export class CaseHeaderComponent implements OnInit {
 
   @Input()

@@ -9,9 +9,8 @@ import { Wizard } from './wizard.model';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseFieldService, CaseReferencePipe, CaseEventTrigger, aCaseField, CaseField,
-  IsCompoundPipe, FieldsUtils, WizardPage, FormErrorService, FormValueService } from '@hmcts/ccd-case-ui-toolkit';
+  IsCompoundPipe, FieldsUtils, WizardPage, FormErrorService, FormValueService, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { aWizardPage } from './case-edit.spec';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 describe('CaseEditSubmitComponent', () => {
   let comp: CaseEditSubmitComponent;

@@ -189,6 +189,8 @@ select::-ms-expand {
 }
 .form-hint {
   font-size: 14px;
+  margin-top: 10px;
+  font-family: "nta", Arial, sans-serif;
 }
 .multiple-choice {
   [type=checkbox] + label::before {
@@ -246,4 +248,14 @@ select::-ms-expand {
 .pagination-top {
   float: left;
   margin-bottom: 10px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

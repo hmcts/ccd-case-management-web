@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpErrorService, HttpError, HttpService, CaseEventTrigger, CaseEventData,
-  createCaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+  createCaseEventTrigger, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CasesService', () => {
 
@@ -16,7 +15,8 @@ describe('CasesService', () => {
   const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
   const DRAFT_ID = 'DRAFT1';
-  const CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/` + CASE_ID;
+  const CASE_URL = `${API_URL}/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}`;
+  const V2_CASE_VIEW_URL = `${API_URL}/internal/cases/${CASE_ID}`;
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER_URL = API_URL
     + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
@@ -26,6 +26,25 @@ describe('CasesService', () => {
   const VALIDATE_CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/validate`;
   const PRINT_DOCUMENTS_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/documents`;
   const CREATE_CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases?ignore-warning=false`;
+  const CASE_VIEW: CaseView = {
+    case_id: '1',
+    case_type: {
+      id: 'TestAddressBookCase',
+      name: 'Test Address Book Case',
+      jurisdiction: {
+        id: 'TEST',
+        name: 'Test',
+      }
+    },
+    channels: [],
+    state: {
+      id: 'CaseCreated',
+      name: 'Case created'
+    },
+    tabs: [],
+    triggers: [],
+    events: []
+  };
   const ERROR: HttpError = new HttpError();
   ERROR.message = 'Critical error!';
 
@@ -50,26 +69,6 @@ describe('CasesService', () => {
   });
 
   describe('getCaseView()', () => {
-
-    const CASE_VIEW: CaseView = {
-      case_id: '1',
-      case_type: {
-        id: 'TestAddressBookCase',
-        name: 'Test Address Book Case',
-        jurisdiction: {
-          id: 'TEST',
-          name: 'Test',
-        }
-      },
-      channels: [],
-      state: {
-        id: 'CaseCreated',
-        name: 'Case created'
-      },
-      tabs: [],
-      triggers: [],
-      events: []
-    };
 
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
@@ -98,6 +97,50 @@ describe('CasesService', () => {
 
       casesService
         .getCaseView(JID, CTID, CASE_ID)
+        .subscribe(data => {
+          expect(data).toEqual(CASE_VIEW);
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(errorService.setError).toHaveBeenCalledWith(ERROR);
+        });
+    });
+
+  });
+
+  describe('getCaseViewV2()', () => {
+
+    beforeEach(() => {
+      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+        body: JSON.stringify(CASE_VIEW)
+      }))));
+    });
+
+    it('should use HttpService::get with correct url', () => {
+      casesService
+        .getCaseViewV2(CASE_ID)
+        .subscribe();
+
+      expect(httpService.get).toHaveBeenCalledWith(V2_CASE_VIEW_URL, {
+        headers: new Headers({
+          'Accept': CasesService.V2_MEDIATYPE_CASE_VIEW,
+          'experimental': 'true',
+        })
+      });
+    });
+
+    it('should retrieve case from server', () => {
+      casesService
+        .getCaseViewV2(CASE_ID)
+        .subscribe(
+          caseData => expect(caseData).toEqual(CASE_VIEW)
+        );
+    });
+
+    it('should set error when error is thrown', () => {
+      httpService.get.and.returnValue(Observable.throw(ERROR));
+
+      casesService
+        .getCaseViewV2(CASE_ID)
         .subscribe(data => {
           expect(data).toEqual(CASE_VIEW);
         }, err => {

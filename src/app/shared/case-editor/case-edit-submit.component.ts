@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CaseEventTrigger, CaseEventData, FormValueService, CaseField, WizardPage, CaseFieldService,
-  PaletteContext, FormErrorService, FieldsUtils, HttpError } from '@hmcts/ccd-case-ui-toolkit';
+  PaletteContext, FormErrorService, FieldsUtils, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { Subject } from 'rxjs/Subject';
@@ -10,7 +10,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Profile } from '../../core/profile/profile.model';
 import { Confirmation } from './confirmation.model';
 import { Wizard } from './wizard.model';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   selector: 'ccd-case-edit-submit',

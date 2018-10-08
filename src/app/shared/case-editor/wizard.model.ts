@@ -1,6 +1,5 @@
-import { WizardPage } from '@hmcts/ccd-case-ui-toolkit';
+import { WizardPage, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { Predicate } from '../predicate';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 export class Wizard {
   private orderService = new OrderService();

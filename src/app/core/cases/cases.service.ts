@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { CaseView } from './case-view.model';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../app.config';
-import { CaseEventTrigger, CaseEventData, WizardPage, WizardPageField, ShowCondition, Draft, HttpService,
-  HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, CaseEventData, WizardPage, WizardPageField, ShowCondition, HttpService,
+  HttpErrorService, Draft, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { plainToClass } from 'class-transformer';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class CasesService {
+
+  public static readonly V2_MEDIATYPE_CASE_VIEW = 'application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-case-view.v2+json';
 
   /**
    *
@@ -37,6 +39,22 @@ export class CasesService {
 
     return this.http
       .get(url)
+      .map(response => response.json())
+      .catch((error: any): any => {
+        this.errorService.setError(error);
+        return Observable.throw(error);
+      });
+  }
+
+  getCaseViewV2(caseId: string): Observable<CaseView> {
+    const url = `${this.appConfig.getCaseDataUrl()}/internal/cases/${caseId}`;
+    const headers = new Headers({
+      'Accept': CasesService.V2_MEDIATYPE_CASE_VIEW,
+      'experimental': 'true',
+    });
+
+    return this.http
+      .get(url, {headers})
       .map(response => response.json())
       .catch((error: any): any => {
         this.errorService.setError(error);

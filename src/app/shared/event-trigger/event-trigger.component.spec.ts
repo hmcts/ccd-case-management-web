@@ -8,8 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
 import { AlertService } from '../../core/alert/alert.service';
 import { Subject } from 'rxjs/Subject';
-import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('EventTriggerComponent', () => {
 

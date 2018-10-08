@@ -13,8 +13,7 @@ import { AlertService } from '../../../core/alert/alert.service';
 import { CaseType } from '../../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../../shared/jurisdiction.service';
 import createSpyObj = jasmine.createSpyObj;
-import { HttpError } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';

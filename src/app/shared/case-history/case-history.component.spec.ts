@@ -11,8 +11,7 @@ import { createCaseHistory } from '../../core/cases/case-history.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
-  LabelSubstitutionService } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+  LabelSubstitutionService, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryComponent', () => {
 

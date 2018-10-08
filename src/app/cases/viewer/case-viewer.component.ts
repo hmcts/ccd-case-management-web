@@ -10,8 +10,7 @@ import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField, ShowCondition, Draft, DRAFT, HttpError } from '@hmcts/ccd-case-ui-toolkit';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { CaseField, ShowCondition, Draft, DRAFT, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-viewer.component.html',

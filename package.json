@@ -2,6 +2,9 @@
   "name": "case-management-web",
   "version": "1.2.0",
   "private": true,
+  "engines": {
+    "node": "^8.9.4"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,8 +21,8 @@
     "test:a11y": "echo 'TODO: Accessibility tests'",
     "test:nsp": "nsp check",
     "test:cucumber": "protractor test/config/cucumber.conf.js",
-    "test:smoke": "protractor test/config/smoke.conf.js",
-    "test:smokeDocker": "./bin/runSmokeTests.sh",
+    "test:smoke": "./bin/runSmokeTests.sh",
+    "test:smokeTest": "protractor test/config/smoke.conf.js",
     "test:functional": "echo 'TODO: Enable functional tests' || ./bin/runFunctionalTests.sh",
     "test:functionalTests": "protractor test/config/functional.conf.js",
     "lint": "ng lint ccd-case-management-web",
@@ -49,8 +52,8 @@
     "@angular/platform-server": "~6.1.8",
     "@angular/router": "~6.1.8",
     "@angular/upgrade": "~6.1.8",
-    "@hmcts/ccd-case-ui-toolkit": "1.2.8",
-    "@hmcts/ccpay-web-component": "~1.5.0",
+    "@hmcts/ccd-case-ui-toolkit": "1.2.9",
+    "@hmcts/ccpay-web-component": "~1.6.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^1.0.0",

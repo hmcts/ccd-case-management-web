@@ -31,10 +31,6 @@ export class CaseHeaderComponent implements OnInit {
     return !this.caseTitle.label;
   }
 
-  isDraft(): boolean {
-    return Draft.isDraft(this.caseDetails.case_id);
-  }
-
   private getCaseFields(): CaseField[] {
     const caseDataFields = this.caseDetails.tabs.reduce((acc, tab) => {
       return acc.concat(tab.fields);

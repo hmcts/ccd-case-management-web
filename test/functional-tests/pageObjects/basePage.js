@@ -12,15 +12,15 @@ class BasePage {
     }
 
     async waitForElementToBeVisible(element){
-        browser.wait(EC.visibilityOf(element), TIMEOUT);
+        await browser.wait(EC.visibilityOf(element), TIMEOUT);
     }
 
     async waitForElementToBeVisible(element, timeout){
-        browser.wait(EC.visibilityOf(element), timeout);
+        await browser.wait(EC.visibilityOf(element), timeout);
     }
 
     async waitForElementToBeVisibleByLocator(locator){
-        browser.wait(EC.visibilityOf(element(locator)), TIMEOUT);
+        await browser.wait(EC.visibilityOf(element(locator)), TIMEOUT);
     }
 
     async waitForUrl(expectedUrlRegex){

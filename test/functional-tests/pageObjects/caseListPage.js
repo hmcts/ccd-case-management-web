@@ -1,4 +1,6 @@
 BasePage = require('./basePage.js')
+const selfUrlPath = '/list';
+
 
 class CaseListPage extends BasePage {
 
@@ -13,7 +15,12 @@ class CaseListPage extends BasePage {
       this._footer = by.css('.footer-wrapper');
       this._signOut = by.css('div #sign-out');
 
-      //As we are now on the CCD landing page, we can set this to false and make use of protractor angular functionality
+      let EC = protractor.ExpectedConditions;
+      browser.wait(EC.urlContains(selfUrlPath),30000)
+        .catch(err => console.log('page not loaded'));
+
+
+    //As we are now on the CCD landing page, we can set this to false and make use of protractor angular functionality
       browser.ignoreSynchronization = false;
 
   }
@@ -27,6 +34,10 @@ class CaseListPage extends BasePage {
       return await element(this._bannerHeaderTitle).getText();
   }
 
+  /**
+   * Check the workbasket filters are displayed on the case list landing page
+   * @returns {Promise<boolean>}
+   */
   async isFiltersDisplayed(){
       await this.waitForElementToBeVisible(element(this._landingPageFilters), 10000);
       return await element(this._landingPageFilters).isDisplayed()

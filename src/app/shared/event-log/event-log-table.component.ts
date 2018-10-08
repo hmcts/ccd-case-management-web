@@ -21,4 +21,23 @@ export class EventLogTableComponent {
     this.selected = event;
     this.onSelect.emit(event);
   }
+
+  significantItemExist(event: CaseViewEvent): boolean {
+    return (event.significant_item &&
+        event.significant_item.type === 'DOCUMENT' &&
+        event.significant_item.url !== undefined &&
+        event.significant_item.description !== undefined);
+  }
+
+  getSignificantItemUrl(event: CaseViewEvent): string {
+    if (event.significant_item) {
+      return event.significant_item.url;
+    }
+  }
+
+  getSignificantItemDesc(event: CaseViewEvent): string {
+    if (event.significant_item) {
+      return event.significant_item.description;
+    }
+  }
 }

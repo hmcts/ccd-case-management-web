@@ -21,6 +21,7 @@ import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
 import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
 import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
+import { DeleteOrCancelDialogComponent } from './delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 import { MarkdownModule } from './markdown/markdown.module';
 import { LabelFieldComponent } from './palette/label/label-field.component';
 import { SharedUtilsModule } from './utils/shared-utils.module';
@@ -50,10 +51,12 @@ import { SharedUtilsModule } from './utils/shared-utils.module';
     CcdActivityBannerComponent,
     CaseHistoryComponent,
     DocumentDialogComponent,
+    DeleteOrCancelDialogComponent,
     LabelFieldComponent,
   ],
   entryComponents: [
     DocumentDialogComponent,
+    DeleteOrCancelDialogComponent,
     LabelFieldComponent
   ],
   providers: [

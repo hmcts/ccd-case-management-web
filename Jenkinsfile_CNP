@@ -44,11 +44,21 @@ withPipeline("angular", product, component) {
     }
 
     after('functionalTest:aat'){
-        archiveArtifacts 'test/functional-tests/results/index.html'
+        publishHTML(target:[
+            reportDir            : "test/functional-tests/results/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests",
+            alwaysLinkToLastBuild: true
+        ])
     }
 
     after('functionalTest:preview'){
-        archiveArtifacts 'test/functional-tests/results/index.html'
+        publishHTML(target:[
+            reportDir            : "test/functional-tests/results/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests",
+            alwaysLinkToLastBuild: true
+        ])
     }
 
 

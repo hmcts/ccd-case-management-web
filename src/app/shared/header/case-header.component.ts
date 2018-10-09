@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CaseView } from '../../core/cases/case-view.model';
 import { CaseField } from '../domain/definition/case-field.model';
-import { Draft } from '../../shared/domain/draft';
+import { Draft } from '../domain/draft';
 
 @Component({
   selector: 'ccd-case-header',
   templateUrl: './case-header.html',
   styleUrls: ['./case-header.scss']
 })
+
 export class CaseHeaderComponent implements OnInit {
 
   @Input()
@@ -22,13 +23,12 @@ export class CaseHeaderComponent implements OnInit {
       this.caseFields = this.getCaseFields();
     }
   }
+  isDraft(): boolean {
+    return Draft.isDraft(this.caseDetails.case_id);
+  }
 
   showCaseReference(): boolean {
     return !this.caseTitle.label;
-  }
-
-  isDraft(): boolean {
-    return Draft.isDraft(this.caseDetails.case_id);
   }
 
   private getCaseFields(): CaseField[] {

@@ -20,6 +20,9 @@ locals {
   nonPreviewResourceGroup = "${var.raw_product}-shared-${var.env}"
   sharedResourceGroup = "${(var.env == "preview" || var.env == "spreview") ? local.previewResourceGroup : local.nonPreviewResourceGroup}"
 
+  sharedAppServicePlan = "${var.raw_product}-${var.env}"
+  sharedASPResourceGroup = "${var.raw_product}-shared-${var.env}"
+
   is_frontend = "${var.external_host_name != "" ? "1" : "0"}"
   external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 
@@ -32,7 +35,7 @@ data "azurerm_key_vault" "ccd_shared_key_vault" {
 }
 
 module "case-management-web" {
-  source   = "git@github.com:hmcts/moj-module-webapp?ref=master"
+  source   = "git@github.com:hmcts/cnp-module-webapp?ref=master"
   product  = "${var.product}-case-management-web"
   location = "${var.location}"
   env      = "${var.env}"
@@ -42,6 +45,10 @@ module "case-management-web" {
   additional_host_name = "${local.external_host_name}"
   https_only = "${var.https_only}"
   common_tags  = "${var.common_tags}"
+  asp_name = "${(var.asp_name == "use_shared") ? local.sharedAppServicePlan : var.asp_name}"
+  asp_rg = "${(var.asp_rg == "use_shared") ? local.sharedASPResourceGroup : var.asp_rg}"
+  website_local_cache_sizeinmb = 500
+  capacity = "${var.capacity}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"
@@ -56,7 +63,6 @@ module "case-management-web" {
     POSTCODE_LOOKUP_URL = "${local.ccd_gateway_url}/addresses?postcode=$${postcode}"
     PRINT_SERVICE_URL = "${local.ccd_gateway_url}/print"
     PRINT_SERVICE_URL_REMOTE = "${local.ccd_print_service_url}"
-    WEBSITE_NODE_DEFAULT_VERSION = "8.9.4"
     CCD_ACTIVITY_URL = "${var.activity_enabled == "true" ? local.ccd_activity_url : ""}"
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS = 5000
     CCD_ACTIVITY_RETRY = 5

@@ -13,9 +13,12 @@ import { WizardPage } from '../../shared/domain/wizard-page.model';
 import { HttpErrorService } from '../http/http-error.service';
 import { plainToClass } from 'class-transformer';
 import { Draft } from '../../shared/domain/draft';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class CasesService {
+
+  public static readonly V2_MEDIATYPE_CASE_VIEW = 'application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-case-view.v2+json';
 
   /**
    *
@@ -43,6 +46,22 @@ export class CasesService {
 
     return this.http
       .get(url)
+      .map(response => response.json())
+      .catch((error: any): any => {
+        this.errorService.setError(error);
+        return Observable.throw(error);
+      });
+  }
+
+  getCaseViewV2(caseId: string): Observable<CaseView> {
+    const url = `${this.appConfig.getCaseDataUrl()}/internal/cases/${caseId}`;
+    const headers = new Headers({
+      'Accept': CasesService.V2_MEDIATYPE_CASE_VIEW,
+      'experimental': 'true',
+    });
+
+    return this.http
+      .get(url, {headers})
       .map(response => response.json())
       .catch((error: any): any => {
         this.errorService.setError(error);

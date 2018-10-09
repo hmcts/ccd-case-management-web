@@ -15,6 +15,6 @@ export class Draft {
   }
 
   public static isDraft (id: string): boolean {
-    return id.startsWith(this.DRAFT_PREFIX);
+    return String(id).startsWith(this.DRAFT_PREFIX);
   }
 }

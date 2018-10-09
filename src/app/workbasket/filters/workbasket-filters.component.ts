@@ -109,12 +109,12 @@ export class WorkbasketFiltersComponent implements OnInit {
   onJurisdictionIdChange() {
     this.jurisdictionService.announceSelectedJurisdiction(this.selected.jurisdiction);
     this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes.length > 0 ? this.selected.jurisdiction.caseTypes : null;
-      this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
-      this.selected.caseState = this.selected.caseType ? this.selected.caseType.states[0] : null;
-      this.clearWorkbasketInputs();
-      if (!this.isApplyButtonDisabled()) {
-        this.onCaseTypeIdChange();
-      }
+    this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
+    this.selected.caseState = this.selected.caseType ? this.selected.caseType.states[0] : null;
+    this.clearWorkbasketInputs();
+    if (!this.isApplyButtonDisabled()) {
+      this.onCaseTypeIdChange();
+    }
   }
 
   onCaseTypeIdChange(): void {

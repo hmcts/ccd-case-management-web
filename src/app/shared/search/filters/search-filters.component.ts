@@ -83,8 +83,8 @@ export class SearchFiltersComponent implements OnInit {
   onJurisdictionIdChange(): void {
     this.selected.caseType = null;
     this.jurisdictionService.announceSelectedJurisdiction(this.selected.jurisdiction);
-      this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
-      this.selectCaseType(this.selectedJurisdictionCaseTypes);
+    this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
+    this.selectCaseType(this.selectedJurisdictionCaseTypes);
   }
 
   onCaseTypeIdChange(): void {
@@ -108,7 +108,7 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   private selectCaseType(caseTypes: CaseType[]) {
-    if (caseTypes.length === 1) {
+    if (caseTypes && caseTypes.length > 0) {
       this.selected.caseType = caseTypes[0];
       this.onCaseTypeIdChange();
     }

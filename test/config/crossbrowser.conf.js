@@ -16,7 +16,7 @@ exports.config = {
   sauceSeleniumAddress: 'ondemand.saucelabs.com:443/wd/hub',
 
   specs: ["../end-to-end/specs/*/login.*.spec.js"],
-  //seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
+  seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
 
   exclude: [],
 
@@ -36,7 +36,7 @@ exports.config = {
         "tunnel-identifier": 'reformtunnel',
         tags:'ccd-crossbrowser'
     }],
-  
+
     plugins: [{
         package: "protractor-screenshoter-plugin",
         screenshotPath: "./smoke-output",

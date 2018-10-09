@@ -1,6 +1,6 @@
 BasePage = require('./basePage.js')
 let CCDBanner = require('./caseListPage.js')
-const selfUrlPath = '/logqqqqqin';
+const selfUrlPath = '/login';
 
 
 class LoginPage extends BasePage {

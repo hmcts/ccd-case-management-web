@@ -37,7 +37,9 @@
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
     "sonar-scan": "NODE_PATH=. sonar-scanner -X",
     "stub-api": "json-server -p 3453 --delay 800 --routes stubs/unit/aggregated.routes.json --watch stubs/unit/aggregated.api.json",
-    "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json"
+    "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
     "@angular/animations": "~6.0.6",
@@ -80,7 +82,8 @@
     "rxjs-compat": "^6.0.0-rc.0",
     "url": "^0.11.0",
     "x-frame-options": "^1.0.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "snyk": "^1.94.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",
@@ -121,5 +124,6 @@
     "typescript": "2.7.2",
     "webdriver-manager": "^12.1.0",
     "webpack-cli": "^2.0.14"
-  }
+  },
+  "snyk": true
 }

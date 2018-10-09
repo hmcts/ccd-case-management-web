@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CaseTab } from '../../core/cases/case-tab.model';
-import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
@@ -10,7 +8,7 @@ import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField, ShowCondition, Draft, DRAFT, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseField, ShowCondition, Draft, DRAFT, HttpError, OrderService, CaseView, CaseViewTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-viewer.component.html',

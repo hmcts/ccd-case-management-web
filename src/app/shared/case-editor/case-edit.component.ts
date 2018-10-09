@@ -1,13 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CaseEventTrigger, WizardPage, ConditionalShowRegistrarService, Draft, FieldsUtils,
-  FieldsPurger } from '@hmcts/ccd-case-ui-toolkit';
+  FieldsPurger, WizardFactoryService, Wizard, CaseView, Confirmation } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
-import { Wizard } from './wizard.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Confirmation } from './confirmation.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaseView } from '../../core/cases/case-view.model';
-import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
 
 @Component({
   selector: 'ccd-case-edit',

@@ -1,13 +1,12 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CaseEventTrigger, WizardPage, CaseEventData, FormValueService, FormErrorService, DRAFT,
-  HttpError } from '@hmcts/ccd-case-ui-toolkit';
+  HttpError, PageValidationService} from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../error/error-context';
-import { PageValidationService } from './page-validation.service';
 
 @Component({
   selector: 'ccd-case-edit-page',

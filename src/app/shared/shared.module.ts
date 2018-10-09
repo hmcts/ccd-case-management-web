@@ -5,7 +5,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchResultComponent } from './search/search-result.component';
 import { SearchFiltersComponent } from './search/filters/search-filters.component';
 import { PaletteModule, CaseFieldService, ConditionalShowModule, DocumentDialogComponent,
-  MarkdownModule, LabelFieldComponent, LabelSubstitutorModule, SharedUtilsModule } from '@hmcts/ccd-case-ui-toolkit';
+  MarkdownModule, LabelFieldComponent, LabelSubstitutorModule, SharedUtilsModule,
+  DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
 import { EventTriggerModule } from './event-trigger/event-trigger.module';
 import { CaseHeaderComponent } from './header/case-header.component';
@@ -44,10 +45,12 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     CcdActivityBannerComponent,
     CaseHistoryComponent,
     DocumentDialogComponent,
+    DeleteOrCancelDialogComponent,
     LabelFieldComponent,
   ],
   entryComponents: [
     DocumentDialogComponent,
+    DeleteOrCancelDialogComponent,
     LabelFieldComponent
   ],
   providers: [

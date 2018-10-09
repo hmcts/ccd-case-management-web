@@ -16,6 +16,10 @@ import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { DraftService } from '../../core/draft/draft.service';
+import { AlertService } from '../../core/alert/alert.service';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line
@@ -104,6 +108,11 @@ describe('CaseViewerComponent', () => {
       id: 'RESUME',
       name: 'Resume',
       description: 'Resume Draft'
+    },
+    {
+      id: 'DELETE',
+      name: 'Delete',
+      description: 'Delete Draft'
     }
   ];
 
@@ -263,13 +272,16 @@ describe('CaseViewerComponent', () => {
    }
   ];
 
+  const JID = 'TEST';
+  const CTID = 'TestAddressBookCase';
+  const CID = '1234567890123456';
   const CASE_VIEW: CaseView = {
-    case_id: '1234567890123456',
+    case_id: CID,
     case_type: {
-      id: 'TestAddressBookCase',
+      id: CTID,
       name: 'Test Address Book Case',
       jurisdiction: {
-        id: 'TEST',
+        id: JID,
         name: 'Test',
       }
     },
@@ -350,6 +362,9 @@ describe('CaseViewerComponent', () => {
   ERROR.message = 'Critical error!';
 
   let fixture: ComponentFixture<CaseViewerComponent>;
+  let fixtureDialog: ComponentFixture<DeleteOrCancelDialogComponent>;
+  let componentDialog: DeleteOrCancelDialogComponent;
+  let deDialog: DebugElement;
   let component: CaseViewerComponent;
   let de: DebugElement;
 
@@ -365,6 +380,14 @@ describe('CaseViewerComponent', () => {
   let router: any;
   let mockCallbackErrorSubject: any;
   let activityService: any;
+  let draftService: any;
+  let alertService: any;
+  let dialog: any;
+  let matDialogRef: any;
+
+  const $DIALOG_DELETE_BUTTON = By.css('.button[title=Delete]');
+  const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
+  const DIALOG_CONFIG = new MatDialogConfig();
 
   let CaseActivityComponent: any = MockComponent({
     selector: 'ccd-activity',
@@ -384,6 +407,17 @@ describe('CaseViewerComponent', () => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
 
+    draftService = createSpyObj('draftService', ['deleteDraft']);
+    draftService.deleteDraft.and.returnValue(Observable.of({}));
+
+    alertService = createSpyObj('draftService', ['setPreserveAlerts', 'success', 'warning']);
+    alertService.setPreserveAlerts.and.returnValue(Observable.of({}));
+    alertService.success.and.returnValue(Observable.of({}));
+    alertService.warning.and.returnValue(Observable.of({}));
+
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    matDialogRef = createSpyObj<MatDialogRef<DeleteOrCancelDialogComponent>>('matDialogRef', ['afterClosed', 'close']);
+
     activityService = createSpyObj<ActivityPollingService>('activityPollingService', ['postViewActivity']);
     activityService.postViewActivity.and.returnValue(Observable.of());
 
@@ -399,6 +433,7 @@ describe('CaseViewerComponent', () => {
         declarations: [
           CaseViewerComponent,
           LabelSubstitutorDirective,
+          DeleteOrCancelDialogComponent,
           // Mock
           CaseActivityComponent,
           FieldReadComponent,
@@ -409,7 +444,7 @@ describe('CaseViewerComponent', () => {
           CallbackErrorsComponent,
           TabsComponent,
           TabComponent,
-          MarkdownComponent
+          MarkdownComponent,
         ],
         providers: [
           FieldsUtils,
@@ -417,7 +452,13 @@ describe('CaseViewerComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router },
-          { provide: ActivityPollingService, useValue: activityService }
+          { provide: ActivityPollingService, useValue: activityService },
+          { provide: DraftService, useValue: draftService },
+          { provide: AlertService, useValue: alertService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatDialogRef, useValue: matDialogRef },
+          { provide: MatDialogConfig, useValue: DIALOG_CONFIG },
+          DeleteOrCancelDialogComponent
         ]
       })
       .compileComponents();
@@ -587,6 +628,32 @@ describe('CaseViewerComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
       queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
     });
+  });
+
+  it('should trigger the delete case event when delete case button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogDeleteButton = deDialog.query($DIALOG_DELETE_BUTTON);
+    dialogDeleteButton.nativeElement.click();
+
+    expect(componentDialog.result).toEqual('Delete');
+    fixture.detectChanges();
+  });
+
+  it('should not trigger the delete case event when cancel button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
+    dialogCancelButton.nativeElement.click();
+
+    expect(componentDialog.result).toEqual('Cancel');
+    fixture.detectChanges();
   });
 
   it('should notify user about errors/warnings when trigger applied and response with callback warnings/errors', () => {

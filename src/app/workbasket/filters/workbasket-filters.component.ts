@@ -82,7 +82,10 @@ export class WorkbasketFiltersComponent implements OnInit {
     }
     // without explicitly preserving alerts any message on the page
     // would be cleared out because of this initial navigation.
-    this.alertService.setPreserveAlerts(!this.initialised);
+    // The above is only true if no alerts were set prior to loading case list page.
+    if (!this.alertService.isPreserveAlerts()) {
+      this.alertService.setPreserveAlerts(!this.initialised);
+    }
     this.router.navigate(['/list/case'], {
       queryParams: queryParams
     });

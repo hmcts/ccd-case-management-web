@@ -10,7 +10,10 @@ import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField, ShowCondition, Draft, DRAFT, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseField, ShowCondition, Draft, DRAFT, HttpError, OrderService, DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
+import { DraftService } from '../../core/draft/draft.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -26,6 +29,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   ignoreWarning = false;
   subscription: Subscription;
+  dialogConfig: MatDialogConfig;
 
   callbackErrorsSubject: Subject<any> = new Subject();
 
@@ -34,9 +38,14 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private router: Router,
     private orderService: OrderService,
     private activityPollingService: ActivityPollingService,
+    private dialog: MatDialog,
+    private alertService: AlertService,
+    private draftService: DraftService
   ) {}
 
   ngOnInit(): void {
+    this.initDialog();
+
     this.caseDetails = this.route.snapshot.data.case;
 
     // Clone and sort tabs array
@@ -81,7 +90,31 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     }
 
     // we may need to take care of different triggers in the future
-    if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
+    if (trigger.id === CaseViewTrigger.DELETE) {
+      const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'Delete') {
+          this.draftService.deleteDraft(this.caseDetails.case_type.jurisdiction.id,
+            this.caseDetails.case_type.id,
+            this.caseDetails.case_id)
+            .subscribe(_ => {
+              return this.router.navigate(['list/case'])
+                .then(() => {
+                  this.alertService.setPreserveAlerts(true);
+                  this.alertService.success(`The draft has been successfully deleted`);
+                })
+                .catch(error => {
+                  this.handleError(error, trigger)
+                });
+            }, _ => {
+              return this.router.navigate(['list/case'])
+              .catch(error => {
+                this.handleError(error, trigger)
+              });
+            });
+        }
+      });
+    } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
       theQueryParams[DRAFT] = this.caseDetails.case_id;
       return this.router.navigate(
         ['create/case',
@@ -97,6 +130,21 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       }).catch(error => {
         this.handleError(error, trigger)
       });
+    }
+  }
+
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.height = '245px';
+    this.dialogConfig.width = '550px';
+    this.dialogConfig.panelClass = 'dialog';
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
   }
 

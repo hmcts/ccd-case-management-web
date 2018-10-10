@@ -1,7 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CaseEventTrigger, WizardPage, CaseEventData, FormValueService, FormErrorService, DRAFT_PREFIX,
-  HttpError, 
-  SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
+  HttpError, SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';

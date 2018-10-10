@@ -15,11 +15,10 @@ import { ActivityPollingService } from '../../core/activity/activity.polling.ser
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
-  LabelSubstitutorDirective, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+  LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line

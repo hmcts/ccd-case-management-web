@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material';
 @Component({
   selector: 'ccd-remove-dialog',
   templateUrl: './remove-dialog.component.html',
-  styleUrls: ['./remove-dialog.component.scss']
+  styleUrls: ['../action-dialog.component.scss']
 })
 export class RemoveDialogComponent {
 

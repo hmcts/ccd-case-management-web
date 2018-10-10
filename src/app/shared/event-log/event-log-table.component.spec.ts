@@ -20,7 +20,12 @@ describe('EventLogTableComponent', () => {
       state_name: 'Case Updated',
       user_id: 0,
       user_last_name: 'smith',
-      user_first_name: 'justin'
+      user_first_name: 'justin',
+      significant_item: {
+        type: 'DOCUMENT',
+        description: 'First document description',
+        url: 'https://google.com'
+      }
     },
     {
       id: 4,
@@ -33,7 +38,12 @@ describe('EventLogTableComponent', () => {
       state_name: 'Case Updated',
       user_id: 0,
       user_last_name: 'chan',
-      user_first_name: 'phillip'
+      user_first_name: 'phillip',
+      significant_item: {
+        type: 'NON-DOCUMENT',
+        description: 'Second document description',
+        url: 'https://google.com'
+      }
     }
   ];
   const SELECTED_EVENT = EVENTS[0];
@@ -92,8 +102,8 @@ describe('EventLogTableComponent', () => {
     expect(firstRowCells.length).toBe(3);
     let firstEvent = EVENTS[0];
 
-    expect(firstRowCells[COL_EVENT].nativeElement.textContent).toBe(firstEvent.event_name);
-    expect(firstRowCells[COL_DATE].nativeElement.textContent).toEqual('10 May 2017, 11:00:00 AM UTC: 10 May 2017, 10:00:00 AM');
+    expect(firstRowCells[COL_EVENT].nativeElement.textContent).toBe(firstEvent.event_name + firstEvent.significant_item.description);
+    expect(firstRowCells[COL_DATE].nativeElement.textContent).toBe('10 May 2017, 10:00:00 AM UTC: 10 May 2017, 10:00:00 AM');
     expect(firstRowCells[COL_AUTHOR].nativeElement.textContent).toEqual('Justin SMITH');
 
     let secondRowCells = rows[1].queryAll(By.css('td'));
@@ -141,5 +151,21 @@ describe('EventLogTableComponent', () => {
     expect(links.length).toBe(2);
     expect(links[0].nativeElement.getAttribute('href')).toBe('/event/5/history');
     expect(links[1].nativeElement.getAttribute('href')).toBe('/event/4/history');
+  });
+
+  it('should display icon if significant item exist', () => {
+    expect(component.significantItemExist(EVENTS[0])).toBeTruthy();
+  });
+
+  it('should not display icon if significant item does not exist', () => {
+    expect(component.significantItemExist(EVENTS[1])).toBeFalsy();
+  });
+
+  it('should contain the significant item description', () => {
+    expect(component.getSignificantItemDesc(EVENTS[0])).toEqual('First document description');
+  });
+
+  it('should contain the significant item url', () => {
+    expect(component.getSignificantItemUrl(EVENTS[1])).toEqual('https://google.com');
   });
 });

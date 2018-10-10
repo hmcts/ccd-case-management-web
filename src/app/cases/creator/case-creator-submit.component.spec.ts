@@ -19,6 +19,7 @@ import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { Draft } from '../../shared/domain/draft';
 import { DraftService } from '../../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -63,7 +64,6 @@ describe('CaseCreatorSubmitComponent', () => {
 
   let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
   let component: CaseCreatorSubmitComponent;
-  let de: DebugElement;
 
   let EventTriggerHeaderComponent: any = MockComponent({
     selector: 'ccd-event-trigger-header',
@@ -160,9 +160,10 @@ describe('CaseCreatorSubmitComponent', () => {
     casesService = createSpyObj<CasesService>('casesService', ['createCase', 'validateCase']);
     casesService.createCase.and.returnValue(Observable.of(CASE_DETAILS));
     draftService = createSpyObj<DraftService>('draftService', ['createOrUpdateDraft']);
+    draftService.createOrUpdateDraft.and.returnValue(Observable.of(DRAFT));
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
-    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
+    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning', 'setPreserveAlerts']);
 
     router = createSpyObj('router', ['navigate']);
     router.navigate.and.returnValue({then: f => f()});
@@ -202,7 +203,6 @@ describe('CaseCreatorSubmitComponent', () => {
     fixture = TestBed.createComponent(CaseCreatorSubmitComponent);
     component = fixture.componentInstance;
 
-    de = fixture.debugElement;
     fixture.detectChanges();
   }));
 
@@ -229,10 +229,10 @@ describe('CaseCreatorSubmitComponent', () => {
 
   it('should update draft when saveDraft called with sanitised data for second time', () => {
     const DRAFT_ID = '12345';
-    component.eventTrigger.case_id = Draft.DRAFT + DRAFT_ID; // Set behaviour to draft has been saved before
+    component.eventTrigger.case_id = Draft.DRAFT_PREFIX + DRAFT_ID; // Set behaviour to draft has been saved before
     component.saveDraft()(SANITISED_EDIT_FORM);
 
-    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, Draft.DRAFT + DRAFT_ID, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, Draft.DRAFT_PREFIX + DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {
@@ -275,10 +275,30 @@ describe('CaseCreatorSubmitComponent', () => {
     expect(alertService.warning).toHaveBeenCalled();
   });
 
-  it('should have a cancel button going back to the create case', () => {
-    component.cancel();
+  it('should have a cancel button going back to the case list for discard new draft', () => {
+    component.cancel({status: CaseEditPageComponent.NEW_FORM_DISCARD, data: {field1 : 'value1'}});
 
-    expect(router.navigate).toHaveBeenCalledWith(['/create/case']);
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  it('should have a cancel button going back to the view draft for discard existing draft', () => {
+    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_DISCARD, data: {field1 : 'value1'}});
+
+    expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
+  });
+
+  it('should have a cancel button saving draft going back to the case list for save new draft', () => {
+    component.cancel({status: CaseEditPageComponent.NEW_FORM_SAVE, data : SANITISED_EDIT_FORM});
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  it('should have a cancel button saving draft and going back to the view draft for save existing draft', () => {
+    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data : SANITISED_EDIT_FORM});
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
 
 });

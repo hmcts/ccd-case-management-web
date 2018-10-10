@@ -271,7 +271,7 @@ describe('SearchResultComponent', () => {
 
       // draft
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
-      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(Draft.DRAFT);
+      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(Draft.DRAFT_PREFIX);
 
       let firstRowComponent = firstRow.children.slice(1, 3);
       let firstRowResult = RESULT_VIEW.results[0];
@@ -384,7 +384,7 @@ describe('SearchResultComponent', () => {
     it('should render DRAFT value in first column with hyperlink if case_id is DRAFT prefixed even if first column not null', () => {
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
 
-      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(Draft.DRAFT);
+      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(Draft.DRAFT_PREFIX);
     });
   });
 

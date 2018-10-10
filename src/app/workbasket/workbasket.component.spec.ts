@@ -94,6 +94,13 @@ describe('WorkbasketComponent', () => {
     hasDrafts: () => false
   };
 
+  const RESULT_VIEW_ERROR: SearchResultView = {
+    columns: [],
+    results: [],
+    result_error: 'ERROR',
+    hasDrafts: () => false
+  };
+
   const JURISDICTION: Jurisdiction = {
     id: 'J1',
     name: 'Jurisdiction 1',
@@ -122,6 +129,7 @@ describe('WorkbasketComponent', () => {
   };
 
   const RESULT_VIEW_OBS: Observable<SearchResultView> = Observable.of(RESULT_VIEW);
+  const RESULT_VIEW_ERROR_OBS: Observable<SearchResultView> = Observable.of(RESULT_VIEW_ERROR);
 
   const $BODY = By.css('div cut-body');
 
@@ -145,7 +153,7 @@ describe('WorkbasketComponent', () => {
     mockPaginationService = createSpyObj<PaginationService>('paginationService', ['getPaginationMetadata']);
     mockPaginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
     mockJurisdictionService = createSpyObj<JurisdictionService>('jurisdictionService', ['search']);
-    alertService = createSpyObj<AlertService>('alertService', ['warning']);
+    alertService = createSpyObj<AlertService>('alertService', ['warning', 'clear']);
     windowService = new WindowService();
     windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
     TestBed
@@ -203,6 +211,36 @@ describe('WorkbasketComponent', () => {
 
     expect(mockSearchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id,
       { page: 1, state: CASE_STATE.id }, {}, 'WORKBASKET');
+  });
+
+  it('should alert warning when result has error', () => {
+    mockSearchService.search.and.returnValue(RESULT_VIEW_ERROR_OBS);
+    let filter = {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        page: 1
+    };
+
+    comp.applyFilter(filter);
+
+    expect(alertService.warning).toHaveBeenCalledWith('ERROR');
+  });
+
+  it('should clear errors when result has no error', () => {
+    mockSearchService.search.and.returnValue(RESULT_VIEW_OBS);
+    let filter = {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        page: 1
+    };
+
+    comp.applyFilter(filter);
+
+    expect(alertService.clear).toHaveBeenCalled();
   });
 
   it('should make inputs fields turn into query parameters with structure', () => {

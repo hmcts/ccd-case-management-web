@@ -30,5 +30,20 @@
         padding-left: $leftPadding - $borderWidth / 2;
       }
     }
+    .event-link {
+      float: left;
+      padding-right:8px;
+    }
+    .doc-img {
+      width: 16px;
+      float: left;
+    }
+    .doc-tooltip {
+      left: 35%;
+      bottom: 7px;
+    }
+    .doc-tooltip::after {
+      border-color: transparent;
+    }
   }
 }

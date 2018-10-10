@@ -75,15 +75,16 @@ export class SearchResultComponent implements OnChanges {
   draftsCount: number;
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
-              appConfig: AppConfig,
-              private activityService: ActivityService,
-              private caseReferencePipe: CaseReferencePipe) {
+    appConfig: AppConfig,
+    private activityService: ActivityService,
+    private caseReferencePipe: CaseReferencePipe) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // console.log("ONCHANGES", changes['resultView']);
     if (changes['resultView']) {
       this.hideRows = false;
 
@@ -99,7 +100,7 @@ export class SearchResultComponent implements OnChanges {
       this.resultView.columns = this.resultView.columns.sort((a: SearchResultViewColumn, b: SearchResultViewColumn) => {
         return a.order - b.order;
       });
-
+      console.log(this.resultView.columns);
       this.draftsCount = this.draftsCount ? this.draftsCount : this.numberOfDrafts();
     }
     if (changes['page']) {
@@ -108,6 +109,7 @@ export class SearchResultComponent implements OnChanges {
   }
 
   goToPage(page): void {
+    console.log("GOTOOO");
     this.hideRows = true;
     this.selected.init = false;
     this.selected.jurisdiction = this.jurisdiction;
@@ -160,6 +162,7 @@ export class SearchResultComponent implements OnChanges {
 
   private isSortAscending(column: SearchResultViewColumn): boolean {
     let currentSortOrder = this.currentSortOrder(column);
+
     return currentSortOrder === SortOrder.UNSORTED || currentSortOrder === SortOrder.DESCENDING;
   }
 
@@ -167,26 +170,21 @@ export class SearchResultComponent implements OnChanges {
 
     let isAscending = true;
     let isDescending = true;
-
+    //console.log("this.resultView.results.length", this.resultView.results.length);
     for (let i = 0; i < this.resultView.results.length - 1; i++) {
-      let comparison = this.comparator(column).compare(this.resultView.results[i], this.resultView.results[i + 1]);
-      isDescending = isDescending && comparison <= 0;
-      isAscending = isAscending && comparison >= 0;
-      if (!isAscending && !isDescending) {
-        break;
-      }
+
     }
     return isAscending ? SortOrder.ASCENDING : isDescending ? SortOrder.DESCENDING : SortOrder.UNSORTED;
   }
 
   getFirstResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
+    return ((currentPage - 1) * this.paginationPageSize) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getLastResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
+    return ((currentPage - 1) * this.paginationPageSize) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getTotalResults(): number {

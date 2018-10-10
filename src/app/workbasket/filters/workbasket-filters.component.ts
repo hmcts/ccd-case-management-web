@@ -72,6 +72,7 @@ export class WorkbasketFiltersComponent implements OnInit {
 
   apply(init): void {
     // Save filters as query parameters for current route
+    console.log("Calling apply");
     let queryParams = {};
     if (this.selected.jurisdiction) {
       queryParams[WorkbasketFiltersComponent.PARAM_JURISDICTION] = this.selected.jurisdiction.id;
@@ -99,6 +100,7 @@ export class WorkbasketFiltersComponent implements OnInit {
       this.windowService.setLocalStorage('workbasket-filter-form-group-value', JSON.stringify(this.formGroup.value));
     }
     // Apply filters
+    console.log("Calling apply filter");
     this.onApply.emit(this.selected);
   }
 
@@ -122,6 +124,8 @@ export class WorkbasketFiltersComponent implements OnInit {
   }
 
   onCaseTypeIdChange(): void {
+    const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
+    const searchFormValueObject = JSON.parse(formValue);
     this.selectedCaseTypeStates = this.sortStates(this.selected.caseType.states);
     this.selected.caseState = this.selectedCaseTypeStates[0];
     this.formGroup = new FormGroup({});
@@ -132,12 +136,18 @@ export class WorkbasketFiltersComponent implements OnInit {
           this.workbasketInputsReady = true;
           this.workbasketInputs = workbasketInputs
             .sort(this.orderService.sortAsc);
-          const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
-          const formValueObject = JSON.parse(formValue);
-          workbasketInputs.forEach(item => {
+          console.log("workbasketInputs.size", workbasketInputs.length);
+          for (var i = 0; i < workbasketInputs.length; i++) {
+            let item = workbasketInputs[i];
+            console.log("console.log(item)", workbasketInputs[i]);
+            console.log("item.lable " + item.label + " item.field ", item.field);
             item.field.label = item.label;
-            item.field.value = formValueObject[item.field.id];
-          });
+            console.log("searchFormValueObject", searchFormValueObject);
+            item.field.value = searchFormValueObject[item.field.id];
+            console.log("searchFormValueObject[item.field.id]", searchFormValueObject[item.field.id]);
+            console.log("item.field.value", item.field.value);
+          }
+
         });
     }
   }
@@ -178,6 +188,7 @@ export class WorkbasketFiltersComponent implements OnInit {
         this.selected.caseState = this.selectCaseState(this.selected.caseType, routeSnapshot);
       }
     }
+
     this.apply(false);
   }
 

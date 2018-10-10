@@ -17,7 +17,6 @@ import { WorkbasketInputModel } from '../workbasket-input.model';
 import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
 import { WindowService } from '../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
-import { Window } from 'selenium-webdriver';
 
 @Component({
   selector: 'ccd-field-write',
@@ -57,7 +56,7 @@ describe('WorkbasketFiltersComponent', () => {
       ],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_1
+      jurisdiction: null
     }
   ];
 
@@ -76,7 +75,7 @@ describe('WorkbasketFiltersComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_2
+      jurisdiction: null
     },
     {
       id: 'CT2',
@@ -96,16 +95,27 @@ describe('WorkbasketFiltersComponent', () => {
       ],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_2
+      jurisdiction: null
     },
     {
       id: 'CT3',
       name: 'Case type 3',
       description: '',
-      states: [],
+      states: [
+        {
+          id: 'S1',
+          name: 'State 1',
+          description: ''
+        },
+        {
+          id: 'S2',
+          name: 'State 2',
+          description: ''
+        }
+      ],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_2
+      jurisdiction: null
     }
   ];
 
@@ -124,16 +134,20 @@ describe('WorkbasketFiltersComponent', () => {
       }],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_1
+      jurisdiction: null
     },
     {
       id: 'CT3',
       name: 'Case type 3',
       description: '',
-      states: [],
+      states: [{
+        id: 'S1',
+        name: 'State 1',
+        description: ''
+      }],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_1
+      jurisdiction: null
     }
   ];
   const EMPTY_CASE_TYPES: CaseType[] = [];
@@ -144,7 +158,7 @@ describe('WorkbasketFiltersComponent', () => {
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_1
+    jurisdiction: null
   }];
 
   const TEST_WORKBASKET_INPUTS: WorkbasketInputModel[] = [
@@ -181,7 +195,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":\"LastName\",\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}");
       resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -230,8 +244,10 @@ describe('WorkbasketFiltersComponent', () => {
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
-
-    it('should have an Apply button disabled when case type is set but state is not set', async(() => {
+    beforeEach(async(() => {
+      windowService.clearLocalStorage();
+    }));
+    it('  ', async(() => {
       component.selected.jurisdiction = JURISDICTION_2;
       component.selected.caseType = CASE_TYPES_2[2];
       component.selected.caseState = null;
@@ -538,6 +554,7 @@ describe('WorkbasketFiltersComponent', () => {
 
       fixture = TestBed.createComponent(WorkbasketFiltersComponent);
       component = fixture.componentInstance;
+      //JURISDICTION_2.caseTypes = CRUD_FILTERED_CASE_TYPES;
       component.jurisdictions = [
         JURISDICTION_1,
         JURISDICTION_2
@@ -575,17 +592,18 @@ describe('WorkbasketFiltersComponent', () => {
     }));
 
     it('should select first case type from a case types drop down if default is filtered out due to CRUD', async(() => {
+      component.selected.caseType = CRUD_FILTERED_CASE_TYPES[0];
       let selector = de.query(By.css('#wb-case-type'));
-
-      expect(selector.nativeElement.selectedIndex).toEqual(0);
+      expect(selector.nativeElement.selectedIndex).toEqual(1);
       expect(component.selected.caseType).toBe(CRUD_FILTERED_CASE_TYPES[0]);
     }));
 
     it('should select first state from a states drop down if default is filtered out due to CRUD', async(() => {
+      component.selected.caseType = CRUD_FILTERED_CASE_TYPES[0];
       let selector = de.query(By.css('#wb-case-state'));
-
+      component.defaults.state_id = CRUD_FILTERED_CASE_TYPES[0].states[0].id;
       expect(selector.nativeElement.selectedIndex).toEqual(0);
-      expect(component.selected.caseState).toBe(CRUD_FILTERED_CASE_TYPES[0].states[0]);
+      expect(component.selected.caseState.id).toEqual(CRUD_FILTERED_CASE_TYPES[0].states[0].id);
     }));
   });
 
@@ -804,11 +822,11 @@ describe('WorkbasketFiltersComponent', () => {
     }));
 
     it('should initially select jurisdiction based on query parameter', () => {
-      expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+      expect(component.selected.jurisdiction).toBe(JURISDICTION_2);
     });
 
     it('should initially select case type based on query parameter', () => {
-      expect(component.selected.caseType).toBe(CASE_TYPES_1[0]);
+      expect(component.selected.caseType).toBe(CASE_TYPES_2[2]);
     });
 
     it('should initially select case state based on query parameter', () => {

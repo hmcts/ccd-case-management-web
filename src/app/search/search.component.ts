@@ -4,6 +4,7 @@ import { Profile } from '../core/profile/profile.model';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
 import { SearchService } from '../core/search/search.service';
+import { WindowService } from '../core/utils/window.service';
 import { FormGroup } from '@angular/forms/forms';
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { CaseState } from '../shared/domain/definition/case-state.model';
@@ -32,15 +33,17 @@ export class SearchComponent implements OnInit {
   metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
-              private searchService: SearchService,
-              private paginationService: PaginationService,
-              private alertService: AlertService) { }
+    private searchService: SearchService,
+    private paginationService: PaginationService,
+    private alertService: AlertService,
+    private windowService: WindowService) { }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
   }
 
   applyFilter(filter): void {
+    console.log("Apply filter", filter);
     const paginationParams = {};
     const searchParams = {};
 
@@ -88,7 +91,12 @@ export class SearchComponent implements OnInit {
     result[SearchComponent.CASE_FILTER] = {};
 
     if (formGroup) {
-      this.buildFormDetails('', result, formGroup.value);
+      const formValue = this.windowService.getLocalStorage('search-form-group-value');
+      if (formValue) {
+        this.buildFormDetails('', result, JSON.parse(formValue));
+      } else {
+        this.buildFormDetails('', result, formGroup.value);
+      }
     }
     return result;
   }

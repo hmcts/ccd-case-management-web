@@ -18,7 +18,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from '../core/alert/alert.service';
 import createSpyObj = jasmine.createSpyObj;
 
-xdescribe('WorkbasketComponent', () => {
+describe('WorkbasketComponent', () => {
 
   const TEMPLATE =
     `<div class="global-display">
@@ -187,7 +187,7 @@ xdescribe('WorkbasketComponent', () => {
     expect(cutBodyEl.nativeElement.tagName).toBe('CUT-BODY');
   });
 
-  xit('should make inputs fields turn into query parameters', () => {
+  it('should make inputs fields turn into query parameters', () => {
     let filter = {
       init: true,
       jurisdiction: JURISDICTION,

@@ -409,7 +409,7 @@ describe('CaseViewerComponent', () => {
     draftService = createSpyObj('draftService', ['deleteDraft']);
     draftService.deleteDraft.and.returnValue(Observable.of({}));
 
-    alertService = createSpyObj('draftService', ['setPreserveAlerts', 'success', 'warning']);
+    alertService = createSpyObj('alertService', ['setPreserveAlerts', 'success', 'warning']);
     alertService.setPreserveAlerts.and.returnValue(Observable.of({}));
     alertService.success.and.returnValue(Observable.of({}));
     alertService.warning.and.returnValue(Observable.of({}));
@@ -625,7 +625,7 @@ describe('CaseViewerComponent', () => {
     component.caseDetails.case_id = 'DRAFT123';
     component.applyTrigger(TRIGGERS[1]);
     expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
-      queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
+      queryParams: { ignoreWarning: true, draft: 'DRAFT123', origin: 'viewDraft' }
     });
   });
 

@@ -10,10 +10,13 @@ import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField, ShowCondition, Draft, DRAFT, HttpError, OrderService, DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseField, ShowCondition, Draft, HttpError, OrderService,
+  DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertService } from '../../core/alert/alert.service';
+import { CaseCreatorSubmitComponent } from '../creator/case-creator-submit.component';
+import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -102,20 +105,15 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
                 .then(() => {
                   this.alertService.setPreserveAlerts(true);
                   this.alertService.success(`The draft has been successfully deleted`);
-                })
-                .catch(error => {
-                  this.handleError(error, trigger)
                 });
             }, _ => {
-              return this.router.navigate(['list/case'])
-              .catch(error => {
-                this.handleError(error, trigger)
-              });
+              return this.router.navigate(['list/case']);
             });
         }
       });
     } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
-      theQueryParams[DRAFT] = this.caseDetails.case_id;
+      theQueryParams[DRAFT_QUERY_PARAM] = this.caseDetails.case_id;
+      theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = 'viewDraft';
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,

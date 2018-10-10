@@ -17,7 +17,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseReferencePipe, DRAFT } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-read',
@@ -270,7 +270,7 @@ describe('SearchResultComponent', () => {
 
       // draft
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
-      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT);
+      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT_PREFIX);
 
       let firstRowComponent = firstRow.children.slice(1, 3);
       let firstRowResult = RESULT_VIEW.results[0];
@@ -383,7 +383,7 @@ describe('SearchResultComponent', () => {
     it('should render DRAFT value in first column with hyperlink if case_id is DRAFT prefixed even if first column not null', () => {
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
 
-      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT);
+      expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT_PREFIX);
     });
   });
 

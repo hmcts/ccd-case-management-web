@@ -1,11 +1,12 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CaseEventTrigger, Draft, DRAFT, HttpError } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, Draft, HttpError } from '@hmcts/ccd-case-ui-toolkit';
 import { AlertService } from '../../core/alert/alert.service';
 import { CasesService } from '../../core/cases/cases.service';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Injectable()
 export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger> {
@@ -34,7 +35,7 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
     let caseTypeId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID);
     let eventTriggerId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING);
-    let draftId = route.queryParamMap.get(DRAFT);
+    let draftId = route.queryParamMap.get(DRAFT_QUERY_PARAM);
     let caseId = undefined;
 
     if (-1 === CreateCaseEventTriggerResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {

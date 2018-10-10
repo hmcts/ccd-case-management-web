@@ -19,6 +19,7 @@ import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-ac
 import { CaseHistoryComponent } from './case-history/case-history.component';
 import { CaseHistoryResolver } from './case-history/case-history.resolver';
 import { CaseHistoryService } from '../core/cases/case-history.service';
+import { SaveOrDiscardDialogComponent } from './save-or-discard-dialog/save-or-discard-dialog.component';
 
 @NgModule({
   imports: [
@@ -46,11 +47,13 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     CaseHistoryComponent,
     DocumentDialogComponent,
     DeleteOrCancelDialogComponent,
+    SaveOrDiscardDialogComponent,
     LabelFieldComponent,
   ],
   entryComponents: [
     DocumentDialogComponent,
     DeleteOrCancelDialogComponent,
+    SaveOrDiscardDialogComponent,
     LabelFieldComponent
   ],
   providers: [

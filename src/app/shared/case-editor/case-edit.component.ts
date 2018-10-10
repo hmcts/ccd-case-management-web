@@ -5,9 +5,10 @@ import { Observable } from 'rxjs';
 import { Wizard } from './wizard.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Confirmation } from './confirmation.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CaseView } from '../../core/cases/case-view.model';
 import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
+import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -43,6 +44,8 @@ export class CaseEditComponent implements OnInit {
 
   confirmation: Confirmation;
 
+  navigationOrigin: any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -50,7 +53,7 @@ export class CaseEditComponent implements OnInit {
     private fieldsUtils: FieldsUtils,
     private fieldsPurger: FieldsPurger,
     private registrarService: ConditionalShowRegistrarService,
-    private wizardFactory: WizardFactoryService
+    private wizardFactory: WizardFactoryService,
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +66,10 @@ export class CaseEditComponent implements OnInit {
         'summary': [''],
         'description': ['']
       })
+    });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      this.navigationOrigin = params[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM];
     });
   }
 
@@ -84,8 +91,10 @@ export class CaseEditComponent implements OnInit {
     this.fieldsPurger.clearHiddenFields(this.form, this.wizard, this.eventTrigger, currentPageId);
     this.registrarService.reset();
 
+    let theQueryParams: Params = {};
+    theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = this.navigationOrigin;
     let nextPage = this.wizard.nextPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
-    return this.router.navigate([nextPage ? nextPage.id : 'submit'], { relativeTo: this.route });
+    return this.router.navigate([nextPage ? nextPage.id : 'submit'], { queryParams: theQueryParams, relativeTo: this.route });
   }
 
   previous(currentPageId: string): Promise<boolean> {
@@ -97,7 +106,9 @@ export class CaseEditComponent implements OnInit {
       return Promise.resolve(false);
     }
 
-    return this.router.navigate([previousPage.id], { relativeTo: this.route });
+    let theQueryParams: Params = {};
+    theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = this.navigationOrigin;
+    return this.router.navigate([previousPage.id], { queryParams: theQueryParams, relativeTo: this.route });
   }
 
   hasPrevious(currentPageId: string): boolean {

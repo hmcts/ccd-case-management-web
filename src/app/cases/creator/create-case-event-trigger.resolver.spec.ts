@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { CreateCaseEventTriggerResolver } from './create-case-event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
-import { DRAFT, createCaseEventTrigger, HttpError, CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
+import { DRAFT_PREFIX, DRAFT_QUERY_PARAM, createCaseEventTrigger, HttpError, CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CreateCaseFieldsResolver', () => {
 
@@ -15,7 +15,7 @@ describe('CreateCaseFieldsResolver', () => {
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(EVENT_TRIGGER_ID, 'Into legacy', 'caseId', true, []);
 
-  const DRAFT_ID = DRAFT + '12345';
+  const DRAFT_ID = DRAFT_PREFIX + '12345';
   const EVENT_TRIGGER_OBS: Observable<CaseEventTrigger> = Observable.of(EVENT_TRIGGER);
   const ERROR: HttpError = {
     timestamp: '',
@@ -30,16 +30,11 @@ describe('CreateCaseFieldsResolver', () => {
 
   let casesService: any;
   let alertService: any;
-
   let route: any;
-
-  let router: any;
 
   beforeEach(() => {
     casesService = createSpyObj('casesService', ['getEventTrigger']);
     alertService = createSpyObj('alertService', ['error']);
-
-    router = createSpyObj('router', ['navigate']);
 
     createCaseFieldsResolver = new CreateCaseEventTriggerResolver(casesService, alertService);
 
@@ -83,7 +78,7 @@ describe('CreateCaseFieldsResolver', () => {
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
-    expect(route.queryParamMap.get).toHaveBeenCalledWith(DRAFT);
+    expect(route.queryParamMap.get).toHaveBeenCalledWith(DRAFT_QUERY_PARAM);
     expect(route.paramMap.get).toHaveBeenCalledTimes(3);
     expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
     expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
@@ -137,7 +132,7 @@ describe('CreateCaseFieldsResolver', () => {
       switch (key) {
         case QUERY_PARAM_IGNORE_WARNINGS:
           return IGNORE_WARNINGS;
-        case DRAFT:
+        case DRAFT_QUERY_PARAM:
           return DRAFT_ID;
       }
     });

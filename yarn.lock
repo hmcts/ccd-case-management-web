@@ -6211,9 +6211,9 @@ ngx-md@~6.0.0:
     prismjs "^1.14.0"
     tslib "^1.9.0"
 
-ngx-pagination@^3.0.3:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-3.1.1.tgz#fcde5cb5fd4a1bd6aa785ff062a55f3deefcd3ac"
+ngx-pagination@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-3.2.0.tgz#67271e5395854464657a151276faa8154dce4806"
 
 nice-try@^1.0.4:
   version "1.0.4"

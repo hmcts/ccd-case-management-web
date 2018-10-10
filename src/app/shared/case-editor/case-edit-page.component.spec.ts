@@ -12,6 +12,7 @@ import { WizardPage, CaseField, FormValueService, FormErrorService, CaseFieldSer
 import createSpyObj = jasmine.createSpyObj;
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
+import { CaseViewerComponent } from '../../cases/viewer/case-viewer.component';
 
 describe('CaseEditPageComponent', () => {
 
@@ -164,7 +165,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = false;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
+        case CaseViewerComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });
@@ -192,7 +193,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = true;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
+        case CaseViewerComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });
@@ -222,7 +223,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = true;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
+        case CaseViewerComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });

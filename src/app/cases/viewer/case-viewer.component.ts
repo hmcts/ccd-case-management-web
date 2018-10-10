@@ -23,6 +23,7 @@ import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain
   styleUrls: ['./case-viewer.scss']
 })
 export class CaseViewerComponent implements OnInit, OnDestroy {
+  public static readonly ORIGIN_QUERY_PARAM = 'origin';
   BANNER = DisplayMode.BANNER;
 
   caseDetails: CaseView;
@@ -113,7 +114,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       });
     } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
       theQueryParams[DRAFT_QUERY_PARAM] = this.caseDetails.case_id;
-      theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = 'viewDraft';
+      theQueryParams[CaseViewerComponent.ORIGIN_QUERY_PARAM] = 'viewDraft';
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,

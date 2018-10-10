@@ -5,7 +5,7 @@
   <thead>
   <tr>
     <th *ngFor="let col of resultView.columns">
-      <table class="search-result-column-header" attr.aria-label="Sort by {{col.label}} {{ isSortAscending(col)? 'ascending' : 'descending' }}">
+      <table class="search-result-column-header">
         <tr>
           <div class="search-result-column-label" (click)="sort(col)">{{col.label}}</div>
           <div *ngIf="comparator(col)" class="search-result-column-sort">

@@ -6,8 +6,7 @@ import { SearchResultComponent } from './search/search-result.component';
 import { SearchFiltersComponent } from './search/filters/search-filters.component';
 import { PaletteModule, CaseFieldService, ConditionalShowModule, DocumentDialogComponent,
   MarkdownModule, LabelFieldComponent, LabelSubstitutorModule, SharedUtilsModule,
-  DeleteOrCancelDialogComponent, 
-  SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
+  DeleteOrCancelDialogComponent, SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
 import { EventTriggerModule } from './event-trigger/event-trigger.module';
 import { CaseHeaderComponent } from './header/case-header.component';

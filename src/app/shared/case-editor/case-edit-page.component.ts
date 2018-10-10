@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, AfterViewChecked } from '@angular/core';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
@@ -13,6 +13,9 @@ import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { PageValidationService } from './page-validation.service';
 import { Draft } from '../domain/draft';
+import { SaveOrDiscardDialogComponent } from '../save-or-discard-dialog/save-or-discard-dialog.component';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -20,14 +23,24 @@ import { Draft } from '../domain/draft';
   styleUrls: ['./case-edit-page.scss']
 })
 export class CaseEditPageComponent implements OnInit, AfterViewChecked {
+
+  static readonly RESUMED_FORM_DISCARD = 'RESUMED_FORM_DISCARD';
+  static readonly NEW_FORM_DISCARD = 'NEW_FORM_DISCARD';
+  static readonly NEW_FORM_SAVE = 'NEW_FORM_CHANGED_SAVE';
+  static readonly RESUMED_FORM_SAVE = 'RESUMED_FORM_SAVE';
+
   eventTrigger: CaseEventTrigger;
   editForm: FormGroup;
   currentPage: WizardPage;
+  currentPageForm: FormGroup;
+  dialogConfig: MatDialogConfig;
   error: HttpError;
   callbackErrorsSubject: Subject<any> = new Subject();
   ignoreWarning = false;
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_SUBMIT;
   isSubmitting = false;
+  formValuesChanged = false;
+  pageChangeSubject: Subject<boolean> = new Subject();
 
   constructor(
     private caseEdit: CaseEditComponent,
@@ -36,9 +49,11 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
     private formErrorService: FormErrorService,
     private cdRef: ChangeDetectorRef,
     private pageValidationService: PageValidationService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
+    this.initDialog();
     this.eventTrigger = this.caseEdit.eventTrigger;
     this.editForm = this.caseEdit.form;
 
@@ -61,6 +76,25 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges();
+  }
+
+  applyValuesChanged(valuesChanged: boolean): void {
+    this.formValuesChanged = valuesChanged;
+  }
+
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.height = '245px';
+    this.dialogConfig.width = '550px';
+    this.dialogConfig.panelClass = 'dialog';
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+    }
   }
 
   first(): Promise<boolean> {
@@ -95,12 +129,16 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
 
   next(): Promise<boolean> {
     this.isSubmitting = false;
+    this.formValuesChanged = false;
+    this.pageChangeSubject.next(true);
     return this.caseEdit.next(this.currentPage.id);
   }
 
   previous(): Promise<boolean> {
     this.error = null;
     this.saveDraft();
+    this.formValuesChanged = false;
+    this.pageChangeSubject.next(true);
     return this.caseEdit.previous(this.currentPage.id);
   }
 
@@ -109,7 +147,31 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   cancel(): void {
-    this.caseEdit.cancel();
+    if (this.formValuesChanged) {
+      const dialogRef = this.dialog.open(SaveOrDiscardDialogComponent, this.dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'Discard') {
+          this.discard();
+        } else if (result === 'Save') {
+          const draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
+          if (this.route.snapshot.queryParamMap.get(CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
+            this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data: draftCaseEventData});
+          } else {
+            this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_SAVE, data: draftCaseEventData});
+          }
+        }
+      });
+    } else {
+      this.discard();
+    }
+  }
+
+  private discard() {
+    if (this.route.snapshot.queryParamMap.get(CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
+      this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_DISCARD});
+    } else {
+      this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_DISCARD});
+    }
   }
 
   submitting(): boolean {
@@ -140,7 +202,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       draftCaseEventData.event_token = this.eventTrigger.event_token;
       draftCaseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-        (draft) => this.eventTrigger.case_id = Draft.DRAFT + draft.id, error => this.handleError(error)
+        (draft) => this.eventTrigger.case_id = Draft.DRAFT_PREFIX + draft.id, error => this.handleError(error)
       );
     }
   }

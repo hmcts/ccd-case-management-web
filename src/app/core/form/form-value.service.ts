@@ -8,6 +8,16 @@ export class FormValueService {
     return this.sanitiseObject(rawValue);
   }
 
+  filterCurrentPageFields(caseFields: CaseField[], editFrom: any): any {
+    let cloneForm = JSON.parse(JSON.stringify(editFrom));
+    Object.keys(cloneForm['data']).forEach((key) => {
+      if (caseFields.findIndex((element) => element.id === key) < 0) {
+        delete cloneForm['data'][key];
+      }
+    });
+    return cloneForm;
+  }
+
   private sanitiseObject(rawObject: object): object {
     if (!rawObject) {
       return rawObject;
@@ -39,26 +49,20 @@ export class FormValueService {
       return this.sanitiseArray(rawValue);
     }
 
+    if (null === rawValue) {
+      return null;
+    }
+
     switch (typeof rawValue) {
       case 'object':
         return this.sanitiseObject(rawValue);
       case 'string':
-        return rawValue.trim();
+        return '' === rawValue ? null : rawValue.trim();
       case 'number':
         return String(rawValue);
       default:
         return rawValue;
     }
-  }
-
-  filterCurrentPageFields(caseFields: CaseField[], editFrom: any): any {
-    let cloneForm = JSON.parse(JSON.stringify(editFrom));
-    Object.keys(cloneForm['data']).forEach((key) => {
-      if (caseFields.findIndex((element) => element.id === key) < 0) {
-        delete cloneForm['data'][key];
-      }
-    });
-    return cloneForm;
   }
 
 }

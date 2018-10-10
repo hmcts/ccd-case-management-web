@@ -18,7 +18,7 @@ describe('CreateCaseFieldsResolver', () => {
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(EVENT_TRIGGER_ID, 'Into legacy', 'caseId', true, []);
 
-  const DRAFT_ID = Draft.DRAFT + '12345';
+  const DRAFT_ID = Draft.DRAFT_PREFIX + '12345';
   const EVENT_TRIGGER_OBS: Observable<CaseEventTrigger> = Observable.of(EVENT_TRIGGER);
   const ERROR: HttpError = {
     timestamp: '',
@@ -33,16 +33,11 @@ describe('CreateCaseFieldsResolver', () => {
 
   let casesService: any;
   let alertService: any;
-
   let route: any;
-
-  let router: any;
 
   beforeEach(() => {
     casesService = createSpyObj('casesService', ['getEventTrigger']);
     alertService = createSpyObj('alertService', ['error']);
-
-    router = createSpyObj('router', ['navigate']);
 
     createCaseFieldsResolver = new CreateCaseEventTriggerResolver(casesService, alertService);
 
@@ -86,7 +81,7 @@ describe('CreateCaseFieldsResolver', () => {
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
-    expect(route.queryParamMap.get).toHaveBeenCalledWith(Draft.DRAFT);
+    expect(route.queryParamMap.get).toHaveBeenCalledWith(Draft.DRAFT_QUERY_PARAM);
     expect(route.paramMap.get).toHaveBeenCalledTimes(3);
     expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
     expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
@@ -140,7 +135,7 @@ describe('CreateCaseFieldsResolver', () => {
       switch (key) {
         case QUERY_PARAM_IGNORE_WARNINGS:
           return IGNORE_WARNINGS;
-        case Draft.DRAFT:
+        case Draft.DRAFT_QUERY_PARAM:
           return DRAFT_ID;
       }
     });

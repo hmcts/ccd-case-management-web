@@ -8,7 +8,7 @@ export class CaseReferencePipe implements PipeTransform {
 
   transform(caseReference: string): string {
     if (Draft.isDraft(caseReference)) {
-      return Draft.DRAFT;
+      return Draft.DRAFT_PREFIX;
     } else {
       return String(caseReference).replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
     }

@@ -39,20 +39,25 @@ describe('CaseHeaderComponent', () => {
           LabelSubstitutionService,
         ]
       })
-      .compileComponents();
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(CaseHeaderComponent);
+        component = fixture.componentInstance;
+        component.caseDetails = CASE_DETAILS;
 
-    fixture = TestBed.createComponent(CaseHeaderComponent);
-    component = fixture.componentInstance;
-    component.caseDetails = CASE_DETAILS;
-
-    de = fixture.debugElement;
-    fixture.detectChanges();
+        de = fixture.debugElement;
+        fixture.detectChanges();
+      });
   }));
 
   it('should render a header with case reference when title display is empty', () => {
     let header = de.query($HEADING);
-    expect(header).toBeTruthy();
-    expect(text(header)).toEqual('#1234-5678-9012-3456');
+    fixture
+      .whenStable()
+      .then(() => {
+        expect(header).toBeTruthy();
+        expect(text(header)).toEqual('#1234-5678-9012-3456');
+      });
   });
 
   it('should render a header with markdown element when title display is not empty', () => {

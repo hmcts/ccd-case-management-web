@@ -8,9 +8,10 @@ import { CaseEditComponent } from './case-edit.component';
 import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Wizard } from './wizard.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
 import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
+import { Observable } from 'rxjs';
 
 describe('CaseEditComponent', () => {
 
@@ -113,7 +114,8 @@ describe('CaseEditComponent', () => {
   let routerStub: any;
   let fieldsUtils = new FieldsUtils();
   let fieldsPurger = new FieldsPurger(fieldsUtils);
-  let registrarService = new ConditionalShowRegistrarService()
+  let registrarService = new ConditionalShowRegistrarService();
+  let route: any;
 
   routerStub = {
     navigate: jasmine.createSpy('navigate'),
@@ -133,6 +135,10 @@ describe('CaseEditComponent', () => {
     formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
 
     formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);
+
+    route = {
+      queryParams: Observable.of({Origin: 'viewDraft'})
+    };
 
     TestBed
       .configureTestingModule({
@@ -159,7 +165,8 @@ describe('CaseEditComponent', () => {
           { provide: FieldsUtils, useValue: fieldsUtils },
           { provide: FieldsPurger, useValue: fieldsPurger },
           { provide: ConditionalShowRegistrarService, useValue: registrarService },
-          { provide: Router, useValue: routerStub }
+          { provide: Router, useValue: routerStub },
+          { provide: ActivatedRoute, useValue: route }
         ]
       })
       .compileComponents();

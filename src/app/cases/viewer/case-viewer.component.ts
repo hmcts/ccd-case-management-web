@@ -19,6 +19,7 @@ import { Draft } from '../../shared/domain/draft';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 import { AlertService } from '../../core/alert/alert.service';
+import { CaseCreatorSubmitComponent } from '../creator/case-creator-submit.component';
 
 @Component({
   templateUrl: './case-viewer.component.html',
@@ -107,20 +108,15 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
                 .then(() => {
                   this.alertService.setPreserveAlerts(true);
                   this.alertService.success(`The draft has been successfully deleted`);
-                })
-                .catch(error => {
-                  this.handleError(error, trigger)
                 });
             }, _ => {
-              return this.router.navigate(['list/case'])
-              .catch(error => {
-                this.handleError(error, trigger)
-              });
+              return this.router.navigate(['list/case']);
             });
         }
       });
     } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
-      theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
+      theQueryParams[Draft.DRAFT_QUERY_PARAM] = this.caseDetails.case_id;
+      theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = 'viewDraft';
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,

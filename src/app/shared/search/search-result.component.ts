@@ -155,7 +155,7 @@ export class SearchResultComponent implements OnChanges {
   }
 
   draftPrefixOrGet(col, result): any {
-    return result.case_id.startsWith(Draft.DRAFT) ? Draft.DRAFT : this.hyphenateIfCaseReferenceOrGet(col, result);
+    return result.case_id.startsWith(Draft.DRAFT_PREFIX) ? Draft.DRAFT_PREFIX : this.hyphenateIfCaseReferenceOrGet(col, result);
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {
@@ -197,6 +197,6 @@ export class SearchResultComponent implements OnChanges {
     return currentPage > 1 ? this.draftsCount : 0;
   }
   private numberOfDrafts(): number {
-    return this.resultView.results.filter(_ => _.case_id.startsWith(Draft.DRAFT)).length;
+    return this.resultView.results.filter(_ => _.case_id.startsWith(Draft.DRAFT_PREFIX)).length;
   }
 }

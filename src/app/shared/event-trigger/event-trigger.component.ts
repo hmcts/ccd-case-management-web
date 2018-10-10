@@ -53,6 +53,7 @@ export class EventTriggerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.changeSubscription.unsubscribe();
+    this.callbackErrorsSubject.unsubscribe();
   }
 
   isDisabled(): boolean {

@@ -5,11 +5,10 @@ import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Wizard } from './wizard.model';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseFieldService, CaseReferencePipe, CaseEventTrigger, aCaseField, CaseField,
-  IsCompoundPipe, FieldsUtils, WizardPage, FormErrorService, FormValueService, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+  IsCompoundPipe, FieldsUtils, WizardPage, FormErrorService, FormValueService, OrderService, Wizard } from '@hmcts/ccd-case-ui-toolkit';
 import { aWizardPage } from './case-edit.spec';
 
 describe('CaseEditSubmitComponent', () => {

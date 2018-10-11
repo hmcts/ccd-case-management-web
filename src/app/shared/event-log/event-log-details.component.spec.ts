@@ -1,9 +1,9 @@
 import { EventLogDetailsComponent } from './event-log-details.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { By } from '@angular/platform-browser';
 import { DatePipe, DashPipe } from '@hmcts/ccd-case-ui-toolkit/dist/shared/palette/utils';
+import { CaseViewEvent } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('EventLogDetails', () => {
 

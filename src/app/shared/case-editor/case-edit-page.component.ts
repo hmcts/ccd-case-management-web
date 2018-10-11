@@ -8,7 +8,6 @@ import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../error/error-context';
 import { MatDialogConfig, MatDialog } from '@angular/material';
-import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
 import { CaseViewerComponent } from '../../cases/viewer/case-viewer.component';
 
 @Component({

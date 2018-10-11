@@ -6,9 +6,8 @@ import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PageValidationService } from './page-validation.service';
 import { WizardPage, CaseField, FormValueService, FormErrorService, CaseFieldService, aCaseField,
-  CaseReferencePipe, CaseEventData, Draft, SaveOrDiscardDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
+  CaseReferencePipe, CaseEventData, Draft, SaveOrDiscardDialogComponent, PageValidationService } from '@hmcts/ccd-case-ui-toolkit';
 import createSpyObj = jasmine.createSpyObj;
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';

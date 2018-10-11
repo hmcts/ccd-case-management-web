@@ -101,18 +101,7 @@ describe('WorkbasketFiltersComponent', () => {
       id: 'CT3',
       name: 'Case type 3',
       description: '',
-      states: [
-        {
-          id: 'S1',
-          name: 'State 1',
-          description: ''
-        },
-        {
-          id: 'S2',
-          name: 'State 2',
-          description: ''
-        }
-      ],
+      states: [],
       events: [],
       case_fields: [],
       jurisdiction: null
@@ -244,7 +233,7 @@ describe('WorkbasketFiltersComponent', () => {
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
-    beforeEach(async(() => {
+    afterEach(async(() => {
       windowService.clearLocalStorage();
     }));
     it('  ', async(() => {
@@ -570,7 +559,9 @@ describe('WorkbasketFiltersComponent', () => {
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
-
+    afterEach(async(() => {
+      windowService.clearLocalStorage();
+    }));
     it('should populate case types drop down with CRUD filtered case types and sort states', async(() => {
       component.onJurisdictionIdChange();
       fixture.detectChanges();
@@ -594,7 +585,7 @@ describe('WorkbasketFiltersComponent', () => {
     it('should select first case type from a case types drop down if default is filtered out due to CRUD', async(() => {
       component.selected.caseType = CRUD_FILTERED_CASE_TYPES[0];
       let selector = de.query(By.css('#wb-case-type'));
-      expect(selector.nativeElement.selectedIndex).toEqual(1);
+      expect(selector.nativeElement.selectedIndex).toEqual(0);
       expect(component.selected.caseType).toBe(CRUD_FILTERED_CASE_TYPES[0]);
     }));
 
@@ -668,7 +659,9 @@ describe('WorkbasketFiltersComponent', () => {
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
-
+    afterEach(async(() => {
+      windowService.clearLocalStorage();
+    }));
     it('should disable case type dropdown if default is filtered out due to CRUD and no other case types', async(() => {
       let caseTypeSelector = de.query(By.css('#wb-case-type'));
       expect(caseTypeSelector.nativeElement.disabled).toBeTruthy();
@@ -741,7 +734,9 @@ describe('WorkbasketFiltersComponent', () => {
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
-
+    afterEach(async(() => {
+      windowService.clearLocalStorage();
+    }));
     it('should disable states dropdown if default is filtered out due to CRUD and no other states', async(() => {
       let caseTypeSelector = de.query(By.css('#wb-case-type'));
       expect(caseTypeSelector.nativeElement.disabled).toBeFalsy();
@@ -810,6 +805,7 @@ describe('WorkbasketFiltersComponent', () => {
         JURISDICTION_2
       ];
       component.formGroup = TEST_FORM_GROUP;
+
       component.defaults = {
         jurisdiction_id: JURISDICTION_2.id,
         case_type_id: DEFAULT_CASE_TYPE.id,
@@ -820,13 +816,15 @@ describe('WorkbasketFiltersComponent', () => {
       de = fixture.debugElement;
       fixture.detectChanges();
     }));
-
+    afterEach(async(() => {
+      windowService.clearLocalStorage();
+    }));
     it('should initially select jurisdiction based on query parameter', () => {
-      expect(component.selected.jurisdiction).toBe(JURISDICTION_2);
+      expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
     });
 
     it('should initially select case type based on query parameter', () => {
-      expect(component.selected.caseType).toBe(CASE_TYPES_2[2]);
+      expect(component.selected.caseType).toEqual(CASE_TYPES_1[0]);
     });
 
     it('should initially select case state based on query parameter', () => {

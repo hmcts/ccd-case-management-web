@@ -130,10 +130,15 @@ export class SearchFiltersComponent implements OnInit {
           .sort(this.orderService.sortAsc);
 
         const formValue = this.windowService.getLocalStorage('search-form-group-value');
-        const formValueObject = JSON.parse(formValue);
+        let formValueObject = null;
+        if (formValue) {
+          formValueObject = JSON.parse(formValue);
+        }
         searchInputs.forEach(item => {
           item.field.label = item.label;
-          item.field.value = formValueObject[item.field.id];
+          if (formValueObject) {
+            item.field.value = formValueObject[item.field.id];
+          }
         });
       });
   }

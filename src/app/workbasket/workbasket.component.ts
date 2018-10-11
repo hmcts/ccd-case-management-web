@@ -90,16 +90,16 @@ export class WorkbasketComponent implements OnInit {
       .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters);
 
     Observable.forkJoin(searchObservable, paginationMetadataObservable)
-        .subscribe(results => {
-          this.resultView = plainToClass(SearchResultView, results[0]);
-          this.jurisdiction = filter.jurisdiction;
-          this.caseType = filter.caseType;
-          this.caseState = filter.caseState;
-          this.page = filter.page;
-          this.paginationMetadata = results[1];
-          // Clearing the errors is only on the assumption this is the only place we display errors on case list page
-          this.resultView.result_error ? this.alertService.warning(this.resultView.result_error) : this.alertService.clear();
-        });
+      .subscribe(results => {
+        this.resultView = plainToClass(SearchResultView, results[0]);
+        this.jurisdiction = filter.jurisdiction;
+        this.caseType = filter.caseType;
+        this.caseState = filter.caseState;
+        this.page = filter.page;
+        this.paginationMetadata = results[1];
+        // Clearing the errors is only on the assumption this is the only place we display errors on case list page
+        this.resultView.result_error ? this.alertService.warning(this.resultView.result_error) : this.alertService.clear();
+      });
 
     this.scrollToTop();
   }
@@ -111,8 +111,12 @@ export class WorkbasketComponent implements OnInit {
 
     if (isFormApply) {
       const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
-      let formValueObject = JSON.parse(formValue);
-      this.buildSearchCaseDetails('', result, formValueObject);
+      console.log("formValue", formValue);
+
+      if (formValue) {
+        let formValueObject = JSON.parse(formValue);
+        this.buildSearchCaseDetails('', result, formValueObject);
+      }
     } else {
       if (formGroup)
         this.buildSearchCaseDetails('', result, formGroup.value);

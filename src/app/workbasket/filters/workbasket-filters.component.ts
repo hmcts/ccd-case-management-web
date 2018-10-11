@@ -127,8 +127,7 @@ export class WorkbasketFiltersComponent implements OnInit {
   }
 
   onCaseTypeIdChange(): void {
-    const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
-    const searchFormValueObject = JSON.parse(formValue);
+
     this.selectedCaseTypeStates = this.sortStates(this.selected.caseType.states);
     this.selected.caseState = this.selectedCaseTypeStates[0];
     this.formGroup = new FormGroup({});
@@ -139,15 +138,18 @@ export class WorkbasketFiltersComponent implements OnInit {
           this.workbasketInputsReady = true;
           this.workbasketInputs = workbasketInputs
             .sort(this.orderService.sortAsc);
+          const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
+
           console.log("workbasketInputs.size", workbasketInputs.length);
           for (var i = 0; i < workbasketInputs.length; i++) {
             let item = workbasketInputs[i];
             console.log("console.log(item)", workbasketInputs[i]);
             console.log("item.lable " + item.label + " item.field ", item.field);
             item.field.label = item.label;
-            console.log("searchFormValueObject", searchFormValueObject);
-            item.field.value = searchFormValueObject[item.field.id];
-            console.log("searchFormValueObject[item.field.id]", searchFormValueObject[item.field.id]);
+            if (formValue) {
+              const searchFormValueObject = JSON.parse(formValue);
+              item.field.value = searchFormValueObject[item.field.id];
+            }
             console.log("item.field.value", item.field.value);
           }
 
@@ -176,7 +178,7 @@ export class WorkbasketFiltersComponent implements OnInit {
    */
   private initFilters() {
     const savedQueryParams = this.windowService.getLocalStorage('savedQueryParams');
-
+    console.log("savedQueryParams", savedQueryParams);
     let routeSnapshot: ActivatedRouteSnapshot = this.route.snapshot;
     if (savedQueryParams) {
       routeSnapshot.queryParams = JSON.parse(savedQueryParams);

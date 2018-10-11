@@ -21,7 +21,7 @@ class CaseListPage extends BasePage {
 
 
     //As we are now on the CCD landing page, we can set this to false and make use of protractor angular functionality
-      browser.ignoreSynchronization = false;
+    //   browser.ignoreSynchronization = false;
 
   }
 

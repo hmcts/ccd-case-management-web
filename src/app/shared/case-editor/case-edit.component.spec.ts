@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
-import { By } from '@angular/platform-browser';
 import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
 import { PaletteUtilsModule } from '../palette/utils/utils.module';
 import { CaseEditComponent } from './case-edit.component';
@@ -12,22 +11,25 @@ import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FieldsUtils } from '../utils/fields.utils';
 import { Wizard } from './wizard.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { WizardPage } from '../domain/wizard-page.model';
 import createSpyObj = jasmine.createSpyObj;
 import { WizardPageField } from '../domain/wizard-page-field.model';
 import { CaseField } from '../domain/definition/case-field.model';
 import { FieldsPurger } from '../utils/fields.purger';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
+import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
+import { Observable } from 'rxjs';
 
 describe('CaseEditComponent', () => {
 
-  const EVENT_TOKEN = 'test-token';
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: 'TEST_TRIGGER',
-    name: 'Test Trigger',
-    description: 'This is a test trigger',
-    case_fields: [
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(
+    'TEST_TRIGGER',
+    'Test Trigger',
+    'caseId',
+    false,
+    [
       {
         id: 'PersonFirstName',
         label: 'First name',
@@ -40,10 +42,8 @@ describe('CaseEditComponent', () => {
         field_type: null,
         display_context: 'OPTIONAL'
       }
-    ],
-    wizard_pages: [],
-    event_token: EVENT_TOKEN
-  };
+    ]
+  );
 
   const WIZARD_PAGE_FIELD_WITH_SHOW_CONDITION: WizardPageField = {
     case_field_id: 'PersonFirstName'
@@ -123,7 +123,8 @@ describe('CaseEditComponent', () => {
   let routerStub: any;
   let fieldsUtils = new FieldsUtils();
   let fieldsPurger = new FieldsPurger(fieldsUtils);
-  let registrarService = new ConditionalShowRegistrarService()
+  let registrarService = new ConditionalShowRegistrarService();
+  let route: any;
 
   routerStub = {
     navigate: jasmine.createSpy('navigate'),
@@ -144,6 +145,10 @@ describe('CaseEditComponent', () => {
 
     formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);
 
+    route = {
+      queryParams: Observable.of({Origin: 'viewDraft'})
+    };
+
     TestBed
       .configureTestingModule({
         imports: [
@@ -163,12 +168,14 @@ describe('CaseEditComponent', () => {
           FieldWrite
         ],
         providers: [
+          WizardFactoryService,
           { provide: FormErrorService, useValue: formErrorService },
           { provide: FormValueService, useValue: formValueService },
           { provide: FieldsUtils, useValue: fieldsUtils },
           { provide: FieldsPurger, useValue: fieldsPurger },
           { provide: ConditionalShowRegistrarService, useValue: registrarService },
-          { provide: Router, useValue: routerStub }
+          { provide: Router, useValue: routerStub },
+          { provide: ActivatedRoute, useValue: route }
         ]
       })
       .compileComponents();

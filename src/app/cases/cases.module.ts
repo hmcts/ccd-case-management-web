@@ -9,14 +9,14 @@ import { PaletteModule } from '../shared/palette/palette.module';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaletteUtilsModule } from '../shared/palette/utils/utils.module';
 import { CaseCreatorComponent } from './creator/case-creator.component';
 import { CreateCaseFiltersComponent } from './creator/filters/create-case-filters.component';
 import { CasePrinterComponent } from './printer/case-printer.component';
 import { CasePrintDocumentsResolver } from './printer/case-print-documents.resolver';
 import { CaseCreatorSubmitComponent } from './creator/case-creator-submit.component';
-import { CreateCaseFieldsResolver } from './creator/create-case-fields.resolver';
+import { CreateCaseEventTriggerResolver } from './creator/create-case-event-trigger.resolver';
 import { CaseEditComponent } from '../shared/case-editor/case-edit.component';
 import { CallbackErrorsComponent } from '../shared/error/callback-errors.component';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
@@ -33,6 +33,7 @@ import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RemoveDialogComponent } from '../shared/remove-dialog/remove-dialog.component';
 import { FieldsPurger } from '../shared/utils/fields.purger';
+import { PageValidationService } from '../shared/case-editor/page-validation.service';
 
 @NgModule({
   imports: [
@@ -49,7 +50,7 @@ import { FieldsPurger } from '../shared/utils/fields.purger';
     ReactiveFormsModule,
     SharedModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   declarations: [
     CallbackErrorsComponent,
@@ -64,19 +65,22 @@ import { FieldsPurger } from '../shared/utils/fields.purger';
     CasePrinterComponent,
     CaseViewerComponent,
     CreateCaseFiltersComponent,
-    CallbackErrorsComponent,
     PrintUrlPipe,
     RemoveDialogComponent
+  ],
+  exports: [
+    CallbackErrorsComponent,
   ],
   entryComponents: [RemoveDialogComponent],
   providers: [
     CasePrintDocumentsResolver,
     CaseReferencePipe,
     CaseResolver,
-    CreateCaseFieldsResolver,
+    CreateCaseEventTriggerResolver,
     EventTriggerResolver,
+    FieldsPurger,
     LabelSubstitutionService,
-    FieldsPurger
+    PageValidationService,
   ]
 })
 export class CasesModule {}

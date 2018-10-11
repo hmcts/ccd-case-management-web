@@ -9,19 +9,22 @@ import { OrderService } from '../../core/order/order.service';
 import { Observable } from 'rxjs/Observable';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
-import { attr } from '../../test/helpers';
+import { attr, text } from '../../test/helpers';
 import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
-import createSpyObj = jasmine.createSpyObj;
-import any = jasmine.any;
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { HttpError } from '../../core/http/http-error.model';
-import { text } from '../../test/helpers';
-import { ActivityService } from '../../core/activity/activity.service';
 import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
 import { FieldsUtils } from '../../shared/utils/fields.utils';
 import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
+import { CaseField } from '../../shared/domain/definition/case-field.model';
+import createSpyObj = jasmine.createSpyObj;
+import any = jasmine.any;
+import { DraftService } from '../../core/draft/draft.service';
+import { AlertService } from '../../core/alert/alert.service';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line
@@ -105,6 +108,16 @@ describe('CaseViewerComponent', () => {
       id: 'EDIT',
       name: 'Edit',
       description: 'Edit a case'
+    },
+    {
+      id: 'RESUME',
+      name: 'Resume',
+      description: 'Resume Draft'
+    },
+    {
+      id: 'DELETE',
+      name: 'Delete',
+      description: 'Delete Draft'
     }
   ];
 
@@ -120,17 +133,160 @@ describe('CaseViewerComponent', () => {
       state_name: 'Case Updated',
       user_id: 0,
       user_last_name: 'Chan',
-      user_first_name: 'Phillip'
+      user_first_name: 'Phillip',
+      significant_item: {
+        type: 'DOCUMENT',
+        description: 'First document description',
+        url: 'https://google.com'
+      }
     }
   ];
 
+  const METADATA: CaseField[] = [
+    {
+     id: '[CASE_REFERENCE]',
+     label: 'Case Reference',
+     value: 1533032330714079,
+     hint_text: null,
+     field_type: {
+       id: 'Number',
+       type: 'Number',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[CASE_TYPE]',
+     label: 'Case Type',
+     value: 'DIVORCE',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[CREATED_DATE]',
+     label: 'Created Date',
+     value: '2018-07-31T10:18:50.737',
+     hint_text: null,
+     field_type: {
+       id: 'Date',
+       type: 'Date',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[JURISDICTION]',
+     label: 'Jurisdiction',
+     value: 'DIVORCE',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[LAST_MODIFIED_DATE]',
+     label: 'Last Modified Date',
+     value: '2018-07-31T10:18:50.737',
+     hint_text: null,
+     field_type: {
+       id: 'Date',
+       type: 'Date',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   },
+   {
+     id: '[SECURITY_CLASSIFICATION]',
+     label: 'Security Classification',
+     value: 'PUBLIC',
+     hint_text: null,
+     field_type: {
+       id: 'Text',
+       type: 'Text',
+       min: null,
+       max: null,
+       regular_expression: null,
+       fixed_list_items: [],
+       complex_fields: [],
+       collection_field_type: null
+     },
+     security_label: 'PUBLIC',
+     order: null,
+     display_context: null,
+     show_condition: null,
+     show_summary_change_option: null,
+     show_summary_content_option: null
+   }
+  ];
+
+  const JID = 'TEST';
+  const CTID = 'TestAddressBookCase';
+  const CID = '1234567890123456';
   const CASE_VIEW: CaseView = {
-    case_id: '1',
+    case_id: CID,
     case_type: {
-      id: 'TestAddressBookCase',
+      id: CTID,
       name: 'Test Address Book Case',
       jurisdiction: {
-        id: 'TEST',
+        id: JID,
         name: 'Test',
       }
     },
@@ -200,7 +356,8 @@ describe('CaseViewerComponent', () => {
       },
     ],
     triggers: TRIGGERS,
-    events: EVENTS
+    events: EVENTS,
+    metadataFields: METADATA,
   };
   const FIELDS = CASE_VIEW.tabs[1].fields;
   const SIMPLE_FIELDS = CASE_VIEW.tabs[1].fields.slice(0, 2);
@@ -210,6 +367,9 @@ describe('CaseViewerComponent', () => {
   ERROR.message = 'Critical error!';
 
   let fixture: ComponentFixture<CaseViewerComponent>;
+  let fixtureDialog: ComponentFixture<DeleteOrCancelDialogComponent>;
+  let componentDialog: DeleteOrCancelDialogComponent;
+  let deDialog: DebugElement;
   let component: CaseViewerComponent;
   let de: DebugElement;
 
@@ -225,6 +385,14 @@ describe('CaseViewerComponent', () => {
   let router: any;
   let mockCallbackErrorSubject: any;
   let activityService: any;
+  let draftService: any;
+  let alertService: any;
+  let dialog: any;
+  let matDialogRef: any;
+
+  const $DIALOG_DELETE_BUTTON = By.css('.button[title=Delete]');
+  const $DIALOG_CANCEL_BUTTON = By.css('.button[title=Cancel]');
+  const DIALOG_CONFIG = new MatDialogConfig();
 
   let CaseActivityComponent: any = MockComponent({
     selector: 'ccd-activity',
@@ -232,7 +400,8 @@ describe('CaseViewerComponent', () => {
   });
 
   let FieldReadComponent: any = MockComponent({ selector: 'ccd-field-read', inputs: [
-    'caseField'
+    'caseField',
+    'caseReference'
   ]});
 
   let LinkComponent: any = MockComponent({ selector: 'a', inputs: [
@@ -242,6 +411,17 @@ describe('CaseViewerComponent', () => {
   beforeEach(async(() => {
     orderService = new OrderService();
     spyOn(orderService, 'sort').and.callThrough();
+
+    draftService = createSpyObj('draftService', ['deleteDraft']);
+    draftService.deleteDraft.and.returnValue(Observable.of({}));
+
+    alertService = createSpyObj('alertService', ['setPreserveAlerts', 'success', 'warning']);
+    alertService.setPreserveAlerts.and.returnValue(Observable.of({}));
+    alertService.success.and.returnValue(Observable.of({}));
+    alertService.warning.and.returnValue(Observable.of({}));
+
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    matDialogRef = createSpyObj<MatDialogRef<DeleteOrCancelDialogComponent>>('matDialogRef', ['afterClosed', 'close']);
 
     activityService = createSpyObj<ActivityPollingService>('activityPollingService', ['postViewActivity']);
     activityService.postViewActivity.and.returnValue(Observable.of());
@@ -258,6 +438,7 @@ describe('CaseViewerComponent', () => {
         declarations: [
           CaseViewerComponent,
           LabelSubstitutorDirective,
+          DeleteOrCancelDialogComponent,
           // Mock
           CaseActivityComponent,
           FieldReadComponent,
@@ -268,7 +449,7 @@ describe('CaseViewerComponent', () => {
           CallbackErrorsComponent,
           TabsComponent,
           TabComponent,
-          MarkdownComponent
+          MarkdownComponent,
         ],
         providers: [
           FieldsUtils,
@@ -276,7 +457,13 @@ describe('CaseViewerComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router },
-          { provide: ActivityPollingService, useValue: activityService }
+          { provide: ActivityPollingService, useValue: activityService },
+          { provide: DraftService, useValue: draftService },
+          { provide: AlertService, useValue: alertService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatDialogRef, useValue: matDialogRef },
+          { provide: MatDialogConfig, useValue: DIALOG_CONFIG },
+          DeleteOrCancelDialogComponent
         ]
       })
       .compileComponents();
@@ -373,11 +560,11 @@ describe('CaseViewerComponent', () => {
   it('should render each field value using FieldReadComponent', () => {
     let readFields_fields = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr td>ccd-field-read'));
+      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
 
     let readFields_compound = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr th>ccd-field-read'));
+      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
 
     let readFields = readFields_fields.concat(readFields_compound);
 
@@ -388,7 +575,7 @@ describe('CaseViewerComponent', () => {
         }))
         .toBeTruthy(`Could not find field with type ${field.field_type}`);
     });
-    expect(FIELDS.length).toBe(readFields.length);
+    expect(FIELDS.length).toBe(readFields_fields.length);
   });
 
   it('should render fields in ascending order', () => {
@@ -433,11 +620,45 @@ describe('CaseViewerComponent', () => {
 
   it('should navigate to event trigger view on trigger emit', () => {
     component.applyTrigger(TRIGGERS[0]);
-
     expect(router.navigate).toHaveBeenCalledWith(['trigger', TRIGGERS[0].id], {
       queryParams: { },
       relativeTo: mockRoute
     });
+  });
+
+  it('should navigate to resume draft trigger view on trigger emit', () => {
+    component.ignoreWarning = true;
+    component.caseDetails.case_id = 'DRAFT123';
+    component.applyTrigger(TRIGGERS[1]);
+    expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
+      queryParams: { ignoreWarning: true, draft: 'DRAFT123', origin: 'viewDraft' }
+    });
+  });
+
+  it('should trigger the delete case event when delete case button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogDeleteButton = deDialog.query($DIALOG_DELETE_BUTTON);
+    dialogDeleteButton.nativeElement.click();
+
+    expect(componentDialog.result).toEqual('Delete');
+    fixture.detectChanges();
+  });
+
+  it('should not trigger the delete case event when cancel button is clicked', () => {
+    fixtureDialog = TestBed.createComponent(DeleteOrCancelDialogComponent);
+    componentDialog = fixtureDialog.componentInstance;
+    deDialog = fixtureDialog.debugElement;
+    fixtureDialog.detectChanges();
+
+    let dialogCancelButton = deDialog.query($DIALOG_CANCEL_BUTTON);
+    dialogCancelButton.nativeElement.click();
+
+    expect(componentDialog.result).toEqual('Cancel');
+    fixture.detectChanges();
   });
 
   it('should notify user about errors/warnings when trigger applied and response with callback warnings/errors', () => {
@@ -511,4 +732,11 @@ describe('CaseViewerComponent', () => {
     expect(printLink.componentInstance.routerLink).toEqual('print');
   });
 
+  it('should not contain a print link if Draft', () => {
+    component.caseDetails.case_id = 'DRAFT123';
+    fixture.detectChanges();
+    let printLink = de.query($PRINT_LINK);
+
+    expect(printLink).toBeFalsy();
+  });
 });

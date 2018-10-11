@@ -13,6 +13,7 @@ import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { CaseEventData } from '../../shared/domain/case-event-data';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({
@@ -55,12 +56,12 @@ describe('CaseEventTriggerComponent', () => {
   CASE_DETAILS.case_type.id = 'TEST_CASE_TYPE';
   CASE_DETAILS.case_type.jurisdiction.id = 'TEST';
 
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: 'TEST_TRIGGER',
-    name: 'Test Trigger',
-    description: 'This is a test trigger',
-    case_id: '3',
-    case_fields: [
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(
+    'TEST_TRIGGER',
+    'Test Trigger',
+    '3',
+    true,
+    [
       {
         id: 'PersonFirstName',
         label: 'First name',
@@ -73,10 +74,8 @@ describe('CaseEventTriggerComponent', () => {
         field_type: null,
         display_context: 'OPTIONAL'
       }
-    ],
-    event_token: 'test-token',
-    wizard_pages: []
-  };
+    ]
+  );
 
   const SANITISED_EDIT_FORM: CaseEventData = {
     data: {
@@ -232,7 +231,7 @@ describe('CaseEventTriggerComponent', () => {
   it('should alert warning message after navigation upon successful event creation but incomplete call back', () => {
     casesService.createEvent.and.returnValue(Observable.of({}));
 
-    component.submitted({caseId: 123, status: 'INCOMPLETE'});
+    component.submitted({caseId: 123, status: 'INCOMPLETE_CALLBACK'});
 
     expect(alertService.warning).toHaveBeenCalled();
   });

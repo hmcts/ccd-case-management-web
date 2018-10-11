@@ -82,7 +82,7 @@ export class CaseEditSubmitComponent implements OnInit {
           if (confirmation && (confirmation.getHeader() || confirmation.getBody())) {
             this.caseEdit.confirm(confirmation);
           } else {
-            this.caseEdit.submitted.emit({caseId: response['id'], status: response['callback_response_status']});
+            this.caseEdit.submitted.emit({caseId: response['id'], status: this.getStatus(response)});
           }
         },
         error => {
@@ -98,6 +98,14 @@ export class CaseEditSubmitComponent implements OnInit {
 
   isDisabled(): boolean {
     return !this.editForm.valid || this.hasErrors();
+  }
+
+  private getStatus(response) {
+    return this.hasCallbackFailed(response) ? response['callback_response_status'] : response['delete_draft_response_status'];
+  }
+
+  private hasCallbackFailed(response) {
+    return response['callback_response_status'] !== 'CALLBACK_COMPLETED';
   }
 
   private hasErrors(): boolean {

@@ -15,7 +15,11 @@ import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigg
 import { CaseView } from '../../core/cases/case-view.model';
 import { CaseDetails } from '../../shared/domain/case-details';
 import { CaseEventData } from '../../shared/domain/case-event-data';
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
+import { Draft } from '../../shared/domain/draft';
+import { DraftService } from '../../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -31,6 +35,9 @@ class CaseEditComponent {
 
   @Input()
   validate: (CaseEventData) => Observable<object>;
+
+  @Input()
+  saveDraft: (CaseEventData) => Observable<Draft>;
 
   @Output()
   cancelled: EventEmitter<any> = new EventEmitter();
@@ -57,7 +64,6 @@ describe('CaseCreatorSubmitComponent', () => {
 
   let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
   let component: CaseCreatorSubmitComponent;
-  let de: DebugElement;
 
   let EventTriggerHeaderComponent: any = MockComponent({
     selector: 'ccd-event-trigger-header',
@@ -81,12 +87,12 @@ describe('CaseCreatorSubmitComponent', () => {
   const CASE_DETAILS: CaseView = new CaseView();
   CASE_DETAILS.case_id = '42';
 
-  const EVENT_TRIGGER: CaseEventTrigger = {
-    id: 'TEST_TRIGGER',
-    name: 'Test Trigger',
-    description: 'This is a test trigger',
-    case_id: '1234567890123456',
-    case_fields: [
+  const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger(
+    'TEST_TRIGGER',
+    'Test Trigger',
+    null,
+    false,
+    [
       {
         id: 'PersonFirstName',
         label: 'First name',
@@ -100,9 +106,9 @@ describe('CaseCreatorSubmitComponent', () => {
         display_context: 'OPTIONAL'
       }
     ],
-    event_token: 'test-token',
-    wizard_pages: []
-  };
+    [],
+    true
+  );
 
   const PARAMS: Params = {
     jid: JID,
@@ -114,12 +120,20 @@ describe('CaseCreatorSubmitComponent', () => {
       'PersonLastName': 'Khaleesi'
     },
     event: {
-      id: EVENT_TRIGGER.id,
+      id: null,
       summary: 'Some summary',
       description: 'Some description'
     },
     event_token: 'test-token',
     ignore_warning: false
+  };
+
+  const DRAFT: Draft = {
+    'id': '1234',
+    'document': CREATED_CASE,
+    'type': 'dummy',
+    'created': 'sometime',
+    'updated': 'another time'
   };
 
   let mockRoute: any = {
@@ -137,6 +151,7 @@ describe('CaseCreatorSubmitComponent', () => {
   let router: any;
   let alertService: any;
   let casesService: any;
+  let draftService: any;
   let formErrorService: any;
   let formValueService: any;
   let casesReferencePipe: any;
@@ -144,9 +159,11 @@ describe('CaseCreatorSubmitComponent', () => {
   beforeEach(async(() => {
     casesService = createSpyObj<CasesService>('casesService', ['createCase', 'validateCase']);
     casesService.createCase.and.returnValue(Observable.of(CASE_DETAILS));
+    draftService = createSpyObj<DraftService>('draftService', ['createOrUpdateDraft']);
+    draftService.createOrUpdateDraft.and.returnValue(Observable.of(DRAFT));
     casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
 
-    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning']);
+    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning', 'setPreserveAlerts']);
 
     router = createSpyObj('router', ['navigate']);
     router.navigate.and.returnValue({then: f => f()});
@@ -173,6 +190,7 @@ describe('CaseCreatorSubmitComponent', () => {
         providers: [
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: CasesService, useValue: casesService },
+          { provide: DraftService, useValue: draftService },
           { provide: Router, useValue: router },
           { provide: AlertService, useValue: alertService },
           { provide: FormErrorService, useValue: formErrorService },
@@ -185,7 +203,6 @@ describe('CaseCreatorSubmitComponent', () => {
     fixture = TestBed.createComponent(CaseCreatorSubmitComponent);
     component = fixture.componentInstance;
 
-    de = fixture.debugElement;
     fixture.detectChanges();
   }));
 
@@ -201,6 +218,21 @@ describe('CaseCreatorSubmitComponent', () => {
     component.validate()(SANITISED_EDIT_FORM);
 
     expect(casesService.validateCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+  });
+
+  it('should create a draft when saveDraft called with sanitised data', () => {
+    component.eventTrigger.case_id = undefined;
+    component.saveDraft()(SANITISED_EDIT_FORM);
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, undefined, SANITISED_EDIT_FORM);
+  });
+
+  it('should update draft when saveDraft called with sanitised data for second time', () => {
+    const DRAFT_ID = '12345';
+    component.eventTrigger.case_id = Draft.DRAFT_PREFIX + DRAFT_ID; // Set behaviour to draft has been saved before
+    component.saveDraft()(SANITISED_EDIT_FORM);
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, Draft.DRAFT_PREFIX + DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {
@@ -222,7 +254,7 @@ describe('CaseCreatorSubmitComponent', () => {
   it('should alert success message after navigation upon successful event creation and call back', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'happy'});
+    component.submitted({caseId: 123, status: 'CALLBACK_COMPLETED'});
 
     expect(alertService.success).toHaveBeenCalled();
   });
@@ -230,15 +262,43 @@ describe('CaseCreatorSubmitComponent', () => {
   it('should alert warning message after navigation upon successful event creation but incomplete call back', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'INCOMPLETE'});
+    component.submitted({caseId: 123, status: 'INCOMPLETE_CALLBACK'});
 
     expect(alertService.warning).toHaveBeenCalled();
   });
 
-  it('should have a cancel button going back to the create case', () => {
-    component.cancel();
+  it('should alert warning message after navigation upon successful event creation but incomplete delete draft', () => {
+    casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    expect(router.navigate).toHaveBeenCalledWith(['/create/case']);
+    component.submitted({caseId: 123, status: 'INCOMPLETE_DELETE_DRAFT'});
+
+    expect(alertService.warning).toHaveBeenCalled();
+  });
+
+  it('should have a cancel button going back to the case list for discard new draft', () => {
+    component.cancel({status: CaseEditPageComponent.NEW_FORM_DISCARD, data: {field1 : 'value1'}});
+
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  it('should have a cancel button going back to the view draft for discard existing draft', () => {
+    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_DISCARD, data: {field1 : 'value1'}});
+
+    expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
+  });
+
+  it('should have a cancel button saving draft going back to the case list for save new draft', () => {
+    component.cancel({status: CaseEditPageComponent.NEW_FORM_SAVE, data : SANITISED_EDIT_FORM});
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
+
+  it('should have a cancel button saving draft and going back to the view draft for save existing draft', () => {
+    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data : SANITISED_EDIT_FORM});
+
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
 
 });

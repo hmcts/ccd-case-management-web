@@ -9,6 +9,7 @@ import { CaseEventData } from '../../shared/domain/case-event-data';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { OrderService } from '../order/order.service';
 import createSpyObj = jasmine.createSpyObj;
+import { createCaseEventTrigger } from '../../fixture/shared.fixture'
 import { HttpError } from '../http/http-error.model';
 import { HttpErrorService } from '../http/http-error.service';
 
@@ -18,14 +19,37 @@ describe('CasesService', () => {
   const JID = 'TEST';
   const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
-  const CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/` + CASE_ID;
+  const DRAFT_ID = 'DRAFT1';
+  const CASE_URL = `${API_URL}/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}`;
+  const V2_CASE_VIEW_URL = `${API_URL}/internal/cases/${CASE_ID}`;
   const EVENT_TRIGGER_ID = 'enterCaseIntoLegacy';
   const EVENT_TRIGGER_URL = API_URL
     + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
+  const EVENT_TRIGGER_DRAFT_URL = API_URL
+    + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/drafts/${DRAFT_ID}/event-triggers/${EVENT_TRIGGER_ID}?ignore-warning=true`;
   const CREATE_EVENT_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/events`;
   const VALIDATE_CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/validate`;
   const PRINT_DOCUMENTS_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}/documents`;
   const CREATE_CASE_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases?ignore-warning=false`;
+  const CASE_VIEW: CaseView = {
+    case_id: '1',
+    case_type: {
+      id: 'TestAddressBookCase',
+      name: 'Test Address Book Case',
+      jurisdiction: {
+        id: 'TEST',
+        name: 'Test',
+      }
+    },
+    channels: [],
+    state: {
+      id: 'CaseCreated',
+      name: 'Case created'
+    },
+    tabs: [],
+    triggers: [],
+    events: []
+  };
   const ERROR: HttpError = new HttpError();
   ERROR.message = 'Critical error!';
 
@@ -50,26 +74,6 @@ describe('CasesService', () => {
   });
 
   describe('getCaseView()', () => {
-
-    const CASE_VIEW: CaseView = {
-      case_id: '1',
-      case_type: {
-        id: 'TestAddressBookCase',
-        name: 'Test Address Book Case',
-        jurisdiction: {
-          id: 'TEST',
-          name: 'Test',
-        }
-      },
-      channels: [],
-      state: {
-        id: 'CaseCreated',
-        name: 'Case created'
-      },
-      tabs: [],
-      triggers: [],
-      events: []
-    };
 
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
@@ -108,16 +112,53 @@ describe('CasesService', () => {
 
   });
 
+  describe('getCaseViewV2()', () => {
+
+    beforeEach(() => {
+      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+        body: JSON.stringify(CASE_VIEW)
+      }))));
+    });
+
+    it('should use HttpService::get with correct url', () => {
+      casesService
+        .getCaseViewV2(CASE_ID)
+        .subscribe();
+
+      expect(httpService.get).toHaveBeenCalledWith(V2_CASE_VIEW_URL, {
+        headers: new Headers({
+          'Accept': CasesService.V2_MEDIATYPE_CASE_VIEW,
+          'experimental': 'true',
+        })
+      });
+    });
+
+    it('should retrieve case from server', () => {
+      casesService
+        .getCaseViewV2(CASE_ID)
+        .subscribe(
+          caseData => expect(caseData).toEqual(CASE_VIEW)
+        );
+    });
+
+    it('should set error when error is thrown', () => {
+      httpService.get.and.returnValue(Observable.throw(ERROR));
+
+      casesService
+        .getCaseViewV2(CASE_ID)
+        .subscribe(data => {
+          expect(data).toEqual(CASE_VIEW);
+        }, err => {
+          expect(err).toEqual(ERROR);
+          expect(errorService.setError).toHaveBeenCalledWith(ERROR);
+        });
+    });
+
+  });
+
   describe('getEventTrigger()', () => {
 
-    const EVENT_TRIGGER: CaseEventTrigger = {
-      id: '',
-      name: '',
-      case_id: '',
-      case_fields: [],
-      event_token: 'test-token',
-      wizard_pages: []
-    };
+    const EVENT_TRIGGER: CaseEventTrigger = createCaseEventTrigger('', '', '', false, []);
 
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
@@ -131,6 +172,14 @@ describe('CasesService', () => {
         .subscribe();
 
       expect(httpService.get).toHaveBeenCalledWith(EVENT_TRIGGER_URL);
+    });
+
+    it('should use HttpService::get with correct url for DRAFTS', () => {
+      casesService
+        .getEventTrigger(JID, CTID, EVENT_TRIGGER_ID, DRAFT_ID, 'true')
+        .subscribe();
+
+      expect(httpService.get).toHaveBeenCalledWith(EVENT_TRIGGER_DRAFT_URL);
     });
 
     it('should retrieve event trigger from server by case id', () => {

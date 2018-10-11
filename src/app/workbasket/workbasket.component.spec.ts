@@ -9,12 +9,13 @@ import { SearchService } from '../core/search/search.service';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { Observable } from 'rxjs/Observable';
-import createSpyObj = jasmine.createSpyObj;
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AlertService } from '../core/alert/alert.service';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('WorkbasketComponent', () => {
 
@@ -42,7 +43,8 @@ describe('WorkbasketComponent', () => {
        'resultView',
        'paginationMetadata',
        'page',
-       'caseFilterFG'
+       'caseFilterFG',
+       'metadataFields'
   ]});
 
   const  JURISDICTIONS = [
@@ -83,13 +85,22 @@ describe('WorkbasketComponent', () => {
 
   const RESULT_VIEW: SearchResultView = {
     columns: [],
-    results: []
+    results: [],
+    hasDrafts: () => false
+  };
+
+  const RESULT_VIEW_ERROR: SearchResultView = {
+    columns: [],
+    results: [],
+    result_error: 'ERROR',
+    hasDrafts: () => false
   };
 
   const JURISDICTION: Jurisdiction = {
     id: 'J1',
     name: 'Jurisdiction 1',
-    description: ''
+    description: '',
+    caseTypes: []
   };
 
   const CASE_TYPES: CaseType[] = [
@@ -113,6 +124,7 @@ describe('WorkbasketComponent', () => {
   };
 
   const RESULT_VIEW_OBS: Observable<SearchResultView> = Observable.of(RESULT_VIEW);
+  const RESULT_VIEW_ERROR_OBS: Observable<SearchResultView> = Observable.of(RESULT_VIEW_ERROR);
 
   const $BODY = By.css('div cut-body');
 
@@ -122,6 +134,7 @@ describe('WorkbasketComponent', () => {
   let mockSearchService: any;
   let mockPaginationService: any;
   let mockJurisdictionService: JurisdictionService;
+  let alertService: AlertService;
 
   beforeEach(async(() => {
 
@@ -130,6 +143,7 @@ describe('WorkbasketComponent', () => {
     mockPaginationService = createSpyObj<PaginationService>('paginationService', ['getPaginationMetadata']);
     mockPaginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
     mockJurisdictionService = createSpyObj<JurisdictionService>('jurisdictionService', ['search']);
+    alertService = createSpyObj<AlertService>('alertService', ['warning', 'clear']);
 
     TestBed
       .configureTestingModule({
@@ -146,7 +160,8 @@ describe('WorkbasketComponent', () => {
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: SearchService, useValue: mockSearchService },
           { provide: PaginationService, useValue: mockPaginationService },
-          { provide: JurisdictionService, useValue: mockJurisdictionService }
+          { provide: JurisdictionService, useValue: mockJurisdictionService },
+          { provide: AlertService, useValue: alertService}
         ]
       })
       .compileComponents();  // compile template and css
@@ -184,6 +199,36 @@ describe('WorkbasketComponent', () => {
 
     expect(mockSearchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id,
       { page: 1, state: CASE_STATE.id }, {}, 'WORKBASKET');
+  });
+
+  it('should alert warning when result has error', () => {
+    mockSearchService.search.and.returnValue(RESULT_VIEW_ERROR_OBS);
+    let filter = {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        page: 1
+    };
+
+    comp.applyFilter(filter);
+
+    expect(alertService.warning).toHaveBeenCalledWith('ERROR');
+  });
+
+  it('should clear errors when result has no error', () => {
+    mockSearchService.search.and.returnValue(RESULT_VIEW_OBS);
+    let filter = {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        page: 1
+    };
+
+    comp.applyFilter(filter);
+
+    expect(alertService.clear).toHaveBeenCalled();
   });
 
   it('should make inputs fields turn into query parameters with structure', () => {
@@ -227,5 +272,38 @@ describe('WorkbasketComponent', () => {
     };
     comp.applyFilter(filter);
     expect(mockSearchService.search).not.toHaveBeenCalled();
+  });
+
+  it('should make metadata inputs fields turn into query parameters', () => {
+    const nameControl1 = new FormControl();
+    const NAME_VALUE1 = 'something';
+    nameControl1.setValue(NAME_VALUE1);
+
+    const nameControl2 = new FormControl();
+    const NAME_VALUE2 = 100;
+    nameControl2.setValue(NAME_VALUE2);
+
+    const filterContents = {
+      'name': nameControl1,
+      '[META]': nameControl2
+    };
+    let formGroup = new FormGroup(filterContents);
+    let filter = {
+      formGroup: formGroup,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      page: 1,
+      metadataFields: ['[META]']
+    };
+
+    comp.applyFilter(filter);
+
+    expect(mockPaginationService.getPaginationMetadata).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {meta: NAME_VALUE2}, {
+      'name': NAME_VALUE1
+    });
+
+    expect(mockSearchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {page: 1, meta: NAME_VALUE2},
+      {'name': NAME_VALUE1}, SearchService.VIEW_WORKBASKET);
+
   });
 });

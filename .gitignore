@@ -55,6 +55,7 @@ __build__/**
 *.iml
 *.swp
 /.vscode
+/.history
 
 # Lock: Use Yarn instead of NPM #
 package-lock.json
@@ -67,3 +68,6 @@ package-lock.json
 
 # Protractor test report
 test-report
+
+# Cucumber report
+test/functional-test/results

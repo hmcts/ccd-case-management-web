@@ -8,16 +8,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
-import { DefinitionsService } from '../../core/definitions/definitions.service';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
-import { READ_ACCESS } from '../../shared/domain/case-view/access-types.model';
 import { AlertService } from '../../core/alert/alert.service';
 import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
-import createSpyObj = jasmine.createSpyObj;
 import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
+import createSpyObj = jasmine.createSpyObj;
 
 @Component({
   selector: 'ccd-field-write',
@@ -34,7 +32,8 @@ describe('WorkbasketFiltersComponent', () => {
   const JURISDICTION_1: Jurisdiction = {
     id: 'J1',
     name: 'Jurisdiction 1',
-    description: ''
+    description: '',
+    caseTypes: []
   };
 
   const CASE_TYPES_1: CaseType[] = [
@@ -63,7 +62,8 @@ describe('WorkbasketFiltersComponent', () => {
   const JURISDICTION_2: Jurisdiction = {
     id: 'J2',
     name: 'Jurisdiction 2',
-    description: ''
+    description: '',
+    caseTypes: []
   };
 
   const CASE_TYPES_2: CaseType[] = [
@@ -146,9 +146,11 @@ describe('WorkbasketFiltersComponent', () => {
   }];
 
   const TEST_WORKBASKET_INPUTS: WorkbasketInputModel[] = [
-    createWBInput('Label 1', 1, 'PersonFirstName', 'Text'),
-    createWBInput('Label 2', 2, 'PersonLastName', 'Text')
+    createWBInput('Label 1', 1, 'PersonFirstName', 'Text', false),
+    createWBInput('Label 2', 2, 'PersonLastName', 'Text', true)
   ];
+
+  const METADATA_FIELDS = ['PersonLastName'];
 
   const $APPLY_BUTTON = By.css('button');
 
@@ -158,7 +160,6 @@ describe('WorkbasketFiltersComponent', () => {
 
   let workbasketHandler;
   let router: any;
-  let definitionsService: any;
   let activatedRoute: any;
   let jurisdictionService: JurisdictionService;
   let workbasketInputFilterService: any;
@@ -172,13 +173,12 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
+      resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
         snapshot: {
@@ -202,7 +202,6 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: DefinitionsService, useValue: definitionsService },
             { provide: AlertService, useValue: alertService },
           ]
         })
@@ -355,7 +354,8 @@ describe('WorkbasketFiltersComponent', () => {
         caseState: DEFAULT_CASE_STATE,
         init: false,
         page: 1,
-        formGroup: jasmine.any(Object)
+        formGroup: jasmine.any(Object),
+        metadataFields: METADATA_FIELDS
       });
 
       expect(workbasketHandler.applyFilters).toHaveBeenCalledTimes(1);
@@ -375,19 +375,11 @@ describe('WorkbasketFiltersComponent', () => {
         caseState: DEFAULT_CASE_STATE,
         init: true,
         page: 1,
-        formGroup: jasmine.any(Object)
+        formGroup: jasmine.any(Object),
+        metadataFields: METADATA_FIELDS
       });
       expect(workbasketHandler.applyFilters).toHaveBeenCalledTimes(1);
       expect(alertService.setPreserveAlerts).toHaveBeenCalledWith(false);
-    });
-
-    it('should announce selected jurisdiction', () => {
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_2));
-      component.selected.jurisdiction = JURISDICTION_2;
-      component.onJurisdictionIdChange();
-      fixture.detectChanges();
-
-      expect(definitionsService.getCaseTypes).toHaveBeenCalledWith(JURISDICTION_2.id, READ_ACCESS);
     });
 
     it('should reset searchFilters when Jurisdiction changes even when Apply button is disabled', async(() => {
@@ -410,6 +402,14 @@ describe('WorkbasketFiltersComponent', () => {
       component.apply(true);
       expect(workbasketHandler.applyFilters).toHaveBeenCalledWith(component.selected);
       expect(component.selected.formGroup.value).toEqual(TEST_FORM_GROUP.value);
+    }));
+
+    it('should have metadata fields added when apply button is clicked', async(() => {
+      component.workbasketInputs = TEST_WORKBASKET_INPUTS;
+
+      component.apply(true);
+
+      expect(component.selected.metadataFields).toEqual(METADATA_FIELDS);
     }));
 
     it('should update search input when case type is reset', async(() => {
@@ -494,9 +494,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CRUD_FILTERED_CASE_TYPES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
+      resetCaseTypes(JURISDICTION_2, CRUD_FILTERED_CASE_TYPES);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -524,7 +523,6 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: DefinitionsService, useValue: definitionsService },
             { provide: AlertService, useValue: alertService }
           ]
         })
@@ -548,7 +546,7 @@ describe('WorkbasketFiltersComponent', () => {
       fixture.detectChanges();
     }));
 
-    it('should populate case types dropdown with CRUD filtered case types and sort states', async(() => {
+    it('should populate case types drop down with CRUD filtered case types and sort states', async(() => {
       component.onJurisdictionIdChange();
       fixture.detectChanges();
 
@@ -568,14 +566,14 @@ describe('WorkbasketFiltersComponent', () => {
         });
     }));
 
-    it('should select first case type from a case types dropdown if default is filtered out due to CRUD', async(() => {
+    it('should select first case type from a case types drop down if default is filtered out due to CRUD', async(() => {
       let selector = de.query(By.css('#wb-case-type'));
 
       expect(selector.nativeElement.selectedIndex).toEqual(0);
       expect(component.selected.caseType).toBe(CRUD_FILTERED_CASE_TYPES[0]);
     }));
 
-    it('should select first state from a states dropdown if default is filtered out due to CRUD', async(() => {
+    it('should select first state from a states drop down if default is filtered out due to CRUD', async(() => {
       let selector = de.query(By.css('#wb-case-state'));
 
       expect(selector.nativeElement.selectedIndex).toEqual(0);
@@ -588,9 +586,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(EMPTY_CASE_TYPES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
+      resetCaseTypes(JURISDICTION_2, EMPTY_CASE_TYPES);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -618,7 +615,6 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: DefinitionsService, useValue: definitionsService },
             { provide: AlertService, useValue: alertService }
           ]
         })
@@ -659,9 +655,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPE_WITH_EMPTY_STATES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
+      resetCaseTypes(JURISDICTION_2, CASE_TYPE_WITH_EMPTY_STATES);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -689,7 +684,6 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: DefinitionsService, useValue: definitionsService },
             { provide: AlertService, useValue: alertService }
           ]
         })
@@ -738,12 +732,11 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(CASE_TYPES_1));
+      resetCaseTypes(JURISDICTION_1, CASE_TYPES_1);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
         snapshot: {
@@ -767,7 +760,6 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: DefinitionsService, useValue: definitionsService},
             { provide: AlertService, useValue: alertService },
           ]
         })
@@ -830,9 +822,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      definitionsService = createSpyObj<DefinitionsService>('definitionsService', ['getCaseTypes']);
-      definitionsService.getCaseTypes.and.returnValue(Observable.of(EMPTY_CASE_TYPES));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
+      resetCaseTypes(JURISDICTION_2, EMPTY_CASE_TYPES);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -859,7 +850,6 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: DefinitionsService, useValue: definitionsService },
             { provide: AlertService, useValue: alertService }
           ]
         })
@@ -892,6 +882,11 @@ describe('WorkbasketFiltersComponent', () => {
   });
 });
 
+function resetCaseTypes(jurisdiction: Jurisdiction, caseTypes: CaseType[]) {
+  jurisdiction.caseTypes.splice(0, jurisdiction.caseTypes.length);
+  caseTypes.forEach(caseType => jurisdiction.caseTypes.push(caseType));
+}
+
 function createObservableFrom<T>(param: T): Observable<T> {
   return Observable.create(observer => {
     observer.next(param);
@@ -899,7 +894,8 @@ function createObservableFrom<T>(param: T): Observable<T> {
   });
 }
 
-function createWBInput(theLabel: string, theOrder: number, theId: string, theType: FieldTypeEnum): WorkbasketInputModel {
+function createWBInput(theLabel: string, theOrder: number, theId: string,
+                       theType: FieldTypeEnum, theMetadata: boolean): WorkbasketInputModel {
   return {
     label: theLabel,
     order: theOrder,
@@ -908,7 +904,8 @@ function createWBInput(theLabel: string, theOrder: number, theId: string, theTyp
       field_type: {
         id: theType,
         type: theType
-      }
+      },
+      metadata: theMetadata
     }
-  };
+  }
 }

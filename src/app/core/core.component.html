@@ -64,6 +64,9 @@
 <!-- BETA : For Solicitor -->
 <cut-phase-bar [isSolicitor]="isSolicitor()" *ngIf="isSolicitor()" phaseLabel="BETA" phaseLink="{{getSmartSurveyUrl()}}"></cut-phase-bar>
 
+<!-- Unsupported browser help link -->
+<ccd-browser-support [isSolicitor]="isSolicitor()" *ngIf="unsupportedBrowser"></ccd-browser-support>
+
 <!-- Main area : Start -->
 <div class="container-fluid">
   <ccd-alert></ccd-alert>
@@ -75,5 +78,23 @@
 <!-- Main area : End -->
 
 <!-- Footer : Start -->
-<cut-footer-bar [isSolicitor]="isSolicitor()" email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)"></cut-footer-bar>
+<cut-footer-bar [isSolicitor]="isSolicitor()" email="service-desk@hmcts.gsi.gov.uk" phone="0207 633 4140" workhours="Monday to Friday, 8am to 6pm (excluding bank holidays)">
+  <div footerSolsNavLinks>
+    <div class="footer-menu">
+      <a [routerLink]="'/cookies'" target="_blank">Cookies</a>
+    </div>
+    <div class="footer-menu">
+      <a [routerLink]="'/privacy-policy'" target="_blank">Privacy policy</a>
+    </div>
+    <div class="footer-menu">
+      <a [routerLink]="'/terms-and-conditions'" target="_blank">Terms and conditions</a>
+    </div>
+    <div class="footer-menu">
+    <a [routerLink]="'/contact-us'" target="_blank">Contact us</a>
+    </div>
+  </div>
+  <div footerCaseWorkerNavLinks>
+    <!-- Case worker footer navigation links -->
+  </div>
+</cut-footer-bar>
 <!-- Footer : End -->

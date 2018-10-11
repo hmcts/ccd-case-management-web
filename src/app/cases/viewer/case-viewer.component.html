@@ -14,7 +14,7 @@
 <div class="grid-row">
   <div class="column-one-half">
     <ccd-case-header [caseDetails]="caseDetails"></ccd-case-header>
-    <div class="case-viewer-controls">
+    <div class="case-viewer-controls" *ngIf="!isDraft()">
       <a id="case-viewer-control-print" routerLink="print" class="button button-secondary">Print</a>
     </div>
   </div>
@@ -36,12 +36,12 @@
               <ng-container [ngSwitch]="!(field | ccdIsCompound)">
                 <tr *ngSwitchCase="true">
                   <th>
-                    <div class="case-viewer-label">{{field.label}}</div>
+                    <div class="case-viewer-label text-16">{{field.label}}</div>
                   </th>
-                  <td><ccd-field-read [caseField]="field"></ccd-field-read></td>
+                  <td><span class="text-16"><ccd-field-read [caseField]="field" [caseReference]="caseDetails.case_id"></ccd-field-read></span></td>
                 </tr>
                 <tr *ngSwitchCase="false" class="compound-field">
-                  <th><ccd-field-read [caseField]="field"></ccd-field-read></th><td> </td>
+                  <td colspan="2"><span class="text-16"><ccd-field-read [caseField]="field" [caseReference]="caseDetails.case_id"></ccd-field-read></span></td>
                 </tr>
               </ng-container>
             </div>

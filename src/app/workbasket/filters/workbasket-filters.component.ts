@@ -4,8 +4,6 @@ import { CaseState } from '../../shared/domain/definition/case-state.model';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { DefinitionsService } from '../../core/definitions/definitions.service';
-import { READ_ACCESS } from '../../shared/domain/case-view/access-types.model';
 import { FormGroup } from '@angular/forms';
 import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
@@ -42,7 +40,8 @@ export class WorkbasketFiltersComponent implements OnInit {
     caseType?: CaseType,
     caseState?: CaseState,
     formGroup?: FormGroup,
-    page?: number
+    page?: number,
+    metadataFields?: string[]
   };
 
   formGroup: FormGroup = new FormGroup({});
@@ -57,7 +56,6 @@ export class WorkbasketFiltersComponent implements OnInit {
               private orderService: OrderService,
               private workbasketInputFilterService: WorkbasketInputFilterService,
               private jurisdictionService: JurisdictionService,
-              private definitionsService: DefinitionsService,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
@@ -84,29 +82,39 @@ export class WorkbasketFiltersComponent implements OnInit {
     }
     // without explicitly preserving alerts any message on the page
     // would be cleared out because of this initial navigation.
-    this.alertService.setPreserveAlerts(!this.initialised);
+    // The above is only true if no alerts were set prior to loading case list page.
+    if (!this.alertService.isPreserveAlerts()) {
+      this.alertService.setPreserveAlerts(!this.initialised);
+    }
     this.router.navigate(['/list/case'], {
       queryParams: queryParams
     });
     this.selected.formGroup = this.formGroup;
     this.selected.init = init;
     this.selected.page = 1;
+    this.selected.metadataFields = this.getMetadataFields();
+
     // Apply filters
     this.onApply.emit(this.selected);
   }
 
+  getMetadataFields(): string[] {
+    if (this.workbasketInputs) {
+      return this.workbasketInputs
+        .filter(workbasketInput => workbasketInput.field.metadata === true)
+        .map(workbasketInput => workbasketInput.field.id);
+    }
+  }
+
   onJurisdictionIdChange() {
     this.jurisdictionService.announceSelectedJurisdiction(this.selected.jurisdiction);
-    this.definitionsService.getCaseTypes(this.selected.jurisdiction.id, READ_ACCESS)
-    .subscribe(caseTypes => {
-      this.selectedJurisdictionCaseTypes = caseTypes.length > 0 ? caseTypes : null;
-      this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
-      this.selected.caseState = this.selected.caseType ? this.selected.caseType.states[0] : null;
-      this.clearWorkbasketInputs();
-      if (!this.isApplyButtonDisabled()) {
-        this.onCaseTypeIdChange();
-      }
-    });
+    this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes.length > 0 ? this.selected.jurisdiction.caseTypes : null;
+    this.selected.caseType = this.selectedJurisdictionCaseTypes ? this.selectedJurisdictionCaseTypes[0] : null;
+    this.selected.caseState = this.selected.caseType ? this.selected.caseType.states[0] : null;
+    this.clearWorkbasketInputs();
+    if (!this.isApplyButtonDisabled()) {
+      this.onCaseTypeIdChange();
+    }
   }
 
   onCaseTypeIdChange(): void {
@@ -148,19 +156,15 @@ export class WorkbasketFiltersComponent implements OnInit {
 
     let selectedJurisdictionId = routeSnapshot.queryParams[WorkbasketFiltersComponent.PARAM_JURISDICTION] || this.defaults.jurisdiction_id;
     this.selected.jurisdiction = this.jurisdictions.find(j => selectedJurisdictionId === j.id);
-
-    this.definitionsService.getCaseTypes(selectedJurisdictionId, READ_ACCESS)
-    .subscribe(caseTypes => {
-      this.selectedJurisdictionCaseTypes = caseTypes.length > 0 ? caseTypes : null;
-      if (this.selectedJurisdictionCaseTypes) {
-        this.selected.caseType = this.selectCaseType(this.selected, this.selectedJurisdictionCaseTypes, routeSnapshot);
-        if (this.selected.caseType) {
-          this.onCaseTypeIdChange();
-          this.selected.caseState = this.selectCaseState(this.selected.caseType, routeSnapshot);
-        }
+    if (this.selected.jurisdiction && this.selected.jurisdiction.caseTypes.length > 0) {
+      this.selectedJurisdictionCaseTypes = this.selected.jurisdiction.caseTypes;
+      this.selected.caseType = this.selectCaseType(this.selected, this.selectedJurisdictionCaseTypes, routeSnapshot);
+      if (this.selected.caseType) {
+        this.onCaseTypeIdChange();
+        this.selected.caseState = this.selectCaseState(this.selected.caseType, routeSnapshot);
       }
-      this.apply(false);
-    });
+    }
+    this.apply(false);
   }
 
   private selectCaseState(caseType: CaseType, routeSnapshot: ActivatedRouteSnapshot): CaseState {

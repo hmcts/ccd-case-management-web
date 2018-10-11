@@ -1,15 +1,14 @@
 # ccd-case-management-web
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/hmcts/ccd-case-management-web.svg?branch=master)](https://travis-ci.org/hmcts/ccd-case-management-web)
+[![Docker Build Status](https://img.shields.io/docker/build/hmcts/ccd-case-management-web.svg)](https://hub.docker.com/r/hmcts/ccd-case-management-web)
 [![codecov](https://codecov.io/gh/hmcts/ccd-case-management-web/branch/master/graph/badge.svg)](https://codecov.io/gh/hmcts/ccd-case-management-web)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8375dcaa04594226a973d5cd44842713)](https://www.codacy.com/app/adr1ancho/ccd-case-management-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hmcts/ccd-case-management-web&amp;utm_campaign=Badge_Grade)
 [![HitCount](http://hits.dwyl.io/hmcts/ccd-case-management-web.svg)](#ccd-case-management-web)
-[![Issue Stats](http://issuestats.com/github/hmcts/ccd-case-management-web/badge/pr)](http://issuestats.com/github/hmcts/ccd-case-management-web)
 
 An Angular front-end for Core Case Data.
 
 ### Quick start
-
 ```bash
 # install the dependencies with Yarn
 $ yarn install
@@ -125,7 +124,15 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 
 ### 2. Smoke Tests
 
-The smoke tests are run within a docker container.
+On the pipeline the Smoke tests are run with out docker, smoke test script available in package.json
+
+``` test:smoke": "protractor test/config/smoke.conf.js", ```
+
+environment variables listed below to be used.   
+
+The smoke tests can also run within a docker container.
+
+ ``` "test:smokeDocker": "./bin/runSmokeTests.sh", ```
 
 To create an image to run execute the following command in the test directory:
 
@@ -151,7 +158,7 @@ To build your application, run:
 
 You can now go to `/dist` and deploy that to your server!
 
-## Documentation
+## Documentation.
 
 You can generate api docs (using [TypeDoc](http://typedoc.org/)) for your code with the following:
 
@@ -160,3 +167,4 @@ You can generate api docs (using [TypeDoc](http://typedoc.org/)) for your code w
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+  

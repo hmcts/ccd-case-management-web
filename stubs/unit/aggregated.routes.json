@@ -4,7 +4,7 @@
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases?view=WORKBASKET&state=CaseCreated&page=1": "/cases",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:id": "/case",
   "/data/caseworkers/:uid/profile": "/profile",
-  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/work-basket-inputs": "/profile",
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/work-basket-inputs": "/work-basket-inputs",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/event-triggers/:etid": "/event-trigger",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:cid/event-triggers/:etid": "/event-trigger",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/event-triggers/:etid" : "/create-case-event-trigger",
@@ -12,5 +12,7 @@
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/alpha/inputs": "/inputs-address-book",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/inputs": "/inputs",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=read": "/case-types",
-  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=create": "/case-types"
+  "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types?access=create": "/case-types",
+  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/drafts/": "/drafts",
+  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/drafts/:id": "/drafts/:id"
 }

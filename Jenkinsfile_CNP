@@ -7,11 +7,12 @@ properties(
 @Library("Infrastructure")
 
 def product = "ccd"
-def app = "case-management-web"
+def component = "case-management-web"
+
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret('caseworkerAutoTestEmail', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
-    secret('caseworkerAutoTestPassword', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+    secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
+    secret('ccd-caseworker-autotest-password', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -24,8 +25,42 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 
-withPipeline("angular", product, app) {
+withPipeline("angular", product, component) {
 
-   //loadVaultSecrets(secrets)
+    onMaster {
+        enableSlackNotifications('#ccd-master-builds')
+    }
+    onDemo {
+        enableSlackNotifications('#ccd-demo-builds')
+    }
+    onPR {
+        enableSlackNotifications('#ccd-pr-builds')
+    }
+
+    enableDockerBuild()
+    loadVaultSecrets(secrets)
+
+    afterCheckout {
+        sh "yarn cache clean"
+    }
+
+    after('functionalTest:aat'){
+        publishHTML(target:[
+            reportDir            : "test/functional-tests/results/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests",
+            alwaysLinkToLastBuild: true
+        ])
+    }
+
+    after('functionalTest:preview'){
+        publishHTML(target:[
+            reportDir            : "test/functional-tests/results/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests",
+            alwaysLinkToLastBuild: true
+        ])
+    }
+
 
 }

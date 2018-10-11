@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd, RouterEvent } from '@angular/router';
 import { CasesService } from '../../core/cases/cases.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
 import { Observable } from 'rxjs/Observable';
 import { CaseEventData } from '../../shared/domain/case-event-data';
 import { EventStatusService } from '../../core/cases/event-status.service';
+import { DraftService } from '../../core/draft/draft.service';
+import { Draft } from '../../shared/domain/draft';
+import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -14,6 +17,7 @@ import { EventStatusService } from '../../core/cases/event-status.service';
 })
 export class CaseCreatorSubmitComponent implements OnInit {
 
+  public static readonly ORIGIN_QUERY_PARAM = 'origin';
   eventTrigger: CaseEventTrigger;
 
   jurisdictionId: string;
@@ -21,10 +25,11 @@ export class CaseCreatorSubmitComponent implements OnInit {
 
   constructor(
     private casesService: CasesService,
+    private draftService: DraftService,
     private router: Router,
     private alertService: AlertService,
     private route: ActivatedRoute,
-    private caseReferencePipe: CaseReferencePipe,
+    private caseReferencePipe: CaseReferencePipe
   ) {
     this.eventTrigger = route.snapshot.data.eventTrigger;
   }
@@ -37,11 +42,23 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   submit(): (sanitizedEditForm: CaseEventData) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData) => this.casesService.createCase(this.jurisdictionId, this.caseTypeId , sanitizedEditForm);
+    return (sanitizedEditForm: CaseEventData) => {
+      sanitizedEditForm.draft_id = this.eventTrigger.case_id;
+      return this.casesService.createCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+    }
   }
 
   validate(): (sanitizedEditForm: CaseEventData) => Observable<object> {
     return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+  }
+
+  saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
+    if (this.eventTrigger.can_save_draft) {
+      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.jurisdictionId,
+            this.caseTypeId,
+            this.eventTrigger.case_id,
+            caseEventData);
+    }
   }
 
   submitted(event: any): void {
@@ -52,16 +69,70 @@ export class CaseCreatorSubmitComponent implements OnInit {
       .then(() => {
         let caseReference = this.caseReferencePipe.transform(String(caseId));
         if (EventStatusService.isIncomplete(eventStatus)) {
-          this.alertService.warning(`Case #${caseReference} has been created with event: ${this.eventTrigger.name} `
-            + `but the callback service cannot be completed`);
+          this.alertFailure(eventStatus, caseReference);
         } else {
-          this.alertService.success(`Case #${caseReference} has been created with event: ${this.eventTrigger.name}`);
+          this.alertSuccess(eventStatus, caseReference);
         }
     });
   }
 
-  cancel(): Promise<boolean> {
-    return this.router.navigate(['/create/case']);
+  cancel(event: any): Promise<boolean> {
+    switch (event.status) {
+      case CaseEditPageComponent.NEW_FORM_DISCARD:
+        return this.router.navigate(['list/case']);
+      case CaseEditPageComponent.RESUMED_FORM_DISCARD:
+        return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
+      case CaseEditPageComponent.NEW_FORM_SAVE:
+        this.saveDraft().call(null, event.data).subscribe(_ => {
+          return this.router.navigate(['list/case'])
+            .then(() => {
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.success(`The draft has been successfully saved`);
+            })
+        }, error => {
+          console.log('error=', error);
+          this.alertService.setPreserveAlerts(true);
+          this.alertService.warning(error.message);
+          this.router.navigate(['list/case'])
+        });
+        break;
+      case CaseEditPageComponent.RESUMED_FORM_SAVE:
+        this.saveDraft().call(null, event.data).subscribe(_ => {
+          return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
+            .then(() => {
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.success(`The draft has been successfully saved`);
+            })
+          }, error => {
+            console.log('error=', error);
+            this.alertService.setPreserveAlerts(true);
+            this.alertService.warning(error.message);
+        });
+        break;
+    }
   }
 
+  private alertSuccess(eventStatus, caseReference) {
+    eventStatus = eventStatus || EventStatusService.CALLBACK_STATUS_COMPLETE;
+    switch (eventStatus) {
+      case EventStatusService.CALLBACK_STATUS_COMPLETE:
+        this.alertService.success(`Case #${caseReference} has been created.`);
+        break;
+      case EventStatusService.DELETE_DRAFT_STATUS_COMPLETE:
+        this.alertService.success(`Case #${caseReference} has been created. The draft has been successfully deleted`);
+        break;
+    }
+  }
+
+  private alertFailure(eventStatus, caseReference) {
+    switch (eventStatus) {
+      case EventStatusService.CALLBACK_STATUS_INCOMPLETE:
+        this.alertService.warning(`Case #${caseReference} has been created but the callback service cannot be completed`);
+        break;
+      case EventStatusService.DELETE_DRAFT_STATUS_INCOMPLETE:
+        this.alertService.warning(`Case #${caseReference} has been created. The draft store is currently down so the draft
+         was not deleted.`);
+        break;
+    }
+  }
 }

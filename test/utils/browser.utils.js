@@ -45,14 +45,6 @@ class BrowserUtils {
 
     }
 
-    signOut() {
-
-       let query = "document.querySelector('.dropdown-content a').click()"
-
-       browser.executeScript(query)
-
-    }
-
     getSelectedOption(dropDownCss) {
 
         let valueOfSelectedOption = this.getValueByElementCss(dropDownCss)

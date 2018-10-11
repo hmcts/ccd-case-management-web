@@ -19,7 +19,12 @@ describe('EventLogDetails', () => {
     state_name: 'Case Updated',
     user_id: 0,
     user_last_name: 'smith',
-    user_first_name: 'justin'
+    user_first_name: 'justin',
+    significant_item: {
+      type: 'DOCUMENT',
+      description: 'First document description',
+      url: 'https://google.com'
+    }
   };
 
   const EVENT_WITH_EMPTY_SUMMARY_AND_COMMENT: CaseViewEvent = {
@@ -33,7 +38,12 @@ describe('EventLogDetails', () => {
     state_name: 'Case Updated',
     user_id: 0,
     user_last_name: 'smith',
-    user_first_name: 'justin'
+    user_first_name: 'justin',
+    significant_item: {
+      type: 'DOCUMENT',
+      description: 'First document description',
+      url: 'https://google.com'
+    }
   };
 
   const $TABLE_ROWS = By.css('table>tbody>tr');
@@ -88,7 +98,9 @@ describe('EventLogDetails', () => {
 
     expect(rows.length).toBe(6);
 
-    expectRow(rows[0]).toEqual('Date', new DatePipe().transform(EVENT.timestamp, null));
+    let resultDate = new DatePipe().transform(EVENT.timestamp, 'local', null) +
+      ' UTC: ' + new DatePipe().transform(EVENT.timestamp, 'utc', null);
+    expectRow(rows[0]).toEqual('Date', resultDate);
     expectRow(rows[1]).toEqual('Author', 'Justin SMITH');
     expectRow(rows[2]).toEqual('End state', EVENT.state_name);
     expectRow(rows[3]).toEqual('Event', EVENT.event_name);

@@ -18,12 +18,126 @@
       {
         "id": "TEST",
         "name": "Test",
-        "description": "Content for the Test Jurisdiction."
+        "description": "Content for the Test Jurisdiction.",
+        "caseTypes": [
+          {
+            "id": "TestAddressBookCase",
+            "name": "Test Address Book Case",
+            "description": "Test Address Book Case",
+            "states": [
+              {
+                "id": "CaseCreated",
+                "name": "Case created",
+                "description": null
+              },
+              {
+                "id": "CaseEnteredIntoLegacy",
+                "name": "Case has been Entered into Legacy",
+                "description": null
+              },
+              {
+                "id": "CaseStopped",
+                "name": "Put case on hold",
+                "description": null
+              }
+            ]
+          },
+          {
+            "id": "TestComplexAddressBookCase",
+            "name": "Complex Address Book Case",
+            "description": "Complex Address Book Case",
+            "states": [
+              {
+                "id": "CaseCreated",
+                "name": "Complex Case created",
+                "description": null
+              },
+              {
+                "id": "CaseEnteredIntoLegacy",
+                "name": "Complex Case has been Entered into Legacy",
+                "description": null
+              },
+              {
+                "id": "CaseStopped",
+                "name": "Put Complex case on hold",
+                "description": null
+              }
+            ]
+          }
+        ]
       },
       {
-        "id": "TEST2",
-        "name": "Test2",
-        "description": " Content for the second Test Jurisdiction."
+        "id": "PROBATE",
+        "name": "Manage probate application",
+        "description": "Services (grant of representation, caveats, will lodgment, standing search, settlers, pre lodgement)",
+        "caseTypes": [
+          {
+            "id": "GrantOfRepresentation",
+            "name": "Grant of Representation",
+            "description": "Probate - Grant of Representation",
+            "states": [
+              {
+                "id": "SolAppCreated",
+                "name": "Application created",
+                "description": "Application created (Solicitor)"
+              },
+              {
+                "id": "SolAppUpdated",
+                "name": "Application updated",
+                "description": "Application updated (Solicitor)"
+              },
+              {
+                "id": "SolAppConfirmed",
+                "name": "Application confirmed",
+                "description": "Application confirmed (Solicitor)"
+              },
+              {
+                "id": "CaseCreated",
+                "name": "Case created",
+                "description": "Case created"
+              },
+              {
+                "id": "CasePrinted",
+                "name": "Case printed",
+                "description": "Case printed"
+              },
+              {
+                "id": "Stopped",
+                "name": "Stopped",
+                "description": "Stopped"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DIVORCE",
+        "name": "Family Divorce",
+        "description": "Family Divorce: Dissolution of Marriage",
+        "caseTypes": [
+          {
+            "id": "FinancialRemedyMVP2",
+            "name": "Financial Remedy MVP_v0.3",
+            "description": "Financial Remedy MVP_v0.3",
+            "states": [
+              {
+                "id": "caseAdded",
+                "name": "Application Draft Added",
+                "description": null
+              },
+              {
+                "id": "orderAccepted",
+                "name": "Order Accepted",
+                "description": null
+              },
+              {
+                "id": "orderRejected",
+                "name": "Order Rejected",
+                "description": null
+              }
+            ]
+          }
+        ]
       }
     ],
     "default": {
@@ -60,6 +174,44 @@
           "pre_states": []
         }
       ]
+    }
+  ],
+  "work-basket-inputs": [
+    {
+      "label": "First Name",
+      "order": 1,
+      "field": {
+        "id": "PersonFirstName",
+        "metadata": false,
+        "field_type": {
+          "id": "Text",
+          "type": "Text",
+          "min": null,
+          "max": null,
+          "regular_expression": null,
+          "fixed_list_items": [],
+          "complex_fields": [],
+          "collection_field_type": null
+        }
+      }
+    },
+    {
+      "label": "Last Name",
+      "order": 2,
+      "field": {
+        "id": "PersonLastName",
+        "metadata": false,
+        "field_type": {
+          "id": "Text",
+          "type": "Text",
+          "min": null,
+          "max": null,
+          "regular_expression": null,
+          "fixed_list_items": [],
+          "complex_fields": [],
+          "collection_field_type": null
+        }
+      }
     }
   ],
   "cases": {
@@ -2334,14 +2486,14 @@
                           },
                           "security_classification": "PUBLIC"
                         },
-                        {  
-                          "id":"FeeVersion",
-                          "label":"Fee Version",
-                          "field_type":{  
-                              "id":"Text",
-                              "type":"Text"
+                        {
+                          "id": "FeeVersion",
+                          "label": "Fee Version",
+                          "field_type": {
+                            "id": "Text",
+                            "type": "Text"
                           },
-                          "security_classification":"PUBLIC"
+                          "security_classification": "PUBLIC"
                         }
                       ]
                     }
@@ -4224,14 +4376,14 @@
                       },
                       "security_classification": "PUBLIC"
                     },
-                    {  
-                      "id":"FeeVersion",
-                      "label":"Fee Version",
-                      "field_type":{  
-                          "id":"Text",
-                          "type":"Text"
+                    {
+                      "id": "FeeVersion",
+                      "label": "Fee Version",
+                      "field_type": {
+                        "id": "Text",
+                        "type": "Text"
                       },
-                      "security_classification":"PUBLIC"
+                      "security_classification": "PUBLIC"
                     }
                   ]
                 }
@@ -4403,6 +4555,9 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "end_button_label": "Save & Next",
+    "can_save_draft": true
+  },
+  "drafts": []
 }

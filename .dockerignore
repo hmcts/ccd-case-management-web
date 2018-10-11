@@ -1,9 +1,10 @@
 *
 !package.json
 !yarn.lock
-!src/
+!.snyk
+!src/**
 !docker/
-!.angular-cli.json
+!angular.json
 !tsconfig.json
 !webpack.server.config.js
 !server.ts

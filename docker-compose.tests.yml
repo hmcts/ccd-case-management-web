@@ -1,0 +1,14 @@
+version: '3'
+services:
+  protractor:
+    container_name: ccd-case-management-protractor
+    image: ccd-protractor:latest
+    build:
+      context: ./test
+      dockerfile: DockerfileTests
+    environment:
+      - CCD_CASEWORKER_AUTOTEST_EMAIL
+      - CCD_CASEWORKER_AUTOTEST_PASSWORD
+      - TEST_URL
+    volumes:
+      - "$PWD:/protractor"

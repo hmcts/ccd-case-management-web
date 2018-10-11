@@ -43,7 +43,6 @@ export class SearchComponent implements OnInit {
   }
 
   applyFilter(filter): void {
-    console.log("Apply filter", filter);
     const paginationParams = {};
     const searchParams = {};
 

@@ -1,4 +1,3 @@
-
 import { SearchResultViewColumn } from '../search-result-view-column.model';
 import { SearchResultViewItemComparator } from './search-result-view-item-comparator';
 import { SearchResultViewItem } from '../search-result-view-item.model';
@@ -9,7 +8,6 @@ import { isUndefined } from 'util';
 export class SearchResultViewItemComparatorFactory {
 
   createSearchResultViewItemComparator(column: SearchResultViewColumn): SearchResultViewItemComparator {
-    console.log(column);
     let fieldId = column.case_field_id;
     switch (column.case_field_type.type) {
       case ('MultiSelectList'): {

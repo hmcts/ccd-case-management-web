@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { WindowService } from "../../core/utils/window.service"
+import { WindowService } from '../../core/utils/window.service'
 import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import { CaseState } from '../../shared/domain/definition/case-state.model';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
@@ -53,12 +53,13 @@ export class WorkbasketFiltersComponent implements OnInit {
   initialised = false;
 
   constructor(private router: Router,
-    private route: ActivatedRoute,
-    private orderService: OrderService,
-    private workbasketInputFilterService: WorkbasketInputFilterService,
-    private jurisdictionService: JurisdictionService,
-    private alertService: AlertService,
-    private windowService: WindowService) { }
+              private route: ActivatedRoute,
+              private orderService: OrderService,
+              private workbasketInputFilterService: WorkbasketInputFilterService,
+              private jurisdictionService: JurisdictionService,
+              private alertService: AlertService,
+              private windowService: WindowService) {
+  }
 
   ngOnInit(): void {
     this.selected = {};
@@ -72,7 +73,6 @@ export class WorkbasketFiltersComponent implements OnInit {
 
   apply(init): void {
     // Save filters as query parameters for current route
-    console.log("Calling apply");
     let queryParams = {};
     if (this.selected.jurisdiction) {
       queryParams[WorkbasketFiltersComponent.PARAM_JURISDICTION] = this.selected.jurisdiction.id;
@@ -103,7 +103,6 @@ export class WorkbasketFiltersComponent implements OnInit {
       this.windowService.setLocalStorage('workbasket-filter-form-group-value', JSON.stringify(this.formGroup.value));
     }
     // Apply filters
-    console.log("Calling apply filter");
     this.onApply.emit(this.selected);
   }
 
@@ -140,17 +139,13 @@ export class WorkbasketFiltersComponent implements OnInit {
             .sort(this.orderService.sortAsc);
           const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
 
-          console.log("workbasketInputs.size", workbasketInputs.length);
           for (var i = 0; i < workbasketInputs.length; i++) {
             let item = workbasketInputs[i];
-            console.log("console.log(item)", workbasketInputs[i]);
-            console.log("item.lable " + item.label + " item.field ", item.field);
             item.field.label = item.label;
             if (formValue) {
               const searchFormValueObject = JSON.parse(formValue);
               item.field.value = searchFormValueObject[item.field.id];
             }
-            console.log("item.field.value", item.field.value);
           }
 
         });
@@ -172,13 +167,13 @@ export class WorkbasketFiltersComponent implements OnInit {
   private sortStates(states: CaseState[]) {
     return states.sort(this.orderService.sortAsc);
   }
+
   /**
    * Try to initialise filters based on query parameters or workbasket defaults.
    * Query parameters, when available, take precedence over workbasket defaults.
    */
   private initFilters() {
     const savedQueryParams = this.windowService.getLocalStorage('savedQueryParams');
-    console.log("savedQueryParams", savedQueryParams);
     let routeSnapshot: ActivatedRouteSnapshot = this.route.snapshot;
     if (savedQueryParams) {
       routeSnapshot.queryParams = JSON.parse(savedQueryParams);

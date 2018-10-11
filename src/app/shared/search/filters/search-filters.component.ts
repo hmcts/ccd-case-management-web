@@ -42,10 +42,11 @@ export class SearchFiltersComponent implements OnInit {
   formGroup: FormGroup = new FormGroup({});
 
   constructor(private searchService: SearchService,
-    private orderService: OrderService,
-    private jurisdictionService: JurisdictionService,
-    private windowService: WindowService,
-    private platformLocation: PlatformLocation) { }
+              private orderService: OrderService,
+              private jurisdictionService: JurisdictionService,
+              private windowService: WindowService,
+              private platformLocation: PlatformLocation) {
+  }
 
   ngOnInit(): void {
     this.selected = {};
@@ -55,12 +56,10 @@ export class SearchFiltersComponent implements OnInit {
       if (jurisdiction) {
         this.selected.jurisdiction = JSON.parse(jurisdiction);
       }
-      console.log("jurisdiction", this.selected.jurisdiction);
       this.onJurisdictionIdChange();
     }
 
     if (this.autoApply === true) {
-      console.log("Calling via apply...", this.selected);
       this.selected.formGroup = this.formGroup;
       this.selected.page = 1;
       this.selected.metadataFields = this.getMetadataFields();
@@ -69,27 +68,23 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   apply(): void {
-    console.log("Calling apply button...", this.selected);
     this.selected.formGroup = this.formGroup;
     this.selected.page = 1;
     this.selected.metadataFields = this.getMetadataFields();
     this.populateValuesInLocalStorage();
     this.onApply.emit(this.selected);
   }
+
   populateValuesInLocalStorage(): void {
-    console.log(1);
     this.windowService.setLocalStorage('search-form-group-value',
       JSON.stringify(this.selected.formGroup.value));
-    console.log(2);
     this.windowService.setLocalStorage('search-metadata-fields', JSON.stringify(this.selected.metadataFields));
-    console.log(3);
     this.windowService.setLocalStorage('search-jurisdiction', JSON.stringify(this.selected.jurisdiction));
-    console.log("4", this.selected.caseType);
     if (this.selected.caseType) {
       this.windowService.setLocalStorage('search-caseType', JSON.stringify(this.selected.caseType))
-      console.log("5");
     }
   }
+
   getMetadataFields(): string[] {
     if (this.searchInputs) {
       return this.searchInputs
@@ -155,10 +150,8 @@ export class SearchFiltersComponent implements OnInit {
       const caseType = this.windowService.getLocalStorage('search-caseType')
 
       if (caseType) {
-        console.log(JSON.stringify(this.selected.caseType));
         const caseTypeObject = JSON.parse(caseType);
         const result = caseTypes.filter(c => c.id === caseTypeObject.id)
-
         this.selected.caseType = result[0];
       }
       this.onCaseTypeIdChange();

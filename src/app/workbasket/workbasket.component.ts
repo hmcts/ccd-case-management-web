@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { WindowService } from "../core/utils/window.service"
+import { WindowService } from '../core/utils/window.service'
 import { ActivatedRoute } from '@angular/router';
 import { Profile } from '../core/profile/profile.model';
 import { SearchResultView } from '../shared/search/search-result-view.model';
@@ -41,11 +41,12 @@ export class WorkbasketComponent implements OnInit {
   searchResults: SearchResultComponent;
 
   constructor(private route: ActivatedRoute,
-    private searchService: SearchService,
-    private paginationService: PaginationService,
-    private jurisdictionService: JurisdictionService,
-    private alertService: AlertService,
-    private windowService: WindowService) { }
+              private searchService: SearchService,
+              private paginationService: PaginationService,
+              private jurisdictionService: JurisdictionService,
+              private alertService: AlertService,
+              private windowService: WindowService) {
+  }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
@@ -111,7 +112,6 @@ export class WorkbasketComponent implements OnInit {
 
     if (isFormApply) {
       const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
-      console.log("formValue", formValue);
 
       if (formValue) {
         let formValueObject = JSON.parse(formValue);

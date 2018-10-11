@@ -182,12 +182,12 @@ export class SearchResultComponent implements OnChanges {
 
   getFirstResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
+    return ((currentPage - 1) * this.paginationPageSize) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getLastResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
+    return ((currentPage - 1) * this.paginationPageSize) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getTotalResults(): number {

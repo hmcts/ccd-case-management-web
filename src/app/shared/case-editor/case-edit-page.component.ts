@@ -1,15 +1,13 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CaseEventTrigger, WizardPage, CaseEventData, FormValueService, FormErrorService, DRAFT_PREFIX,
-  HttpError, SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
+  HttpError, SaveOrDiscardDialogComponent, PageValidationService} from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../error/error-context';
-import { PageValidationService } from './page-validation.service';
 import { MatDialogConfig, MatDialog } from '@angular/material';
-import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
 import { CaseViewerComponent } from '../../cases/viewer/case-viewer.component';
 
 @Component({

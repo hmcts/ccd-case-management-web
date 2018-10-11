@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CaseEventTrigger, CaseEventData, FormValueService, CaseField, WizardPage, CaseFieldService,
-  PaletteContext, FormErrorService, FieldsUtils, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+  PaletteContext, FormErrorService, FieldsUtils, HttpError, OrderService, Wizard, Confirmation } from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { Subject } from 'rxjs/Subject';
@@ -8,8 +8,6 @@ import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { CallbackErrorsContext } from '../error/error-context';
 import { ActivatedRoute } from '@angular/router';
 import { Profile } from '../../core/profile/profile.model';
-import { Confirmation } from './confirmation.model';
-import { Wizard } from './wizard.model';
 
 @Component({
   selector: 'ccd-case-edit-submit',

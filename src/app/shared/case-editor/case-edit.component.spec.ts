@@ -3,14 +3,12 @@ import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular
 import { MockComponent } from 'ng2-mock-component';
 import { CaseEventTrigger, PaletteUtilsModule, FormValueService, FormErrorService,
   ConditionalShowDirective, FieldsUtils, WizardPage, WizardPageField, CaseField, FieldsPurger,
-  createCaseEventTrigger, ConditionalShowRegistrarService } from '@hmcts/ccd-case-ui-toolkit';
+  createCaseEventTrigger, ConditionalShowRegistrarService, Wizard, WizardFactoryService } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseEditComponent } from './case-edit.component';
 import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Wizard } from './wizard.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
-import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
 import { Observable } from 'rxjs';
 
 describe('CaseEditComponent', () => {

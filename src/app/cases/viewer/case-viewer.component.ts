@@ -13,7 +13,6 @@ import { CaseField, ShowCondition, Draft, HttpError, OrderService, CaseView,
 import { DraftService } from '../../core/draft/draft.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertService } from '../../core/alert/alert.service';
-import { CaseCreatorSubmitComponent } from '../creator/case-creator-submit.component';
 import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({

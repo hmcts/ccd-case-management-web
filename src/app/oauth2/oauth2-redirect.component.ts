@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuth2Service } from '../core/auth/oauth2.service';
-import { AuthService } from '../core/auth/auth.service';
+import { AuthService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './oauth2-redirect.html',

@@ -4,22 +4,15 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
-import { WizardPage } from '../domain/wizard-page.model';
-import { CaseField } from '../domain/definition/case-field.model';
-import { FormValueService } from '../../core/form/form-value.service';
-import { FormErrorService } from '../../core/form/form-error.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CaseFieldService } from '../domain/case-field.service';
-import { aCaseField } from './case-edit.spec';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { PageValidationService } from './page-validation.service';
-import { CaseEventData } from '../domain/case-event-data';
-import { Draft } from '../domain/draft';
+import { WizardPage, CaseField, FormValueService, FormErrorService, CaseFieldService, aCaseField,
+  CaseReferencePipe, CaseEventData, Draft, SaveOrDiscardDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
 import createSpyObj = jasmine.createSpyObj;
-import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { SaveOrDiscardDialogComponent } from '../save-or-discard-dialog/save-or-discard-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
+import { CaseViewerComponent } from '../../cases/viewer/case-viewer.component';
 
 describe('CaseEditPageComponent', () => {
 
@@ -172,7 +165,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = false;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
+        case CaseViewerComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });
@@ -200,7 +193,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = true;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
+        case CaseViewerComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });
@@ -230,7 +223,7 @@ describe('CaseEditPageComponent', () => {
     comp.formValuesChanged = true;
     snapshot.queryParamMap.get.and.callFake(key => {
       switch (key) {
-        case CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM:
+        case CaseViewerComponent.ORIGIN_QUERY_PARAM:
           return 'viewDraft';
       }
     });

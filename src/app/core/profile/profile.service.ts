@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
 import { plainToClass } from 'class-transformer';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class ProfileService {

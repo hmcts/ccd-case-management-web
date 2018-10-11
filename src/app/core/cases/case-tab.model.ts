@@ -1,5 +1,4 @@
-import { CaseField } from '../../shared/domain/definition/case-field.model';
-import { Orderable } from '../order/orderable.model';
+import { CaseField, Orderable } from '@hmcts/ccd-case-ui-toolkit';
 
 export class CaseTab implements Orderable {
   id: string;

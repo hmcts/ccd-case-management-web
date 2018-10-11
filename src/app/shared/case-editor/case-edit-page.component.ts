@@ -1,21 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit, AfterViewChecked } from '@angular/core';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CaseEventTrigger, WizardPage, CaseEventData, FormValueService, FormErrorService, DRAFT_PREFIX,
+  HttpError, SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
-import { WizardPage } from '../domain/wizard-page.model';
-import { CaseEventData } from '../domain/case-event-data';
-import { FormValueService } from '../../core/form/form-value.service';
 import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { Subject } from 'rxjs/Subject';
-import { HttpError } from '../../core/http/http-error.model';
-import { FormErrorService } from '../../core/form/form-error.service';
 import { CallbackErrorsContext } from '../error/error-context';
 import { PageValidationService } from './page-validation.service';
-import { Draft } from '../domain/draft';
-import { SaveOrDiscardDialogComponent } from '../save-or-discard-dialog/save-or-discard-dialog.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
+import { CaseViewerComponent } from '../../cases/viewer/case-viewer.component';
 
 @Component({
   selector: 'ccd-case-edit-page',
@@ -154,7 +149,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
           this.discard();
         } else if (result === 'Save') {
           const draftCaseEventData: CaseEventData = this.formValueService.sanitise(this.editForm.value) as CaseEventData;
-          if (this.route.snapshot.queryParamMap.get(CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
+          if (this.route.snapshot.queryParamMap.get(CaseViewerComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
             this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data: draftCaseEventData});
           } else {
             this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_SAVE, data: draftCaseEventData});
@@ -167,7 +162,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
   }
 
   private discard() {
-    if (this.route.snapshot.queryParamMap.get(CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
+    if (this.route.snapshot.queryParamMap.get(CaseViewerComponent.ORIGIN_QUERY_PARAM) === 'viewDraft') {
       this.caseEdit.cancelled.emit({status: CaseEditPageComponent.RESUMED_FORM_DISCARD});
     } else {
       this.caseEdit.cancelled.emit({status: CaseEditPageComponent.NEW_FORM_DISCARD});
@@ -202,7 +197,7 @@ export class CaseEditPageComponent implements OnInit, AfterViewChecked {
       draftCaseEventData.event_token = this.eventTrigger.event_token;
       draftCaseEventData.ignore_warning = this.ignoreWarning;
       this.caseEdit.saveDraft(draftCaseEventData).subscribe(
-        (draft) => this.eventTrigger.case_id = Draft.DRAFT_PREFIX + draft.id, error => this.handleError(error)
+        (draft) => this.eventTrigger.case_id = DRAFT_PREFIX + draft.id, error => this.handleError(error)
       );
     }
   }

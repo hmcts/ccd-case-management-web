@@ -3,7 +3,7 @@ import { EventLogComponent } from './event-log.component';
 import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
-import { DatePipe } from '../palette/utils/date.pipe';
+import { DatePipe } from '@hmcts/ccd-case-ui-toolkit/dist/shared/palette/utils';
 
 describe('EventLogComponent', () => {
 

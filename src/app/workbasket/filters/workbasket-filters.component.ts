@@ -5,11 +5,11 @@ import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import { AlertService } from '../../core/alert/alert.service';
 import 'rxjs/add/operator/do';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-workbasket-filters',

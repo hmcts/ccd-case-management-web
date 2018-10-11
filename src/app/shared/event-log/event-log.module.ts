@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EventLogComponent } from './event-log.component';
 import { EventLogTableComponent } from './event-log-table.component';
 import { EventLogDetailsComponent } from './event-log-details.component';
-import { PaletteUtilsModule } from '../palette/utils/utils.module';
+import { PaletteUtilsModule } from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
 
 @NgModule({

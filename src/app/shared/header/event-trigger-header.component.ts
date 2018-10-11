@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-event-trigger-header',

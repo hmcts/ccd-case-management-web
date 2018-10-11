@@ -1,7 +1,7 @@
 import { CaseTab } from './case-tab.model';
 import { CaseViewEvent } from './case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
+import { CaseField } from '@hmcts/ccd-case-ui-toolkit';
 
 export class CaseView {
   case_id?: string;

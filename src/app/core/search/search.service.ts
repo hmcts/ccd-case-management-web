@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 import { SearchResultView } from '../../shared/search/search-result-view.model';
 import { SearchInput } from './search-input.model';
-import { HttpService } from '../http/http.service';
 import { RequestOptionsBuilder, SearchView } from '../request.options.builder';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class SearchService {

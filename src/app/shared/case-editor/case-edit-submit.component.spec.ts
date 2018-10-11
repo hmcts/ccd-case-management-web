@@ -1,24 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CaseEditSubmitComponent } from './case-edit-submit.component';
-import { CaseFieldService } from '../domain/case-field.service';
-import { FormValueService } from '../../core/form/form-value.service';
 import { CaseEditComponent } from './case-edit.component';
 import { ActivatedRoute } from '@angular/router';
-import { FormErrorService } from '../../core/form/form-error.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { WizardPage } from '../domain/wizard-page.model';
-import { FieldsUtils } from '../utils/fields.utils';
-import { IsCompoundPipe } from '../palette/utils/is-compound.pipe';
-import { CaseField } from '../domain/definition/case-field.model';
-import { aCaseField, aWizardPage } from './case-edit.spec';
 import { Wizard } from './wizard.model';
-import { OrderService } from '../../core/order/order.service';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
 import { By } from '@angular/platform-browser';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseFieldService, CaseReferencePipe, CaseEventTrigger, aCaseField, CaseField,
+  IsCompoundPipe, FieldsUtils, WizardPage, FormErrorService, FormValueService, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { aWizardPage } from './case-edit.spec';
 
 describe('CaseEditSubmitComponent', () => {
   let comp: CaseEditSubmitComponent;

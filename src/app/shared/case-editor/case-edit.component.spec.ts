@@ -1,24 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
-import { PaletteUtilsModule } from '../palette/utils/utils.module';
+import { CaseEventTrigger, PaletteUtilsModule, FormValueService, FormErrorService,
+  ConditionalShowDirective, FieldsUtils, WizardPage, WizardPageField, CaseField, FieldsPurger,
+  createCaseEventTrigger, ConditionalShowRegistrarService } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseEditComponent } from './case-edit.component';
-import { FormValueService } from '../../core/form/form-value.service';
-import { FormErrorService } from '../../core/form/form-error.service';
-import { ConditionalShowDirective } from '../conditional-show/conditional-show.directive';
 import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FieldsUtils } from '../utils/fields.utils';
 import { Wizard } from './wizard.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { WizardPage } from '../domain/wizard-page.model';
 import createSpyObj = jasmine.createSpyObj;
-import { WizardPageField } from '../domain/wizard-page-field.model';
-import { CaseField } from '../domain/definition/case-field.model';
-import { FieldsPurger } from '../utils/fields.purger';
-import { createCaseEventTrigger } from '../../fixture/shared.fixture'
-import { ConditionalShowRegistrarService } from '../conditional-show/conditional-show-registrar.service';
 import { WizardFactoryService } from '../../core/case-editor/wizard-factory.service';
 import { Observable } from 'rxjs';
 

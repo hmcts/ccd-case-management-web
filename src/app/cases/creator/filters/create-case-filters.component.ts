@@ -3,12 +3,11 @@ import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.mod
 import { CaseType } from '../../../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CaseEvent } from '../../../shared/domain/definition/case-event.model';
-import { OrderService } from '../../../core/order/order.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../../shared/error/callback-errors.component';
-import { HttpError } from '../../../core/http/http-error.model';
+import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { AlertService } from '../../../core/alert/alert.service';
 
 @Component({

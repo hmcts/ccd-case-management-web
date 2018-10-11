@@ -3,8 +3,7 @@ import { EventTriggerHeaderComponent } from './event-trigger-header.component';
 import { DebugElement } from '@angular/core';
 import { text } from '../../test/helpers';
 import { By } from '@angular/platform-browser';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
-import { createCaseEventTrigger } from '../../fixture/shared.fixture'
+import { CaseEventTrigger, createCaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('EventTriggerHeaderComponent', () => {
 

@@ -9,6 +9,7 @@ properties(
 def product = "ccd"
 def component = "case-management-web"
 
+
 List<LinkedHashMap<String, Object>> secrets = [
     secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
     secret('ccd-caseworker-autotest-password', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
@@ -42,5 +43,24 @@ withPipeline("angular", product, component) {
     afterCheckout {
         sh "yarn cache clean"
     }
+
+    after('functionalTest:aat'){
+        publishHTML(target:[
+            reportDir            : "test/functional-tests/results/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests",
+            alwaysLinkToLastBuild: true
+        ])
+    }
+
+    after('functionalTest:preview'){
+        publishHTML(target:[
+            reportDir            : "test/functional-tests/results/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests",
+            alwaysLinkToLastBuild: true
+        ])
+    }
+
 
 }

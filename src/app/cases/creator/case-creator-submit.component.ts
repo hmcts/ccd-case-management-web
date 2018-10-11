@@ -14,7 +14,6 @@ import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.c
 })
 export class CaseCreatorSubmitComponent implements OnInit {
 
-  public static readonly ORIGIN_QUERY_PARAM = 'origin';
   eventTrigger: CaseEventTrigger;
 
   jurisdictionId: string;

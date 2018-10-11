@@ -203,25 +203,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService },
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should have an Apply button disabled when case type is set but state is not set', async(() => {
@@ -387,12 +388,16 @@ describe('WorkbasketFiltersComponent', () => {
       fixture.detectChanges();
 
       let button = de.query($APPLY_BUTTON);
-      expect(button.nativeElement.disabled).toBeTruthy();
+      fixture
+        .whenStable()
+        .then(() => {
 
-      component.selected.jurisdiction = JURISDICTION_1;
-      component.onJurisdictionIdChange();
-      expect(component.workbasketInputsReady).toBeFalsy();
+        expect(button.nativeElement.disabled).toBeTruthy();
 
+        component.selected.jurisdiction = JURISDICTION_1;
+        component.onJurisdictionIdChange();
+        expect(component.workbasketInputsReady).toBeFalsy();
+      });
     }));
 
     it('should have form group details added when apply button is clicked ', async(() => {
@@ -524,24 +529,25 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CASE_TYPES_2[1].id,
+            state_id: CASE_TYPES_2[1].states[1].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CASE_TYPES_2[1].id,
-        state_id: CASE_TYPES_2[1].states[1].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should populate case types drop down with CRUD filtered case types and sort states', async(() => {
@@ -616,25 +622,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CRUD_FILTERED_CASE_TYPES[0].id,
+            state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CRUD_FILTERED_CASE_TYPES[0].id,
-        state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should disable case type dropdown if default is filtered out due to CRUD and no other case types', async(() => {
@@ -685,25 +692,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CRUD_FILTERED_CASE_TYPES[1].id,
+            state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CRUD_FILTERED_CASE_TYPES[1].id,
-        state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should disable states dropdown if default is filtered out due to CRUD and no other states', async(() => {
@@ -761,25 +769,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService },
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should initially select jurisdiction based on query parameter', () => {
@@ -851,25 +860,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should initially NOT select anything if jurisdiction is invalid and no case types', () => {

@@ -1,3 +1,5 @@
+const baseUrl = (process.env.TEST_URL || 'http://localhost:3451/').replace('https', 'http');
+
 exports.config = {
 
   /*
@@ -11,8 +13,10 @@ exports.config = {
 
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
+  sauceSeleniumAddress: 'ondemand.saucelabs.com:443/wd/hub',
 
-  specs: ["../specs/*/*.*.spec.js"],
+  specs: ["../end-to-end/specs/*/login.*.spec.js"],
+  seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
 
   exclude: [],
 
@@ -25,11 +29,22 @@ exports.config = {
   multiCapabilities: [{
         browserName: 'chrome',
         version: 'latest',
-        platform: 'Windows 7',
+        platform: 'Windows 10',
         name: "chrome-tests",
         shardTestFiles: true,
         maxInstances: 1,
-        "tunnel-identifier": 'saucelabs-crossbrowser'
+        "tunnel-identifier": 'reformtunnel',
+        tags:'ccd-crossbrowser'
+    }],
+
+    plugins: [{
+        package: "protractor-screenshoter-plugin",
+        screenshotPath: "./smoke-output",
+        screenshotOnExpect: "failure+success",
+        screenshotOnSpec: "failure+success",
+        withLogs: true,
+        writeReportFreq: "asap",
+        clearFoldersBeforeTest: true
     }],
 
   jasmineNodeOpts: {

@@ -4,7 +4,7 @@ import { CaseEventTrigger, WizardPage, ConditionalShowRegistrarService, Draft, F
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { CaseCreatorSubmitComponent } from '../../cases/creator/case-creator-submit.component';
+import { CaseViewerComponent } from '../../cases/viewer/case-viewer.component';
 
 @Component({
   selector: 'ccd-case-edit',
@@ -65,7 +65,7 @@ export class CaseEditComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe((params: Params) => {
-      this.navigationOrigin = params[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM];
+      this.navigationOrigin = params[CaseViewerComponent.ORIGIN_QUERY_PARAM];
     });
   }
 
@@ -88,7 +88,7 @@ export class CaseEditComponent implements OnInit {
     this.registrarService.reset();
 
     let theQueryParams: Params = {};
-    theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = this.navigationOrigin;
+    theQueryParams[CaseViewerComponent.ORIGIN_QUERY_PARAM] = this.navigationOrigin;
     let nextPage = this.wizard.nextPage(currentPageId, this.fieldsUtils.buildCanShowPredicate(this.eventTrigger, this.form));
     return this.router.navigate([nextPage ? nextPage.id : 'submit'], { queryParams: theQueryParams, relativeTo: this.route });
   }
@@ -103,7 +103,7 @@ export class CaseEditComponent implements OnInit {
     }
 
     let theQueryParams: Params = {};
-    theQueryParams[CaseCreatorSubmitComponent.ORIGIN_QUERY_PARAM] = this.navigationOrigin;
+    theQueryParams[CaseViewerComponent.ORIGIN_QUERY_PARAM] = this.navigationOrigin;
     return this.router.navigate([previousPage.id], { queryParams: theQueryParams, relativeTo: this.route });
   }
 

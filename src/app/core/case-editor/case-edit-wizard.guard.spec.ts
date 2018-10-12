@@ -2,11 +2,8 @@ import createSpyObj = jasmine.createSpyObj;
 import { CaseEditWizardGuard } from './case-edit-wizard.guard';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { TestRouteSnapshotBuilder } from '../../test/test-route-snapshot-builder';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { WizardPage } from '../../shared/domain/wizard-page.model';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { AlertService } from '../alert/alert.service';
-import { createCaseEventTrigger } from '../../fixture/shared.fixture'
+import { CaseEventTrigger, createCaseEventTrigger, CaseField, WizardPage } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseEditWizardGuard', () => {
 

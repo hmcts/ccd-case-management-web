@@ -9,7 +9,7 @@ import { SearchService } from '../core/search/search.service';
 import { WindowService } from '../core/utils/window.service';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { SearchResultView } from '../shared/search/search-result-view.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';

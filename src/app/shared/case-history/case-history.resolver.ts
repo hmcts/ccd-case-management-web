@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import { CaseHistory } from '../../core/cases/case-history.model';

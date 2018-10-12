@@ -1,6 +1,6 @@
 import { SearchInput } from './search-input.model';
 import { Field } from './field.model';
-import { FieldType } from '../../shared/domain/definition/field-type.model';
+import { FieldType } from '@hmcts/ccd-case-ui-toolkit';
 
 export let createSearchInputs = () => {
   const fieldType = new FieldType();

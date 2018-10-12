@@ -5,26 +5,20 @@ import { By } from '@angular/platform-browser';
 import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
-import { OrderService } from '../../core/order/order.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseViewEvent } from '../../core/cases/case-view-event.model';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { attr, text } from '../../test/helpers';
-import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
-import { HttpError } from '../../core/http/http-error.model';
-import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
-import { FieldsUtils } from '../../shared/utils/fields.utils';
-import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
+import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
+  LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line

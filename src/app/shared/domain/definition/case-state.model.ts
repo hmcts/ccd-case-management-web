@@ -1,4 +1,4 @@
-import { Orderable } from '../../../core/order/orderable.model';
+import { Orderable } from '@hmcts/ccd-case-ui-toolkit';
 
 export class CaseState implements Orderable {
   id: string;

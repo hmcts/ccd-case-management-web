@@ -5,18 +5,16 @@ import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { AlertService } from '../../core/alert/alert.service';
-import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
-import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
-import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
 import { WindowService } from '../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
+import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-write',
@@ -213,25 +211,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WindowService, useValue: windowService },
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
     afterEach(async(() => {
       windowService.clearLocalStorage();
@@ -399,12 +398,16 @@ describe('WorkbasketFiltersComponent', () => {
       fixture.detectChanges();
 
       let button = de.query($APPLY_BUTTON);
-      expect(button.nativeElement.disabled).toBeTruthy();
+      fixture
+        .whenStable()
+        .then(() => {
 
-      component.selected.jurisdiction = JURISDICTION_1;
-      component.onJurisdictionIdChange();
-      expect(component.workbasketInputsReady).toBeFalsy();
+        expect(button.nativeElement.disabled).toBeTruthy();
 
+        component.selected.jurisdiction = JURISDICTION_1;
+        component.onJurisdictionIdChange();
+        expect(component.workbasketInputsReady).toBeFalsy();
+      });
     }));
 
     it('should have form group details added when apply button is clicked ', async(() => {
@@ -539,25 +542,25 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WindowService, useValue: windowService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CASE_TYPES_2[1].id,
+            state_id: CASE_TYPES_2[1].states[1].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
-      //JURISDICTION_2.caseTypes = CRUD_FILTERED_CASE_TYPES;
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CASE_TYPES_2[1].id,
-        state_id: CASE_TYPES_2[1].states[1].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
     afterEach(async(() => {
       windowService.clearLocalStorage();
@@ -639,25 +642,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WindowService, useValue: windowService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CRUD_FILTERED_CASE_TYPES[0].id,
+            state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CRUD_FILTERED_CASE_TYPES[0].id,
-        state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
     afterEach(async(() => {
       windowService.clearLocalStorage();
@@ -714,25 +718,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WindowService, useValue: windowService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CRUD_FILTERED_CASE_TYPES[1].id,
+            state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CRUD_FILTERED_CASE_TYPES[1].id,
-        state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
     afterEach(async(() => {
       windowService.clearLocalStorage();
@@ -795,26 +800,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WindowService, useValue: windowService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
     afterEach(async(() => {
       windowService.clearLocalStorage();
@@ -892,25 +897,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WindowService, useValue: windowService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should initially NOT select anything if jurisdiction is invalid and no case types', () => {

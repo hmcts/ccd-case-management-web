@@ -1,5 +1,5 @@
 import { EventCaseField } from './event-case-field.model';
-import { Orderable } from '../../../core/order/orderable.model';
+import { Orderable } from '@hmcts/ccd-case-ui-toolkit';
 
 export class CaseEvent implements Orderable {
   id: string;

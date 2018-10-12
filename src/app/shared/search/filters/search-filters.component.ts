@@ -8,7 +8,7 @@ import { WindowService } from '../../../core/utils/window.service';
 import { FormGroup } from '@angular/forms';
 import { PlatformLocation } from '@angular/common'
 import { JurisdictionService } from '../../jurisdiction.service';
-import { OrderService } from '../../../core/order/order.service';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-filters',

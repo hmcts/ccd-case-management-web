@@ -1,11 +1,9 @@
 import { EventTriggerResolver } from './event-trigger.resolver';
 import createSpyObj = jasmine.createSpyObj;
-import { Observable } from 'rxjs/Observable';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
+import { Observable } from 'rxjs';
 import { CaseResolver } from '../case.resolver';
-import { HttpError } from '../../core/http/http-error.model';
 import { CaseView } from '../../core/cases/case-view.model';
-import { createCaseEventTrigger } from '../../fixture/shared.fixture'
+import { CaseEventTrigger, createCaseEventTrigger, HttpError } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('EventTriggerResolver', () => {
 

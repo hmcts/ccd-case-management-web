@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http/http.service';
 import { AppConfig } from '../../app.config';
-import { HttpErrorService } from '../http/http-error.service';
-import { CaseEventData } from '../../shared/domain/case-event-data';
+import { CaseEventData, Draft, HttpService, HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
-import { Draft } from '../../shared/domain/draft';
 import { CaseView } from '../cases/case-view.model';
 import { Response } from '@angular/http';
+import { DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Injectable()
 export class DraftService {
@@ -39,7 +37,7 @@ export class DraftService {
   }
 
   getDraft(jid: string, ctid: string, draftId: string): Observable<CaseView> {
-    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid, draftId.slice(Draft.DRAFT_PREFIX.length));
+    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid, draftId.slice(DRAFT_PREFIX.length));
     return this.http
       .get(url)
       .map(response => response.json())
@@ -50,7 +48,7 @@ export class DraftService {
   }
 
   deleteDraft(jid: string, ctid: string, draftId: string): Observable<{} | Response> {
-    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid, draftId.slice(Draft.DRAFT_PREFIX.length));
+    const url = this.appConfig.getViewOrDeleteDraftsUrl(jid, ctid, draftId.slice(DRAFT_PREFIX.length));
     return this.http
       .delete(url)
       .catch((error: any): any => {

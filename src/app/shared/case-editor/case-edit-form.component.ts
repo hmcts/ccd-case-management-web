@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
-import { CaseField } from '../domain/definition/case-field.model';
 import { FormGroup } from '@angular/forms';
-import { FormValueService } from '../../core/form/form-value.service';
 import { Subject, Subscription } from 'rxjs';
+import { CaseField, FormValueService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-case-edit-form',

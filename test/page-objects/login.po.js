@@ -35,7 +35,7 @@ class Login extends BrowserUtils {
     }
 
     clickSignIn() {
-
+        //browser.wait(10000);
         element(this._signIn).click();
 
     }

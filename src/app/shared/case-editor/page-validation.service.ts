@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CaseField } from '../domain/definition/case-field.model';
+import { CaseField, ShowCondition, CaseFieldService, WizardPage } from '@hmcts/ccd-case-ui-toolkit';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { ShowCondition } from '../conditional-show/conditional-show.model';
-import { CaseFieldService } from '../domain/case-field.service';
-import { WizardPage } from '../domain/wizard-page.model';
 
 @Injectable()
 export class PageValidationService {

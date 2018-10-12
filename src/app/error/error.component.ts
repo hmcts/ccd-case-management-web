@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorService } from '../core/http/http-error.service';
+import { HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './error.html'

@@ -9,8 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, CaseEventTrigger,
-  CaseView, 
-  AlertService} from '@hmcts/ccd-case-ui-toolkit';
+  CaseView, AlertService} from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-case-edit',

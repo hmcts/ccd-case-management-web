@@ -13,8 +13,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
-import { Draft } from '../domain/draft';
+import { CaseReferencePipe, DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',
@@ -155,7 +154,7 @@ export class SearchResultComponent implements OnChanges {
   }
 
   draftPrefixOrGet(col, result): any {
-    return result.case_id.startsWith(Draft.DRAFT) ? Draft.DRAFT : this.hyphenateIfCaseReferenceOrGet(col, result);
+    return result.case_id.startsWith(DRAFT_PREFIX) ? DRAFT_PREFIX : this.hyphenateIfCaseReferenceOrGet(col, result);
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {
@@ -197,6 +196,6 @@ export class SearchResultComponent implements OnChanges {
     return currentPage > 1 ? this.draftsCount : 0;
   }
   private numberOfDrafts(): number {
-    return this.resultView.results.filter(_ => _.case_id.startsWith(Draft.DRAFT)).length;
+    return this.resultView.results.filter(_ => _.case_id.startsWith(DRAFT_PREFIX)).length;
   }
 }

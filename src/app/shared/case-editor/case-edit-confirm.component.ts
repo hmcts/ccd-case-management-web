@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { CaseEditComponent } from './case-edit.component';
 import { Router } from '@angular/router';
 import { Confirmation } from './confirmation.model';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-edit-confirm.html',

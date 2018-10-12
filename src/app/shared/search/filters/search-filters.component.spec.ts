@@ -7,12 +7,11 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { SearchService } from '../../../core/search/search.service';
 import { Observable } from 'rxjs/Rx';
 import { SearchInput } from '../../../core/search/search-input.model';
-import { OrderService } from '../../../core/order/order.service';
-import { AbstractFieldWriteComponent } from '../../palette/base-field/abstract-field-write.component';
 import { JurisdictionService } from '../../jurisdiction.service';
 import { CaseType } from '../../domain/definition/case-type.model';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
+import { AbstractFieldWriteComponent, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
@@ -164,31 +163,37 @@ describe('SearchFiltersComponent', () => {
           { provide: JurisdictionService, useValue: jurisdictionService },
         ]
       })
-      .compileComponents();
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(SearchFiltersComponent);
+        component = fixture.componentInstance;
 
-    fixture = TestBed.createComponent(SearchFiltersComponent);
-    component = fixture.componentInstance;
+        component.formGroup = TEST_FORM_GROUP;
+        component.jurisdictions = [
+          JURISDICTION_1,
+          JURISDICTION_2
+        ];
+        component.onApply.subscribe(searchHandler.applyFilters);
 
-    component.formGroup = TEST_FORM_GROUP;
-    component.jurisdictions = [
-      JURISDICTION_1,
-      JURISDICTION_2
-    ];
-    component.onApply.subscribe(searchHandler.applyFilters);
-
-    de = fixture.debugElement;
-    fixture.detectChanges();
+        de = fixture.debugElement;
+        fixture.detectChanges();
+      });
   }));
 
-  it('should select the jurisdiction if there is only one jurisdiction', () => {
+  it('should select the jurisdiction if there is only one jurisdiction', async(() => {
+    resetCaseTypes(JURISDICTION_1, []);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
     fixture.detectChanges();
     component.ngOnInit();
-    fixture.detectChanges();
-    expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
-    expect(component.selected.caseType).toBe(null);
-  });
+
+    fixture
+      .whenStable()
+      .then(() => {
+        expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+        expect(component.selected.caseType).toBe(null);
+      });
+  }));
 
   it('should select the first caseType ', () => {
     resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);

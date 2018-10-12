@@ -1,5 +1,5 @@
 import createSpyObj = jasmine.createSpyObj;
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseHistoryResolver } from './case-history.resolver';
 import { CaseHistory } from '../../core/cases/case-history.model';
 import { CaseView } from '../../core/cases/case-view.model';

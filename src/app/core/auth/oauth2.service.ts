@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http/http.service';
 import { AppConfig } from '../../app.config';
 import { Response, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { HttpService, AuthService } from '@hmcts/ccd-case-ui-toolkit';
 
 /**
  * `Oauth2Service` and `AuthService` cannot be merged as it creates a cyclic dependency on `AuthService` through `HttpErrorService`.

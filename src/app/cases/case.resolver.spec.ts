@@ -1,5 +1,5 @@
 import { CaseResolver } from './case.resolver';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseView } from '../core/cases/case-view.model';
 import { AlertService } from '../core/alert/alert.service';
 import { DraftService } from '../core/draft/draft.service';

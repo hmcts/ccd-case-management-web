@@ -5,17 +5,15 @@ import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { AlertService } from '../../core/alert/alert.service';
-import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
-import { AbstractFieldWriteComponent } from '../../shared/palette/base-field/abstract-field-write.component';
 import { WorkbasketInputModel } from '../workbasket-input.model';
-import { FieldTypeEnum } from '../../shared/domain/definition/field-type-enum.model';
 import createSpyObj = jasmine.createSpyObj;
+import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-write',
@@ -173,7 +171,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -205,25 +203,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService },
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should have an Apply button disabled when case type is set but state is not set', async(() => {
@@ -389,12 +388,16 @@ describe('WorkbasketFiltersComponent', () => {
       fixture.detectChanges();
 
       let button = de.query($APPLY_BUTTON);
-      expect(button.nativeElement.disabled).toBeTruthy();
+      fixture
+        .whenStable()
+        .then(() => {
 
-      component.selected.jurisdiction = JURISDICTION_1;
-      component.onJurisdictionIdChange();
-      expect(component.workbasketInputsReady).toBeFalsy();
+        expect(button.nativeElement.disabled).toBeTruthy();
 
+        component.selected.jurisdiction = JURISDICTION_1;
+        component.onJurisdictionIdChange();
+        expect(component.workbasketInputsReady).toBeFalsy();
+      });
     }));
 
     it('should have form group details added when apply button is clicked ', async(() => {
@@ -494,8 +497,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, CRUD_FILTERED_CASE_TYPES);
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -526,24 +529,25 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CASE_TYPES_2[1].id,
+            state_id: CASE_TYPES_2[1].states[1].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CASE_TYPES_2[1].id,
-        state_id: CASE_TYPES_2[1].states[1].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should populate case types drop down with CRUD filtered case types and sort states', async(() => {
@@ -586,8 +590,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, EMPTY_CASE_TYPES);
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -618,25 +622,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CRUD_FILTERED_CASE_TYPES[0].id,
+            state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CRUD_FILTERED_CASE_TYPES[0].id,
-        state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should disable case type dropdown if default is filtered out due to CRUD and no other case types', async(() => {
@@ -655,8 +660,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, CASE_TYPE_WITH_EMPTY_STATES);
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -687,25 +692,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: CRUD_FILTERED_CASE_TYPES[1].id,
+            state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: CRUD_FILTERED_CASE_TYPES[1].id,
-        state_id: CRUD_FILTERED_CASE_TYPES[0].states[0].id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should disable states dropdown if default is filtered out due to CRUD and no other states', async(() => {
@@ -736,7 +742,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
         snapshot: {
@@ -763,25 +769,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService },
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should initially select jurisdiction based on query parameter', () => {
@@ -822,8 +829,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
       router = createSpyObj<Router>('router', ['navigate']);
       router.navigate.and.returnValue(Promise.resolve('someResult'));
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, EMPTY_CASE_TYPES);
-      alertService = createSpyObj<AlertService>('alertService', ['setPreserveAlerts']);
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -853,25 +860,26 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: AlertService, useValue: alertService }
           ]
         })
-        .compileComponents();
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
 
-      fixture = TestBed.createComponent(WorkbasketFiltersComponent);
-      component = fixture.componentInstance;
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
 
-      component.jurisdictions = [
-        JURISDICTION_1,
-        JURISDICTION_2
-      ];
-      component.formGroup = TEST_FORM_GROUP;
-      component.defaults = {
-        jurisdiction_id: JURISDICTION_2.id,
-        case_type_id: DEFAULT_CASE_TYPE.id,
-        state_id: DEFAULT_CASE_STATE.id
-      };
-      component.onApply.subscribe(workbasketHandler.applyFilters);
-
-      de = fixture.debugElement;
-      fixture.detectChanges();
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
     }));
 
     it('should initially NOT select anything if jurisdiction is invalid and no case types', () => {

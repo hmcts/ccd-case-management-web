@@ -1,24 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CaseEventTrigger } from '../domain/case-view/case-event-trigger.model';
+import { CaseEventTrigger, CaseEventData, FormValueService, CaseField, WizardPage, CaseFieldService,
+  PaletteContext, FormErrorService, FieldsUtils, HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { FormGroup } from '@angular/forms';
-import { CaseEventData } from '../domain/case-event-data';
-import { FormValueService } from '../../core/form/form-value.service';
 import { CaseEditComponent } from './case-edit.component';
-import { HttpError } from '../../core/http/http-error.model';
-import { FormErrorService } from '../../core/form/form-error.service';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsComponent } from '../error/callback-errors.component';
 import { CallbackErrorsContext } from '../error/error-context';
-import { CaseField } from '../domain/definition/case-field.model';
-import { WizardPage } from '../domain/wizard-page.model';
-import { FieldsUtils } from '../utils/fields.utils';
 import { ActivatedRoute } from '@angular/router';
 import { Profile } from '../../core/profile/profile.model';
 import { Confirmation } from './confirmation.model';
-import { CaseFieldService } from '../domain/case-field.service';
 import { Wizard } from './wizard.model';
-import { OrderService } from '../../core/order/order.service';
-import { PaletteContext } from '../palette/base-field/palette-context.enum';
 
 @Component({
   selector: 'ccd-case-edit-submit',

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Activity } from './activity.model';
 import { Observable } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 const DUMMY_CASE_REFERENCE = '0';
 

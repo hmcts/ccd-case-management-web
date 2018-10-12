@@ -2,25 +2,28 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CaseTab } from '../../core/cases/case-tab.model';
-import { OrderService } from '../../core/order/order.service';
 import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
-import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
-import { HttpError } from '../../core/http/http-error.model';
-import { Draft } from '../../shared/domain/draft';
+import { CaseField, ShowCondition, Draft, HttpError, OrderService,
+  DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
+import { DraftService } from '../../core/draft/draft.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AlertService } from '../../core/alert/alert.service';
+import { CaseCreatorSubmitComponent } from '../creator/case-creator-submit.component';
+import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   templateUrl: './case-viewer.component.html',
   styleUrls: ['./case-viewer.scss']
 })
 export class CaseViewerComponent implements OnInit, OnDestroy {
+  public static readonly ORIGIN_QUERY_PARAM = 'origin';
   BANNER = DisplayMode.BANNER;
 
   caseDetails: CaseView;
@@ -30,6 +33,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_GO;
   ignoreWarning = false;
   subscription: Subscription;
+  dialogConfig: MatDialogConfig;
 
   callbackErrorsSubject: Subject<any> = new Subject();
 
@@ -38,9 +42,14 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     private router: Router,
     private orderService: OrderService,
     private activityPollingService: ActivityPollingService,
+    private dialog: MatDialog,
+    private alertService: AlertService,
+    private draftService: DraftService
   ) {}
 
   ngOnInit(): void {
+    this.initDialog();
+
     this.caseDetails = this.route.snapshot.data.case;
 
     // Clone and sort tabs array
@@ -85,8 +94,27 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     }
 
     // we may need to take care of different triggers in the future
-    if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
-      theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
+    if (trigger.id === CaseViewTrigger.DELETE) {
+      const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'Delete') {
+          this.draftService.deleteDraft(this.caseDetails.case_type.jurisdiction.id,
+            this.caseDetails.case_type.id,
+            this.caseDetails.case_id)
+            .subscribe(_ => {
+              return this.router.navigate(['list/case'])
+                .then(() => {
+                  this.alertService.setPreserveAlerts(true);
+                  this.alertService.success(`The draft has been successfully deleted`);
+                });
+            }, _ => {
+              return this.router.navigate(['list/case']);
+            });
+        }
+      });
+    } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
+      theQueryParams[DRAFT_QUERY_PARAM] = this.caseDetails.case_id;
+      theQueryParams[CaseViewerComponent.ORIGIN_QUERY_PARAM] = 'viewDraft';
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,
@@ -101,6 +129,21 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       }).catch(error => {
         this.handleError(error, trigger)
       });
+    }
+  }
+
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.height = '245px';
+    this.dialogConfig.width = '550px';
+    this.dialogConfig.panelClass = 'dialog';
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
   }
 

@@ -3,7 +3,6 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
-import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
 import { CasePrinterComponent } from './case-printer.component';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { attr, text } from '../../test/helpers';
@@ -11,6 +10,7 @@ import { CaseView } from '../../core/cases/case-view.model';
 import createSpyObj = jasmine.createSpyObj;
 import { AppConfig } from '../../app.config';
 import { PrintUrlPipe } from './print-url.pipe';
+import { PaletteUtilsModule } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CasePrinterComponent', () => {
 

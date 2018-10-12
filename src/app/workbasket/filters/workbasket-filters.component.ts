@@ -5,11 +5,11 @@ import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { OrderService } from '../../core/order/order.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import { AlertService } from '../../core/alert/alert.service';
 import 'rxjs/add/operator/do';
+import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-workbasket-filters',
@@ -82,7 +82,10 @@ export class WorkbasketFiltersComponent implements OnInit {
     }
     // without explicitly preserving alerts any message on the page
     // would be cleared out because of this initial navigation.
-    this.alertService.setPreserveAlerts(!this.initialised);
+    // The above is only true if no alerts were set prior to loading case list page.
+    if (!this.alertService.isPreserveAlerts()) {
+      this.alertService.setPreserveAlerts(!this.initialised);
+    }
     this.router.navigate(['/list/case'], {
       queryParams: queryParams
     });

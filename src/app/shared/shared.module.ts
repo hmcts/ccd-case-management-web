@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchResultComponent } from './search/search-result.component';
 import { SearchFiltersComponent } from './search/filters/search-filters.component';
-import { PaletteModule } from './palette/palette.module';
+import { PaletteModule, CaseFieldService, ConditionalShowModule, DocumentDialogComponent,
+  MarkdownModule, LabelFieldComponent, LabelSubstitutorModule, SharedUtilsModule,
+  DeleteOrCancelDialogComponent, SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
 import { EventTriggerModule } from './event-trigger/event-trigger.module';
 import { CaseHeaderComponent } from './header/case-header.component';
@@ -14,16 +16,9 @@ import { SearchResultViewItemComparatorFactory } from './search/sorting/search-r
 import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity.component';
 import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';
 import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-activity-banner/ccd-activity-banner.component';
-import { CaseFieldService } from './domain/case-field.service';
 import { CaseHistoryComponent } from './case-history/case-history.component';
 import { CaseHistoryResolver } from './case-history/case-history.resolver';
-import { LabelSubstitutorModule } from './substitutor/label-substitutor.module';
-import { ConditionalShowModule } from './conditional-show/conditional-show.module';
 import { CaseHistoryService } from '../core/cases/case-history.service';
-import { DocumentDialogComponent } from './document-dialog/document-dialog.component';
-import { MarkdownModule } from './markdown/markdown.module';
-import { LabelFieldComponent } from './palette/label/label-field.component';
-import { SharedUtilsModule } from './utils/shared-utils.module';
 
 @NgModule({
   imports: [
@@ -50,10 +45,14 @@ import { SharedUtilsModule } from './utils/shared-utils.module';
     CcdActivityBannerComponent,
     CaseHistoryComponent,
     DocumentDialogComponent,
+    DeleteOrCancelDialogComponent,
+    SaveOrDiscardDialogComponent,
     LabelFieldComponent,
   ],
   entryComponents: [
     DocumentDialogComponent,
+    DeleteOrCancelDialogComponent,
+    SaveOrDiscardDialogComponent,
     LabelFieldComponent
   ],
   providers: [

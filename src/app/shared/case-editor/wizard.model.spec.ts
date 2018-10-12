@@ -1,6 +1,6 @@
 import { Wizard } from './wizard.model';
-import { WizardPage } from '../domain/wizard-page.model';
 import createSpy = jasmine.createSpy;
+import { WizardPage } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('wizard.model', () => {
 

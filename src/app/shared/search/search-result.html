@@ -9,7 +9,7 @@
         <tr>
           <div class="search-result-column-label" (click)="sort(col)">{{col.label}}</div>
           <div *ngIf="comparator(col)" class="search-result-column-sort">
-            <a (click)="sort(col)" class="sort-widget" [innerHTML]="sortWidget(col)"></a>
+            <a (click)="sort(col)" class="sort-widget" [innerHTML]="sortWidget(col)" href="javascript:void(0)"></a>
           </div>
         </tr>
       </table>
@@ -20,7 +20,8 @@
   <tbody>
   <tr *ngFor="let result of resultView.results | ccdSortSearchResult : sortParameters | paginate: { itemsPerPage: paginationPageSize, currentPage: selected.page, totalItems: paginationMetadata.total_results_count }">
     <td *ngFor="let col of resultView.columns; let colIndex = index">
-      <a *ngIf="colIndex == 0" routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}">
+      <a *ngIf="colIndex == 0" routerLink="/case/{{jurisdiction.id}}/{{caseType.id}}/{{result.case_id}}"
+         attr.aria-label="go to case with Case reference:{{ result.case_id | ccdCaseReference }}">
         <div class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">
           <ccd-field-read *ngIf="draftPrefixOrGet(col, result); else case_reference" [caseField]="{
                   id: col.case_field_id,

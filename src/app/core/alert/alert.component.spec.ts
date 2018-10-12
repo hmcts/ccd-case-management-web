@@ -1,12 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlertComponent } from './alert.component';
 import { DebugElement } from '@angular/core';
-import { AlertService } from './alert.service';
 import { MockComponent } from 'ng2-mock-component';
-import { Alert } from './alert.model';
 import { By } from '@angular/platform-browser';
 import { text } from '../../test/helpers';
 import { LevelToTypePipe } from './level-to-type.pipe';
+import { Alert, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('AlertComponent', () => {
 

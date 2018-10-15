@@ -7,11 +7,10 @@ import { CasesService } from '../../core/cases/cases.service';
 import { Observable } from 'rxjs';
 import { AlertService } from '../../core/alert/alert.service';
 import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
-import { CaseView } from '../../core/cases/case-view.model';
 import { DraftService } from '../../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
-  FormErrorService, CaseReferencePipe, FormValueService } from '@hmcts/ccd-case-ui-toolkit';
+  FormErrorService, CaseReferencePipe, FormValueService, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({

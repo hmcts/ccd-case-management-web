@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CaseView } from './case-view.model';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../app.config';
 import { CaseEventTrigger, CaseEventData, WizardPage, WizardPageField, ShowCondition, HttpService,
-  HttpErrorService, Draft, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+  HttpErrorService, Draft, OrderService, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { plainToClass } from 'class-transformer';
 import { Headers } from '@angular/http';

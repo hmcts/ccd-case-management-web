@@ -1,7 +1,7 @@
 import { CaseTab } from './case-tab.model';
-import { CaseViewEvent } from './case-view-event.model';
 import { Type } from 'class-transformer';
 import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
+import { CaseViewEvent } from '@hmcts/ccd-case-ui-toolkit';
 
 export class CaseHistoryCaseType {
   id: string;

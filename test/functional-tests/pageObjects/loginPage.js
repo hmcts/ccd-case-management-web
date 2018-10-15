@@ -36,7 +36,7 @@ class LoginPage extends BasePage {
 
 
   /**
-   * Inputs credentials into username and password fieldc
+   * Inputs credentials into username and password field
    * @param username
    * @param password
    * @returns {Promise<void>}

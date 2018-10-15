@@ -1,5 +1,6 @@
 BasePage = require('./basePage.js')
 NavBar = require('./ccd-components/globalNavBar.js');
+const selfUrlPath = '/list';
 
 class CaseListPage extends BasePage {
 
@@ -13,6 +14,17 @@ class CaseListPage extends BasePage {
       this._searchBox = by.css('.global-navigation .cut-nav-bar #search');
       this._footer = by.css('.footer-wrapper');
       this._signOut = by.css('div #sign-out');
+
+      let EC = protractor.ExpectedConditions;
+      browser.wait(EC.urlContains(selfUrlPath),30000)
+        .catch(err => console.log('page not loaded'));
+
+  }
+
+
+
+  async getTitleLabel() {
+      return await element(this._bannerHeaderTitle).getText();
   }
 
   /**

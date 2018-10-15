@@ -53,12 +53,12 @@ export class WorkbasketFiltersComponent implements OnInit {
   initialised = false;
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
-              private orderService: OrderService,
-              private workbasketInputFilterService: WorkbasketInputFilterService,
-              private jurisdictionService: JurisdictionService,
-              private alertService: AlertService,
-              private windowService: WindowService) {
+    private route: ActivatedRoute,
+    private orderService: OrderService,
+    private workbasketInputFilterService: WorkbasketInputFilterService,
+    private jurisdictionService: JurisdictionService,
+    private alertService: AlertService,
+    private windowService: WindowService) {
   }
 
   ngOnInit(): void {
@@ -139,7 +139,7 @@ export class WorkbasketFiltersComponent implements OnInit {
             .sort(this.orderService.sortAsc);
           const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
 
-          for (var i = 0; i < workbasketInputs.length; i++) {
+          for (let i = 0; i < workbasketInputs.length; i++) {
             let item = workbasketInputs[i];
             item.field.label = item.label;
             if (formValue) {

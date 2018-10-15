@@ -8,6 +8,10 @@ import { CaseState } from '../shared/domain/definition/case-state.model';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import createSpyObj = jasmine.createSpyObj;
 
+const workbasterfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
+    + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`
+    + `\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
+
 const JURISDICTION: Jurisdiction = {
     id: 'J1',
     name: 'Jurisdiction 1',
@@ -50,7 +54,7 @@ describe('SearchComponent', () => {
         paginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
         alertService = createSpyObj('alertService', ['warning']);
         windowService.setLocalStorage('search-caseType', JSON.stringify(CASE_TYPES[0]));
-        windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}");
+        windowService.setLocalStorage('workbasket-filter-form-group-value', workbasterfiltervalue);
 
         subject = new SearchComponent(null, searchService, paginationService, alertService, windowService);
     }));
@@ -74,7 +78,7 @@ describe('SearchComponent', () => {
         };
 
         subject.applyFilter(filter);
-        console.log("paginationService.getPaginationMetadata", paginationService.getPaginationMetadata);
+
         expect(paginationService.getPaginationMetadata).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, { state: CASE_STATE.id }, {
             'name': NAME_VALUE
         });

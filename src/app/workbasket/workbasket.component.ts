@@ -41,11 +41,11 @@ export class WorkbasketComponent implements OnInit {
   searchResults: SearchResultComponent;
 
   constructor(private route: ActivatedRoute,
-              private searchService: SearchService,
-              private paginationService: PaginationService,
-              private jurisdictionService: JurisdictionService,
-              private alertService: AlertService,
-              private windowService: WindowService) {
+    private searchService: SearchService,
+    private paginationService: PaginationService,
+    private jurisdictionService: JurisdictionService,
+    private alertService: AlertService,
+    private windowService: WindowService) {
   }
 
   ngOnInit() {
@@ -118,8 +118,9 @@ export class WorkbasketComponent implements OnInit {
         this.buildSearchCaseDetails('', result, formValueObject);
       }
     } else {
-      if (formGroup)
+      if (formGroup) {
         this.buildSearchCaseDetails('', result, formGroup.value);
+      }
     }
 
     return result;

@@ -143,7 +143,9 @@ let orderService;
 
 const TEST_FORM_GROUP = new FormGroup({});
 const METADATA_FIELDS = ['PersonLastName'];
-
+const searchfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
+  + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`
+  + `\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
 describe('SearchFiltersComponent', () => {
 
   let fixture: ComponentFixture<SearchFiltersComponent>;
@@ -158,7 +160,7 @@ describe('SearchFiltersComponent', () => {
     orderService = createSpyObj('orderService', ['sortAsc']);
     jurisdictionService = new JurisdictionService();
     windowService = new WindowService();
-    windowService.setLocalStorage("search-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+    windowService.setLocalStorage('search-form-group-value', searchfiltervalue)
     windowService.setLocalStorage('search-caseType', JSON.stringify(CASE_TYPE_2));
     TestBed
       .configureTestingModule({

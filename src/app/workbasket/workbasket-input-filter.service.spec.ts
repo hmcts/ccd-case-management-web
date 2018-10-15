@@ -12,7 +12,9 @@ describe('DefinitionsService', () => {
   const JurisdictionId = 'PROBATE';
   const CaseTypeId = 'TestAddressBookCase';
   const CASE_TYPES_URL = API_DATA_URL + `/caseworkers/:uid/jurisdictions/${JurisdictionId}/case-types/${CaseTypeId}/work-basket-inputs`;
-
+  const workbasketfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
+    + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`
+    + `\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
   let appConfig: any;
   let httpService: any;
   let workbasketInputFilterService: WorkbasketInputFilterService;
@@ -24,7 +26,7 @@ describe('DefinitionsService', () => {
     httpService = createSpyObj<HttpService>('httpService', ['get']);
     workbasketInputFilterService = new WorkbasketInputFilterService(httpService, appConfig);
     windowService = new WindowService();
-    windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+    windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketfiltervalue);
   });
 
   describe('getWorkbasketInputs()', () => {

@@ -25,7 +25,9 @@ class FieldWriteComponent extends AbstractFieldWriteComponent {
   @Input()
   formGroup: FormGroup;
 }
-
+const workbasketvalue = `{\"PersonLastName\":\"LastName\",\"PersonFirstName\":\"CaseFirstName\",`
+  + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\"`
+  + `:null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
 describe('WorkbasketFiltersComponent', () => {
 
   const JURISDICTION_1: Jurisdiction = {
@@ -182,7 +184,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":\"LastName\",\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}");
+
+      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
       resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -402,12 +405,12 @@ describe('WorkbasketFiltersComponent', () => {
         .whenStable()
         .then(() => {
 
-        expect(button.nativeElement.disabled).toBeTruthy();
+          expect(button.nativeElement.disabled).toBeTruthy();
 
-        component.selected.jurisdiction = JURISDICTION_1;
-        component.onJurisdictionIdChange();
-        expect(component.workbasketInputsReady).toBeFalsy();
-      });
+          component.selected.jurisdiction = JURISDICTION_1;
+          component.onJurisdictionIdChange();
+          expect(component.workbasketInputsReady).toBeFalsy();
+        });
     }));
 
     it('should have form group details added when apply button is clicked ', async(() => {
@@ -513,7 +516,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -612,7 +615,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
 
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
@@ -686,7 +689,7 @@ describe('WorkbasketFiltersComponent', () => {
       resetCaseTypes(JURISDICTION_2, CASE_TYPE_WITH_EMPTY_STATES);
       orderService = createSpyObj('orderService', ['sortAsc']);
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}");
+      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
 
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
@@ -771,7 +774,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue)
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
@@ -868,7 +871,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       windowService = new WindowService();
-      windowService.setLocalStorage("workbasket-filter-form-group-value", "{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}")
+      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
 
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),

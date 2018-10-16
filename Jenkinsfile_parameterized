@@ -23,7 +23,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRONMENT, 'sandbox') {
-    
+
     loadVaultSecrets(secrets)
 
     enableSlackNotifications('#ccd-param-builds')
@@ -31,5 +31,19 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
     afterCheckout {
         sh "yarn cache clean"
     }
+
+    after('functionalTest:saat') {
+
+        publishHTML(target:[
+               reportDir            : "test/functional-tests/results/",
+               reportFiles          : "index.html",
+               reportName           : "Functional Tests",
+               alwaysLinkToLastBuild: true
+       ])
+
+    }
+
+
+
 
 }

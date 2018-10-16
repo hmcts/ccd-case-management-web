@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { WizardFactoryService } from './wizard-factory.service';
+import { CaseEventTrigger, WizardPage, ShowCondition, CaseField, WizardFactoryService, Wizard } from '@hmcts/ccd-case-ui-toolkit';
 import { Predicate } from '../../shared/predicate';
-import { WizardPage } from '../../shared/domain/wizard-page.model';
-import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
 import { AlertService } from '../alert/alert.service';
-import { Wizard } from '../../shared/case-editor/wizard.model';
 import { RouterHelperService } from '../utils/router-helper.service';
 
 @Injectable()

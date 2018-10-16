@@ -1,15 +1,9 @@
-import { HttpError } from '../http/http-error.model';
-import { HttpService } from '../http/http.service';
-import { HttpErrorService } from '../http/http-error.service';
 import { AppConfig } from '../../app.config';
-import { CaseEventData } from '../../shared/domain/case-event-data';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Response, ResponseOptions } from '@angular/http';
 import createSpyObj = jasmine.createSpyObj;
 import { DraftService } from './draft.service';
-import { Draft } from '../../shared/domain/draft';
-import { CaseDetails } from '../../shared/domain/case-details';
-import { CaseView } from '../cases/case-view.model';
+import { HttpError, CaseDetails, Draft, CaseEventData, HttpErrorService, HttpService, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('Drafts Service', () => {
 

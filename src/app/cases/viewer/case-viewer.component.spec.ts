@@ -2,29 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 import { CaseViewerComponent } from './case-viewer.component';
 import { By } from '@angular/platform-browser';
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
-import { OrderService } from '../../core/order/order.service';
-import { Observable } from 'rxjs/Observable';
-import { CaseViewEvent } from '../../core/cases/case-view-event.model';
-import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
+import { Observable } from 'rxjs';
 import { attr, text } from '../../test/helpers';
-import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
-import { HttpError } from '../../core/http/http-error.model';
-import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
-import { FieldsUtils } from '../../shared/utils/fields.utils';
-import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
+import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
+  LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
+  CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line
@@ -415,7 +407,7 @@ describe('CaseViewerComponent', () => {
     draftService = createSpyObj('draftService', ['deleteDraft']);
     draftService.deleteDraft.and.returnValue(Observable.of({}));
 
-    alertService = createSpyObj('draftService', ['setPreserveAlerts', 'success', 'warning']);
+    alertService = createSpyObj('alertService', ['setPreserveAlerts', 'success', 'warning']);
     alertService.setPreserveAlerts.and.returnValue(Observable.of({}));
     alertService.success.and.returnValue(Observable.of({}));
     alertService.warning.and.returnValue(Observable.of({}));
@@ -631,7 +623,7 @@ describe('CaseViewerComponent', () => {
     component.caseDetails.case_id = 'DRAFT123';
     component.applyTrigger(TRIGGERS[1]);
     expect(router.navigate).toHaveBeenCalledWith(['create/case', 'TEST', 'TestAddressBookCase', TRIGGERS[1].id], {
-      queryParams: { ignoreWarning: true, DRAFT: 'DRAFT123' }
+      queryParams: { ignoreWarning: true, draft: 'DRAFT123', origin: 'viewDraft' }
     });
   });
 

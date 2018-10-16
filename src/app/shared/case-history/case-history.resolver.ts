@@ -1,11 +1,11 @@
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import { CaseHistory } from '../../core/cases/case-history.model';
 import { CaseHistoryService } from '../../core/cases/case-history.service';
-import { CaseView } from '../../core/cases/case-view.model';
+import { CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class CaseHistoryResolver implements Resolve<CaseHistory> {

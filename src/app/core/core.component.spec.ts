@@ -9,11 +9,11 @@ import { By } from '@angular/platform-browser';
 import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { attr } from '../test/helpers';
 import { OAuth2Service } from './auth/oauth2.service';
-import { HttpService } from './http/http.service';
 import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CoreComponent', () => {
 

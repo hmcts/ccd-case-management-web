@@ -3,6 +3,6 @@
                  [validate]="validate()"
                  [saveDraft]="saveDraft()"
                  [eventTrigger]="eventTrigger"
-                 (cancelled)="cancel()"
+                 (cancelled)="cancel($event)"
                  (submitted)="submitted($event)"></ccd-case-edit>
 </div>

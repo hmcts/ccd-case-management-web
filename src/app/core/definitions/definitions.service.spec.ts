@@ -1,7 +1,7 @@
 import { Response, ResponseOptions } from '@angular/http';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
-import { Observable } from 'rxjs/Observable';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { Observable } from 'rxjs';
 import { DefinitionsService } from './definitions.service';
 import { CaseType } from '../../shared/domain/definition/case-type.model';
 import createSpyObj = jasmine.createSpyObj;

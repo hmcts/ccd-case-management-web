@@ -1,30 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CaseTab } from '../../core/cases/case-tab.model';
-import { OrderService } from '../../core/order/order.service';
-import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { Subject } from 'rxjs/Subject';
 import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
-import { ShowCondition } from '../../shared/conditional-show/conditional-show.model';
-import { HttpError } from '../../core/http/http-error.model';
+import { CaseField, ShowCondition, Draft, HttpError, OrderService, CaseView,
+  CaseViewTrigger, DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
-import { Draft } from '../../shared/domain/draft';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 import { AlertService } from '../../core/alert/alert.service';
+import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   templateUrl: './case-viewer.component.html',
   styleUrls: ['./case-viewer.scss']
 })
 export class CaseViewerComponent implements OnInit, OnDestroy {
+  public static readonly ORIGIN_QUERY_PARAM = 'origin';
   BANNER = DisplayMode.BANNER;
 
   caseDetails: CaseView;
@@ -107,20 +103,15 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
                 .then(() => {
                   this.alertService.setPreserveAlerts(true);
                   this.alertService.success(`The draft has been successfully deleted`);
-                })
-                .catch(error => {
-                  this.handleError(error, trigger)
                 });
             }, _ => {
-              return this.router.navigate(['list/case'])
-              .catch(error => {
-                this.handleError(error, trigger)
-              });
+              return this.router.navigate(['list/case']);
             });
         }
       });
     } else if (this.isDraft() && trigger.id !== CaseViewTrigger.DELETE) {
-      theQueryParams[Draft.DRAFT] = this.caseDetails.case_id;
+      theQueryParams[DRAFT_QUERY_PARAM] = this.caseDetails.case_id;
+      theQueryParams[CaseViewerComponent.ORIGIN_QUERY_PARAM] = 'viewDraft';
       return this.router.navigate(
         ['create/case',
           this.caseDetails.case_type.jurisdiction.id,

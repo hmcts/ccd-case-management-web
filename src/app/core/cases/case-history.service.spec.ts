@@ -1,13 +1,11 @@
 import { Response, ResponseOptions } from '@angular/http';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
-import { Observable } from 'rxjs/Observable';
-import { HttpError } from '../http/http-error.model';
+import { Observable } from 'rxjs';
 import { CaseHistory } from './case-history.model';
 import { CaseHistoryService } from './case-history.service';
 import { createCaseHistory } from './case-history.test.fixture';
-import { HttpErrorService } from '../http/http-error.service';
 import createSpyObj = jasmine.createSpyObj;
+import { HttpService, HttpError, HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryService', () => {
 

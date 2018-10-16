@@ -1,4 +1,4 @@
-import { FieldType } from '../../shared/domain/definition/field-type.model';
+import { FieldType } from '@hmcts/ccd-case-ui-toolkit';
 
 export class SearchResultViewColumn {
   case_field_id: string;

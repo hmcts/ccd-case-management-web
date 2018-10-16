@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CaseView } from '../../core/cases/case-view.model';
-import { CaseField } from '../domain/definition/case-field.model';
-import { Draft } from '../domain/draft';
+import { CaseField, Draft, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-case-header',
@@ -23,6 +21,7 @@ export class CaseHeaderComponent implements OnInit {
       this.caseFields = this.getCaseFields();
     }
   }
+
   isDraft(): boolean {
     return Draft.isDraft(this.caseDetails.case_id);
   }

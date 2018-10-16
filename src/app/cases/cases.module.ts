@@ -6,7 +6,7 @@ import { CaseResolver } from './case.resolver';
 import { CaseViewerComponent } from './viewer/case-viewer.component';
 import { PaletteModule, PaletteUtilsModule, ConditionalShowModule, MarkdownModule,
   LabelSubstitutionService, RemoveDialogComponent, CaseReferencePipe, LabelSubstitutorModule,
-  FieldsPurger } from '@hmcts/ccd-case-ui-toolkit';
+  FieldsPurger, PageValidationService} from '@hmcts/ccd-case-ui-toolkit';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
@@ -27,7 +27,6 @@ import { CaseEditConfirmComponent } from '../shared/case-editor/case-edit-confir
 import { PrintUrlPipe } from './printer/print-url.pipe';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PageValidationService } from '../shared/case-editor/page-validation.service';
 
 @NgModule({
   imports: [

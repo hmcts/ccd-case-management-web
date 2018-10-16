@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import { Response, ResponseOptions } from '@angular/http';
 import createSpyObj = jasmine.createSpyObj;
 import { DraftService } from './draft.service';
-import { CaseView } from '../cases/case-view.model';
-import { HttpError, CaseDetails, Draft, CaseEventData, HttpErrorService, HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpError, CaseDetails, Draft, CaseEventData, HttpErrorService, HttpService, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('Drafts Service', () => {
 

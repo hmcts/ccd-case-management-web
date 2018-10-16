@@ -106,6 +106,10 @@ export class WorkbasketFiltersComponent implements OnInit {
     this.onApply.emit(this.selected);
   }
 
+  reset(): void {
+    this.windowService.clearLocalStorage();
+    this.windowService.locationAssign('list/case');
+  }
   getMetadataFields(): string[] {
     if (this.workbasketInputs) {
       return this.workbasketInputs

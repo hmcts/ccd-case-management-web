@@ -428,7 +428,60 @@ describe('SearchFiltersComponent', () => {
 
       });
   }));
+});
+describe('Clear localStorage', () => {
 
+  let fixture: ComponentFixture<SearchFiltersComponent>;
+  let component: SearchFiltersComponent;
+  let de: DebugElement;
+  let jurisdictionService: JurisdictionService;
+  let windowService: WindowService;
+
+  beforeEach(async(() => {
+    searchHandler = createSpyObj('searchHandler', ['applyFilters']);
+    mockSearchService = createSpyObj('mockSearchService', ['getSearchInputs']);
+    orderService = createSpyObj('orderService', ['sortAsc']);
+    jurisdictionService = new JurisdictionService();
+    windowService = createSpyObj('windowService', ['clearLocalStorage', 'locationAssign']);
+    TestBed
+      .configureTestingModule({
+        imports: [
+          FormsModule,
+          ReactiveFormsModule
+        ],
+        declarations: [
+          SearchFiltersComponent,
+          FieldWriteComponent
+        ], providers: [
+          { provide: SearchService, useValue: mockSearchService },
+          { provide: OrderService, useValue: orderService },
+          { provide: JurisdictionService, useValue: jurisdictionService },
+          { provide: WindowService, useValue: windowService }
+        ]
+      })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(SearchFiltersComponent);
+        component = fixture.componentInstance;
+
+        component.formGroup = TEST_FORM_GROUP;
+        component.jurisdictions = [
+          JURISDICTION_1,
+          JURISDICTION_2
+        ];
+        component.onApply.subscribe(searchHandler.applyFilters);
+
+        de = fixture.debugElement;
+        fixture.detectChanges();
+      });
+  }));
+  it('should remove localStorage once reset button is clicked', async(() => {
+    windowService.clearLocalStorage();
+    windowService.locationAssign('search');
+    component.reset();
+    expect(windowService.clearLocalStorage).toHaveBeenCalled();
+    expect(windowService.locationAssign).toHaveBeenCalled();
+  }));
 });
 
 function resetCaseTypes(jurisdiction: Jurisdiction, caseTypes: CaseType[]) {

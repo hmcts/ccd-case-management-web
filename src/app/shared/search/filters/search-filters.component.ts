@@ -42,10 +42,10 @@ export class SearchFiltersComponent implements OnInit {
   formGroup: FormGroup = new FormGroup({});
 
   constructor(private searchService: SearchService,
-              private orderService: OrderService,
-              private jurisdictionService: JurisdictionService,
-              private windowService: WindowService,
-              private platformLocation: PlatformLocation) {
+    private orderService: OrderService,
+    private jurisdictionService: JurisdictionService,
+    private windowService: WindowService,
+    private platformLocation: PlatformLocation) {
   }
 
   ngOnInit(): void {
@@ -66,7 +66,10 @@ export class SearchFiltersComponent implements OnInit {
       this.onApply.emit(this.selected);
     }
   }
-
+  reset(): void {
+    this.windowService.clearLocalStorage();
+    this.windowService.locationAssign('search');
+  }
   apply(): void {
     this.selected.formGroup = this.formGroup;
     this.selected.page = 1;

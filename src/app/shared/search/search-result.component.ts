@@ -10,9 +10,7 @@ import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
-import { CaseType } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain/definition/case-type.model';
-import { CaseState } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain/definition/case-state.model';
+import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',

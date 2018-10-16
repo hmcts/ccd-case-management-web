@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Profile } from '@hmcts/ccd-case-ui-toolkit/dist/shared/profile';
+import { Profile } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: 'case-creator.component.html'

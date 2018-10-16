@@ -9,9 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { SearchResultComponent } from '../shared/search/search-result.component';
 import { Observable } from 'rxjs';
 import { plainToClass } from 'class-transformer';
-import { Profile, Jurisdiction, AlertService } from '@hmcts/ccd-case-ui-toolkit';
-import { CaseType } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain/definition/case-type.model';
-import { CaseState } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain/definition/case-state.model';
+import { Profile, Jurisdiction, AlertService, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 const ATTRIBUTE_SEPARATOR = '.';
 

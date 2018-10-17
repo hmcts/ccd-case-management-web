@@ -3,13 +3,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
 import { Observable } from 'rxjs';
 import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
-import { DraftService } from '../../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
-  FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent } from '@hmcts/ccd-case-ui-toolkit';
+  FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
+  DraftService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-case-edit',

@@ -226,6 +226,19 @@ describe('SearchFiltersComponent', () => {
     expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
   });
 
+  it('should select the caseType when no LocalStorage is present', () => {
+    windowService.clearLocalStorage();
+    resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
+    component.jurisdictions = [JURISDICTION_1];
+    fixture.detectChanges();
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+    expect(component.selected.caseType).toBe(CASE_TYPE_1);
+    expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
+  });
+
   it('should initialise jurisdiction selector with given jurisdictions', () => {
     let selector = de.query(By.css('#s-jurisdiction'));
 

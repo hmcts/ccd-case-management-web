@@ -318,4 +318,35 @@ describe('WorkbasketComponent', () => {
       { PersonFirstName: 'CaseFirstName' }, SearchService.VIEW_WORKBASKET);
 
   });
+
+  it('should pick from existing defaults when local storage is empty', () => {
+    windowService.clearLocalStorage();
+    const nameControl1 = new FormControl();
+    const NAME_VALUE1 = 'something';
+    nameControl1.setValue(NAME_VALUE1);
+
+    const nameControl2 = new FormControl();
+    const NAME_VALUE2 = 100;
+    nameControl2.setValue(NAME_VALUE2);
+
+    const filterContents = {
+      'name': nameControl1,
+      '[META]': nameControl2
+    };
+    let formGroup = new FormGroup(filterContents);
+    let filter = {
+      formGroup: formGroup,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      page: 1,
+      metadataFields: ['[META]']
+    };
+    comp.applyFilter(filter);
+    expect(mockPaginationService.getPaginationMetadata)
+      .toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, {}, {});
+
+    expect(mockSearchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, { page: 1 },
+      {}, SearchService.VIEW_WORKBASKET);
+
+  });
 });

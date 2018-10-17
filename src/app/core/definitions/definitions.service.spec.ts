@@ -3,7 +3,8 @@ import { AppConfig } from '../../app.config';
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
 import { DefinitionsService } from './definitions.service';
-import { CaseType } from '../../shared/domain/definition/case-type.model';
+import { CaseTypeLite } from '../../shared/domain/definition/case-type-lite.model';
+import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('DefinitionsService', () => {
@@ -50,23 +51,40 @@ describe('DefinitionsService', () => {
           caseTypesData => expect(caseTypesData).toEqual([createCaseType(CTID), createCaseType(CTID_2)])
         );
     });
-
-    function createCaseType(caseTypeId: string): CaseType {
-      return {
-        id: caseTypeId,
-        name: 'Complex Address Book Case',
-        events: [],
-        states: [],
-        case_fields: [],
-        description: 'Complex Address Book Case',
-        jurisdiction: {
-          id: 'PROBATE',
-          name: 'Probate',
-          description: 'Content for the Test Jurisdiction.',
-          caseTypes: []
-        }
-      };
-    }
-
   });
+
+  describe('getJurisdictions()', () => {
+    beforeEach(() => {
+      httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+        body: JSON.stringify([createJurisdiction('jId1'), createJurisdiction('jId2')])
+      }))));
+    });
+
+    it('should retrieve jurisdiction from server', () => {
+      definitionsService
+        .getJurisdictions('create')
+        .subscribe(
+          jurisdictionData => expect(jurisdictionData).toEqual([createJurisdiction('jId1'), createJurisdiction('jId2')])
+        );
+    });
+  });
+
+  function createCaseType(caseTypeId: string): CaseTypeLite {
+    return {
+      id: caseTypeId,
+      name: 'Complex Address Book Case',
+      events: [],
+      states: [],
+      description: 'Complex Address Book Case'
+    };
+  }
+
+  function createJurisdiction(jurisdictionId: string): Jurisdiction {
+    return {
+      id: jurisdictionId,
+      name: 'Probate',
+      description: 'Content for the Probate Jurisdiction.',
+      caseTypes: [createCaseType('ct1'), createCaseType('ct2'), createCaseType('ct3')]
+    };
+  }
 });

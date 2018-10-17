@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.model';
-import { CaseType } from '../../../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CaseEvent } from '../../../shared/domain/definition/case-event.model';
 import { Router } from '@angular/router';
@@ -9,6 +8,9 @@ import { CallbackErrorsContext } from '../../../shared/error/error-context';
 import { CallbackErrorsComponent } from '../../../shared/error/callback-errors.component';
 import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { AlertService } from '../../../core/alert/alert.service';
+import { CaseTypeLite } from '../../../shared/domain/definition/case-type-lite.model';
+import { CREATE_ACCESS } from '../../../shared/domain/case-view/access-types.model';
+import { DefinitionsService } from '../../../core/definitions/definitions.service';
 
 @Component({
   selector: 'ccd-create-case-filters',
@@ -16,23 +18,20 @@ import { AlertService } from '../../../core/alert/alert.service';
   styleUrls: ['./create-case-filters.scss']
 })
 export class CreateCaseFiltersComponent implements OnInit {
-
-  @Input()
-  jurisdictions: Jurisdiction[];
-
   @Input()
   formGroup: FormGroup = new FormGroup({});
 
+  jurisdictions: Jurisdiction[];
   callbackErrorsSubject: Subject<any> = new Subject();
 
   selected: {
     jurisdiction?: Jurisdiction,
-    caseType?: CaseType,
+    caseType?: CaseTypeLite,
     event?: CaseEvent,
     formGroup?: FormGroup
   };
 
-  selectedJurisdictionCaseTypes?: CaseType[];
+  selectedJurisdictionCaseTypes?: CaseTypeLite[];
   selectedCaseTypeEvents?: CaseEvent[];
 
   filterJurisdictionControl: FormControl;
@@ -44,6 +43,7 @@ export class CreateCaseFiltersComponent implements OnInit {
   error: HttpError;
 
   constructor(private router: Router,
+              private definitionsService: DefinitionsService,
               private orderService: OrderService,
               private alertService: AlertService) {
   }
@@ -51,7 +51,11 @@ export class CreateCaseFiltersComponent implements OnInit {
   ngOnInit(): void {
     this.selected = {};
     this.initControls();
-    this.selectJurisdiction(this.jurisdictions, this.filterJurisdictionControl);
+    this.definitionsService.getJurisdictions(CREATE_ACCESS)
+      .subscribe(jurisdictions => {
+        this.jurisdictions = jurisdictions;
+        this.selectJurisdiction(this.jurisdictions, this.filterJurisdictionControl);
+      });
   }
 
   onJurisdictionIdChange(): void {
@@ -126,7 +130,7 @@ export class CreateCaseFiltersComponent implements OnInit {
     }
   }
 
-  private selectCaseType(caseTypes: CaseType[], filterCaseTypeControl: FormControl) {
+  private selectCaseType(caseTypes: CaseTypeLite[], filterCaseTypeControl: FormControl) {
     if (caseTypes.length === 1) {
       filterCaseTypeControl.setValue(caseTypes[0].id);
       this.onCaseTypeIdChange();
@@ -144,7 +148,7 @@ export class CreateCaseFiltersComponent implements OnInit {
     return jurisdictions.find(j => j.id === id);
   }
 
-  private findCaseType(caseTypes: CaseType[], id: string): CaseType {
+  private findCaseType(caseTypes: CaseTypeLite[], id: string): CaseTypeLite {
     return caseTypes.find(caseType => caseType.id === id);
   }
 
@@ -199,5 +203,4 @@ export class CreateCaseFiltersComponent implements OnInit {
   private isEmpty(value: any): boolean {
     return value === null || value === undefined;
   }
-
 }

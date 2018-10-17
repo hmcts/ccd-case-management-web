@@ -1,8 +1,8 @@
 
 import { ActivityService } from './activity.service';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
 import { Observable } from 'rxjs';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 let httpService: any;
 let appConfig: any;

@@ -1,10 +1,10 @@
 import { Response, ResponseOptions, URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import { AppConfig } from '../../app.config';
 import createSpyObj = jasmine.createSpyObj;
-import { HttpService } from '../http/http.service';
 import { PaginationService } from './pagination.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RequestOptionsBuilder } from '../request.options.builder';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('PaginationService', () => {
 

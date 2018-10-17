@@ -5,10 +5,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { CaseEditConfirmComponent } from './case-edit-confirm.component';
-import { WizardPage } from '../domain/wizard-page.model';
-import { MarkdownModule } from '../markdown/markdown.module';
 import { By } from '@angular/platform-browser';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
+import { WizardPage, MarkdownModule, CaseReferencePipe } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseEditConfirmComponent', () => {
   let fixture: ComponentFixture<CaseEditConfirmComponent>;

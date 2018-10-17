@@ -68,3 +68,6 @@ package-lock.json
 
 # Protractor test report
 test-report
+
+# Cucumber report
+test/functional-test/results

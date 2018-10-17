@@ -1,7 +1,7 @@
 import { SearchResultViewColumn } from './search-result-view-column.model';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { Type } from 'class-transformer';
-import { Draft } from '../domain/draft';
+import { Draft } from '@hmcts/ccd-case-ui-toolkit';
 
 export class SearchResultView {
   @Type(() => SearchResultViewColumn)

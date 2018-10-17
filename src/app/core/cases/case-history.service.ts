@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
 import { CaseHistory } from './case-history.model';
 import { plainToClass } from 'class-transformer';
-import { HttpErrorService } from '../http/http-error.service';
+import { HttpService, HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class CaseHistoryService {

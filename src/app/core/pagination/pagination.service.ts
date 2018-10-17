@@ -4,8 +4,8 @@ import { RequestOptionsArgs } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 import { PaginationMetadata } from '../../shared/search/pagination-metadata.model';
-import { HttpService } from '../http/http.service';
 import { RequestOptionsBuilder } from '../request.options.builder';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class PaginationService {

@@ -3,15 +3,15 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { CaseEventData, AbstractAppConfig, Config } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
-import { CaseEventData } from './shared/domain/case-event-data';
 
 @Injectable()
-export class AppConfig {
+export class AppConfig extends AbstractAppConfig {
 
-  protected config: Config;
-
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+    super();
+  }
 
   public load(): Promise<void> {
     console.log('Loading app config...');
@@ -144,34 +144,11 @@ export class AppConfig {
       + `/case-history`;
   }
 
-  public getDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
+  public getCreateOrUpdateDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
     return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
   }
-}
 
-export class Config {
-  activity_batch_collection_delay_ms: number;
-  activity_max_request_per_batch: number;
-  activity_next_poll_request_ms: number;
-  activity_retry: number;
-  activity_url: string;
-  api_url: string;
-  case_data_url: string;
-  document_management_url: string;
-  login_url: string;
-  logout_url: string;
-  oauth2_client_id: string;
-  oauth2_token_endpoint_url: string;
-  pagination_page_size: number;
-  postcode_lookup_url: string;
-  print_service_url: string;
-  remote_document_management_url: string;
-  remote_print_service_url: string;
-  smart_survey_url: string;
-  payments_url: string;
-  unsupported_browser_url: string;
-  chrome_min_required_version: number;
-  ie_min_required_version: number;
-  edge_min_required_version: number;
-  firefox_min_required_version: number;
+  public getViewOrDeleteDraftsUrl(jid: string, ctid: string, did: string) {
+    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${did}`;
+  }
 }

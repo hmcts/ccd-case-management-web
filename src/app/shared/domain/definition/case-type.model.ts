@@ -1,6 +1,6 @@
 import { CaseEvent } from './case-event.model';
 import { CaseState } from './case-state.model';
-import { CaseField } from './case-field.model';
+import { CaseField } from '@hmcts/ccd-case-ui-toolkit';
 import { Jurisdiction } from './jurisdiction.model';
 
 export class CaseType {

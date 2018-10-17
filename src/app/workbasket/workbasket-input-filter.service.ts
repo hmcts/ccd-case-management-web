@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-import { HttpService } from '../core/http/http.service';
 import { AppConfig } from '../app.config';
 import { WorkbasketInputModel } from './workbasket-input.model';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class WorkbasketInputFilterService {

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CaseHistory } from '../../core/cases/case-history.model';
-import { OrderService } from '../../core/order/order.service';
 import { CaseTab } from '../../core/cases/case-tab.model';
-import { ShowCondition } from '../conditional-show/conditional-show.model';
+import { ShowCondition, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-history.component.html',

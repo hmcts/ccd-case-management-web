@@ -11,7 +11,7 @@ import { PaginationService } from '../core/pagination/pagination.service';
 import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { SearchResultComponent } from '../shared/search/search-result.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AlertService } from '../core/alert/alert.service';
 import { plainToClass } from 'class-transformer';
 
@@ -95,9 +95,8 @@ export class WorkbasketComponent implements OnInit {
           this.caseState = filter.caseState;
           this.page = filter.page;
           this.paginationMetadata = results[1];
-          if (this.resultView.result_error) {
-            this.alertService.warning(this.resultView.result_error);
-          }
+          // Clearing the errors is only on the assumption this is the only place we display errors on case list page
+          this.resultView.result_error ? this.alertService.warning(this.resultView.result_error) : this.alertService.clear();
         });
 
     this.scrollToTop();

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CasesService } from '../../core/cases/cases.service';
 import { AlertService } from '../../core/alert/alert.service';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { Observable } from 'rxjs/Observable';
-import { CaseEventData } from '../../shared/domain/case-event-data';
+import { CaseEventTrigger, CaseEventData, Draft, CaseReferencePipe } from '@hmcts/ccd-case-ui-toolkit';
+import { Observable } from 'rxjs';
 import { EventStatusService } from '../../core/cases/event-status.service';
 import { DraftService } from '../../core/draft/draft.service';
-import { Draft } from '../../shared/domain/draft';
+import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -27,7 +25,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private route: ActivatedRoute,
-    private caseReferencePipe: CaseReferencePipe,
+    private caseReferencePipe: CaseReferencePipe
   ) {
     this.eventTrigger = route.snapshot.data.eventTrigger;
   }
@@ -53,9 +51,9 @@ export class CaseCreatorSubmitComponent implements OnInit {
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
     if (this.eventTrigger.can_save_draft) {
       return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.jurisdictionId,
-        this.caseTypeId,
-        this.eventTrigger.case_id,
-        caseEventData);
+            this.caseTypeId,
+            this.eventTrigger.case_id,
+            caseEventData);
     }
   }
 
@@ -74,8 +72,40 @@ export class CaseCreatorSubmitComponent implements OnInit {
     });
   }
 
-  cancel(): Promise<boolean> {
-    return this.router.navigate(['/create/case']);
+  cancel(event: any): Promise<boolean> {
+    switch (event.status) {
+      case CaseEditPageComponent.NEW_FORM_DISCARD:
+        return this.router.navigate(['list/case']);
+      case CaseEditPageComponent.RESUMED_FORM_DISCARD:
+        return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
+      case CaseEditPageComponent.NEW_FORM_SAVE:
+        this.saveDraft().call(null, event.data).subscribe(_ => {
+          return this.router.navigate(['list/case'])
+            .then(() => {
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.success(`The draft has been successfully saved`);
+            })
+        }, error => {
+          console.log('error=', error);
+          this.alertService.setPreserveAlerts(true);
+          this.alertService.warning(error.message);
+          this.router.navigate(['list/case'])
+        });
+        break;
+      case CaseEditPageComponent.RESUMED_FORM_SAVE:
+        this.saveDraft().call(null, event.data).subscribe(_ => {
+          return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
+            .then(() => {
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.success(`The draft has been successfully saved`);
+            })
+          }, error => {
+            console.log('error=', error);
+            this.alertService.setPreserveAlerts(true);
+            this.alertService.warning(error.message);
+        });
+        break;
+    }
   }
 
   private alertSuccess(eventStatus, caseReference) {
@@ -96,7 +126,8 @@ export class CaseCreatorSubmitComponent implements OnInit {
         this.alertService.warning(`Case #${caseReference} has been created but the callback service cannot be completed`);
         break;
       case EventStatusService.DELETE_DRAFT_STATUS_INCOMPLETE:
-        this.alertService.warning(`Case #${caseReference} has been created. The draft is placed in a queue and will be deleted shortly`);
+        this.alertService.warning(`Case #${caseReference} has been created. The draft store is currently down so the draft
+         was not deleted.`);
         break;
     }
   }

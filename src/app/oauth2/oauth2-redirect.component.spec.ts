@@ -1,12 +1,12 @@
 import { OAuth2RedirectComponent } from './oauth2-redirect.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuth2Service } from '../core/auth/oauth2.service';
 import createSpyObj = jasmine.createSpyObj;
-import { AuthService } from '../core/auth/auth.service';
+import { AuthService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('OAuth2RedirectComponent', () => {
   const ROUTE_WITH_CODE = {

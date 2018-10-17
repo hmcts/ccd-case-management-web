@@ -13,7 +13,7 @@ import { AppConfig } from '../../app.config';
 import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe } from '../utils/case-reference.pipe';
+import { CaseReferencePipe, DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',
@@ -71,6 +71,7 @@ export class SearchResultComponent implements OnChanges {
 
   sortParameters: SortParameters;
   searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory;
+  draftsCount: number;
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
               appConfig: AppConfig,
@@ -97,6 +98,8 @@ export class SearchResultComponent implements OnChanges {
       this.resultView.columns = this.resultView.columns.sort((a: SearchResultViewColumn, b: SearchResultViewColumn) => {
         return a.order - b.order;
       });
+
+      this.draftsCount = this.draftsCount ? this.draftsCount : this.numberOfDrafts();
     }
     if (changes['page']) {
       this.selected.page = (changes['page']).currentValue;
@@ -150,6 +153,10 @@ export class SearchResultComponent implements OnChanges {
       : result.case_fields[col.case_field_id];
   }
 
+  draftPrefixOrGet(col, result): any {
+    return result.case_id.startsWith(DRAFT_PREFIX) ? DRAFT_PREFIX : this.hyphenateIfCaseReferenceOrGet(col, result);
+  }
+
   private isSortAscending(column: SearchResultViewColumn): boolean {
     let currentSortOrder = this.currentSortOrder(column);
     return currentSortOrder === SortOrder.UNSORTED || currentSortOrder === SortOrder.DESCENDING;
@@ -173,11 +180,22 @@ export class SearchResultComponent implements OnChanges {
 
   getFirstResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + 1
+    return ( (currentPage - 1) * this.paginationPageSize ) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getLastResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length;
+    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
+  }
+
+  getTotalResults(): number {
+    return this.paginationMetadata.total_results_count + this.draftsCount;
+  }
+
+  private getDraftsCountIfNotPageOne(currentPage): number {
+    return currentPage > 1 ? this.draftsCount : 0;
+  }
+  private numberOfDrafts(): number {
+    return this.resultView.results.filter(_ => _.case_id.startsWith(DRAFT_PREFIX)).length;
   }
 }

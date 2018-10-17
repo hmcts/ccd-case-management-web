@@ -1,10 +1,10 @@
 import { Response, ResponseOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
-import { HttpService } from '../core/http/http.service';
 import { WorkbasketInputModel } from './workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('DefinitionsService', () => {
   const API_DATA_URL = 'http://data.ccd.reform/aggregated';

@@ -2,18 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, Input } from '@angular/core';
 import { WorkbasketFiltersComponent } from './workbasket-filters.component';
 import { By } from '@angular/platform-browser';
-import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
-import { CaseType } from '../../shared/domain/definition/case-type.model';
-import { AlertService } from '../../core/alert/alert.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
-import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService, Jurisdiction, CaseType, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-write',

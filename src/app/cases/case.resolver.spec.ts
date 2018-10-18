@@ -1,9 +1,8 @@
 import { CaseResolver } from './case.resolver';
 import { Observable } from 'rxjs';
-import { AlertService } from '../core/alert/alert.service';
 import { DraftService } from '../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseView } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseView, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseResolver', () => {
   describe('resolve()', () => {

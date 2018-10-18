@@ -30,7 +30,6 @@ withNightlyPipeline(type, product, app) {
     loadVaultSecrets(secrets)
     
     enableSlackNotifications('#ccd-nightly-builds')
-    enableCrossBrowserTest()
 
     afterCheckout {
         sh "yarn cache clean"

@@ -2,10 +2,9 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import { CasesService } from '../../core/cases/cases.service';
-import { AlertService } from '../../core/alert/alert.service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { HttpError, CaseView } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpError, CaseView, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 import { Injectable } from '@angular/core';
 
 @Injectable()

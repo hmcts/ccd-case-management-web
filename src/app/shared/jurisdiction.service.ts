@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Jurisdiction } from './domain/definition/jurisdiction.model';
+import { Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class JurisdictionService {

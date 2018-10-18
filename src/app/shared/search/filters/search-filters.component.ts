@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Jurisdiction } from '../../domain/definition/jurisdiction.model';
-import { CaseState } from '../../domain/definition/case-state.model';
 import { SearchService } from '../../../core/search/search.service';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { FormGroup } from '@angular/forms';
 import { JurisdictionService } from '../../jurisdiction.service';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseState, Jurisdiction, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseTypeLite } from '../../domain/definition/case-type-lite.model';
 
 @Component({

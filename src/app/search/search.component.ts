@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Profile } from '../core/profile/profile.model';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
 import { SearchService } from '../core/search/search.service';
 import { FormGroup } from '@angular/forms/forms';
-import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
-import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
-import { CaseType } from '../shared/domain/definition/case-type.model';
-import { AlertService } from '../core/alert/alert.service';
 import { plainToClass } from 'class-transformer';
+import { Jurisdiction, Profile, CaseType, CaseState, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 const ATTRIBUTE_SEPERATOR = '.';
 

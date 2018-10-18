@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../app.config';
-import { CaseType } from '../../shared/domain/definition/case-type.model';
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import { CaseTypeLite } from '../../shared/domain/definition/case-type-lite.model';

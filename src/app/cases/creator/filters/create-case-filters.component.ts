@@ -1,13 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Jurisdiction } from '../../../shared/domain/definition/jurisdiction.model';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CaseEvent } from '../../../shared/domain/definition/case-event.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import { CallbackErrorsContext } from '../../../shared/error/error-context';
-import { CallbackErrorsComponent } from '../../../shared/error/callback-errors.component';
-import { HttpError, OrderService } from '@hmcts/ccd-case-ui-toolkit';
-import { AlertService } from '../../../core/alert/alert.service';
+import { HttpError, OrderService, CaseEvent, AlertService, CallbackErrorsComponent, Jurisdiction,
+  CaseType, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { CaseTypeLite } from '../../../shared/domain/definition/case-type-lite.model';
 import { CREATE_ACCESS } from '../../../shared/domain/case-view/access-types.model';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';

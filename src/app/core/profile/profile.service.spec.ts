@@ -1,11 +1,10 @@
 import { ProfileService } from './profile.service';
-import { Profile } from './profile.model';
 import { AppConfig } from '../../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
 import { Response, ResponseOptions } from '@angular/http';
 import { createAProfile } from './profile.test.fixture';
-import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Profile } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('ProfileService', () => {
 

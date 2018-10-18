@@ -7,15 +7,13 @@ import { MockComponent } from 'ng2-mock-component';
 import { Observable } from 'rxjs';
 import { attr, text } from '../../test/helpers';
 import { Subject } from 'rxjs/Subject';
-import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
-  CaseView } from '@hmcts/ccd-case-ui-toolkit';
+  CaseView, AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
-import { AlertService } from '../../core/alert/alert.service';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 
 @Component({

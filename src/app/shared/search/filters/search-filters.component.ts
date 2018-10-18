@@ -1,14 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Jurisdiction } from '../../domain/definition/jurisdiction.model';
-import { CaseState } from '../../domain/definition/case-state.model';
-import { CaseType } from '../../domain/definition/case-type.model';
 import { SearchService } from '../../../core/search/search.service';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { WindowService } from '../../../core/utils/window.service';
 import { FormGroup } from '@angular/forms';
 import { PlatformLocation } from '@angular/common'
 import { JurisdictionService } from '../../jurisdiction.service';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { OrderService, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-filters',

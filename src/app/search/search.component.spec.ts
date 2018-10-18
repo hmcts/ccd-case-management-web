@@ -1,12 +1,10 @@
 import { async } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
 import { WindowService } from '../core/utils/window.service';
 import { Observable } from 'rxjs/Rx';
-import { CaseState } from '../shared/domain/definition/case-state.model';
-import { CaseType } from '../shared/domain/definition/case-type.model';
 import createSpyObj = jasmine.createSpyObj;
+import { Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 const workbasterfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
     + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`

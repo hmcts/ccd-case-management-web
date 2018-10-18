@@ -6,18 +6,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { SortSearchResultPipe } from './sorting/sort-search-result.pipe';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
-import { Jurisdiction } from '../domain/definition/jurisdiction.model';
 import { ActivityService } from '../../core/activity/activity.service';
 import { MockComponent } from 'ng2-mock-component';
 import { PaginationMetadata } from './pagination-metadata.model';
 import { PaginatePipe, PaginationService } from 'ngx-pagination';
-import { CaseState } from '../domain/definition/case-state.model';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { AppConfig } from '../../app.config';
-import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseReferencePipe, DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-read',

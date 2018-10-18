@@ -6,14 +6,11 @@ import { SearchResultViewItemComparator } from './sorting/search-result-view-ite
 import { SortParameters } from './sorting/sort-parameters';
 import { SortOrder } from './sorting/sort-order';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
-import { Jurisdiction } from '../domain/definition/jurisdiction.model';
-import { CaseState } from '../domain/definition/case-state.model';
 import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
-import { CaseType } from '../domain/definition/case-type.model';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe, DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',

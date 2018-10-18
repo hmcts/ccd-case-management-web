@@ -5,8 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
 import 'rxjs/add/operator/do';
-import { OrderService, Jurisdiction, AlertService, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
-import { CaseTypeLite } from '../../shared/domain/definition/case-type-lite.model';
+import { OrderService, Jurisdiction, AlertService, CaseState, CaseTypeLite } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-workbasket-filters',

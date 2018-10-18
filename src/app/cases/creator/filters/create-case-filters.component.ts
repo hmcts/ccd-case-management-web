@@ -3,8 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { HttpError, OrderService, CaseEvent, AlertService, CallbackErrorsComponent, Jurisdiction,
-  CaseType, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
-import { CaseTypeLite } from '../../../shared/domain/definition/case-type-lite.model';
+  CaseTypeLite, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { CREATE_ACCESS } from '../../../shared/domain/case-view/access-types.model';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
 

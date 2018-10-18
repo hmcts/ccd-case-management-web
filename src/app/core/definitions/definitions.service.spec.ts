@@ -1,10 +1,8 @@
 import { Response, ResponseOptions } from '@angular/http';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseTypeLite, HttpService, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
 import { DefinitionsService } from './definitions.service';
-import { CaseTypeLite } from '../../shared/domain/definition/case-type-lite.model';
-import { Jurisdiction } from '../../shared/domain/definition/jurisdiction.model';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('DefinitionsService', () => {

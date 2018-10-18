@@ -3,8 +3,7 @@ import { SearchService } from '../../../core/search/search.service';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { FormGroup } from '@angular/forms';
 import { JurisdictionService } from '../../jurisdiction.service';
-import { CaseState, Jurisdiction, OrderService } from '@hmcts/ccd-case-ui-toolkit';
-import { CaseTypeLite } from '../../domain/definition/case-type-lite.model';
+import { CaseState, CaseTypeLite, Jurisdiction, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-filters',

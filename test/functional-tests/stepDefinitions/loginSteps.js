@@ -34,8 +34,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^I have logged in$/, async function () {
       loginPage = await Login.open();
-      caseListPage = await loginPage.loginToApp(); //why does returning a new object like this not work?
-      // caseListPage = new CaseListPage();
+      caseListPage = await loginPage.loginToApp();
 
       expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });

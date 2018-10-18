@@ -1,9 +1,25 @@
-  async function Field(element){
+//Experimental class - Ignore
+
+async function Field(element){
+  console.log('pppppppppppppp')
     this.element = element;
     this.optional = isOptionalBoolean(element);
-    this.label = getLabel(element)
+    this.label = getLabel(element);
+    this.tagName = getTag(element);
+
+
+    async function toString() {
+      console.log(`label=${this.label} | tag=${this.tagName}`)
+    }
     // this.fieldType = tod
   }
+
+  async function getTag(element){
+      let tag = await element.getTagName();
+      console.log(tag);
+      return tag;
+  }
+
 
 
   async function getLabel(element) {
@@ -29,4 +45,5 @@
     return optional;
 
   }
+
 

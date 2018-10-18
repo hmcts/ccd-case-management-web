@@ -292,9 +292,9 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.2.14":
-  version "1.2.14"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.14.tgz#270efb0b7cc051f04928ca48fbc8aadc78f58ce1"
+"@hmcts/ccd-case-ui-toolkit@1.2.20":
+  version "1.2.20"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.20.tgz#b791adf529a91e6a0ddd836088e52601b5e906e1"
   dependencies:
     govuk-elements-sass "^3.1.2"
     karma-jasmine-html-reporter "^1.2.0"

@@ -1,5 +1,4 @@
-import { AppConfig } from './app.config';
-import { Config } from '@hmcts/ccd-case-ui-toolkit';
+import { AppConfig, Config } from './app.config';
 
 export class AppServerConfig extends AppConfig {
   constructor(config: Config) {

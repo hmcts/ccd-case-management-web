@@ -17,7 +17,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
-      await createCaseStartPage.selectJurisdiction('Test');
+      await createCaseStartPage.selectJurisdiction('AUTOTEST1');
       await createCaseStartPage.selectCaseType('All Data Types');
       await createCaseStartPage.selectEvent('Create a case');
       await createCaseStartPage.clickStartButton();
@@ -29,10 +29,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I navigate to the case creation form page$/, async function () {
     await navigateToCreateCasePage()
-  });
-
-  Then(/^I print console output of the fields on the page$/, async function () {
-    console.log('should be on the wizard page now')
   });
 
   Then(/^I should see a '(.*)' field$/, async function(dataType) {

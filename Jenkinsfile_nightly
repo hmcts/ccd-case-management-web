@@ -33,7 +33,7 @@ withNightlyPipeline(type, product, app) {
     enableSlackNotifications('#ccd-nightly-builds')
     enableFullFunctionalTest()
     //enablesmokeTest()
-    //enableCrossBrowserTest()
+    enableCrossBrowserTest()
 
     afterCheckout {
         sh "yarn cache clean"

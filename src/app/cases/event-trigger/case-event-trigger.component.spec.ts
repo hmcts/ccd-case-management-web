@@ -3,14 +3,13 @@ import { CaseEventTriggerComponent } from './case-event-trigger.component';
 import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaseView } from '../../core/cases/case-view.model';
 import { CasesService } from '../../core/cases/cases.service';
 import { Observable } from 'rxjs';
-import { AlertService } from '../../core/alert/alert.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, CaseEventTrigger } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, CaseEventTrigger,
+  CaseView, AlertService} from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-case-edit',

@@ -6,7 +6,8 @@ import { CaseResolver } from './case.resolver';
 import { CaseViewerComponent } from './viewer/case-viewer.component';
 import { PaletteModule, PaletteUtilsModule, ConditionalShowModule, MarkdownModule,
   LabelSubstitutionService, RemoveDialogComponent, CaseReferencePipe, LabelSubstitutorModule,
-  FieldsPurger } from '@hmcts/ccd-case-ui-toolkit';
+  FieldsPurger, PageValidationService, CallbackErrorsComponent, CaseEditConfirmComponent, CaseEditComponent,
+  CaseEditPageComponent, CaseEditFormComponent, CaseEditSubmitComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
@@ -17,17 +18,10 @@ import { CasePrinterComponent } from './printer/case-printer.component';
 import { CasePrintDocumentsResolver } from './printer/case-print-documents.resolver';
 import { CaseCreatorSubmitComponent } from './creator/case-creator-submit.component';
 import { CreateCaseEventTriggerResolver } from './creator/create-case-event-trigger.resolver';
-import { CaseEditComponent } from '../shared/case-editor/case-edit.component';
-import { CallbackErrorsComponent } from '../shared/error/callback-errors.component';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
-import { CaseEditPageComponent } from '../shared/case-editor/case-edit-page.component';
-import { CaseEditSubmitComponent } from '../shared/case-editor/case-edit-submit.component';
-import { CaseEditFormComponent } from '../shared/case-editor/case-edit-form.component';
-import { CaseEditConfirmComponent } from '../shared/case-editor/case-edit-confirm.component';
 import { PrintUrlPipe } from './printer/print-url.pipe';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PageValidationService } from '../shared/case-editor/page-validation.service';
 
 @NgModule({
   imports: [

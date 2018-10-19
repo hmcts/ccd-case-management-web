@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CasesService } from '../../core/cases/cases.service';
-import { AlertService } from '../../core/alert/alert.service';
-import { CaseEventTrigger, CaseEventData, Draft, CaseReferencePipe } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, CaseEventData, Draft, CaseReferencePipe, CaseEditPageComponent, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
 import { EventStatusService } from '../../core/cases/event-status.service';
 import { DraftService } from '../../core/draft/draft.service';
-import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-creator-submit',

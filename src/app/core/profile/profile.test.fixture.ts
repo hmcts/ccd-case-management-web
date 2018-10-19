@@ -1,4 +1,4 @@
-import { Profile } from './profile.model';
+import { Profile } from '@hmcts/ccd-case-ui-toolkit';
 
 export let createAProfile = () => {
   const p = new Profile();

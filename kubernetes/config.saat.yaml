@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${SERVICE_NAME}-config
+  namespace: ${NAMESPACE}
+data:
+  IDAM_LOGIN_URL: "https://idam-test.dev.ccidam.reform.hmcts.net/login"
+  CCD_GW_LOGOUT_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/logout"
+  CCD_API_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/aggregated"
+  CCD_DATA_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/data"
+  CCD_GW_OAUTH2_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/oauth2"
+  CCD_GW_OAUTH2_CLIENT_ID: "ccd_gateway"
+  DM_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/documents"
+  DM_URL_REMOTE: "^https?://(?:api-gateway\\.test\\.dm\\.reform\\.hmcts\\.net|dm-store-saat\\.service\\.core-compute-saat\\.internal(?::\\d+)?)/documents"
+  CCD_PAGE_SIZE: "25"
+  POSTCODE_LOOKUP_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/addresses?postcode=${postcode}"
+  PRINT_SERVICE_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/print"
+  PRINT_SERVICE_URL_REMOTE: "https://ccd-case-print-service-saat.service.core-compute-saat.internal"
+  CCD_ACTIVITY_URL: ""
+  CCD_ACTIVITY_NEXT_POLL_REQUEST_MS: "5000"
+  CCD_ACTIVITY_RETRY: "5"
+  CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: "1"
+  CCD_ACTIVITY_MAX_REQUEST_PER_BATCH: "25"
+  PAYMENTS_URL: "https://ccd-api-gateway-web-saat.service.core-compute-saat.internal/payments"

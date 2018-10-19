@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CaseViewEvent } from '../../core/cases/case-view-event.model';
+import { CaseViewEvent } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-event-log-table',

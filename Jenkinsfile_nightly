@@ -22,7 +22,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
       secretType: 'Secret',
       name: secretName,
       version: '',
-      envVariable: 'saat'
+      envVariable: envVar
     ]
 }
     

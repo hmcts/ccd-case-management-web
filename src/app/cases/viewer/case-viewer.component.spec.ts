@@ -2,22 +2,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 import { CaseViewerComponent } from './case-viewer.component';
 import { By } from '@angular/platform-browser';
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
 import { Observable } from 'rxjs';
-import { CaseViewEvent } from '../../core/cases/case-view-event.model';
-import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { attr, text } from '../../test/helpers';
 import { Subject } from 'rxjs/Subject';
-import { CallbackErrorsContext } from '../../shared/error/error-context';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
-  LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
+  LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
+  CaseView, AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
-import { AlertService } from '../../core/alert/alert.service';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 
 @Component({

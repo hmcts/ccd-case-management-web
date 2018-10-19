@@ -1,4 +1,4 @@
-import { CaseViewEvent } from './case-view-event.model';
+import { CaseViewEvent } from '@hmcts/ccd-case-ui-toolkit';
 
 export let createCaseViewEvent = () => {
   const caseViewEvent = new CaseViewEvent();

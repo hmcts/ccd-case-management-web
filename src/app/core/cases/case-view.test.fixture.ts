@@ -1,5 +1,5 @@
-import { CaseView } from './case-view.model';
 import { createCaseTabArray } from './case-tab.test.fixture';
+import { CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 export let createCaseView = () => {
   const caseView = new CaseView();

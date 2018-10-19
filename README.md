@@ -19,7 +19,7 @@ $ yarn stub-api
 # start the development server
 $ yarn start
 ```
-go to [http://localhost:3451](http://localhost:3451) in your browser.
+go to [http://localhost:3451](http://localhost:3451) in your browser. 
 
 # Table of Contents
 

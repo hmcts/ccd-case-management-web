@@ -3,11 +3,13 @@ import { Http } from '@angular/http';
 import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { CaseEventData, AbstractAppConfig, Config } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventData, AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
 
 @Injectable()
 export class AppConfig extends AbstractAppConfig {
+
+  protected config: Config;
 
   constructor(private http: Http) {
     super();
@@ -151,4 +153,23 @@ export class AppConfig extends AbstractAppConfig {
   public getViewOrDeleteDraftsUrl(jid: string, ctid: string, did: string) {
     return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${did}`;
   }
+}
+
+export class Config extends CaseEditorConfig {
+  activity_batch_collection_delay_ms: number;
+  activity_next_poll_request_ms: number;
+  activity_retry: number;
+  activity_url: string;
+  activity_max_request_per_batch: number;
+  logout_url: string;
+  oauth2_token_endpoint_url: string;
+  pagination_page_size: number;
+  print_service_url: string;
+  remote_print_service_url: string;
+  smart_survey_url: string;
+  unsupported_browser_url: string;
+  chrome_min_required_version: number;
+  ie_min_required_version: number;
+  edge_min_required_version: number;
+  firefox_min_required_version: number;
 }

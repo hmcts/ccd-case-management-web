@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { CaseEventData, AbstractAppConfig, Config } from '@hmcts/ccd-case-ui-toolkit';
@@ -25,7 +25,7 @@ export class AppConfig extends AbstractAppConfig {
         .catch((error: any): any => {
           console.error(`Configuration ${configUrl} could not be read`, error);
           reject();
-          return Observable.throw(error.json().error || 'Server error');
+          return throwError(error.json().error || 'Server error');
         })
         .subscribe((config: Config) => {
           this.config = config;

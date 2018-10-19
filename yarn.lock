@@ -206,10 +206,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser@~6.1.8":
-  version "6.1.10"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-6.1.10.tgz#ef9d6408db7ae9443daa355f3655adeb496f1216"
-  integrity sha512-CB7pqMwtgb7KjdHDAJlsXcs0rrU+2xQVaoOaqEfJtUrKhtGMLaZh8Qoic5l92SoGattkOw7SYarAOsWlAsVfvw==
+"@angular/platform-browser@~7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-7.0.0.tgz#8c13a6380cf465b3628e5b576a1313e9b4976093"
+  integrity sha512-XyvL30d6meJ+SXlOmdR+sxoLdSvkQdmVNvpdvUzAHC/EqwA/byg4V3bTe5lpZmypclgFCjkGoTsz6uOnnwlQhw==
   dependencies:
     tslib "^1.9.0"
 
@@ -324,10 +324,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.2.20":
-  version "1.2.20"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.20.tgz#b791adf529a91e6a0ddd836088e52601b5e906e1"
-  integrity sha512-q+AQyZC4/35UjygQHewk4k1xno+43J6116/ckshs4+MyUk18Zgco7hVy3D11zbnAkFAfKajvduqtiMrRC7BFLg==
+"@hmcts/ccd-case-ui-toolkit@1.2.21":
+  version "1.2.21"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.21.tgz#2bd50052267042d6ea43d5918b4f7ab1d6a22816"
+  integrity sha512-YkL46gV9tfNgkBUGZbcqj1lXaXIxaNGZz+NQ/SggwRo4Faj3ryCe4V9RmOwz4T5xHXaoM8iok/QnuR5YGl8nvw==
   dependencies:
     govuk-elements-sass "^3.1.2"
     karma-jasmine-html-reporter "^1.2.0"

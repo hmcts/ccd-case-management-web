@@ -324,10 +324,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.2.20":
-  version "1.2.20"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.20.tgz#b791adf529a91e6a0ddd836088e52601b5e906e1"
-  integrity sha512-q+AQyZC4/35UjygQHewk4k1xno+43J6116/ckshs4+MyUk18Zgco7hVy3D11zbnAkFAfKajvduqtiMrRC7BFLg==
+"@hmcts/ccd-case-ui-toolkit@1.2.21":
+  version "1.2.21"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.21.tgz#2bd50052267042d6ea43d5918b4f7ab1d6a22816"
+  integrity sha512-YkL46gV9tfNgkBUGZbcqj1lXaXIxaNGZz+NQ/SggwRo4Faj3ryCe4V9RmOwz4T5xHXaoM8iok/QnuR5YGl8nvw==
   dependencies:
     govuk-elements-sass "^3.1.2"
     karma-jasmine-html-reporter "^1.2.0"
@@ -10900,7 +10900,12 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@2.9.2, "typescript@>=2.6.2 <2.10", typescript@~2.9.1:
+typescript@3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.3.tgz#01b70247a6d3c2467f70c45795ef5ea18ce191d5"
+  integrity sha512-+81MUSyX+BaSo+u2RbozuQk/UWx6hfG0a5gHu4ANEM4sU96XbuIyAB+rWBW1u70c6a5QuZfuYICn3s2UjuHUpA==
+
+"typescript@>=2.6.2 <2.10", typescript@~2.9.1:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
   integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==

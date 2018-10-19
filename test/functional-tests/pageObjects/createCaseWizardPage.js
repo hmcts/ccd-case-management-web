@@ -22,7 +22,7 @@ class CreateCaseWizardPage extends BasePage{
    */
     async isFieldPresent(fieldDataType){
         let css = await new FieldUtils().getFieldCSS(fieldDataType);
-        return  $(css).isDisplayed();
+        return await $(css).isDisplayed();
     }
 
   /**

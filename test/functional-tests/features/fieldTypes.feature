@@ -34,14 +34,14 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | TextArea  |
       | Number    |
       | Money-gbp |
-#      | Date      |
-#      | Document  |
+      | Date      |
       | Email     |
-#      | Fixed-List|
-#      | Phone UK  |
-#      | Yes-No    |
-#      | Collection|
-#      | Complex   |
+      | Fixed-List|
+      | Phone UK  |
+      | Yes-No    |
+#      | Collection| TODO
+#      | Complex   | TODO
+
 
 
 

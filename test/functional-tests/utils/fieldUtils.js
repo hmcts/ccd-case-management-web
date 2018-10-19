@@ -1,6 +1,8 @@
 let CustomError = require('./errors/custom-error.js');
-TextField = require('../pageObjects/ccd-components/fields/textField.js');
+TextField = require('../pageObjects/ccd-components/fields/ccdStringField.js');
 DateField = require('../pageObjects/ccd-components/fields/dateField.js');
+FixedList = require('../pageObjects/ccd-components/fields/fixedList.js');
+YesNoField = require('../pageObjects/ccd-components/fields/yesNoField.js');
 TextAreaField = require('../pageObjects/ccd-components/fields/textAreaField.js');
 
 class FieldDataTypes {
@@ -40,6 +42,12 @@ class FieldDataTypes {
     return textField;
   }
 
+  async enterIntoPhoneField(){
+    let css = await fields.PHONE_NUMBER.cssTag;
+    let phoneField = await new TextField(css);
+    await phoneField.enterPhoneNumber();
+    return phoneField;
+  }
 
   async enterIntoDateField(){
     let css = await fields.DATE.cssTag;
@@ -48,82 +56,94 @@ class FieldDataTypes {
     return dateField;
   }
 
+  async selectFromFixedList(){
+    let css = await fields.FIXED_LIST.cssTag;
+    let fixedListField = await new FixedList(css);
+    await fixedListField.selectOption();
+    return fixedListField;
+  }
+
+  async selectYesNoOption(){
+    let css = await fields.YES_NO.cssTag;
+    let yesNoField = await new YesNoField(css);
+    await yesNoField.selectOption();
+    return yesNoField;
+  }
+
+  async interactWithField(dataType){
+    let dt = dataType.toLowerCase();
+    switch(dt) {
+      case 'text':
+        return await this.enterIntoTextField();
+      case 'textarea':
+        return await this.enterIntoTextAreaField();
+      case 'number':
+        return await this.enterIntoNumberField();
+      case 'address':
+        return //todo
+      case 'money-gbp':
+        return await this.enterIntoMoneyField();
+      case 'date':
+        return await this.enterIntoDateField();
+      case 'document':
+        return //todo
+      case 'email':
+        return await this.enterIntoEmailField();
+      case 'fixed-list':
+        return await this.selectFromFixedList();
+      case 'phone uk':
+        return await this.enterIntoPhoneField();
+      case 'yes-no':
+        return await this.selectYesNoOption();
+      case 'collection':
+        return //todo
+      case 'complex':
+        return //todo
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
 
 
-    async interactWithField(dataType){
-      let dt = dataType.toLowerCase();
-      switch(dt) {
-        case 'text':
-          return await this.enterIntoTextField();
-        case 'textarea':
-          return await this.enterIntoTextAreaField();
-        case 'number':
-          return await this.enterIntoNumberField();
-        case 'address':
+  async getFieldCSS(dataType){
+    switch(dataType.toLowerCase()) {
+      case 'text':
+          return fields.TEXT.cssTag;
+      case 'textarea':
+          return fields.TEXT_AREA.cssTag;
+      case 'number':
+          return fields.NUMBER.cssTag;
+      case 'address':
           return fields.ADDRESS.cssTag;
-        case 'money-gbp':
-          return await this.enterIntoMoneyField();
-        case 'date':
-          return await this.enterIntoDateField();
-        case 'document':
+      case 'money-gbp':
+          return fields.MONEY_GBP.cssTag;
+      case 'date':
+          return fields.DATE.cssTag;
+      case 'document':
           return fields.DOCUMENT.cssTag;
-        case 'email':
-          return await this.enterIntoEmailField();
-        case 'fixed-list':
+      case 'email':
+          return fields.EMAIL.cssTag;
+      case 'fixed-list':
           return fields.FIXED_LIST.cssTag;
-        case 'phone uk':
+      case 'phone uk':
           return fields.PHONE_NUMBER.cssTag;
-        case 'yes-no':
+      case 'yes-no':
           return fields.YES_NO.cssTag;
-        case 'collection':
+      case 'collection':
           return fields.COLLECTION.cssTag;
-        case 'complex':
+      case 'complex':
           return fields.COMPLEX_TYPE.cssTag;
-        default:
-          throw new CustomError(`could not find a data type called '${dataType}'`)
-      }
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
     }
-
-
-    async getFieldCSS(dataType){
-      switch(dataType.toLowerCase()) {
-        case 'text':
-            return fields.TEXT.cssTag;
-        case 'textarea':
-            return fields.TEXT_AREA.cssTag;
-        case 'number':
-            return fields.NUMBER.cssTag;
-        case 'address':
-            return fields.ADDRESS.cssTag;
-        case 'money-gbp':
-            return fields.MONEY_GBP.cssTag;
-        case 'date':
-            return fields.DATE.cssTag;
-        case 'document':
-            return fields.DOCUMENT.cssTag;
-        case 'email':
-            return fields.EMAIL.cssTag;
-        case 'fixed-list':
-            return fields.FIXED_LIST.cssTag;
-        case 'phone uk':
-            return fields.PHONE_NUMBER.cssTag;
-        case 'yes-no':
-            return fields.YES_NO.cssTag;
-        case 'collection':
-            return fields.COLLECTION.cssTag;
-        case 'complex':
-            return fields.COMPLEX_TYPE.cssTag;
-        default:
-          throw new CustomError(`could not find a data type called '${dataType}'`)
-      }
-    }
+  }
 
 }
 
 module.exports = FieldDataTypes;
 
 
-const fields = {
+const fields = Object.freeze({
   TEXT: {
     cssTag: 'ccd-write-text-field'
   },
@@ -171,4 +191,4 @@ const fields = {
   },
 
 
-};
+});

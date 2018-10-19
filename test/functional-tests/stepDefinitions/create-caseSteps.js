@@ -36,7 +36,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
-      this.fieldDisplayed = await new CreateCaseWizardPage().isFieldPresent(dataType);
+      let fieldDisplayed = await new CreateCaseWizardPage().isFieldPresent(dataType);
       expect(fieldDisplayed).to.be.true;
   });
 
@@ -57,8 +57,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(expectedValue).to.equal(value);
   });
 
+
   Given(/^a case type containing every field type exists$/, function() {
-    // Placeholder for uploading a definition file
+    // todo : Placeholder for uploading a definition file, not priority now
   });
 
 

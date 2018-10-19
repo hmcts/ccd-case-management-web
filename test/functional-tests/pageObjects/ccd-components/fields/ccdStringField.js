@@ -1,6 +1,11 @@
-class TextField{
+TextField = require('../../webdriver-components/textField.js');
+RandomUtils = require('../../../utils/randomUtils.js');
+
+
+class CcdStringField extends TextField{
 
   constructor(css){
+    super();
     this.css = css;
       this.label = this.getLabel();
     this.inputValue = null;
@@ -8,15 +13,16 @@ class TextField{
   }
 
   async enterText(){
-    let value = await Math.random().toString(36).substring(7);
+    let value = await RandomUtils.generateRandomString();
     await this.enterIntoField(value);
   }
 
   async enterNumber(){
-    let value = await Math.floor((Math.random() * 100) + 1);
+    let value = await RandomUtils.generateRandomInt(1,100);
     await this.enterIntoField(value);
   }
 
+  //private
   async enterIntoField(value){
     await $(`${this.css} input`).sendKeys(value);
     this.inputValue = value;
@@ -27,13 +33,19 @@ class TextField{
   }
 
   async enterMoney(){
-    let value = await Math.floor((Math.random() * 100) + 1);
+    let value = await RandomUtils.generateRandomInt(1,100);
     this.checkYourAnswersValue = `£${value}.00`;
     await this.enterIntoField(value);
   }
 
+  async enterPhoneNumber(){
+    let value = await RandomUtils.generateRandomPhoneNumber();
+    this.checkYourAnswersValue = value;
+    await this.enterIntoField(value);
+  }
+
   async enterEmail(){
-    let firstpart = await Math.random().toString(36).substring(7);
+    let firstpart = await RandomUtils.generateRandomString();
     let email = `${firstpart}@gmail.com`;
     await this.enterIntoField(email)
   }
@@ -44,4 +56,4 @@ class TextField{
 
 }
 
-module.exports = TextField;
+module.exports = CcdStringField;

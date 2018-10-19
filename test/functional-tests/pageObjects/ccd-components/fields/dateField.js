@@ -1,4 +1,4 @@
-let RandomUtils = require('../../utils/randomUtils.js');
+let RandomUtils = require('../../../utils/randomUtils.js');
 
 class DateField{
 
@@ -14,13 +14,13 @@ class DateField{
   }
 
   async enterDate(){
-    let day = RandomUtils.generateRandomInt(1,28);
-    let month = RandomUtils.generateRandomInt(1,12);
-    let year = RandomUtils.generateRandomInt(1950, 2000);
-    await this.enterDate(day, month, year);
+    let day = await RandomUtils.generateRandomInt(1,28);
+    let month = await RandomUtils.generateRandomInt(1,12);
+    let year = await RandomUtils.generateRandomInt(1950, 2000);
+    await this.enterDateWithParams(day, month, year);
   }
 
-  async enterDate(day, month, year){
+  async enterDateWithParams(day, month, year){
       await $(this.dayCss).sendKeys(day);
       await $(this.monthCss).sendKeys(month);
       await $(this.yearCss).sendKeys(year);
@@ -28,11 +28,11 @@ class DateField{
   }
 
   async setCheckYourAnswersValue(day, month, year){
-    if (month.startsWith('0')){
+    if (month.toString().startsWith('0')){
       month = await month.substring(1);
     }
 
-    this.checkYourAnswersValue = `${day} ${MONTH[month].value} ${year}`;
+    this.checkYourAnswersValue = `${day} ${MONTH[month]} ${year}`;
   }
 
   async getLabel(){
@@ -41,45 +41,19 @@ class DateField{
 
 }
 
-
-const MONTH = {
-  1: {
-    stringValue: 'January'
-  },
-  2: {
-    stringValue: 'Febuary'
-  },
-  3: {
-    stringValue: 'March'
-  },
-  4: {
-    stringValue: 'April'
-  },
-  5: {
-    stringValue: 'May'
-  },
-  6: {
-    stringValue: 'June'
-  },
-  7: {
-    stringValue: 'July'
-  },
-  8: {
-    stringValue: 'August'
-  },
-  9: {
-    stringValue: 'September'
-  },
-  10: {
-    stringValue: 'October'
-  },
-  11: {
-    stringValue: 'November'
-  },
-  12: {
-    stringValue: 'December'
-  }
-};
-
+const MONTH = Object.freeze({
+  1:  'Jan',
+  2:  'Feb',
+  3:  'Mar',
+  4:  'Apr',
+  5:  'May',
+  6:  'Jun',
+  7:  'Jul',
+  8:  'Aug',
+  9:  'Sep',
+  10:  'Oct',
+  11:  'Nov',
+  12:  'Dec'
+});
 
 module.exports = DateField;

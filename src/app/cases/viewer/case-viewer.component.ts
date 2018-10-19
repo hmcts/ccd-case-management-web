@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField, ShowCondition, Draft, HttpError, OrderService, CaseView,
   CaseViewTrigger, DeleteOrCancelDialogComponent, CallbackErrorsComponent, DRAFT_QUERY_PARAM,
-  AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
-import { DraftService } from '../../core/draft/draft.service';
+  AlertService, CallbackErrorsContext, DraftService} from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({

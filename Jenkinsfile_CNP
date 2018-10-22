@@ -38,7 +38,10 @@ withPipeline("angular", product, component) {
     }
 
     enableDockerBuild()
+    enableDeployToAKS()
+
     loadVaultSecrets(secrets)
+    setVaultName('ccd')
 
     afterCheckout {
         sh "yarn cache clean"

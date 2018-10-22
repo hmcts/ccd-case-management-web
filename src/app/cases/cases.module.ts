@@ -50,8 +50,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CaseEditPageComponent,
     CaseEditFormComponent,
     CaseEditSubmitComponent,
-    CaseCreateComponent,
-    CaseProgressComponent,
     CaseEventTriggerComponent,
     CasePrinterComponent,
     CaseViewerComponent,

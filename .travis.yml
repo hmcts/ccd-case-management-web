@@ -12,4 +12,3 @@ script:
   - yarn test
   - yarn test:coverage
   - codecov
-after_success:

@@ -1,16 +1,26 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SearchResultView } from './search-result-view.model';
-import { PaginationMetadata } from './pagination-metadata.model';
-import { SearchResultViewColumn } from './search-result-view-column.model';
-import { SearchResultViewItemComparator } from './sorting/search-result-view-item-comparator';
-import { SortParameters } from './sorting/sort-parameters';
-import { SortOrder } from './sorting/sort-order';
-import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
-import { DisplayMode } from '../../core/activity/activity.model';
-import { AppConfig } from '../../app.config';
-import { FormGroup } from '@angular/forms';
-import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+
+import {SearchResultView} from './search-result-view.model';
+import {PaginationMetadata} from './pagination-metadata.model';
+import {SearchResultViewColumn} from './search-result-view-column.model';
+import {SearchResultViewItem} from './search-result-view-item.model';
+import {SearchResultViewItemComparator} from './sorting/search-result-view-item-comparator';
+import {SortParameters} from './sorting/sort-parameters';
+import {SortOrder} from './sorting/sort-order';
+import {SearchResultViewItemComparatorFactory} from './sorting/search-result-view-item-comparator-factory';
+import {DisplayMode} from '../../core/activity/activity.model';
+import {AppConfig} from '../../app.config';
+import {FormGroup} from '@angular/forms';
+import {ActivityService} from '../../core/activity/activity.service';
+
+import {
+  CaseField,
+  CaseReferencePipe,
+  CaseState,
+  CaseType,
+  DRAFT_PREFIX,
+  Jurisdiction
+} from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',
@@ -96,11 +106,42 @@ export class SearchResultComponent implements OnChanges {
         return a.order - b.order;
       });
 
+      this.hydrateResultView();
       this.draftsCount = this.draftsCount ? this.draftsCount : this.numberOfDrafts();
     }
     if (changes['page']) {
       this.selected.page = (changes['page']).currentValue;
     }
+  }
+
+  /**
+   * Hydrates result view with case field definitions.
+   */
+  // A longer term resolution is to move this piece of logic to the backend
+  hydrateResultView(): void {
+    this.resultView.results.forEach(result => {
+      const caseFields = [];
+
+      Object.keys(result.case_fields).forEach(fieldId => {
+
+        const field = result.case_fields[fieldId];
+        caseFields.push({
+          id: fieldId,
+          label: null,
+          field_type: {},
+          value: field,
+          display_context: null,
+        });
+      });
+
+      result.hydrated_case_fields = caseFields;
+
+      result.columns = {};
+
+      this.resultView.columns.forEach(col => {
+        result.columns[col.case_field_id] = this.buildCaseField(col, result);
+      });
+    });
   }
 
   goToPage(page): void {
@@ -114,6 +155,16 @@ export class SearchResultComponent implements OnChanges {
     this.selected.page = page;
     // Apply filters
     this.changePage.emit(this.selected);
+  }
+
+  buildCaseField(col: SearchResultViewColumn, result: SearchResultViewItem): CaseField {
+    return {
+      id: col.case_field_id,
+      label: col.label,
+      field_type: col.case_field_type,
+      value: result.case_fields[col.case_field_id],
+      display_context: null,
+    };
   }
 
   hasResults(): any {

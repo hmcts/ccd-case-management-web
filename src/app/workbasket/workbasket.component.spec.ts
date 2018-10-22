@@ -9,13 +9,10 @@ import { SearchService } from '../core/search/search.service';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { Observable } from 'rxjs';
-import { Jurisdiction } from '../shared/domain/definition/jurisdiction.model';
-import { CaseState } from '../shared/domain/definition/case-state.model';
 import { PaginationService } from '../core/pagination/pagination.service';
-import { CaseType } from '../shared/domain/definition/case-type.model';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AlertService } from '../core/alert/alert.service';
 import createSpyObj = jasmine.createSpyObj;
+import { Jurisdiction, CaseType, CaseState, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('WorkbasketComponent', () => {
 

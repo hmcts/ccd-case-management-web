@@ -1,4 +1,4 @@
-import { Jurisdiction } from './jurisdiction.model';
+import { Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 
 export let createJurisdiction = () => {
   const jurisdiction = new Jurisdiction();

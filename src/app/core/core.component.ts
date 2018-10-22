@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Profile } from './profile/profile.model';
 import { JurisdictionService } from '../shared/jurisdiction.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
+import { Profile } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-core',

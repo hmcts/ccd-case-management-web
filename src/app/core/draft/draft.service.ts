@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AppConfig } from '../../app.config';
-import { CaseEventData, Draft, HttpService, HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventData, Draft, HttpService, HttpErrorService, CaseView, DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
-import { CaseView } from '../cases/case-view.model';
 import { Response } from '@angular/http';
-import { DRAFT_PREFIX } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Injectable()
 export class DraftService {

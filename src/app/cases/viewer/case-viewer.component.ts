@@ -1,22 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CaseTab } from '../../core/cases/case-tab.model';
-import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
 import { Subject } from 'rxjs/Subject';
-import { CallbackErrorsContext } from '../../shared/error/error-context';
-import { CallbackErrorsComponent } from '../../shared/error/callback-errors.component';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { CaseField, ShowCondition, Draft, HttpError, OrderService,
-  DeleteOrCancelDialogComponent } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseField, ShowCondition, Draft, HttpError, OrderService, CaseView,
+  CaseViewTrigger, DeleteOrCancelDialogComponent, CallbackErrorsComponent, DRAFT_QUERY_PARAM,
+  AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { DraftService } from '../../core/draft/draft.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { AlertService } from '../../core/alert/alert.service';
-import { CaseCreatorSubmitComponent } from '../creator/case-creator-submit.component';
-import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Component({
   templateUrl: './case-viewer.component.html',

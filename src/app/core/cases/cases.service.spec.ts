@@ -1,12 +1,11 @@
 import { Response, ResponseOptions, Headers } from '@angular/http';
 import { AppConfig } from '../../app.config';
 import { CasesService } from './cases.service';
-import { CaseView } from './case-view.model';
 import { Observable } from 'rxjs';
 import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpErrorService, HttpError, HttpService, CaseEventTrigger, CaseEventData,
-  createCaseEventTrigger, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+  createCaseEventTrigger, OrderService, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CasesService', () => {
 

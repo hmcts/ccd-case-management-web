@@ -1,12 +1,10 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CaseEventTrigger, Draft, HttpError } from '@hmcts/ccd-case-ui-toolkit';
-import { AlertService } from '../../core/alert/alert.service';
+import { CaseEventTrigger, Draft, HttpError, AlertService, DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit';
 import { CasesService } from '../../core/cases/cases.service';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
-import { DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
 
 @Injectable()
 export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger> {

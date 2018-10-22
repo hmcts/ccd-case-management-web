@@ -1,7 +1,7 @@
 import { ProfileResolver } from './profile.resolver';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
-import { Profile } from './profile.model';
+import { Profile } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('ProfileResolver', () => {
   describe('resolve()', () => {

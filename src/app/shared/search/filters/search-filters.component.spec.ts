@@ -2,16 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, Input } from '@angular/core';
 import { SearchFiltersComponent } from './search-filters.component';
 import { By } from '@angular/platform-browser';
-import { Jurisdiction } from '../../domain/definition/jurisdiction.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchService } from '../../../core/search/search.service';
 import { Observable } from 'rxjs/Rx';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { JurisdictionService } from '../../jurisdiction.service';
-import { CaseType } from '../../domain/definition/case-type.model';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
-import { AbstractFieldWriteComponent, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { AbstractFieldWriteComponent, OrderService, Jurisdiction, CaseType } from '@hmcts/ccd-case-ui-toolkit';
 
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',

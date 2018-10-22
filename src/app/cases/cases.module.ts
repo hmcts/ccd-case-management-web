@@ -7,7 +7,8 @@ import { CaseViewerComponent } from './viewer/case-viewer.component';
 import { PaletteModule, PaletteUtilsModule, ConditionalShowModule, MarkdownModule,
   LabelSubstitutionService, RemoveDialogComponent, CaseReferencePipe, LabelSubstitutorModule,
   FieldsPurger, PageValidationService, CallbackErrorsComponent, CaseEditConfirmComponent, CaseEditComponent,
-  CaseEditPageComponent, CaseEditFormComponent, CaseEditSubmitComponent} from '@hmcts/ccd-case-ui-toolkit';
+  CaseEditPageComponent, CaseEditFormComponent, CaseEditSubmitComponent,
+  CaseCreateComponent, CaseProgressComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
@@ -49,6 +50,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CaseEditPageComponent,
     CaseEditFormComponent,
     CaseEditSubmitComponent,
+    CaseCreateComponent,
+    CaseProgressComponent,
     CaseEventTriggerComponent,
     CasePrinterComponent,
     CaseViewerComponent,

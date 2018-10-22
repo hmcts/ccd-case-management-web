@@ -5,7 +5,7 @@ import { WindowService } from '../../../core/utils/window.service';
 import { FormGroup } from '@angular/forms';
 import { PlatformLocation } from '@angular/common'
 import { JurisdictionService } from '../../jurisdiction.service';
-import { OrderService, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseState, CaseTypeLite, Jurisdiction, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-filters',
@@ -27,14 +27,14 @@ export class SearchFiltersComponent implements OnInit {
 
   selected: {
     jurisdiction?: Jurisdiction,
-    caseType?: CaseType,
+    caseType?: CaseTypeLite,
     formGroup?: FormGroup,
     caseState?: CaseState,
     page?: number,
     metadataFields?: string[]
   };
 
-  selectedJurisdictionCaseTypes?: CaseType[];
+  selectedJurisdictionCaseTypes?: CaseTypeLite[];
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -140,8 +140,7 @@ export class SearchFiltersComponent implements OnInit {
       this.selected.jurisdiction === undefined;
   }
 
-  private selectCaseType(caseTypes: CaseType[]) {
-
+  private selectCaseType(caseTypes: CaseTypeLite[]) {
     if (caseTypes && caseTypes.length > 0) {
       this.selected.caseType = caseTypes[0];
       const caseType = this.windowService.getLocalStorage('search-caseType')

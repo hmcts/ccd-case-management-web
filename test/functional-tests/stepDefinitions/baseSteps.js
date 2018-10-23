@@ -14,7 +14,7 @@ setDefaultTimeout(60 * 1000);
     });
 
     After(async () => {
-       await browser.manage().deleteAllCookies();
+        await browser.restart();
     });
 
     After(function (scenario, done) {

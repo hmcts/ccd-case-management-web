@@ -17,7 +17,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
-      await createCaseStartPage.selectJurisdiction('AUTOTEST1');
+      await createCaseStartPage.selectJurisdiction('Auto Test 1');
       await createCaseStartPage.selectCaseType('All Data Types');
       await createCaseStartPage.selectEvent('Create a case');
       await createCaseStartPage.clickStartButton();

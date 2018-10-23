@@ -7,27 +7,44 @@ let RandomUtils = require('../../utils/randomUtils.js');
 class Dropdown {
 
 
+  /**
+   * Should be parsed ccs 'select' tag for a dropdown
+   * @param css
+   */
   constructor(css){
     this._dropdownElement = css;
+    this._currentDropdownOptionElement = `${css} option:checked`;
   }
 
   //private
   async getOptionElements(){
-     return await element.all(this._dropdownElement).all(by.css('option'));
+     return await element.all(by.css(this._dropdownElement)).all(by.css('option'));
   }
 
+  /**
+   * Will randomly select any dropdown option
+   */
   async selectAnyOption(){
     let options = await this.getOptionElements();
     let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await options.length);
     let optionToSelect = await options[randomOptionArrayInt];
     await optionToSelect.click();
+
   }
 
+  /**
+   * Returns the value of the current option selected for a dropdown
+   * @returns String
+   */
   async getCurrentSelectedOption(){
-    let text = await element(this._dropdownElement).$('option:checked').getText();
+    let text = await $(this._currentDropdownOptionElement).getText();
     return text.trim();
   }
 
+  /**
+   * Select a dropdown option by text value. Case insensitive
+   * @param dropdownOption
+   */
   async selectFromDropdownByText(dropdownOption){
       let optionToSelect;
       let found = false;

@@ -1,19 +1,27 @@
 let CustomError = require('./errors/custom-error.js');
-TextField = require('../pageObjects/ccd-components/fields/ccdStringField.js');
-DateField = require('../pageObjects/ccd-components/fields/dateField.js');
-FixedList = require('../pageObjects/ccd-components/fields/fixedList.js');
-YesNoField = require('../pageObjects/ccd-components/fields/yesNoField.js');
-TextAreaField = require('../pageObjects/ccd-components/fields/textAreaField.js');
+let CCDStringField = require('../pageObjects/ccd-components/fields/ccdStringField.js');
+let DateField = require('../pageObjects/ccd-components/fields/dateField.js');
+let FixedList = require('../pageObjects/ccd-components/fields/fixedList.js');
+let YesNoField = require('../pageObjects/ccd-components/fields/yesNoField.js');
+let TextAreaField = require('../pageObjects/ccd-components/fields/textAreaField.js');
 
 class FieldDataTypes {
 
+  /**
+   * Enter random text into the Text field
+   * @returns CCDStringField Object
+   */
   async enterIntoTextField(){
     let css = await fields.TEXT.cssTag;
-    let textField = await new TextField(css);
-    await textField.enterText();
-    return textField;
+    let field = await new CCDStringField(css);
+    await field.enterText();
+    return field;
   }
 
+  /**
+   * Enter random text into the Text Area field
+   * @returns CCDStringField Object
+   */
   async enterIntoTextAreaField(){
     let css = await fields.TEXT_AREA.cssTag;
     let textAreaField = await new TextAreaField(css);
@@ -21,34 +29,54 @@ class FieldDataTypes {
     return textAreaField;
   }
 
+  /**
+   * Enter random number into the Number field field
+   * @returns CCDStringField Object
+   */
   async enterIntoNumberField(){
     let css = await fields.NUMBER.cssTag;
-    let textField = await new TextField(css);
+    let textField = await new CCDStringField(css);
     await textField.enterNumber();
     return textField;
   }
 
+  /**
+   * Enter random number in money field
+   * @returns CCDStringField Object
+   */
   async enterIntoMoneyField(){
     let css = await fields.MONEY_GBP.cssTag;
-    let textField = await new TextField(css);
+    let textField = await new CCDStringField(css);
     await textField.enterMoney();
     return textField;
   }
 
+  /**
+   * Enter random email address into Email field
+   * @returns CCDStringField Object
+   */
   async enterIntoEmailField(){
     let css = await fields.EMAIL.cssTag;
-    let textField = await new TextField(css);
+    let textField = await new CCDStringField(css);
     await textField.enterEmail();
     return textField;
   }
 
+  /**
+   * Enter random valid phone number into Phone UK field
+   * @returns CCDStringField Object
+   */
   async enterIntoPhoneField(){
     let css = await fields.PHONE_NUMBER.cssTag;
-    let phoneField = await new TextField(css);
+    let phoneField = await new CCDStringField(css);
     await phoneField.enterPhoneNumber();
     return phoneField;
   }
 
+  /**
+   * Enter random valid date in the past
+   * @returns CCDStringField Object
+   */
   async enterIntoDateField(){
     let css = await fields.DATE.cssTag;
     let dateField = await new DateField(css);
@@ -56,6 +84,10 @@ class FieldDataTypes {
     return dateField;
   }
 
+  /**
+   * Select a random option from the dropdown
+   * @returns CCDStringField Object
+   */
   async selectFromFixedList(){
     let css = await fields.FIXED_LIST.cssTag;
     let fixedListField = await new FixedList(css);
@@ -63,6 +95,10 @@ class FieldDataTypes {
     return fixedListField;
   }
 
+  /**
+   * Select random radio butto option
+   * @returns CCDStringField Object
+   */
   async selectYesNoOption(){
     let css = await fields.YES_NO.cssTag;
     let yesNoField = await new YesNoField(css);
@@ -70,6 +106,11 @@ class FieldDataTypes {
     return yesNoField;
   }
 
+  /**
+   * Interact with any field type entering randomly generated data or selecting random options
+   * @param dataType
+   * @returns {Promise<void>}
+   */
   async interactWithField(dataType){
     let dt = dataType.toLowerCase();
     switch(dt) {
@@ -105,6 +146,11 @@ class FieldDataTypes {
   }
 
 
+  /**
+   * retrieve the css component of a given field data type
+   * @param dataType
+   * @returns css component of specified field
+   */
   async getFieldCSS(dataType){
     switch(dataType.toLowerCase()) {
       case 'text':
@@ -142,7 +188,9 @@ class FieldDataTypes {
 
 module.exports = FieldDataTypes;
 
-
+/**
+ *  Enum holding css component for each field data type
+ */
 const fields = Object.freeze({
   TEXT: {
     cssTag: 'ccd-write-text-field'

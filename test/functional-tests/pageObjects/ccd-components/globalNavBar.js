@@ -7,20 +7,22 @@ CreateCaseStartPage = require('../createCaseStartPage.js');
 class NavBar{
 
   constructor(){
-      this._parentNavElement = element($('nav'));
+      this._parentNavElement = 'nav';
 
-      this._caseListLink = $('#menu-links-left li:nth-of-type(1) a');
-      this._createCaseLink = $('#menu-links-left li:nth-of-type(2) a');
-      this._searchLink = $('#menu-links-right a');
+      this._caseListLink = '#menu-links-left li:nth-of-type(1) a';
+      this._createCaseLink = '#menu-links-left li:nth-of-type(2) a';
+      this._searchLink = '#menu-links-right a';
   }
 
+  /**
+   * Click the 'create case' link ignoring synchronisation while interacting
+   * with the button
+   * @returns {Promise<CreateCaseStartPage|*>}
+   */
   async clickCreateCaseLink(){
     browser.ignoreSynchronization = true;
-
-    await this._createCaseLink.click();
-
+    await $(this._createCaseLink).click();
     browser.ignoreSynchronization = false;
-
     return new CreateCaseStartPage;
   }
 

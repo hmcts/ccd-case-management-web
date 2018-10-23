@@ -7,17 +7,13 @@ class WorkbasketComponent extends BasePage {
       super();
 
       //Fixed Elements (non dynamic)
-      this._clfJurisdiction = by.css('#wb-jurisdiction');
-      this._clfCaseType = by.css('#wb-case-type');
-      this._clfState = by.css('#wb-case-state');
-      this._clfApplyButton = by.css('.global-display .display-left button');
+      this._clfJurisdiction = '#wb-jurisdiction';
+      this._clfCaseType = '#wb-case-type';
+      this._clfState = '#wb-case-state';
+      this._clfApplyButton = '.global-display .display-left button';
 
-    }
-
-    async selectJurisdiction(jurisdiction){
-        await this.selectOption(this._clfJurisdiction, jurisdiction)
     }
 
 }
 
-module.exports = LoginPage;
+module.exports = WorkbasketComponent;

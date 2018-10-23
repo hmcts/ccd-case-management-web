@@ -6,10 +6,10 @@ class CreateCaseStartPage extends BasePage{
 
   constructor(){
       super();
-      this._jurisdiction = new Dropdown(by.css('#cc-jurisdiction'));
-      this._caseType = new Dropdown(by.css('#cc-case-type'));
-      this._event = new Dropdown(by.css('#cc-event'));
-      this._submitButton = by.css('.container-fluid .button');
+      this._jurisdiction = new Dropdown('#cc-jurisdiction');
+      this._caseType = new Dropdown('#cc-case-type');
+      this._event = new Dropdown('#cc-event');
+      this._submitButton = '.container-fluid .button';
   }
 
   /**
@@ -44,8 +44,8 @@ class CreateCaseStartPage extends BasePage{
    * @returns {Promise<CreateCaseWizardPage|*>}
    */
   async clickStartButton() {
-    await this.waitForElementToBeClickable(element(this._submitButton));
-    await element(this._submitButton).click();
+    await this.waitForElementToBeClickable($(this._submitButton));
+    await $(this._submitButton).click();
     await browser.waitForAngular;
     return new CreateCaseWizardPage;
   }

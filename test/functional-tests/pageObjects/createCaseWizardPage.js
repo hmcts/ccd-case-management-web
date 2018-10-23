@@ -8,8 +8,8 @@ let FieldUtils = require('../utils/fieldUtils.js');
 class CreateCaseWizardPage extends BasePage{
 
     constructor() {
-      super()
-      this.progressButton = $('button[type=submit]');
+      super();
+      this.progressButton = 'button[type=submit]';
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
 
 
@@ -41,8 +41,9 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<void>}
    */
     async clickProgressButton(){
-        await this.progressButton.click();
+        await $(this.progressButton).click();
     }
+
 
 
     async getCheckYourAnswersValueByLabel(labelText){

@@ -10,25 +10,25 @@ class BasePage {
             browser.wait(EC.visibilityOf(element(locator)), );
         }
 
-        this._formFields = 'ccd-case-edit-form > div > * > *'
-        this._optionalClass = 'ng-valid'
-        this._mandetoryClass = 'ng-invalid'
+        this._formFields = 'ccd-case-edit-form > div > * > *';
+        this._optionalClass = 'ng-valid';
+        this._mandetoryClass = 'ng-invalid';
     }
 
     async waitForElementToBeVisible(element){
-        await browser.wait(EC.visibilityOf(element), TIMEOUT);
+        await browser.wait(await EC.visibilityOf(element), TIMEOUT);
     }
 
     async waitForElementToBeVisible(element, timeout){
-        await browser.wait(EC.visibilityOf(element), timeout);
+        await browser.wait(await EC.visibilityOf(element), timeout);
     }
 
     async waitForElementToBeVisibleByLocator(locator){
-        await browser.wait(EC.visibilityOf(element(locator)), TIMEOUT);
+        await browser.wait(await EC.visibilityOf(element(locator)), TIMEOUT);
     }
 
     async waitForElementToBeClickable(element){
-        await browser.wait(EC.elementToBeClickable(element), TIMEOUT);
+        await browser.wait(await EC.elementToBeClickable(element), TIMEOUT);
     }
 
     async waitForUrl(expectedUrlRegex){

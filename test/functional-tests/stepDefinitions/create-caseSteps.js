@@ -17,7 +17,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
-      await createCaseStartPage.selectJurisdiction('AUTOTEST1');
+      await createCaseStartPage.selectJurisdiction('Test');
       await createCaseStartPage.selectCaseType('All Data Types');
       await createCaseStartPage.selectEvent('Create a case');
       await createCaseStartPage.clickStartButton();
@@ -44,7 +44,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   When(/^I navigate to the 'check your answers' form page$/, async function() {
       await new CreateCaseWizardPage().clickProgressButton();
   });
-
 
   Then(/^I should see my value displayed$/, async function() {
     let label = await this.fieldObject.label;

@@ -1,11 +1,19 @@
 
 let Dropdown = require('../../webdriver-components/dropdown.js');
 
+/**
+ * CCD Fixed List dropdown field component
+ */
 class FixedList {
 
+  /**
+   * Must take the parent css tag for the ccd date field component: ccd-write-date-field
+   *
+   * @param css
+   */
     constructor(css){
         this.css = css;
-        this.fixedList = new Dropdown(by.css(`${this.css} select`));
+        this.fixedList = new Dropdown(`${this.css} select`);
         this.label = this.getLabel();
 
         this.inputValue = null;
@@ -16,8 +24,6 @@ class FixedList {
         await this.fixedList.selectAnyOption();
         this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
     }
-
-    //select option with params
 
     async getLabel(){
       return await $(`${this.css} .form-label`).getText();

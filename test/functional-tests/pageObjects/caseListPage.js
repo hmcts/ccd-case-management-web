@@ -15,10 +15,6 @@ class CaseListPage extends BasePage {
       this._footer = by.css('.footer-wrapper');
       this._signOut = by.css('div #sign-out');
 
-      let EC = protractor.ExpectedConditions;
-      browser.wait(EC.urlContains(selfUrlPath),30000)
-        .catch(err => console.log('page not loaded'));
-
   }
 
 

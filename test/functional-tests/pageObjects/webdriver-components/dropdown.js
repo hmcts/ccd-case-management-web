@@ -18,7 +18,7 @@ class Dropdown {
 
   //private
   async getOptionElements(){
-     return await element.all(by.css(this._dropdownElement)).all(by.css('option'));
+     return await $$(`${this._dropdownElement} option`);
   }
 
   /**

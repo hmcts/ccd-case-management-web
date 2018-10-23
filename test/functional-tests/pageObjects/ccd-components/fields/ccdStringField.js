@@ -18,7 +18,7 @@ class CDDStringField {
   constructor(css){
     this.stringField = new TextField(`${css} input`)
     this.css = css;
-    this.label = this.getLabel();
+    this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
   }
@@ -69,7 +69,8 @@ class CDDStringField {
 
   //private
   async enterIntoField(value){
-    await this.stringField.enterText(value)
+    this.label = await this.getLabel();
+    await this.stringField.enterText(value);
     this.inputValue = value;
     if (this.checkYourAnswersValue === null){
       this.checkYourAnswersValue = value;

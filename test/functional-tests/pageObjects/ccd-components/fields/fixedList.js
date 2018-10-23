@@ -14,7 +14,7 @@ class FixedList {
     constructor(css){
         this.css = css;
         this.fixedList = new Dropdown(`${this.css} select`);
-        this.label = this.getLabel();
+        this.label = null;
 
         this.inputValue = null;
         this.checkYourAnswersValue = null;
@@ -23,6 +23,7 @@ class FixedList {
     async selectOption(){
         await this.fixedList.selectAnyOption();
         this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
+        this.label = await this.getLabel();
     }
 
     async getLabel(){

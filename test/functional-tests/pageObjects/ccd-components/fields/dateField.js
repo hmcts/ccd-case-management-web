@@ -18,7 +18,7 @@ class DateField{
     this.monthCss = new TextField(`${css} #DateField-month`);
     this.yearCss = new TextField(`${css} #DateField-year`);
 
-    this.label = this.getLabel();
+    this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
   }
@@ -35,6 +35,7 @@ class DateField{
       await this.monthCss.enterText(month);
       await this.yearCss.enterText(year);
       await this.setCheckYourAnswersValue(day, month, year)
+      this.label = await this.getLabel();
   }
 
   async setCheckYourAnswersValue(day, month, year){

@@ -17,7 +17,7 @@ class TextAreaField{
   constructor(css){
     this.css = css;
     this.stringField = new TextField(`${this.css} textarea`);
-    this.label = this.getLabel();
+    this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
   }
@@ -27,11 +27,12 @@ class TextAreaField{
    */
   async enterText(){
     let value = await RandomUtils.generateRandomString();
-    this.stringField.enterText(value)
+    await this.stringField.enterText(value)
     this.inputValue = value;
     if (this.checkYourAnswersValue === null){
       this.checkYourAnswersValue = value;
     }
+    this.label = await this.getLabel();
   }
 
   /**

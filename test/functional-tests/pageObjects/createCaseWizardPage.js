@@ -1,5 +1,4 @@
 BasePage = require('./basePage');
-FieldObject = require('./ccd-components/wip/fieldObject.js');
 let FieldUtils = require('../utils/fieldUtils.js');
 
 

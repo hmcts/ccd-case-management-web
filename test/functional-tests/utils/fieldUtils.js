@@ -1,9 +1,9 @@
 let CustomError = require('./errors/custom-error.js');
 let CCDStringField = require('../pageObjects/ccd-components/fields/ccdStringField.js');
-let DateField = require('../pageObjects/ccd-components/fields/dateField.js');
-let FixedList = require('../pageObjects/ccd-components/fields/fixedList.js');
-let YesNoField = require('../pageObjects/ccd-components/fields/yesNoField.js');
-let TextAreaField = require('../pageObjects/ccd-components/fields/textAreaField.js');
+let DateField = require('../pageObjects/ccd-components/fields/ccdDateField.js');
+let FixedList = require('../pageObjects/ccd-components/fields/ccdFixedList.js');
+let YesNoField = require('../pageObjects/ccd-components/fields/ccdYesNoField.js');
+let TextAreaField = require('../pageObjects/ccd-components/fields/ccdTextAreaField.js');
 
 class FieldDataTypes {
 

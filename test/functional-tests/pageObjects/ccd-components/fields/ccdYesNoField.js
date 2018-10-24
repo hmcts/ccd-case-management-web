@@ -1,11 +1,11 @@
 let RandomUtils = require('../../../utils/randomUtils.js');
 
 /**
- * TextAreaField field component deals with interactions with the CCD Yes No Field component.
+ * Yes-No  field component deals with interactions with the CCD Yes No Field component - Yes/No radio button options.
  *
  * returning this object will give access to the expected 'show your answers' page answer for the specified field
  */
-class YesNoField {
+class CcdYesNoField {
 
   /**
    * Must take the parent css tag for the ccd field component
@@ -58,4 +58,4 @@ class YesNoField {
 
 }
 
-module.exports = YesNoField;
+module.exports = CcdYesNoField;

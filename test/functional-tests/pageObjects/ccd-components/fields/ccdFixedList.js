@@ -4,7 +4,7 @@ let Dropdown = require('../../webdriver-components/dropdown.js');
 /**
  * CCD Fixed List dropdown field component
  */
-class FixedList {
+class CcdFixedList {
 
   /**
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
@@ -32,4 +32,4 @@ class FixedList {
 
 }
 
-module.exports = FixedList;
+module.exports = CcdFixedList;

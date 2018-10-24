@@ -1,4 +1,4 @@
-class Collection {
+class CcdCollectionField {
 
   constructor(css){
       this.css = css;
@@ -12,4 +12,4 @@ class Collection {
 
 }
 
-module.exports = Collection;
+module.exports = CcdCollectionField;

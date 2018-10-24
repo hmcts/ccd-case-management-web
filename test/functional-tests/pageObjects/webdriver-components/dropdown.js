@@ -26,7 +26,8 @@ class Dropdown {
    */
   async selectAnyOption(){
     let options = await this.getOptionElements();
-    let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await options.length);
+    let elementListSize = await options.length;
+    let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
     let optionToSelect = await options[randomOptionArrayInt];
     await optionToSelect.click();
 

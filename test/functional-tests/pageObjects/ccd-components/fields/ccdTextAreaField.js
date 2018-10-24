@@ -2,11 +2,11 @@ let TextField = require('../../webdriver-components/textField.js');
 let RandomUtils = require('../../../utils/randomUtils.js');
 
 /**
- * TextAreaField field component deals with interactions with the CCD Text Area Field component.
+ * CcdTextAreaField field component deals with interactions with the CCD Text Area Field component.
  *
  * returning this object will give access to the expected 'show your answers' page answer for the specified field
  */
-class TextAreaField{
+class CcdTextAreaField{
 
   /**
    * Must take the parent css tag for the ccd field component
@@ -44,4 +44,4 @@ class TextAreaField{
 
 }
 
-module.exports = TextAreaField;
+module.exports = CcdTextAreaField;

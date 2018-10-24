@@ -5,7 +5,7 @@ TextField = require('../../webdriver-components/textField.js');
 /**
  * CCD date field component, encapsulated all interactions with the Date field
  */
-class DateField{
+class CcdDateField{
 
   /**
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
@@ -67,4 +67,4 @@ const MONTH = Object.freeze({
   12:  'Dec'
 });
 
-module.exports = DateField;
+module.exports = CcdDateField;

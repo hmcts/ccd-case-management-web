@@ -10,31 +10,6 @@ import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, 
   FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
   DraftService } from '@hmcts/ccd-case-ui-toolkit';
 
-@Component({
-  selector: 'ccd-case-edit',
-  template: ``
-})
-class CaseEditComponent {
-
-  @Input()
-  eventTrigger: CaseEventTrigger;
-
-  @Input()
-  submit: (CaseEventData) => Observable<object>;
-
-  @Input()
-  validate: (CaseEventData) => Observable<object>;
-
-  @Input()
-  saveDraft: (CaseEventData) => Observable<Draft>;
-
-  @Output()
-  cancelled: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  submitted: EventEmitter<string> = new EventEmitter();
-}
-
 describe('CaseCreatorSubmitComponent', () => {
 
   const JID = 'PROBATE';
@@ -53,6 +28,12 @@ describe('CaseCreatorSubmitComponent', () => {
 
   let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
   let component: CaseCreatorSubmitComponent;
+
+  let CaseEditComponent: any = MockComponent({
+    selector: 'ccd-case-edit',
+    inputs: ['eventTrigger', 'submit', 'validate', 'saveDraft', 'caseDetails'],
+    outputs: ['cancelled', 'submitted']
+  });
 
   let EventTriggerHeaderComponent: any = MockComponent({
     selector: 'ccd-event-trigger-header',

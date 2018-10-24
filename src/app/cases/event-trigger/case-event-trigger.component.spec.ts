@@ -10,32 +10,6 @@ import createSpyObj = jasmine.createSpyObj;
 import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, CaseEventTrigger,
   CaseView, AlertService, CasesService} from '@hmcts/ccd-case-ui-toolkit';
 
-@Component({
-  selector: 'ccd-case-edit',
-  template: ``
-})
-class CaseEditComponent {
-
-  @Input()
-  eventTrigger: CaseEventTrigger;
-
-  @Input()
-  submit: (CaseEventData) => Observable<object>;
-
-  @Input()
-  validate: (CaseEventData) => Observable<object>;
-
-  @Input()
-  caseDetails: CaseView;
-
-  @Output()
-  cancelled: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  submitted: EventEmitter<string> = new EventEmitter();
-
-}
-
 describe('CaseEventTriggerComponent', () => {
   const CASE_DETAILS: CaseView = new CaseView();
   CASE_DETAILS.case_id = '42';
@@ -90,6 +64,12 @@ describe('CaseEventTriggerComponent', () => {
   let fixture: ComponentFixture<CaseEventTriggerComponent>;
   let component: CaseEventTriggerComponent;
   let de: DebugElement;
+
+  let CaseEditComponent: any = MockComponent({
+    selector: 'ccd-case-edit',
+    inputs: ['eventTrigger', 'submit', 'validate', 'caseDetails', 'saveDraft'],
+    outputs: ['cancelled', 'submitted']
+  });
 
   let CaseActivityComponent: any = MockComponent({
     selector: 'ccd-activity',

@@ -1,5 +1,6 @@
 BasePage = require('./basePage.js')
 NavBar = require('./ccd-components/globalNavBar.js');
+Footer = require('./ccd-components/footerComponent.js');
 const selfUrlPath = '/list';
 
 class CaseListPage extends BasePage {
@@ -8,20 +9,9 @@ class CaseListPage extends BasePage {
       super();
 
       this._landingPageFilters = by.css('ccd-workbasket-filters');
-      this._bannerHeaderTitle = by.css('.global-header .title span');
-      this._userName = by.css('div #user-name');
-      this._menuItems = by.css('.global-navigation cut-nav-item a');
-      this._searchBox = by.css('.global-navigation .cut-nav-bar #search');
-      this._footer = by.css('.footer-wrapper');
-      this._signOut = by.css('div #sign-out');
 
   }
 
-
-
-  async getTitleLabel() {
-      return await element(this._bannerHeaderTitle).getText();
-  }
 
   /**
    * Waits for workbasket search filters to be visible then checks if it is now visible
@@ -43,6 +33,14 @@ class CaseListPage extends BasePage {
    */
   getNavBarComponent(){
       return new NavBar;
+  }
+
+  /**
+   * returns new instance of the footer component
+   * @returns {Footer|*}
+   */
+  getFooter(){
+      return new Footer;
   }
 
 }

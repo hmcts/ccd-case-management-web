@@ -29,7 +29,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       caseListPage = new CaseListPage();
       failedOnPageTitle = 'page not titled on case list page';
 
-      expect (await caseListPage.isFiltersDisplayed()).to.be.true
+      expect (await caseListPage.isFiltersDisplayed()).to.be.true;
+      expect (await caseListPage.getNavBarComponent().allComponentsDisplayed()).to.be.true;
+      expect (await caseListPage.getFooter().isDisplayed()).to.be.true;
   });
 
   Given(/^I have logged in$/, async function () {

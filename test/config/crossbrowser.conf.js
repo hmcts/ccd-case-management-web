@@ -15,7 +15,7 @@ exports.config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceSeleniumAddress: 'ondemand.saucelabs.com:443/wd/hub',
 
-  specs: ["../end-to-end/specs/*/login.*.spec.js"],
+  specs: ["../functional-tests/features/*.feature"],
   //seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
 
   exclude: [],
@@ -24,7 +24,8 @@ exports.config = {
   restartBrowserBetweenTests: true,
   untrackOutstandingTimeouts: true,
 
-  framework: 'jasmine2',
+  framework: 'custom',
+  frameworkPath: require.resolve('protractor-cucumber-framework'),
 
   multiCapabilities: [{
         browserName: 'chrome',
@@ -37,6 +38,17 @@ exports.config = {
         tags:'ccd-crossbrowser'
     }],
 
+  cucumberOpts: {
+    require: [
+      '../functional-tests/stepDefinitions/*.js'
+    ],
+    tags: false,
+    format: 'json:test/functional-tests/results/results.json',
+    profile: false,
+    'no-source': true,
+    plugin: 'json:test/cucumber.json'
+  },
+  
     plugins: [{
         package: "protractor-screenshoter-plugin",
         screenshotPath: "./smoke-output",
@@ -46,15 +58,6 @@ exports.config = {
         writeReportFreq: "asap",
         clearFoldersBeforeTest: true
     }],
-
-  jasmineNodeOpts: {
-    showTiming: true,
-    showColors: true,
-    isVerbose: false,
-    includeStackTrace: false,
-    defaultTimeoutInterval: 400000
-
-  },
 
   useAllAngular2AppRoots: true,
 

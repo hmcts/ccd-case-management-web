@@ -34,6 +34,12 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
   let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
   let component: CaseCreatorSubmitComponent;
 
+  let CaseEditComponent: any = MockComponent({
+    selector: 'ccd-case-edit',
+    inputs: ['eventTrigger', 'submit', 'validate', 'saveDraft', 'caseDetails'],
+    outputs: ['cancelled', 'submitted']
+  });
+
   let EventTriggerHeaderComponent: any = MockComponent({
     selector: 'ccd-event-trigger-header',
     inputs: ['eventTrigger']

@@ -13,7 +13,7 @@
         (onApply)="applyFilter($event)"
       ></ccd-workbasket-filters>
     </div>
-    <div class="display-right" rightBody>
+    <div class="display-right" id="search-result" aria-live="polite" role="region" rightBody>
 
       <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
                          [caseFilterFG]="caseFilterFG" [page]="page" [paginationMetadata]="paginationMetadata"

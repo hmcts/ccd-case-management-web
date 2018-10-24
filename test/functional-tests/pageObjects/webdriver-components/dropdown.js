@@ -1,5 +1,5 @@
 let CustomError = require('../../utils/errors/custom-error');
-let RandomUtils = require('../../utils/randomUtils.js');
+let RandomUtils = require('../../utils/ccdDataGenerationUtils.js');
 
 /**
  * Wrapper object to handle all interactions around dealing with a dropdown box. constructor takes locator in plain string

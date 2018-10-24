@@ -1,5 +1,5 @@
 let TextField = require('../../webdriver-components/textField.js');
-let RandomUtils = require('../../../utils/randomUtils.js');
+let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 
 /**
  * CcdTextAreaField field component deals with interactions with the CCD Text Area Field component.

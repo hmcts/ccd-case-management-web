@@ -1,4 +1,4 @@
-let RandomUtils = require('../../../utils/randomUtils.js');
+let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 
 /**
  * Yes-No  field component deals with interactions with the CCD Yes No Field component - Yes/No radio button options.

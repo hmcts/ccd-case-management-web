@@ -1,4 +1,4 @@
-RandomUtils = require('../../../utils/randomUtils.js');
+RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 TextField = require('../../webdriver-components/textField.js');
 
 /**

@@ -1,4 +1,4 @@
-class RandomUtils {
+class CcdDataGenerationUtils {
 
 
     /**
@@ -40,5 +40,5 @@ class RandomUtils {
     }
 }
 
-module.exports = RandomUtils;
+module.exports = CcdDataGenerationUtils;
 

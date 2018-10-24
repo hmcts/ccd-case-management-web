@@ -36,7 +36,7 @@ class CaseEditComponent {
   submitted: EventEmitter<string> = new EventEmitter();
 }
 
-describe('CaseCreatorSubmitComponent', () => {
+describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
   const JID = 'PROBATE';
   const CTID = 'ComplexTestType';
@@ -260,12 +260,14 @@ describe('CaseCreatorSubmitComponent', () => {
   it('should have a cancel button going back to the case list for discard new draft', () => {
     component.cancel({status: CaseEditPageComponent.NEW_FORM_DISCARD, data: {field1 : 'value1'}});
 
+    expect(draftService.createOrUpdateDraft).not.toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith(['list/case']);
   });
 
   it('should have a cancel button going back to the view draft for discard existing draft', () => {
     component.cancel({status: CaseEditPageComponent.RESUMED_FORM_DISCARD, data: {field1 : 'value1'}});
 
+    expect(draftService.createOrUpdateDraft).not.toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
 
@@ -282,5 +284,165 @@ describe('CaseCreatorSubmitComponent', () => {
     expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
+});
 
+describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
+
+  const JID = 'PROBATE';
+  const CTID = 'ComplexTestType';
+
+  const CREATED_CASE: CaseDetails = {
+    id: '1234567890123456',
+    jurisdiction: JID,
+    case_type_id: CTID,
+    state: 'CaseCreated'
+  };
+  const CREATED_CASE_OBS: Observable<CaseDetails> = Observable.of(CREATED_CASE);
+
+  const ERROR: HttpError = new HttpError();
+  ERROR.message = 'Critical error!';
+
+  let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
+  let component: CaseCreatorSubmitComponent;
+
+  let EventTriggerHeaderComponent: any = MockComponent({
+    selector: 'ccd-event-trigger-header',
+    inputs: ['eventTrigger']
+  });
+
+  let FieldRead: any = MockComponent({
+    selector: 'ccd-field-read',
+    inputs: ['caseField']
+  });
+
+  let FieldWrite: any = MockComponent({
+    selector: 'ccd-field-write',
+    inputs: ['caseField', 'formGroup', 'idPrefix', 'isExpanded']
+  });
+
+  const RouterLinkComponent: any = MockComponent({
+    selector: 'a'
+  });
+
+  const CASE_DETAILS: CaseView = new CaseView();
+  CASE_DETAILS.case_id = '42';
+
+  const EVENT_TRIGGER_SAVE_AND_RESUME_DISABLED: CaseEventTrigger = createCaseEventTrigger(
+    'TEST_TRIGGER',
+    'Test Trigger',
+    null,
+    false,
+    [
+      {
+        id: 'PersonFirstName',
+        label: 'First name',
+        field_type: null,
+        display_context: 'READONLY'
+      },
+      {
+        id: 'PersonLastName',
+        label: 'Last name',
+        field_type: null,
+        display_context: 'OPTIONAL'
+      }
+    ],
+    [],
+    false
+  );
+
+  const PARAMS: Params = {
+    jid: JID,
+    ctid: CTID
+  };
+
+  const SANITISED_EDIT_FORM: CaseEventData = {
+    data: {
+      'PersonLastName': 'Khaleesi'
+    },
+    event: {
+      id: null,
+      summary: 'Some summary',
+      description: 'Some description'
+    },
+    event_token: 'test-token',
+    ignore_warning: false
+  };
+
+  let mockRoute: any = {
+    snapshot: {
+      data: {
+        eventTrigger: EVENT_TRIGGER_SAVE_AND_RESUME_DISABLED
+      },
+      params: {
+        PARAMS
+      }
+    },
+    params: Observable.of(PARAMS)
+  };
+
+  let router: any;
+  let alertService: any;
+  let casesService: any;
+  let draftService: any;
+  let formErrorService: any;
+  let formValueService: any;
+  let casesReferencePipe: any;
+
+  beforeEach(async(() => {
+    casesService = createSpyObj<CasesService>('casesService', ['createCase', 'validateCase']);
+    casesService.createCase.and.returnValue(Observable.of(CASE_DETAILS));
+    draftService = createSpyObj<DraftService>('draftService', ['createOrUpdateDraft']);
+    draftService.createOrUpdateDraft.and.returnValue(Observable.of(DRAFT_PREFIX));
+    casesReferencePipe = createSpyObj<CaseReferencePipe>('caseReference', ['transform']);
+
+    alertService = createSpyObj<AlertService>('alertService', ['success', 'warning', 'setPreserveAlerts']);
+
+    router = createSpyObj('router', ['navigate']);
+    router.navigate.and.returnValue({then: f => f()});
+    formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
+
+    formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);
+
+    TestBed
+      .configureTestingModule({
+        imports: [
+          ReactiveFormsModule
+        ],
+        declarations: [
+          CaseEditComponent,
+          CaseCreatorSubmitComponent,
+
+          // Mock
+          EventTriggerHeaderComponent,
+          RouterLinkComponent,
+          FieldRead,
+          FieldWrite,
+          CaseReferencePipe
+        ],
+        providers: [
+          { provide: ActivatedRoute, useValue: mockRoute },
+          { provide: CasesService, useValue: casesService },
+          { provide: DraftService, useValue: draftService },
+          { provide: Router, useValue: router },
+          { provide: AlertService, useValue: alertService },
+          { provide: FormErrorService, useValue: formErrorService },
+          { provide: FormValueService, useValue: formValueService },
+          { provide: CaseReferencePipe, useValue: casesReferencePipe }
+        ]
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(CaseCreatorSubmitComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+  }));
+
+  it('should have a cancel button going back to the case list for cancel create case event', () => {
+    component.cancel({});
+
+    expect(draftService.createOrUpdateDraft)
+      .not.toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER_SAVE_AND_RESUME_DISABLED.case_id, SANITISED_EDIT_FORM);
+    expect(router.navigate).toHaveBeenCalledWith(['list/case']);
+  });
 });

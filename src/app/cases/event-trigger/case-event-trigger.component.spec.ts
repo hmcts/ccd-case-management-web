@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CaseEventTriggerComponent } from './case-event-trigger.component';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';

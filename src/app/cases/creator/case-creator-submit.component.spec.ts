@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Params, Router } from '@angular/router';

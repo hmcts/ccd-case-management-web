@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
-import {SearchResultView} from './search-result-view.model';
-import {PaginationMetadata} from './pagination-metadata.model';
-import {SearchResultViewColumn} from './search-result-view-column.model';
-import {SearchResultViewItem} from './search-result-view-item.model';
-import {SearchResultViewItemComparator} from './sorting/search-result-view-item-comparator';
-import {SortParameters} from './sorting/sort-parameters';
-import {SortOrder} from './sorting/sort-order';
-import {SearchResultViewItemComparatorFactory} from './sorting/search-result-view-item-comparator-factory';
-import {DisplayMode} from '../../core/activity/activity.model';
-import {AppConfig} from '../../app.config';
-import {FormGroup} from '@angular/forms';
-import {ActivityService} from '../../core/activity/activity.service';
+import { SearchResultView } from './search-result-view.model';
+import { PaginationMetadata } from './pagination-metadata.model';
+import { SearchResultViewColumn } from './search-result-view-column.model';
+import { SearchResultViewItem } from './search-result-view-item.model';
+import { SearchResultViewItemComparator } from './sorting/search-result-view-item-comparator';
+import { SortParameters } from './sorting/sort-parameters';
+import { SortOrder } from './sorting/sort-order';
+import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
+import { DisplayMode } from '../../core/activity/activity.model';
+import { AppConfig } from '../../app.config';
+import { FormGroup } from '@angular/forms';
+import { ActivityService } from '../../core/activity/activity.service';
 
 import {
   CaseField,
@@ -81,9 +81,9 @@ export class SearchResultComponent implements OnChanges {
   draftsCount: number;
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
-              appConfig: AppConfig,
-              private activityService: ActivityService,
-              private caseReferencePipe: CaseReferencePipe) {
+    appConfig: AppConfig,
+    private activityService: ActivityService,
+    private caseReferencePipe: CaseReferencePipe) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -125,6 +125,7 @@ export class SearchResultComponent implements OnChanges {
       Object.keys(result.case_fields).forEach(fieldId => {
 
         const field = result.case_fields[fieldId];
+
         caseFields.push({
           id: fieldId,
           label: null,
@@ -135,13 +136,15 @@ export class SearchResultComponent implements OnChanges {
       });
 
       result.hydrated_case_fields = caseFields;
-
+      console.log('resultColumn', result.columns);
       result.columns = {};
 
       this.resultView.columns.forEach(col => {
         result.columns[col.case_field_id] = this.buildCaseField(col, result);
       });
+      console.log('resultColumn', result.columns);
     });
+
   }
 
   goToPage(page): void {
@@ -167,6 +170,28 @@ export class SearchResultComponent implements OnChanges {
     };
   }
 
+  getColumnsWithPrefix(col: any, result: SearchResultViewItem): CaseField {
+    console.log('getColumnsWithPrefix', col);
+    const response = {
+      id: col.id,
+      label: col.label,
+      field_type: col.field_type,
+      value: this.draftPrefixOrGet(col, result),
+      display_context: null,
+    };
+    console.log('getColumnsWithPrefix- response', response);
+    return response;
+  }
+
+  getColumnsWithHephenOrCaseReference(col: any, result: SearchResultViewItem): CaseField {
+    return {
+      id: col.id,
+      label: col.label,
+      field_type: col.field_type,
+      value: this.hyphenateIfCaseReferenceOrGet(col, result),
+      display_context: null,
+    };
+  }
   hasResults(): any {
     return this.resultView.results.length && this.paginationMetadata.total_pages_count;
   }
@@ -196,9 +221,21 @@ export class SearchResultComponent implements OnChanges {
   }
 
   hyphenateIfCaseReferenceOrGet(col, result): any {
-    return col.case_field_id === '[CASE_REFERENCE]' ?
-      this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
-      : result.case_fields[col.case_field_id];
+    // return col.case_field_id === '[CASE_REFERENCE]' ?
+    //   this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
+    //   : result.case_fields[col.case_field_id];
+    if (col.case_field_id === '[CASE_REFERENCE]') {
+      return this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
+    } else {
+      console.log('result.case_fields', result.case_fields);
+      console.log('col.case_field_id];', col.case_field_id);
+      console.log('result.case_fields[id];', result.case_fields[col.case_field_id]);
+      if (col.id) {
+        return result.case_fields[col.id];
+      } else {
+        return result.case_fields[col.case_field_id];
+      }
+    }
   }
 
   draftPrefixOrGet(col, result): any {
@@ -228,12 +265,12 @@ export class SearchResultComponent implements OnChanges {
 
   getFirstResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
+    return ((currentPage - 1) * this.paginationPageSize) + 1 + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getLastResult(): number {
     const currentPage = (this.selected.page ? this.selected.page : 1);
-    return ( (currentPage - 1) * this.paginationPageSize ) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
+    return ((currentPage - 1) * this.paginationPageSize) + this.resultView.results.length + this.getDraftsCountIfNotPageOne(currentPage);
   }
 
   getTotalResults(): number {

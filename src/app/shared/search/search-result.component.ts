@@ -170,28 +170,11 @@ export class SearchResultComponent implements OnChanges {
     };
   }
 
-  getColumnsWithPrefix(col: any, result: SearchResultViewItem): CaseField {
-    console.log('getColumnsWithPrefix', col);
-    const response = {
-      id: col.id,
-      label: col.label,
-      field_type: col.field_type,
-      value: this.draftPrefixOrGet(col, result),
-      display_context: null,
-    };
-    console.log('getColumnsWithPrefix- response', response);
-    return response;
+  getColumnsWithPrefix(col: CaseField, result: SearchResultViewItem): CaseField {
+    col.value = this.draftPrefixOrGet(col, result);
+    return col;
   }
 
-  getColumnsWithHephenOrCaseReference(col: any, result: SearchResultViewItem): CaseField {
-    return {
-      id: col.id,
-      label: col.label,
-      field_type: col.field_type,
-      value: this.hyphenateIfCaseReferenceOrGet(col, result),
-      display_context: null,
-    };
-  }
   hasResults(): any {
     return this.resultView.results.length && this.paginationMetadata.total_pages_count;
   }
@@ -220,26 +203,16 @@ export class SearchResultComponent implements OnChanges {
     return this.activityService.isEnabled;
   }
 
-  hyphenateIfCaseReferenceOrGet(col, result): any {
-    // return col.case_field_id === '[CASE_REFERENCE]' ?
-    //   this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
-    //   : result.case_fields[col.case_field_id];
-    if (col.case_field_id === '[CASE_REFERENCE]') {
-      return this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
+  getValueFromCaseField(col, result): any {
+    if (col.id) {
+      return result.case_fields[col.id];
     } else {
-      console.log('result.case_fields', result.case_fields);
-      console.log('col.case_field_id];', col.case_field_id);
-      console.log('result.case_fields[id];', result.case_fields[col.case_field_id]);
-      if (col.id) {
-        return result.case_fields[col.id];
-      } else {
-        return result.case_fields[col.case_field_id];
-      }
+      return result.case_fields[col.case_field_id];
     }
   }
 
   draftPrefixOrGet(col, result): any {
-    return result.case_id.startsWith(DRAFT_PREFIX) ? DRAFT_PREFIX : this.hyphenateIfCaseReferenceOrGet(col, result);
+    return result.case_id.startsWith(DRAFT_PREFIX) ? DRAFT_PREFIX : this.getValueFromCaseField(col, result);
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {

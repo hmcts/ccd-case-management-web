@@ -36,7 +36,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | Money-gbp |
       | Date      |
       | Email     |
-      | Fixed-List|
+     #| Fixed-List|
       | Phone UK  |
       | Yes-No    |
 #      | Collection| TODO

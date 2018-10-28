@@ -1,14 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Jurisdiction } from '../../domain/definition/jurisdiction.model';
-import { CaseState } from '../../domain/definition/case-state.model';
-import { CaseType } from '../../domain/definition/case-type.model';
-import { SearchService } from '../../../core/search/search.service';
-import { SearchInput } from '../../../core/search/search-input.model';
-import { WindowService } from '../../../core/utils/window.service';
-import { FormGroup } from '@angular/forms';
-import { PlatformLocation } from '@angular/common'
-import { JurisdictionService } from '../../jurisdiction.service';
-import { OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SearchService} from '../../../core/search/search.service';
+import {SearchInput} from '../../../core/search/search-input.model';
+import {WindowService} from '../../../core/utils/window.service';
+import {FormGroup} from '@angular/forms';
+import {PlatformLocation} from '@angular/common'
+import {JurisdictionService} from '../../jurisdiction.service';
+import {CaseState, CaseTypeLite, Jurisdiction, OrderService} from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-filters',
@@ -30,14 +27,14 @@ export class SearchFiltersComponent implements OnInit {
 
   selected: {
     jurisdiction?: Jurisdiction,
-    caseType?: CaseType,
+    caseType?: CaseTypeLite,
     formGroup?: FormGroup,
     caseState?: CaseState,
     page?: number,
     metadataFields?: string[]
   };
 
-  selectedJurisdictionCaseTypes?: CaseType[];
+  selectedJurisdictionCaseTypes?: CaseTypeLite[];
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -50,11 +47,12 @@ export class SearchFiltersComponent implements OnInit {
 
   ngOnInit(): void {
     this.selected = {};
-    if (this.jurisdictions.length === 1) {
+    const jurisdiction = this.windowService.getLocalStorage('search-jurisdiction');
+    if (this.jurisdictions.length === 1 || jurisdiction) {
       this.selected.jurisdiction = this.jurisdictions[0];
-      const jurisdiction = this.windowService.getLocalStorage('jurisdiction');
       if (jurisdiction) {
-        this.selected.jurisdiction = JSON.parse(jurisdiction);
+        const localStorageJurisdiction = JSON.parse(jurisdiction);
+        this.selected.jurisdiction = this.jurisdictions.filter(j => j.id === localStorageJurisdiction.id)[0];
       }
       this.onJurisdictionIdChange();
     }
@@ -146,8 +144,7 @@ export class SearchFiltersComponent implements OnInit {
       this.selected.jurisdiction === undefined;
   }
 
-  private selectCaseType(caseTypes: CaseType[]) {
-
+  private selectCaseType(caseTypes: CaseTypeLite[]) {
     if (caseTypes && caseTypes.length > 0) {
       this.selected.caseType = caseTypes[0];
       const caseType = this.windowService.getLocalStorage('search-caseType')

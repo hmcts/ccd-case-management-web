@@ -2,17 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, Input } from '@angular/core';
 import { SearchFiltersComponent } from './search-filters.component';
 import { By } from '@angular/platform-browser';
-import { Jurisdiction } from '../../domain/definition/jurisdiction.model';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchService } from '../../../core/search/search.service';
 import { Observable } from 'rxjs/Rx';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { JurisdictionService } from '../../jurisdiction.service';
-import { CaseType } from '../../domain/definition/case-type.model';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
 import { WindowService } from '../../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
-import { AbstractFieldWriteComponent, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { AbstractFieldWriteComponent, OrderService, Jurisdiction, CaseType } from '@hmcts/ccd-case-ui-toolkit';
 
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
@@ -223,6 +221,19 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
     expect(component.selected.jurisdiction).toBe(JURISDICTION_3);
     expect(component.selected.caseType).toBe(CASE_TYPE_2);
+    expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
+  });
+
+  it('should select the caseType when no LocalStorage is present', () => {
+    windowService.clearLocalStorage();
+    resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
+    component.jurisdictions = [JURISDICTION_1];
+    fixture.detectChanges();
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
+    expect(component.selected.caseType).toBe(CASE_TYPE_1);
     expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
   });
 

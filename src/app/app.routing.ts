@@ -1,5 +1,4 @@
 import { RouterModule, Routes } from '@angular/router';
-
 import { WorkbasketComponent } from './workbasket/workbasket.component';
 import { SearchComponent } from './search/search.component';
 import { ProfileResolver } from './core/profile/profile.resolver';
@@ -14,11 +13,7 @@ import { CasePrinterComponent } from './cases/printer/case-printer.component';
 import { CasePrintDocumentsResolver } from './cases/printer/case-print-documents.resolver';
 import { CaseCreatorSubmitComponent } from './cases/creator/case-creator-submit.component';
 import { CreateCaseEventTriggerResolver } from './cases/creator/create-case-event-trigger.resolver';
-import { CaseEditSubmitComponent } from './shared/case-editor/case-edit-submit.component';
-import { CaseEditPageComponent } from './shared/case-editor/case-edit-page.component';
-import { CaseEditWizardGuard } from './core/case-editor/case-edit-wizard.guard';
 import { OAuth2RedirectComponent } from './oauth2/oauth2-redirect.component';
-import { CaseEditConfirmComponent } from './shared/case-editor/case-edit-confirm.component';
 import { AppConfigGuard } from './app.config.guard';
 import { ActivityResolver } from './core/activity/activity.resolver';
 import { CaseHistoryComponent } from './shared/case-history/case-history.component';
@@ -27,6 +22,7 @@ import { CookiesComponent } from './footer-nav/cookies.component';
 import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
+import { routing as caseEditRouting } from '@hmcts/ccd-case-ui-toolkit';
 
 const caseViewChildRoutes: Routes = [
   {
@@ -46,30 +42,7 @@ const caseViewChildRoutes: Routes = [
       eventTrigger: EventTriggerResolver
     },
     component: CaseEventTriggerComponent,
-    children: [
-      {
-        path: '',
-        resolve: {
-          caseEditWizardGuard: CaseEditWizardGuard,
-        },
-        component: CaseEditPageComponent,
-      },
-      {
-        path: 'submit',
-        component: CaseEditSubmitComponent,
-      },
-      {
-        path: 'confirm',
-        component: CaseEditConfirmComponent,
-      },
-      {
-        path: ':page',
-        resolve: {
-          caseEditWizardGuard: CaseEditWizardGuard,
-        },
-        component: CaseEditPageComponent,
-      }
-    ]
+    children: caseEditRouting
   },
   {
     path: 'event/:eid/history',
@@ -114,30 +87,7 @@ const routes: Routes = [
             resolve: {
               eventTrigger: CreateCaseEventTriggerResolver
             },
-            children: [
-              {
-                path: '',
-                resolve: {
-                  caseEditWizardGuard: CaseEditWizardGuard,
-                },
-                component: CaseEditPageComponent,
-              },
-              {
-                path: 'submit',
-                component: CaseEditSubmitComponent,
-              },
-              {
-                path: 'confirm',
-                component: CaseEditConfirmComponent,
-              },
-              {
-                path: ':page',
-                resolve: {
-                  caseEditWizardGuard: CaseEditWizardGuard,
-                },
-                component: CaseEditPageComponent,
-              }
-            ]
+            children: caseEditRouting
           }
         ]
       },

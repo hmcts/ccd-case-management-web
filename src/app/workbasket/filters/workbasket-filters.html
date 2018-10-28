@@ -1,21 +1,27 @@
 <form class="global-display">
   <div class="form-group">
     <label class="form-label" for="wb-jurisdiction">Jurisdiction</label>
-    <select class="form-control form-control-3-4 ccd-dropdown" id="wb-jurisdiction" name="jurisdiction" [(ngModel)]="selected.jurisdiction" (change)="onJurisdictionIdChange()">
+    <select class="form-control form-control-3-4 ccd-dropdown" id="wb-jurisdiction"
+            name="jurisdiction" [(ngModel)]="selected.jurisdiction" aria-controls="search-result"
+            (change)="onJurisdictionIdChange()">
       <option *ngFor="let j of jurisdictions" [ngValue]="j">{{j.name}}</option>
     </select>
   </div>
 
   <div class="form-group">
     <label class="form-label" for="wb-case-type">Case type</label>
-    <select class="form-control form-control-3-4 ccd-dropdown" id="wb-case-type" name="case-type" [(ngModel)]="selected.caseType" [disabled]="isCaseTypesDropdownDisabled()" (change)="onCaseTypeIdChange()">
+    <select class="form-control form-control-3-4 ccd-dropdown" id="wb-case-type"
+            name="case-type" [(ngModel)]="selected.caseType" [disabled]="isCaseTypesDropdownDisabled()"
+            (change)="onCaseTypeIdChange()" aria-controls="search-result">
       <option *ngFor="let ct of selectedJurisdictionCaseTypes" [ngValue]="ct">{{ct.name}}</option>
     </select>
   </div>
 
   <div class="form-group">
     <label class="form-label" for="wb-case-state">State</label>
-    <select class="form-control form-control-3-4 ccd-dropdown" id="wb-case-state" name="state" [(ngModel)]="selected.caseState" [disabled]="isCaseStatesDropdownDisabled()">
+    <select class="form-control form-control-3-4 ccd-dropdown" id="wb-case-state"
+            name="state" [(ngModel)]="selected.caseState" [disabled]="isCaseStatesDropdownDisabled()"
+            aria-controls="search-result">
       <option *ngFor="let cs of selectedCaseTypeStates" [ngValue]="cs">{{cs.name}}</option>
     </select>
   </div>

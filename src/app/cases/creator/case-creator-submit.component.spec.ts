@@ -19,6 +19,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
   const JID = 'PROBATE';
   const CTID = 'ComplexTestType';
+  const PAGE_ID = 'pageId';
 
   const CREATED_CASE: CaseDetails = {
     id: '1234567890123456',
@@ -176,9 +177,9 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
   it('should validate case details with sanitised data when validated', () => {
     casesService.validateCase.and.returnValue(CREATED_CASE_OBS);
-    component.validate()(SANITISED_EDIT_FORM);
+    component.validate()(SANITISED_EDIT_FORM, PAGE_ID);
 
-    expect(casesService.validateCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+    expect(casesService.validateCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM, PAGE_ID);
   });
 
   it('should create a draft when saveDraft called with sanitised data', () => {

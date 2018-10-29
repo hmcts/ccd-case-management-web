@@ -15,7 +15,6 @@ import { ActivityService } from '../../core/activity/activity.service';
 
 import {
   CaseField,
-  CaseReferencePipe,
   CaseState,
   CaseType,
   DRAFT_PREFIX,
@@ -38,7 +37,6 @@ export class SearchResultComponent implements OnChanges {
   @Input()
   jurisdiction: Jurisdiction;
 
-  @Input()
   caseType: CaseType;
 
   @Input()
@@ -82,8 +80,7 @@ export class SearchResultComponent implements OnChanges {
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
     appConfig: AppConfig,
-    private activityService: ActivityService,
-    private caseReferencePipe: CaseReferencePipe) {
+    private activityService: ActivityService) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -136,13 +133,11 @@ export class SearchResultComponent implements OnChanges {
       });
 
       result.hydrated_case_fields = caseFields;
-      console.log('resultColumn', result.columns);
       result.columns = {};
 
       this.resultView.columns.forEach(col => {
         result.columns[col.case_field_id] = this.buildCaseField(col, result);
       });
-      console.log('resultColumn', result.columns);
     });
 
   }

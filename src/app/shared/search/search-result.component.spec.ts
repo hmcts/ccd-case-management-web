@@ -271,28 +271,24 @@ describe('SearchResultComponent', () => {
 
       let firstRowComponent = firstRow.children.slice(1, 3);
       let firstRowResult = RESULT_VIEW.results[0];
-      console.log('firstRowComponent[0].children[0]', firstRowComponent[0].children[0].children[0].componentInstance.caseField.value);
-      console.log('firstRowResul.case_fields[PersonFirstName]', firstRowResult.case_fields['PersonFirstName']);
-      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
+      expect(firstRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
         .case_fields['PersonFirstName']);
-      // expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
-      //   .case_fields['PersonAddress']);
+      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
+        .case_fields['PersonAddress']);
       let secondRow = de.query(By.css('div>table>tbody tr:nth-child(2)'));
       let secondResult = RESULT_VIEW.results[1];
 
       // case
       let secondRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(2) td:nth-child(1) a'));
-      // expect(secondRowFirstCol.nativeElement.textContent.trim()).toBe(secondResult.case_fields['PersonLastName']);
+      expect(secondRowFirstCol.nativeElement.textContent.trim()).toBe(secondResult.case_fields['PersonLastName']);
 
       let secondRowComponent = secondRow.children.slice(1, 3);
       let secondRowResult = RESULT_VIEW.results[1];
 
-      // expect(secondRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
-      //   .case_fields['PersonAddress']);
-      // console.log(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value);
-      // console.log(secondRowResult.case_fields['PersonFirstName']);
-      // expect(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
-      //   .case_fields['PersonFirstName']);
+      expect(secondRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
+        .case_fields['PersonAddress']);
+      expect(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
+        .case_fields['PersonFirstName']);
     });
 
     it('should render an case activity column with header', () => {

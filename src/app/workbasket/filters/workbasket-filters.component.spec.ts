@@ -22,6 +22,9 @@ class FieldWriteComponent extends AbstractFieldWriteComponent {
   @Input()
   formGroup: FormGroup;
 }
+const FORM_GROUP_VAL_LOC_STORAGE = 'workbasket-filter-form-group-value';
+const SAVED_QUERY_PARAM_LOC_STORAGE = 'savedQueryParams';
+
 const workbasketvalue = `{\"PersonLastName\":\"LastName\",\"PersonFirstName\":\"CaseFirstName\",`
   + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\"`
   + `:null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
@@ -181,7 +184,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
-      windowMockService = createSpyObj<WindowService>('windowService', ['clearLocalStorage', 'locationAssign', 'getLocalStorage']);
+      windowMockService = createSpyObj<WindowService>('windowService', ['clearLocalStorage', 'locationAssign',
+        'getLocalStorage', 'removeLocalStorage']);
       resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -232,11 +236,11 @@ describe('WorkbasketFiltersComponent', () => {
         });
     }));
     it('should remove localStorage once reset button is clicked', async(() => {
-      windowMockService.clearLocalStorage();
-      windowMockService.locationAssign('list/case');
+      windowMockService.removeLocalStorage(FORM_GROUP_VAL_LOC_STORAGE);
+      windowMockService.removeLocalStorage(SAVED_QUERY_PARAM_LOC_STORAGE);
       component.reset();
-      expect(windowMockService.clearLocalStorage).toHaveBeenCalled();
-      expect(windowMockService.locationAssign).toHaveBeenCalled();
+      expect(windowMockService.removeLocalStorage).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalled();
     }));
   });
   describe('with defaults', () => {

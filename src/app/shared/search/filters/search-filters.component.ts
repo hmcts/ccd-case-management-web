@@ -71,6 +71,7 @@ export class SearchFiltersComponent implements OnInit {
       this.onApply.emit(this.selected);
     }
   }
+
   reset(): void {
     this.windowService.removeLocalStorage(FORM_GROUP_VALUE_LOC_STORAGE);
     this.windowService.removeLocalStorage(CASE_TYPE_LOC_STORAGE);
@@ -79,6 +80,7 @@ export class SearchFiltersComponent implements OnInit {
     this.selected = {};
     this.onReset.emit();
   }
+
   apply(): void {
     this.selected.formGroup = this.formGroup;
     this.selected.page = 1;

@@ -12,6 +12,11 @@ import { WindowService } from '../../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AbstractFieldWriteComponent, OrderService, Jurisdiction, CaseType } from '@hmcts/ccd-case-ui-toolkit';
 
+const JURISDICTION_LOC_STORAGE = 'search-jurisdiction';
+const META_FIELDS_LOC_STORAGE = 'search-metadata-fields';
+const FORM_GROUP_VALUE_LOC_STORAGE = 'search-form-group-value';
+const CASE_TYPE_LOC_STORAGE = 'search-caseType';
+
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
@@ -449,11 +454,11 @@ describe('Clear localStorage', () => {
   let windowService: WindowService;
 
   beforeEach(async(() => {
-    searchHandler = createSpyObj('searchHandler', ['applyFilters']);
+    searchHandler = createSpyObj('searchHandler', ['applyFilters', 'applyReset']);
     mockSearchService = createSpyObj('mockSearchService', ['getSearchInputs']);
     orderService = createSpyObj('orderService', ['sortAsc']);
     jurisdictionService = new JurisdictionService();
-    windowService = createSpyObj('windowService', ['clearLocalStorage', 'locationAssign']);
+    windowService = createSpyObj('windowService', ['clearLocalStorage', 'locationAssign', 'getLocalStorage', 'removeLocalStorage']);
     TestBed
       .configureTestingModule({
         imports: [
@@ -480,18 +485,39 @@ describe('Clear localStorage', () => {
           JURISDICTION_1,
           JURISDICTION_2
         ];
-        component.onApply.subscribe(searchHandler.applyFilters);
+        component.onReset.subscribe(searchHandler.applyReset);
 
         de = fixture.debugElement;
         fixture.detectChanges();
       });
   }));
+
   it('should remove localStorage once reset button is clicked', async(() => {
-    windowService.clearLocalStorage();
-    windowService.locationAssign('search');
-    component.reset();
-    expect(windowService.clearLocalStorage).toHaveBeenCalled();
-    expect(windowService.locationAssign).toHaveBeenCalled();
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
+    searchHandler.applyReset.calls.reset();
+    component.selected.jurisdiction = JURISDICTION_3;
+    component.selected.caseType = CASE_TYPES_2[3];
+
+    let control = new FormControl('test');
+    control.setValue('anything');
+    const formControls = {
+      'name': control
+    };
+
+    let formGroup = new FormGroup(formControls);
+
+    component.onCaseTypeIdChange();
+    fixture.detectChanges();
+    fixture
+      .whenStable()
+      .then(() => {
+        let button = de.query(By.css('#reset'));
+        component.formGroup = formGroup;
+        button.nativeElement.click();
+        expect(windowService.removeLocalStorage).toHaveBeenCalledTimes(4);
+
+      });
+
   }));
 });
 

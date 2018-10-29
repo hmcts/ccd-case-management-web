@@ -1,4 +1,5 @@
-<div *ngIf="(hasResults() || hasDrafts())" class="pagination-top">
+<div *ngIf="(hasResults() || hasDrafts())" class="pagination-top"
+     attr.aria-label="{{ getTotalResults() }} results have been found">
   <span class="text-16">Displaying {{ getFirstResult() }} - {{ getLastResult() }} out of {{ getTotalResults() }} results</span>
 </div>
 <table *ngIf="hasResults() || hasDrafts()">

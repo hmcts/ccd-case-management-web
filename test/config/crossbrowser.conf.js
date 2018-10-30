@@ -131,8 +131,8 @@ exports.config = {
     plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{
-      jsonOutputPath: 'test/functional-tests/results/',
-      reportPath: 'test/functional-tests/results/',
+      jsonDir: './functional-output/crossbrowser/reports',
+      reportPath: './functional-output/crossbrowser/reports',
 
       automaticallyGenerateReport: true,
       removeExistingJsonReportFile: true,

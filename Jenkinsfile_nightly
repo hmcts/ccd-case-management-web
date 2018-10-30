@@ -43,4 +43,8 @@ withNightlyPipeline(type, product, app) {
     afterCheckout {
         sh "yarn cache clean"
     }
+    
+    after('crossBrowserTest') {
+       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
+     }
 }

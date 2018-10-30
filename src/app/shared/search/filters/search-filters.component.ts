@@ -1,16 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SearchService} from '../../../core/search/search.service';
-import {SearchInput} from '../../../core/search/search-input.model';
-import {WindowService} from '../../../core/utils/window.service';
-import {FormGroup} from '@angular/forms';
-import {PlatformLocation} from '@angular/common'
-import {JurisdictionService} from '../../jurisdiction.service';
-import {CaseState, CaseTypeLite, Jurisdiction, OrderService} from '@hmcts/ccd-case-ui-toolkit';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SearchService } from '../../../core/search/search.service';
+import { SearchInput } from '../../../core/search/search-input.model';
+import { WindowService } from '../../../core/utils/window.service';
+import { FormGroup } from '@angular/forms';
+import { PlatformLocation } from '@angular/common'
+import { JurisdictionService } from '../../jurisdiction.service';
+import { CaseState, CaseTypeLite, Jurisdiction, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-filters',
   templateUrl: './search-filters.html',
 })
+
 export class SearchFiltersComponent implements OnInit {
 
   @Input()
@@ -39,10 +40,10 @@ export class SearchFiltersComponent implements OnInit {
   formGroup: FormGroup = new FormGroup({});
 
   constructor(private searchService: SearchService,
-              private orderService: OrderService,
-              private jurisdictionService: JurisdictionService,
-              private windowService: WindowService,
-              private platformLocation: PlatformLocation) {
+    private orderService: OrderService,
+    private jurisdictionService: JurisdictionService,
+    private windowService: WindowService,
+    private platformLocation: PlatformLocation) {
   }
 
   ngOnInit(): void {

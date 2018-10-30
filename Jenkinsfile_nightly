@@ -39,12 +39,4 @@ withNightlyPipeline(type, product, app) {
     
     enableSlackNotifications('#ccd-nightly-builds')
     enableCrossBrowserTest()
-
-    afterCheckout {
-        sh "yarn cache clean"
-    }
-    
-    after('crossBrowserTest') {
-       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-     }
 }

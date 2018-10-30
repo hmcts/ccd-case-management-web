@@ -16,6 +16,7 @@ const CASE_TYPE_LOC_STORAGE = 'search-caseType';
   selector: 'ccd-search-filters',
   templateUrl: './search-filters.html',
 })
+
 export class SearchFiltersComponent implements OnInit {
 
   @Input()

@@ -50,15 +50,17 @@ exports.config = {
   },
   
     plugins: [{
-        package: "protractor-screenshoter-plugin",
-        screenshotPath: "./smoke-output",
-        screenshotOnExpect: "failure+success",
-        screenshotOnSpec: "failure+success",
-        withLogs: true,
-        writeReportFreq: "asap",
-        clearFoldersBeforeTest: true
-    }],
+    package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
+    options:{
+      jsonOutputPath: 'test/functional-tests/results/',
+      reportPath: 'test/functional-tests/results/',
 
+      automaticallyGenerateReport: true,
+      removeExistingJsonReportFile: true,
+      removeOriginalJsonReportFile:true
+    }
+  }],
+  
   useAllAngular2AppRoots: true,
 
 };

@@ -39,71 +39,72 @@ exports.config = {
         tags:'ccd-crossbrowser'
     },
     
-    {
-      browserName: 'internet explorer',
-      version: '11',
-      platform: 'Windows 10',
-      name: "win-ie11",
-      shardTestFiles: true,
-      maxInstances: 1,
-      "tunnel-identifier": 'reformtunnel',
-      tags:'ccd-crossbrowser'
-    },
+//     {
+//       browserName: 'internet explorer',
+//       version: '11',
+//       "iedriverVersion": "2.46.0",
+//       platform: 'Windows 10',
+//       name: "win-ie11",
+//       shardTestFiles: true,
+//       maxInstances: 1,
+//       "tunnel-identifier": 'reformtunnel',
+//       tags:'ccd-crossbrowser'
+//     },
     
-    {
-      browserName: 'MicrosoftEdge',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: "win-edge-latest",
-      shardTestFiles: true,
-      maxInstances: 1,
-      "tunnel-identifier": 'reformtunnel',
-      tags:'ccd-crossbrowser'
-    },
+//     {
+//       browserName: 'MicrosoftEdge',
+//       version: 'latest',
+//       platform: 'Windows 10',
+//       name: "win-edge-latest",
+//       shardTestFiles: true,
+//       maxInstances: 1,
+//       "tunnel-identifier": 'reformtunnel',
+//       tags:'ccd-crossbrowser'
+//     },
   
-    {
-      browserName: 'chrome',
-      version: 'latest',
-      platform: 'macOS 10.13',
-      name: 'mac-chrome-latest',
-      shardTestFiles: true,
-      maxInstances: 1,
-      "tunnel-identifier": 'reformtunnel',
-      tags:'ccd-crossbrowser'
-    },
+//     {
+//       browserName: 'chrome',
+//       version: 'latest',
+//       platform: 'macOS 10.13',
+//       name: 'mac-chrome-latest',
+//       shardTestFiles: true,
+//       maxInstances: 1,
+//       "tunnel-identifier": 'reformtunnel',
+//       tags:'ccd-crossbrowser'
+//     },
   
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: 'win-firefox-latest',
-      shardTestFiles: true,
-      maxInstances: 1,
-      "tunnel-identifier": 'reformtunnel',
-      tags:'ccd-crossbrowser'
-    },
+//     {
+//       browserName: 'firefox',
+//       version: 'latest',
+//       platform: 'Windows 10',
+//       name: 'win-firefox-latest',
+//       shardTestFiles: true,
+//       maxInstances: 1,
+//       "tunnel-identifier": 'reformtunnel',
+//       tags:'ccd-crossbrowser'
+//     },
     
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'macOS 10.13',
-      name: 'mac-firefox-latest',
-      shardTestFiles: true,
-      maxInstances: 1,
-      "tunnel-identifier": 'reformtunnel',
-      tags:'ccd-crossbrowser'
-    },
+//     {
+//       browserName: 'firefox',
+//       version: 'latest',
+//       platform: 'macOS 10.13',
+//       name: 'mac-firefox-latest',
+//       shardTestFiles: true,
+//       maxInstances: 1,
+//       "tunnel-identifier": 'reformtunnel',
+//       tags:'ccd-crossbrowser'
+//     },
     
-    {
-      browserName: 'safari',
-      version: 'latest',
-      platform: 'macOS 10.13',
-      name: 'mac-safari-latest',
-      shardTestFiles: true,
-      maxInstances: 1,
-      "tunnel-identifier": 'reformtunnel',
-      tags:'ccd-crossbrowser'
-    }
+//     {
+//       browserName: 'safari',
+//       version: 'latest',
+//       platform: 'macOS 10.13',
+//       name: 'mac-safari-latest',
+//       shardTestFiles: true,
+//       maxInstances: 1,
+//       "tunnel-identifier": 'reformtunnel',
+//       tags:'ccd-crossbrowser'
+//     }
   ],
 
   cucumberOpts: {

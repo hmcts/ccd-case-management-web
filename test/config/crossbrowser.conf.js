@@ -118,6 +118,16 @@ exports.config = {
     plugin: 'json:test/cucumber.json'
   },
   
+  onComplete() {
+        const printSessionId = function (jobName) {
+            browser.getSession()
+                .then(session => {
+                    console.log('SauceOnDemandSessionID=' + session.getId() + ' job-name=' + jobName);
+                });
+        };
+        printSessionId('CCD Crossbrowser');
+    },
+  
     plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{

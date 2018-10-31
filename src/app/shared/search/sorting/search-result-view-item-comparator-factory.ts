@@ -22,6 +22,7 @@ export class SearchResultViewItemComparatorFactory {
       case ('TextArea'):
       case ('Email'):
       case ('Date'):
+      case ('DateTime'):
       case ('Postcode'):
       case ('YesOrNo'):
       case ('PhoneUK'):

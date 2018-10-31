@@ -10,8 +10,10 @@ import { DebugElement } from '@angular/core';
 import { createCaseHistory } from '../../core/cases/case-history.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
-import { FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
-  LabelSubstitutionService, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import {
+  FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
+  LabelSubstitutionService, OrderService, CaseReferencePipe
+} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryComponent', () => {
 
@@ -52,13 +54,17 @@ describe('CaseHistoryComponent', () => {
   let router: any;
   let orderService;
 
-  let FieldReadComponent: any = MockComponent({ selector: 'ccd-field-read', inputs: [
+  let FieldReadComponent: any = MockComponent({
+    selector: 'ccd-field-read', inputs: [
       'caseField'
-    ]});
+    ]
+  });
 
-  let LinkComponent: any = MockComponent({ selector: 'a', inputs: [
+  let LinkComponent: any = MockComponent({
+    selector: 'a', inputs: [
       'routerLink'
-    ]});
+    ]
+  });
 
   beforeEach(async(() => {
     orderService = new OrderService();
@@ -84,6 +90,7 @@ describe('CaseHistoryComponent', () => {
         providers: [
           FieldsUtils,
           LabelSubstitutionService,
+          CaseReferencePipe,
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router }

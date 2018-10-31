@@ -324,10 +324,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.2.20":
-  version "1.2.20"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.20.tgz#b791adf529a91e6a0ddd836088e52601b5e906e1"
-  integrity sha512-q+AQyZC4/35UjygQHewk4k1xno+43J6116/ckshs4+MyUk18Zgco7hVy3D11zbnAkFAfKajvduqtiMrRC7BFLg==
+"@hmcts/ccd-case-ui-toolkit@1.2.28":
+  version "1.2.28"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.28.tgz#4c8350645872038343199890f692581bbd9d8773"
+  integrity sha512-LyBdCnzR6FUZO5+ZqDs9J7HWVvv1BZRuY3ixmYfi0UyV4mo217apwglRzs+I9Yri4ASXSL3qds8zAaUKx1IsDw==
   dependencies:
     govuk-elements-sass "^3.1.2"
     karma-jasmine-html-reporter "^1.2.0"

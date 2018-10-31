@@ -2,7 +2,7 @@
 
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-    //Disabling cron job until nightly build vault is active for the repo
+    // cron job disbled until vault for nightly build is in place, build will run ondemand 
     //pipelineTriggers([cron('H 05 * * *')]),
     parameters([
                 string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),

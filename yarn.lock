@@ -229,10 +229,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/upgrade@~6.1.8":
-  version "6.1.10"
-  resolved "https://registry.yarnpkg.com/@angular/upgrade/-/upgrade-6.1.10.tgz#e6c6eee376acc07caf856aa6169e302cdbdf38e3"
-  integrity sha512-faqW2NDFjXEVSuSdziXvmSBaWidySQ6BI9itLjkWfBVeTvP7sTaGCVXhLnPDP9HFcix3a9TiNcus53qv7jDz1A==
+"@angular/upgrade@~7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@angular/upgrade/-/upgrade-7.0.1.tgz#f790d9031754826b709c6f8b413e0fc9edad2762"
+  integrity sha512-ZjHLlzHIrxkSk/dysgn7P9ySquKDx2Jh0Ch7awuJxi0Ybiu5mveFg+rfglzXUpZ6PFUJLRfkduleoP0CLPWHrQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -324,10 +324,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@1.2.20":
-  version "1.2.20"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.20.tgz#b791adf529a91e6a0ddd836088e52601b5e906e1"
-  integrity sha512-q+AQyZC4/35UjygQHewk4k1xno+43J6116/ckshs4+MyUk18Zgco7hVy3D11zbnAkFAfKajvduqtiMrRC7BFLg==
+"@hmcts/ccd-case-ui-toolkit@1.2.27":
+  version "1.2.27"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-1.2.27.tgz#b7af4eb3a0dccc4bc385685b13d19bb8cc1074c2"
+  integrity sha512-A2aPP/x7oVxF5TPW/1wptk5ZivOZV9gG+LR6BW+slIUwExq5jfoWZTf0+/SZFSj0Ze4snVDgaXxdDZBcvwWgmg==
   dependencies:
     govuk-elements-sass "^3.1.2"
     karma-jasmine-html-reporter "^1.2.0"

@@ -5,10 +5,10 @@ properties([
     // cron job disbled until vault for nightly build is in place, build will run ondemand 
     //pipelineTriggers([cron('H 05 * * *')]),
     parameters([
-                string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
-                string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
-                string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password')
-        ])
+        string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
+        string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
+        string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password')
+    ])
 ])
 
 @Library("Infrastructure")

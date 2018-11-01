@@ -51,8 +51,8 @@ class LoginPage extends BasePage {
    * @returns {Promise<CCDBanner>} new instance of the CCDBanner page
    */
   async clickSignIn() {
-      await element(this._signIn).submit();
-      browser.waitForAngular();
+      await element(this._signIn).click();
+      // browser.waitForAngular();
       return new CCDBanner
   }
 
@@ -64,8 +64,8 @@ class LoginPage extends BasePage {
       let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
       let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
 
-      await inputCredentials(username,password);
-      await clickSignIn();
+      await this.inputCredentials(username,password);
+      return await this.clickSignIn();
   }
 
 }

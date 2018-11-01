@@ -87,11 +87,7 @@ export class SearchComponent implements OnInit {
 
     if (formGroup) {
       const formValue = this.windowService.getLocalStorage('search-form-group-value');
-      if (formValue) {
-        this.buildFormDetails('', result, JSON.parse(formValue));
-      } else {
-        this.buildFormDetails('', result, formGroup.value);
-      }
+      this.buildFormDetails('', result, formValue ? JSON.parse(formValue) : formGroup.value);
     }
     return result;
   }

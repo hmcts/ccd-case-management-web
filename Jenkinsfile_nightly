@@ -2,13 +2,17 @@
 
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-    // cron job disbled until vault for nightly build is in place, build will run ondemand 
-    //pipelineTriggers([cron('H 05 * * *')]),
+    pipelineTriggers([cron('H 05 * * *')]),
     parameters([
         string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
         string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
-        string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password')
-    ])
+        string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password'),
+        booleanParam(
+            name: 'RUN_XBROWSER',
+            defaultValue: false,
+            description: 'Run Cross Browser tests'
+        )
+    ]),
 ])
 
 @Library("Infrastructure")
@@ -39,7 +43,9 @@ withNightlyPipeline(type, product, app) {
     env.CCD_CASEWORKER_AUTOTEST_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
     
     enableSlackNotifications('#ccd-nightly-builds')
-    enableCrossBrowserTest()
+    if (params.RUN_XBROWSER) {
+        enableCrossBrowserTest()
+    }
     
     after('checkout') {
     sh 'yarn cache clean'

@@ -84,13 +84,13 @@ export class SearchComponent implements OnInit {
   }
 
   applyReset(filter): void {
-    this.resultView.results = [];
-    this.resultView = {
-      columns: this.resultView.columns,
-      results: this.resultView.results,
-      hasDrafts: this.resultView.hasDrafts
-    };
+    this.resultView = plainToClass(SearchResultView, {
+      columns: [],
+      results: [],
+      hasDrafts: false
+    });
   }
+
   private getCaseFilterFromFormGroup(formGroup?: FormGroup): object {
     const result = {};
     result[SearchComponent.METADATA_FILTER] = {};

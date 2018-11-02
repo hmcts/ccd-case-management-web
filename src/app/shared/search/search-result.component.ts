@@ -37,6 +37,7 @@ export class SearchResultComponent implements OnChanges {
   @Input()
   jurisdiction: Jurisdiction;
 
+  @Input()
   caseType: CaseType;
 
   @Input()

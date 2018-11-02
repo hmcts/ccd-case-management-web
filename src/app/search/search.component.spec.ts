@@ -52,8 +52,6 @@ describe('SearchComponent', () => {
         paginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
         alertService = createSpyObj('alertService', ['warning']);
         windowService = createSpyObj('WindowService', ['setLocalStorage', 'getLocalStorage'])
-        windowService.setLocalStorage('search-caseType', JSON.stringify(CASE_TYPES[0]));
-        windowService.setLocalStorage('workbasket-filter-form-group-value', workbasterfiltervalue);
 
         subject = new SearchComponent(null, searchService, paginationService, alertService, windowService);
     }));
@@ -61,7 +59,7 @@ describe('SearchComponent', () => {
     it('should make inputs fields turn into query parameters', () => {
         const nameControl = new FormControl();
         const NAME_VALUE = 'something';
-        windowService.getLocalStorage('search-form-group-value');
+
         nameControl.setValue(NAME_VALUE);
 
         const filterContents = {
@@ -93,7 +91,6 @@ describe('SearchComponent', () => {
         const NAME_VALUE = 'something';
 
         nameControl.setValue(NAME_VALUE);
-        windowService.getLocalStorage('search-form-group-value');
         const filterContents = {
             'name': nameControl,
             'child': new FormGroup({ 'childName': new FormControl('childValue') })
@@ -125,7 +122,6 @@ describe('SearchComponent', () => {
         const nameControl1 = new FormControl();
         const NAME_VALUE1 = 'something';
         nameControl1.setValue(NAME_VALUE1);
-        windowService.getLocalStorage('search-form-group-value');
         const nameControl2 = new FormControl();
         const NAME_VALUE2 = 100;
         nameControl2.setValue(NAME_VALUE2);

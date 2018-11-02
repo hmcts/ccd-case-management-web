@@ -167,7 +167,7 @@ describe('WorkbasketFiltersComponent', () => {
   let workbasketInputFilterService: any;
   let orderService: any;
   let alertService: AlertService;
-  let windowService: WindowService;
+  let windowService;
   const TEST_FORM_GROUP = new FormGroup({});
 
   describe('with defaults', () => {
@@ -180,9 +180,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
-      windowService = new WindowService();
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
 
-      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
       resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -231,9 +230,6 @@ describe('WorkbasketFiltersComponent', () => {
           de = fixture.debugElement;
           fixture.detectChanges();
         });
-    }));
-    afterEach(async(() => {
-      windowService.clearLocalStorage();
     }));
     it('  ', async(() => {
       component.selected.jurisdiction = JURISDICTION_2;
@@ -512,8 +508,8 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      windowService = new WindowService();
-      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -562,9 +558,7 @@ describe('WorkbasketFiltersComponent', () => {
           fixture.detectChanges();
         });
     }));
-    afterEach(async(() => {
-      windowService.clearLocalStorage();
-    }));
+
     it('should populate case types drop down with CRUD filtered case types and sort states', async(() => {
       component.onJurisdictionIdChange();
       fixture.detectChanges();
@@ -611,8 +605,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      windowService = new WindowService();
-      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
 
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
@@ -663,9 +656,6 @@ describe('WorkbasketFiltersComponent', () => {
           fixture.detectChanges();
         });
     }));
-    afterEach(async(() => {
-      windowService.clearLocalStorage();
-    }));
     it('should disable case type dropdown if default is filtered out due to CRUD and no other case types', async(() => {
       let caseTypeSelector = de.query(By.css('#wb-case-type'));
       expect(caseTypeSelector.nativeElement.disabled).toBeTruthy();
@@ -685,9 +675,7 @@ describe('WorkbasketFiltersComponent', () => {
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, CASE_TYPE_WITH_EMPTY_STATES);
       orderService = createSpyObj('orderService', ['sortAsc']);
-      windowService = new WindowService();
-      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
-
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
@@ -739,9 +727,7 @@ describe('WorkbasketFiltersComponent', () => {
           fixture.detectChanges();
         });
     }));
-    afterEach(async(() => {
-      windowService.clearLocalStorage();
-    }));
+
     it('should disable states dropdown if default is filtered out due to CRUD and no other states', async(() => {
       let caseTypeSelector = de.query(By.css('#wb-case-type'));
       expect(caseTypeSelector.nativeElement.disabled).toBeFalsy();
@@ -770,8 +756,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      windowService = new WindowService();
-      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue)
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
@@ -821,9 +806,7 @@ describe('WorkbasketFiltersComponent', () => {
           fixture.detectChanges();
         });
     }));
-    afterEach(async(() => {
-      windowService.clearLocalStorage();
-    }));
+
     it('should initially select jurisdiction based on query parameter', () => {
       expect(component.selected.jurisdiction).toBe(JURISDICTION_1);
     });
@@ -867,9 +850,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
-      windowService = new WindowService();
-      windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketvalue);
-
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
         snapshot: {

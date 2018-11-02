@@ -158,8 +158,6 @@ describe('SearchFiltersComponent', () => {
     orderService = createSpyObj('orderService', ['sortAsc']);
     jurisdictionService = new JurisdictionService();
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
-    windowService.setLocalStorage('search-form-group-value', searchfiltervalue)
-    windowService.setLocalStorage('search-caseType', JSON.stringify(CASE_TYPE_2));
     TestBed
       .configureTestingModule({
         imports: [

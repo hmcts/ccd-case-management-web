@@ -139,12 +139,8 @@ describe('WorkbasketComponent', () => {
   let mockPaginationService: any;
   let mockJurisdictionService: JurisdictionService;
   let alertService: AlertService;
-  let windowService: WindowService;
-  afterEach(() => {
+  let windowService;
 
-    windowService.clearLocalStorage();
-
-  })
   beforeEach(async(() => {
 
     mockSearchService = createSpyObj<SearchService>('searchService', ['search']);
@@ -153,8 +149,8 @@ describe('WorkbasketComponent', () => {
     mockPaginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
     mockJurisdictionService = createSpyObj<JurisdictionService>('jurisdictionService', ['search']);
     alertService = createSpyObj<AlertService>('alertService', ['warning', 'clear']);
-    windowService = new WindowService();
-    windowService.setLocalStorage('workbasket-filter-form-group-value', workbasketfiltervalue)
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+
     TestBed
       .configureTestingModule({
         imports: [RouterTestingModule],
@@ -306,6 +302,7 @@ describe('WorkbasketComponent', () => {
       page: 1,
       metadataFields: ['[META]']
     };
+    windowService.getLocalStorage.and.returnValue(workbasketfiltervalue);
     comp.applyFilter(filter);
 
     expect(mockPaginationService.getPaginationMetadata)
@@ -317,7 +314,6 @@ describe('WorkbasketComponent', () => {
   });
 
   it('should pick from existing defaults when local storage is empty', () => {
-    windowService.clearLocalStorage();
     const nameControl1 = new FormControl();
     const NAME_VALUE1 = 'something';
     nameControl1.setValue(NAME_VALUE1);

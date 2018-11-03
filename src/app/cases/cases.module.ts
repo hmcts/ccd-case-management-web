@@ -46,9 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CaseViewerComponent,
     CreateCaseFiltersComponent,
     PrintUrlPipe,
-    RemoveDialogComponent
   ],
-  entryComponents: [RemoveDialogComponent],
   providers: [
     CasePrintDocumentsResolver,
     CaseReferencePipe,

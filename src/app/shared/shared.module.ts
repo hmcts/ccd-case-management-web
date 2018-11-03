@@ -4,9 +4,8 @@ import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchResultComponent } from './search/search-result.component';
 import { SearchFiltersComponent } from './search/filters/search-filters.component';
-import { PaletteModule, CaseFieldService, ConditionalShowModule, DocumentDialogComponent,
-  MarkdownModule, LabelFieldComponent, LabelSubstitutorModule, SharedUtilsModule,
-  DeleteOrCancelDialogComponent, SaveOrDiscardDialogComponent} from '@hmcts/ccd-case-ui-toolkit';
+import { PaletteModule, CaseFieldService, ConditionalShowModule, MarkdownModule, LabelFieldComponent,
+  LabelSubstitutorModule, SharedUtilsModule, DialogsModule } from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
 import { EventTriggerModule } from './event-trigger/event-trigger.module';
 import { CaseHeaderComponent } from './header/case-header.component';
@@ -44,16 +43,6 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     CcdActivityIconComponent,
     CcdActivityBannerComponent,
     CaseHistoryComponent,
-    DocumentDialogComponent,
-    DeleteOrCancelDialogComponent,
-    SaveOrDiscardDialogComponent,
-    LabelFieldComponent,
-  ],
-  entryComponents: [
-    DocumentDialogComponent,
-    DeleteOrCancelDialogComponent,
-    SaveOrDiscardDialogComponent,
-    LabelFieldComponent
   ],
   providers: [
     SearchResultViewItemComparatorFactory,

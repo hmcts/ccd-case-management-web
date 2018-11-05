@@ -1,5 +1,6 @@
 BasePage = require('./basePage.js')
 NavBar = require('./ccd-components/globalNavBar.js');
+CaseList= require('./ccd-components/caseListComponent.js');
 Footer = require('./ccd-components/footerComponent.js');
 const selfUrlPath = '/list';
 
@@ -33,6 +34,15 @@ class CaseListPage extends BasePage {
    */
   getNavBarComponent(){
       return new NavBar;
+  }
+
+  /**
+   * Return a new instance of the Case List Component which is common across both
+   * the case list page and search page
+   * @returns {CaseListComponent|*}
+   */
+  getCaseListComponent(){
+      return new CaseList;
   }
 
   /**

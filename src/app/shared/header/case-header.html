@@ -1,6 +1,6 @@
-<h2 *ngIf="showCaseReference(); else custom_case_title" class="heading-medium">
+<h1 *ngIf="showCaseReference(); else custom_case_title" class="heading-medium">
   #{{ caseDetails.case_id | ccdCaseReference}}
-</h2>
+</h1>
 
 <ng-template #custom_case_title>
   <div class="case-title">

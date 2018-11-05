@@ -310,7 +310,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 2,
             value: 'Janet',
-            show_condition: ''
+            show_condition: '',
+            hint_text: ''
           },
           {
             id: 'PersonLastName',
@@ -322,7 +323,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 1,
             value: 'Parker',
-            show_condition: 'PersonFirstName="Jane*"'
+            show_condition: 'PersonFirstName="Jane*"',
+            hint_text: ''
           },
           {
             id: 'PersonComplex',
@@ -334,7 +336,8 @@ describe('CaseViewerComponent', () => {
               complex_fields: []
             },
             order: 3,
-            show_condition: 'PersonFirstName="Park"'
+            show_condition: 'PersonFirstName="Park"',
+            hint_text: ''
           }
         ],
         show_condition: 'PersonFirstName="Janet"'

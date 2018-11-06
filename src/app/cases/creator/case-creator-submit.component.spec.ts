@@ -7,7 +7,13 @@ import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
   FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
-  DraftService, CaseEditComponent} from '@hmcts/ccd-case-ui-toolkit';
+  DraftService} from '@hmcts/ccd-case-ui-toolkit';
+
+let CaseEditComponent: any = MockComponent({
+  selector: 'ccd-case-edit',
+  inputs: ['eventTrigger', 'submit', 'validate', 'saveDraft', 'caseDetails'],
+  outputs: ['cancelled', 'submitted']
+});
 
 describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
@@ -27,12 +33,6 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
   let fixture: ComponentFixture<CaseCreatorSubmitComponent>;
   let component: CaseCreatorSubmitComponent;
-
-  let CaseEditComponent: any = MockComponent({
-    selector: 'ccd-case-edit',
-    inputs: ['eventTrigger', 'submit', 'validate', 'saveDraft', 'caseDetails'],
-    outputs: ['cancelled', 'submitted']
-  });
 
   let EventTriggerHeaderComponent: any = MockComponent({
     selector: 'ccd-event-trigger-header',

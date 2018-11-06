@@ -1,4 +1,4 @@
-const {Before,After, Status , Given, When, Then} = require('cucumber');
+const {Before,After, AfterAll, Status , BeforeAll} = require('cucumber');
 let fs = require('fs');
 
 let {setDefaultTimeout} = require('cucumber');
@@ -8,8 +8,13 @@ setDefaultTimeout(60 * 1000);
         browser.ignoreSynchronization = true
     });
 
+    AfterAll(async () => {
+        await browser.close();
+        await browser.quit();
+    });
+
     After(async () => {
-      browser.close();
+        await browser.restart();
     });
 
     After(function (scenario, done) {

@@ -1,4 +1,5 @@
-<div *ngIf="(hasResults() || hasDrafts())" class="pagination-top">
+<div *ngIf="(hasResults() || hasDrafts())" class="pagination-top"
+     attr.aria-label="{{ getTotalResults() }} results have been found">
   <span class="text-16">Displaying {{ getFirstResult() }} - {{ getLastResult() }} out of {{ getTotalResults() }} results</span>
 </div>
 <table *ngIf="hasResults() || hasDrafts()">
@@ -51,6 +52,7 @@
   </tbody>
 </table>
 <pagination-controls [style.visibility]="hideRows ? 'hidden' : 'visible'" *ngIf="hasResults()" class="pagination" (pageChange)="goToPage($event)" autoHide="true" maxSize="8" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
-<div *ngIf="!(hasResults() || hasDrafts())" class="notification">
+<div *ngIf="!(hasResults() || hasDrafts())" class="notification"
+     aria-label="No cases found. Try using different filters.">
   No cases found. Try using different filters.
 </div>

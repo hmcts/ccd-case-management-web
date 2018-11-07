@@ -32,6 +32,7 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     ConditionalShowModule,
     MarkdownModule,
     SharedUtilsModule,
+    DialogsModule,
   ],
   declarations: [
     SearchResultComponent,

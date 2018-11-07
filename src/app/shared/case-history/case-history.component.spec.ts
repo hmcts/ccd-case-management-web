@@ -53,7 +53,8 @@ describe('CaseHistoryComponent', () => {
   let orderService;
 
   let FieldReadComponent: any = MockComponent({ selector: 'ccd-field-read', inputs: [
-      'caseField'
+      'caseField',
+      'caseReference'
     ]});
 
   let LinkComponent: any = MockComponent({ selector: 'a', inputs: [
@@ -172,11 +173,14 @@ describe('CaseHistoryComponent', () => {
       .queryAll(By.css('tbody>tr td>ccd-field-read'));
 
     FIELDS.forEach(field => {
-      expect(readFields.find(f => {
+      let readField = readFields.find(f => {
         let fieldInstance = f.componentInstance;
         return JSON.stringify(fieldInstance.caseField) === JSON.stringify(field);
-      }))
-        .toBeTruthy(`Could not find field with type ${field.field_type}`);
+      });
+      let readFieldComponent = readField.componentInstance;
+
+      expect(readField).toBeTruthy(`Could not find field with type ${field.field_type}`);
+      expect(readFieldComponent.caseReference).toEqual(CASE_HISTORY.case_id);
     });
     expect(FIELDS.length).toBe(readFields.length);
   });

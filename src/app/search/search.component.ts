@@ -85,7 +85,7 @@ export class SearchComponent implements OnInit {
     result[SearchComponent.METADATA_FILTER] = {};
     result[SearchComponent.CASE_FILTER] = {};
 
-    if (formGroup) {
+    if (formGroup && Object.keys(formGroup.value).length !== 0) {
       const formValue = this.windowService.getLocalStorage('search-form-group-value');
       this.buildFormDetails('', result, formValue ? JSON.parse(formValue) : formGroup.value);
     }

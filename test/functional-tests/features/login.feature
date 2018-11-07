@@ -1,5 +1,6 @@
 Feature: Login Scenarios
 
+  @smoke
   Scenario: User successfully logs into CCD with correct credentials
     Given I am on the CCD login page
     When I login with correct credentials

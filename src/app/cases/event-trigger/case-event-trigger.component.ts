@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
-import { CaseEventTrigger, CaseEventData, CaseReferencePipe, CaseView, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, CaseEventData, CaseReferencePipe, CaseView, AlertService, CasesService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { Subscription } from 'rxjs/Subscription';

@@ -7,7 +7,7 @@ import { JurisdictionService } from '../shared/jurisdiction.service';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { FormGroup } from '@angular/forms';
 import { SearchResultComponent } from '../shared/search/search-result.component';
-import { Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { plainToClass } from 'class-transformer';
 import { Profile, Jurisdiction, AlertService, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
@@ -83,7 +83,7 @@ export class WorkbasketComponent implements OnInit {
     let paginationMetadataObservable = this.paginationService
       .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters);
 
-    Observable.forkJoin(searchObservable, paginationMetadataObservable)
+    forkJoin(searchObservable, paginationMetadataObservable)
         .subscribe(results => {
           this.resultView = plainToClass(SearchResultView, results[0]);
           this.jurisdiction = filter.jurisdiction;

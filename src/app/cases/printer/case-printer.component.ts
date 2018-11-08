@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
-import { CaseView } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseView, CasePrintDocument } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-printer.html'

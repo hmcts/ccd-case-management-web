@@ -38,17 +38,18 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Then(/^I should see the '(.*)' on the CCD case list page$/, async function (component) {
     caseListPage = new CaseListPage();
 
+    //isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
+    expect (await caseListPage.isFiltersDisplayed()).to.be.true;
+
     switch (component){
       case 'filters':
-        expect (await caseListPage.isFiltersDisplayed()).to.be.true;
-      //isFiltered displayed is the most reliable way of waiting for the home
-      // page to load so we allow it to fall through instead of 'break'
+        //we are waiting for the page to load by waiting for the filters so this is already done
       case 'banners':
         expect (await caseListPage.getNavBarComponent().allComponentsDisplayed()).to.be.true;
         expect (await caseListPage.getFooter().isDisplayed()).to.be.true;
         break;
       case 'case list results':
-        expect (await caseListPage.getCaseListComponent().isDisplayed().to.be.true;
+        expect (await caseListPage.getCaseListComponent().isDisplayed()).to.be.true;
         break;
       default: throw new CustomError('Invalid option in switch statement')
     }
@@ -63,9 +64,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
       expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });
-
-
-
 
 
 });

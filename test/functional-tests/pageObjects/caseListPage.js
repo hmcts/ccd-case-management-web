@@ -22,7 +22,7 @@ class CaseListPage extends BasePage {
    * @returns {Promise<boolean>}
    */
   async isFiltersDisplayed(){
-    await this.waitForElementToBeVisible(element(this._landingPageFilters), 10000);
+    await this.waitForElementToBeVisible(element(this._landingPageFilters), 30000);
     browser.ignoreSynchronization = false;
     return await element(this._landingPageFilters).isDisplayed()
   }

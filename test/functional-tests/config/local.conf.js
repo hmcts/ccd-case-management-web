@@ -1,7 +1,7 @@
 exports.config = {
 
   specs: [
-    '../features/fieldTypes.feature'
+    '../features/*.feature'
   ],
 
   exclude: [],
@@ -19,6 +19,9 @@ exports.config = {
     'acceptInsecureCerts': true,
     'marionette': false,
     'browserName': 'chrome',
+
+    chromeOptions: { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote '] },
+
 
     'proxy': {
       'proxyType': 'manual',

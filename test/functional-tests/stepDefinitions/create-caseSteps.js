@@ -1,4 +1,4 @@
-
+let World = require('../utils/world.js');
 let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
 let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
@@ -17,9 +17,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
-      await createCaseStartPage.selectJurisdiction('Auto Test 1');
-      await createCaseStartPage.selectCaseType('All Data Types');
-      await createCaseStartPage.selectEvent('Create a case');
+      await createCaseStartPage.selectJurisdiction(World.jurisdiction);
+      await createCaseStartPage.selectCaseType(World.caseType);
+      await createCaseStartPage.selectEvent(World.event);
       await createCaseStartPage.clickStartButton();
   }
 
@@ -50,11 +50,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     let expectedValue = await this.fieldObject.checkYourAnswersValue.toString();
     let value = await new CreateCaseWizardPage().getCheckYourAnswersValueByLabel(label);
     expect(expectedValue).to.equal(value);
-  });
-
-
-  Given(/^a case type containing every field type exists$/, function() {
-    // todo : Placeholder for uploading a definition file, not priority now
   });
 
 

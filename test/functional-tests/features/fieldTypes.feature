@@ -1,3 +1,4 @@
+@functional
 Feature: Set of scenarios to check we can read and write to all field data types when creating a case
 
   Scenario Outline: Fields are displayed on create case form page
@@ -6,9 +7,13 @@ Feature: Set of scenarios to check we can read and write to all field data types
     When I navigate to the case creation form page
     Then I should see a '<dataType>' field
 
+    @debug
     Examples:
       | dataType |
       | Text      |
+
+    Examples:
+      | dataType |
       | TextArea  |
       | Number    |
       | Money-gbp |

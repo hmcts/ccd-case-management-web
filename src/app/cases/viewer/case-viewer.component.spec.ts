@@ -12,8 +12,7 @@ import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
-  CaseView, AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
-import { DraftService } from '../../core/draft/draft.service';
+  CaseView, AlertService, CallbackErrorsContext, DraftService} from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 
 @Component({
@@ -308,7 +307,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 2,
             value: 'Janet',
-            show_condition: ''
+            show_condition: '',
+            hint_text: ''
           },
           {
             id: 'PersonLastName',
@@ -320,7 +320,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 1,
             value: 'Parker',
-            show_condition: 'PersonFirstName="Jane*"'
+            show_condition: 'PersonFirstName="Jane*"',
+            hint_text: ''
           },
           {
             id: 'PersonComplex',
@@ -332,7 +333,8 @@ describe('CaseViewerComponent', () => {
               complex_fields: []
             },
             order: 3,
-            show_condition: 'PersonFirstName="Park"'
+            show_condition: 'PersonFirstName="Park"',
+            hint_text: ''
           }
         ],
         show_condition: 'PersonFirstName="Janet"'

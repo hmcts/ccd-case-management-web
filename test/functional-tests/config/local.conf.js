@@ -20,9 +20,6 @@ exports.config = {
     'marionette': false,
     'browserName': 'chrome',
 
-    chromeOptions: { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote '] },
-
-
     'proxy': {
       'proxyType': 'manual',
       'httpProxy': 'proxyout.reform.hmcts.net:8080',

@@ -65,5 +65,4 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });
 
-
 });

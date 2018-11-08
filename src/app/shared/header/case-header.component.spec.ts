@@ -15,7 +15,7 @@ describe('CaseHeaderComponent', () => {
     inputs: ['content']
   });
 
-  const $HEADING = By.css('h2');
+  const $HEADING = By.css('h1');
   const $MARKDOWN = By.css('dl>dt ccd-markdown');
   const CASE_DETAILS = createCaseView();
 

@@ -43,7 +43,7 @@ describe('SearchComponent', () => {
     let searchService;
     let paginationService;
     let alertService;
-    const windowService = new WindowService();
+    let windowService;
 
     beforeEach(async(() => {
         searchService = createSpyObj('searchService', ['search']);
@@ -51,8 +51,7 @@ describe('SearchComponent', () => {
         paginationService = createSpyObj('paginationService', ['getPaginationMetadata']);
         paginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
         alertService = createSpyObj('alertService', ['warning']);
-        windowService.setLocalStorage('search-caseType', JSON.stringify(CASE_TYPES[0]));
-        windowService.setLocalStorage('workbasket-filter-form-group-value', workbasterfiltervalue);
+        windowService = createSpyObj('WindowService', ['setLocalStorage', 'getLocalStorage'])
 
         subject = new SearchComponent(null, searchService, paginationService, alertService, windowService);
     }));
@@ -92,7 +91,6 @@ describe('SearchComponent', () => {
         const NAME_VALUE = 'something';
 
         nameControl.setValue(NAME_VALUE);
-
         const filterContents = {
             'name': nameControl,
             'child': new FormGroup({ 'childName': new FormControl('childValue') })
@@ -124,7 +122,6 @@ describe('SearchComponent', () => {
         const nameControl1 = new FormControl();
         const NAME_VALUE1 = 'something';
         nameControl1.setValue(NAME_VALUE1);
-
         const nameControl2 = new FormControl();
         const NAME_VALUE2 = 100;
         nameControl2.setValue(NAME_VALUE2);

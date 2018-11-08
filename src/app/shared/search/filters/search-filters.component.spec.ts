@@ -155,16 +155,14 @@ describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
-  let windowService: WindowService;
+  let windowService;
   beforeEach(async(() => {
 
     searchHandler = createSpyObj('searchHandler', ['applyFilters']);
     mockSearchService = createSpyObj('mockSearchService', ['getSearchInputs']);
     orderService = createSpyObj('orderService', ['sortAsc']);
     jurisdictionService = new JurisdictionService();
-    windowService = new WindowService();
-    windowService.setLocalStorage('search-form-group-value', searchfiltervalue)
-    windowService.setLocalStorage('search-caseType', JSON.stringify(CASE_TYPE_2));
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
     TestBed
       .configureTestingModule({
         imports: [
@@ -198,10 +196,6 @@ describe('SearchFiltersComponent', () => {
       });
   }));
 
-  afterEach(async(() => {
-    windowService.clearLocalStorage();
-  }));
-
   it('should select the jurisdiction if there is only one jurisdiction', async(() => {
     resetCaseTypes(JURISDICTION_1, []);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
@@ -221,6 +215,7 @@ describe('SearchFiltersComponent', () => {
     resetCaseTypes(JURISDICTION_3, [CASE_TYPE_1, CASE_TYPE_2]);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_3];
+    windowService.getLocalStorage.and.returnValues(undefined, JSON.stringify(CASE_TYPE_2));
     fixture.detectChanges();
     component.ngOnInit();
     fixture.detectChanges();
@@ -230,7 +225,6 @@ describe('SearchFiltersComponent', () => {
   });
 
   it('should select the caseType when no LocalStorage is present', () => {
-    windowService.clearLocalStorage();
     resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];

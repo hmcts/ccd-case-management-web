@@ -1,9 +1,8 @@
 import { CasePrintDocumentsResolver } from './case-print-documents.resolver';
 import { Observable } from 'rxjs';
 import { CaseResolver } from '../case.resolver';
-import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
 import createSpyObj = jasmine.createSpyObj;
-import { HttpError, CaseView } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpError, CaseView, CasePrintDocument } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CasePrintDocumentsResolver', () => {
 

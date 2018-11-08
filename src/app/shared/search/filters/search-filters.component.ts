@@ -79,6 +79,10 @@ export class SearchFiltersComponent implements OnInit {
     this.windowService.removeLocalStorage(JURISDICTION_LOC_STORAGE);
     this.windowService.removeLocalStorage(META_FIELDS_LOC_STORAGE);
     this.selected = {};
+    if (this.jurisdictions.length === 1) {
+      this.selected.jurisdiction = this.jurisdictions[0];
+      this.onJurisdictionIdChange();
+    }
     this.onReset.emit();
   }
 

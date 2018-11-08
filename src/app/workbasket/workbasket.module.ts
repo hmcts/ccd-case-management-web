@@ -6,17 +6,17 @@ import { WorkbasketFiltersComponent } from './filters/workbasket-filters.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
-import { PaletteModule } from '@hmcts/ccd-case-ui-toolkit';
+import { BaseFieldModule } from '@hmcts/ccd-case-ui-toolkit/dist/shared/palette';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    PaletteModule,
     SharedModule,
     CaseUIToolkitModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BaseFieldModule
   ],
   declarations: [
     WorkbasketComponent,

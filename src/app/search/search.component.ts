@@ -44,8 +44,8 @@ export class SearchComponent implements OnInit {
     const searchParams = {};
 
     this.caseFilterFG = filter.formGroup;
-    this.metadataFields = filter.metadataFields;
-
+    const metafields = this.windowService.getLocalStorage('search-metadata-fields');
+    this.metadataFields = metafields ? JSON.parse(metafields) : filter.metadataFields;
     if (filter.caseState) {
       paginationParams['state'] = filter.caseState.id;
       searchParams['state'] = filter.caseState.id;
@@ -98,11 +98,7 @@ export class SearchComponent implements OnInit {
 
     if (formGroup) {
       const formValue = this.windowService.getLocalStorage('search-form-group-value');
-      if (formValue) {
-        this.buildFormDetails('', result, JSON.parse(formValue));
-      } else {
-        this.buildFormDetails('', result, formGroup.value);
-      }
+      this.buildFormDetails('', result, formValue ? JSON.parse(formValue) : formGroup.value);
     }
     return result;
   }

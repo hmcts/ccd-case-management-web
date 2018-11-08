@@ -29,8 +29,8 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
     enableSlackNotifications('#ccd-param-builds')
 
     afterCheckout {
+        sh "npm install -g yarn@1.12.1"
         sh "yarn cache clean"
-        sh "curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.12.1"
     }
 
     after('functionalTest:saat') {

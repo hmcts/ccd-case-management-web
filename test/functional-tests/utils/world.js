@@ -3,7 +3,7 @@
  * @type {{jurisdiction: string, caseType: string, event: string}}
  */
 module.exports = {
-  jurisdiction: 'Auto Test1',
+  jurisdiction: 'Auto Test 1',
   caseType: '',
   event: 'Create a case'
 };

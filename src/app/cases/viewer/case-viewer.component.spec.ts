@@ -13,9 +13,8 @@ import any = jasmine.any;
 import {
   PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
-  CaseView, AlertService, CallbackErrorsContext, CaseReferencePipe
+  CaseView, AlertService, CallbackErrorsContext, DraftService, CaseReferencePipe
 } from '@hmcts/ccd-case-ui-toolkit';
-import { DraftService } from '../../core/draft/draft.service';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 
 @Component({

@@ -49,6 +49,7 @@ withNightlyPipeline(type, product, app) {
     env.CCD_CASEWORKER_AUTOTEST_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
     
     afterCheckout {
+        sh "npm install -g yarn@1.12.1"
         sh "yarn cache clean"
     }
 

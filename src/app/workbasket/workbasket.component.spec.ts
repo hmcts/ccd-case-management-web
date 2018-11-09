@@ -139,7 +139,7 @@ describe('WorkbasketComponent', () => {
     mockSearchService.search.and.returnValue(RESULT_VIEW_OBS);
     mockPaginationService = createSpyObj<PaginationService>('paginationService', ['getPaginationMetadata']);
     mockPaginationService.getPaginationMetadata.and.returnValue(Observable.of({}));
-    mockJurisdictionService = createSpyObj<JurisdictionService>('jurisdictionService', ['search']);
+    mockJurisdictionService = createSpyObj<any>('jurisdictionService', ['search']);
     alertService = createSpyObj<AlertService>('alertService', ['warning', 'clear']);
 
     TestBed

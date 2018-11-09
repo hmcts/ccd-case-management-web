@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DatePipe } from '@hmcts/ccd-case-ui-toolkit/dist/shared/palette/utils';
 import { CaseViewEvent } from '@hmcts/ccd-case-ui-toolkit';
+import { DatePipe } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 
 describe('EventLogTableComponent', () => {
 

@@ -119,7 +119,7 @@
     "protractor-cucumber-framework": "^6.1.1",
     "protractor-multiple-cucumber-html-reporter-plugin": "^1.8.0",
     "protractor-screenshoter-plugin": "^0.10.1",
-    "puppeteer": "^1.6.0",
+    "puppeteer": "^1.10.0",
     "sass-loader": "^7.1.0",
     "sonar-scanner": "^3.0.3",
     "ts-loader": "^4.2.0",

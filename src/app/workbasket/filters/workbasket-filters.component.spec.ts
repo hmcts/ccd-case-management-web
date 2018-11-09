@@ -254,7 +254,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
       windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
-
+      windowService.getLocalStorage.and.returnValue('{}');
       resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -426,6 +426,7 @@ describe('WorkbasketFiltersComponent', () => {
     }));
 
     it('should submit filters when defaults could be selected, preserving the alerts', () => {
+
       expect(workbasketHandler.applyFilters).toHaveBeenCalledWith({
         jurisdiction: JURISDICTION_2,
         caseType: DEFAULT_CASE_TYPE,
@@ -465,7 +466,8 @@ describe('WorkbasketFiltersComponent', () => {
       component.selected.caseType = null;
       component.selected.caseState = null;
       fixture.detectChanges();
-
+      const formValue = {}
+      windowService.getLocalStorage.and.returnValue(formValue);
       let button = de.query($APPLY_BUTTON);
       fixture
         .whenStable()
@@ -582,7 +584,6 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
-
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -924,6 +925,7 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+      windowService.getLocalStorage.and.returnValue(JSON.stringify(QUERY_PARAMS));
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
         snapshot: {

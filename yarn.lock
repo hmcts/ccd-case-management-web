@@ -293,14 +293,19 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.0.0.tgz#4102bd50fd2f4cf0f68a567c5ae2aac158c98d2d"
-  integrity sha512-KQv84iG7DlDQD7+zWR+y2oBtsQ6Ujorb+Ikroax5SyF5kyRWbpaRDBVNyqBQBxe89fm29qrRsOV3Nr+ebxrh3A==
+"@hmcts/ccd-case-ui-toolkit@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.3.0.tgz#677f07e8310bbc8061086fbef99f62312bf1e7fc"
+  integrity sha512-MWP1kqbgUmnEQ69rvK+ESeB1wpn7gQppd8gDQrC9m7saVF757d9+uXvLxy7FtPwVBrjNGpqjPF22XJk7JVVZUA==
   dependencies:
+    "@angular/cli" "^6.0.8"
+    "@angular/compiler-cli" "~6.1.8"
+    enhanced-resolve "3.3.0"
     govuk-elements-sass "^3.1.2"
+    json-server "^0.14.0"
     karma-jasmine-html-reporter "^1.2.0"
     mocha "^5.0.5"
+    typescript "2.9.2"
 
 "@hmcts/ccpay-web-component@~1.6.1":
   version "1.6.2"
@@ -1596,7 +1601,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
-body-parser@1.18.3, body-parser@^1.16.1, body-parser@^1.18.2:
+body-parser@1.18.3, body-parser@^1.16.1, body-parser@^1.18.2, body-parser@^1.18.3:
   version "1.18.3"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.18.3.tgz#5b292198ffdd553b3a0f20ded0592b956955c8b4"
   dependencies:
@@ -2321,7 +2326,7 @@ compressible@~2.0.14:
   dependencies:
     mime-db ">= 1.36.0 < 2"
 
-compression@^1.5.2, compression@^1.7.1:
+compression@^1.5.2, compression@^1.7.1, compression@^1.7.2:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/compression/-/compression-1.7.3.tgz#27e0e176aaf260f7f2c2813c3e440adb9f1993db"
   dependencies:
@@ -2361,7 +2366,7 @@ connect-history-api-fallback@^1.3.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/connect-history-api-fallback/-/connect-history-api-fallback-1.5.0.tgz#b06873934bc5e344fef611a196a6faae0aee015a"
 
-connect-pause@^0.1.0:
+connect-pause@^0.1.0, connect-pause@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/connect-pause/-/connect-pause-0.1.1.tgz#b269b2bb82ddb1ac3db5099c0fb582aba99fb37a"
 
@@ -3120,6 +3125,16 @@ engine.io@1.8.3:
     engine.io-parser "1.3.2"
     ws "1.1.2"
 
+enhanced-resolve@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-3.3.0.tgz#950964ecc7f0332a42321b673b38dc8ff15535b3"
+  integrity sha512-2qbxE7ek3YxPJ1ML6V+satHkzHpJQKWkRHmRx6mfAoW59yP8YH8BFplbegSP+u2hBd6B6KCOpvJQ3dZAP+hkpg==
+  dependencies:
+    graceful-fs "^4.1.2"
+    memory-fs "^0.4.0"
+    object-assign "^4.0.1"
+    tapable "^0.2.5"
+
 enhanced-resolve@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.0.tgz#41c7e0bfdfe74ac1ffe1e57ad6a5c6c9f3742a7f"
@@ -3414,7 +3429,7 @@ express-urlrewrite@^1.2.0:
     debug "*"
     path-to-regexp "^1.0.3"
 
-express@^4.16.2:
+express@^4.16.2, express@^4.16.3:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
   dependencies:
@@ -5377,6 +5392,34 @@ json-server@^0.12.1:
     update-notifier "^2.3.0"
     yargs "^10.0.3"
 
+json-server@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/json-server/-/json-server-0.14.0.tgz#a25c721dda9c4e741a64c25eca9926946573b08d"
+  integrity sha512-8RVRAb1TO6LlCny6+8GC+sXDsESYv7gv7fSLdVANklVt866I416/7Z5fdqrtzSru92nyreddgavbEk8pjqcWoA==
+  dependencies:
+    body-parser "^1.18.3"
+    chalk "^2.4.1"
+    compression "^1.7.2"
+    connect-pause "^0.1.1"
+    cors "^2.8.4"
+    errorhandler "^1.2.0"
+    express "^4.16.3"
+    express-urlrewrite "^1.2.0"
+    json-parse-helpfulerror "^1.0.3"
+    lodash "^4.17.10"
+    lodash-id "^0.14.0"
+    lowdb "^0.15.0"
+    method-override "^2.3.10"
+    morgan "^1.9.0"
+    nanoid "^1.0.2"
+    object-assign "^4.0.1"
+    please-upgrade-node "^3.0.2"
+    pluralize "^7.0.0"
+    request "^2.87.0"
+    server-destroy "^1.0.1"
+    update-notifier "^2.5.0"
+    yargs "^10.1.2"
+
 json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
@@ -6470,6 +6513,11 @@ nan@^2.10.0, nan@^2.9.2:
 nanoid@^1.0.1:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.2.6.tgz#5b9427cabf41f5df1fc371b14c969ffcd3b095aa"
+
+nanoid@^1.0.2:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.3.4.tgz#ad89f62c9d1f4fd69710d4a90953d2893d2d31f4"
+  integrity sha512-4ug4BsuHxiVHoRUe1ud6rUFT3WUMmjXt1W0quL0CviZQANdan7D8kqN5/maw53hmAApY/jfzMRkC57BNNs60ZQ==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -9192,6 +9240,11 @@ symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
+tapable@^0.2.5:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"
+  integrity sha1-mTcqXJmb8t8WCvwNdL7U9HlIzSI=
+
 tapable@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.0.tgz#0d076a172e3d9ba088fd2272b2668fb8d194b78c"
@@ -9630,7 +9683,7 @@ upath@^1.0.5:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.1.0.tgz#35256597e46a581db4793d0ce47fa9aebfc9fabd"
 
-update-notifier@^2.3.0:
+update-notifier@^2.3.0, update-notifier@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/update-notifier/-/update-notifier-2.5.0.tgz#d0744593e13f161e406acb1d9408b72cad08aff6"
   dependencies:
@@ -10246,7 +10299,7 @@ yargs@12.0.2:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^10.1.0"
 
-yargs@^10.0.3:
+yargs@^10.0.3, yargs@^10.1.2:
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-10.1.2.tgz#454d074c2b16a51a43e2fb7807e4f9de69ccb5c5"
   dependencies:

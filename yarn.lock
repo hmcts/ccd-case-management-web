@@ -380,13 +380,14 @@
   dependencies:
     "@types/jasmine" "*"
 
+"@types/node@^10.12.4":
+  version "10.12.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.4.tgz#292a86dcfffac3a9f8073f6e29b71c05bbc65c0d"
+  integrity sha512-0aFZiYCvoxyKP/Mg6PvqBb2UtWGIPf63r6rOAvRBrgyJOfanbL60yUH2U4FSpg+Yn6FW+JVYWtzn6hLTy745Fg==
+
 "@types/node@^6.0.46":
   version "6.14.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.14.0.tgz#85c6998293fc6f2945915419296c7fbb63384f66"
-
-"@types/node@^8.0.30":
-  version "8.10.36"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.36.tgz#eac05d576fbcd0b4ea3c912dc58c20475c08d9e4"
 
 "@types/q@^0.0.32":
   version "0.0.32"

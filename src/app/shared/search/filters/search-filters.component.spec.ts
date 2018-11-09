@@ -196,6 +196,7 @@ describe('SearchFiltersComponent', () => {
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
     fixture.detectChanges();
+    component.autoApply = true;
     component.ngOnInit();
 
     fixture
@@ -355,7 +356,7 @@ describe('SearchFiltersComponent', () => {
     component.selected.jurisdiction = JURISDICTION_2;
     component.selected.caseType = CASE_TYPES_2[2];
     mockSearchService.getSearchInputs.and.returnValue(Observable.of([]));
-
+    windowService.getLocalStorage.and.returnValue('{}');
     component.onCaseTypeIdChange();
     expect(mockSearchService.getSearchInputs).toHaveBeenCalledWith(JURISDICTION_2.id, CASE_TYPES_2[2].id);
   }));

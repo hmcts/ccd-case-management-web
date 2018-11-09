@@ -8,6 +8,8 @@ import { WorkbasketInputModel } from '../workbasket-input.model';
 import 'rxjs/add/operator/do';
 import { OrderService, Jurisdiction, AlertService, CaseState, CaseTypeLite } from '@hmcts/ccd-case-ui-toolkit';
 
+const FORM_GROUP_VAL_LOC_STORAGE = 'workbasket-filter-form-group-value';
+const SAVED_QUERY_PARAM_LOC_STORAGE = 'savedQueryParams';
 @Component({
   selector: 'ccd-workbasket-filters',
   templateUrl: './workbasket-filters.html',
@@ -27,6 +29,9 @@ export class WorkbasketFiltersComponent implements OnInit {
 
   @Output()
   onApply: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  onReset: EventEmitter<any> = new EventEmitter();
 
   workbasketInputs: WorkbasketInputModel[];
   workbasketInputsReady: boolean;
@@ -96,10 +101,16 @@ export class WorkbasketFiltersComponent implements OnInit {
     this.selected.page = 1;
     this.selected.metadataFields = this.getMetadataFields();
     if (init) {
-      this.windowService.setLocalStorage('workbasket-filter-form-group-value', JSON.stringify(this.formGroup.value));
+      this.windowService.setLocalStorage(FORM_GROUP_VAL_LOC_STORAGE, JSON.stringify(this.formGroup.value));
     }
     // Apply filters
     this.onApply.emit(this.selected);
+  }
+
+  reset(): void {
+    this.windowService.removeLocalStorage(FORM_GROUP_VAL_LOC_STORAGE);
+    this.windowService.removeLocalStorage(SAVED_QUERY_PARAM_LOC_STORAGE);
+    this.router.navigate(['/list/case']);
   }
 
   getMetadataFields(): string[] {
@@ -133,7 +144,7 @@ export class WorkbasketFiltersComponent implements OnInit {
           this.workbasketInputsReady = true;
           this.workbasketInputs = workbasketInputs
             .sort(this.orderService.sortAsc);
-          const formValue = this.windowService.getLocalStorage('workbasket-filter-form-group-value');
+          const formValue = this.windowService.getLocalStorage(FORM_GROUP_VAL_LOC_STORAGE);
 
           for (let i = 0; i < workbasketInputs.length; i++) {
             let item = workbasketInputs[i];
@@ -169,7 +180,7 @@ export class WorkbasketFiltersComponent implements OnInit {
    * Query parameters, when available, take precedence over workbasket defaults.
    */
   private initFilters() {
-    const savedQueryParams = this.windowService.getLocalStorage('savedQueryParams');
+    const savedQueryParams = this.windowService.getLocalStorage(SAVED_QUERY_PARAM_LOC_STORAGE);
     let routeSnapshot: ActivatedRouteSnapshot = this.route.snapshot;
     if (savedQueryParams) {
       routeSnapshot.queryParams = JSON.parse(savedQueryParams);

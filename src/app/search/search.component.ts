@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms/forms';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { plainToClass } from 'class-transformer';
 import { Jurisdiction, Profile, CaseType, CaseState, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { SearchResultViewItem } from '../shared/search/search-result-view-item.model';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -59,25 +60,35 @@ export class SearchComponent implements OnInit {
     const metadataFilters = Object.assign(searchParams, filters[SearchComponent.METADATA_FILTER]);
     const metadataPaginationParams = Object.assign(paginationParams, filters[SearchComponent.METADATA_FILTER]);
 
-    this.paginationService
-      .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters)
-      .subscribe(paginationMetadataResult => {
-        this.paginationMetadata = paginationMetadataResult;
-      });
+    if (filter.jurisdiction) {
+      this.paginationService
+        .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters)
+        .subscribe(paginationMetadataResult => {
+          this.paginationMetadata = paginationMetadataResult;
+        });
 
-    this.searchService
-      .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
-      .subscribe(resultView => {
-        this.resultView = plainToClass(SearchResultView, resultView);
-        if (this.resultView.result_error) {
-          this.alertService.warning(this.resultView.result_error);
-        }
-        this.jurisdiction = filter.jurisdiction;
-        this.caseType = filter.caseType;
-        this.caseState = filter.caseState;
+      this.searchService
+        .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
+        .subscribe(resultView => {
+          this.resultView = plainToClass(SearchResultView, resultView);
+          if (this.resultView.result_error) {
+            this.alertService.warning(this.resultView.result_error);
+          }
+          this.jurisdiction = filter.jurisdiction;
+          this.caseType = filter.caseType;
+          this.caseState = filter.caseState;
 
-        this.scrollToTop();
-      });
+          this.scrollToTop();
+        });
+    }
+  }
+
+  applyReset(filter): void {
+    this.resultView = plainToClass(SearchResultView, {
+      columns: [],
+      results: [],
+      hasDrafts: false
+    });
   }
 
   private getCaseFilterFromFormGroup(formGroup?: FormGroup): object {

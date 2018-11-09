@@ -17,4 +17,7 @@ export class WindowService {
   clearLocalStorage() {
     window.localStorage.clear();
   }
+  removeLocalStorage(key: string) {
+    window.localStorage.removeItem(key);
+  }
 }

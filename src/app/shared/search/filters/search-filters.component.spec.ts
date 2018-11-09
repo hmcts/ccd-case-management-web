@@ -12,6 +12,11 @@ import { WindowService } from '../../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AbstractFieldWriteComponent, OrderService, Jurisdiction, CaseType } from '@hmcts/ccd-case-ui-toolkit';
 
+const JURISDICTION_LOC_STORAGE = 'search-jurisdiction';
+const META_FIELDS_LOC_STORAGE = 'search-metadata-fields';
+const FORM_GROUP_VALUE_LOC_STORAGE = 'search-form-group-value';
+const CASE_TYPE_LOC_STORAGE = 'search-caseType';
+
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
@@ -434,7 +439,81 @@ describe('SearchFiltersComponent', () => {
 
       });
   }));
+});
+describe('Clear localStorage', () => {
 
+  let fixture: ComponentFixture<SearchFiltersComponent>;
+  let component: SearchFiltersComponent;
+  let de: DebugElement;
+  let jurisdictionService: JurisdictionService;
+  let windowService: WindowService;
+
+  beforeEach(async(() => {
+    searchHandler = createSpyObj('searchHandler', ['applyFilters', 'applyReset']);
+    mockSearchService = createSpyObj('mockSearchService', ['getSearchInputs']);
+    orderService = createSpyObj('orderService', ['sortAsc']);
+    jurisdictionService = new JurisdictionService();
+    windowService = createSpyObj('windowService', ['clearLocalStorage', 'locationAssign', 'getLocalStorage', 'removeLocalStorage']);
+    TestBed
+      .configureTestingModule({
+        imports: [
+          FormsModule,
+          ReactiveFormsModule
+        ],
+        declarations: [
+          SearchFiltersComponent,
+          FieldWriteComponent
+        ], providers: [
+          { provide: SearchService, useValue: mockSearchService },
+          { provide: OrderService, useValue: orderService },
+          { provide: JurisdictionService, useValue: jurisdictionService },
+          { provide: WindowService, useValue: windowService }
+        ]
+      })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(SearchFiltersComponent);
+        component = fixture.componentInstance;
+
+        component.formGroup = TEST_FORM_GROUP;
+        component.jurisdictions = [
+          JURISDICTION_1,
+          JURISDICTION_2
+        ];
+        component.onReset.subscribe(searchHandler.applyReset);
+
+        de = fixture.debugElement;
+        fixture.detectChanges();
+      });
+  }));
+
+  it('should remove localStorage once reset button is clicked', async(() => {
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
+    searchHandler.applyReset.calls.reset();
+    component.selected.jurisdiction = JURISDICTION_3;
+    component.selected.caseType = CASE_TYPES_2[3];
+
+    let control = new FormControl('test');
+    control.setValue('anything');
+    const formControls = {
+      'name': control
+    };
+
+    let formGroup = new FormGroup(formControls);
+
+    component.onCaseTypeIdChange();
+    fixture.detectChanges();
+    fixture
+      .whenStable()
+      .then(() => {
+        let button = de.query(By.css('#reset'));
+        component.formGroup = formGroup;
+        button.nativeElement.click();
+        expect(windowService.removeLocalStorage).toHaveBeenCalledTimes(4);
+
+      });
+
+  }));
 });
 
 function resetCaseTypes(jurisdiction: Jurisdiction, caseTypes: CaseType[]) {

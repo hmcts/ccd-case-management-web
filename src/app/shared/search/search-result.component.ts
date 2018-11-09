@@ -71,9 +71,9 @@ export class SearchResultComponent implements OnChanges {
   draftsCount: number;
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
-              appConfig: AppConfig,
-              private activityService: ActivityService,
-              private caseReferencePipe: CaseReferencePipe) {
+    appConfig: AppConfig,
+    private activityService: ActivityService,
+    private caseReferencePipe: CaseReferencePipe) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -84,7 +84,6 @@ export class SearchResultComponent implements OnChanges {
       this.hideRows = false;
 
       this.sortParameters = undefined;
-
       // Clone `resultView` to prevent sorting the external variable
       this.resultView = {
         columns: this.resultView.columns.slice(0),

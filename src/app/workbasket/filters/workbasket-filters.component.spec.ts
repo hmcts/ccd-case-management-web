@@ -22,6 +22,9 @@ class FieldWriteComponent extends AbstractFieldWriteComponent {
   @Input()
   formGroup: FormGroup;
 }
+const FORM_GROUP_VAL_LOC_STORAGE = 'workbasket-filter-form-group-value';
+const SAVED_QUERY_PARAM_LOC_STORAGE = 'savedQueryParams';
+
 const workbasketvalue = `{\"PersonLastName\":\"LastName\",\"PersonFirstName\":\"CaseFirstName\",`
   + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\"`
   + `:null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
@@ -170,6 +173,76 @@ describe('WorkbasketFiltersComponent', () => {
   let windowService;
   const TEST_FORM_GROUP = new FormGroup({});
 
+  describe('Clear localStorage for workbasket filters', () => {
+    let windowMockService: WindowService;
+    beforeEach(async(() => {
+      workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
+      router = createSpyObj<Router>('router', ['navigate']);
+      router.navigate.and.returnValue(Promise.resolve('someResult'));
+      alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
+      orderService = createSpyObj('orderService', ['sortAsc']);
+      workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
+      workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
+      jurisdictionService = new JurisdictionService();
+      windowMockService = createSpyObj<WindowService>('windowService', ['clearLocalStorage', 'locationAssign',
+        'getLocalStorage', 'removeLocalStorage']);
+      resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
+      activatedRoute = {
+        queryParams: Observable.of({}),
+        snapshot: {
+          queryParams: {}
+        }
+      };
+
+      TestBed
+        .configureTestingModule({
+          imports: [
+            FormsModule,
+            ReactiveFormsModule
+          ],
+          declarations: [
+            WorkbasketFiltersComponent,
+            FieldWriteComponent
+          ],
+          providers: [
+            { provide: Router, useValue: router },
+            { provide: ActivatedRoute, useValue: activatedRoute },
+            { provide: OrderService, useValue: orderService },
+            { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
+            { provide: JurisdictionService, useValue: jurisdictionService },
+            { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowMockService },
+          ]
+        })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(WorkbasketFiltersComponent);
+          component = fixture.componentInstance;
+
+          component.jurisdictions = [
+            JURISDICTION_1,
+            JURISDICTION_2
+          ];
+          component.formGroup = TEST_FORM_GROUP;
+          component.defaults = {
+            jurisdiction_id: JURISDICTION_2.id,
+            case_type_id: DEFAULT_CASE_TYPE.id,
+            state_id: DEFAULT_CASE_STATE.id
+          };
+          component.onApply.subscribe(workbasketHandler.applyFilters);
+
+          de = fixture.debugElement;
+          fixture.detectChanges();
+        });
+    }));
+    it('should remove localStorage once reset button is clicked', async(() => {
+      windowMockService.removeLocalStorage(FORM_GROUP_VAL_LOC_STORAGE);
+      windowMockService.removeLocalStorage(SAVED_QUERY_PARAM_LOC_STORAGE);
+      component.reset();
+      expect(windowMockService.removeLocalStorage).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalled();
+    }));
+  });
   describe('with defaults', () => {
     beforeEach(async(() => {
       workbasketHandler = createSpyObj('workbasketHandler', ['applyFilters']);
@@ -908,6 +981,7 @@ describe('WorkbasketFiltersComponent', () => {
       expect(component.selected.caseState).toBeUndefined();
     });
   });
+
 });
 
 function resetCaseTypes(jurisdiction: Jurisdiction, caseTypes: CaseType[]) {

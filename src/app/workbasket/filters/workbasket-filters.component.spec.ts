@@ -9,6 +9,7 @@ import 'rxjs/add/operator/do';
 import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
+import { WindowService } from '../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService, Jurisdiction, CaseType, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
@@ -21,7 +22,9 @@ class FieldWriteComponent extends AbstractFieldWriteComponent {
   @Input()
   formGroup: FormGroup;
 }
-
+const workbasketvalue = `{\"PersonLastName\":\"LastName\",\"PersonFirstName\":\"CaseFirstName\",`
+  + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\"`
+  + `:null,\"AddressLine3\":null,\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
 describe('WorkbasketFiltersComponent', () => {
 
   const JURISDICTION_1: Jurisdiction = {
@@ -50,7 +53,7 @@ describe('WorkbasketFiltersComponent', () => {
       ],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_1
+      jurisdiction: null
     }
   ];
 
@@ -69,7 +72,7 @@ describe('WorkbasketFiltersComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_2
+      jurisdiction: null
     },
     {
       id: 'CT2',
@@ -89,7 +92,7 @@ describe('WorkbasketFiltersComponent', () => {
       ],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_2
+      jurisdiction: null
     },
     {
       id: 'CT3',
@@ -98,7 +101,7 @@ describe('WorkbasketFiltersComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION_2
+      jurisdiction: null
     }
   ];
 
@@ -106,28 +109,32 @@ describe('WorkbasketFiltersComponent', () => {
   const DEFAULT_CASE_STATE = DEFAULT_CASE_TYPE.states[1];
 
   const CRUD_FILTERED_CASE_TYPES: CaseType[] = [
-      {
-        id: 'CT1',
-        name: 'Case type 1',
-        description: '',
-        states: [{
-          id: 'S1',
-          name: 'State 1',
-          description: ''
-        }],
-        events: [],
-        case_fields: [],
-        jurisdiction: JURISDICTION_1
-      },
-      {
-        id: 'CT3',
-        name: 'Case type 3',
-        description: '',
-        states: [],
-        events: [],
-        case_fields: [],
-        jurisdiction: JURISDICTION_1
-      }
+    {
+      id: 'CT1',
+      name: 'Case type 1',
+      description: '',
+      states: [{
+        id: 'S1',
+        name: 'State 1',
+        description: ''
+      }],
+      events: [],
+      case_fields: [],
+      jurisdiction: null
+    },
+    {
+      id: 'CT3',
+      name: 'Case type 3',
+      description: '',
+      states: [{
+        id: 'S1',
+        name: 'State 1',
+        description: ''
+      }],
+      events: [],
+      case_fields: [],
+      jurisdiction: null
+    }
   ];
   const EMPTY_CASE_TYPES: CaseType[] = [];
   const CASE_TYPE_WITH_EMPTY_STATES: CaseType[] = [{
@@ -137,12 +144,12 @@ describe('WorkbasketFiltersComponent', () => {
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_1
+    jurisdiction: null
   }];
 
   const TEST_WORKBASKET_INPUTS: WorkbasketInputModel[] = [
-    createWBInput('Label 1', 1, 'PersonFirstName', 'Text', false),
-    createWBInput('Label 2', 2, 'PersonLastName', 'Text', true)
+    createWBInput('Label 1', 1, 'PersonFirstName', 'Text', 'Mohammed', false),
+    createWBInput('Label 2', 2, 'PersonLastName', 'Text', 'Khatri', true)
   ];
 
   const METADATA_FIELDS = ['PersonLastName'];
@@ -160,7 +167,7 @@ describe('WorkbasketFiltersComponent', () => {
   let workbasketInputFilterService: any;
   let orderService: any;
   let alertService: AlertService;
-
+  let windowService;
   const TEST_FORM_GROUP = new FormGroup({});
 
   describe('with defaults', () => {
@@ -173,6 +180,8 @@ describe('WorkbasketFiltersComponent', () => {
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+      windowService.getLocalStorage.and.returnValue('{}');
       resetCaseTypes(JURISDICTION_2, CASE_TYPES_2);
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -198,6 +207,7 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
             { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowService },
           ]
         })
         .compileComponents()
@@ -221,8 +231,7 @@ describe('WorkbasketFiltersComponent', () => {
           fixture.detectChanges();
         });
     }));
-
-    it('should have an Apply button disabled when case type is set but state is not set', async(() => {
+    it('  ', async(() => {
       component.selected.jurisdiction = JURISDICTION_2;
       component.selected.caseType = CASE_TYPES_2[2];
       component.selected.caseState = null;
@@ -344,6 +353,7 @@ describe('WorkbasketFiltersComponent', () => {
     }));
 
     it('should submit filters when defaults could be selected, preserving the alerts', () => {
+
       expect(workbasketHandler.applyFilters).toHaveBeenCalledWith({
         jurisdiction: JURISDICTION_2,
         caseType: DEFAULT_CASE_TYPE,
@@ -383,18 +393,19 @@ describe('WorkbasketFiltersComponent', () => {
       component.selected.caseType = null;
       component.selected.caseState = null;
       fixture.detectChanges();
-
+      const formValue = {}
+      windowService.getLocalStorage.and.returnValue(formValue);
       let button = de.query($APPLY_BUTTON);
       fixture
         .whenStable()
         .then(() => {
 
-        expect(button.nativeElement.disabled).toBeTruthy();
+          expect(button.nativeElement.disabled).toBeTruthy();
 
-        component.selected.jurisdiction = JURISDICTION_1;
-        component.onJurisdictionIdChange();
-        expect(component.workbasketInputsReady).toBeFalsy();
-      });
+          component.selected.jurisdiction = JURISDICTION_1;
+          component.onJurisdictionIdChange();
+          expect(component.workbasketInputsReady).toBeFalsy();
+        });
     }));
 
     it('should have form group details added when apply button is clicked ', async(() => {
@@ -464,7 +475,7 @@ describe('WorkbasketFiltersComponent', () => {
     });
 
     it('should submit filters when apply button is clicked', async(() => {
-      let control =  new FormControl('test');
+      let control = new FormControl('test');
       control.setValue('anything');
       const formControls = {
         'name': control
@@ -499,6 +510,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -523,7 +535,8 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: AlertService, useValue: alertService }
+            { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowService }
           ]
         })
         .compileComponents()
@@ -568,17 +581,18 @@ describe('WorkbasketFiltersComponent', () => {
     }));
 
     it('should select first case type from a case types drop down if default is filtered out due to CRUD', async(() => {
+      component.selected.caseType = CRUD_FILTERED_CASE_TYPES[0];
       let selector = de.query(By.css('#wb-case-type'));
-
       expect(selector.nativeElement.selectedIndex).toEqual(0);
       expect(component.selected.caseType).toBe(CRUD_FILTERED_CASE_TYPES[0]);
     }));
 
     it('should select first state from a states drop down if default is filtered out due to CRUD', async(() => {
+      component.selected.caseType = CRUD_FILTERED_CASE_TYPES[0];
       let selector = de.query(By.css('#wb-case-state'));
-
+      component.defaults.state_id = CRUD_FILTERED_CASE_TYPES[0].states[0].id;
       expect(selector.nativeElement.selectedIndex).toEqual(0);
-      expect(component.selected.caseState).toBe(CRUD_FILTERED_CASE_TYPES[0].states[0]);
+      expect(component.selected.caseState.id).toEqual(CRUD_FILTERED_CASE_TYPES[0].states[0].id);
     }));
   });
 
@@ -592,6 +606,8 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+
       jurisdictionService = new JurisdictionService();
       activatedRoute = {
         queryParams: Observable.of({}),
@@ -616,7 +632,8 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: AlertService, useValue: alertService }
+            { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowService }
           ]
         })
         .compileComponents()
@@ -640,7 +657,6 @@ describe('WorkbasketFiltersComponent', () => {
           fixture.detectChanges();
         });
     }));
-
     it('should disable case type dropdown if default is filtered out due to CRUD and no other case types', async(() => {
       let caseTypeSelector = de.query(By.css('#wb-case-type'));
       expect(caseTypeSelector.nativeElement.disabled).toBeTruthy();
@@ -660,6 +676,7 @@ describe('WorkbasketFiltersComponent', () => {
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       resetCaseTypes(JURISDICTION_2, CASE_TYPE_WITH_EMPTY_STATES);
       orderService = createSpyObj('orderService', ['sortAsc']);
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
       jurisdictionService = new JurisdictionService();
@@ -686,7 +703,8 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: AlertService, useValue: alertService }
+            { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowService }
           ]
         })
         .compileComponents()
@@ -739,6 +757,7 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
       alertService = createSpyObj<AlertService>('alertService', ['isPreserveAlerts', 'setPreserveAlerts']);
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
@@ -764,6 +783,7 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
             { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowService }
           ]
         })
         .compileComponents()
@@ -793,7 +813,7 @@ describe('WorkbasketFiltersComponent', () => {
     });
 
     it('should initially select case type based on query parameter', () => {
-      expect(component.selected.caseType).toBe(CASE_TYPES_1[0]);
+      expect(component.selected.caseType).toEqual(CASE_TYPES_1[0]);
     });
 
     it('should initially select case state based on query parameter', () => {
@@ -831,6 +851,8 @@ describe('WorkbasketFiltersComponent', () => {
       orderService = createSpyObj('orderService', ['sortAsc']);
       workbasketInputFilterService = createSpyObj<WorkbasketInputFilterService>('workbasketInputFilterService', ['getWorkbasketInputs']);
       workbasketInputFilterService.getWorkbasketInputs.and.returnValue(createObservableFrom(TEST_WORKBASKET_INPUTS));
+      windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+      windowService.getLocalStorage.and.returnValue(JSON.stringify(QUERY_PARAMS));
       activatedRoute = {
         queryParams: Observable.of(QUERY_PARAMS),
         snapshot: {
@@ -854,7 +876,8 @@ describe('WorkbasketFiltersComponent', () => {
             { provide: OrderService, useValue: orderService },
             { provide: WorkbasketInputFilterService, useValue: workbasketInputFilterService },
             { provide: JurisdictionService, useValue: jurisdictionService },
-            { provide: AlertService, useValue: alertService }
+            { provide: AlertService, useValue: alertService },
+            { provide: WindowService, useValue: windowService }
           ]
         })
         .compileComponents()
@@ -900,7 +923,7 @@ function createObservableFrom<T>(param: T): Observable<T> {
 }
 
 function createWBInput(theLabel: string, theOrder: number, theId: string,
-                       theType: FieldTypeEnum, theMetadata: boolean): WorkbasketInputModel {
+  theType: FieldTypeEnum, theValue: string, theMetadata: boolean): WorkbasketInputModel {
   return {
     label: theLabel,
     order: theOrder,
@@ -910,6 +933,7 @@ function createWBInput(theLabel: string, theOrder: number, theId: string,
         id: theType,
         type: theType
       },
+      value: theValue,
       metadata: theMetadata
     }
   }

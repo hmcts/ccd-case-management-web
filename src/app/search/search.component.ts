@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
 import { SearchService } from '../core/search/search.service';
+import { WindowService } from '../core/utils/window.service';
 import { FormGroup } from '@angular/forms/forms';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { plainToClass } from 'class-transformer';
@@ -28,9 +29,10 @@ export class SearchComponent implements OnInit {
   metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
-              private searchService: SearchService,
-              private paginationService: PaginationService,
-              private alertService: AlertService) { }
+    private searchService: SearchService,
+    private paginationService: PaginationService,
+    private alertService: AlertService,
+    private windowService: WindowService) { }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
@@ -41,8 +43,8 @@ export class SearchComponent implements OnInit {
     const searchParams = {};
 
     this.caseFilterFG = filter.formGroup;
-    this.metadataFields = filter.metadataFields;
-
+    const metafields = this.windowService.getLocalStorage('search-metadata-fields');
+    this.metadataFields = metafields ? JSON.parse(metafields) : filter.metadataFields;
     if (filter.caseState) {
       paginationParams['state'] = filter.caseState.id;
       searchParams['state'] = filter.caseState.id;
@@ -84,7 +86,8 @@ export class SearchComponent implements OnInit {
     result[SearchComponent.CASE_FILTER] = {};
 
     if (formGroup) {
-      this.buildFormDetails('', result, formGroup.value);
+      const formValue = this.windowService.getLocalStorage('search-form-group-value');
+      this.buildFormDetails('', result, formValue ? JSON.parse(formValue) : formGroup.value);
     }
     return result;
   }

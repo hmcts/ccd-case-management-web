@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Rx';
 import { SearchInput } from '../../../core/search/search-input.model';
 import { JurisdictionService } from '../../jurisdiction.service';
 import { createSearchInputs } from '../../../core/search/search-input.test.fixture';
+import { WindowService } from '../../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
 import { AbstractFieldWriteComponent, OrderService, Jurisdiction, CaseType } from '@hmcts/ccd-case-ui-toolkit';
 
@@ -24,7 +25,7 @@ const CASE_TYPE_1: CaseType = {
   states: [],
   events: [],
   case_fields: [],
-  jurisdiction: JURISDICTION_1
+  jurisdiction: null
 };
 
 const CASE_TYPE_2: CaseType = {
@@ -34,7 +35,7 @@ const CASE_TYPE_2: CaseType = {
   states: [],
   events: [],
   case_fields: [],
-  jurisdiction: JURISDICTION_1
+  jurisdiction: null
 };
 
 const JURISDICTION_2: Jurisdiction = {
@@ -44,6 +45,13 @@ const JURISDICTION_2: Jurisdiction = {
   caseTypes: []
 };
 
+const JURISDICTION_3: Jurisdiction = {
+  id: 'J3',
+  name: 'Jurisdiction 3',
+  description: '',
+  caseTypes: []
+}
+
 const CASE_TYPES_2: CaseType[] = [
   {
     id: 'CT1',
@@ -52,7 +60,7 @@ const CASE_TYPES_2: CaseType[] = [
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_2
+    jurisdiction: null
   },
   {
     id: 'CT2',
@@ -72,7 +80,7 @@ const CASE_TYPES_2: CaseType[] = [
     ],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_2
+    jurisdiction: null
   },
   {
     id: 'CT3',
@@ -81,8 +89,9 @@ const CASE_TYPES_2: CaseType[] = [
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_2
-  }
+    jurisdiction: null
+  },
+  CASE_TYPE_2
 ];
 
 const CRUD_FILTERED_CASE_TYPES: CaseType[] = [
@@ -93,8 +102,9 @@ const CRUD_FILTERED_CASE_TYPES: CaseType[] = [
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_1
+    jurisdiction: null
   },
+  CASE_TYPE_2,
   {
     id: 'CT3',
     name: 'Case type 3',
@@ -102,7 +112,7 @@ const CRUD_FILTERED_CASE_TYPES: CaseType[] = [
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: JURISDICTION_1
+    jurisdiction: null
   }
 ];
 
@@ -131,21 +141,23 @@ let orderService;
 
 const TEST_FORM_GROUP = new FormGroup({});
 const METADATA_FIELDS = ['PersonLastName'];
-
+const searchfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
+  + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`
+  + `\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
 describe('SearchFiltersComponent', () => {
 
   let fixture: ComponentFixture<SearchFiltersComponent>;
   let component: SearchFiltersComponent;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
-
+  let windowService;
   beforeEach(async(() => {
 
     searchHandler = createSpyObj('searchHandler', ['applyFilters']);
     mockSearchService = createSpyObj('mockSearchService', ['getSearchInputs']);
     orderService = createSpyObj('orderService', ['sortAsc']);
     jurisdictionService = new JurisdictionService();
-
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
     TestBed
       .configureTestingModule({
         imports: [
@@ -159,6 +171,7 @@ describe('SearchFiltersComponent', () => {
           { provide: SearchService, useValue: mockSearchService },
           { provide: OrderService, useValue: orderService },
           { provide: JurisdictionService, useValue: jurisdictionService },
+          { provide: WindowService, useValue: windowService }
         ]
       })
       .compileComponents()
@@ -183,6 +196,7 @@ describe('SearchFiltersComponent', () => {
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
     fixture.detectChanges();
+    component.autoApply = true;
     component.ngOnInit();
 
     fixture
@@ -194,6 +208,19 @@ describe('SearchFiltersComponent', () => {
   }));
 
   it('should select the first caseType ', () => {
+    resetCaseTypes(JURISDICTION_3, [CASE_TYPE_1, CASE_TYPE_2]);
+    mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
+    component.jurisdictions = [JURISDICTION_3];
+    windowService.getLocalStorage.and.returnValues(undefined, JSON.stringify(CASE_TYPE_2));
+    fixture.detectChanges();
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(component.selected.jurisdiction).toBe(JURISDICTION_3);
+    expect(component.selected.caseType).toBe(CASE_TYPE_2);
+    expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
+  });
+
+  it('should select the caseType when no LocalStorage is present', () => {
     resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     component.jurisdictions = [JURISDICTION_1];
@@ -245,7 +272,7 @@ describe('SearchFiltersComponent', () => {
     fixture
       .whenStable()
       .then(() => {
-        expect(selector.children.length).toEqual(2);
+        expect(selector.children.length).toEqual(3);
 
         let juris1 = selector.children[0];
         expect(juris1.nativeElement.textContent).toEqual(CRUD_FILTERED_CASE_TYPES[0].name);
@@ -263,7 +290,7 @@ describe('SearchFiltersComponent', () => {
     fixture.detectChanges();
 
     let selector = de.query(By.css('#s-case-type'));
-    expect(selector.children.length).toEqual(3);
+    expect(selector.children.length).toEqual(4);
 
     let ct1 = selector.children[0];
     expect(ct1.nativeElement.textContent).toEqual(CASE_TYPES_2[0].name);
@@ -310,7 +337,8 @@ describe('SearchFiltersComponent', () => {
   }));
 
   it('should have form group details added when apply button is clicked ', async(() => {
-    component.selected.jurisdiction = JURISDICTION_2;
+    component.selected.jurisdiction = JURISDICTION_3;
+    component.selected.metadataFields = METADATA_FIELDS;
     component.apply();
     expect(searchHandler.applyFilters).toHaveBeenCalledWith(component.selected);
     expect(component.selected.formGroup.value).toEqual(TEST_FORM_GROUP.value);
@@ -328,7 +356,7 @@ describe('SearchFiltersComponent', () => {
     component.selected.jurisdiction = JURISDICTION_2;
     component.selected.caseType = CASE_TYPES_2[2];
     mockSearchService.getSearchInputs.and.returnValue(Observable.of([]));
-
+    windowService.getLocalStorage.and.returnValue('{}');
     component.onCaseTypeIdChange();
     expect(mockSearchService.getSearchInputs).toHaveBeenCalledWith(JURISDICTION_2.id, CASE_TYPES_2[2].id);
   }));
@@ -379,10 +407,10 @@ describe('SearchFiltersComponent', () => {
   it('should submit filters when apply button is clicked', async(() => {
     mockSearchService.getSearchInputs.and.returnValue(createObservableFrom(TEST_SEARCH_INPUTS));
     searchHandler.applyFilters.calls.reset();
-    component.selected.jurisdiction = JURISDICTION_2;
-    component.selected.caseType = CASE_TYPES_2[2];
+    component.selected.jurisdiction = JURISDICTION_3;
+    component.selected.caseType = CASE_TYPES_2[3];
 
-    let control =  new FormControl('test');
+    let control = new FormControl('test');
     control.setValue('anything');
     const formControls = {
       'name': control
@@ -399,8 +427,8 @@ describe('SearchFiltersComponent', () => {
         component.formGroup = formGroup;
         button.nativeElement.click();
         let arg: any = searchHandler.applyFilters.calls.mostRecent().args[0];
-        expect(arg['jurisdiction']).toEqual(JURISDICTION_2);
-        expect(arg['caseType']).toEqual(CASE_TYPES_2[2]);
+        expect(arg['jurisdiction']).toEqual(JURISDICTION_3);
+        expect(arg['caseType']).toEqual(CASE_TYPES_2[3]);
         expect(arg['formGroup'].value).toEqual(formGroup.value);
         expect(searchHandler.applyFilters).toHaveBeenCalledTimes(1);
 

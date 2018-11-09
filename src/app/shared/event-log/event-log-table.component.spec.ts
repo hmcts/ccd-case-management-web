@@ -4,7 +4,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CaseViewEvent } from '@hmcts/ccd-case-ui-toolkit';
-import { DatePipe } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
+import { DatePipe } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('EventLogTableComponent', () => {
 

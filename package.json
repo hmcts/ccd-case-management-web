@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "engines": {
-    "yarn": "~1.9.2",
+    "yarn": "^1.9.2",
     "node": "^8.11.1"
   },
   "license": "MIT",
@@ -56,7 +56,7 @@
     "@angular/platform-server": "~6.1.8",
     "@angular/router": "~6.1.8",
     "@angular/upgrade": "~6.1.8",
-    "@hmcts/ccd-case-ui-toolkit": "2.2.0",
+    "@hmcts/ccd-case-ui-toolkit": "2.3.0",
     "@hmcts/ccpay-web-component": "~1.6.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",

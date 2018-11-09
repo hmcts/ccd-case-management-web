@@ -44,7 +44,6 @@ withPipeline("angular", product, component) {
     setVaultName('ccd')
 
     afterCheckout {
-        sh "npm install -g yarn@1.12.1"
         sh "yarn cache clean"
     }
 

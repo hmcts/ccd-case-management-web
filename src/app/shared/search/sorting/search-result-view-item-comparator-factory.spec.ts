@@ -1,7 +1,7 @@
 import { SearchResultViewItemComparatorFactory } from './search-result-view-item-comparator-factory';
 import { SearchResultViewColumn } from '../search-result-view-column.model';
 import { SearchResultViewItem } from '../search-result-view-item.model';
-import { FieldTypeEnum, FieldType } from '@hmcts/ccd-case-ui-toolkit/dist/shared/domain';
+import { FieldTypeEnum, FieldType } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('SearchResultViewItemComparatorFactory', () => {
 

@@ -122,33 +122,40 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 * single run: `yarn test`
 * live mode (TDD style): `yarn test-watch`
 
-### 2. Smoke Tests
+### 2. Smoke & Functional Tests
 
-On the pipeline the Smoke tests are run with out docker, smoke test script available in package.json
+Both the smoke and functional tests are written in a cucumber protractor framework, 
+tests are selected using cucumber tags `@smoke` or `@functional`
 
-``` test:smoke": "protractor test/config/smoke.conf.js", ```
+Tests require 3 environment variables to be set in order to run:
 
-environment variables listed below to be used.   
-
-The smoke tests can also run within a docker container.
-
- ``` "test:smokeDocker": "./bin/runSmokeTests.sh", ```
-
-To create an image to run execute the following command in the test directory:
-
-``` docker build -t ccd-protractor . ```
-
-Before running the tests set the following environment variables
-
-        | Name | Description |
+ | Name | Description |
         |------|-------------|
         | CCD_CASEWORKER_AUTOTEST_EMAIL     | Username for test account     |
         | CCD_CASEWORKER_AUTOTEST_PASSWORD  | Password for tests account    |
-        | TEST_FRONTEND_URL                 | URL for systems under tests   |
+        | TEST_URL                 | Target  URL to test against (default if not set is local docker url) |
 
-To run the tests execute
 
-``` docker run -it --rm -e CCD_CASEWORKER_AUTOTEST_EMAIL=$CCD_CASEWORKER_AUTOTEST_EMAIL -e CCD_CASEWORKER_AUTOTEST_PASSWORD=$CCD_CASEWORKER_AUTOTEST_PASSWORD -e TEST_FRONTEND_URL=$TEST_FRONTEND_URL --name protractor-runner -v $(PWD):/protractor/project ccd-protractor:latest test:smoke  ```
+#### Running on pipeline
+On the pipeline tests are run with out docker, they are run by scripts in package.json
+
+- Smoke: ``` "test:smoke": "./bin/runSmokeTests.sh", ```
+- Functional: ``` "test:functional": "./bin/runFunctionalTests.sh", ```
+
+These bash scripts in turn execute `test:smokeTest` and `test:functionalTests` respectively in the package.json
+
+#### Running local
+
+If you wish to run tests locally make sure the environment variables listed above are correct and pointing to your
+local/docker or desired url and run the following commands:
+
+
+- Smoke: ``` protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@smoke ```
+- Functional: ``` protractor test/fucntional-tests/config/local.conf.js --cucumberOpts.tags=@functional ```
+
+Note: if you are trying to run tests agaist local/docker instance you may need to comment out the `proxy` section 
+in the `local.conf.js`:
+
 
 ## Production
 

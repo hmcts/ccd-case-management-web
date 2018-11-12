@@ -129,11 +129,11 @@ tests are selected using cucumber tags `@smoke` or `@functional`
 
 Tests require 3 environment variables to be set in order to run:
 
- | Name | Description |
-        |------|-------------|
-        | CCD_CASEWORKER_AUTOTEST_EMAIL     | Username for test account     |
-        | CCD_CASEWORKER_AUTOTEST_PASSWORD  | Password for tests account    |
-        | TEST_URL                 | Target  URL to test against (default if not set is local docker url) |
+| Name | Description |
+|------|-------------|
+| CCD_CASEWORKER_AUTOTEST_EMAIL | Username for test account |
+| CCD_CASEWORKER_AUTOTEST_PASSWORD | Password for tests account |
+| TEST_URL | Target URL to test against (default if not set is local docker url) |
 
 
 #### Running on pipeline

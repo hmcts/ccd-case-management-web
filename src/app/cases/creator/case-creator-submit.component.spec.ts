@@ -7,7 +7,7 @@ import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
   FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
-  DraftService} from '@hmcts/ccd-case-ui-toolkit';
+  DraftService } from '@hmcts/ccd-case-ui-toolkit';
 
 let CaseEditComponent: any = MockComponent({
   selector: 'ccd-case-edit',

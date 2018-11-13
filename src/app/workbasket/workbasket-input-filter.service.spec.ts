@@ -25,7 +25,7 @@ describe('DefinitionsService', () => {
     appConfig.getApiUrl.and.returnValue(API_DATA_URL);
     httpService = createSpyObj<HttpService>('httpService', ['get']);
     workbasketInputFilterService = new WorkbasketInputFilterService(httpService, appConfig);
-    windowService = appConfig = createSpyObj<AppConfig>('windowService', ['setLocalStorage', 'getLocalStorage']);
+    windowService = appConfig = createSpyObj<any>('windowService', ['setLocalStorage', 'getLocalStorage']);
   });
 
   describe('getWorkbasketInputs()', () => {

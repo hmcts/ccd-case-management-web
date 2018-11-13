@@ -1,4 +1,4 @@
-let World = require('../utils/world.js');
+let TestData = require('../utils/world.js');
 let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
 let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
@@ -17,9 +17,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
-      await createCaseStartPage.selectJurisdiction(World.jurisdiction);
-      await createCaseStartPage.selectCaseType(World.caseType);
-      await createCaseStartPage.selectEvent(World.event);
+      await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
+      await createCaseStartPage.selectCaseType(TestData.caseType);
+      await createCaseStartPage.selectEvent(TestData.event);
       await createCaseStartPage.clickStartButton();
   }
 

@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CaseResolver } from './case.resolver';
 import { CaseViewerComponent } from './viewer/case-viewer.component';
 import { PaletteModule, ConditionalShowModule, MarkdownModule,
-  LabelSubstitutionService, RemoveDialogComponent, CaseReferencePipe, LabelSubstitutorModule,
+  LabelSubstitutionService, CaseReferencePipe, LabelSubstitutorModule,
   FieldsPurger, PageValidationService } from '@hmcts/ccd-case-ui-toolkit';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
@@ -46,9 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CaseViewerComponent,
     CreateCaseFiltersComponent,
     PrintUrlPipe,
-    RemoveDialogComponent
   ],
-  entryComponents: [RemoveDialogComponent],
   providers: [
     CasePrintDocumentsResolver,
     CaseReferencePipe,

@@ -34,7 +34,7 @@ describe('OAuth2Service', () => {
     appConfig.getLoginUrl.and.returnValue(LOGIN_URL);
     appConfig.getLogoutUrl.and.returnValue(LOGOUT_URL);
     appConfig.getOAuth2ClientId.and.returnValue(OAUTH2_CLIENT_ID);
-    authService = createSpyObj<HttpService>('authService', ['redirectUri', 'signIn']);
+    authService = createSpyObj<any>('authService', ['redirectUri', 'signIn']);
     authService.redirectUri.and.returnValue(REDIRECT_URI);
 
     oauth2Service = new OAuth2Service(httpService, appConfig, authService);

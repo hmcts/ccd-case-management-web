@@ -266,7 +266,7 @@ describe('CreateCaseFiltersComponent', () => {
     mockDefinitionsService.getJurisdictions.and.returnValue(Observable.of([JURISDICTION_2]));
     mockRouter = createSpyObj<Router>('router', ['navigate']);
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
-    mockCallbackErrorSubject = createSpyObj<Router>('callbackErrorSubject', ['next']);
+    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
     mockAlertService = createSpyObj<AlertService>('alertService', ['clear']);
     jurisdictionService = new JurisdictionService();
 

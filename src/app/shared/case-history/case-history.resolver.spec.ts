@@ -10,7 +10,7 @@ describe('CaseHistoryResolver', () => {
     const CASE_TYPE_ID = 'TEST_CASE_TYPE';
     const CASE_ID = '42';
     const EVENT_ID = '100';
-    const CASE_HISTORY: CaseHistory = createSpyObj<CaseHistory>('case', ['toString']);
+    const CASE_HISTORY: CaseHistory = createSpyObj<any>('case', ['toString']);
     const CASE_OBS: Observable<CaseHistory> = Observable.of(CASE_HISTORY);
 
     const CASE: CaseView = {

@@ -49,7 +49,7 @@
     "@angular/compiler": "~7.0.3",
     "@angular/core": "~7.0.3",
     "@angular/forms": "~7.0.3",
-    "@angular/http": "~7.0.3",
+    "@angular/http": "~7.0.4",
     "@angular/material": "^6.3.0",
     "@angular/platform-browser": "~7.0.3",
     "@angular/platform-browser-dynamic": "~7.0.3",

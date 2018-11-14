@@ -426,7 +426,7 @@ describe('CaseViewerComponent', () => {
 
     router = createSpyObj<Router>('router', ['navigate']);
     router.navigate.and.returnValue(new Promise(any));
-    mockCallbackErrorSubject = createSpyObj<Router>('callbackErrorSubject', ['next']);
+    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
 
     TestBed
       .configureTestingModule({
@@ -551,7 +551,7 @@ describe('CaseViewerComponent', () => {
 
     let cells = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr.compound-field>td'));
+      .queryAll(By.css('tbody>tr.compound-field>th'));
 
     expect(cells.length).toEqual(COMPLEX_FIELDS.length);
   });
@@ -563,7 +563,7 @@ describe('CaseViewerComponent', () => {
 
     let readFields_compound = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
+      .queryAll(By.css('tbody>tr th>span>ccd-field-read'));
 
     let readFields = readFields_fields.concat(readFields_compound);
 
@@ -574,7 +574,7 @@ describe('CaseViewerComponent', () => {
       }))
         .toBeTruthy(`Could not find field with type ${field.field_type}`);
     });
-    expect(FIELDS.length).toBe(readFields_fields.length);
+    expect(FIELDS.length).toBe(readFields.length);
   });
 
   it('should render fields in ascending order', () => {

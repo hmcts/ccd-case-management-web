@@ -92,7 +92,6 @@ export class SearchResultComponent implements OnChanges {
       this.hideRows = false;
 
       this.sortParameters = undefined;
-
       // Clone `resultView` to prevent sorting the external variable
       this.resultView = {
         columns: this.resultView.columns.slice(0),
@@ -213,6 +212,7 @@ export class SearchResultComponent implements OnChanges {
 
   private isSortAscending(column: SearchResultViewColumn): boolean {
     let currentSortOrder = this.currentSortOrder(column);
+
     return currentSortOrder === SortOrder.UNSORTED || currentSortOrder === SortOrder.DESCENDING;
   }
 

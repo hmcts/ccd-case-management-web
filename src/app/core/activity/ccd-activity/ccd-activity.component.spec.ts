@@ -92,7 +92,7 @@ describe('CcdActivityComponent', () => {
   });
 
   beforeEach(async(() => {
-    activityPollingService = createSpyObj<ActivityPollingService>('activityPollingService',
+    activityPollingService = createSpyObj<any>('activityPollingService',
       ['subscribeToActivity', 'unsubscribeFromActivity']);
     activityPollingService.subscribeToActivity.and.returnValue();
     activityPollingService.unsubscribeFromActivity.and.returnValue();

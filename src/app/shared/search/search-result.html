@@ -1,10 +1,11 @@
-<div class="caption">
-  <span class="text-16 bold-small" attr.aria-label="All applications">All applications</span>
-</div>
-<div *ngIf="(hasResults() || hasDrafts())" class="pagination-top">
-  <span class="text-16">Displaying {{ getFirstResult() }} - {{ getLastResult() }} out of {{ getTotalResults() }} results</span>
-</div>
-<table *ngIf="hasResults() || hasDrafts()">
+<table *ngIf="hasResults() || hasDrafts()" style="margin-top: -15px;">
+  <caption>
+    <span class="heading-medium">Case List</span>
+    <div *ngIf="(hasResults() || hasDrafts())" class="pagination-top"
+         attr.aria-label="{{ getTotalResults() }} results have been found">
+      <span class="text-16">Displaying {{ getFirstResult() }} - {{ getLastResult() }} out of {{ getTotalResults() }} results</span>
+    </div>
+  </caption>
   <thead>
   <tr>
     <th *ngFor="let col of resultView.columns">

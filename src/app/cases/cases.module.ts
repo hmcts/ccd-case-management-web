@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { CaseResolver } from './case.resolver';
 import { CaseViewerComponent } from './viewer/case-viewer.component';
-import { PaletteModule, PaletteUtilsModule, ConditionalShowModule, MarkdownModule,
-  LabelSubstitutionService, RemoveDialogComponent, CaseReferencePipe, LabelSubstitutorModule,
-  FieldsPurger, PageValidationService, CallbackErrorsComponent, CaseEditConfirmComponent, CaseEditComponent,
-  CaseEditPageComponent, CaseEditFormComponent, CaseEditSubmitComponent} from '@hmcts/ccd-case-ui-toolkit';
+import { PaletteModule, ConditionalShowModule, MarkdownModule,
+  LabelSubstitutionService, CaseReferencePipe, LabelSubstitutorModule,
+  FieldsPurger, PageValidationService } from '@hmcts/ccd-case-ui-toolkit';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
@@ -33,7 +32,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LabelSubstitutorModule,
     MarkdownModule,
     PaletteModule,
-    PaletteUtilsModule,
     RouterModule,
     ReactiveFormsModule,
     SharedModule,
@@ -41,25 +39,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
   ],
   declarations: [
-    CallbackErrorsComponent,
     CaseCreatorComponent,
     CaseCreatorSubmitComponent,
-    CaseEditConfirmComponent,
-    CaseEditComponent,
-    CaseEditPageComponent,
-    CaseEditFormComponent,
-    CaseEditSubmitComponent,
     CaseEventTriggerComponent,
     CasePrinterComponent,
     CaseViewerComponent,
     CreateCaseFiltersComponent,
     PrintUrlPipe,
-    RemoveDialogComponent
   ],
-  exports: [
-    CallbackErrorsComponent,
-  ],
-  entryComponents: [RemoveDialogComponent],
   providers: [
     CasePrintDocumentsResolver,
     CaseReferencePipe,

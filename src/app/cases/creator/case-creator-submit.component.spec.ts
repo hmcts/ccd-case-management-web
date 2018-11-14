@@ -1,40 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
 import { Observable } from 'rxjs';
 import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
-import { DraftService } from '../../core/draft/draft.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
-  FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent } from '@hmcts/ccd-case-ui-toolkit';
+  FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
+  DraftService } from '@hmcts/ccd-case-ui-toolkit';
 
-@Component({
+let CaseEditComponent: any = MockComponent({
   selector: 'ccd-case-edit',
-  template: ``
-})
-class CaseEditComponent {
-
-  @Input()
-  eventTrigger: CaseEventTrigger;
-
-  @Input()
-  submit: (CaseEventData) => Observable<object>;
-
-  @Input()
-  validate: (CaseEventData) => Observable<object>;
-
-  @Input()
-  saveDraft: (CaseEventData) => Observable<Draft>;
-
-  @Output()
-  cancelled: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  submitted: EventEmitter<string> = new EventEmitter();
-}
+  inputs: ['eventTrigger', 'submit', 'validate', 'saveDraft', 'caseDetails'],
+  outputs: ['cancelled', 'submitted']
+});
 
 describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 

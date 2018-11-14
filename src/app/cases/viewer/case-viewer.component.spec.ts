@@ -12,8 +12,7 @@ import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
-  CaseView, AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
-import { DraftService } from '../../core/draft/draft.service';
+  CaseView, AlertService, CallbackErrorsContext, DraftService} from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 
 @Component({
@@ -308,7 +307,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 2,
             value: 'Janet',
-            show_condition: ''
+            show_condition: '',
+            hint_text: ''
           },
           {
             id: 'PersonLastName',
@@ -320,7 +320,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 1,
             value: 'Parker',
-            show_condition: 'PersonFirstName="Jane*"'
+            show_condition: 'PersonFirstName="Jane*"',
+            hint_text: ''
           },
           {
             id: 'PersonComplex',
@@ -332,7 +333,8 @@ describe('CaseViewerComponent', () => {
               complex_fields: []
             },
             order: 3,
-            show_condition: 'PersonFirstName="Park"'
+            show_condition: 'PersonFirstName="Park"',
+            hint_text: ''
           }
         ],
         show_condition: 'PersonFirstName="Janet"'
@@ -418,7 +420,7 @@ describe('CaseViewerComponent', () => {
 
     router = createSpyObj<Router>('router', ['navigate']);
     router.navigate.and.returnValue(new Promise(any));
-    mockCallbackErrorSubject = createSpyObj<Router>('callbackErrorSubject', ['next']);
+    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
 
     TestBed
       .configureTestingModule({
@@ -542,7 +544,7 @@ describe('CaseViewerComponent', () => {
 
     let cells = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr.compound-field>td'));
+      .queryAll(By.css('tbody>tr.compound-field>th'));
 
     expect(cells.length).toEqual(COMPLEX_FIELDS.length);
   });
@@ -554,7 +556,7 @@ describe('CaseViewerComponent', () => {
 
     let readFields_compound = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
+      .queryAll(By.css('tbody>tr th>span>ccd-field-read'));
 
     let readFields = readFields_fields.concat(readFields_compound);
 
@@ -565,7 +567,7 @@ describe('CaseViewerComponent', () => {
         }))
         .toBeTruthy(`Could not find field with type ${field.field_type}`);
     });
-    expect(FIELDS.length).toBe(readFields_fields.length);
+    expect(FIELDS.length).toBe(readFields.length);
   });
 
   it('should render fields in ascending order', () => {

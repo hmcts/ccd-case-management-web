@@ -14,8 +14,8 @@ export class ActivityPollingService {
   private currentTimeoutHandle: any;
   private pollActivitiesSubscription: Subscription;
   private pollConfig: IOptions;
-  private batchCollectionDelayMs: Number;
-  private maxRequestsPerBatch: Number;
+  private batchCollectionDelayMs: number;
+  private maxRequestsPerBatch: number;
 
   constructor(private activityService: ActivityService, private ngZone: NgZone, private config: AppConfig) {
     this.pollConfig = {

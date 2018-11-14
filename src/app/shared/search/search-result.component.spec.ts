@@ -78,7 +78,7 @@ describe('SearchResultComponent', () => {
           case_field_id: 'PersonAddress',
           case_field_type: {
             id: 'Text',
-            type: 'Text'
+            type: 'Complex'
           },
           label: 'Address',
           order: 1
@@ -369,6 +369,13 @@ describe('SearchResultComponent', () => {
       expect(secondField).toBe(RESULT_VIEW.results[0].case_fields['PersonFirstName']);
       expect(thirdField).toBe(RESULT_VIEW.results[1].case_fields['PersonFirstName']);
       expect(fourthField).toBe(RESULT_VIEW.results[3].case_fields['PersonFirstName']);
+    });
+
+    it('should not break while sorting with unknown sort comparators like Complex type Address', () => {
+      let complexType = de.query(By.css('div>table>thead>tr th:nth-child(2) table tbody div'));
+      complexType.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      expect(complexType.nativeElement.textContent).toBe('Address');
     });
 
     it('should render case reference value in first column with hyperlink if not draft and first column field value is null', () => {

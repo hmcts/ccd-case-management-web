@@ -1,16 +1,14 @@
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
-
-
+Button = require('./webdriver-components/button.js')
 
 
 class CreateCaseWizardPage extends BasePage{
 
     constructor() {
       super();
-      this.progressButton = 'button[type=submit]';
+      this.progressButton = new Button('button[type=submit]');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
-
 
     }
 
@@ -40,7 +38,7 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<void>}
    */
     async clickProgressButton(){
-        await $(this.progressButton).click();
+        await this.progressButton.click();
     }
 
 

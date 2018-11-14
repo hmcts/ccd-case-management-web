@@ -20,4 +20,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     World.caseType = 'All Data Types';
   });
 
+  Given(/^a case with Case Progression functionality exists$/, function() {
+    World.caseType = 'Case Progression';
+  });
+
 });

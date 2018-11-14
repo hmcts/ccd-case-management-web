@@ -1,10 +1,6 @@
 let TestData = require('../utils/world.js');
-let Login = require('../pageObjects/loginPage.js');
-let CaseListPage = require('../pageObjects/caseListPage.js');
-let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
-let NavBar = require('../pageObjects/ccd-components/globalNavBar.js');
-let FieldUtils = require('../utils/fieldUtils.js');
+let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 
 
 let chai = require("chai").use(require("chai-as-promised"));
@@ -14,7 +10,6 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
-
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
       await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
@@ -23,12 +18,28 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       await createCaseStartPage.clickStartButton();
   }
 
-  When(/^I create a new case$/, async function () {
-    await navigateToCreateCasePage()
+
+  async function fillOutAndSubmitForm(){
+    //todo eventually change to be dynamic and automatic
+    let wizardPage = new CreateCaseWizardPage();
+    await wizardPage.interactWithField('text');
+    await wizardPage.clickProgressButton();
+    await wizardPage.clickProgressButton();
+  }
+
+  When(/^I create the case$/, async function () {
+    await navigateToCreateCasePage();
+    await fillOutAndSubmitForm();
+  });
+
+  When(/^I have navigated to a case in the state 'Case created'$/, async function () {
+    //todo should we pushing this data in through API instead?
+    await navigateToCreateCasePage();
+    await fillOutAndSubmitForm();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {
-    await navigateToCreateCasePage()
+    await navigateToCreateCasePage();
   });
 
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
@@ -52,7 +63,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(expectedValue).to.equal(value);
   });
 
-
+  When(/^I select and submit the event '(.*)'$/, async function (event) {
+    await new CaseDetailsPage().startEvent(event)
+    await fillOutAndSubmitForm();
+  });
 
 });
 

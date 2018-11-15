@@ -1,4 +1,6 @@
-const TIMEOUT = 5000;
+CustomError = require('../utils/errors/custom-error.js');
+
+const DEFAULT_TIMEOUT = 5000;
 const EC = protractor.ExpectedConditions;
 
 class BasePage {
@@ -15,21 +17,45 @@ class BasePage {
         this._mandetoryClass = 'ng-invalid';
     }
 
-    async waitForElementToBeVisible(element){
-        await browser.wait(await EC.visibilityOf(element), TIMEOUT);
+
+  /**
+   * Wait a designated amount of time for an element to be visible before timing out
+   * and throwing an error
+   * @param element to wait for
+   * @param timeout - time to wait for element to be visible
+   */
+    async waitForElementToBeVisibleWithTimeout(element, timeout){
+      try {
+          await browser.wait(await EC.visibilityOf(element), timeout);
+        } catch (e) {
+          let message = `timed out after ${timeout} waiting for element`
+          throw new CustomError(message, e)
+        }
     }
 
-    async waitForElementToBeVisible(element, timeout){
-        await browser.wait(await EC.visibilityOf(element), timeout);
+    async waitForElementToBeVisible(element){
+        await this.waitForElementToBeVisibleWithTimeout(element, DEFAULT_TIMEOUT);
     }
 
     async waitForElementToBeVisibleByLocator(locator){
-        await browser.wait(await EC.visibilityOf(element(locator)), TIMEOUT);
+      await this.waitForElementToBeVisibleWithTimeout(element(locator), DEFAULT_TIMEOUT);
     }
 
+
+  /**
+   * Wait for an element to be clickable or throw an error.
+   * will wait for the DEFAULT_TIMEOUT value of 5000ms
+   * @param element to wait to be clickable
+   */
     async waitForElementToBeClickable(element){
-        await browser.wait(await EC.elementToBeClickable(element), TIMEOUT);
+      try {
+        await browser.wait(await EC.elementToBeClickable(element), DEFAULT_TIMEOUT);
+      } catch (e) {
+        let message = `timed out after ${timeout} waiting for element ${element} to be clickable`;
+        throw new CustomError(message, e)
+      }
     }
+
 
     async waitForUrl(expectedUrlRegex){
       let currentURL = await browser.getCurrentUrl();

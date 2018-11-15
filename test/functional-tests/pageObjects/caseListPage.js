@@ -1,5 +1,6 @@
 BasePage = require('./basePage.js')
 NavBar = require('./ccd-components/globalNavBar.js');
+CaseList= require('./ccd-components/caseListComponent.js');
 Footer = require('./ccd-components/footerComponent.js');
 const selfUrlPath = '/list';
 
@@ -21,7 +22,7 @@ class CaseListPage extends BasePage {
    * @returns {Promise<boolean>}
    */
   async isFiltersDisplayed(){
-    await this.waitForElementToBeVisible(element(this._landingPageFilters), 10000);
+    await this.waitForElementToBeVisibleWithTimeout(element(this._landingPageFilters), 30000);
     browser.ignoreSynchronization = false;
     return await element(this._landingPageFilters).isDisplayed()
   }
@@ -33,6 +34,15 @@ class CaseListPage extends BasePage {
    */
   getNavBarComponent(){
       return new NavBar;
+  }
+
+  /**
+   * Return a new instance of the Case List Component which is common across both
+   * the case list page and search page
+   * @returns {CaseListComponent|*}
+   */
+  getCaseListComponent(){
+      return new CaseList;
   }
 
   /**

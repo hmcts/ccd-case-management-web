@@ -34,9 +34,9 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
       envVariable: envVar
     ]
 }
-    
+
 withNightlyPipeline(type, product, app) {
-    
+
     enableSlackNotifications('#ccd-nightly-builds')
 
     if (params.RUN_XBROWSER) {
@@ -47,7 +47,7 @@ withNightlyPipeline(type, product, app) {
     env.TEST_URL = params.TEST_URL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_EMAIL = params.AUTOTEST_EMAIL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
-    
+
     afterCheckout {
         sh "yarn cache clean"
     }

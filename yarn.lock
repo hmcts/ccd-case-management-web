@@ -312,9 +312,10 @@
     mocha "^5.0.5"
     typescript "3.1.1"
 
-"@hmcts/ccpay-web-component@~1.6.1":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.6.2.tgz#ac02986bfe6575f332cefc795b2fef84c049a9e3"
+"@hmcts/ccpay-web-component@~1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.7.0.tgz#d1323cc883292c85b3e4bbb55645d761951fd64d"
+  integrity sha512-Lr0+o2ts1bnXPXsfGlEsTz/eZRkUBldDRYISIg6Q3zqeh0QjIz3OgcoHHSUGgaehKIkTyY0e2M8n0au16/tI7w==
   dependencies:
     tslib "^1.9.0"
 

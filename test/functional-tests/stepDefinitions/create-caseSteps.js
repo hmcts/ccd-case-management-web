@@ -1,4 +1,7 @@
 let TestData = require('../utils/TestData.js');
+let Login = require('../pageObjects/loginPage.js');
+let CaseListPage = require('../pageObjects/caseListPage.js');
+let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 

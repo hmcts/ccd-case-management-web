@@ -9,7 +9,12 @@
     </li>
   </ul>
 </div>
-<ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject" (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
+<ccd-callback-errors
+  [triggerTextContinue]="triggerTextStart"
+  [triggerTextIgnore]="triggerTextIgnoreWarnings"
+  [callbackErrorsSubject]="callbackErrorsSubject"
+  (callbackErrorsContext)="callbackErrorsNotify($event)">
+</ccd-callback-errors>
 <ccd-activity [caseId]="caseDetails.case_id" [displayMode]="BANNER"></ccd-activity>
 <div class="grid-row">
   <div class="column-one-half">

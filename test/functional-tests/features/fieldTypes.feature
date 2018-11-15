@@ -1,3 +1,4 @@
+@functional
 Feature: Set of scenarios to check we can read and write to all field data types when creating a case
 
   Scenario Outline: Fields are displayed on create case form page

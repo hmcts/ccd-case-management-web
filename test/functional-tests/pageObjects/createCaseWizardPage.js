@@ -7,7 +7,7 @@ class CreateCaseWizardPage extends BasePage{
 
     constructor() {
       super();
-      this.progressButton = new Button('button[type=submit]');
+      this.continueButton = new Button('button[type=submit]');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
 
     }
@@ -37,8 +37,8 @@ class CreateCaseWizardPage extends BasePage{
    * Submit button with a different name as it can be dynamic
    * @returns {Promise<void>}
    */
-    async clickProgressButton(){
-        await this.progressButton.click();
+    async clickContinueButton(){
+        await this.continueButton.click();
     }
 
 

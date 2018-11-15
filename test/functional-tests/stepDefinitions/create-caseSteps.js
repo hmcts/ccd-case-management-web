@@ -1,4 +1,4 @@
-let TestData = require('../utils/world.js');
+let TestData = require('../utils/TestData.js');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 
@@ -23,8 +23,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     //todo eventually change to be dynamic and automatic
     let wizardPage = new CreateCaseWizardPage();
     await wizardPage.interactWithField('text');
-    await wizardPage.clickProgressButton();
-    await wizardPage.clickProgressButton();
+    await wizardPage.clickContinueButton();
+    await wizardPage.clickContinueButton();
   }
 
   When(/^I create the case$/, async function () {
@@ -53,7 +53,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I navigate to the 'check your answers' form page$/, async function() {
-      await new CreateCaseWizardPage().clickProgressButton();
+      await new CreateCaseWizardPage().clickContinueButton();
   });
 
   Then(/^I should see my value displayed$/, async function() {

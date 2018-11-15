@@ -3,7 +3,7 @@ let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
 let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let NavBar = require('../pageObjects/ccd-components/globalNavBar.js');
-let World = require('../utils/world.js');
+let World = require('../utils/TestData.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;

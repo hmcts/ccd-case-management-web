@@ -43,7 +43,4 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
 
     }
 
-
-
-
 }

@@ -11,6 +11,7 @@ import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, Ca
   CaseView, AlertService, CasesService} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseEventTriggerComponent', () => {
+  const PAGE_ID = 'pageId';
   const CASE_DETAILS: CaseView = new CaseView();
   CASE_DETAILS.case_id = '42';
   CASE_DETAILS.case_type = {
@@ -171,10 +172,10 @@ describe('CaseEventTriggerComponent', () => {
   });
 
   it('should edit case with sanitised data when form validated', () => {
-    component.validate()(SANITISED_EDIT_FORM);
+    component.validate()(SANITISED_EDIT_FORM, PAGE_ID);
 
     expect(casesService.validateCase).toHaveBeenCalledWith(CASE_DETAILS.case_type.jurisdiction.id,
-      CASE_DETAILS.case_type.id, SANITISED_EDIT_FORM);
+      CASE_DETAILS.case_type.id, SANITISED_EDIT_FORM, PAGE_ID);
   });
 
   it('should navigate to case view upon successful event creation', () => {

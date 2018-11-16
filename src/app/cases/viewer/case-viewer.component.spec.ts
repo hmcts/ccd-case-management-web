@@ -57,9 +57,10 @@ describe('CaseViewerComponent', () => {
   })
   class CallbackErrorsComponent {
 
-    public static readonly TRIGGER_TEXT_GO = 'Go';
-    public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
-
+    @Input()
+    triggerTextIgnore: string;
+    @Input()
+    triggerTextContinue: string;
     @Input()
     callbackErrorsSubject: Subject<any> = new Subject();
     @Output()
@@ -680,20 +681,20 @@ describe('CaseViewerComponent', () => {
 
   it('should change button label when notified about callback errors', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
 
     let eventTriggerElement = de.query(By.directive(EventTriggerComponent));
     let eventTrigger = eventTriggerElement.componentInstance;
 
-    expect(eventTrigger.triggerText).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_GO);
+    expect(eventTrigger.triggerText).toEqual(CaseViewerComponent.TRIGGER_TEXT_START);
 
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_IGNORE;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_CONTINUE;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
 
-    expect(eventTrigger.triggerText).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_IGNORE);
+    expect(eventTrigger.triggerText).toEqual(CaseViewerComponent.TRIGGER_TEXT_CONTINUE);
   });
 
   it('should initially not display form errors', () => {
@@ -704,13 +705,14 @@ describe('CaseViewerComponent', () => {
 
   it('should clear errors and warnings', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
     component.clearErrorsAndWarnings();
     let error = de.query($ERROR_SUMMARY);
     expect(error).toBeFalsy();
     expect(component.error).toBeFalsy();
+    expect(component.ignoreWarning).toBeFalsy();
   });
 
   it('should display error when form error get set', () => {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard,
-  RouterHelperService, DraftService, CasesService} from '@hmcts/ccd-case-ui-toolkit';
+  RouterHelperService, DraftService, CasesService, ProfileService} from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from './definitions/definitions.service';
 import { WindowService } from './utils/window.service';
 import { DocumentService } from './utils/document.service';
@@ -9,7 +9,6 @@ import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProfileResolver } from './profile/profile.resolver';
-import { ProfileService } from './profile/profile.service';
 import { SearchService } from './search/search.service';
 import { PaginationService } from './pagination/pagination.service';
 import { AlertModule } from './alert/alert.module';

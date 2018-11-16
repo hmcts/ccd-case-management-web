@@ -12,6 +12,7 @@ import { HttpError, OrderService, CaseTypeLite, Jurisdiction, CaseEvent, AlertSe
   CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { Observable } from 'rxjs';
+import { CaseViewerComponent } from '../../viewer/case-viewer.component';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';
@@ -225,9 +226,10 @@ const SORTED_CASE_EVENTS: CaseEvent[] = [...CASE_EVENTS_NO_PRE_STATES];
 })
 class CallbackErrorsComponent {
 
-  public static readonly TRIGGER_TEXT_GO = 'Go';
-  public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
-
+  @Input()
+  triggerTextIgnore: string;
+  @Input()
+  triggerTextContinue: string;
   @Input()
   callbackErrorsSubject: Subject<any> = new Subject();
   @Output()
@@ -828,18 +830,32 @@ describe('CreateCaseFiltersComponent', () => {
 
   it('should change button label when callback warnings notified', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CreateCaseFiltersComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
 
     fixture.detectChanges();
     let button = de.query($SELECT_BUTTON);
-    expect(button.nativeElement.textContent).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_GO);
+    expect(button.nativeElement.textContent).toEqual(CreateCaseFiltersComponent.TRIGGER_TEXT_START);
 
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_IGNORE;
+    callbackErrorsContext.trigger_text = CreateCaseFiltersComponent.TRIGGER_TEXT_CONTINUE;
     component.callbackErrorsNotify(callbackErrorsContext);
 
     fixture.detectChanges();
-    expect(button.nativeElement.textContent).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_IGNORE);
+    expect(button.nativeElement.textContent).toEqual(CreateCaseFiltersComponent.TRIGGER_TEXT_CONTINUE);
+  });
+
+  it('should clear errors and warnings', () => {
+    let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
+    component.callbackErrorsNotify(callbackErrorsContext);
+
+    fixture.detectChanges();
+    component.resetErrors();
+
+    let error = de.query($ERROR_SUMMARY);
+    expect(error).toBeFalsy();
+    expect(component.error).toBeFalsy();
+    expect(component.ignoreWarning).toBeFalsy();
   });
 
   it('should disable button when form valid but callback validation errors exists', () => {

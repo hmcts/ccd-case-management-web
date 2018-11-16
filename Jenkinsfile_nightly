@@ -2,17 +2,8 @@
 
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-    pipelineTriggers([cron('H 05 * * *')]),
-    parameters([
-        string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
-        string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
-        string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password'),
-        booleanParam(
-            name: 'RUN_XBROWSER',
-            defaultValue: false,
-            description: 'Run Cross Browser tests'
-        )
-    ]),
+    pipelineTriggers([cron('H 05 * * *')])
+   
 ])
 
 @Library("Infrastructure")
@@ -36,18 +27,13 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withNightlyPipeline(type, product, app) {
+    loadVaultSecrets(secrets)
+    setVaultName('ccd')
 
     enableSlackNotifications('#ccd-nightly-builds')
 
-    if (params.RUN_XBROWSER) {
-        enableCrossBrowserTest()
-    }
-
-    //loadVaultSecrets(secrets)
-    env.TEST_URL = params.TEST_URL_PARAM
-    env.CCD_CASEWORKER_AUTOTEST_EMAIL = params.AUTOTEST_EMAIL_PARAM
-    env.CCD_CASEWORKER_AUTOTEST_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
-
+    enableCrossBrowserTest()
+    
     afterCheckout {
         sh "yarn cache clean"
     }

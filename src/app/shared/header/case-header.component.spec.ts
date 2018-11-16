@@ -37,6 +37,7 @@ describe('CaseHeaderComponent', () => {
         providers: [
           FieldsUtils,
           LabelSubstitutionService,
+          CaseReferencePipe
         ]
       })
       .compileComponents()

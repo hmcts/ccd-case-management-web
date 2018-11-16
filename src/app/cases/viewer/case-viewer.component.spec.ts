@@ -10,9 +10,11 @@ import { Subject } from 'rxjs/Subject';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
-import { PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
+import {
+  PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
-  CaseView, AlertService, CallbackErrorsContext, DraftService} from '@hmcts/ccd-case-ui-toolkit';
+  CaseView, AlertService, CallbackErrorsContext, DraftService, CaseReferencePipe
+} from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 
 @Component({
@@ -456,7 +458,8 @@ describe('CaseViewerComponent', () => {
           { provide: MatDialog, useValue: dialog },
           { provide: MatDialogRef, useValue: matDialogRef },
           { provide: MatDialogConfig, useValue: DIALOG_CONFIG },
-          DeleteOrCancelDialogComponent
+          DeleteOrCancelDialogComponent,
+          CaseReferencePipe
         ]
       })
       .compileComponents();

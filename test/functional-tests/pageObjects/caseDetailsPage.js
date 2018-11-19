@@ -29,7 +29,7 @@ class CaseDetailsPage extends BasePage {
    */
   async getEndStateValue(){
     browser.ignoreSynchronization = true;
-    this.waitForElementToBeVisibleByLocator(this._endStateValue);
+    await this.waitForElementToBeVisibleByLocator(this._endStateValue);
     browser.ignoreSynchronization = false;
 
     return await $(this._endStateValue).getText();
@@ -41,7 +41,7 @@ class CaseDetailsPage extends BasePage {
    */
   async getActions(){
     browser.ignoreSynchronization = true;
-    this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
+    await this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
     browser.ignoreSynchronization = false;
 
     return await this._actionsDropdown.getOptionsTextValues()
@@ -54,7 +54,7 @@ class CaseDetailsPage extends BasePage {
    */
   async startEvent(event){
     browser.ignoreSynchronization = true;
-    this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
+    await this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
     browser.ignoreSynchronization = false;
 
     await this._actionsDropdown.selectFromDropdownByText(event);

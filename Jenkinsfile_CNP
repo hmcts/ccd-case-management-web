@@ -73,4 +73,8 @@ withPipeline("angular", product, component) {
     }
 
 
+    after('build') {
+        sh "yarn check"
+    }
+
 }

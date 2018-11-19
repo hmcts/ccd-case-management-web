@@ -1,9 +1,11 @@
 # ---- Base Image ----
 FROM node:8.12.0-slim AS base
 WORKDIR /usr/src/app
-ARG BUILD_DEPS='bzip2 patch libfontconfig'
 RUN apt-get update \
-    && apt-get install -y $BUILD_DEPS --no-install-recommends \
+    && apt-get install --no-install-recommends -y \
+    bzip2=1.0.6-7+b3 \
+    patch=2.7.5-1+deb8u1 \
+    libfontconfig1=2.11.0-6.3+deb8u1 \
     && rm -rf /var/lib/apt/lists/*
 # ---- Dependencies ----
 # This image has all dependencies for all build tasks, frontend,

@@ -28,7 +28,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async getEndStateValue(){
-    this.super().waitForElementToBeVisibleByLocator(this._endStateValue);
+    this.waitForElementToBeVisibleByLocator(this._endStateValue);
     return await $(this._endStateValue).getText();
   }
 
@@ -37,7 +37,7 @@ class CaseDetailsPage extends BasePage {
    * @returns String Array
    */
   async getActions(){
-      this.super().waitForElementToBeVisibleByLocator(this._actionsDropdown);
+      this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
       return await this._actionsDropdown.getOptionsTextValues()
   }
 
@@ -47,11 +47,10 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async startEvent(event){
-    this.super().waitForElementToBeVisibleByLocator(this._actionsDropdown);
+    this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
     await this._actionsDropdown.selectFromDropdownByText(event);
     await this._goButton.click()
   }
-
 
 
 }

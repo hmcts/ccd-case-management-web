@@ -55,9 +55,10 @@ describe('CaseViewerComponent', () => {
   })
   class CallbackErrorsComponent {
 
-    public static readonly TRIGGER_TEXT_GO = 'Go';
-    public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
-
+    @Input()
+    triggerTextIgnore: string;
+    @Input()
+    triggerTextContinue: string;
     @Input()
     callbackErrorsSubject: Subject<any> = new Subject();
     @Output()
@@ -420,7 +421,7 @@ describe('CaseViewerComponent', () => {
 
     router = createSpyObj<Router>('router', ['navigate']);
     router.navigate.and.returnValue(new Promise(any));
-    mockCallbackErrorSubject = createSpyObj<Router>('callbackErrorSubject', ['next']);
+    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
 
     TestBed
       .configureTestingModule({
@@ -544,7 +545,7 @@ describe('CaseViewerComponent', () => {
 
     let cells = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr.compound-field>td'));
+      .queryAll(By.css('tbody>tr.compound-field>th'));
 
     expect(cells.length).toEqual(COMPLEX_FIELDS.length);
   });
@@ -556,7 +557,7 @@ describe('CaseViewerComponent', () => {
 
     let readFields_compound = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
+      .queryAll(By.css('tbody>tr th>span>ccd-field-read'));
 
     let readFields = readFields_fields.concat(readFields_compound);
 
@@ -567,7 +568,7 @@ describe('CaseViewerComponent', () => {
         }))
         .toBeTruthy(`Could not find field with type ${field.field_type}`);
     });
-    expect(FIELDS.length).toBe(readFields_fields.length);
+    expect(FIELDS.length).toBe(readFields.length);
   });
 
   it('should render fields in ascending order', () => {
@@ -673,20 +674,20 @@ describe('CaseViewerComponent', () => {
 
   it('should change button label when notified about callback errors', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
 
     let eventTriggerElement = de.query(By.directive(EventTriggerComponent));
     let eventTrigger = eventTriggerElement.componentInstance;
 
-    expect(eventTrigger.triggerText).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_GO);
+    expect(eventTrigger.triggerText).toEqual(CaseViewerComponent.TRIGGER_TEXT_START);
 
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_IGNORE;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_CONTINUE;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
 
-    expect(eventTrigger.triggerText).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_IGNORE);
+    expect(eventTrigger.triggerText).toEqual(CaseViewerComponent.TRIGGER_TEXT_CONTINUE);
   });
 
   it('should initially not display form errors', () => {
@@ -697,13 +698,14 @@ describe('CaseViewerComponent', () => {
 
   it('should clear errors and warnings', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
     component.clearErrorsAndWarnings();
     let error = de.query($ERROR_SUMMARY);
     expect(error).toBeFalsy();
     expect(component.error).toBeFalsy();
+    expect(component.ignoreWarning).toBeFalsy();
   });
 
   it('should display error when form error get set', () => {

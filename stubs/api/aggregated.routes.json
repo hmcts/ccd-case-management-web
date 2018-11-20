@@ -1,6 +1,7 @@
 {
   "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/pagination_metadata?state=CaseCreated": "/pagination_metadata",
   "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/validate": "/validate",
+  "/data/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/validate?pageId=pageId": "/validate",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases?view=WORKBASKET&state=CaseCreated&page=1": "/cases",
   "/aggregated/caseworkers/:uid/jurisdictions/:jid/case-types/:ctid/cases/:id": "/case",
   "/data/caseworkers/:uid/profile": "/profile",

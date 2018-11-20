@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import { HttpError, OrderService, CaseEvent, AlertService, CallbackErrorsComponent, Jurisdiction,
+import { HttpError, OrderService, CaseEvent, AlertService, Jurisdiction,
   CaseTypeLite, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { CREATE_ACCESS } from '../../../shared/domain/case-view/access-types.model';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
@@ -13,6 +13,9 @@ import { DefinitionsService } from '../../../core/definitions/definitions.servic
   styleUrls: ['./create-case-filters.scss']
 })
 export class CreateCaseFiltersComponent implements OnInit {
+  static readonly TRIGGER_TEXT_START = 'Start';
+  static readonly TRIGGER_TEXT_CONTINUE = 'Ignore Warning and Start';
+
   @Input()
   formGroup: FormGroup = new FormGroup({});
 
@@ -33,7 +36,9 @@ export class CreateCaseFiltersComponent implements OnInit {
   filterCaseTypeControl: FormControl;
   filterEventControl: FormControl;
 
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_START;
+  triggerTextStart = CreateCaseFiltersComponent.TRIGGER_TEXT_START;
+  triggerTextIgnoreWarnings = CreateCaseFiltersComponent.TRIGGER_TEXT_CONTINUE;
+  triggerText = CreateCaseFiltersComponent.TRIGGER_TEXT_START;
   ignoreWarning = false;
   error: HttpError;
 
@@ -176,8 +181,9 @@ export class CreateCaseFiltersComponent implements OnInit {
     this.formGroup.controls['event'].disable();
   }
 
-  private resetErrors(): void {
+  resetErrors(): void {
     this.error = null;
+    this.ignoreWarning = false;
     this.callbackErrorsSubject.next(null);
     this.alertService.clear();
   }

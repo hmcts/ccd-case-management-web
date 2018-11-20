@@ -9,7 +9,12 @@
     </li>
   </ul>
 </div>
-<ccd-callback-errors [callbackErrorsSubject]="callbackErrorsSubject" (callbackErrorsContext)="callbackErrorsNotify($event)"></ccd-callback-errors>
+<ccd-callback-errors
+  [triggerTextContinue]="triggerTextStart"
+  [triggerTextIgnore]="triggerTextIgnoreWarnings"
+  [callbackErrorsSubject]="callbackErrorsSubject"
+  (callbackErrorsContext)="callbackErrorsNotify($event)">
+</ccd-callback-errors>
 <form  (ngSubmit)="apply()">
   <div class="form-group">
     <label class="form-label" for="cc-jurisdiction">Jurisdiction</label>

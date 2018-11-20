@@ -190,10 +190,12 @@ select::-ms-expand {
 .form-label {
   font-size: 16px;
   margin-bottom: 5px;
+  padding-bottom: 0px;
 }
 .form-hint {
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-family: "nta", Arial, sans-serif;
 }
 .multiple-choice {

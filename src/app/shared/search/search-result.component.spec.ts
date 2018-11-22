@@ -201,7 +201,7 @@ describe('SearchResultComponent', () => {
     it('should render a table <thead> and <tbody>', () => {
       let table = de.query(By.css('div>table'));
       expect(table.nativeElement.tagName).toBe('TABLE');
-      expect(table.children.length).toBe(2);
+      expect(table.children.length).toBe(3);
       let thead = de.query(By.css('div>table>thead'));
       expect(thead.nativeElement.tagName).toBe('THEAD');
       expect(thead.children.length).toBe(1);

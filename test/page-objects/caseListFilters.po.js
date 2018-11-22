@@ -18,8 +18,6 @@ class CaseListFilters extends BrowserUtils{
        this._clfStateCss = '#wb-case-state';
        this._clfStateOptions = by.css('#wb-case-state option');
 
-       this._pageTitle = by.css('.global-display > cut-body > div h1');
-
        this._clfApplyButton = by.css('.global-display .display-left button');
 
     }
@@ -28,11 +26,6 @@ class CaseListFilters extends BrowserUtils{
 
         browser.waitForAngular
 
-    }
-
-    getPageTitleLabel() {
-
-        return element(this._pageTitle).getText()
     }
 
     jurisdictionDropDownIsClickable() {

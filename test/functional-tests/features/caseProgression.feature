@@ -1,4 +1,4 @@
-@functional @caseProgression
+@caseProgression
 Feature: Set of scenarios to test case creation and case progression
 
   Background:

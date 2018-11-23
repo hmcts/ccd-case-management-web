@@ -14,6 +14,8 @@ export class SearchService {
   public static readonly VIEW_SEARCH = 'SEARCH';
   public static readonly VIEW_WORKBASKET = 'WORKBASKET';
   public static readonly FIELD_PREFIX = 'case.';
+  private currentJurisdiction: string;
+  private currentCaseType: string;
 
   constructor(private appConfig: AppConfig, private httpService: HttpService, private requestOptionsBuilder: RequestOptionsBuilder) { }
 
@@ -37,12 +39,19 @@ export class SearchService {
 
   getSearchInputs(jurisdictionId: string, caseTypeId: string): Observable<SearchInput[]> {
     let url = this.getSearchInputUrl(jurisdictionId, caseTypeId);
+    this.currentJurisdiction = jurisdictionId;
+    this.currentCaseType = caseTypeId;
     return this.httpService
       .get(url)
       .map(response => {
         let searchInputs = response.json();
-        searchInputs
-          .forEach( item => { item.field.label = item.label; });
+        if (!(this.currentJurisdiction !== jurisdictionId || this.currentCaseType !== caseTypeId)) {
+          searchInputs.forEach(item => {
+            item.field.label = item.label;
+          });
+        } else {
+          throw new Error('Response expired');
+        }
         return searchInputs;
       });
   }

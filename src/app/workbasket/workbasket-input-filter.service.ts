@@ -7,6 +7,8 @@ import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class WorkbasketInputFilterService {
+  private currentJurisdiction: string;
+  private currentCaseType: string;
 
   constructor(private httpService: HttpService, private appConfig: AppConfig) {
   }
@@ -17,11 +19,19 @@ export class WorkbasketInputFilterService {
 
   getWorkbasketInputs(jurisdictionId: string, caseTypeId: string): Observable<WorkbasketInputModel[]> {
     let url = this.getWorkbasketInputUrl(jurisdictionId, caseTypeId);
+    this.currentJurisdiction = jurisdictionId;
+    this.currentCaseType = caseTypeId;
     return this.httpService
       .get(url)
       .map(response => {
         let workbasketInputs = response.json();
-        workbasketInputs.forEach( item => { item.field.label = item.label; });
+        if (!(this.currentJurisdiction !== jurisdictionId || this.currentCaseType !== caseTypeId)) {
+          workbasketInputs.forEach(item => {
+            item.field.label = item.label;
+          });
+        } else {
+          throw new Error('Response expired');
+        }
         return workbasketInputs;
       });
   }

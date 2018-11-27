@@ -25,7 +25,7 @@ export class WorkbasketInputFilterService {
       .get(url)
       .map(response => {
         let workbasketInputs = response.json();
-        if (!(this.currentJurisdiction !== jurisdictionId || this.currentCaseType !== caseTypeId)) {
+        if (this.isDataValid(jurisdictionId, caseTypeId)) {
           workbasketInputs.forEach(item => {
             item.field.label = item.label;
           });
@@ -34,5 +34,9 @@ export class WorkbasketInputFilterService {
         }
         return workbasketInputs;
       });
+  }
+
+  isDataValid(jurisdictionId: string, caseTypeId: string): boolean {
+    return this.currentJurisdiction === jurisdictionId && this.currentCaseType === caseTypeId
   }
 }

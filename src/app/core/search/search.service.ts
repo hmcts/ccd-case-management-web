@@ -45,7 +45,7 @@ export class SearchService {
       .get(url)
       .map(response => {
         let searchInputs = response.json();
-        if (!(this.currentJurisdiction !== jurisdictionId || this.currentCaseType !== caseTypeId)) {
+        if (this.isDataValid(jurisdictionId, caseTypeId)) {
           searchInputs.forEach(item => {
             item.field.label = item.label;
           });
@@ -54,5 +54,9 @@ export class SearchService {
         }
         return searchInputs;
       });
+  }
+
+  isDataValid(jurisdictionId: string, caseTypeId: string): boolean {
+    return this.currentJurisdiction === jurisdictionId && this.currentCaseType === caseTypeId
   }
 }

@@ -65,4 +65,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });
 
+
+  Then(/^I should see the <component> on the CCD case list page$/, async function () {
+      await waitForLandingPageToLoad();
+      caseListPage = new CaseListPage();
+      failedOnPageTitle = 'page not titled on case list page';
+
+      expect (await caseListPage.isFiltersDisplayed()).to.be.true
+  });
+
+
+
 });

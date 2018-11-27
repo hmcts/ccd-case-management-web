@@ -62,8 +62,6 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<void>}
    */
     async clickSubmitCaseButton(){
-        console.log('click submit button');
-        browser.sleep(2000);
         await this.continueButton.click();
         await new CaseDetailsPage().waitForPageToLoad();
     }

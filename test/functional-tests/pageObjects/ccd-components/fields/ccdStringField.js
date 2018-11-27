@@ -26,33 +26,34 @@ class CDDStringField {
   /**
    * enter random text into a CCD Text Field
    */
-  async enterText(){
-    let value = await RandomUtils.generateRandomString();
+  async enterText(text){
+    let value = typeof text === 'undefined' ? await RandomUtils.generateRandomString() : text;
     await this.enterIntoField(value);
   }
 
   /**
    * enter random number between 1-100 into CCD Number Field
    */
-  async enterNumber(){
-    let value = await RandomUtils.generateRandomInt(1,100);
+  async enterNumber(value){
+    value = typeof value === 'undefined' ? await RandomUtils.generateRandomInt(1,100) : value;
     await this.enterIntoField(value);
   }
 
   /**
    * enter random number between 1-100 into CCD Money GBP Field
    */
-  async enterMoney(){
-    let value = await RandomUtils.generateRandomInt(1,100);
+  async enterMoney(value){
+    value = typeof value === 'undefined' ? await RandomUtils.generateRandomInt(1,100) : value;
     this.checkYourAnswersValue = `£${value}.00`;
     await this.enterIntoField(value);
+    await $('h1').click(); //click out of focus to trigger any errors
   }
 
   /**
    * Enter random valid phone number into CCD Phone UK field
    */
-  async enterPhoneNumber(){
-    let value = await RandomUtils.generateRandomPhoneNumber();
+  async enterPhoneNumber(value){
+    value = typeof value === 'undefined' ? await RandomUtils.generateRandomPhoneNumber() : value;
     this.checkYourAnswersValue = value;
     await this.enterIntoField(value);
   }
@@ -61,15 +62,23 @@ class CDDStringField {
    * Enter random email into CCD Email field
    * @returns {Promise<void>}
    */
-  async enterEmail(){
+  async enterEmail(value){
     let firstpart = await RandomUtils.generateRandomString();
     let email = `${firstpart}@gmail.com`;
-    await this.enterIntoField(email)
+
+    value = typeof value === 'undefined' ? email : value;
+
+    await this.enterIntoField(value)
+  }
+
+  async getFieldValue(){
+    return await this.stringField.getText()
   }
 
   //private
   async enterIntoField(value){
-    this.label = await this.getLabel();
+    this.label = await this._getLabel();
+    await this.stringField.clearField();
     await this.stringField.enterText(value);
     this.inputValue = value;
     if (this.checkYourAnswersValue === null){
@@ -79,9 +88,10 @@ class CDDStringField {
   }
 
   //private
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }
+
 
 }
 

@@ -4,6 +4,8 @@ let DateField = require('../pageObjects/ccd-components/fields/ccdDateField.js');
 let FixedList = require('../pageObjects/ccd-components/fields/ccdFixedList.js');
 let YesNoField = require('../pageObjects/ccd-components/fields/ccdYesNoField.js');
 let TextAreaField = require('../pageObjects/ccd-components/fields/ccdTextAreaField.js');
+let CollectionField = require('../pageObjects/ccd-components/fields/ccdCollectionField.js');
+let ComplexField = require('../pageObjects/ccd-components/fields/ccdComplexTypeField.js');
 
 class FieldDataTypes {
 
@@ -11,10 +13,10 @@ class FieldDataTypes {
    * Enter random text into the Text field
    * @returns CCDStringField Object
    */
-  async enterIntoTextField(){
+  async enterIntoTextField(value){
     let css = await fields.TEXT.cssTag;
     let field = await new CCDStringField(css);
-    await field.enterText();
+    await field.enterText(value);
     return field;
   }
 
@@ -22,10 +24,10 @@ class FieldDataTypes {
    * Enter random text into the Text Area field
    * @returns CCDStringField Object
    */
-  async enterIntoTextAreaField(){
+  async enterIntoTextAreaField(value){
     let css = await fields.TEXT_AREA.cssTag;
     let textAreaField = await new TextAreaField(css);
-    await textAreaField.enterText();
+    await textAreaField.enterText(value);
     return textAreaField;
   }
 
@@ -33,10 +35,10 @@ class FieldDataTypes {
    * Enter random number into the Number field field
    * @returns CCDStringField Object
    */
-  async enterIntoNumberField(){
+  async enterIntoNumberField(value){
     let css = await fields.NUMBER.cssTag;
     let textField = await new CCDStringField(css);
-    await textField.enterNumber();
+    await textField.enterNumber(value);
     return textField;
   }
 
@@ -44,10 +46,10 @@ class FieldDataTypes {
    * Enter random number in money field
    * @returns CCDStringField Object
    */
-  async enterIntoMoneyField(){
+  async enterIntoMoneyField(value){
     let css = await fields.MONEY_GBP.cssTag;
     let textField = await new CCDStringField(css);
-    await textField.enterMoney();
+    await textField.enterMoney(value);
     return textField;
   }
 
@@ -55,10 +57,10 @@ class FieldDataTypes {
    * Enter random email address into Email field
    * @returns CCDStringField Object
    */
-  async enterIntoEmailField(){
+  async enterIntoEmailField(value){
     let css = await fields.EMAIL.cssTag;
     let textField = await new CCDStringField(css);
-    await textField.enterEmail();
+    await textField.enterEmail(value);
     return textField;
   }
 
@@ -66,10 +68,10 @@ class FieldDataTypes {
    * Enter random valid phone number into Phone UK field
    * @returns CCDStringField Object
    */
-  async enterIntoPhoneField(){
+  async enterIntoPhoneField(value){
     let css = await fields.PHONE_NUMBER.cssTag;
     let phoneField = await new CCDStringField(css);
-    await phoneField.enterPhoneNumber();
+    await phoneField.enterPhoneNumber(value);
     return phoneField;
   }
 
@@ -77,10 +79,10 @@ class FieldDataTypes {
    * Enter random valid date in the past
    * @returns CCDStringField Object
    */
-  async enterIntoDateField(){
+  async enterIntoDateField(value){
     let css = await fields.DATE.cssTag;
     let dateField = await new DateField(css);
-    await dateField.enterDate();
+    await dateField.enterDate(value);
     return dateField;
   }
 
@@ -107,39 +109,70 @@ class FieldDataTypes {
   }
 
   /**
+   * Select random radio butto option
+   * @returns CCDStringField Object
+   */
+  async enterIntoCollectionField(){
+    let css = await fields.COLLECTION.cssTag;
+    let collectionField  = await new CollectionField(css);
+    await collectionField.enterTextData();
+    return collectionField;
+  }
+
+  /**
+   * Select random radio butto option
+   * @returns CCDStringField Object
+   */
+  async enterIntoComplexFiled(){
+    let css = await fields.COMPLEX_TYPE.cssTag;
+    let complexField  = await new ComplexField(css);
+    await complexField.enterComplexTextData();
+    return complexField;
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getNumberFieldValue(){
+    let css = await fields.NUMBER.cssTag;
+    let numberField = await new CCDStringField(css);
+    return await numberField.getFieldValue();
+  }
+
+  /**
    * Interact with any field type entering randomly generated data or selecting random options
    * @param dataType
+   * @param value - optional value to enter into field if applicable
    * @returns {Promise<void>}
    */
-  async interactWithField(dataType){
+  async interactWithField(dataType, value){
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'text':
-        return await this.enterIntoTextField();
+        return await this.enterIntoTextField(value);
       case 'textarea':
-        return await this.enterIntoTextAreaField();
+        return await this.enterIntoTextAreaField(value);
       case 'number':
-        return await this.enterIntoNumberField();
-      case 'address':
-        return //todo
+        return await this.enterIntoNumberField(value);
       case 'money-gbp':
-        return await this.enterIntoMoneyField();
+        return await this.enterIntoMoneyField(value);
       case 'date':
-        return await this.enterIntoDateField();
+        return await this.enterIntoDateField(value);
       case 'document':
         return //todo
       case 'email':
-        return await this.enterIntoEmailField();
+        return await this.enterIntoEmailField(value);
       case 'fixed-list':
         return await this.selectFromFixedList();
       case 'phone uk':
-        return await this.enterIntoPhoneField();
+        return await this.enterIntoPhoneField(value);
       case 'yes-no':
         return await this.selectYesNoOption();
       case 'collection':
-        return //todo
+        return await this.enterIntoCollectionField();
       case 'complex':
-        return //todo
+        return await this.enterIntoComplexFiled();
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -159,8 +192,6 @@ class FieldDataTypes {
           return fields.TEXT_AREA.cssTag;
       case 'number':
           return fields.NUMBER.cssTag;
-      case 'address':
-          return fields.ADDRESS.cssTag;
       case 'money-gbp':
           return fields.MONEY_GBP.cssTag;
       case 'date':

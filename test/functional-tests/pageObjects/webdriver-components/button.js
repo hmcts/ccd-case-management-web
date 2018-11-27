@@ -24,7 +24,7 @@ class Button{
    */
   async click(){
       await $(this.css).click();
-      browser.waitForAngular()
+      await browser.waitForAngular()
   }
 
   /**

@@ -18,7 +18,7 @@ class Dropdown {
 
   //private
   async getOptionElements(){
-     return await $$(`${this._dropdownElement} option`);
+    return await $$(`${this._dropdownElement} option`);
   }
 
   /**
@@ -60,7 +60,7 @@ class Dropdown {
    * Select a dropdown option by text value. Case insensitive
    * @param dropdownOption
    */
-  async selectFromDropdownByText(dropdownOption){
+  async _selectFromDropdownByText(dropdownOption){
       let optionToSelect;
       let found = false;
 
@@ -77,10 +77,39 @@ class Dropdown {
       }
 
       if (!found){
-        throw new CustomError(`option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'`)
+        let message = `option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'. Available options: ${options}`
+        throw new CustomError(message)
       }
 
       await optionToSelect.click();
+
+  }
+
+  /**
+   * Select a dropdown option by text value. Retry 2 more times if fails.
+   * @param dropdownOption
+   */
+  async selectFromDropdownByText(dropdownOption){
+
+    let fail = true;
+    let failmessage = null;
+
+    for (let i = 0; i < 3; i++){
+      try {
+        await this._selectFromDropdownByText(dropdownOption)
+        fail = false;
+        break;
+      } catch (e) {
+        failmessage = e;
+        console.log(e);
+        console.log(`Attempt ${i + 1}/3 failed, Retry after 1 second wait`);
+        browser.wait(1000)
+      }
+    }
+
+    if (fail){
+      throw new CustomError(failmessage, 'failed 3 retry attempts')
+    }
 
   }
 

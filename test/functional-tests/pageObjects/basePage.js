@@ -63,6 +63,28 @@ class BasePage {
         .catch(err => console.log(`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
     }
 
+  /**
+   * Checks if an element is displayed. Will catch a NoSuchElementError exception and return false instead
+   * @param element
+   * @returns Boolean
+   */
+    async elementDisplayed(element){
+      let displayed = null;
+        try {
+            displayed = await element.isDisplayed();
+        } catch (e) {
+            if (e.name === 'NoSuchElementError'){
+                displayed = false; //element not present so not displayed
+            }
+            else {
+                throw new CustomError(e);
+            }
+        }
+
+      return displayed
+    }
+
+
 }
 
-module.exports = BasePage
+module.exports = BasePage;

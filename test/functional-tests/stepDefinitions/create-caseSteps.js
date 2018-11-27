@@ -4,6 +4,8 @@ let CaseListPage = require('../pageObjects/caseListPage.js');
 let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
+CustomError = require('../utils/errors/custom-error.js');
+
 
 
 let chai = require("chai").use(require("chai-as-promised"));
@@ -12,6 +14,8 @@ let expect = chai.expect;
 var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
+
+  let caseWizardPage = new CreateCaseWizardPage();
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
@@ -27,7 +31,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     let wizardPage = new CreateCaseWizardPage();
     await wizardPage.interactWithField('text');
     await wizardPage.clickContinueButton();
-    await wizardPage.clickContinueButton();
+    await wizardPage.clickSubmitCaseButton();
   }
 
   When(/^I create the case$/, async function () {
@@ -70,6 +74,51 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await new CaseDetailsPage().startEvent(event)
     await fillOutAndSubmitForm();
   });
+
+
+  //----- VALIDATION STEPS -----
+
+  When(/^I enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
+    await navigateToCreateCasePage()
+    await caseWizardPage.interactWithField(fieldType,value);
+  });
+
+  When(/^I re-enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
+    await caseWizardPage.interactWithField(fieldType,value);
+  });
+
+  When(/^I have a validation error from invalid '(.*)'$/, async function (dataType) {
+    await navigateToCreateCasePage()
+
+    switch (dataType){
+      case "email" :
+        await caseWizardPage.interactWithField(dataType,'invalidemail.com');
+        await caseWizardPage.clickContinueButton();
+        break
+      case "money-gbp" :
+        await caseWizardPage.interactWithField(dataType,'-10');
+        break;
+      case "phone uk":
+        await caseWizardPage.interactWithField(dataType,'12345');
+        await caseWizardPage.clickContinueButton();
+        break;
+      case "date":
+        await caseWizardPage.interactWithField(dataType,'10201990');
+        await caseWizardPage.clickContinueButton();
+        break;
+      case "regex":
+        await caseWizardPage.interactWithField('text','lower case is invalid');
+        await caseWizardPage.clickContinueButton();
+        break;
+      default: throw new CustomError(`option ${dataType} not found`)
+    }
+
+  });
+
+  When(/^I do not fill in the Mandatory field$/, async function () {
+    await navigateToCreateCasePage()
+  });
+
 
 });
 

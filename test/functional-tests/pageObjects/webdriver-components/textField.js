@@ -19,6 +19,20 @@ class TextField{
     await $(this.css).sendKeys(text);
   }
 
+  /**
+   * Clear contents of an input field
+   */
+  async clearField(){
+    await $(this.css).clear();
+  }
+
+  /**
+   * Get value of text box contents
+   * @returns {Promise<String>}
+   */
+  async getText(){
+    return await $(this.css).getAttribute('value');
+  }
 
 }
 

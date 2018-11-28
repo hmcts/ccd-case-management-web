@@ -12,14 +12,7 @@ import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-
-import {
-  CaseField,
-  CaseState,
-  CaseType,
-  DRAFT_PREFIX,
-  Jurisdiction
-} from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState,CaseField } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',
@@ -81,7 +74,8 @@ export class SearchResultComponent implements OnChanges {
 
   constructor(searchResultViewItemComparatorFactory: SearchResultViewItemComparatorFactory,
     appConfig: AppConfig,
-    private activityService: ActivityService) {
+    private activityService: ActivityService,
+    private caseReferencePipe: CaseReferencePipe) {
     this.searchResultViewItemComparatorFactory = searchResultViewItemComparatorFactory;
     this.paginationPageSize = appConfig.getPaginationPageSize();
     this.hideRows = false;
@@ -198,16 +192,20 @@ export class SearchResultComponent implements OnChanges {
     return this.activityService.isEnabled;
   }
 
-  getValueFromCaseField(col, result): any {
-    if (col.id) {
-      return result.case_fields[col.id];
+  hyphenateIfCaseReferenceOrGet(col, result): any {
+    if (col.case_field_id === '[CASE_REFERENCE]') {
+      return this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
     } else {
-      return result.case_fields[col.case_field_id];
+      if (col.id) {
+        return result.case_fields[col.id];
+      } else {
+        return result.case_fields[col.case_field_id];
+      }
     }
   }
 
   draftPrefixOrGet(col, result): any {
-    return result.case_id.startsWith(DRAFT_PREFIX) ? DRAFT_PREFIX : this.getValueFromCaseField(col, result);
+    return result.case_id.startsWith(DRAFT_PREFIX) ? DRAFT_PREFIX : this.hyphenateIfCaseReferenceOrGet(col, result);
   }
 
   private isSortAscending(column: SearchResultViewColumn): boolean {

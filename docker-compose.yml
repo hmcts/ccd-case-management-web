@@ -7,10 +7,9 @@ services:
       context: .
     image: hmcts/ccd-case-management-web
     environment:
-      - IDAM_LOGIN_URL=https://localhost:8000/login
+      - IDAM_LOGIN_URL=https://localhost:3501/login
       - CCD_GATEWAY_BASE_URL=http://localhost:3453
-      - CCD_ACTIVITY_BASE_URL=http://localhost:3455
-      - DM_GATEWAY_BASE_URL=https://api-gateway.dev.dm.reform.hmcts.net
-      -
+      - CCD_ACTIVITY_BASE_URL=
+      - DM_GATEWAY_BASE_URL=http://localhost:3453
     ports:
       - 3451:3451

@@ -163,6 +163,10 @@ select::-ms-expand {
   padding-right: 15px;
   box-sizing: border-box;
 }
+.search-filter{
+  margin-top: 20px;
+  height: 15px;
+}
 .screen-990 {
   width: 990px;
   margin: 0 auto;
@@ -186,10 +190,12 @@ select::-ms-expand {
 .form-label {
   font-size: 16px;
   margin-bottom: 5px;
+  padding-bottom: 0px;
 }
 .form-hint {
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-family: "nta", Arial, sans-serif;
 }
 .multiple-choice {
@@ -247,6 +253,10 @@ select::-ms-expand {
 }
 .pagination-top {
   float: left;
+  margin-bottom: 10px;
+}
+.caption {
+  text-align: left;
   margin-bottom: 10px;
 }
 .sr-only {

@@ -232,7 +232,8 @@ select::-ms-expand {
   margin-top: 0px;
 }
 .markdown ul, .markdown p {
-  margin-bottom: 25px;
+  margin: 10px 0px;
+  white-space: normal;
 }
 
 #fileInputWrapper{

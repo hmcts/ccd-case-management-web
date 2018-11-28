@@ -12,7 +12,7 @@ import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState,CaseField } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',

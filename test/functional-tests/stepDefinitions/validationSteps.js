@@ -1,7 +1,7 @@
 
 let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
-let CreateCaseWizardPage = require('../pageObjects/CreateCaseWizardPage.js');
+let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage.js');
 let NavBar = require('../pageObjects/ccd-components/globalNavBar.js');
 let Data = require('../utils/TestData.js');
 

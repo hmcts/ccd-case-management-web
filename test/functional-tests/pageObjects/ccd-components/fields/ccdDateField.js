@@ -51,11 +51,11 @@ class CcdDateField{
       await this.yearCss.clearField();
       await this.yearCss.enterText(year);
 
-      await this.setCheckYourAnswersValue(day, month, year)
-      this.label = await this.getLabel();
+      await this._setCheckYourAnswersValue(day, month, year)
+      this.label = await this._getLabel();
   }
 
-  async setCheckYourAnswersValue(day, month, year){
+  async _setCheckYourAnswersValue(day, month, year){
     if (month.toString().startsWith('0')){
       month = await month.substring(1);
     }
@@ -63,7 +63,7 @@ class CcdDateField{
     this.checkYourAnswersValue = `${day} ${MONTH[month]} ${year}`;
   }
 
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }
 

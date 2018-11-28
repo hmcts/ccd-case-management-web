@@ -4,40 +4,43 @@ class CcdCollectionField {
 
   constructor(css){
       this.css = css;
-      this.label = this.getLabel();
+      this.label = this._getLabel();
       this.addNewButtonCss = `${this.css} > div > div >button:nth-of-type(1)`;
       this.lastTextField = `${this.css} > div > div > div > div:last-of-type input`;
       this.inputValue = null;
-      this.checkYourAnswersValue = null;
+      this.checkYourAnswersValue = '';
 
   }
 
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} h3:nth-of-type(1)`).getText();
   }
 
   /**
-   * Add 3 random bits of data into a collection of Text fields
+   * Add n random bits of data into a collection of Text fields
    * @returns {Promise<void>}
    */
-  async enterTextData(){
-    let data = [];
-    let data1 = await RandomUtils.generateRandomString();
-    await $(this.addNewButtonCss).click();
-    await $(this.lastTextField).sendKeys(data1);
+  async enterTextData(n){
+    let dataArray = [];
+    for (let i=0; i < n; i++) {
+      let data = await RandomUtils.generateRandomString();
+      await $(this.addNewButtonCss).click();
+      await $(this.lastTextField).sendKeys(data);
 
-    let data2 = await RandomUtils.generateRandomString();
-    await $(this.addNewButtonCss).click();
-    await $(this.lastTextField).sendKeys(data2);
+      dataArray.push(data);
+      this.checkYourAnswersValue += data;
 
-    let data3 = await RandomUtils.generateRandomString();
-    await $(this.addNewButtonCss).click();
-    await $(this.lastTextField).sendKeys(data3);
+      if (i !== n-1){
+        //don't want a new line at the very end
+        this.checkYourAnswersValue += '\n'
+      }
 
-    this.checkYourAnswersValue = await `${data1}\n${data2}\n${data3}`;
-    this.inputValue = data.push(data1, data2, data3);
+    }
+
+    this.inputValue = dataArray
 
   }
+
 }
 
 module.exports = CcdCollectionField;

@@ -28,7 +28,7 @@ class CDDStringField {
    */
   async enterText(text){
     let value = typeof text === 'undefined' ? await RandomUtils.generateRandomString() : text;
-    await this.enterIntoField(value);
+    await this._enterIntoField(value);
   }
 
   /**
@@ -36,7 +36,7 @@ class CDDStringField {
    */
   async enterNumber(value){
     value = typeof value === 'undefined' ? await RandomUtils.generateRandomInt(1,100) : value;
-    await this.enterIntoField(value);
+    await this._enterIntoField(value);
   }
 
   /**
@@ -45,7 +45,7 @@ class CDDStringField {
   async enterMoney(value){
     value = typeof value === 'undefined' ? await RandomUtils.generateRandomInt(1,100) : value;
     this.checkYourAnswersValue = `£${value}.00`;
-    await this.enterIntoField(value);
+    await this._enterIntoField(value);
     await $('h1').click(); //click out of focus to trigger any errors
   }
 
@@ -55,7 +55,7 @@ class CDDStringField {
   async enterPhoneNumber(value){
     value = typeof value === 'undefined' ? await RandomUtils.generateRandomPhoneNumber() : value;
     this.checkYourAnswersValue = value;
-    await this.enterIntoField(value);
+    await this._enterIntoField(value);
   }
 
   /**
@@ -68,15 +68,14 @@ class CDDStringField {
 
     value = typeof value === 'undefined' ? email : value;
 
-    await this.enterIntoField(value)
+    await this._enterIntoField(value)
   }
 
   async getFieldValue(){
     return await this.stringField.getText()
   }
 
-  //private
-  async enterIntoField(value){
+  async _enterIntoField(value){
     this.label = await this._getLabel();
     await this.stringField.clearField();
     await this.stringField.enterText(value);
@@ -87,7 +86,6 @@ class CDDStringField {
     return value;
   }
 
-  //private
   async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }

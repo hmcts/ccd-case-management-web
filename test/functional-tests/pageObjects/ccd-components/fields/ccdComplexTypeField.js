@@ -4,7 +4,7 @@ class CcdComplexTypeField {
 
   constructor(css){
     this.css = css;
-    this.label = this.getLabel();
+    this.label = this._getLabel();
     this.inputValue = null;
     this.checkYourAnswersValue = null;
     this.textFieldList = `${this.css} ccd-field-write`;
@@ -12,7 +12,7 @@ class CcdComplexTypeField {
 
   }
 
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} h3:nth-of-type(1)`).getText();
   }
 

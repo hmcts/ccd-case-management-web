@@ -115,7 +115,7 @@ class FieldDataTypes {
   async enterIntoCollectionField(){
     let css = await fields.COLLECTION.cssTag;
     let collectionField  = await new CollectionField(css);
-    await collectionField.enterTextData();
+    await collectionField.enterTextData(3);
     return collectionField;
   }
 
@@ -184,7 +184,7 @@ class FieldDataTypes {
    * @param dataType
    * @returns css component of specified field
    */
-  async getFieldCSS(dataType){
+  async _getFieldCSS(dataType){
     switch(dataType.toLowerCase()) {
       case 'text':
           return fields.TEXT.cssTag;

@@ -79,11 +79,6 @@ app.use(helmet.contentSecurityPolicy({
     browserSniff: true,
     setAllHeaders: true
 }));
-// Http public key pinning
-app.use(helmet.hpkp({
-    maxAge: 900,
-    sha256s: ['AbCdEf123=', 'XyzABC123=']
-}));
 
 // Referrer policy for helmet
 app.use(helmet.referrerPolicy({

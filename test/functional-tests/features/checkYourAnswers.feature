@@ -1,5 +1,5 @@
 @functional @cya
-Feature:
+Feature: Set of scenarios to test functionality of the Check Your Answers page
 
   Background:
     Given I have logged in

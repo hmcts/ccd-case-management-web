@@ -65,10 +65,12 @@ class Dropdown {
       let found = false;
 
       let options = await this._getOptionElements();
+      let optionsTextArray = [];
+
 
       for (const option of options){
           const optionText = await option.getText();
-
+          await optionsTextArray.push(optionText)
           if (optionText.toLowerCase() === dropdownOption.toLowerCase()){
              optionToSelect = option;
              found = true;
@@ -77,7 +79,7 @@ class Dropdown {
       }
 
       if (!found){
-        let message = `option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'. Available options: ${options}`
+        let message = `option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'. Available options: ${optionsTextArray}`
         throw new CustomError(message)
       }
 
@@ -103,7 +105,7 @@ class Dropdown {
         failmessage = e;
         console.log(e);
         console.log(`Attempt ${i + 1}/3 failed, Retry after 1 second wait`);
-        browser.wait(1000)
+        await browser.sleep(1000)
       }
     }
 

@@ -22,6 +22,20 @@ class Dropdown {
   }
 
   /**
+   * Get list of string dropdown options
+   * @returns String Array
+   */
+  async getOptionsTextValues(){
+    let dropdownElements = await this.getOptionElements();
+    let stringArray = [];
+    for (const option of dropdownElements){
+      const optionText = await option.getText();
+      stringArray.push(optionText);
+    }
+    return stringArray
+  }
+
+  /**
    * Will randomly select any dropdown option
    */
   async selectAnyOption(){

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
-import { CaseEventTrigger, CaseEventData, Draft, CaseReferencePipe, CaseEditPageComponent, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, CaseEventData, Draft, CaseReferencePipe, CaseEditPageComponent, AlertService,
+  CasesService, DraftService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
 import { EventStatusService } from '../../core/cases/event-status.service';
-import { DraftService } from '../../core/draft/draft.service';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -42,8 +41,9 @@ export class CaseCreatorSubmitComponent implements OnInit {
     }
   }
 
-  validate(): (sanitizedEditForm: CaseEventData) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+  validate(): (sanitizedEditForm: CaseEventData, pageId: string) => Observable<object> {
+    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId,
+      sanitizedEditForm, pageId);
   }
 
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {

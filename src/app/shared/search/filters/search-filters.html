@@ -1,5 +1,5 @@
 <form>
-  <div class="form-group">
+  <div class="form-group" style="margin-top: 13px;">
     <label class="form-label" for="s-jurisdiction">Jurisdiction*</label>
     <select class="form-control form-control-3-4 ccd-dropdown" id="s-jurisdiction"
             name="jurisdiction" [(ngModel)]="selected.jurisdiction" aria-controls="search-result"
@@ -23,5 +23,6 @@
     </div>
   </div>
 
-  <button [disabled]="!isSearchableAndSearchInputsReady()" type="button" class="button" (click)="apply()" (keyup.enter)="apply()" >Apply</button>
+  <button [disabled]="!isSearchableAndSearchInputsReady()" type="button" class="button" (click)="apply()" (keyup.enter)="apply()" >Apply</button> &nbsp;&nbsp;&nbsp;
+  <button id="reset" type="button" (click)="reset()" class="button button-secondary">Reset</button>
 </form>

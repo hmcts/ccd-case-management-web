@@ -3,10 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchResultView } from '../shared/search/search-result-view.model';
 import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
 import { SearchService } from '../core/search/search.service';
+import { WindowService } from '../core/utils/window.service';
 import { FormGroup } from '@angular/forms/forms';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { plainToClass } from 'class-transformer';
 import { Jurisdiction, Profile, CaseType, CaseState, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { SearchResultViewItem } from '../shared/search/search-result-view-item.model';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -28,9 +30,10 @@ export class SearchComponent implements OnInit {
   metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
-              private searchService: SearchService,
-              private paginationService: PaginationService,
-              private alertService: AlertService) { }
+    private searchService: SearchService,
+    private paginationService: PaginationService,
+    private alertService: AlertService,
+    private windowService: WindowService) { }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
@@ -41,8 +44,8 @@ export class SearchComponent implements OnInit {
     const searchParams = {};
 
     this.caseFilterFG = filter.formGroup;
-    this.metadataFields = filter.metadataFields;
-
+    const metafields = this.windowService.getLocalStorage('search-metadata-fields');
+    this.metadataFields = metafields ? JSON.parse(metafields) : filter.metadataFields;
     if (filter.caseState) {
       paginationParams['state'] = filter.caseState.id;
       searchParams['state'] = filter.caseState.id;
@@ -57,25 +60,35 @@ export class SearchComponent implements OnInit {
     const metadataFilters = Object.assign(searchParams, filters[SearchComponent.METADATA_FILTER]);
     const metadataPaginationParams = Object.assign(paginationParams, filters[SearchComponent.METADATA_FILTER]);
 
-    this.paginationService
-      .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters)
-      .subscribe(paginationMetadataResult => {
-        this.paginationMetadata = paginationMetadataResult;
-      });
+    if (filter.jurisdiction) {
+      this.paginationService
+        .getPaginationMetadata(filter.jurisdiction.id, filter.caseType.id, metadataPaginationParams, caseFilters)
+        .subscribe(paginationMetadataResult => {
+          this.paginationMetadata = paginationMetadataResult;
+        });
 
-    this.searchService
-      .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
-      .subscribe(resultView => {
-        this.resultView = plainToClass(SearchResultView, resultView);
-        if (this.resultView.result_error) {
-          this.alertService.warning(this.resultView.result_error);
-        }
-        this.jurisdiction = filter.jurisdiction;
-        this.caseType = filter.caseType;
-        this.caseState = filter.caseState;
+      this.searchService
+        .search(filter.jurisdiction.id, filter.caseType.id, metadataFilters, caseFilters)
+        .subscribe(resultView => {
+          this.resultView = plainToClass(SearchResultView, resultView);
+          if (this.resultView.result_error) {
+            this.alertService.warning(this.resultView.result_error);
+          }
+          this.jurisdiction = filter.jurisdiction;
+          this.caseType = filter.caseType;
+          this.caseState = filter.caseState;
 
-        this.scrollToTop();
-      });
+          this.scrollToTop();
+        });
+    }
+  }
+
+  applyReset(filter): void {
+    this.resultView = plainToClass(SearchResultView, {
+      columns: [],
+      results: [],
+      hasDrafts: false
+    });
   }
 
   private getCaseFilterFromFormGroup(formGroup?: FormGroup): object {
@@ -84,7 +97,8 @@ export class SearchComponent implements OnInit {
     result[SearchComponent.CASE_FILTER] = {};
 
     if (formGroup) {
-      this.buildFormDetails('', result, formGroup.value);
+      const formValue = this.windowService.getLocalStorage('search-form-group-value');
+      this.buildFormDetails('', result, formValue ? JSON.parse(formValue) : formGroup.value);
     }
     return result;
   }

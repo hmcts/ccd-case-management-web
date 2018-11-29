@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard,
-  RouterHelperService } from '@hmcts/ccd-case-ui-toolkit';
-import { CasesService } from './cases/cases.service';
+  RouterHelperService, DraftService, CasesService, ProfileService} from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from './definitions/definitions.service';
 import { WindowService } from './utils/window.service';
 import { DocumentService } from './utils/document.service';
@@ -10,7 +9,6 @@ import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProfileResolver } from './profile/profile.resolver';
-import { ProfileService } from './profile/profile.service';
 import { SearchService } from './search/search.service';
 import { PaginationService } from './pagination/pagination.service';
 import { AlertModule } from './alert/alert.module';
@@ -26,7 +24,6 @@ import { PrivacyComponent } from '../footer-nav/privacy.component';
 import { TcComponent } from '../footer-nav/tc.component';
 import { ContactUsComponent } from '../footer-nav/contact-us.component';
 import { AccordionComponent } from '../shared/accordion/accordion.component';
-import { DraftService } from './draft/draft.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 

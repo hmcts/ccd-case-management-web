@@ -63,7 +63,6 @@ it('Should display case list filters', function() {
    failedOnMissingDropDownFilter = 'drop down filter missing on case list page'
    failedOnMissingButton = 'button missing on case list page'
 
-   expect(caseListFiltersPage.getPageTitleLabel()).toBe('Case List')
    expect(caseListFiltersPage.jurisdictionDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
    expect(caseListFiltersPage.caseTypeDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);
    expect(caseListFiltersPage.stateDropDownIsClickable()).toBeTruthy(failedOnMissingDropDownFilter);

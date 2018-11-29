@@ -1,43 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CaseEventTriggerComponent } from './case-event-trigger.component';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
 import { Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, CaseEventTrigger,
-  CaseView, AlertService} from '@hmcts/ccd-case-ui-toolkit';
-
-@Component({
-  selector: 'ccd-case-edit',
-  template: ``
-})
-class CaseEditComponent {
-
-  @Input()
-  eventTrigger: CaseEventTrigger;
-
-  @Input()
-  submit: (CaseEventData) => Observable<object>;
-
-  @Input()
-  validate: (CaseEventData) => Observable<object>;
-
-  @Input()
-  caseDetails: CaseView;
-
-  @Output()
-  cancelled: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  submitted: EventEmitter<string> = new EventEmitter();
-
-}
+  CaseView, AlertService, CasesService} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseEventTriggerComponent', () => {
+  const PAGE_ID = 'pageId';
   const CASE_DETAILS: CaseView = new CaseView();
   CASE_DETAILS.case_id = '42';
   CASE_DETAILS.case_type = {
@@ -91,6 +65,12 @@ describe('CaseEventTriggerComponent', () => {
   let fixture: ComponentFixture<CaseEventTriggerComponent>;
   let component: CaseEventTriggerComponent;
   let de: DebugElement;
+
+  let CaseEditComponent: any = MockComponent({
+    selector: 'ccd-case-edit',
+    inputs: ['eventTrigger', 'submit', 'validate', 'caseDetails', 'saveDraft'],
+    outputs: ['cancelled', 'submitted']
+  });
 
   let CaseActivityComponent: any = MockComponent({
     selector: 'ccd-activity',
@@ -192,10 +172,10 @@ describe('CaseEventTriggerComponent', () => {
   });
 
   it('should edit case with sanitised data when form validated', () => {
-    component.validate()(SANITISED_EDIT_FORM);
+    component.validate()(SANITISED_EDIT_FORM, PAGE_ID);
 
     expect(casesService.validateCase).toHaveBeenCalledWith(CASE_DETAILS.case_type.jurisdiction.id,
-      CASE_DETAILS.case_type.id, SANITISED_EDIT_FORM);
+      CASE_DETAILS.case_type.id, SANITISED_EDIT_FORM, PAGE_ID);
   });
 
   it('should navigate to case view upon successful event creation', () => {

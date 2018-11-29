@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
-import { CaseEventTrigger, CaseEventData, CaseReferencePipe, CaseView, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, CaseEventData, CaseReferencePipe, CaseView, AlertService, CasesService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
 import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { Subscription } from 'rxjs/Subscription';
@@ -47,10 +46,11 @@ export class CaseEventTriggerComponent implements OnInit, OnDestroy {
     return (sanitizedEditForm: CaseEventData) => this.casesService.createEvent(this.caseDetails, sanitizedEditForm);
   }
 
-  validate(): (sanitizedEditForm: CaseEventData) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(
+  validate(): (sanitizedEditForm: CaseEventData, pageId: string) => Observable<object> {
+    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(
       this.caseDetails.case_type.jurisdiction.id,
-      this.caseDetails.case_type.id, sanitizedEditForm);
+      this.caseDetails.case_type.id, sanitizedEditForm,
+      pageId);
   }
 
   submitted(event: any): void {

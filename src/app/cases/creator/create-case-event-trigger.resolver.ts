@@ -1,8 +1,7 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CaseEventTrigger, Draft, HttpError, AlertService, DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit';
-import { CasesService } from '../../core/cases/cases.service';
+import { CaseEventTrigger, Draft, HttpError, AlertService, DRAFT_QUERY_PARAM, CasesService } from '@hmcts/ccd-case-ui-toolkit';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
@@ -29,7 +28,6 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
   }
 
   getAndCacheEventTrigger(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
-    let jurisdictionId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_JURISDICTION_ID);
     let caseTypeId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID);
     let eventTriggerId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING);
@@ -43,7 +41,7 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
       caseId = draftId;
     }
     return this.casesService
-      .getEventTrigger(jurisdictionId, caseTypeId, eventTriggerId, caseId, ignoreWarning)
+      .getEventTriggerV2(caseTypeId, eventTriggerId, caseId, ignoreWarning)
       .do(eventTrigger => this.cachedEventTrigger = eventTrigger)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);

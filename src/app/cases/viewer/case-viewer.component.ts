@@ -7,9 +7,8 @@ import { ActivityPollingService } from '../../core/activity/activity.polling.ser
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 import { CaseField, ShowCondition, Draft, HttpError, OrderService, CaseView,
-  CaseViewTrigger, DeleteOrCancelDialogComponent, CallbackErrorsComponent, DRAFT_QUERY_PARAM,
-  AlertService, CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
-import { DraftService } from '../../core/draft/draft.service';
+  CaseViewTrigger, DeleteOrCancelDialogComponent, DRAFT_QUERY_PARAM,
+  AlertService, CallbackErrorsContext, DraftService} from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
@@ -18,13 +17,18 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 })
 export class CaseViewerComponent implements OnInit, OnDestroy {
   public static readonly ORIGIN_QUERY_PARAM = 'origin';
+  static readonly TRIGGER_TEXT_START = 'Go';
+  static readonly TRIGGER_TEXT_CONTINUE = 'Ignore Warning and Go';
+
   BANNER = DisplayMode.BANNER;
 
   caseDetails: CaseView;
   sortedTabs: CaseTab[];
   caseFields: CaseField[];
   error: any;
-  triggerText: string = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+  triggerTextStart = CaseViewerComponent.TRIGGER_TEXT_START;
+  triggerTextIgnoreWarnings = CaseViewerComponent.TRIGGER_TEXT_CONTINUE;
+  triggerText: string = CaseViewerComponent.TRIGGER_TEXT_START;
   ignoreWarning = false;
   subscription: Subscription;
   dialogConfig: MatDialogConfig;
@@ -75,7 +79,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
   clearErrorsAndWarnings() {
     this.error = null;
     this.ignoreWarning = false;
-    this.triggerText = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    this.triggerText = CaseViewerComponent.TRIGGER_TEXT_START;
   }
 
   applyTrigger(trigger: CaseViewTrigger): Promise<boolean | void> {

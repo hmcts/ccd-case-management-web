@@ -2,7 +2,10 @@ Dropdown = require('./webdriver-components/dropdown.js')
 BasePage = require('./basePage.js');
 CreateCaseWizardPage = require('./createCaseWizardPage.js')
 
+// const pageHeader = 'Create Case';
+
 class CreateCaseStartPage extends BasePage{
+
 
   constructor(){
       super();
@@ -10,6 +13,7 @@ class CreateCaseStartPage extends BasePage{
       this._caseType = new Dropdown('#cc-case-type');
       this._event = new Dropdown('#cc-event');
       this._submitButton = '.container-fluid .button';
+
   }
 
   /**
@@ -48,6 +52,15 @@ class CreateCaseStartPage extends BasePage{
     await $(this._submitButton).click();
     await browser.waitForAngular;
     return new CreateCaseWizardPage;
+  }
+
+  /**
+   * Check we are on CreateCaseStartPage by checking the page header is as expected
+   * @returns Boolean
+   */
+  async amOnPage(){
+    let header = await this.getPageHeader();
+    return header === 'Create Case'
   }
 
 }

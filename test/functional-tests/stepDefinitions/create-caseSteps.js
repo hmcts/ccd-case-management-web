@@ -16,6 +16,7 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
+  let caseListPage = new CaseListPage();
 
   async function navigateToCreateCasePage(){
       createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
@@ -74,6 +75,16 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await new CaseDetailsPage().startEvent(event)
     await fillOutAndSubmitForm();
   });
+
+
+  When(/^I click the 'Create a case' button$/, async function () {
+    await caseListPage.clickCreateNewCaseButton();
+  });
+
+  Then(/^I will be navigated to the 'Create Case' page$/, async function () {
+    expect(await new CreateCaseStartPage().amOnPage()).to.be.true
+  });
+
 
 
   //----- VALIDATION STEPS -----

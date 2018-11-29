@@ -2,7 +2,6 @@ Dropdown = require('./webdriver-components/dropdown.js')
 BasePage = require('./basePage.js');
 CreateCaseWizardPage = require('./createCaseWizardPage.js')
 
-// const pageHeader = 'Create Case';
 
 class CreateCaseStartPage extends BasePage{
 
@@ -13,7 +12,6 @@ class CreateCaseStartPage extends BasePage{
       this._caseType = new Dropdown('#cc-case-type');
       this._event = new Dropdown('#cc-event');
       this._submitButton = '.container-fluid .button';
-
   }
 
   /**

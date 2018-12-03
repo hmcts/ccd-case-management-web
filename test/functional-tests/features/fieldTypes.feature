@@ -41,7 +41,15 @@ Feature: Set of scenarios to check we can read and write to all field data types
      #| Fixed-List|
       | Phone UK  |
       | Yes-No    |
+
+    @collection
+    Examples:
+      | dataType  |
       | Collection|
+
+    @complex
+    Examples:
+      | dataType  |
       | Complex   |
 
 
@@ -97,14 +105,14 @@ Feature: Set of scenarios to check we can read and write to all field data types
     And the 'Continue' button will be disabled
 
     @validation @bug
-  Scenario: Validation: can continue after correcting email validation failure
+  Scenario: Validation: can continue after correcting Phone UK validation failure
     And a case type containing every field type exists
     And I have a validation error from invalid 'phone uk'
     When I re-enter '07777777777' into the 'phone uk' field
     Then I can navigate to the next page
 
     @validation @bug
-  Scenario: Validation: can continue after correcting Phone UK validation failure
+  Scenario: Validation: can continue after correcting email validation failure
     And a case type containing every field type exists
     And I have a validation error from invalid 'email'
     When I re-enter 'valid@email.com' into the 'email' field

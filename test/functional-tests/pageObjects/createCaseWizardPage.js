@@ -11,6 +11,7 @@ class CreateCaseWizardPage extends BasePage{
       super();
       this.continueButton = new Button('button[type=submit]');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
+      this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
@@ -73,6 +74,12 @@ class CreateCaseWizardPage extends BasePage{
       let xpathLocator = await this.answerValueXpathTemplate.replace('LABEL-TEXT-PLACEHOLDER',label);
 
       return await element(by.xpath(xpathLocator.toString())).getText();
+    }
+
+    async clickChangeLink(labelText){
+      let label = await labelText.replace(' (Optional)','');
+      let xpathLocator = await this.answerChangeLinkXpathTemplate.replace('LABEL-TEXT-PLACEHOLDER',label);
+      await element(by.xpath(xpathLocator)).click();
     }
 
     async getPageHeader(){

@@ -10,6 +10,7 @@ class CaseListPage extends BasePage {
       super();
 
       this._landingPageFilters = by.css('ccd-workbasket-filters');
+      this._createNewCaseButton = '.heading-top > .button';
 
   }
 
@@ -51,6 +52,10 @@ class CaseListPage extends BasePage {
    */
   getFooter(){
       return new Footer;
+  }
+
+  async clickCreateNewCaseButton(){
+    await $(this._createNewCaseButton).click();
   }
 
 }

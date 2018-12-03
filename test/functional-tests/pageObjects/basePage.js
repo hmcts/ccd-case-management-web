@@ -12,6 +12,8 @@ class BasePage {
             browser.wait(EC.visibilityOf(element(locator)), );
         }
 
+        this._pageHeader= 'h1';
+
         this._formFields = 'ccd-case-edit-form > div > * > *';
         this._optionalClass = 'ng-valid';
         this._mandetoryClass = 'ng-invalid';
@@ -82,6 +84,14 @@ class BasePage {
         }
 
       return displayed
+    }
+
+  /**
+   * Get page header title
+   * @returns String
+   */
+  async getPageHeader(){
+      return await $(this._pageHeader).getText();
     }
 
 

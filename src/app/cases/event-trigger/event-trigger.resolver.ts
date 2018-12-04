@@ -38,7 +38,7 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
       ignoreWarning = 'false';
     }
     return this.casesService
-      .getEventTrigger(caseDetails.case_type.jurisdiction.id, caseDetails.case_type.id, eventTriggerId, caseDetails.case_id, ignoreWarning)
+      .getEventTriggerV2(eventTriggerId, undefined, caseDetails.case_id, ignoreWarning)
       .do(eventTrigger => this.cachedEventTrigger = eventTrigger)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);

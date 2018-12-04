@@ -73,7 +73,7 @@ describe('CreateCaseFieldsResolver', () => {
       });
 
     expect(casesService.getEventTriggerV2).toHaveBeenCalledWith(
-      CASE_TYPE, EVENT_TRIGGER_ID, undefined, String(IGNORE_WARNINGS));
+      EVENT_TRIGGER_ID, CASE_TYPE, undefined, String(IGNORE_WARNINGS));
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
@@ -144,7 +144,7 @@ describe('CreateCaseFieldsResolver', () => {
       });
 
     expect(casesService.getEventTriggerV2).toHaveBeenCalledWith(
-      CASE_TYPE, EVENT_TRIGGER_ID, DRAFT_ID, String(IGNORE_WARNINGS));
+      EVENT_TRIGGER_ID, CASE_TYPE, DRAFT_ID, String(IGNORE_WARNINGS));
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);

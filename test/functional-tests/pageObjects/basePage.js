@@ -95,6 +95,50 @@ class BasePage {
     }
 
 
+  /**
+   * Converts an array of elements to array of string containing text values of the elements
+   * @param Array of Elements
+   * @returns Array of Strings
+   */
+  async getElementsText(elementArray){
+    let textArray = [];
+    for (const elem of elementArray){
+      let elemText = await elem.getText();
+      textArray.push(elemText)
+    }
+
+    return textArray;
+  }
+
+  /**
+   * Search through list of elements and return one that matches a specified test value
+   * @param elementArray
+   * @param elementText
+   * @returns {Promise<WebElement>}
+   */
+  async getElementWithText(elementArray, elementText){
+    let textArray = [];
+    let element = null;
+    let found = false;
+
+    for (const e of elementArray){
+      let text = await e.getText();
+      textArray.push(text);
+
+      if (text === elementText){
+        element = e;
+        found = true;
+        break;
+      }
+    }
+
+    if (!found){
+      throw new CustomError(`Could not find '${elementText}' in: ${textArray}`)
+    }
+
+    return element;
+  }
+
 }
 
 module.exports = BasePage;

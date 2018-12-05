@@ -26,4 +26,23 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect( actualActions.toString()).to.include( expectedActions);
   });
 
+  Then('the following tabs will be visible:', async function (dataTable) {
+      let expectedTabs = await [].concat(...dataTable.raw());
+      let actualTabs = await caseDetailsPage.getTabsText();
+      expect(expectedTabs).to.deep.equal(actualTabs);
+  });
+
+  Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
+      await caseDetailsPage.clickTab(tabName);
+      let fields =await caseDetailsPage.getTabFields()
+      expect(fields).to.include(tabfield)
+  });
+
+  Then(/^the '(.*)' field will NOT be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
+      await caseDetailsPage.clickTab(tabName);
+      let fields =await caseDetailsPage.getTabFields()
+      expect(fields).to.not.include(tabfield)
+  });
+
+
 });

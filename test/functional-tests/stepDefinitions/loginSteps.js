@@ -75,5 +75,21 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
 
+  Then(/^I have a failed test$/, async function () {
+    loginPage = await Login.open();
+
+    let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
+
+    await loginPage.inputCredentials(username, 'WRONGPASSWORD');
+    await loginPage.clickSignIn();
+
+    caseListPage = new CaseListPage();
+
+    //isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
+    expect (await caseListPage.isFiltersDisplayed()).to.be.true;
+
+  });
+
+
 
 });

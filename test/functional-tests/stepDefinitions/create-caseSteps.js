@@ -182,5 +182,56 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
 
+  When(/^I Submit the case$/, async function () {
+    while (await caseWizardPage.continueButtonDisplayed()){
+      if (!caseWizardPage.continueButtonEnabled()) {
+        throw new CustomError('Trying to click Continue/Submit button but it is not enabled')
+      }
+      await caseWizardPage.clickContinueButton();
+    }
+  });
+
+  //---- conditionals
+
+  When(/^I meet the condition for showing the field in the tab$/, async function () {
+    await navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+  When(/^I do NOT meet the condition for showing the field in the tab$/, async function () {
+    await navigateToCreateCasePage()
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','dontshowmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+
+  Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getFieldLabels();
+    expect(labels).to.not.include(expectedLabel);
+  });
+
+  Then(/^the field with label '(.*)' is visible$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getFieldLabels();
+    expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^I will not be on the '(.*)' page$/, async function (expectedPageHeader) {
+    let pageHeader = await caseWizardPage.getPageHeader();
+    expect(pageHeader).to.not.equal(expectedPageHeader);
+  });
+
+  Then(/^I will be on the '(.*)' page$/, async function (expectedPageHeader) {
+    let pageHeader = await caseWizardPage.getPageHeader();
+    expect(pageHeader).to.equal(expectedPageHeader);
+  });
+
+
 });
 

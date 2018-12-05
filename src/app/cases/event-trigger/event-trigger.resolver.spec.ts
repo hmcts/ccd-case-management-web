@@ -52,7 +52,7 @@ describe('EventTriggerResolver', () => {
   let router: any;
 
   beforeEach(() => {
-    casesService = createSpyObj('casesService', ['getEventTriggerV2']);
+    casesService = createSpyObj('casesService', ['getEventTrigger']);
     alertService = createSpyObj('alertService', ['error']);
     orderService = createSpyObj('orderService', ['sort']);
 
@@ -91,7 +91,7 @@ describe('EventTriggerResolver', () => {
   });
 
   it('should resolve event trigger and cache when route is trigger/:eid', () => {
-    casesService.getEventTriggerV2.and.returnValue(EVENT_TRIGGER_OBS);
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
     expect(eventTriggerResolver['cachedEventTrigger']).toBeUndefined();
 
     eventTriggerResolver
@@ -100,7 +100,7 @@ describe('EventTriggerResolver', () => {
         expect(triggerData).toBe(EVENT_TRIGGER);
       });
 
-    expect(casesService.getEventTriggerV2).toHaveBeenCalledWith(EVENT_TRIGGER_ID, undefined, CASE_ID, IGNORE_WARNING_VALUE);
+    expect(casesService.getEventTrigger).toHaveBeenCalledWith(undefined, undefined, EVENT_TRIGGER_ID, CASE_ID, IGNORE_WARNING_VALUE);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.paramMap.get).toHaveBeenCalledTimes(1);
     expect(eventTriggerResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
@@ -119,7 +119,7 @@ describe('EventTriggerResolver', () => {
         }
       }
     };
-    casesService.getEventTriggerV2.and.returnValue(EVENT_TRIGGER_OBS);
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
     expect(eventTriggerResolver['cachedEventTrigger']).toBeUndefined();
 
     eventTriggerResolver
@@ -128,7 +128,7 @@ describe('EventTriggerResolver', () => {
         expect(triggerData).toBe(EVENT_TRIGGER);
       });
 
-    expect(casesService.getEventTriggerV2).toHaveBeenCalled();
+    expect(casesService.getEventTrigger).toHaveBeenCalled();
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.paramMap.get).toHaveBeenCalledTimes(1);
     expect(eventTriggerResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
@@ -147,7 +147,7 @@ describe('EventTriggerResolver', () => {
         }
       }
     };
-    casesService.getEventTriggerV2.and.returnValue(EVENT_TRIGGER_OBS);
+    casesService.getEventTrigger.and.returnValue(EVENT_TRIGGER_OBS);
     eventTriggerResolver['cachedEventTrigger'] = EVENT_TRIGGER;
 
     eventTriggerResolver
@@ -156,12 +156,12 @@ describe('EventTriggerResolver', () => {
         expect(triggerData).toBe(EVENT_TRIGGER);
       });
 
-    expect(casesService.getEventTriggerV2).not.toHaveBeenCalled();
+    expect(casesService.getEventTrigger).not.toHaveBeenCalled();
     expect(eventTriggerResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
   });
 
   it('should create error alert when event trigger cannot be retrieved', done => {
-    casesService.getEventTriggerV2.and.returnValue(Observable.throw(ERROR));
+    casesService.getEventTrigger.and.returnValue(Observable.throw(ERROR));
 
     eventTriggerResolver
       .resolve(route)

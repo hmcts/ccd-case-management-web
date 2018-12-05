@@ -299,9 +299,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.7.0.tgz#ef713d5e6733976a884fc0e0a4762072da87246c"
+"@hmcts/ccd-case-ui-toolkit@2.8.1":
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.8.1.tgz#596bec851b003ccf6187d3e3c15cf34ab6221b39"
+  integrity sha512-YsFEi6NxEDZwb1jwvNVg0DMC4rG4nj+lgnrQTV32wjJI9pbgFLgpQ3ilzW+kQMYS+8Chg5+UQj06OiPGuH8vcQ==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -312,9 +313,9 @@
     mocha "^5.0.5"
     typescript "3.1.1"
 
-"@hmcts/ccpay-web-component@~1.6.1":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.6.2.tgz#ac02986bfe6575f332cefc795b2fef84c049a9e3"
+"@hmcts/ccpay-web-component@~1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.8.1.tgz#296e091489aac06a457064f066c80ecc74dc0192"
   dependencies:
     tslib "^1.9.0"
 
@@ -8652,8 +8653,8 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     then-fs "^2.0.0"
 
 snyk@^1.94.0:
-  version "1.110.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.110.1.tgz#d43b2bc1befe79131b19365cf47736407b37b429"
+  version "1.110.2"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.110.2.tgz#0d8366ac8880abd8b60e6c6d3dc2074fb91a45f5"
   dependencies:
     abbrev "^1.1.1"
     ansi-escapes "^3.1.0"

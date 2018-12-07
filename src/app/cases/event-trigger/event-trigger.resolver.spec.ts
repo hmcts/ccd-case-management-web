@@ -100,7 +100,7 @@ describe('EventTriggerResolver', () => {
         expect(triggerData).toBe(EVENT_TRIGGER);
       });
 
-    expect(casesService.getEventTrigger).toHaveBeenCalledWith(JURISDICTION, CASE_TYPE, EVENT_TRIGGER_ID, CASE_ID, IGNORE_WARNING_VALUE);
+    expect(casesService.getEventTrigger).toHaveBeenCalledWith(undefined, undefined, EVENT_TRIGGER_ID, CASE_ID, IGNORE_WARNING_VALUE);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.paramMap.get).toHaveBeenCalledTimes(1);
     expect(eventTriggerResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);

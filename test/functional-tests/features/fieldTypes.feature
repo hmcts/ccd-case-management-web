@@ -4,67 +4,6 @@ Feature: Set of scenarios to check we can read and write to all field data types
   Background:
     Given I have logged in
 
-  @wip
-  Scenario: field NOT visible when show & hide condition is NOT met
-    And a case type containing conditionals exists
-    When I enter 'dontshowmethemoney' into the 'text' field
-    Then the field with label 'Text Field 2' is not visible
-
-  @wip
-  Scenario: field visible when show & hide condition is met
-    And a case type containing conditionals exists
-    When I enter 'showmethemoney' into the 'text' field
-    Then the field with label 'Text Field 2' is visible
-
-  @wip
-  Scenario: page NOT visible when show & hide condition is NOT met
-    And a case type containing conditionals exists
-    And I enter 'dontshowmethemoney' into the 'text' field
-    When I click the Continue button
-    Then I will not be on the 'Conditional Page 2 - Create a case' page
-
-  @wip
-  Scenario: page visible when show & hide condition is met
-    And a case type containing conditionals exists
-    And I enter 'showmethemoney' into the 'text' field
-    When I click the Continue button
-    Then I will be on the 'Conditional Page 2 - Create a case' page
-
-
-  @wip
-  Scenario: tab visible when show & hide condition is met
-    And a case type containing conditionals exists
-    And I enter 'showmethemoney' into the 'text' field
-    When I Submit the case
-    Then the following tabs will be visible:
-      | History             |
-      | Conditional Tab 1   |
-
-    @wip
-  Scenario: tab NOT visible when show & hide condition is NOT met
-    And a case type containing conditionals exists
-    And I enter 'dontshowmethemoney' into the 'text' field
-    When I Submit the case
-    Then the following tabs will be visible:
-      | History |
-
-    @wip
-  Scenario: field in tab visible when show & hide condition is met
-    And a case type containing conditionals exists
-    When I meet the condition for showing the field in the tab
-    Then the 'Text Field 3' field will be visible on the 'Conditional Tab 1' tab
-
-      @wip
-  Scenario: field in tab NOT visible when show & hide condition is NOT met
-    And a case type containing conditionals exists
-    When I do NOT meet the condition for showing the field in the tab
-    Then the 'Text Field 3' field will NOT be visible on the 'Conditional Tab 1' tab
-
-
-
-
-
-
   Scenario Outline: Fields are displayed on create case form page
     And a case type containing every field type exists
     When I navigate to the case creation form page

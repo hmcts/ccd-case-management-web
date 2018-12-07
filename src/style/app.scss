@@ -233,8 +233,11 @@ select::-ms-expand {
 }
 .markdown ul, .markdown p {
   margin-bottom: 25px;
+  white-space: normal;
 }
-
+tr.compound-field .markdown ul, tr.compound-field .markdown p {
+  margin: 10px 0px;
+}
 #fileInputWrapper{
   position:absolute;
   width:50%;

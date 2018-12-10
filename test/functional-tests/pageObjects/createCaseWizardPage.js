@@ -30,14 +30,6 @@ class CreateCaseWizardPage extends BasePage{
         return await $(css).isDisplayed();
     }
 
-  /**
-   * Check that a particular field type is present on the current wizard page
-   * @param fieldDataType
-   * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
-   */
-    async isFieldPresentByLabel(label){
-
-    }
 
   /**
    * Fill out a specified field type with a random value

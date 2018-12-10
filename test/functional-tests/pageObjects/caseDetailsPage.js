@@ -20,10 +20,7 @@ class CaseDetailsPage extends BasePage {
 
 
   async waitForPageToLoad(){
-    browser.ignoreSynchronization = true;
     await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
-    browser.ignoreSynchronization = true;
-
   }
 
   /**
@@ -31,10 +28,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<String>}
    */
   async getLatestHistoryEvent(){
-    browser.ignoreSynchronization = true;
     let text = await $(this._latestHistoryEventLink).getText();
-    browser.ignoreSynchronization = true;
-
     return text
   }
 
@@ -43,10 +37,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async getEndStateValue(){
-    browser.ignoreSynchronization = true;
     let text = await $(this._endStateValue).getText();
-    browser.ignoreSynchronization = false;
-
     return text
   }
 
@@ -55,10 +46,7 @@ class CaseDetailsPage extends BasePage {
    * @returns String Array
    */
   async getActions(){
-    browser.ignoreSynchronization = true;
     let options = await this._actionsDropdown.getOptionsTextValues()
-    browser.ignoreSynchronization = false;
-
     return options
   }
 
@@ -68,10 +56,8 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async startEvent(event){
-    browser.ignoreSynchronization = true;
     await this._actionsDropdown.selectFromDropdownByText(event);
     await this._goButton.click()
-    browser.ignoreSynchronization = false;
   }
 
 

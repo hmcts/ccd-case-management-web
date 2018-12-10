@@ -12,7 +12,7 @@ import { DisplayMode } from '../../core/activity/activity.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { ActivityService } from '../../core/activity/activity.service';
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField, FieldType } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',
@@ -153,10 +153,20 @@ export class SearchResultComponent implements OnChanges {
     return {
       id: col.case_field_id,
       label: col.label,
-      field_type: col.case_field_type,
+      field_type: this.changeLabelToTextType(col.case_field_type),
       value: result.case_fields[col.case_field_id],
       display_context: null,
     };
+  }
+
+  /**
+   * We are changing all Label types to Text because Label type caseFields will cause styling issues in the result
+   */
+  private changeLabelToTextType(caseFieldType: FieldType) {
+    if (caseFieldType.type === 'Label') {
+      caseFieldType.type = 'Text';
+    }
+    return caseFieldType;
   }
 
   getColumnsWithPrefix(col: CaseField, result: SearchResultViewItem): CaseField {

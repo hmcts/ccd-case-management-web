@@ -153,20 +153,10 @@ export class SearchResultComponent implements OnChanges {
     return {
       id: col.case_field_id,
       label: col.label,
-      field_type: this.changeLabelToTextType(col.case_field_type),
+      field_type: col.case_field_type,
       value: result.case_fields[col.case_field_id],
       display_context: null,
     };
-  }
-
-  /**
-   * We are changing all Label types to Text because Label type caseFields will cause styling issues in the result
-   */
-  private changeLabelToTextType(caseFieldType: FieldType) {
-    if (caseFieldType.type === 'Label') {
-      caseFieldType.type = 'Text';
-    }
-    return caseFieldType;
   }
 
   getColumnsWithPrefix(col: CaseField, result: SearchResultViewItem): CaseField {

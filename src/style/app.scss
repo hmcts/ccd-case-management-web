@@ -231,8 +231,12 @@ select::-ms-expand {
   font-size: 17px;
   margin-top: 0px;
 }
-.markdown ul, .markdown p {
+.markdown ul {
   margin-bottom: 25px;
+}
+
+.markdown p {
+  margin: 0px;
 }
 
 #fileInputWrapper{

@@ -11,7 +11,7 @@ import { ActivityPollingService } from '../../core/activity/activity.polling.ser
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import {
-  PaletteUtilsModule, CaseField, LabelSubstitutionService, FieldsUtils,
+  PaletteUtilsModule, CaseField, PlaceholderService, FieldsUtils,
   LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
   CaseView, AlertService, CallbackErrorsContext, DraftService, CaseReferencePipe
 } from '@hmcts/ccd-case-ui-toolkit';
@@ -452,7 +452,7 @@ describe('CaseViewerComponent', () => {
         ],
         providers: [
           FieldsUtils,
-          LabelSubstitutionService,
+          PlaceholderService,
           CaseReferencePipe,
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },

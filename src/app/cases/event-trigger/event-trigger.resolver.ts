@@ -32,7 +32,6 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
 
   private getAndCacheEventTrigger(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
     let caseDetails: CaseView = route.parent.data.case;
-    let jurisdictionId = undefined;
     let caseTypeId = undefined;
     let eventTriggerId = route.paramMap.get(EventTriggerResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(EventTriggerResolver.IGNORE_WARNING);
@@ -40,7 +39,7 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
       ignoreWarning = 'false';
     }
     return this.casesService
-      .getEventTrigger(jurisdictionId, caseTypeId, eventTriggerId, caseDetails.case_id, ignoreWarning)
+      .getEventTrigger(caseTypeId, eventTriggerId, caseDetails.case_id, ignoreWarning)
       .do(eventTrigger => this.cachedEventTrigger = eventTrigger)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);

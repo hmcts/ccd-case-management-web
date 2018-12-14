@@ -25,7 +25,7 @@ class FieldReadComponent {
   caseField: string;
 }
 
-fdescribe('SearchResultComponent', () => {
+describe('SearchResultComponent', () => {
 
   describe('with results', () => {
 
@@ -361,33 +361,28 @@ fdescribe('SearchResultComponent', () => {
       expect(sortLastNameLink.nativeElement.textContent).toBe('▲');
 
       // Check unordered
+      assertOrder(new Array(0, 1, 2, 3));
+
+      sortFirstNameLink.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      assertOrder(new Array(2, 0, 1, 3));
+
+      sortFirstNameLink.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      assertOrder(new Array(3, 1, 0, 2));
+    });
+
+    function assertOrder(order: Array<number>) {
       let firstField = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
       let secondField = de.query(By.css('div>table>tbody tr:nth-child(2) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
       let thirdField = de.query(By.css('div>table>tbody tr:nth-child(3) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
       let fourthField = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
 
-      expect(firstField).toBe(RESULT_VIEW.results[0].case_fields['PersonFirstName']);
-      expect(secondField).toBe(RESULT_VIEW.results[1].case_fields['PersonFirstName']);
-      expect(thirdField).toBe(RESULT_VIEW.results[2].case_fields['PersonFirstName']);
-      expect(fourthField).toBe(RESULT_VIEW.results[3].case_fields['PersonFirstName']);
-
-      sortFirstNameLink.triggerEventHandler('click', null);
-
-      fixture.detectChanges();
-
-      expect(sortFirstNameLink.nativeElement.textContent).toBe('▲');
-      expect(sortLastNameLink.nativeElement.textContent).toBe('▼');
-
-      firstField = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-      secondField = de.query(By.css('div>table>tbody tr:nth-child(2) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-      thirdField = de.query(By.css('div>table>tbody tr:nth-child(3) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-      fourthField = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-
-      expect(firstField).toBe(RESULT_VIEW.results[2].case_fields['PersonFirstName']);
-      expect(secondField).toBe(RESULT_VIEW.results[0].case_fields['PersonFirstName']);
-      expect(thirdField).toBe(RESULT_VIEW.results[1].case_fields['PersonFirstName']);
-      expect(fourthField).toBe(RESULT_VIEW.results[3].case_fields['PersonFirstName']);
-    });
+      expect(firstField).toBe(RESULT_VIEW.results[order[0]].case_fields['PersonFirstName']);
+      expect(secondField).toBe(RESULT_VIEW.results[order[1]].case_fields['PersonFirstName']);
+      expect(thirdField).toBe(RESULT_VIEW.results[order[2]].case_fields['PersonFirstName']);
+      expect(fourthField).toBe(RESULT_VIEW.results[order[3]].case_fields['PersonFirstName']);
+    }
 
     it('should render case reference value in first column with hyperlink if not draft and first column field value is null', () => {
       let fourthRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(1) a'));

@@ -298,9 +298,10 @@
     esutils "^2.0.2"
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
-"@hmcts/ccd-case-ui-toolkit@2.12.1":
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.12.1.tgz#2d41ba559c88c5634bb6c016ab97fad570f68ddf"
+
+"@hmcts/ccd-case-ui-toolkit@2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.13.0.tgz#632de0c8fc5eea1cb97ffcb68a49ddd6949fc2e1"
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

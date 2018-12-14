@@ -56,7 +56,11 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
+<<<<<<< HEAD
     "@hmcts/ccd-case-ui-toolkit": "2.13.0",
+=======
+    "@hmcts/ccd-case-ui-toolkit": "2.12.1",
+>>>>>>> bd6a72f3de245f63c3227435b3e2f939ebc2ed75
     "@hmcts/ccpay-web-component": "~1.8.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",

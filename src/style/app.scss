@@ -231,11 +231,11 @@ select::-ms-expand {
   font-size: 17px;
   margin-top: 0px;
 }
-.markdown ul {
+.markdown ul, .markdown p {
   margin-bottom: 25px;
 }
 
-.markdown p {
+.search-result-column-cell .markdown p {
   margin: 0px;
 }
 

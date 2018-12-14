@@ -25,7 +25,7 @@ class FieldReadComponent {
   caseField: string;
 }
 
-describe('SearchResultComponent', () => {
+fdescribe('SearchResultComponent', () => {
 
   describe('with results', () => {
 
@@ -333,6 +333,24 @@ describe('SearchResultComponent', () => {
       fixture.detectChanges();
 
       expect(component.selected.page).toBe(5);
+    });
+
+    it('should calculate correct values for first, last and total number of results', () => {
+      component.draftsCount = 4;
+      component.paginationMetadata = {
+        total_results_count: 105,
+        total_pages_count: 5
+      };
+      component.ngOnChanges({ page: new SimpleChange(null, 5, true) });
+      fixture.detectChanges();
+
+      let firstResult = component.getFirstResult();
+      let lastResult = component.getLastResult();
+      let totalResults = component.getTotalResults();
+
+      expect(firstResult).toBe(105);
+      expect(lastResult).toBe(108);
+      expect(totalResults).toBe(109);
     });
 
     it('should render widget matching ordering (defaulting to sort descending if unordered) and sort rows when widget pressed', () => {

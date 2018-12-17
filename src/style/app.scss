@@ -235,7 +235,10 @@ select::-ms-expand {
   margin-bottom: 25px;
   white-space: normal;
 }
-tr.compound-field .markdown ul, tr.compound-field .markdown p {
+tr.compound-field .markdown ul,
+tr.compound-field .markdown p,
+form.check-your-answers table  td .markdown ul,
+form.check-your-answers table  td .markdown p {
   margin: 10px 0px;
 }
 #fileInputWrapper{

@@ -3,7 +3,7 @@
   "activity_max_request_per_batch": 25,
   "activity_next_poll_request_ms": 5000,
   "activity_retry": 5,
-  "activity_url": "http://localhost:3453/activity",
+  "activity_url": "",
   "api_url": "http://localhost:3453/aggregated",
   "case_data_url": "http://localhost:3453/data",
   "document_management_url": "http://localhost:3453/documents",

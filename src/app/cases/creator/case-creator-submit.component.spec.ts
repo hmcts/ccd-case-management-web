@@ -179,7 +179,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     casesService.validateCase.and.returnValue(CREATED_CASE_OBS);
     component.validate()(SANITISED_EDIT_FORM, PAGE_ID);
 
-    expect(casesService.validateCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM, PAGE_ID);
+    expect(casesService.validateCase).toHaveBeenCalledWith(CTID, SANITISED_EDIT_FORM, PAGE_ID);
   });
 
   it('should create a draft when saveDraft called with sanitised data', () => {

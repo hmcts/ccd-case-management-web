@@ -174,8 +174,7 @@ describe('CaseEventTriggerComponent', () => {
   it('should edit case with sanitised data when form validated', () => {
     component.validate()(SANITISED_EDIT_FORM, PAGE_ID);
 
-    expect(casesService.validateCase).toHaveBeenCalledWith(CASE_DETAILS.case_type.jurisdiction.id,
-      CASE_DETAILS.case_type.id, SANITISED_EDIT_FORM, PAGE_ID);
+    expect(casesService.validateCase).toHaveBeenCalledWith(CASE_DETAILS.case_type.id, SANITISED_EDIT_FORM, PAGE_ID);
   });
 
   it('should navigate to case view upon successful event creation', () => {

@@ -5,8 +5,10 @@ import { By } from '@angular/platform-browser';
 import { text } from '../../test/helpers';
 import { createCaseView } from '../../core/cases/case-view.test.fixture';
 import { MockComponent } from 'ng2-mock-component';
-import { CaseReferencePipe, LabelSubstitutorDirective, FieldsUtils, LabelSubstitutionService,
-  LabelFieldComponent } from '@hmcts/ccd-case-ui-toolkit';
+import {
+  CaseReferencePipe, LabelSubstitutorDirective, FieldsUtils, PlaceholderService,
+  LabelFieldComponent
+} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHeaderComponent', () => {
 
@@ -36,7 +38,8 @@ describe('CaseHeaderComponent', () => {
         ],
         providers: [
           FieldsUtils,
-          LabelSubstitutionService,
+          PlaceholderService,
+          CaseReferencePipe
         ]
       })
       .compileComponents()

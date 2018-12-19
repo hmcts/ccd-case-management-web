@@ -48,7 +48,6 @@ export class CaseEventTriggerComponent implements OnInit, OnDestroy {
 
   validate(): (sanitizedEditForm: CaseEventData, pageId: string) => Observable<object> {
     return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(
-      this.caseDetails.case_type.jurisdiction.id,
       this.caseDetails.case_type.id, sanitizedEditForm,
       pageId);
   }

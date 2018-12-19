@@ -42,7 +42,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   validate(): (sanitizedEditForm: CaseEventData, pageId: string) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId,
+    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(this.caseTypeId,
       sanitizedEditForm, pageId);
   }
 

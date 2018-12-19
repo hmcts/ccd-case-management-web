@@ -13,8 +13,8 @@ import { PaginatePipe, PaginationService } from 'ngx-pagination';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
+import { CaseReferencePipe, CaseState, CaseType, DRAFT_PREFIX, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-read',
@@ -164,7 +164,7 @@ describe('SearchResultComponent', () => {
             CaseActivityComponent,
             PaginatePipe
           ],
-          schemas: [ NO_ERRORS_SCHEMA ],
+          schemas: [NO_ERRORS_SCHEMA],
           providers: [
             SearchResultViewItemComparatorFactory,
             { provide: ActivityService, useValue: activityService },
@@ -264,18 +264,17 @@ describe('SearchResultComponent', () => {
       let firstRow = de.query(By.css('div>table>tbody tr:nth-child(1)'));
       // added +1 for case activity column
       expect(firstRow.children.length).toBe(RESULT_VIEW.columns.length + 1);
-
       // draft
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
+
       expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT_PREFIX);
 
       let firstRowComponent = firstRow.children.slice(1, 3);
       let firstRowResult = RESULT_VIEW.results[0];
-      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value === firstRowResult
-        .case_fields['PersonAddress']).toBeTruthy();
-      expect(firstRowComponent[1].children[0].children[0].componentInstance.caseField.value === firstRowResult
-        .case_fields['PersonFirstName']).toBeTruthy();
-
+      expect(firstRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
+        .case_fields['PersonFirstName']);
+      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
+        .case_fields['PersonAddress']);
       let secondRow = de.query(By.css('div>table>tbody tr:nth-child(2)'));
       let secondResult = RESULT_VIEW.results[1];
 
@@ -285,10 +284,11 @@ describe('SearchResultComponent', () => {
 
       let secondRowComponent = secondRow.children.slice(1, 3);
       let secondRowResult = RESULT_VIEW.results[1];
-      expect(secondRowComponent[0].children[0].children[0].componentInstance.caseField.value === secondRowResult
-        .case_fields['PersonAddress']).toBeTruthy();
-      expect(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value === secondRowResult
-        .case_fields['PersonFirstName']).toBeTruthy();
+
+      expect(secondRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
+        .case_fields['PersonAddress']);
+      expect(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
+        .case_fields['PersonFirstName']);
     });
 
     it('should render an case activity column with header', () => {
@@ -316,13 +316,15 @@ describe('SearchResultComponent', () => {
     it('should emit correct page if go to page triggered', () => {
       component.goToPage(2);
 
-      let selected = { init : false,
-                       jurisdiction : JURISDICTION,
-                       caseType : CASE_TYPE,
-                       caseState : CASE_STATE,
-                       formGroup: jasmine.any(Object),
-                       metadataFields: METADATA_FIELDS,
-                       page : 2 };
+      let selected = {
+        init: false,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPE,
+        caseState: CASE_STATE,
+        formGroup: jasmine.any(Object),
+        metadataFields: METADATA_FIELDS,
+        page: 2
+      };
 
       expect(component.selected.page).toBe(2);
       expect(searchHandler.applyFilters).toHaveBeenCalledWith(selected);
@@ -392,7 +394,6 @@ describe('SearchResultComponent', () => {
 
     it('should render DRAFT value in first column with hyperlink if case_id is DRAFT prefixed even if first column not null', () => {
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
-
       expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT_PREFIX);
     });
   });
@@ -475,7 +476,7 @@ describe('SearchResultComponent', () => {
             CaseActivityComponent,
             PaginatePipe
           ],
-          schemas: [ NO_ERRORS_SCHEMA ],
+          schemas: [NO_ERRORS_SCHEMA],
           providers: [
             SearchResultViewItemComparatorFactory,
             { provide: ActivityService, useValue: activityService },

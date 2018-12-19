@@ -155,6 +155,8 @@ export class WorkbasketFiltersComponent implements OnInit {
             }
           }
 
+        }, error => {
+          console.log('Workbasket input fields request will be discarded reason: ', error.message);
         });
     }
   }

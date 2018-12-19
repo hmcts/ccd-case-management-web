@@ -235,6 +235,9 @@ select::-ms-expand {
   margin-bottom: 25px;
   white-space: normal;
 }
+.search-result-column-cell .markdown p {
+  margin: 0 10px;
+}
 tr.compound-field .markdown ul,
 tr.compound-field .markdown p,
 form.check-your-answers table  td .markdown ul,

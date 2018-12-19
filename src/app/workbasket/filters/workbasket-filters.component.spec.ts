@@ -506,6 +506,17 @@ describe('WorkbasketFiltersComponent', () => {
       expect(workbasketInputFilterService.getWorkbasketInputs).toHaveBeenCalledWith(JURISDICTION_2.id, CASE_TYPES_2[1].id);
     }));
 
+    it('should ignore error and reset input fields', () => {
+      component.selected.jurisdiction = JURISDICTION_2;
+      component.selected.caseType = CASE_TYPES_2[1];
+      component.selected.caseState = CASE_TYPES_2[1].states[0];
+      workbasketInputFilterService.getWorkbasketInputs.and.returnValue(Observable.throw(new Error('Response expired')));
+
+      component.onCaseTypeIdChange();
+      expect(component.workbasketInputsReady).toBeFalsy();
+      expect(component.workbasketInputs.length).toBe(0);
+    });
+
     it('should order search inputs', async(() => {
       component.selected.jurisdiction = JURISDICTION_2;
       component.selected.caseType = CASE_TYPES_2[2];

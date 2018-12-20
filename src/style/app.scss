@@ -233,8 +233,14 @@ select::-ms-expand {
 }
 .markdown ul, .markdown p {
   margin-bottom: 25px;
+  white-space: normal;
 }
-
+.search-result-column-cell .markdown p {
+  margin: 0 10px;
+}
+tr.compound-field .markdown ul, tr.compound-field .markdown p {
+  margin: 10px 0;
+}
 #fileInputWrapper{
   position:absolute;
   width:50%;

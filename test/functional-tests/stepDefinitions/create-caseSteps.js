@@ -1,12 +1,9 @@
-let TestData = require('../utils/TestData.js');
-let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
 let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
+let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
-
-
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -18,14 +15,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   let caseWizardPage = new CreateCaseWizardPage();
   let caseListPage = new CaseListPage();
 
-  async function navigateToCreateCasePage(){
-      createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
-      await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
-      await createCaseStartPage.selectCaseType(TestData.caseType);
-      await createCaseStartPage.selectEvent(TestData.event);
-      await createCaseStartPage.clickStartButton();
-  }
-
 
   async function fillOutAndSubmitForm(){
     //todo eventually change to be dynamic and automatic
@@ -36,18 +25,18 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   }
 
   When(/^I create the case$/, async function () {
-    await navigateToCreateCasePage();
+    await baseSteps.navigateToCreateCasePage();
     await fillOutAndSubmitForm();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
     //todo should we pushing this data in through API instead?
-    await navigateToCreateCasePage();
+    await baseSteps.navigateToCreateCasePage();
     await fillOutAndSubmitForm();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {
-    await navigateToCreateCasePage();
+    await baseSteps.navigateToCreateCasePage();
   });
 
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
@@ -56,7 +45,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
-    await navigateToCreateCasePage();
+    await baseSteps.navigateToCreateCasePage()
+    // await navigateToCreateCasePage();
     this.fieldObject = await new CreateCaseWizardPage().interactWithField(dataType);
   });
 
@@ -85,102 +75,46 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(await new CreateCaseStartPage().amOnPage()).to.be.true
   });
 
+  //---- conditionals
 
-
-  //----- VALIDATION STEPS -----
-
-  When(/^I enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    await navigateToCreateCasePage()
-    await caseWizardPage.interactWithField(fieldType,value);
-  });
-
-  When(/^I re-enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    await caseWizardPage.interactWithField(fieldType,value);
-  });
-
-  When(/^I have a validation error from invalid '(.*)'$/, async function (dataType) {
-    await navigateToCreateCasePage()
-
-    switch (dataType){
-      case "email" :
-        await caseWizardPage.interactWithField(dataType,'invalidemail.com');
-        await caseWizardPage.clickContinueButton();
-        break
-      case "money-gbp" :
-        await caseWizardPage.interactWithField(dataType,'-10');
-        break;
-      case "phone uk":
-        await caseWizardPage.interactWithField(dataType,'12345');
-        await caseWizardPage.clickContinueButton();
-        break;
-      case "date":
-        await caseWizardPage.interactWithField(dataType,'10201990');
-        await caseWizardPage.clickContinueButton();
-        break;
-      case "regex":
-        await caseWizardPage.interactWithField('text','lower case is invalid');
-        await caseWizardPage.clickContinueButton();
-        break;
-      default: throw new CustomError(`option ${dataType} not found`)
-    }
-
-  });
-
-
-  //----- Check Your Answers
-
-  Given(/^I am on the check your answers page$/, async function () {
-    //multiple pages caseType
-    await navigateToCreateCasePage()
-    await caseWizardPage.interactWithField('text');
+  When(/^I meet the condition for showing the field in the tab$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
     await caseWizardPage.clickContinueButton();
-    this.fieldObject = await caseWizardPage.interactWithField('text');
+    await caseWizardPage.interactWithField('text','showmethemoney');
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text');
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+  When(/^I do NOT meet the condition for showing the field in the tab$/, async function () {
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.interactWithField('text','showmethemoney');
     await caseWizardPage.clickContinueButton();
-  });
-
-
-  When('I click the change link', async function () {
-    let label = this.fieldObject.label.toString();
-    await caseWizardPage.clickChangeLink(label)
-  });
-
-
-  When(/^I click the 'change' link for '(.*)'$/, async function (fieldLabel) {
-    await caseWizardPage.clickChangeLink(fieldLabel)
-  });
-
-
-  When(/^I change the value of the field$/, async function () {
-    this.fieldObject = await caseWizardPage.interactWithField('text');
-  });
-
-
-  Then('I am navigated back to the page containing the field', async function () {
-    let expectedHeader = 'Case Multiple Pages: Page 2/3 - Create a case';
-    let failMessage = 'page header not expected, on wrong page?';
-
-    expect(await caseWizardPage.getPageHeader(),failMessage).to.equal(expectedHeader)
-  });
-
-
-  When(/^the new value will be shown in Check Your Answers$/, async function () {
+    await caseWizardPage.interactWithField('text','dontshowmethemoney');
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickContinueButton();
-
-    let fieldLabel = await this.fieldObject.label;
-    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel)
-    let expectedValue = await this.fieldObject.checkYourAnswersValue;
-
-    expect(actualValue, 'wrong value for CYA').to.equal(expectedValue)
+    await caseWizardPage.clickSubmitCaseButton();
   });
 
 
-  When(/^I do not fill in the Mandatory field$/, async function () {
-    await navigateToCreateCasePage()
+  Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getFieldLabels();
+    expect(labels).to.not.include(expectedLabel);
+  });
+
+  Then(/^the field with label '(.*)' is visible$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getFieldLabels();
+    expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^I will not be on the '(.*)' page$/, async function (expectedPageHeader) {
+    let pageHeader = await caseWizardPage.getPageHeader();
+    expect(pageHeader).to.not.equal(expectedPageHeader);
+  });
+
+  Then(/^I will be on the '(.*)' page$/, async function (expectedPageHeader) {
+    let pageHeader = await caseWizardPage.getPageHeader();
+    expect(pageHeader).to.equal(expectedPageHeader);
   });
 
 
 });
-

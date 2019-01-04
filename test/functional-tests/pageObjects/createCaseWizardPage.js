@@ -12,6 +12,7 @@ class CreateCaseWizardPage extends BasePage{
       this.continueButton = new Button('button[type=submit]');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
+      this.fieldLabels = 'fieldset span';
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
@@ -28,6 +29,7 @@ class CreateCaseWizardPage extends BasePage{
         let css = await new FieldUtils()._getFieldCSS(fieldDataType);
         return await $(css).isDisplayed();
     }
+
 
   /**
    * Fill out a specified field type with a random value
@@ -67,7 +69,17 @@ class CreateCaseWizardPage extends BasePage{
         await new CaseDetailsPage().waitForPageToLoad();
     }
 
+    async getFieldLabels(){
+        let labelElements = await $$(this.fieldLabels);
+        let labels = [];
+        for (const labelElem of labelElements){
+            let labelText = await labelElem.getText();
+            let label = labelText.replace(' (Optional)', '');
+            labels.push(label)
+        }
 
+        return labels;
+    }
 
     async getCheckYourAnswersValueByLabel(labelText){
       let label = await labelText.replace(' (Optional)','');
@@ -96,6 +108,10 @@ class CreateCaseWizardPage extends BasePage{
 
     async continueButtonEnabled(){
       return await this.continueButton.isEnabled();
+    }
+
+    async continueButtonDisplayed(){
+      return await this.continueButton.isDisplayed();
     }
 }
 

@@ -32,4 +32,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Regex';
   });
 
+  Given(/^a case type containing conditionals exists$/, function() {
+    Data.caseType = 'Conditionals';
+  });
+
 });

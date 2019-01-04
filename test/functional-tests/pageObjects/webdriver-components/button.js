@@ -1,3 +1,4 @@
+
 /**
  * WebDriver Button component class
  */
@@ -33,6 +34,22 @@ class Button{
    */
   async getText(){
     return await $(this.css).getText();
+  }
+
+  async isDisplayed(){
+    let displayed = null;
+    try {
+      displayed = await $(this.css).isDisplayed();
+    } catch (e) {
+      if (e.name === 'NoSuchElementError'){
+        displayed = false; //element not present so not displayed
+      }
+      else {
+        throw new CustomError(e);
+      }
+    }
+
+    return displayed
   }
 
 

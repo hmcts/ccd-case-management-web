@@ -5,7 +5,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     Given I have logged in
 
   Scenario Outline: Fields are displayed on create case form page
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     When I navigate to the case creation form page
     Then I should see a '<dataType>' field
 
@@ -75,7 +75,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
 
     @validation
   Scenario: Validation: invalid email is not accepted
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     And I enter 'invalidemail.com' into the 'email' field
     When I click the Continue button
     Then there will be validation errors
@@ -83,7 +83,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
 
     @validation
   Scenario: Validation: invalid Money amount is not accepted
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     And I enter '-1' into the 'Money-gbp' field
     Then there will be a field validation error
     And the 'Continue' button will be disabled
@@ -106,28 +106,28 @@ Feature: Set of scenarios to check we can read and write to all field data types
 
     @validation @bug
   Scenario: Validation: can continue after correcting Phone UK validation failure
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     And I have a validation error from invalid 'phone uk'
     When I re-enter '07777777777' into the 'phone uk' field
     Then I can navigate to the next page
 
     @validation @bug
   Scenario: Validation: can continue after correcting email validation failure
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     And I have a validation error from invalid 'email'
     When I re-enter 'valid@email.com' into the 'email' field
     Then I can navigate to the next page
 
     @validation @bug
   Scenario: Validation: can continue after correcting Date validation failure
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     And I have a validation error from invalid 'date'
     When I re-enter '19091989' into the 'date' field
     Then I can navigate to the next page
 
     @validation
   Scenario: Validation: can continue after correcting Money validation failure
-    And a case type containing every field type exists
+    Given a case type containing every field type exists
     And I have a validation error from invalid 'money-gbp'
     When I re-enter '20' into the 'money-gbp' field
     Then there will be no validation errors

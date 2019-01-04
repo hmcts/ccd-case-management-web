@@ -1,33 +1,13 @@
-const {Before,After, AfterAll, Status , BeforeAll} = require('cucumber');
-let fs = require('fs');
+let TestData = require('../utils/TestData.js');
 
-let {setDefaultTimeout} = require('cucumber');
-setDefaultTimeout(60 * 1000);
+module.exports = {
 
-    Before(async () => {
-        browser.ignoreSynchronization = true
-    });
+  navigateToCreateCasePage: async function(){
+    createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
+    await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
+    await createCaseStartPage.selectCaseType(TestData.caseType);
+    await createCaseStartPage.selectEvent(TestData.event);
+    await createCaseStartPage.clickStartButton();
+  },
 
-    AfterAll(async () => {
-        await browser.close();
-        await browser.quit();
-    });
-
-    After(async () => {
-        await browser.restart();
-    });
-
-    After(function (scenario, done) {
-        const world = this;
-        if (scenario.result.status === Status.FAILED) {
-                browser.takeScreenshot().then(stream => {
-                const decodedImage = new Buffer(stream.replace(/^data:image\/(png|gif|jpeg);base64,/, ''), 'base64');
-                world.attach(decodedImage, 'image/png');
-            })
-              .then(() => {
-                  done();
-              });
-        } else {
-          done();
-        }
-    });
+};

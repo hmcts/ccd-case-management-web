@@ -24,8 +24,14 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
+def vaultOverrides = [
+    'preview': 'aat',
+    'spreview': 'saat'
+]
+
 withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRONMENT, 'sandbox') {
 
+    overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
 
     enableSlackNotifications('#ccd-param-builds')

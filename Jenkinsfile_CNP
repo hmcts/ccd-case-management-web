@@ -17,6 +17,11 @@ def secrets = [
     ]
 ]
 
+def vaultOverrides = [
+    'preview': 'aat',
+    'spreview': 'saat'
+]
+
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -42,6 +47,7 @@ withPipeline("angular", product, component) {
     enableDockerBuild()
     enableDeployToAKS()
 
+    overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
 
     afterCheckout {

@@ -11,10 +11,7 @@ describe('DefinitionsService', () => {
   const API_DATA_URL = 'http://data.ccd.reform/aggregated';
   const JurisdictionId = 'PROBATE';
   const CaseTypeId = 'TestAddressBookCase';
-  const CASE_TYPES_URL = API_DATA_URL + `/caseworkers/:uid/jurisdictions/${JurisdictionId}/case-types/${CaseTypeId}/work-basket-inputs`;
-  const workbasketfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
-    + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`
-    + `\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
+  const CASE_TYPES_URL = API_DATA_URL + `/internal/case-types/${CaseTypeId}/work-basket-inputs`;
   let appConfig: any;
   let httpService: any;
   let workbasketInputFilterService: WorkbasketInputFilterService;

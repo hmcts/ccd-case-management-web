@@ -13,12 +13,12 @@ export class WorkbasketInputFilterService {
   constructor(private httpService: HttpService, private appConfig: AppConfig) {
   }
 
-  getWorkbasketInputUrl(jurisdictionId: string, caseTypeId: string): string {
-    return `${this.appConfig.getApiUrl()}/caseworkers/:uid/jurisdictions/${jurisdictionId}/case-types/${caseTypeId}/work-basket-inputs`;
+  getWorkbasketInputUrl(caseTypeId: string): string {
+    return `${this.appConfig.getCaseDataUrl()}/internal/case-types/${caseTypeId}/work-basket-inputs`;
   }
 
   getWorkbasketInputs(jurisdictionId: string, caseTypeId: string): Observable<WorkbasketInputModel[]> {
-    let url = this.getWorkbasketInputUrl(jurisdictionId, caseTypeId);
+    let url = this.getWorkbasketInputUrl(caseTypeId);
     this.currentJurisdiction = jurisdictionId;
     this.currentCaseType = caseTypeId;
     return this.httpService

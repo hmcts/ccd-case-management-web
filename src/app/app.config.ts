@@ -146,7 +146,11 @@ export class AppConfig extends AbstractAppConfig {
       + `/case-history`;
   }
 
+<<<<<<< Updated upstream
   public getCreateOrUpdateDraftsUrl(jid: string, ctid: string) {
+=======
+  public getCreateOrUpdateDraftsUrl(ctid: string) {
+>>>>>>> Stashed changes
     return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;
   }
 

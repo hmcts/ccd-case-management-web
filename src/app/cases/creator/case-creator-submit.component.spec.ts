@@ -186,7 +186,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     component.eventTrigger.case_id = undefined;
     component.saveDraft()(SANITISED_EDIT_FORM);
 
-    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, undefined, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(CTID, undefined, SANITISED_EDIT_FORM);
   });
 
   it('should update draft when saveDraft called with sanitised data for second time', () => {
@@ -194,7 +194,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     component.eventTrigger.case_id = DRAFT_PREFIX + DRAFT_ID; // Set behaviour to draft has been saved before
     component.saveDraft()(SANITISED_EDIT_FORM);
 
-    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, DRAFT_PREFIX + DRAFT_ID, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(CTID, DRAFT_PREFIX + DRAFT_ID, SANITISED_EDIT_FORM);
   });
 
   it('should navigate to case view upon successful case creation', () => {
@@ -254,14 +254,14 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
   it('should have a cancel button saving draft going back to the case list for save new draft', () => {
     component.cancel({status: CaseEditPageComponent.NEW_FORM_SAVE, data : SANITISED_EDIT_FORM});
 
-    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith(['list/case']);
   });
 
   it('should have a cancel button saving draft and going back to the view draft for save existing draft', () => {
     component.cancel({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data : SANITISED_EDIT_FORM});
 
-    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
+    expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
 });

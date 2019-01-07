@@ -4,9 +4,13 @@ import 'rxjs/add/operator/map';
 import { AppConfig } from '../app.config';
 import { WorkbasketInputModel } from './workbasket-input.model';
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class WorkbasketInputFilterService {
+  public static readonly V2_MEDIATYPE_WORKBASKET_INPUT_DETAILS =
+  'application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-workbasket-input-details.v2+json;charset=UTF-8';
+
   private currentJurisdiction: string;
   private currentCaseType: string;
 
@@ -19,12 +23,16 @@ export class WorkbasketInputFilterService {
 
   getWorkbasketInputs(jurisdictionId: string, caseTypeId: string): Observable<WorkbasketInputModel[]> {
     let url = this.getWorkbasketInputUrl(caseTypeId);
+    let headers = new Headers({
+      'experimental': 'true',
+      'Accept': WorkbasketInputFilterService.V2_MEDIATYPE_WORKBASKET_INPUT_DETAILS
+    });
     this.currentJurisdiction = jurisdictionId;
     this.currentCaseType = caseTypeId;
     return this.httpService
-      .get(url)
+      .get(url, {headers})
       .map(response => {
-        let workbasketInputs = response.json();
+        let workbasketInputs = response.json().workbasketInputs;
         if (this.isDataValid(jurisdictionId, caseTypeId)) {
           workbasketInputs.forEach(item => {
             item.field.label = item.label;

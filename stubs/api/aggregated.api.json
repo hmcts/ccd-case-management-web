@@ -176,44 +176,51 @@
       ]
     }
   ],
-  "work-basket-inputs": [
-    {
-      "label": "First Name",
-      "order": 1,
-      "field": {
-        "id": "PersonFirstName",
-        "metadata": false,
-        "field_type": {
-          "id": "Text",
-          "type": "Text",
-          "min": null,
-          "max": null,
-          "regular_expression": null,
-          "fixed_list_items": [],
-          "complex_fields": [],
-          "collection_field_type": null
+  "work-basket-inputs": {
+    "workbasketInputs": [
+      {
+        "label": "First Name",
+        "order": 1,
+        "field": {
+          "id": "PersonFirstName",
+          "metadata": false,
+          "field_type": {
+            "id": "Text",
+            "type": "Text",
+            "min": null,
+            "max": null,
+            "regular_expression": null,
+            "fixed_list_items": [],
+            "complex_fields": [],
+            "collection_field_type": null
+          }
+        }
+      },
+      {
+        "label": "Last Name",
+        "order": 2,
+        "field": {
+          "id": "PersonLastName",
+          "metadata": false,
+          "field_type": {
+            "id": "Text",
+            "type": "Text",
+            "min": null,
+            "max": null,
+            "regular_expression": null,
+            "fixed_list_items": [],
+            "complex_fields": [],
+            "collection_field_type": null
+          }
         }
       }
-    },
-    {
-      "label": "Last Name",
-      "order": 2,
-      "field": {
-        "id": "PersonLastName",
-        "metadata": false,
-        "field_type": {
-          "id": "Text",
-          "type": "Text",
-          "min": null,
-          "max": null,
-          "regular_expression": null,
-          "fixed_list_items": [],
-          "complex_fields": [],
-          "collection_field_type": null
-        }
+    ],
+    "_links": {
+      "self": {
+        "href": "http://localhost:4452/internal/case-types/AAT/work-basket-inputs"
       }
     }
-  ],
+  },
   "cases": {
     "columns": [
       {

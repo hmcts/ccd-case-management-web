@@ -1,8 +1,7 @@
-import { Response, ResponseOptions } from '@angular/http';
+import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
-import { WindowService } from '../core/utils/window.service';
 import { WorkbasketInputModel } from './workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
@@ -18,8 +17,8 @@ describe('DefinitionsService', () => {
   let windowService;
 
   beforeEach(() => {
-    appConfig = createSpyObj<AppConfig>('appConfig', ['getApiUrl']);
-    appConfig.getApiUrl.and.returnValue(API_DATA_URL);
+    appConfig = createSpyObj<AppConfig>('appConfig', ['getCaseDataUrl']);
+    appConfig.getCaseDataUrl.and.returnValue(API_DATA_URL);
     httpService = createSpyObj<HttpService>('httpService', ['get']);
     workbasketInputFilterService = new WorkbasketInputFilterService(httpService, appConfig);
     windowService = appConfig = createSpyObj<any>('windowService', ['setLocalStorage', 'getLocalStorage']);
@@ -28,7 +27,9 @@ describe('DefinitionsService', () => {
   describe('getWorkbasketInputs()', () => {
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-        body: JSON.stringify(createWorkbasketInputs())
+        body: {
+          'workbasketInputs': JSON.stringify(createWorkbasketInputs())
+        }
       }))));
     });
 
@@ -37,7 +38,11 @@ describe('DefinitionsService', () => {
         .getWorkbasketInputs(JurisdictionId, CaseTypeId)
         .subscribe();
 
-      expect(httpService.get).toHaveBeenCalledWith(CASE_TYPES_URL);
+      expect(httpService.get).toHaveBeenCalledWith(CASE_TYPES_URL, {
+        headers: new Headers({
+          'experimental': 'true',
+          'Accept': WorkbasketInputFilterService.V2_MEDIATYPE_WORKBASKET_INPUT_DETAILS
+        })});
     });
 
     it('should retrieve workbasketInput array from server', () => {

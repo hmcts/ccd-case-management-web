@@ -146,7 +146,7 @@ export class AppConfig extends AbstractAppConfig {
       + `/case-history`;
   }
 
-  public getCreateOrUpdateDraftsUrl(jid: string, ctid: string) {
+  public getCreateOrUpdateDraftsUrl(ctid: string) {
     return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;
   }
 

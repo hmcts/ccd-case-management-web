@@ -96,12 +96,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'Delete') {
-<<<<<<< Updated upstream
           this.draftService.deleteDraft(this.caseDetails.case_id)
-=======
-          this.draftService.deleteDraft(
-            this.caseDetails.case_id)
->>>>>>> Stashed changes
             .subscribe(_ => {
               return this.router.navigate(['list/case'])
                 .then(() => {

@@ -60,4 +60,8 @@ export class CoreComponent implements OnInit, OnDestroy {
   isUnsupportedBrowser(): boolean {
     return this.browserSupportComponent.isUnsupportedBrowser();
   }
+
+  getMainContentLink(): string {
+    return this.router.url + '#main-content';
+  }
 }

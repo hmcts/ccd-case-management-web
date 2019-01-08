@@ -46,7 +46,7 @@ describe('CaseHistoryService', () => {
 
     it('should use HttpService::get with correct url', () => {
       caseHistoryService
-        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .get(CASE_ID, EVENT_ID)
         .subscribe();
 
       expect(httpService.get).toHaveBeenCalledWith(CASE_HISTORY_URL);
@@ -54,7 +54,7 @@ describe('CaseHistoryService', () => {
 
     it('should retrieve case history from server', () => {
       caseHistoryService
-        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .get(CASE_ID, EVENT_ID)
         .subscribe(
           caseHistory => expect(caseHistory).toEqual(CASE_HISTORY)
         );
@@ -64,7 +64,7 @@ describe('CaseHistoryService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       caseHistoryService
-        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .get(CASE_ID, EVENT_ID)
         .subscribe(() => {
         }, err => {
           expect(err).toEqual(ERROR);

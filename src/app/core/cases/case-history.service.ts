@@ -12,12 +12,10 @@ export class CaseHistoryService {
               private httpErrorService: HttpErrorService,
               private appConfig: AppConfig) {}
 
-  get(jurisdictionId: string,
-      caseTypeId: string,
-      caseId: string,
+  get(caseId: string,
       eventId: string): Observable<CaseHistory> {
 
-    const url = this.appConfig.getCaseHistoryUrl(jurisdictionId, caseTypeId, caseId, eventId);
+    const url = this.appConfig.getCaseHistoryUrl(caseId, eventId);
 
     return this.httpService
       .get(url)

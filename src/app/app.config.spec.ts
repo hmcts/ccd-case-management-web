@@ -109,7 +109,7 @@ describe('AppConfig', () => {
             expect(appConfig.getEdgeMinRequiredVersion()).toEqual(EDGE_MIN_REQUIRED_VERSION);
             expect(appConfig.getFirefoxMinRequiredVersion()).toEqual(FIREFOX_MIN_REQUIRED_VERSION);
             expect(appConfig.getCaseHistoryUrl('JID', 'CTID', 'CID', 'EID')).toEqual(CASE_HISTORY_URL);
-            expect(appConfig.getCreateOrUpdateDraftsUrl('JID', 'CTID')).toEqual(CREATE_OR_UPDATE_DRAFT_URL);
+            expect(appConfig.getCreateOrUpdateDraftsUrl('CTID')).toEqual(CREATE_OR_UPDATE_DRAFT_URL);
             expect(appConfig.getViewOrDeleteDraftsUrl('DID')).toEqual(VIEW_OR_DELETE_DRAFT_URL);
           });
       })));

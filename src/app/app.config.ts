@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { CaseEventData, AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
+import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
 
 @Injectable()
@@ -146,12 +146,12 @@ export class AppConfig extends AbstractAppConfig {
       + `/case-history`;
   }
 
-  public getCreateOrUpdateDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
+  public getCreateOrUpdateDraftsUrl(ctid: string) {
+    return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;
   }
 
-  public getViewOrDeleteDraftsUrl(jid: string, ctid: string, did: string) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${did}`;
+  public getViewOrDeleteDraftsUrl(did: string) {
+    return this.getCaseDataUrl() + `/internal/drafts/${did}`;
   }
 }
 

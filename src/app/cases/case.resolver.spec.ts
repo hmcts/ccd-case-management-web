@@ -224,7 +224,7 @@ describe('CaseResolver', () => {
           expect(caseData).toBe(DRAFT);
         });
 
-      expect(draftService.getDraft).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, DRAFT_ID);
+      expect(draftService.getDraft).toHaveBeenCalledWith(DRAFT_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);

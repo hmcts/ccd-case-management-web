@@ -21,9 +21,11 @@ def type = "angular"
 def product = "ccd"
 def app = "case-management-web"
 
-List<LinkedHashMap<String, Object>> secrets = [
-    secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
-    secret('ccd-caseworker-autotest-password', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+def secrets = [
+    'ccd-${env}': [
+        secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
+        secret('ccd-caseworker-autotest-password', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+    ]
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -43,7 +45,7 @@ withNightlyPipeline(type, product, app) {
         enableCrossBrowserTest()
     }
 
-    //loadVaultSecrets(secrets)
+    loadVaultSecrets(secrets)
     env.TEST_URL = params.TEST_URL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_EMAIL = params.AUTOTEST_EMAIL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_PASSWORD = params.AUTOTEST_PASSWORD_PARAM

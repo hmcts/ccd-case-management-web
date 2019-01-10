@@ -2,7 +2,7 @@ import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
-import { WorkbasketInputModel } from './workbasket-input.model';
+import { WorkbasketInput, WorkbasketInputModel } from './workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
@@ -27,9 +27,7 @@ describe('DefinitionsService', () => {
   describe('getWorkbasketInputs()', () => {
     beforeEach(() => {
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-        body: {
-          'workbasketInputs': JSON.stringify(createWorkbasketInputs())
-        }
+        body: JSON.stringify(jsonResponse())
       }))));
     });
 
@@ -48,29 +46,33 @@ describe('DefinitionsService', () => {
     it('should retrieve workbasketInput array from server', () => {
       workbasketInputFilterService
         .getWorkbasketInputs(JurisdictionId, CaseTypeId)
-        .subscribe(workbasketInputData => expect(workbasketInputData).toEqual(createWorkbasketInputs())
+        .subscribe(workbasketInputs => expect(workbasketInputs).toEqual(createWorkbasketInputs())
         );
     });
 
+    function jsonResponse(): WorkbasketInput {
+      return { workbasketInputs: createWorkbasketInputs()};
+    }
+
     function createWorkbasketInputs(): WorkbasketInputModel[] {
       return [
-        {
+         {
           label: 'Field 1',
           field: {
-            id: 'field1', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 1'
+           id: 'field1', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 1'
           },
           order: 1
-        },
-        {
+         },
+         {
           label: 'Field 2',
           field: { id: 'field2', field_type: { id: 'Text', type: 'Text' }, value: 'Some Value', label: 'Field 2' },
           order: 2
-        },
-        {
+         },
+         {
           label: 'Field 3',
           field: { id: 'field3', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 3' },
           order: 3
-        }
+         }
       ];
     }
   }

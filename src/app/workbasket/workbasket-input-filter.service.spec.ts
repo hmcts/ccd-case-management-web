@@ -1,6 +1,6 @@
 import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
+import { WorkbasketInput, WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
 import { WorkbasketInput, WorkbasketInputModel } from './workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;

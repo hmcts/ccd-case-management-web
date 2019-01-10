@@ -1,8 +1,8 @@
 import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { WorkbasketInput, WorkbasketInputFilterService } from './workbasket-input-filter.service';
+import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
-import { WorkbasketInputModel } from './workbasket-input.model';
+import { WorkbasketInput, WorkbasketInputModel } from './workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
@@ -46,9 +46,13 @@ describe('DefinitionsService', () => {
     it('should retrieve workbasketInput array from server', () => {
       workbasketInputFilterService
         .getWorkbasketInputs(JurisdictionId, CaseTypeId)
-        .subscribe(workbasketInputData => expect(workbasketInputData).toEqual(createWorkbasketInputs())
+        .subscribe(workbasketInputs => expect(workbasketInputs).toEqual(createWorkbasketInputs())
         );
     });
+
+    function jsonResponse(): WorkbasketInput {
+      return { workbasketInputs: createWorkbasketInputs()};
+    }
 
     function createWorkbasketInputs(): WorkbasketInputModel[] {
       return [

@@ -32,7 +32,8 @@ export class WorkbasketInputFilterService {
     return this.httpService
       .get(url, {headers})
       .map(response => {
-        let workbasketInputs = response.json().workbasketInputs;
+        let jsonResponse = response.json();
+        let workbasketInputs = jsonResponse.workbasketInputs;
         if (this.isDataValid(jurisdictionId, caseTypeId)) {
           workbasketInputs.forEach(item => {
             item.field.label = item.label;

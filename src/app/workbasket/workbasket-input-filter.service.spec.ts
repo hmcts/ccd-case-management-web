@@ -1,6 +1,6 @@
 import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { WorkbasketInput, WorkbasketInputFilterService } from './workbasket-input-filter.service';
+import { WorkbasketInputFilterService } from './workbasket-input-filter.service';
 import { AppConfig } from '../app.config';
 import { WorkbasketInput, WorkbasketInputModel } from './workbasket-input.model';
 import createSpyObj = jasmine.createSpyObj;
@@ -56,23 +56,27 @@ describe('DefinitionsService', () => {
 
     function createWorkbasketInputs(): WorkbasketInputModel[] {
       return [
-         {
+        {
           label: 'Field 1',
           field: {
-           id: 'field1', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 1'
+            id: 'field1', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 1'
           },
           order: 1
-         },
-         {
+        },
+        {
           label: 'Field 2',
-          field: { id: 'field2', field_type: { id: 'Text', type: 'Text' }, value: 'Some Value', label: 'Field 2' },
+          field: {
+            id: 'field2', field_type: { id: 'Text', type: 'Text' }, value: 'Some Value', label: 'Field 2'
+          },
           order: 2
-         },
-         {
+        },
+        {
           label: 'Field 3',
-          field: { id: 'field3', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 3' },
+          field: {
+            id: 'field3', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 3'
+          },
           order: 3
-         }
+        }
       ];
     }
   }

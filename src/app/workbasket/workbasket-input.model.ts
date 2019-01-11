@@ -9,3 +9,7 @@ export class WorkbasketInputModel implements Orderable {
       public metadata?: boolean) {
     }
 }
+
+export class WorkbasketInput {
+  public workbasketInputs: WorkbasketInputModel[]
+}

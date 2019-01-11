@@ -111,6 +111,9 @@ export class CreateCaseFiltersComponent implements OnInit {
       this.error = error;
       this.callbackErrorsSubject.next(error);
     });
+    if (document.getElementById('main-content')) {
+      document.getElementById('main-content').focus();
+    }
   }
 
   callbackErrorsNotify(errorContext: CallbackErrorsContext) {

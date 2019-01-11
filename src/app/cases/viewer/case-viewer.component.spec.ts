@@ -732,4 +732,12 @@ describe('CaseViewerComponent', () => {
     expect(printLink).toBeTruthy();
     expect(printLink.componentInstance.routerLink).toEqual('print');
   });
+
+  it('should not contain a print link if Draft', () => {
+    component.caseDetails.case_id = 'DRAFT123';
+    fixture.detectChanges();
+    let printLink = de.query($PRINT_LINK);
+
+    expect(printLink).toBeFalsy();
+  });
 });

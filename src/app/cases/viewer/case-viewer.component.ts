@@ -60,6 +60,9 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));
     });
+    if (document.getElementById('case-viewer-control-print')) {
+      document.getElementById('case-viewer-control-print').focus();
+    }
   }
 
   ngOnDestroy() {

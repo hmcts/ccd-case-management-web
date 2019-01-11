@@ -42,14 +42,13 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   validate(): (sanitizedEditForm: CaseEventData, pageId: string) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId,
+    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(this.caseTypeId,
       sanitizedEditForm, pageId);
   }
 
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
     if (this.eventTrigger.can_save_draft) {
-      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.jurisdictionId,
-            this.caseTypeId,
+      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.caseTypeId,
             this.eventTrigger.case_id,
             caseEventData);
     }

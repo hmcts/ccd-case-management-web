@@ -73,12 +73,12 @@ describe('CreateCaseFieldsResolver', () => {
       });
 
     expect(casesService.getEventTrigger).toHaveBeenCalledWith(
-      JURISDICTION, CASE_TYPE, EVENT_TRIGGER_ID, undefined, String(IGNORE_WARNINGS));
+      CASE_TYPE, EVENT_TRIGGER_ID, undefined, String(IGNORE_WARNINGS));
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(DRAFT_QUERY_PARAM);
-    expect(route.paramMap.get).toHaveBeenCalledTimes(3);
+    expect(route.paramMap.get).toHaveBeenCalledTimes(2);
     expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
     expect(createCaseFieldsResolver['cachedEventTrigger']).toBe(EVENT_TRIGGER);
   });
@@ -143,12 +143,11 @@ describe('CreateCaseFieldsResolver', () => {
         expect(triggerData).toBe(EVENT_TRIGGER);
       });
 
-    expect(casesService.getEventTrigger).toHaveBeenCalledWith(
-      JURISDICTION, CASE_TYPE, EVENT_TRIGGER_ID, DRAFT_ID, String(IGNORE_WARNINGS));
+    expect(casesService.getEventTrigger).toHaveBeenCalledWith(CASE_TYPE, EVENT_TRIGGER_ID, DRAFT_ID, String(IGNORE_WARNINGS));
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
     expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_EVENT_ID);
     expect(route.queryParamMap.get).toHaveBeenCalledWith(QUERY_PARAM_IGNORE_WARNINGS);
-    expect(route.paramMap.get).toHaveBeenCalledTimes(3);
+    expect(route.paramMap.get).toHaveBeenCalledTimes(2);
     expect(route.queryParamMap.get).toHaveBeenCalledTimes(2);
   });
 

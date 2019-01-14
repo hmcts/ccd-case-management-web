@@ -66,7 +66,7 @@ describe('CaseHistoryResolver', () => {
         });
 
       expect(route.paramMap.get).toHaveBeenCalledWith(CaseHistoryResolver.PARAM_EVENT_ID);
-      expect(caseHistoryService.get).toHaveBeenCalledWith(CASE_ID, EVENT_ID);
+      expect(caseHistoryService.get).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID, EVENT_ID);
     });
 
     it('should redirect to error page when case history cannot be retrieved', () => {

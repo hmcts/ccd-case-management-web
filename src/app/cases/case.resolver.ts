@@ -74,7 +74,7 @@ export class CaseResolver implements Resolve<CaseView> {
 
   private getAndCacheDraft(jid, ctid, cid): Observable<CaseView> {
     return this.draftService
-      .getDraft(jid, ctid, cid)
+      .getDraft(cid)
       .do(caseView => this.cachedCaseView = caseView)
       .catch((error: Response | any) => this.checkAuthorizationError(error));
   }

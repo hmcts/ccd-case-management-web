@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { CaseResolver } from './case.resolver';
-import { CaseViewerComponent } from './viewer/case-viewer.component';
 import { PaletteModule, ConditionalShowModule, MarkdownModule,
-  CaseReferencePipe, LabelSubstitutorModule,
-  FieldsPurger, PageValidationService, PlaceholderService
+  CaseReferencePipe, LabelSubstitutorModule, CaseHeaderModule,
+  FieldsPurger, PageValidationService, PlaceholderService, EventLogModule, ActivityModule
 } from '@hmcts/ccd-case-ui-toolkit';
-import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,13 +36,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    ActivityModule,
+    CaseHeaderModule,
   ],
   declarations: [
     CaseCreatorComponent,
     CaseCreatorSubmitComponent,
     CaseEventTriggerComponent,
     CasePrinterComponent,
-    CaseViewerComponent,
     CreateCaseFiltersComponent,
     PrintUrlPipe,
   ],

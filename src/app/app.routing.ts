@@ -4,7 +4,6 @@ import { SearchComponent } from './search/search.component';
 import { ProfileResolver } from './core/profile/profile.resolver';
 import { CoreComponent } from './core/core.component';
 import { CaseResolver } from './cases/case.resolver';
-import { CaseViewerComponent } from './cases/viewer/case-viewer.component';
 import { ErrorComponent } from './error/error.component';
 import { EventTriggerResolver } from './cases/event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './cases/event-trigger/case-event-trigger.component';
@@ -22,7 +21,7 @@ import { CookiesComponent } from './footer-nav/cookies.component';
 import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
-import { routing as caseEditRouting } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseViewerComponent, routing as caseEditRouting } from '@hmcts/ccd-case-ui-toolkit';
 
 const caseViewChildRoutes: Routes = [
   {

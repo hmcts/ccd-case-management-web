@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaseEventTrigger, CaseEventData, CaseReferencePipe, CaseView, AlertService, CasesService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseEventTrigger, CaseEventData, CaseReferencePipe, CaseView, AlertService, CasesService, Activity, DisplayMode,
+  ActivityPollingService } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable } from 'rxjs';
-import { Activity, DisplayMode } from '../../core/activity/activity.model';
 import { Subscription } from 'rxjs/Subscription';
 import { EventStatusService } from '../../core/cases/event-status.service';
-import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 
 @Component({
   selector: 'ccd-case-event-trigger',

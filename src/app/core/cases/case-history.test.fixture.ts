@@ -1,7 +1,7 @@
 import { CaseHistory, CaseHistoryCaseType } from './case-history.model';
 import { createCaseViewEvent } from './case-view-event.test.fixture';
-import { createCaseTabArray } from './case-tab.test.fixture';
 import { createJurisdiction } from '../../shared/domain/definition/jurisdiction.test.fixture';
+import { createCaseTabArray } from '@hmcts/ccd-case-ui-toolkit';
 
 export let createCaseHistory = () => {
   const caseHistory = new CaseHistory();

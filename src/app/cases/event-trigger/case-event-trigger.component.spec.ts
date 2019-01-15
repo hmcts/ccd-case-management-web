@@ -5,10 +5,9 @@ import { MockComponent } from 'ng2-mock-component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivityPollingService } from '../../core/activity/activity.polling.service';
 import createSpyObj = jasmine.createSpyObj;
 import { CaseEventData, createCaseEventTrigger, CaseReferencePipe, HttpError, CaseEventTrigger,
-  CaseView, AlertService, CasesService} from '@hmcts/ccd-case-ui-toolkit';
+  CaseView, AlertService, CasesService, ActivityPollingService} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseEventTriggerComponent', () => {
   const PAGE_ID = 'pageId';

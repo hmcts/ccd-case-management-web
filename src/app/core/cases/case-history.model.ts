@@ -1,6 +1,5 @@
-import { CaseTab } from './case-tab.model';
 import { Type } from 'class-transformer';
-import { CaseViewEvent, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseViewEvent, Jurisdiction, CaseTab } from '@hmcts/ccd-case-ui-toolkit';
 
 export class CaseHistoryCaseType {
   id: string;

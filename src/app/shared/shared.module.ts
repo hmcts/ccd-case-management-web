@@ -5,16 +5,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchResultComponent } from './search/search-result.component';
 import { SearchFiltersComponent } from './search/filters/search-filters.component';
 import { PaletteModule, CaseFieldService, ConditionalShowModule, MarkdownModule,
-  LabelSubstitutorModule, PipesModule, CaseReferencePipe, DialogsModule } from '@hmcts/ccd-case-ui-toolkit';
+  LabelSubstitutorModule, PipesModule, CaseReferencePipe, DialogsModule, CaseHeaderModule,
+  ActivityModule, EventTriggerModule } from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
-import { EventTriggerModule } from './event-trigger/event-trigger.module';
-import { CaseHeaderComponent } from './header/case-header.component';
 import { EventTriggerHeaderComponent } from './header/event-trigger-header.component';
 import { SortSearchResultPipe } from './search/sorting/sort-search-result.pipe';
 import { SearchResultViewItemComparatorFactory } from './search/sorting/search-result-view-item-comparator-factory';
-import { CcdActivityComponent } from '../core/activity/ccd-activity/ccd-activity.component';
-import { CcdActivityIconComponent } from '../core/activity/ccd-activity/ccd-activity-icon/ccd-activity-icon.component';
-import { CcdActivityBannerComponent } from '../core/activity/ccd-activity/ccd-activity-banner/ccd-activity-banner.component';
 import { CaseHistoryComponent } from './case-history/case-history.component';
 import { CaseHistoryResolver } from './case-history/case-history.resolver';
 import { CaseHistoryService } from '../core/cases/case-history.service';
@@ -33,16 +29,14 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     MarkdownModule,
     PipesModule,
     DialogsModule,
+    CaseHeaderModule,
+    ActivityModule,
   ],
   declarations: [
     SearchResultComponent,
-    CaseHeaderComponent,
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     SortSearchResultPipe,
-    CcdActivityComponent,
-    CcdActivityIconComponent,
-    CcdActivityBannerComponent,
     CaseHistoryComponent,
   ],
   providers: [
@@ -53,14 +47,10 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
   ],
   exports: [
     SearchResultComponent,
-    CaseHeaderComponent,
     EventTriggerModule,
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     CaseReferencePipe,
-    CcdActivityComponent,
-    CcdActivityIconComponent,
-    CcdActivityBannerComponent,
     CaseHistoryComponent,
   ]
 })

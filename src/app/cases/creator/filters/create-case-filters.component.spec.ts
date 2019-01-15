@@ -9,10 +9,10 @@ import { attr, text } from '../../../test/helpers';
 import { JurisdictionService } from '../../../shared/jurisdiction.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, OrderService, CaseTypeLite, Jurisdiction, CaseEvent, AlertService,
-  CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, 
+  CaseViewerComponent} from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { Observable } from 'rxjs';
-import { CaseViewerComponent } from '../../viewer/case-viewer.component';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';

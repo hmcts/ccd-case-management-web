@@ -1,4 +1,4 @@
-import { Response, ResponseOptions, Headers } from '@angular/http';
+import { Response, ResponseOptions } from '@angular/http';
 import { AppConfig } from '../../app.config';
 import { Observable } from 'rxjs';
 import { CaseHistory } from './case-history.model';
@@ -9,10 +9,13 @@ import { HttpService, HttpError, HttpErrorService } from '@hmcts/ccd-case-ui-too
 
 describe('CaseHistoryService', () => {
 
-  const DATA_URL = 'http://data.ccd.reform';
+  const API_URL = 'http://aggregated.ccd.reform';
+  const JID = 'TEST';
+  const CTID = 'TestAddressBookCase';
   const CASE_ID = '1';
   const EVENT_ID = '10';
-  const CASE_HISTORY_URL = DATA_URL + `/internal/cases/${CASE_ID}/events/${EVENT_ID}`;
+  const CASE_HISTORY_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}`
+    + `/events/${EVENT_ID}/case-history`;
   const ERROR: HttpError = new HttpError();
   ERROR.message = 'Critical error!';
 
@@ -43,19 +46,15 @@ describe('CaseHistoryService', () => {
 
     it('should use HttpService::get with correct url', () => {
       caseHistoryService
-        .get(CASE_ID, EVENT_ID)
+        .get(JID, CTID, CASE_ID, EVENT_ID)
         .subscribe();
 
-      expect(httpService.get).toHaveBeenCalledWith(CASE_HISTORY_URL, {
-        headers: new Headers({
-          'experimental': 'true',
-          'Accept': CaseHistoryService.V2_MEDIATYPE_CASE_EVENT_VIEW
-        })});
+      expect(httpService.get).toHaveBeenCalledWith(CASE_HISTORY_URL);
     });
 
     it('should retrieve case history from server', () => {
       caseHistoryService
-        .get(CASE_ID, EVENT_ID)
+        .get(JID, CTID, CASE_ID, EVENT_ID)
         .subscribe(
           caseHistory => expect(caseHistory).toEqual(CASE_HISTORY)
         );
@@ -65,7 +64,7 @@ describe('CaseHistoryService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       caseHistoryService
-        .get(CASE_ID, EVENT_ID)
+        .get(JID, CTID, CASE_ID, EVENT_ID)
         .subscribe(() => {
         }, err => {
           expect(err).toEqual(ERROR);

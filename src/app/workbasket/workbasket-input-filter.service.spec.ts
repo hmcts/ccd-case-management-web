@@ -65,16 +65,12 @@ describe('DefinitionsService', () => {
         },
         {
           label: 'Field 2',
-          field: {
-            id: 'field2', field_type: { id: 'Text', type: 'Text' }, value: 'Some Value', label: 'Field 2'
-          },
+          field: { id: 'field2', field_type: { id: 'Text', type: 'Text' }, value: 'Some Value', label: 'Field 2' },
           order: 2
         },
         {
           label: 'Field 3',
-          field: {
-            id: 'field3', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 3'
-          },
+          field: { id: 'field3', field_type: { id: 'Text', type: 'Text' }, value: '', label: 'Field 3' },
           order: 3
         }
       ];

@@ -42,6 +42,7 @@ module "case-management-web" {
   source   = "git@github.com:hmcts/cnp-module-webapp?ref=master"
   product  = "${var.product}-case-management-web"
   location = "${var.location}"
+  appinsights_location = "${var.location}"
   env      = "${var.env}"
   ilbIp    = "${var.ilbIp}"
   subscription = "${var.subscription}"
@@ -53,6 +54,7 @@ module "case-management-web" {
   asp_rg = "${(var.asp_rg == "use_shared") ? local.sharedASPResourceGroup : var.asp_rg}"
   website_local_cache_sizeinmb = 500
   capacity = "${var.capacity}"
+  appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

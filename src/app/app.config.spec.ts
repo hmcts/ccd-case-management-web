@@ -2,7 +2,6 @@ import { AppConfig, Config } from './app.config';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { CaseEventData } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('AppConfig', () => {
 
@@ -30,7 +29,7 @@ describe('AppConfig', () => {
   const IE_MIN_REQUIRED_VERSION = 11;
   const EDGE_MIN_REQUIRED_VERSION = 17;
   const FIREFOX_MIN_REQUIRED_VERSION = 60;
-  const CASE_HISTORY_URL = API_URL + '/caseworkers/:uid/jurisdictions/JID/case-types/CTID/cases/CID/events/EID/case-history';
+  const CASE_HISTORY_URL = DATA_URL + '/internal/cases/CID/events/EID';
   const CREATE_OR_UPDATE_DRAFT_URL = DATA_URL + '/internal/case-types/CTID/drafts/';
   const VIEW_OR_DELETE_DRAFT_URL = DATA_URL + '/internal/drafts/DID';
 
@@ -108,7 +107,7 @@ describe('AppConfig', () => {
             expect(appConfig.getIEMinRequiredVersion()).toEqual(IE_MIN_REQUIRED_VERSION);
             expect(appConfig.getEdgeMinRequiredVersion()).toEqual(EDGE_MIN_REQUIRED_VERSION);
             expect(appConfig.getFirefoxMinRequiredVersion()).toEqual(FIREFOX_MIN_REQUIRED_VERSION);
-            expect(appConfig.getCaseHistoryUrl('JID', 'CTID', 'CID', 'EID')).toEqual(CASE_HISTORY_URL);
+            expect(appConfig.getCaseHistoryUrl('CID', 'EID')).toEqual(CASE_HISTORY_URL);
             expect(appConfig.getCreateOrUpdateDraftsUrl('CTID')).toEqual(CREATE_OR_UPDATE_DRAFT_URL);
             expect(appConfig.getViewOrDeleteDraftsUrl('DID')).toEqual(VIEW_OR_DELETE_DRAFT_URL);
           });

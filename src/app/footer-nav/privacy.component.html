@@ -2,7 +2,7 @@
   <a (click)="back()" class="link-back">Back</a>
   <h3 class="heading-large">Privacy policy</h3>
 
-  <!--   Probate Accordion stuff   -->
+  <!-- Probate Accordion stuff -->
   <ccd-accordion [title]="'Probate'" [lastAccordion]="false">
 
     <div class="accordion-body">
@@ -205,7 +205,7 @@
 
   </ccd-accordion>
 
-  <!-- Divorce Accordion stuff... -->
+  <!-- Divorce Accordion stuff -->
   <ccd-accordion [title]="'Divorce'" [lastAccordion]="false">
     <div class="accordion-body">
 
@@ -418,8 +418,8 @@
     </div>
   </ccd-accordion>
 
-  <!-- Financial Remedy Accordion stuff... -->
-  <ccd-accordion [title]="'Financial Remedy'" [lastAccordion]="true">
+  <!-- Financial Remedy Accordion stuff -->
+  <ccd-accordion [title]="'Financial Remedy'" [lastAccordion]="false">
     <div class="accordion-body">
 
       <!-- Financial Remedy Start -->
@@ -613,6 +613,125 @@
           or believe we are not processing your personal data lawfully.</span>
       </div>
       <!-- Financial Remedy End -->
+
+    </div>
+  </ccd-accordion>
+
+  <!-- Family Public Law stuff -->
+  <ccd-accordion [title]="'Family Public Law'" [lastAccordion]="true">
+    <div class="accordion-body">
+
+      <!-- Family Public Law Start -->
+      <div class="para">
+        <span class="text-16">This privacy policy explains why we collect your personal data, what we do with it, and
+          your rights. More information about using this service is in the
+          <a [routerLink]="'/terms-and-conditions'" target="_blank">terms and conditions</a></span>
+      </div>
+
+      <h3 class="heading-medium">Who manages this service</h3>
+      <div class="para">
+        <span class="text-16">This service is managed by Her Majesty’sCourts and Tribunals Service (HMCTS) and we’re
+          responsible for protecting the personal data you provide.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">HMCTS is an executive agency of the Ministry of Justice (MoJ). The MoJ is the
+          data controller and their
+          <a href="https://www.gov.uk/government/organisations/ministry-of-justice/about/personal-information-charter"
+             target="_blank">personal information charter</a> explains more about how they process personal data.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">When you use this service we (HMCTS) will ask you to provide some personal data.</span>
+      </div>
+
+      <h3 class="heading-medium">What is the personal data that we collect</h3>
+      <div class="para">
+        <span class="text-16">When you use the Family Public Law service, we collect the following personal data:</span>
+        <ul style="list-style-type: disc;">
+          <li>he applicant's name, address, job role and contact details</li>
+          <li>the Local Authority solicitor's name, address and contact details</li>
+          <li>the social worker's name, address and contact details</li>
+          <li>name, date of birth, gender, and address of children in the case</li>
+          <li>name, date of birth, gender, address and contact details of respondents in the case</li>
+          <li>name, address and contact details of other parties in the case, for example witnesses</li>
+          <li>details of any disability or litigation capacity (ability to understand proceedings) of any child,
+            respondent or other party in the case</li>
+          <li>details of other court cases respondents or children in the case have been involved in</li>
+          <li>evidence supporting the case</li>
+        </ul>
+      </div>
+      <div class="para">
+        <span class="text-16">We also collect:</span>
+        <ul style="list-style-type: disc;">
+          <li>information that tells us if you open an email from us, or click on a link in an email</li>
+          <li>information about how you use this service, like your IP address and the web browser you use. We do
+            this by <a [routerLink]="'/cookies'" target="_blank">using cookies</a></li>
+        </ul>
+      </div>
+
+      <h3 class="heading-medium">What we do with your data</h3>
+      <div class="para">
+        <span class="text-16">We collect personal data to:</span>
+        <ul style="list-style-type: disc;">
+          <li>process the application</li>
+          <li>meet legal requirements</li>
+          <li>make improvements to this service</li>
+        </ul>
+      </div>
+      <div class="para">
+        <span class="text-16">Personal data is processed by our staff in theUK and the data is stored in the UK.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Data relating to a case is stored until the youngest child reaches 18 years old,
+          unless the case results in adoption where the data is stored for 100 years.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">We use GOV.UK Notify to send emails. These are processed within the EEA until
+          the point where emails are handed over to your email provider.</span>
+      </div>
+
+      <h3 class="heading-medium">Your rights</h3>
+      <div class="para">
+        <span class="text-16">You can ask:</span>
+        <ul style="list-style-type: disc;">
+          <li>to see the personal data that we hold on you</li>
+          <li>to have the personal data corrected</li>
+          <li>to have the personal data removed or deleted (this will depend on the circumstances)</li>
+          <li>that access to the personal data is restricted (for example, you can ask to have your data
+            stored for longer, and not automatically deleted)</li>
+        </ul>
+      </div>
+      <div class="para">
+        <span class="text-16">Email <a href="mailto:data.access@justice.gov.uk" target="_blank">data.access@justice.gov.uk</a>
+          if you want to see any of this information.</span>
+      </div>
+
+      <h3 class="heading-medium">Sharing your data</h3>
+      <div class="para">
+        <span class="text-16">We allow Google to use or share our website analytics data, find out about
+          this in our <a [routerLink]="'/terms-and-conditions'" target="_blank">terms and conditions</a>.</span>
+      </div>
+
+      <h3 class="heading-medium">Receiving notifications</h3>
+      <div class="para">
+        <span class="text-16">As part of your application we will send you notifications to let you
+          know how your application is proceeding.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">Email <a href="mailto:dcd-familypubliclawservicedesk@hmcts.net"
+           target="_blank">dcd-familypubliclawservicedesk@hmcts.net</a> if you want to cancel email updates.</span>
+      </div>
+
+      <h3 class="heading-medium">How to complain</h3>
+      <div class="para">
+        <span class="text-16">If you want to complain about how we have handled your personal data,
+          email <a href="mailto:data.compliance@justice.gov.uk" target="_blank">data.compliance@justice.gov.uk</a>.</span>
+      </div>
+      <div class="para">
+        <span class="text-16">You can complain to the
+          <a href="https://ico.org.uk/global/contact-us" target="_blank">Information Commissioner’s Office</a> if you are
+          unsatisfied with our response or believe we are not legally processing your personal data.</span>
+      </div>
+      <!-- Family Public Law End -->
 
     </div>
   </ccd-accordion>

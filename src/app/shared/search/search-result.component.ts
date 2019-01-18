@@ -176,7 +176,9 @@ export class SearchResultComponent implements OnChanges {
   }
 
   sort(column: SearchResultViewColumn) {
-    if (this.isSortAscending(column)) {
+    if (this.comparator(column) === undefined) {
+      return;
+    } else if (this.isSortAscending(column)) {
       this.sortParameters = new SortParameters(this.comparator(column), SortOrder.ASCENDING);
     } else {
       this.sortParameters = new SortParameters(this.comparator(column), SortOrder.DESCENDING);
@@ -218,6 +220,10 @@ export class SearchResultComponent implements OnChanges {
     let isAscending = true;
     let isDescending = true;
 
+    if (this.comparator(column) === undefined) {
+      console.warn('Cannot sort: unknown sort comparator for ' + column.case_field_type.type);
+      return SortOrder.UNSORTED;
+    }
     for (let i = 0; i < this.resultView.results.length - 1; i++) {
       let comparison = this.comparator(column).compare(this.resultView.results[i], this.resultView.results[i + 1]);
       isDescending = isDescending && comparison <= 0;

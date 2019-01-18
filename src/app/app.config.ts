@@ -133,18 +133,12 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.firefox_min_required_version;
   }
 
-  public getCaseHistoryUrl(jurisdictionId: string,
-                           caseTypeId: string,
-                           caseId: string,
-                           eventId: string) {
-    return this.getApiUrl()
-      + `/caseworkers/:uid`
-      + `/jurisdictions/${jurisdictionId}`
-      + `/case-types/${caseTypeId}`
+  public getCaseHistoryUrl(caseId: string, eventId: string) {
+    return this.getCaseDataUrl()
+      + `/internal`
       + `/cases/${caseId}`
-      + `/events/${eventId}`
-      + `/case-history`;
-  }
+      + `/events/${eventId}`;
+}
 
   public getCreateOrUpdateDraftsUrl(ctid: string) {
     return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;

@@ -16,16 +16,14 @@ export class CaseHistoryResolver implements Resolve<CaseHistory> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<CaseHistory> {
     let caseView: CaseView = route.parent.data.case;
-    let jurisdictionId = caseView.case_type.jurisdiction.id;
-    let caseTypeId = caseView.case_type.id;
     let caseId = caseView.case_id;
     let triggerId = route.paramMap.get(CaseHistoryResolver.PARAM_EVENT_ID);
-    return this.getCaseHistoryView(jurisdictionId, caseTypeId, caseId, triggerId);
+    return this.getCaseHistoryView(caseId, triggerId);
   }
 
-  private getCaseHistoryView(jid, ctid, cid, eid): Observable<CaseHistory> {
+  private getCaseHistoryView(cid, eid): Observable<CaseHistory> {
     return this.caseHistoryService
-      .get(jid, ctid, cid, eid)
+      .get(cid, eid)
       .catch((error: Response | any) => {
         console.error(error);
         if (error.status !== 401 && error.status !== 403) {

@@ -230,7 +230,8 @@ select::-ms-expand {
 }
 .markdown h2, .markdown h3 {
   font-size: 17px;
-  margin-top: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .markdown ul, .markdown p {
   margin-bottom: 25px;
@@ -239,8 +240,11 @@ select::-ms-expand {
 .search-result-column-cell .markdown p {
   margin: 0 10px;
 }
-tr.compound-field .markdown ul, tr.compound-field .markdown p {
-  margin: 10px 0;
+tr.compound-field .markdown ul,
+tr.compound-field .markdown p,
+form.check-your-answers table  td .markdown ul,
+form.check-your-answers table  td .markdown p {
+  margin: 10px 0px;
 }
 #fileInputWrapper{
   position:absolute;
@@ -275,4 +279,17 @@ tr.compound-field .markdown ul, tr.compound-field .markdown p {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+.govuk-skip-link {
+  display:block;
+  font-size: 0px;
+  height: 0px;
+  &:focus {
+    font-size: 16px;
+    padding-left: 15px;
+    width: 100%;
+    height: 41px;
+    display:flex;
+    align-items:center;
+  }
 }

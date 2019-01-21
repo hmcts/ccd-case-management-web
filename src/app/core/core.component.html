@@ -1,3 +1,4 @@
+<a href="{{ getMainContentLink() }}" class="govuk-skip-link">Skip to main content</a>
 <div defaultOverlayTarget></div>
 
 <!-- BETA -->
@@ -68,6 +69,7 @@
 <ccd-browser-support [isSolicitor]="isSolicitor()" *ngIf="unsupportedBrowser"></ccd-browser-support>
 
 <!-- Main area : Start -->
+<a id="main-content" href="javascript:void(0);"></a>
 <div class="container-fluid">
   <ccd-alert></ccd-alert>
   <router-outlet></router-outlet>

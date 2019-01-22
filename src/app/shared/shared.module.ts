@@ -11,9 +11,9 @@ import { RouterModule } from '@angular/router';
 import { EventTriggerHeaderComponent } from './header/event-trigger-header.component';
 import { SortSearchResultPipe } from './search/sorting/sort-search-result.pipe';
 import { SearchResultViewItemComparatorFactory } from './search/sorting/search-result-view-item-comparator-factory';
-import { CaseHistoryComponent } from './case-history/case-history.component';
-import { CaseHistoryResolver } from './case-history/case-history.resolver';
-import { CaseHistoryService } from '../core/cases/case-history.service';
+// import { CaseHistoryComponent } from './case-history/case-history.component';
+// import { CaseHistoryResolver } from './case-history/case-history.resolver';
+// import { CaseHistoryService } from '../core/cases/case-history.service';
 
 @NgModule({
   imports: [
@@ -37,13 +37,13 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     SortSearchResultPipe,
-    CaseHistoryComponent,
+    // CaseHistoryComponent,
   ],
   providers: [
     SearchResultViewItemComparatorFactory,
     CaseFieldService,
-    CaseHistoryResolver,
-    CaseHistoryService,
+    // CaseHistoryResolver,
+    // CaseHistoryService,
   ],
   exports: [
     SearchResultComponent,
@@ -51,7 +51,7 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
     CaseReferencePipe,
-    CaseHistoryComponent,
+    // CaseHistoryComponent,
   ]
 })
 export class SharedModule {}

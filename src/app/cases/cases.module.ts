@@ -2,22 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { CaseResolver } from './case.resolver';
+// import { CaseResolver } from './case.resolver';
 import { PaletteModule, ConditionalShowModule, MarkdownModule,
   CaseReferencePipe, LabelSubstitutorModule, CaseHeaderModule,
-  FieldsPurger, PageValidationService, PlaceholderService, EventLogModule, ActivityModule
+  FieldsPurger, PageValidationService, PlaceholderService, EventLogModule, ActivityModule,
 } from '@hmcts/ccd-case-ui-toolkit';
-import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
-import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
+// import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
+// import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CaseCreatorComponent } from './creator/case-creator.component';
 import { CreateCaseFiltersComponent } from './creator/filters/create-case-filters.component';
-import { CasePrinterComponent } from './printer/case-printer.component';
-import { CasePrintDocumentsResolver } from './printer/case-print-documents.resolver';
+// import { CasePrinterComponent } from './printer/case-printer.component';
+// import { CasePrintDocumentsResolver } from './printer/case-print-documents.resolver';
 import { CaseCreatorSubmitComponent } from './creator/case-creator-submit.component';
 import { CreateCaseEventTriggerResolver } from './creator/create-case-event-trigger.resolver';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
-import { PrintUrlPipe } from './printer/print-url.pipe';
+// import { PrintUrlPipe } from './printer/print-url.pipe';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -42,17 +42,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     CaseCreatorComponent,
     CaseCreatorSubmitComponent,
-    CaseEventTriggerComponent,
-    CasePrinterComponent,
+    // CaseEventTriggerComponent,
+    // CasePrinterComponent,
     CreateCaseFiltersComponent,
-    PrintUrlPipe,
+    // PrintUrlPipe,
   ],
   providers: [
-    CasePrintDocumentsResolver,
+    // CasePrintDocumentsResolver,
     CaseReferencePipe,
-    CaseResolver,
+    // CaseResolver,
     CreateCaseEventTriggerResolver,
-    EventTriggerResolver,
+    // EventTriggerResolver,
     FieldsPurger,
     PlaceholderService,
     PageValidationService,

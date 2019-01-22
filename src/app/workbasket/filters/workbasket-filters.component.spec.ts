@@ -306,7 +306,7 @@ describe('WorkbasketFiltersComponent', () => {
     }));
     it('  ', async(() => {
       component.selected.jurisdiction = JURISDICTION_2;
-      component.selected.caseType = CASE_TYPES_2[2];
+      component.selected.caseType = null;
       component.selected.caseState = null;
 
       fixture.detectChanges();
@@ -394,20 +394,23 @@ describe('WorkbasketFiltersComponent', () => {
     it('should initialise case state selector with states from selected case type', () => {
       let selector = de.query(By.css('#wb-case-state'));
 
-      expect(selector.children.length).toEqual(2);
+      expect(selector.children.length).toEqual(3);
 
       let cs1 = selector.children[0];
-      expect(cs1.nativeElement.textContent).toEqual(DEFAULT_CASE_TYPE.states[0].name);
+      expect(cs1.nativeElement.textContent).toEqual('Any');
 
       let cs2 = selector.children[1];
-      expect(cs2.nativeElement.textContent).toEqual(DEFAULT_CASE_STATE.name);
+      expect(cs2.nativeElement.textContent).toEqual(DEFAULT_CASE_TYPE.states[0].name);
+
+      let cs3 = selector.children[2];
+      expect(cs3.nativeElement.textContent).toEqual(DEFAULT_CASE_STATE.name);
       expect(orderService.sortAsc).toHaveBeenCalled();
     });
 
     it('should initially select case state based on default', () => {
       let selector = de.query(By.css('#wb-case-state'));
 
-      expect(selector.nativeElement.selectedIndex).toEqual(1);
+      expect(selector.nativeElement.selectedIndex).toEqual(2);
       expect(component.selected.caseState).toBe(DEFAULT_CASE_TYPE.states[1]);
       expect(orderService.sortAsc).toHaveBeenCalled();
     });
@@ -420,7 +423,7 @@ describe('WorkbasketFiltersComponent', () => {
         .whenStable()
         .then(() => {
           let selector = de.query(By.css('#wb-case-state'));
-          expect(selector.nativeElement.selectedIndex).toEqual(0);
+          expect(selector.nativeElement.selectedIndex).toEqual(1);
           expect(component.selected.caseState).toBe(DEFAULT_CASE_TYPE.states[0]);
         });
     }));
@@ -675,7 +678,7 @@ describe('WorkbasketFiltersComponent', () => {
       component.selected.caseType = CRUD_FILTERED_CASE_TYPES[0];
       let selector = de.query(By.css('#wb-case-state'));
       component.defaults.state_id = CRUD_FILTERED_CASE_TYPES[0].states[0].id;
-      expect(selector.nativeElement.selectedIndex).toEqual(0);
+      expect(selector.nativeElement.selectedIndex).toEqual(1);
       expect(component.selected.caseState.id).toEqual(CRUD_FILTERED_CASE_TYPES[0].states[0].id);
     }));
   });
@@ -821,7 +824,7 @@ describe('WorkbasketFiltersComponent', () => {
 
       let stateSelector = de.query(By.css('#wb-case-state'));
       expect(stateSelector.nativeElement.disabled).toBeTruthy();
-      expect(orderService.sortAsc).not.toHaveBeenCalled();
+      expect(orderService.sortAsc).toHaveBeenCalled();
     }));
   });
 

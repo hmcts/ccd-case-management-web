@@ -10,10 +10,9 @@ import { DebugElement } from '@angular/core';
 import { createCaseHistory } from '../../core/cases/case-history.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
-import { CaseView } from '../../core/cases/case-view.model';
 import {
   FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
-  PlaceholderService, OrderService, CaseReferencePipe
+  PlaceholderService, OrderService, CaseReferencePipe, CaseView
 } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryComponent', () => {

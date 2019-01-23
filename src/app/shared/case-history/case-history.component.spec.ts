@@ -12,7 +12,7 @@ import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import {
   FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
-  PlaceholderService, OrderService, CaseReferencePipe
+  PlaceholderService, OrderService, CaseReferencePipe, CaseView
 } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryComponent', () => {
@@ -32,6 +32,25 @@ describe('CaseHistoryComponent', () => {
   const $CASE_DETAIL_HEADERS = 'h3';
 
   const CASE_HISTORY: CaseHistory = createCaseHistory();
+  const CASE_VIEW: CaseView = {
+    case_id: '1',
+    case_type: {
+      id: 'TestAddressBookCase',
+      name: 'Test Address Book Case',
+      jurisdiction: {
+        id: 'TEST',
+        name: 'Test',
+      }
+    },
+    channels: [],
+    state: {
+      id: 'CaseCreated',
+      name: 'Case created'
+    },
+    tabs: [],
+    triggers: [],
+    events: []
+  };
   const FIELDS = CASE_HISTORY.tabs[1].fields;
   const SIMPLE_FIELDS = CASE_HISTORY.tabs[1].fields.slice(0, 2);
   const COMPLEX_FIELDS = CASE_HISTORY.tabs[1].fields.slice(2);
@@ -46,7 +65,8 @@ describe('CaseHistoryComponent', () => {
   let mockRoute: any = {
     snapshot: {
       data: {
-        caseHistory: CASE_HISTORY
+        caseHistory: CASE_HISTORY,
+        case: CASE_VIEW
       }
     }
   };
@@ -106,7 +126,7 @@ describe('CaseHistoryComponent', () => {
   it('should render a case header', () => {
     let header = de.query(By.directive(CaseHeaderComponent));
     expect(header).toBeTruthy();
-    expect(header.componentInstance.caseDetails).toEqual(CASE_HISTORY);
+    expect(header.componentInstance.caseDetails).toEqual(CASE_VIEW);
   });
 
   it('should render the correct case details based on show_condition', () => {

@@ -1,4 +1,3 @@
-
 import { SearchResultViewColumn } from '../search-result-view-column.model';
 import { SearchResultViewItemComparator } from './search-result-view-item-comparator';
 import { SearchResultViewItem } from '../search-result-view-item.model';
@@ -11,7 +10,7 @@ export class SearchResultViewItemComparatorFactory {
   createSearchResultViewItemComparator(column: SearchResultViewColumn): SearchResultViewItemComparator {
     let fieldId = column.case_field_id;
     switch (column.case_field_type.type) {
-      case ('MultiSelectList') : {
+      case ('MultiSelectList'): {
         return this.textArrayComparator(fieldId);
       }
       case ('Number'):
@@ -22,6 +21,8 @@ export class SearchResultViewItemComparatorFactory {
       case ('TextArea'):
       case ('Email'):
       case ('Date'):
+      case ('DateTime'):
+      case ('Label'):
       case ('Postcode'):
       case ('YesOrNo'):
       case ('PhoneUK'):
@@ -35,7 +36,7 @@ export class SearchResultViewItemComparatorFactory {
   }
 
   private numberComparator(fieldId: string): SearchResultViewItemComparator {
-    return <SearchResultViewItemComparator> {
+    return <SearchResultViewItemComparator>{
       compare(a: SearchResultViewItem, b: SearchResultViewItem) {
         let fieldA = a.case_fields[fieldId];
         let fieldB = b.case_fields[fieldId];
@@ -47,7 +48,7 @@ export class SearchResultViewItemComparatorFactory {
   }
 
   private stringComparator(fieldId: string) {
-    return <SearchResultViewItemComparator> {
+    return <SearchResultViewItemComparator>{
       compare(a: SearchResultViewItem, b: SearchResultViewItem) {
         let fieldA = a.case_fields[fieldId];
         let fieldB = b.case_fields[fieldId];
@@ -59,7 +60,7 @@ export class SearchResultViewItemComparatorFactory {
   }
 
   private textArrayComparator(fieldId: string) {
-    return <SearchResultViewItemComparator> {
+    return <SearchResultViewItemComparator>{
       compare(a: SearchResultViewItem, b: SearchResultViewItem) {
         let fieldA = a.case_fields[fieldId];
         let fieldB = b.case_fields[fieldId];

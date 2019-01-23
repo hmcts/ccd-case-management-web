@@ -1,23 +1,18 @@
-import { Response, ResponseOptions } from '@angular/http';
+import { Response, ResponseOptions, Headers } from '@angular/http';
 import { AppConfig } from '../../app.config';
-import { HttpService } from '../http/http.service';
-import { Observable } from 'rxjs/Observable';
-import { HttpError } from '../http/http-error.model';
+import { Observable } from 'rxjs';
 import { CaseHistory } from './case-history.model';
 import { CaseHistoryService } from './case-history.service';
 import { createCaseHistory } from './case-history.test.fixture';
-import { HttpErrorService } from '../http/http-error.service';
 import createSpyObj = jasmine.createSpyObj;
+import { HttpService, HttpError, HttpErrorService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryService', () => {
 
-  const API_URL = 'http://aggregated.ccd.reform';
-  const JID = 'TEST';
-  const CTID = 'TestAddressBookCase';
+  const DATA_URL = 'http://data.ccd.reform';
   const CASE_ID = '1';
   const EVENT_ID = '10';
-  const CASE_HISTORY_URL = API_URL + `/caseworkers/:uid/jurisdictions/${JID}/case-types/${CTID}/cases/${CASE_ID}`
-    + `/events/${EVENT_ID}/case-history`;
+  const CASE_HISTORY_URL = DATA_URL + `/internal/cases/${CASE_ID}/events/${EVENT_ID}`;
   const ERROR: HttpError = new HttpError();
   ERROR.message = 'Critical error!';
 
@@ -48,15 +43,19 @@ describe('CaseHistoryService', () => {
 
     it('should use HttpService::get with correct url', () => {
       caseHistoryService
-        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .get(CASE_ID, EVENT_ID)
         .subscribe();
 
-      expect(httpService.get).toHaveBeenCalledWith(CASE_HISTORY_URL);
+      expect(httpService.get).toHaveBeenCalledWith(CASE_HISTORY_URL, {
+        headers: new Headers({
+          'experimental': 'true',
+          'Accept': CaseHistoryService.V2_MEDIATYPE_CASE_EVENT_VIEW
+        })});
     });
 
     it('should retrieve case history from server', () => {
       caseHistoryService
-        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .get(CASE_ID, EVENT_ID)
         .subscribe(
           caseHistory => expect(caseHistory).toEqual(CASE_HISTORY)
         );
@@ -66,7 +65,7 @@ describe('CaseHistoryService', () => {
       httpService.get.and.returnValue(Observable.throw(ERROR));
 
       caseHistoryService
-        .get(JID, CTID, CASE_ID, EVENT_ID)
+        .get(CASE_ID, EVENT_ID)
         .subscribe(() => {
         }, err => {
           expect(err).toEqual(ERROR);

@@ -1,10 +1,11 @@
-import { FieldType } from '../../shared/domain/definition/field-type.model';
+import { FieldType } from '@hmcts/ccd-case-ui-toolkit';
 
 export class Field {
-    constructor(
-      public id: string,
-      public field_type: FieldType,
-      public label?: string,
-      public metadata?: boolean
-    ) { }
+  constructor(
+    public id: string,
+    public field_type: FieldType,
+    public value?: string,
+    public label?: string,
+    public metadata?: boolean
+  ) { }
 }

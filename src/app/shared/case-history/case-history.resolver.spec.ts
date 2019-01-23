@@ -1,8 +1,8 @@
 import createSpyObj = jasmine.createSpyObj;
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CaseHistoryResolver } from './case-history.resolver';
 import { CaseHistory } from '../../core/cases/case-history.model';
-import { CaseView } from '../../core/cases/case-view.model';
+import { CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryResolver', () => {
   describe('resolve()', () => {
@@ -10,7 +10,7 @@ describe('CaseHistoryResolver', () => {
     const CASE_TYPE_ID = 'TEST_CASE_TYPE';
     const CASE_ID = '42';
     const EVENT_ID = '100';
-    const CASE_HISTORY: CaseHistory = createSpyObj<CaseHistory>('case', ['toString']);
+    const CASE_HISTORY: CaseHistory = createSpyObj<any>('case', ['toString']);
     const CASE_OBS: Observable<CaseHistory> = Observable.of(CASE_HISTORY);
 
     const CASE: CaseView = {
@@ -66,7 +66,7 @@ describe('CaseHistoryResolver', () => {
         });
 
       expect(route.paramMap.get).toHaveBeenCalledWith(CaseHistoryResolver.PARAM_EVENT_ID);
-      expect(caseHistoryService.get).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, CASE_ID, EVENT_ID);
+      expect(caseHistoryService.get).toHaveBeenCalledWith(CASE_ID, EVENT_ID);
     });
 
     it('should redirect to error page when case history cannot be retrieved', () => {

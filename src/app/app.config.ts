@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
-import { CaseEventData } from './shared/domain/case-event-data';
 
 @Injectable()
-export class AppConfig {
+export class AppConfig extends AbstractAppConfig {
 
   protected config: Config;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+    super();
+  }
 
   public load(): Promise<void> {
     console.log('Loading app config...');
@@ -25,7 +27,7 @@ export class AppConfig {
         .catch((error: any): any => {
           console.error(`Configuration ${configUrl} could not be read`, error);
           reject();
-          return Observable.throw(error.json().error || 'Server error');
+          return throwError(error.json().error || 'Server error');
         })
         .subscribe((config: Config) => {
           this.config = config;
@@ -131,48 +133,34 @@ export class AppConfig {
     return this.config.firefox_min_required_version;
   }
 
-  public getCaseHistoryUrl(jurisdictionId: string,
-                           caseTypeId: string,
-                           caseId: string,
-                           eventId: string) {
-    return this.getApiUrl()
-      + `/caseworkers/:uid`
-      + `/jurisdictions/${jurisdictionId}`
-      + `/case-types/${caseTypeId}`
+  public getCaseHistoryUrl(caseId: string, eventId: string) {
+    return this.getCaseDataUrl()
+      + `/internal`
       + `/cases/${caseId}`
-      + `/events/${eventId}`
-      + `/case-history`;
+      + `/events/${eventId}`;
+}
+
+  public getCreateOrUpdateDraftsUrl(ctid: string) {
+    return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;
   }
 
-  public getCreateOrUpdateDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
-  }
-
-  public getViewOrDeleteDraftsUrl(jid: string, ctid: string, did: string) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${did}`;
+  public getViewOrDeleteDraftsUrl(did: string) {
+    return this.getCaseDataUrl() + `/internal/drafts/${did}`;
   }
 }
 
-export class Config {
+export class Config extends CaseEditorConfig {
   activity_batch_collection_delay_ms: number;
-  activity_max_request_per_batch: number;
   activity_next_poll_request_ms: number;
   activity_retry: number;
   activity_url: string;
-  api_url: string;
-  case_data_url: string;
-  document_management_url: string;
-  login_url: string;
+  activity_max_request_per_batch: number;
   logout_url: string;
-  oauth2_client_id: string;
   oauth2_token_endpoint_url: string;
   pagination_page_size: number;
-  postcode_lookup_url: string;
   print_service_url: string;
-  remote_document_management_url: string;
   remote_print_service_url: string;
   smart_survey_url: string;
-  payments_url: string;
   unsupported_browser_url: string;
   chrome_min_required_version: number;
   ie_min_required_version: number;

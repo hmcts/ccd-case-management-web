@@ -2,43 +2,34 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 import { CaseViewerComponent } from './case-viewer.component';
 import { By } from '@angular/platform-browser';
-import { CaseView } from '../../core/cases/case-view.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng2-mock-component';
-import { OrderService } from '../../core/order/order.service';
-import { Observable } from 'rxjs/Observable';
-import { CaseViewEvent } from '../../core/cases/case-view-event.model';
-import { CaseViewTrigger } from '../../shared/domain/case-view/case-view-trigger.model';
+import { Observable } from 'rxjs';
 import { attr, text } from '../../test/helpers';
-import { PaletteUtilsModule } from '../../shared/palette/utils/utils.module';
 import { Subject } from 'rxjs/Subject';
-import { CallbackErrorsContext } from '../../shared/error/error-context';
-import { HttpError } from '../../core/http/http-error.model';
-import { LabelSubstitutorDirective } from '../../shared/substitutor/label-substitutor.directive';
-import { FieldsUtils } from '../../shared/utils/fields.utils';
-import { LabelSubstitutionService } from '../../shared/case-editor/label-substitution.service';
 import { ActivityPollingService } from '../../core/activity/activity.polling.service';
-import { CaseField } from '../../shared/domain/definition/case-field.model';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
-import { DraftService } from '../../core/draft/draft.service';
-import { AlertService } from '../../core/alert/alert.service';
+import {
+  PaletteUtilsModule, CaseField, PlaceholderService, FieldsUtils,
+  LabelSubstitutorDirective, HttpError, OrderService, DeleteOrCancelDialogComponent, CaseViewTrigger, CaseViewEvent,
+  CaseView, AlertService, CallbackErrorsContext, DraftService, CaseReferencePipe
+} from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { DeleteOrCancelDialogComponent } from '../../shared/delete-or-cancel-dialog/delete-or-cancel-dialog.component';
 
 @Component({
   // tslint:disable-next-line
   selector: 'cut-tabs',
   template: '<ng-content></ng-content>'
 })
-class TabsComponent {}
+class TabsComponent { }
 
 @Component({
   // tslint:disable-next-line
   selector: 'cut-tab',
   template: '<ng-content></ng-content>'
 })
-class TabComponent {}
+class TabComponent { }
 
 describe('CaseViewerComponent', () => {
 
@@ -66,9 +57,10 @@ describe('CaseViewerComponent', () => {
   })
   class CallbackErrorsComponent {
 
-    public static readonly TRIGGER_TEXT_GO = 'Go';
-    public static readonly TRIGGER_TEXT_IGNORE = 'Ignore Warning and Go';
-
+    @Input()
+    triggerTextIgnore: string;
+    @Input()
+    triggerTextContinue: string;
     @Input()
     callbackErrorsSubject: Subject<any> = new Subject();
     @Output()
@@ -144,137 +136,137 @@ describe('CaseViewerComponent', () => {
 
   const METADATA: CaseField[] = [
     {
-     id: '[CASE_REFERENCE]',
-     label: 'Case Reference',
-     value: 1533032330714079,
-     hint_text: null,
-     field_type: {
-       id: 'Number',
-       type: 'Number',
-       min: null,
-       max: null,
-       regular_expression: null,
-       fixed_list_items: [],
-       complex_fields: [],
-       collection_field_type: null
-     },
-     security_label: 'PUBLIC',
-     order: null,
-     display_context: null,
-     show_condition: null,
-     show_summary_change_option: null,
-     show_summary_content_option: null
-   },
-   {
-     id: '[CASE_TYPE]',
-     label: 'Case Type',
-     value: 'DIVORCE',
-     hint_text: null,
-     field_type: {
-       id: 'Text',
-       type: 'Text',
-       min: null,
-       max: null,
-       regular_expression: null,
-       fixed_list_items: [],
-       complex_fields: [],
-       collection_field_type: null
-     },
-     security_label: 'PUBLIC',
-     order: null,
-     display_context: null,
-     show_condition: null,
-     show_summary_change_option: null,
-     show_summary_content_option: null
-   },
-   {
-     id: '[CREATED_DATE]',
-     label: 'Created Date',
-     value: '2018-07-31T10:18:50.737',
-     hint_text: null,
-     field_type: {
-       id: 'Date',
-       type: 'Date',
-       min: null,
-       max: null,
-       regular_expression: null,
-       fixed_list_items: [],
-       complex_fields: [],
-       collection_field_type: null
-     },
-     security_label: 'PUBLIC',
-     order: null,
-     display_context: null,
-     show_condition: null,
-     show_summary_change_option: null,
-     show_summary_content_option: null
-   },
-   {
-     id: '[JURISDICTION]',
-     label: 'Jurisdiction',
-     value: 'DIVORCE',
-     hint_text: null,
-     field_type: {
-       id: 'Text',
-       type: 'Text',
-       min: null,
-       max: null,
-       regular_expression: null,
-       fixed_list_items: [],
-       complex_fields: [],
-       collection_field_type: null
-     },
-     security_label: 'PUBLIC',
-     order: null,
-     display_context: null,
-     show_condition: null,
-     show_summary_change_option: null,
-     show_summary_content_option: null
-   },
-   {
-     id: '[LAST_MODIFIED_DATE]',
-     label: 'Last Modified Date',
-     value: '2018-07-31T10:18:50.737',
-     hint_text: null,
-     field_type: {
-       id: 'Date',
-       type: 'Date',
-       min: null,
-       max: null,
-       regular_expression: null,
-       fixed_list_items: [],
-       complex_fields: [],
-       collection_field_type: null
-     },
-     security_label: 'PUBLIC',
-     order: null,
-     display_context: null,
-     show_condition: null,
-     show_summary_change_option: null,
-     show_summary_content_option: null
-   },
-   {
-     id: '[SECURITY_CLASSIFICATION]',
-     label: 'Security Classification',
-     value: 'PUBLIC',
-     hint_text: null,
-     field_type: {
-       id: 'Text',
-       type: 'Text',
-       min: null,
-       max: null,
-       regular_expression: null,
-       fixed_list_items: [],
-       complex_fields: [],
-       collection_field_type: null
-     },
-     security_label: 'PUBLIC',
-     order: null,
-     display_context: null,
-     show_condition: null,
-     show_summary_change_option: null,
-     show_summary_content_option: null
-   }
+      id: '[CASE_REFERENCE]',
+      label: 'Case Reference',
+      value: 1533032330714079,
+      hint_text: null,
+      field_type: {
+        id: 'Number',
+        type: 'Number',
+        min: null,
+        max: null,
+        regular_expression: null,
+        fixed_list_items: [],
+        complex_fields: [],
+        collection_field_type: null
+      },
+      security_label: 'PUBLIC',
+      order: null,
+      display_context: null,
+      show_condition: null,
+      show_summary_change_option: null,
+      show_summary_content_option: null
+    },
+    {
+      id: '[CASE_TYPE]',
+      label: 'Case Type',
+      value: 'DIVORCE',
+      hint_text: null,
+      field_type: {
+        id: 'Text',
+        type: 'Text',
+        min: null,
+        max: null,
+        regular_expression: null,
+        fixed_list_items: [],
+        complex_fields: [],
+        collection_field_type: null
+      },
+      security_label: 'PUBLIC',
+      order: null,
+      display_context: null,
+      show_condition: null,
+      show_summary_change_option: null,
+      show_summary_content_option: null
+    },
+    {
+      id: '[CREATED_DATE]',
+      label: 'Created Date',
+      value: '2018-07-31T10:18:50.737',
+      hint_text: null,
+      field_type: {
+        id: 'Date',
+        type: 'Date',
+        min: null,
+        max: null,
+        regular_expression: null,
+        fixed_list_items: [],
+        complex_fields: [],
+        collection_field_type: null
+      },
+      security_label: 'PUBLIC',
+      order: null,
+      display_context: null,
+      show_condition: null,
+      show_summary_change_option: null,
+      show_summary_content_option: null
+    },
+    {
+      id: '[JURISDICTION]',
+      label: 'Jurisdiction',
+      value: 'DIVORCE',
+      hint_text: null,
+      field_type: {
+        id: 'Text',
+        type: 'Text',
+        min: null,
+        max: null,
+        regular_expression: null,
+        fixed_list_items: [],
+        complex_fields: [],
+        collection_field_type: null
+      },
+      security_label: 'PUBLIC',
+      order: null,
+      display_context: null,
+      show_condition: null,
+      show_summary_change_option: null,
+      show_summary_content_option: null
+    },
+    {
+      id: '[LAST_MODIFIED_DATE]',
+      label: 'Last Modified Date',
+      value: '2018-07-31T10:18:50.737',
+      hint_text: null,
+      field_type: {
+        id: 'Date',
+        type: 'Date',
+        min: null,
+        max: null,
+        regular_expression: null,
+        fixed_list_items: [],
+        complex_fields: [],
+        collection_field_type: null
+      },
+      security_label: 'PUBLIC',
+      order: null,
+      display_context: null,
+      show_condition: null,
+      show_summary_change_option: null,
+      show_summary_content_option: null
+    },
+    {
+      id: '[SECURITY_CLASSIFICATION]',
+      label: 'Security Classification',
+      value: 'PUBLIC',
+      hint_text: null,
+      field_type: {
+        id: 'Text',
+        type: 'Text',
+        min: null,
+        max: null,
+        regular_expression: null,
+        fixed_list_items: [],
+        complex_fields: [],
+        collection_field_type: null
+      },
+      security_label: 'PUBLIC',
+      order: null,
+      display_context: null,
+      show_condition: null,
+      show_summary_change_option: null,
+      show_summary_content_option: null
+    }
   ];
 
   const JID = 'TEST';
@@ -318,7 +310,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 2,
             value: 'Janet',
-            show_condition: ''
+            show_condition: '',
+            hint_text: ''
           },
           {
             id: 'PersonLastName',
@@ -330,7 +323,8 @@ describe('CaseViewerComponent', () => {
             },
             order: 1,
             value: 'Parker',
-            show_condition: 'PersonFirstName="Jane*"'
+            show_condition: 'PersonFirstName="Jane*"',
+            hint_text: ''
           },
           {
             id: 'PersonComplex',
@@ -342,7 +336,8 @@ describe('CaseViewerComponent', () => {
               complex_fields: []
             },
             order: 3,
-            show_condition: 'PersonFirstName="Park"'
+            show_condition: 'PersonFirstName="Park"',
+            hint_text: ''
           }
         ],
         show_condition: 'PersonFirstName="Janet"'
@@ -399,14 +394,18 @@ describe('CaseViewerComponent', () => {
     inputs: ['caseId', 'displayMode']
   });
 
-  let FieldReadComponent: any = MockComponent({ selector: 'ccd-field-read', inputs: [
-    'caseField',
-    'caseReference'
-  ]});
+  let FieldReadComponent: any = MockComponent({
+    selector: 'ccd-field-read', inputs: [
+      'caseField',
+      'caseReference'
+    ]
+  });
 
-  let LinkComponent: any = MockComponent({ selector: 'a', inputs: [
-    'routerLink'
-  ]});
+  let LinkComponent: any = MockComponent({
+    selector: 'a', inputs: [
+      'routerLink'
+    ]
+  });
 
   beforeEach(async(() => {
     orderService = new OrderService();
@@ -428,7 +427,7 @@ describe('CaseViewerComponent', () => {
 
     router = createSpyObj<Router>('router', ['navigate']);
     router.navigate.and.returnValue(new Promise(any));
-    mockCallbackErrorSubject = createSpyObj<Router>('callbackErrorSubject', ['next']);
+    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
 
     TestBed
       .configureTestingModule({
@@ -453,7 +452,8 @@ describe('CaseViewerComponent', () => {
         ],
         providers: [
           FieldsUtils,
-          LabelSubstitutionService,
+          PlaceholderService,
+          CaseReferencePipe,
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router },
@@ -537,7 +537,7 @@ describe('CaseViewerComponent', () => {
       .query($NAME_TAB_CONTENT)
       .queryAll(By.css('tbody>tr>th'));
 
-      SIMPLE_FIELDS.forEach(field => {
+    SIMPLE_FIELDS.forEach(field => {
       expect(headers.find(r => r.nativeElement.textContent.trim() === field.label))
         .toBeTruthy(`Could not find row with label ${field.label}`);
     });
@@ -552,7 +552,7 @@ describe('CaseViewerComponent', () => {
 
     let cells = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr.compound-field>td'));
+      .queryAll(By.css('tbody>tr.compound-field>th'));
 
     expect(cells.length).toEqual(COMPLEX_FIELDS.length);
   });
@@ -564,18 +564,18 @@ describe('CaseViewerComponent', () => {
 
     let readFields_compound = de
       .query($NAME_TAB_CONTENT)
-      .queryAll(By.css('tbody>tr td>span>ccd-field-read'));
+      .queryAll(By.css('tbody>tr th>span>ccd-field-read'));
 
     let readFields = readFields_fields.concat(readFields_compound);
 
     FIELDS.forEach(field => {
       expect(readFields.find(f => {
-          let fieldInstance = f.componentInstance;
-          return JSON.stringify(fieldInstance.caseField) === JSON.stringify(field);
-        }))
+        let fieldInstance = f.componentInstance;
+        return JSON.stringify(fieldInstance.caseField) === JSON.stringify(field);
+      }))
         .toBeTruthy(`Could not find field with type ${field.field_type}`);
     });
-    expect(FIELDS.length).toBe(readFields_fields.length);
+    expect(FIELDS.length).toBe(readFields.length);
   });
 
   it('should render fields in ascending order', () => {
@@ -583,7 +583,7 @@ describe('CaseViewerComponent', () => {
       .query($NAME_TAB_CONTENT)
       .queryAll(By.css('tbody>tr>th'));
 
-      expect(headers[0].nativeElement.textContent.trim()).toBe(FIELDS[1].label);
+    expect(headers[0].nativeElement.textContent.trim()).toBe(FIELDS[1].label);
     expect(orderService.sort).toHaveBeenCalledWith(FIELDS);
   });
 
@@ -621,7 +621,7 @@ describe('CaseViewerComponent', () => {
   it('should navigate to event trigger view on trigger emit', () => {
     component.applyTrigger(TRIGGERS[0]);
     expect(router.navigate).toHaveBeenCalledWith(['trigger', TRIGGERS[0].id], {
-      queryParams: { },
+      queryParams: {},
       relativeTo: mockRoute
     });
   });
@@ -666,14 +666,14 @@ describe('CaseViewerComponent', () => {
       callbackErrors: ['error1', 'error2'],
       callbackWarnings: ['warning1', 'warning2']
     };
-    router.navigate.and.returnValue({ catch : (error) => error(VALID_ERROR)});
+    router.navigate.and.returnValue({ catch: (error) => error(VALID_ERROR) });
 
     let eventTriggerElement = de.query(By.directive(EventTriggerComponent));
     let eventTrigger = eventTriggerElement.componentInstance;
     eventTrigger.onTrigger.emit(TRIGGERS[0]);
 
     expect(router.navigate).toHaveBeenCalledWith(['trigger', TRIGGERS[0].id], {
-      queryParams: { },
+      queryParams: {},
       relativeTo: mockRoute
     });
     expect(mockCallbackErrorSubject.next).toHaveBeenCalledWith(VALID_ERROR);
@@ -681,20 +681,20 @@ describe('CaseViewerComponent', () => {
 
   it('should change button label when notified about callback errors', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
 
     let eventTriggerElement = de.query(By.directive(EventTriggerComponent));
     let eventTrigger = eventTriggerElement.componentInstance;
 
-    expect(eventTrigger.triggerText).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_GO);
+    expect(eventTrigger.triggerText).toEqual(CaseViewerComponent.TRIGGER_TEXT_START);
 
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_IGNORE;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_CONTINUE;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
 
-    expect(eventTrigger.triggerText).toEqual(CallbackErrorsComponent.TRIGGER_TEXT_IGNORE);
+    expect(eventTrigger.triggerText).toEqual(CaseViewerComponent.TRIGGER_TEXT_CONTINUE);
   });
 
   it('should initially not display form errors', () => {
@@ -705,13 +705,14 @@ describe('CaseViewerComponent', () => {
 
   it('should clear errors and warnings', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CallbackErrorsComponent.TRIGGER_TEXT_GO;
+    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
     fixture.detectChanges();
     component.clearErrorsAndWarnings();
     let error = de.query($ERROR_SUMMARY);
     expect(error).toBeFalsy();
     expect(component.error).toBeFalsy();
+    expect(component.ignoreWarning).toBeFalsy();
   });
 
   it('should display error when form error get set', () => {

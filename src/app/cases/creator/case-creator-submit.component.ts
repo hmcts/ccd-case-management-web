@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CaseReferencePipe } from '../../shared/utils/case-reference.pipe';
-import { ActivatedRoute, Params, Router, NavigationEnd, RouterEvent } from '@angular/router';
-import { CasesService } from '../../core/cases/cases.service';
-import { AlertService } from '../../core/alert/alert.service';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { Observable } from 'rxjs/Observable';
-import { CaseEventData } from '../../shared/domain/case-event-data';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { CaseEventTrigger, CaseEventData, Draft, CaseReferencePipe, CaseEditPageComponent, AlertService,
+  CasesService, DraftService } from '@hmcts/ccd-case-ui-toolkit';
+import { Observable } from 'rxjs';
 import { EventStatusService } from '../../core/cases/event-status.service';
-import { DraftService } from '../../core/draft/draft.service';
-import { Draft } from '../../shared/domain/draft';
-import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.component';
 
 @Component({
   selector: 'ccd-case-creator-submit',
@@ -17,7 +11,6 @@ import { CaseEditPageComponent } from '../../shared/case-editor/case-edit-page.c
 })
 export class CaseCreatorSubmitComponent implements OnInit {
 
-  public static readonly ORIGIN_QUERY_PARAM = 'origin';
   eventTrigger: CaseEventTrigger;
 
   jurisdictionId: string;
@@ -48,14 +41,14 @@ export class CaseCreatorSubmitComponent implements OnInit {
     }
   }
 
-  validate(): (sanitizedEditForm: CaseEventData) => Observable<object> {
-    return (sanitizedEditForm: CaseEventData) => this.casesService.validateCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+  validate(): (sanitizedEditForm: CaseEventData, pageId: string) => Observable<object> {
+    return (sanitizedEditForm: CaseEventData, pageId: string) => this.casesService.validateCase(this.caseTypeId,
+      sanitizedEditForm, pageId);
   }
 
   saveDraft(): (caseEventData: CaseEventData) => Observable<Draft> {
     if (this.eventTrigger.can_save_draft) {
-      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.jurisdictionId,
-            this.caseTypeId,
+      return (caseEventData: CaseEventData) => this.draftService.createOrUpdateDraft(this.caseTypeId,
             this.eventTrigger.case_id,
             caseEventData);
     }
@@ -77,38 +70,42 @@ export class CaseCreatorSubmitComponent implements OnInit {
   }
 
   cancel(event: any): Promise<boolean> {
-    switch (event.status) {
-      case CaseEditPageComponent.NEW_FORM_DISCARD:
-        return this.router.navigate(['list/case']);
-      case CaseEditPageComponent.RESUMED_FORM_DISCARD:
-        return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
-      case CaseEditPageComponent.NEW_FORM_SAVE:
-        this.saveDraft().call(null, event.data).subscribe(_ => {
-          return this.router.navigate(['list/case'])
-            .then(() => {
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.success(`The draft has been successfully saved`);
-            })
-        }, error => {
-          console.log('error=', error);
-          this.alertService.setPreserveAlerts(true);
-          this.alertService.warning(error.message);
-          this.router.navigate(['list/case'])
-        });
-        break;
-      case CaseEditPageComponent.RESUMED_FORM_SAVE:
-        this.saveDraft().call(null, event.data).subscribe(_ => {
-          return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
-            .then(() => {
-              this.alertService.setPreserveAlerts(true);
-              this.alertService.success(`The draft has been successfully saved`);
-            })
+    if (this.eventTrigger.can_save_draft) {
+      switch (event.status) {
+        case CaseEditPageComponent.NEW_FORM_DISCARD:
+          return this.router.navigate(['list/case']);
+        case CaseEditPageComponent.RESUMED_FORM_DISCARD:
+          return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`]);
+        case CaseEditPageComponent.NEW_FORM_SAVE:
+          this.saveDraft().call(null, event.data).subscribe(_ => {
+            return this.router.navigate(['list/case'])
+              .then(() => {
+                this.alertService.setPreserveAlerts(true);
+                this.alertService.success(`The draft has been successfully saved`);
+              })
           }, error => {
             console.log('error=', error);
             this.alertService.setPreserveAlerts(true);
             this.alertService.warning(error.message);
-        });
-        break;
+            this.router.navigate(['list/case'])
+          });
+          break;
+        case CaseEditPageComponent.RESUMED_FORM_SAVE:
+          this.saveDraft().call(null, event.data).subscribe(_ => {
+            return this.router.navigate([`case/${this.jurisdictionId}/${this.caseTypeId}/${this.eventTrigger.case_id}`])
+              .then(() => {
+                this.alertService.setPreserveAlerts(true);
+                this.alertService.success(`The draft has been successfully saved`);
+              })
+            }, error => {
+              console.log('error=', error);
+              this.alertService.setPreserveAlerts(true);
+              this.alertService.warning(error.message);
+          });
+          break;
+      }
+    } else {
+      return this.router.navigate(['list/case']);
     }
   }
 

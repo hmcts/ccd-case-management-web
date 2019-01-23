@@ -1,13 +1,9 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { CasePrintDocument } from '../../shared/domain/case-view/case-print-document.model';
-import { CasesService } from '../../core/cases/cases.service';
-import { AlertService } from '../../core/alert/alert.service';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { HttpError } from '../../core/http/http-error.model';
+import { HttpError, CaseView, AlertService, CasesService, CasePrintDocument } from '@hmcts/ccd-case-ui-toolkit';
 import { Injectable } from '@angular/core';
-import { CaseView } from '../../core/cases/case-view.model';
 
 @Injectable()
 export class CasePrintDocumentsResolver implements Resolve<CasePrintDocument[]> {

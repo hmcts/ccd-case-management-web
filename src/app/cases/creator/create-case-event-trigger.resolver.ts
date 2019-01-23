@@ -1,13 +1,9 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { AlertService } from '../../core/alert/alert.service';
-import { HttpError } from '../../core/http/http-error.model';
-import { CasesService } from '../../core/cases/cases.service';
+import { Observable } from 'rxjs';
+import { CaseEventTrigger, Draft, HttpError, AlertService, DRAFT_QUERY_PARAM, CasesService } from '@hmcts/ccd-case-ui-toolkit';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
-import { Draft } from '../../shared/domain/draft';
 
 @Injectable()
 export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger> {
@@ -32,11 +28,10 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
   }
 
   getAndCacheEventTrigger(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
-    let jurisdictionId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_JURISDICTION_ID);
     let caseTypeId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_CASE_TYPE_ID);
     let eventTriggerId = route.paramMap.get(CreateCaseEventTriggerResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(CreateCaseEventTriggerResolver.QUERY_PARAM_IGNORE_WARNING);
-    let draftId = route.queryParamMap.get(Draft.DRAFT_QUERY_PARAM);
+    let draftId = route.queryParamMap.get(DRAFT_QUERY_PARAM);
     let caseId = undefined;
 
     if (-1 === CreateCaseEventTriggerResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {
@@ -46,7 +41,7 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
       caseId = draftId;
     }
     return this.casesService
-      .getEventTrigger(jurisdictionId, caseTypeId, eventTriggerId, caseId, ignoreWarning)
+      .getEventTrigger(caseTypeId, eventTriggerId, caseId, ignoreWarning)
       .do(eventTrigger => this.cachedEventTrigger = eventTrigger)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);

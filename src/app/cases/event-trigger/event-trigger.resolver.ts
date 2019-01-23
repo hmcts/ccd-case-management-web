@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { CaseEventTrigger } from '../../shared/domain/case-view/case-event-trigger.model';
-import { Observable } from 'rxjs/Observable';
-import { CasesService } from '../../core/cases/cases.service';
-import { AlertService } from '../../core/alert/alert.service';
-import { HttpError } from '../../core/http/http-error.model';
-import { CaseView } from '../../core/cases/case-view.model';
+import { CaseEventTrigger, HttpError, CaseView, AlertService, CasesService } from '@hmcts/ccd-case-ui-toolkit';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
@@ -36,13 +32,14 @@ export class EventTriggerResolver implements Resolve<CaseEventTrigger> {
 
   private getAndCacheEventTrigger(route: ActivatedRouteSnapshot): Observable<CaseEventTrigger> {
     let caseDetails: CaseView = route.parent.data.case;
+    let caseTypeId = undefined;
     let eventTriggerId = route.paramMap.get(EventTriggerResolver.PARAM_EVENT_ID);
     let ignoreWarning = route.queryParamMap.get(EventTriggerResolver.IGNORE_WARNING);
     if (-1 === EventTriggerResolver.IGNORE_WARNING_VALUES.indexOf(ignoreWarning)) {
       ignoreWarning = 'false';
     }
     return this.casesService
-      .getEventTrigger(caseDetails.case_type.jurisdiction.id, caseDetails.case_type.id, eventTriggerId, caseDetails.case_id, ignoreWarning)
+      .getEventTrigger(caseTypeId, eventTriggerId, caseDetails.case_id, ignoreWarning)
       .do(eventTrigger => this.cachedEventTrigger = eventTrigger)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);

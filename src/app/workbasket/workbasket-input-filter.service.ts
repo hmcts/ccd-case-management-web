@@ -1,28 +1,51 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-import { HttpService } from '../core/http/http.service';
 import { AppConfig } from '../app.config';
 import { WorkbasketInputModel } from './workbasket-input.model';
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class WorkbasketInputFilterService {
+  public static readonly V2_MEDIATYPE_WORKBASKET_INPUT_DETAILS =
+  'application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-workbasket-input-details.v2+json;charset=UTF-8';
+
+  private currentJurisdiction: string;
+  private currentCaseType: string;
 
   constructor(private httpService: HttpService, private appConfig: AppConfig) {
   }
 
-  getWorkbasketInputUrl(jurisdictionId: string, caseTypeId: string): string {
-    return `${this.appConfig.getApiUrl()}/caseworkers/:uid/jurisdictions/${jurisdictionId}/case-types/${caseTypeId}/work-basket-inputs`;
+  getWorkbasketInputUrl(caseTypeId: string): string {
+    return `${this.appConfig.getCaseDataUrl()}/internal/case-types/${caseTypeId}/work-basket-inputs`;
   }
 
   getWorkbasketInputs(jurisdictionId: string, caseTypeId: string): Observable<WorkbasketInputModel[]> {
-    let url = this.getWorkbasketInputUrl(jurisdictionId, caseTypeId);
+    let url = this.getWorkbasketInputUrl(caseTypeId);
+    let headers = new Headers({
+      'experimental': 'true',
+      'Accept': WorkbasketInputFilterService.V2_MEDIATYPE_WORKBASKET_INPUT_DETAILS
+    });
+    this.currentJurisdiction = jurisdictionId;
+    this.currentCaseType = caseTypeId;
     return this.httpService
-      .get(url)
+      .get(url, {headers})
       .map(response => {
-        let workbasketInputs = response.json();
-        workbasketInputs.forEach( item => { item.field.label = item.label; });
+        let jsonResponse = response.json();
+        let workbasketInputs = jsonResponse.workbasketInputs;
+        if (this.isDataValid(jurisdictionId, caseTypeId)) {
+          workbasketInputs.forEach(item => {
+            item.field.label = item.label;
+          });
+        } else {
+          throw new Error('Response expired');
+        }
         return workbasketInputs;
       });
+  }
+
+  isDataValid(jurisdictionId: string, caseTypeId: string): boolean {
+    return this.currentJurisdiction === jurisdictionId && this.currentCaseType === caseTypeId
   }
 }

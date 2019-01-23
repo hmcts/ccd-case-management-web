@@ -1,22 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CaseHistoryComponent } from './case-history.component';
-import { FieldsUtils } from '../utils/fields.utils';
-import { PaletteUtilsModule } from '../palette/utils/utils.module';
 import { attr } from '../../test/helpers';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
-import { HttpError } from '../../core/http/http-error.model';
-import { LabelSubstitutorDirective } from '../substitutor/label-substitutor.directive';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LabelSubstitutionService } from '../case-editor/label-substitution.service';
 import { CaseHistory } from '../../core/cases/case-history.model';
 import { DebugElement } from '@angular/core';
-import { OrderService } from '../../core/order/order.service';
 import { createCaseHistory } from '../../core/cases/case-history.test.fixture';
 import createSpyObj = jasmine.createSpyObj;
 import any = jasmine.any;
 import { CaseView } from '../../core/cases/case-view.model';
+import {
+  FieldsUtils, PaletteUtilsModule, HttpError, LabelSubstitutorDirective,
+  PlaceholderService, OrderService, CaseReferencePipe
+} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseHistoryComponent', () => {
 
@@ -78,12 +76,15 @@ describe('CaseHistoryComponent', () => {
   let orderService;
 
   let FieldReadComponent: any = MockComponent({ selector: 'ccd-field-read', inputs: [
-      'caseField'
+      'caseField',
+      'caseReference'
     ]});
 
-  let LinkComponent: any = MockComponent({ selector: 'a', inputs: [
+  let LinkComponent: any = MockComponent({
+    selector: 'a', inputs: [
       'routerLink'
-    ]});
+    ]
+  });
 
   beforeEach(async(() => {
     orderService = new OrderService();
@@ -108,7 +109,8 @@ describe('CaseHistoryComponent', () => {
         ],
         providers: [
           FieldsUtils,
-          LabelSubstitutionService,
+          PlaceholderService,
+          CaseReferencePipe,
           { provide: ActivatedRoute, useValue: mockRoute },
           { provide: OrderService, useValue: orderService },
           { provide: Router, useValue: router }
@@ -197,11 +199,14 @@ describe('CaseHistoryComponent', () => {
       .queryAll(By.css('tbody>tr td>ccd-field-read'));
 
     FIELDS.forEach(field => {
-      expect(readFields.find(f => {
+      let readField = readFields.find(f => {
         let fieldInstance = f.componentInstance;
         return JSON.stringify(fieldInstance.caseField) === JSON.stringify(field);
-      }))
-        .toBeTruthy(`Could not find field with type ${field.field_type}`);
+      });
+      let readFieldComponent = readField.componentInstance;
+
+      expect(readField).toBeTruthy(`Could not find field with type ${field.field_type}`);
+      expect(readFieldComponent.caseReference).toEqual(CASE_HISTORY.case_id);
     });
     expect(FIELDS.length).toBe(readFields.length);
   });

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AlertLevel } from './alert-level.model';
+import { AlertLevel } from '@hmcts/ccd-case-ui-toolkit';
 
 @Pipe({
   name: 'ccdLevelToType'

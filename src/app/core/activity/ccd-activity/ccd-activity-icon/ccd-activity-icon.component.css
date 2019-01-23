@@ -14,25 +14,9 @@
     padding: 5px 0px;
     position: absolute;
     z-index: 1;
-    top: -65%;
-    right: 100%;
-    /*bottom: 125%;*/
-    /*left: 50%;*/
     margin-left: -50px;
     opacity: 0;
     transition: opacity 1s;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-radius: 3px;
-    border-color: #1175B2 transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {

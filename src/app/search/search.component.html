@@ -1,17 +1,18 @@
-<h3 class="heading-medium">Search</h3>
+<h3 class="heading-medium search-filter" aria-label="Criteria">Criteria</h3>
 <div class="grid-row">
   <div class="search-left">
 
     <ccd-search-filters
       [jurisdictions]="profile.jurisdictions"
       (onApply)="applyFilter($event)"
-      [autoApply]="false"
+      (onReset)="applyReset($event)"
+      [autoApply]="true"
     ></ccd-search-filters>
 
   </div>
-  <div class="search-right">
+  <div class="search-right" id="search-result" aria-live="polite" role="region" >
     <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
                        [caseFilterFG]="caseFilterFG" [paginationMetadata]="paginationMetadata"
-                       [metadataFields]="metadataFields" (changePage)="applyFilter($event)"></ccd-search-result>
+                       [metadataFields]="metadataFields" (changePage)="applyFilter($event)" ></ccd-search-result>
   </div>
 </div>

@@ -1,9 +1,9 @@
-import { HttpService } from '../http/http.service';
 import { AppConfig } from '../../app.config';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Response, ResponseOptions, URLSearchParams } from '@angular/http';
 import { OAuth2Service } from './oauth2.service';
 import createSpyObj = jasmine.createSpyObj;
+import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('OAuth2Service', () => {
 
@@ -34,7 +34,7 @@ describe('OAuth2Service', () => {
     appConfig.getLoginUrl.and.returnValue(LOGIN_URL);
     appConfig.getLogoutUrl.and.returnValue(LOGOUT_URL);
     appConfig.getOAuth2ClientId.and.returnValue(OAUTH2_CLIENT_ID);
-    authService = createSpyObj<HttpService>('authService', ['redirectUri', 'signIn']);
+    authService = createSpyObj<any>('authService', ['redirectUri', 'signIn']);
     authService.redirectUri.and.returnValue(REDIRECT_URI);
 
     oauth2Service = new OAuth2Service(httpService, appConfig, authService);

@@ -19,7 +19,6 @@ table {
     a {
       color: $blue_table;
       background-color: $white;
-      outline: none;
     }
   }
 
@@ -54,6 +53,7 @@ table {
 .notification {
   text-align: center;
   padding: 30px 0px 30px 0px;
+  margin-top: 20px;
 }
 a:hover {
   color: $blue_table;
@@ -89,4 +89,6 @@ a:hover {
   color: $black;
 }
 
-
+span.heading-medium {
+  margin-top: -20px;
+}

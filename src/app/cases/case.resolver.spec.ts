@@ -1,9 +1,7 @@
 import { CaseResolver } from './case.resolver';
-import { Observable } from 'rxjs/Observable';
-import { CaseView } from '../core/cases/case-view.model';
-import { AlertService } from '../core/alert/alert.service';
-import { DraftService } from '../core/draft/draft.service';
+import { Observable } from 'rxjs';
 import createSpyObj = jasmine.createSpyObj;
+import { CaseView, AlertService, DraftService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CaseResolver', () => {
   describe('resolve()', () => {
@@ -15,8 +13,8 @@ describe('CaseResolver', () => {
     const JURISDICTION_ID = 'TEST';
     const CASE_TYPE_ID = 'TEST_CASE_TYPE';
     const CASE_ID = '42';
-    const CASE: CaseView = createSpyObj<CaseView>('case', ['toString']);
-    const CASE_CACHED: CaseView = createSpyObj<CaseView>('caseCached', ['toString']);
+    const CASE: CaseView = createSpyObj<any>('case', ['toString']);
+    const CASE_CACHED: CaseView = createSpyObj<any>('caseCached', ['toString']);
     const CASE_OBS: Observable<CaseView> = Observable.of(CASE);
 
     let caseResolver: CaseResolver;
@@ -187,8 +185,8 @@ describe('CaseResolver', () => {
     const JURISDICTION_ID = 'TEST';
     const CASE_TYPE_ID = 'TEST_CASE_TYPE';
     const DRAFT_ID = 'DRAFT42';
-    const DRAFT: CaseView = createSpyObj<CaseView>('draft', ['toString']);
-    const DRAFT_CACHED: CaseView = createSpyObj<CaseView>('draftCached', ['toString']);
+    const DRAFT: CaseView = createSpyObj<any>('draft', ['toString']);
+    const DRAFT_CACHED: CaseView = createSpyObj<any>('draftCached', ['toString']);
     const DRAFT_OBS: Observable<CaseView> = Observable.of(DRAFT);
 
     let caseResolver: CaseResolver;
@@ -226,7 +224,7 @@ describe('CaseResolver', () => {
           expect(caseData).toBe(DRAFT);
         });
 
-      expect(draftService.getDraft).toHaveBeenCalledWith(JURISDICTION_ID, CASE_TYPE_ID, DRAFT_ID);
+      expect(draftService.getDraft).toHaveBeenCalledWith(DRAFT_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_JURISDICTION_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_TYPE_ID);
       expect(route.paramMap.get).toHaveBeenCalledWith(PARAM_CASE_ID);

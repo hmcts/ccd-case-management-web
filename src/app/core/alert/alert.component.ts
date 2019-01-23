@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AlertService } from './alert.service';
-import { Alert } from './alert.model';
 import { Subscription } from 'rxjs/Subscription';
+import { Alert, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-alert',

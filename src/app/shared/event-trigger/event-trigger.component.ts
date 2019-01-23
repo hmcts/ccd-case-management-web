@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CaseViewTrigger } from '../domain/case-view/case-view-trigger.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OrderService } from '../../core/order/order.service';
-import { AlertService } from '../../core/alert/alert.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { HttpError } from '../../core/http/http-error.model';
+import { HttpError, OrderService, CaseViewTrigger, AlertService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-event-trigger',

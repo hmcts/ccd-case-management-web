@@ -2,7 +2,6 @@
   <cut-body>
 
     <div class="heading-top" topBody>
-      <h1 class="heading-medium">Case List</h1>
       <a routerLink="/create/case" class="button">Create new case</a>
     </div>
 
@@ -13,7 +12,7 @@
         (onApply)="applyFilter($event)"
       ></ccd-workbasket-filters>
     </div>
-    <div class="display-right" rightBody>
+    <div class="display-right" id="search-result" aria-live="polite" role="region" rightBody>
 
       <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
                          [caseFilterFG]="caseFilterFG" [page]="page" [paginationMetadata]="paginationMetadata"

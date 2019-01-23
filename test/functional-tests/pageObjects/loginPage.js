@@ -27,7 +27,7 @@ class LoginPage extends BasePage {
       let currentURL = await browser.getCurrentUrl();
       let errorMessage = `Failed to load page, Expected URL fragment: ${selfUrlPath} | Actual URL: ${currentURL}`;
 
-      await browser.wait(EC.urlContains(selfUrlPath),10000)
+      await browser.wait(EC.urlContains(selfUrlPath),30000)
         .catch(err => console.log(errorMessage));
 
       //return new instance of the login page
@@ -51,8 +51,7 @@ class LoginPage extends BasePage {
    * @returns {Promise<CCDBanner>} new instance of the CCDBanner page
    */
   async clickSignIn() {
-      await element(this._signIn).submit();
-      browser.waitForAngular();
+      await element(this._signIn).click();
       return new CCDBanner
   }
 
@@ -64,8 +63,8 @@ class LoginPage extends BasePage {
       let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
       let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
 
-      await inputCredentials(username,password);
-      await clickSignIn();
+      await this.inputCredentials(username,password);
+      return await this.clickSignIn();
   }
 
 }

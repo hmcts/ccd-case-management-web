@@ -153,8 +153,6 @@ export class Config extends CaseEditorConfig {
   logout_url: string;
   oauth2_token_endpoint_url: string;
   pagination_page_size: number;
-  print_service_url: string;
-  remote_print_service_url: string;
   smart_survey_url: string;
   unsupported_browser_url: string;
   chrome_min_required_version: number;

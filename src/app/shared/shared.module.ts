@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { EventTriggerHeaderComponent } from './header/event-trigger-header.component';
 import { SortSearchResultPipe } from './search/sorting/sort-search-result.pipe';
 import { SearchResultViewItemComparatorFactory } from './search/sorting/search-result-view-item-comparator-factory';
-import { CaseHistoryService } from '../core/cases/case-history.service';
 
 @NgModule({
   imports: [
@@ -39,7 +38,6 @@ import { CaseHistoryService } from '../core/cases/case-history.service';
   providers: [
     SearchResultViewItemComparatorFactory,
     CaseFieldService,
-    CaseHistoryService,
   ],
   exports: [
     SearchResultComponent,

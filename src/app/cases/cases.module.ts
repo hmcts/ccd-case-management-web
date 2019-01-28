@@ -17,9 +17,10 @@ import { CasePrintDocumentsResolver } from './printer/case-print-documents.resol
 import { CaseCreatorSubmitComponent } from './creator/case-creator-submit.component';
 import { CreateCaseEventTriggerResolver } from './creator/create-case-event-trigger.resolver';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
-import { PrintUrlPipe } from './printer/print-url.pipe';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CaseViewConsumerComponent } from './viewer/case-view-consumer.component';
+import { PrintUrlPipe } from './printer/print-url.pipe';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CaseEventTriggerComponent,
     CasePrinterComponent,
     CreateCaseFiltersComponent,
-    PrintUrlPipe,
+    CaseViewConsumerComponent,
+    // PrintUrlPipe,
   ],
   providers: [
     CasePrintDocumentsResolver,

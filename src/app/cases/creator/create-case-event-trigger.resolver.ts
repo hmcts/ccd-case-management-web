@@ -41,7 +41,7 @@ export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger>
       caseId = draftId;
     }
     return this.casesService
-      .getEventTriggerV2(caseTypeId, eventTriggerId, caseId, ignoreWarning)
+      .getEventTrigger(caseTypeId, eventTriggerId, caseId, ignoreWarning)
       .do(eventTrigger => this.cachedEventTrigger = eventTrigger)
       .catch((error: HttpError) => {
         this.alertService.error(error.message);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CaseHistory } from '../../core/cases/case-history.model';
 import { CaseTab } from '../../core/cases/case-tab.model';
-import { ShowCondition, OrderService } from '@hmcts/ccd-case-ui-toolkit';
+import { ShowCondition, OrderService, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   templateUrl: './case-history.component.html',
@@ -11,6 +11,7 @@ import { ShowCondition, OrderService } from '@hmcts/ccd-case-ui-toolkit';
 export class CaseHistoryComponent implements OnInit {
 
   caseHistory: CaseHistory;
+  caseDetails: CaseView;
   tabs: CaseTab[];
 
   constructor(
@@ -19,6 +20,7 @@ export class CaseHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.caseHistory = this.route.snapshot.data.caseHistory;
+    this.caseDetails = this.route.snapshot.data.case;
     this.tabs = this.orderService.sort(this.caseHistory.tabs);
     this.tabs = this.sortTabFieldsAndFilterTabs(this.tabs);
   }

@@ -5,8 +5,9 @@ import { SharedModule } from '../shared/shared.module';
 import { CaseResolver } from './case.resolver';
 import { CaseViewerComponent } from './viewer/case-viewer.component';
 import { PaletteModule, ConditionalShowModule, MarkdownModule,
-  LabelSubstitutionService, CaseReferencePipe, LabelSubstitutorModule,
-  FieldsPurger, PageValidationService } from '@hmcts/ccd-case-ui-toolkit';
+  CaseReferencePipe, LabelSubstitutorModule,
+  FieldsPurger, PageValidationService, PlaceholderService
+} from '@hmcts/ccd-case-ui-toolkit';
 import { EventLogModule } from '../shared/event-log/event-log.module';
 import { EventTriggerResolver } from './event-trigger/event-trigger.resolver';
 import { CaseEventTriggerComponent } from './event-trigger/case-event-trigger.component';
@@ -54,7 +55,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CreateCaseEventTriggerResolver,
     EventTriggerResolver,
     FieldsPurger,
-    LabelSubstitutionService,
+    PlaceholderService,
     PageValidationService,
   ]
 })

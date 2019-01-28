@@ -60,6 +60,9 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
     this.subscription = this.postViewActivity().subscribe((_resolved) => {
       // console.log('Posted VIEW activity and result is: ' + JSON.stringify(resolved));
     });
+    if (document.getElementById('main-content')) {
+      document.getElementById('main-content').focus();
+    }
   }
 
   ngOnDestroy() {
@@ -96,9 +99,7 @@ export class CaseViewerComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(DeleteOrCancelDialogComponent, this.dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'Delete') {
-          this.draftService.deleteDraft(this.caseDetails.case_type.jurisdiction.id,
-            this.caseDetails.case_type.id,
-            this.caseDetails.case_id)
+          this.draftService.deleteDraft(this.caseDetails.case_id)
             .subscribe(_ => {
               return this.router.navigate(['list/case'])
                 .then(() => {

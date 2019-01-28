@@ -13,8 +13,8 @@ import { PaginatePipe, PaginationService } from 'ngx-pagination';
 import { SearchResultViewItem } from './search-result-view-item.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
+import { CaseReferencePipe, CaseState, CaseType, DRAFT_PREFIX, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 import createSpyObj = jasmine.createSpyObj;
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-read',
@@ -78,7 +78,7 @@ describe('SearchResultComponent', () => {
           case_field_id: 'PersonAddress',
           case_field_type: {
             id: 'Text',
-            type: 'Text'
+            type: 'Complex'
           },
           label: 'Address',
           order: 1
@@ -164,7 +164,7 @@ describe('SearchResultComponent', () => {
             CaseActivityComponent,
             PaginatePipe
           ],
-          schemas: [ NO_ERRORS_SCHEMA ],
+          schemas: [NO_ERRORS_SCHEMA],
           providers: [
             SearchResultViewItemComparatorFactory,
             { provide: ActivityService, useValue: activityService },
@@ -264,18 +264,17 @@ describe('SearchResultComponent', () => {
       let firstRow = de.query(By.css('div>table>tbody tr:nth-child(1)'));
       // added +1 for case activity column
       expect(firstRow.children.length).toBe(RESULT_VIEW.columns.length + 1);
-
       // draft
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
+
       expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT_PREFIX);
 
       let firstRowComponent = firstRow.children.slice(1, 3);
       let firstRowResult = RESULT_VIEW.results[0];
-      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value === firstRowResult
-        .case_fields['PersonAddress']).toBeTruthy();
-      expect(firstRowComponent[1].children[0].children[0].componentInstance.caseField.value === firstRowResult
-        .case_fields['PersonFirstName']).toBeTruthy();
-
+      expect(firstRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
+        .case_fields['PersonFirstName']);
+      expect(firstRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(firstRowResult
+        .case_fields['PersonAddress']);
       let secondRow = de.query(By.css('div>table>tbody tr:nth-child(2)'));
       let secondResult = RESULT_VIEW.results[1];
 
@@ -285,10 +284,11 @@ describe('SearchResultComponent', () => {
 
       let secondRowComponent = secondRow.children.slice(1, 3);
       let secondRowResult = RESULT_VIEW.results[1];
-      expect(secondRowComponent[0].children[0].children[0].componentInstance.caseField.value === secondRowResult
-        .case_fields['PersonAddress']).toBeTruthy();
-      expect(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value === secondRowResult
-        .case_fields['PersonFirstName']).toBeTruthy();
+
+      expect(secondRowComponent[0].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
+        .case_fields['PersonAddress']);
+      expect(secondRowComponent[1].children[0].children[0].componentInstance.caseField.value).toEqual(secondRowResult
+        .case_fields['PersonFirstName']);
     });
 
     it('should render an case activity column with header', () => {
@@ -316,13 +316,15 @@ describe('SearchResultComponent', () => {
     it('should emit correct page if go to page triggered', () => {
       component.goToPage(2);
 
-      let selected = { init : false,
-                       jurisdiction : JURISDICTION,
-                       caseType : CASE_TYPE,
-                       caseState : CASE_STATE,
-                       formGroup: jasmine.any(Object),
-                       metadataFields: METADATA_FIELDS,
-                       page : 2 };
+      let selected = {
+        init: false,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPE,
+        caseState: CASE_STATE,
+        formGroup: jasmine.any(Object),
+        metadataFields: METADATA_FIELDS,
+        page: 2
+      };
 
       expect(component.selected.page).toBe(2);
       expect(searchHandler.applyFilters).toHaveBeenCalledWith(selected);
@@ -335,6 +337,24 @@ describe('SearchResultComponent', () => {
       expect(component.selected.page).toBe(5);
     });
 
+    it('should calculate correct values for first, last and total number of results', () => {
+      component.draftsCount = 4;
+      component.paginationMetadata = {
+        total_results_count: 105,
+        total_pages_count: 5
+      };
+      component.ngOnChanges({ page: new SimpleChange(null, 5, true) });
+      fixture.detectChanges();
+
+      let firstResult = component.getFirstResult();
+      let lastResult = component.getLastResult();
+      let totalResults = component.getTotalResults();
+
+      expect(firstResult).toBe(105);
+      expect(lastResult).toBe(108);
+      expect(totalResults).toBe(109);
+    });
+
     it('should render widget matching ordering (defaulting to sort descending if unordered) and sort rows when widget pressed', () => {
       let sortFirstNameLink = de.query(By.css('div>table>thead>tr th:nth-child(3) table tbody a'));
       let sortLastNameLink = de.query(By.css('div>table>thead>tr th:nth-child(1) table tbody a'));
@@ -343,32 +363,34 @@ describe('SearchResultComponent', () => {
       expect(sortLastNameLink.nativeElement.textContent).toBe('▲');
 
       // Check unordered
+      assertOrder(new Array(0, 1, 2, 3));
+
+      sortFirstNameLink.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      assertOrder(new Array(2, 0, 1, 3));
+
+      sortFirstNameLink.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      assertOrder(new Array(3, 1, 0, 2));
+    });
+
+    function assertOrder(order: Array<number>) {
       let firstField = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
       let secondField = de.query(By.css('div>table>tbody tr:nth-child(2) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
       let thirdField = de.query(By.css('div>table>tbody tr:nth-child(3) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
       let fourthField = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(3) div ccd-field-read')).nativeElement.textContent;
 
-      expect(firstField).toBe(RESULT_VIEW.results[0].case_fields['PersonFirstName']);
-      expect(secondField).toBe(RESULT_VIEW.results[1].case_fields['PersonFirstName']);
-      expect(thirdField).toBe(RESULT_VIEW.results[2].case_fields['PersonFirstName']);
-      expect(fourthField).toBe(RESULT_VIEW.results[3].case_fields['PersonFirstName']);
+      expect(firstField).toBe(RESULT_VIEW.results[order[0]].case_fields['PersonFirstName']);
+      expect(secondField).toBe(RESULT_VIEW.results[order[1]].case_fields['PersonFirstName']);
+      expect(thirdField).toBe(RESULT_VIEW.results[order[2]].case_fields['PersonFirstName']);
+      expect(fourthField).toBe(RESULT_VIEW.results[order[3]].case_fields['PersonFirstName']);
+    }
 
-      sortFirstNameLink.triggerEventHandler('click', null);
-
+    it('should not break while sorting with unknown sort comparators like Complex type Address', () => {
+      let complexType = de.query(By.css('div>table>thead>tr th:nth-child(2) table tbody div'));
+      complexType.triggerEventHandler('click', null);
       fixture.detectChanges();
-
-      expect(sortFirstNameLink.nativeElement.textContent).toBe('▲');
-      expect(sortLastNameLink.nativeElement.textContent).toBe('▼');
-
-      firstField = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-      secondField = de.query(By.css('div>table>tbody tr:nth-child(2) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-      thirdField = de.query(By.css('div>table>tbody tr:nth-child(3) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-      fourthField = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(3) div>ccd-field-read')).nativeElement.textContent;
-
-      expect(firstField).toBe(RESULT_VIEW.results[2].case_fields['PersonFirstName']);
-      expect(secondField).toBe(RESULT_VIEW.results[0].case_fields['PersonFirstName']);
-      expect(thirdField).toBe(RESULT_VIEW.results[1].case_fields['PersonFirstName']);
-      expect(fourthField).toBe(RESULT_VIEW.results[3].case_fields['PersonFirstName']);
+      expect(complexType.nativeElement.textContent).toBe('Address');
     });
 
     it('should render case reference value in first column with hyperlink if not draft and first column field value is null', () => {
@@ -379,7 +401,6 @@ describe('SearchResultComponent', () => {
 
     it('should render DRAFT value in first column with hyperlink if case_id is DRAFT prefixed even if first column not null', () => {
       let firstRowFirstCol = de.query(By.css('div>table>tbody tr:nth-child(1) td:nth-child(1) a'));
-
       expect(firstRowFirstCol.nativeElement.textContent.trim()).toBe(DRAFT_PREFIX);
     });
   });
@@ -462,7 +483,7 @@ describe('SearchResultComponent', () => {
             CaseActivityComponent,
             PaginatePipe
           ],
-          schemas: [ NO_ERRORS_SCHEMA ],
+          schemas: [NO_ERRORS_SCHEMA],
           providers: [
             SearchResultViewItemComparatorFactory,
             { provide: ActivityService, useValue: activityService },

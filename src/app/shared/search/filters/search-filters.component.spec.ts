@@ -237,6 +237,17 @@ describe('SearchFiltersComponent', () => {
     expect(component.isSearchableAndSearchInputsReady).toBeTruthy();
   });
 
+  it('should ignore error and reset input fields', () => {
+    resetCaseTypes(JURISDICTION_1, [CASE_TYPE_1, CASE_TYPE_2]);
+    component.selected.jurisdiction = JURISDICTION_1;
+    component.selected.caseType = CASE_TYPE_1;
+    component.jurisdictions = [JURISDICTION_1];
+    mockSearchService.getSearchInputs.and.returnValue(Observable.throw(new Error('Response expired')));
+    component.onJurisdictionIdChange();
+    expect(component.searchInputsReady).toBeFalsy();
+    expect(component.searchInputs.length).toBe(0);
+  });
+
   it('should initialise jurisdiction selector with given jurisdictions', () => {
     let selector = de.query(By.css('#s-jurisdiction'));
 

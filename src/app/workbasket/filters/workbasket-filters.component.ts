@@ -155,6 +155,8 @@ export class WorkbasketFiltersComponent implements OnInit {
             }
           }
 
+        }, error => {
+          console.log('Workbasket input fields request will be discarded reason: ', error.message);
         });
     }
   }
@@ -168,7 +170,7 @@ export class WorkbasketFiltersComponent implements OnInit {
   }
 
   isApplyButtonDisabled(): boolean {
-    return !(this.selected.jurisdiction && this.selected.caseType && this.selected.caseState);
+    return !(this.selected.jurisdiction && this.selected.caseType);
   }
 
   private sortStates(states: CaseState[]) {

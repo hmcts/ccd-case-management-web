@@ -154,6 +154,8 @@ export class SearchFiltersComponent implements OnInit {
             item.field.value = formValueObject[item.field.id];
           }
         });
+      }, error => {
+        console.log('Search input fields request will be discarded reason: ', error.message);
       });
   }
 

@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { CaseEventData, AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
+import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
 
 @Injectable()
@@ -133,25 +133,19 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.firefox_min_required_version;
   }
 
-  public getCaseHistoryUrl(jurisdictionId: string,
-                           caseTypeId: string,
-                           caseId: string,
-                           eventId: string) {
-    return this.getApiUrl()
-      + `/caseworkers/:uid`
-      + `/jurisdictions/${jurisdictionId}`
-      + `/case-types/${caseTypeId}`
+  public getCaseHistoryUrl(caseId: string, eventId: string) {
+    return this.getCaseDataUrl()
+      + `/internal`
       + `/cases/${caseId}`
-      + `/events/${eventId}`
-      + `/case-history`;
+      + `/events/${eventId}`;
+}
+
+  public getCreateOrUpdateDraftsUrl(ctid: string) {
+    return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;
   }
 
-  public getCreateOrUpdateDraftsUrl(jid: string, ctid: string, eventData: CaseEventData) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/event-trigger/${eventData.event.id}/drafts/`;
-  }
-
-  public getViewOrDeleteDraftsUrl(jid: string, ctid: string, did: string) {
-    return this.getCaseDataUrl() + `/caseworkers/:uid/jurisdictions/${jid}/case-types/${ctid}/drafts/${did}`;
+  public getViewOrDeleteDraftsUrl(did: string) {
+    return this.getCaseDataUrl() + `/internal/drafts/${did}`;
   }
 }
 

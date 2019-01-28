@@ -7,13 +7,16 @@ RUN apt-get update \
     patch=2.7.5-1+deb8u1 \
     libfontconfig1=2.11.0-6.3+deb8u1 \
     && rm -rf /var/lib/apt/lists/*
+
 # ---- Dependencies ----
 # This image has all dependencies for all build tasks, frontend,
 # backend, unit tests, and even selenium test runner/webdrivers.
 # It can be used as a base image for any build or test run.
 FROM base AS dependencies
 COPY package.json yarn.lock .snyk ./
-RUN yarn install
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s \
+    && export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH" \
+    && yarn install
 # ---- Copy source files ----
 # This image can be used for different codebase-related
 # tasks like unit tests or code quality checks.

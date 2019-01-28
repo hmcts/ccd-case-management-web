@@ -44,7 +44,7 @@ import { SearchResultViewItemComparatorFactory } from './search/sorting/search-r
     EventTriggerModule,
     EventTriggerHeaderComponent,
     SearchFiltersComponent,
-    CaseReferencePipe
+    CaseReferencePipe,
   ]
 })
 export class SharedModule {}

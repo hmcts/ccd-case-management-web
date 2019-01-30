@@ -1,5 +1,5 @@
-import { ActivityService } from './activity.service';
 import { ActivityResolver } from './activity.resolver';
+import { ActivityService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('ActivityResolver', () => {
 

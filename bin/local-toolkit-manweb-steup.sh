@@ -88,7 +88,7 @@ function git_clone() {
 function setup_toolkit() {
 	git_clone $TOOLKIT $TOOLKITBRANCH
 	echo "building ccd-case-ui-toolkit.."
-	(cd $workspace && yarn install && yarn build)
+	(cd $workspace && yarn --ignore-engines install && yarn build)
 }
 
 function setup_manweb {

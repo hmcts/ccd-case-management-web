@@ -84,7 +84,6 @@ function git_clone() {
     echo 'clone complete'
 }
 
-
 function setup_toolkit() {
 	git_clone $TOOLKIT $TOOLKITBRANCH
 	echo "building ccd-case-ui-toolkit.."
@@ -110,7 +109,6 @@ function entrypoint {
 	else 
 		TOOLKITBRANCH='master'
 		echo "CCD-CASE-UI-TOOLKIT: using default branch Master"
-
 	fi
 
 	if [[ "$MANWEBBRANCH" ]]; then
@@ -122,12 +120,6 @@ function entrypoint {
 
 	setup_toolkit
 	setup_manweb
-
 }
 
 entrypoint
-
-
-
-
-

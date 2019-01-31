@@ -67,8 +67,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
 
-  When(/^I click the 'Create a case' button$/, async function () {
+  When(/^I click the 'Create new case' button$/, async function () {
     await caseListPage.clickCreateNewCaseButton();
+  });
+
+  When(/^I click the 'Create Case' link$/, async function () {
+    await caseListPage.clickCreateCaseLink();
   });
 
   Then(/^I will be navigated to the 'Create Case' page$/, async function () {

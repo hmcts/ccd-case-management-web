@@ -11,6 +11,7 @@ class CaseListPage extends BasePage {
 
       this._landingPageFilters = by.css('ccd-workbasket-filters');
       this._createNewCaseButton = '.heading-top > .button';
+      this._createCaseLink = '#menu-links-left li:nth-of-type(2) a';
 
   }
 
@@ -54,9 +55,15 @@ class CaseListPage extends BasePage {
       return new Footer;
   }
 
-  async clickCreateNewCaseButton(){
+ async clickCreateNewCaseButton(){
     await $(this._createNewCaseButton).click();
   }
+
+  async clickCreateCaseLink(){
+    await $(this._createCaseLink).click();
+  }
+
+}
 
 }
 

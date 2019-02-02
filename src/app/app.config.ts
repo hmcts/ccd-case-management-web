@@ -150,16 +150,9 @@ export class AppConfig extends AbstractAppConfig {
 }
 
 export class Config extends CaseEditorConfig {
-  activity_batch_collection_delay_ms: number;
-  activity_next_poll_request_ms: number;
-  activity_retry: number;
-  activity_url: string;
-  activity_max_request_per_batch: number;
   logout_url: string;
   oauth2_token_endpoint_url: string;
   pagination_page_size: number;
-  print_service_url: string;
-  remote_print_service_url: string;
   smart_survey_url: string;
   unsupported_browser_url: string;
   chrome_min_required_version: number;

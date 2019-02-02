@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard,
-  RouterHelperService, DraftService, CasesService, ProfileService} from '@hmcts/ccd-case-ui-toolkit';
+  RouterHelperService, DraftService, CasesService, ProfileService, ActivityService,
+  ActivityPollingService } from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from './definitions/definitions.service';
 import { WindowService } from './utils/window.service';
 import { DocumentService } from './utils/document.service';
@@ -13,8 +14,6 @@ import { SearchService } from './search/search.service';
 import { PaginationService } from './pagination/pagination.service';
 import { AlertModule } from './alert/alert.module';
 import { JurisdictionService } from '../shared/jurisdiction.service';
-import { ActivityService } from './activity/activity.service';
-import { ActivityPollingService } from './activity/activity.polling.service';
 import { RequestOptionsBuilder } from './request.options.builder';
 import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';

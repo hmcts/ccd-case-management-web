@@ -45,7 +45,7 @@ withPipeline("angular", product, component) {
     }
 
     enableDockerBuild()
-    enableDeployToAKS()
+    installCharts()
 
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)

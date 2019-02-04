@@ -4,7 +4,7 @@ nodejs:
   image: ${IMAGE_NAME}
   applicationPort: 3451
   memoryRequests: 256Mi
-  cpuRequests: 0.2
+  cpuRequests: 25m
   memoryLimits: 512Mi
   cpuLimits: 1
   environment:

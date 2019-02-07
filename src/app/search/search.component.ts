@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms/forms';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { plainToClass } from 'class-transformer';
 import { Jurisdiction, Profile, CaseType, CaseState, AlertService, SearchResultView, SearchService,
-  WindowService } from '@hmcts/ccd-case-ui-toolkit';
+  WindowService, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit {
   metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
+    private jurisdictionService: JurisdictionService,
     private searchService: SearchService,
     private paginationService: PaginationService,
     private alertService: AlertService,
@@ -86,6 +87,10 @@ export class SearchComponent implements OnInit {
       results: [],
       hasDrafts: false
     });
+  }
+
+  applyJurisdiction(jurisdiction): void {
+    this.jurisdictionService.announceSelectedJurisdiction(jurisdiction);
   }
 
   private getCaseFilterFromFormGroup(formGroup?: FormGroup): object {

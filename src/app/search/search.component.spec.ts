@@ -35,12 +35,14 @@ const CASE_STATE: CaseState = {
 describe('SearchComponent', () => {
 
     let subject: SearchComponent;
+    let jurisdictionService;
     let searchService;
     let paginationService;
     let alertService;
     let windowService;
 
     beforeEach(async(() => {
+        jurisdictionService = createSpyObj('jurisdictionService', ['announceSelectedJurisdiction']);
         searchService = createSpyObj('searchService', ['search']);
         searchService.search.and.returnValue(Observable.of({}));
         paginationService = createSpyObj('paginationService', ['getPaginationMetadata']);
@@ -48,7 +50,7 @@ describe('SearchComponent', () => {
         alertService = createSpyObj('alertService', ['warning']);
         windowService = createSpyObj('WindowService', ['setLocalStorage', 'getLocalStorage'])
 
-        subject = new SearchComponent(null, searchService, paginationService, alertService, windowService);
+        subject = new SearchComponent(null, jurisdictionService, searchService, paginationService, alertService, windowService);
     }));
 
     it('should make inputs fields turn into query parameters', () => {

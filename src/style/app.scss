@@ -228,6 +228,9 @@ select::-ms-expand {
 .button-30 {
   height: 30px;
 }
+.button-padding {
+  margin-top: 20px;
+}
 .markdown h2, .markdown h3 {
   font-size: 17px;
   margin-top: 10px;
@@ -292,4 +295,9 @@ form.check-your-answers table  td .markdown p {
     display:flex;
     align-items:center;
   }
+}
+.show-condition-grey-bar {
+  border-left: 10px solid #bfc1c3;
+  padding-left: 15px;
+  padding-bottom: 10px;
 }

@@ -9,7 +9,7 @@ import { attr, text } from '../../../test/helpers';
 import { JurisdictionService } from '../../../shared/jurisdiction.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, OrderService, CaseTypeLite, Jurisdiction, CaseEvent, AlertService,
-  CallbackErrorsContext, CaseViewerComponent} from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { Observable } from 'rxjs';
 
@@ -845,7 +845,7 @@ describe('CreateCaseFiltersComponent', () => {
 
   it('should clear errors and warnings', () => {
     let callbackErrorsContext: CallbackErrorsContext = new CallbackErrorsContext();
-    callbackErrorsContext.trigger_text = CaseViewerComponent.TRIGGER_TEXT_START;
+    callbackErrorsContext.trigger_text = CreateCaseFiltersComponent.TRIGGER_TEXT_START;
     component.callbackErrorsNotify(callbackErrorsContext);
 
     fixture.detectChanges();

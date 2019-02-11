@@ -299,10 +299,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.22.2":
-  version "2.22.2"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.22.2.tgz#5202a5d1325484aa8f434dcc0e9779f22d1062f3"
-  integrity sha512-DtcTfCbh1luz+n8Bk2xdJy87bgRGwpwEFpHRuccTbZImxDsz3CINqkKMVvJSG1GL/q115reXhFkT+iCAdORTTw==
+"@hmcts/ccd-case-ui-toolkit@2.23.5":
+  version "2.23.5"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.23.5.tgz#3576cb074712c8f46b3f664336833f3ba4e7e0f4"
+  integrity sha512-elhOmSKDVhUHHtRps7YWAwMCRchgb59OhIZIw1z4PL9f8ZI5sIikvGGZYDfMy8jgQmkf2Gn3D5/0OWluySL/zA==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -312,7 +312,7 @@
     karma-jasmine-html-reporter "^1.2.0"
     mocha "^5.0.5"
     typescript "3.1.1"
-
+    
 "@hmcts/ccpay-web-component@~1.8.1":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.8.1.tgz#296e091489aac06a457064f066c80ecc74dc0192"

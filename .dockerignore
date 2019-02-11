@@ -8,3 +8,5 @@
 !tsconfig.json
 !webpack.server.config.js
 !server.ts
+!Dockerfile
+!acb.yaml

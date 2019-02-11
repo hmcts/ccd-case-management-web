@@ -302,6 +302,7 @@
 "@hmcts/ccd-case-ui-toolkit@2.23.4":
   version "2.23.4"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.23.4.tgz#b3737c54b81d13389e4deac0b3e7e6b6ddff3229"
+
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -311,7 +312,7 @@
     karma-jasmine-html-reporter "^1.2.0"
     mocha "^5.0.5"
     typescript "3.1.1"
-
+    
 "@hmcts/ccpay-web-component@~1.8.1":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.8.1.tgz#296e091489aac06a457064f066c80ecc74dc0192"
@@ -2403,6 +2404,12 @@ console-browserify@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-browserify/-/console-browserify-1.1.0.tgz#f0241c45730a9fc6323b206dbf38edc741d0bb10"
   dependencies:
     date-now "^0.1.4"
+
+
+
+
+
+
 
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"

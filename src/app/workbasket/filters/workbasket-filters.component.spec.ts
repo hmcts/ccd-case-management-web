@@ -6,12 +6,11 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
-import { JurisdictionService } from '../../shared/jurisdiction.service';
 import { WorkbasketInputFilterService } from '../workbasket-input-filter.service';
 import { WorkbasketInputModel } from '../workbasket-input.model';
-import { WindowService } from '../../core/utils/window.service';
 import createSpyObj = jasmine.createSpyObj;
-import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService, Jurisdiction, CaseType, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { AbstractFieldWriteComponent, FieldTypeEnum, OrderService, Jurisdiction, CaseType, AlertService,
+  JurisdictionService, WindowService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-field-write',

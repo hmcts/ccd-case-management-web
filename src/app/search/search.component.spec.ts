@@ -1,14 +1,9 @@
 import { async } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { FormControl, FormGroup } from '@angular/forms';
-import { WindowService } from '../core/utils/window.service';
 import { Observable } from 'rxjs/Rx';
 import createSpyObj = jasmine.createSpyObj;
 import { Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
-
-const workbasterfiltervalue = `{\"PersonLastName\":null,\"PersonFirstName\":\"CaseFirstName\",`
-    + `\"PersonAddress\":{\"AddressLine1\":null,\"AddressLine2\":null,\"AddressLine3\":null,`
-    + `\"PostTown\":null,\"County\":null,\"PostCode\":null,\"Country\":null}}`
 
 const JURISDICTION: Jurisdiction = {
     id: 'J1',
@@ -40,12 +35,14 @@ const CASE_STATE: CaseState = {
 describe('SearchComponent', () => {
 
     let subject: SearchComponent;
+    let jurisdictionService;
     let searchService;
     let paginationService;
     let alertService;
     let windowService;
 
     beforeEach(async(() => {
+        jurisdictionService = createSpyObj('jurisdictionService', ['announceSelectedJurisdiction']);
         searchService = createSpyObj('searchService', ['search']);
         searchService.search.and.returnValue(Observable.of({}));
         paginationService = createSpyObj('paginationService', ['getPaginationMetadata']);
@@ -53,7 +50,7 @@ describe('SearchComponent', () => {
         alertService = createSpyObj('alertService', ['warning']);
         windowService = createSpyObj('WindowService', ['setLocalStorage', 'getLocalStorage'])
 
-        subject = new SearchComponent(null, searchService, paginationService, alertService, windowService);
+        subject = new SearchComponent(null, jurisdictionService, searchService, paginationService, alertService, windowService);
     }));
 
     it('should make inputs fields turn into query parameters', () => {

@@ -3,8 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchResultComponent } from './search/search-result.component';
-import { SearchFiltersComponent } from './search/filters/search-filters.component';
-import { PaletteModule, CaseFieldService, ConditionalShowModule, MarkdownModule,
+import { PaletteModule, ConditionalShowModule, MarkdownModule,
   LabelSubstitutorModule, PipesModule, CaseReferencePipe, DialogsModule, CaseHeaderModule,
   ActivityModule, EventTriggerModule } from '@hmcts/ccd-case-ui-toolkit';
 import { RouterModule } from '@angular/router';
@@ -32,18 +31,15 @@ import { SearchResultViewItemComparatorFactory } from './search/sorting/search-r
   declarations: [
     SearchResultComponent,
     EventTriggerHeaderComponent,
-    SearchFiltersComponent,
     SortSearchResultPipe
   ],
   providers: [
     SearchResultViewItemComparatorFactory,
-    CaseFieldService,
   ],
   exports: [
     SearchResultComponent,
     EventTriggerModule,
     EventTriggerHeaderComponent,
-    SearchFiltersComponent,
     CaseReferencePipe,
   ]
 })

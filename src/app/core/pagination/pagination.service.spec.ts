@@ -3,8 +3,7 @@ import { AppConfig } from '../../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import { PaginationService } from './pagination.service';
 import { Observable } from 'rxjs';
-import { RequestOptionsBuilder } from '../request.options.builder';
-import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, RequestOptionsBuilder } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('PaginationService', () => {
 

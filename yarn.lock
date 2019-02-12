@@ -312,7 +312,7 @@
     karma-jasmine-html-reporter "^1.2.0"
     mocha "^5.0.5"
     typescript "3.1.1"
-    
+
 "@hmcts/ccpay-web-component@~1.8.1":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-1.8.1.tgz#296e091489aac06a457064f066c80ecc74dc0192"
@@ -408,13 +408,14 @@
   dependencies:
     "@types/jasmine" "*"
 
+"@types/node@^11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.0.tgz#35fea17653490dab82e1d5e69731abfdbf13160d"
+  integrity sha512-ry4DOrC+xenhQbzk1iIPzCZGhhPGEFv7ia7Iu6XXSLVluiJIe9FfG7Iu3mObH9mpxEXCWLCMU4JWbCCR9Oy1Zg==
+
 "@types/node@^6.0.46":
   version "6.14.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.14.2.tgz#40b3dbb1221c7d66802cbcc32fe3b85e54569c77"
-
-"@types/node@^8.0.30":
-  version "8.10.38"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.38.tgz#e05c201a668492e534b48102aca0294898f449f6"
 
 "@types/q@^0.0.32":
   version "0.0.32"

@@ -151,7 +151,7 @@ local/docker or desired url and run the following commands:
 
 
 - Smoke: ``` protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@smoke ```
-- Functional: ``` protractor test/fucntional-tests/config/local.conf.js --cucumberOpts.tags=@functional ```
+- Functional: ``` protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@functional ```
 
 Note: if you are trying to run tests agaist local/docker instance you may need to comment out the `proxy` section 
 in the `local.conf.js`:

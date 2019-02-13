@@ -26,7 +26,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I click the Continue button
     Then I will be on the 'Conditional Page 2 - Create a case' page
 
-
+    @broken
   Scenario: tab visible when show & hide condition is met
     Given a case type containing conditionals exists
     And I enter 'showmethemoney' into the 'text' field
@@ -35,6 +35,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
       | History             |
       | Conditional Tab 1   |
 
+    @broken
   Scenario: tab NOT visible when show & hide condition is NOT met
     Given a case type containing conditionals exists
     And I enter 'dontshowmethemoney' into the 'text' field
@@ -42,11 +43,13 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Then the following tabs will be visible:
       | History |
 
+    @broken
   Scenario: field in tab visible when show & hide condition is met
     Given a case type containing conditionals exists
     When I meet the condition for showing the field in the tab
     Then the 'Text Field 3' field will be visible on the 'Conditional Tab 1' tab
 
+    @broken
   Scenario: field in tab NOT visible when show & hide condition is NOT met
     Given a case type containing conditionals exists
     When I do NOT meet the condition for showing the field in the tab

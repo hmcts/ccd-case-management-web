@@ -47,7 +47,8 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | dataType  |
       | Collection|
 
-    @complex
+    #needs AllDataTypes case type deleted from AAT
+    @complex @broken
     Examples:
       | dataType  |
       | Complex   |

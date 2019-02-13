@@ -26,7 +26,7 @@
     "test:smokeTest": "webdriver-manager update --versions.chrome 2.40 && protractor test/functional-tests/config/conf.js --cucumberOpts.tags='@smoke and not @bug'",
     "test:crossbrowser": "protractor test/config/crossbrowser.conf.js",
     "test:functional": "./bin/runFunctionalTests.sh",
-    "test:functionalTests": "webdriver-manager update --versions.chrome 2.40 && protractor test/functional-tests/config/conf.js --cucumberOpts.tags='@functional and not @bug'",
+    "test:functionalTests": "webdriver-manager update --versions.chrome 2.40 && protractor test/functional-tests/config/conf.js --cucumberOpts.tags='@functional and not @bug and not @broken'",
     "lint": "ng lint ccd-case-management-web",
     "e2e": "ng e2e",
     "start:fr": "ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",

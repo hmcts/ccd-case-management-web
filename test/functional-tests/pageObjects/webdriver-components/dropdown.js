@@ -17,8 +17,8 @@ class Dropdown {
   }
 
   //private
-  async getOptionElements(){
-     return await $$(`${this._dropdownElement} option`);
+  async _getOptionElements(){
+    return await $$(`${this._dropdownElement} option`);
   }
 
   /**
@@ -26,7 +26,7 @@ class Dropdown {
    * @returns String Array
    */
   async getOptionsTextValues(){
-    let dropdownElements = await this.getOptionElements();
+    let dropdownElements = await this._getOptionElements();
     let stringArray = [];
     for (const option of dropdownElements){
       const optionText = await option.getText();
@@ -39,7 +39,7 @@ class Dropdown {
    * Will randomly select any dropdown option
    */
   async selectAnyOption(){
-    let options = await this.getOptionElements();
+    let options = await this._getOptionElements();
     let elementListSize = await options.length;
     let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
     let optionToSelect = await options[randomOptionArrayInt];
@@ -60,15 +60,17 @@ class Dropdown {
    * Select a dropdown option by text value. Case insensitive
    * @param dropdownOption
    */
-  async selectFromDropdownByText(dropdownOption){
+  async _selectFromDropdownByText(dropdownOption){
       let optionToSelect;
       let found = false;
 
-      let options = await this.getOptionElements();
+      let options = await this._getOptionElements();
+      let optionsTextArray = [];
+
 
       for (const option of options){
           const optionText = await option.getText();
-
+          await optionsTextArray.push(optionText)
           if (optionText.toLowerCase() === dropdownOption.toLowerCase()){
              optionToSelect = option;
              found = true;
@@ -77,10 +79,39 @@ class Dropdown {
       }
 
       if (!found){
-        throw new CustomError(`option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'`)
+        let message = `option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'. Available options: ${optionsTextArray}`
+        throw new CustomError(message)
       }
 
       await optionToSelect.click();
+
+  }
+
+  /**
+   * Select a dropdown option by text value. Retry 2 more times if fails.
+   * @param dropdownOption
+   */
+  async selectFromDropdownByText(dropdownOption){
+
+    let fail = true;
+    let failmessage = null;
+
+    for (let i = 0; i < 3; i++){
+      try {
+        await this._selectFromDropdownByText(dropdownOption)
+        fail = false;
+        break;
+      } catch (e) {
+        failmessage = e;
+        console.log(e);
+        console.log(`Attempt ${i + 1}/3 failed, Retry after 1 second wait`);
+        await browser.sleep(1000)
+      }
+    }
+
+    if (fail){
+      throw new CustomError(failmessage, 'failed 3 retry attempts')
+    }
 
   }
 

@@ -23,22 +23,39 @@ class CcdDateField{
     this.checkYourAnswersValue = null;
   }
 
-  async enterDate(){
-    let day = await RandomUtils.generateRandomInt(1,28);
-    let month = await RandomUtils.generateRandomInt(1,12);
-    let year = await RandomUtils.generateRandomInt(1950, 2000);
-    await this.enterDateWithParams(day, month, year);
+  async enterDate(value){
+    let day = null;
+    let month = null;
+    let year = null;
+
+    if (typeof value === 'undefined') {
+       day = await RandomUtils.generateRandomInt(1,28);
+       month = await RandomUtils.generateRandomInt(1,12);
+       year = await RandomUtils.generateRandomInt(1950, 2000);
+    } else {
+        day = value.slice(0,2);
+        month = value.slice(2,4);
+        year = value.slice(4,8);
+    }
+
+    await this._enterDateWithParams(day, month, year);
   }
 
-  async enterDateWithParams(day, month, year){
+  async _enterDateWithParams(day, month, year){
+      await this.dayCss.clearField();
       await this.dayCss.enterText(day);
+
+      await this.monthCss.clearField();
       await this.monthCss.enterText(month);
+
+      await this.yearCss.clearField();
       await this.yearCss.enterText(year);
-      await this.setCheckYourAnswersValue(day, month, year)
-      this.label = await this.getLabel();
+
+      await this._setCheckYourAnswersValue(day, month, year)
+      this.label = await this._getLabel();
   }
 
-  async setCheckYourAnswersValue(day, month, year){
+  async _setCheckYourAnswersValue(day, month, year){
     if (month.toString().startsWith('0')){
       month = await month.substring(1);
     }
@@ -46,7 +63,7 @@ class CcdDateField{
     this.checkYourAnswersValue = `${day} ${MONTH[month]} ${year}`;
   }
 
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }
 

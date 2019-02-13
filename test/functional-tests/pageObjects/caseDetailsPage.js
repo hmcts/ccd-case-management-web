@@ -12,7 +12,15 @@ class CaseDetailsPage extends BasePage {
     this._endStateValue = '.EventLogDetails tbody > tr:nth-of-type(3) > td > span';
     this._actionsDropdown = new Dropdown('ccd-event-trigger select');
     this._goButton = new Button('ccd-event-trigger button');
+    this._detailsBox = '.EventLog-DetailsPanel';
+    this._tabs = '.tabs-list li';
+    this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
 
+  }
+
+
+  async waitForPageToLoad(){
+    await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
   }
 
   /**
@@ -20,7 +28,8 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<String>}
    */
   async getLatestHistoryEvent(){
-      return await $(this._latestHistoryEventLink).getText();
+    let text = await $(this._latestHistoryEventLink).getText();
+    return text
   }
 
   /**
@@ -28,11 +37,8 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async getEndStateValue(){
-    browser.ignoreSynchronization = true;
-    await this.waitForElementToBeVisibleByLocator(this._endStateValue);
-    browser.ignoreSynchronization = false;
-
-    return await $(this._endStateValue).getText();
+    let text = await $(this._endStateValue).getText();
+    return text
   }
 
   /**
@@ -40,11 +46,8 @@ class CaseDetailsPage extends BasePage {
    * @returns String Array
    */
   async getActions(){
-    browser.ignoreSynchronization = true;
-    await this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
-    browser.ignoreSynchronization = false;
-
-    return await this._actionsDropdown.getOptionsTextValues()
+    let options = await this._actionsDropdown.getOptionsTextValues()
+    return options
   }
 
   /**
@@ -53,14 +56,32 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async startEvent(event){
-    browser.ignoreSynchronization = true;
-    await this.waitForElementToBeVisibleByLocator(this._actionsDropdown);
-    browser.ignoreSynchronization = false;
-
     await this._actionsDropdown.selectFromDropdownByText(event);
     await this._goButton.click()
   }
 
+
+  async clickTab(tabName){
+    let element = await this.getElementWithText(await $$(this._tabs),tabName);
+    await element.click();
+  }
+
+  /**
+   * Get list of tabs
+   * @returns Array of Strings
+   */
+  async getTabsText(){
+    let tabs = await $$(this._tabs);
+    return await this.getElementsText(tabs);
+  }
+
+  /**
+   * Get list of the fields displayed on the currency viewed tab
+   * @returns Array of Strings
+   */
+  async getTabFields(){
+    return await this.getElementsText(await $$(this._currentTabFieldKeys))
+  }
 
 }
 

@@ -23,10 +23,10 @@ class CcdFixedList {
     async selectOption(){
         await this.fixedList.selectAnyOption();
         this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
-        this.label = await this.getLabel();
+        this.label = await this._getLabel();
     }
 
-    async getLabel(){
+    async _getLabel(){
       return await $(`${this.css} .form-label`).getText();
     }
 

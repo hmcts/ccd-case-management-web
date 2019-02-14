@@ -12,6 +12,8 @@ class BasePage {
             browser.wait(EC.visibilityOf(element(locator)), );
         }
 
+        this._pageHeader= 'h1';
+
         this._formFields = 'ccd-case-edit-form > div > * > *';
         this._optionalClass = 'ng-valid';
         this._mandetoryClass = 'ng-invalid';
@@ -63,6 +65,80 @@ class BasePage {
         .catch(err => console.log(`Failed to load page, Expected URL fragment: ${expectedUrlRegex} | Actual URL: ${currentURL}`));
     }
 
+  /**
+   * Checks if an element is displayed. Will catch a NoSuchElementError exception and return false instead
+   * @param element
+   * @returns Boolean
+   */
+    async elementDisplayed(element){
+      let displayed = null;
+        try {
+            displayed = await element.isDisplayed();
+        } catch (e) {
+            if (e.name === 'NoSuchElementError'){
+                displayed = false; //element not present so not displayed
+            }
+            else {
+                throw new CustomError(e);
+            }
+        }
+
+      return displayed
+    }
+
+  /**
+   * Get page header title
+   * @returns String
+   */
+  async getPageHeader(){
+      return await $(this._pageHeader).getText();
+    }
+
+
+  /**
+   * Converts an array of elements to array of string containing text values of the elements
+   * @param Array of Elements
+   * @returns Array of Strings
+   */
+  async getElementsText(elementArray){
+    let textArray = [];
+    for (const elem of elementArray){
+      let elemText = await elem.getText();
+      textArray.push(elemText)
+    }
+
+    return textArray;
+  }
+
+  /**
+   * Search through list of elements and return one that matches a specified test value
+   * @param elementArray
+   * @param elementText
+   * @returns {Promise<WebElement>}
+   */
+  async getElementWithText(elementArray, elementText){
+    let textArray = [];
+    let element = null;
+    let found = false;
+
+    for (const e of elementArray){
+      let text = await e.getText();
+      textArray.push(text);
+
+      if (text === elementText){
+        element = e;
+        found = true;
+        break;
+      }
+    }
+
+    if (!found){
+      throw new CustomError(`Could not find '${elementText}' in: ${textArray}`)
+    }
+
+    return element;
+  }
+
 }
 
-module.exports = BasePage
+module.exports = BasePage;

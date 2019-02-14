@@ -32,13 +32,13 @@ class CcdTextAreaField{
     if (this.checkYourAnswersValue === null){
       this.checkYourAnswersValue = value;
     }
-    this.label = await this.getLabel();
+    this.label = await this._getLabel();
   }
 
   /**
    * @returns Label name for the Text Area Field
    */
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }
 

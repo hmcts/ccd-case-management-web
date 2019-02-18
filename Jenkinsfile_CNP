@@ -65,7 +65,7 @@ withPipeline("angular", product, component) {
 
     after('functionalTest:preview'){
         publishHTML(target:[
-            reportDir            : "test/functional-tests/results/",
+            reportDir            : "test/functional-tests/results",
             reportFiles          : "index.html",
             reportName           : "Functional Tests",
             alwaysLinkToLastBuild: true

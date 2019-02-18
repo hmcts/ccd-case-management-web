@@ -30,7 +30,7 @@ class CcdYesNoField {
   async selectOption(){
       let bool = RandomUtils.generateRandomBoolean();
       await (bool ? await this.selectYes() : await this.selectNo());
-      this.label = await this.getLabel();
+      this.label = await this._getLabel();
   }
 
   /**
@@ -52,7 +52,7 @@ class CcdYesNoField {
   /**
    * @returns Label name for the Text Area Field
    */
-  async getLabel(){
+  async _getLabel(){
       return await $(`${this.css} .form-label`).getText();
   }
 

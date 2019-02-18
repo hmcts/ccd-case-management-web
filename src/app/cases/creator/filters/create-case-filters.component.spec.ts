@@ -6,10 +6,9 @@ import { CreateCaseFiltersComponent } from './create-case-filters.component';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { attr, text } from '../../../test/helpers';
-import { JurisdictionService } from '../../../shared/jurisdiction.service';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, OrderService, CaseTypeLite, Jurisdiction, CaseEvent, AlertService,
-  CallbackErrorsContext} from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from '../../../core/definitions/definitions.service';
 import { Observable } from 'rxjs';
 

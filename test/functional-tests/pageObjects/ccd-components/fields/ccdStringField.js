@@ -52,7 +52,7 @@ class CDDStringField {
     value = typeof value === 'undefined' ? await RandomUtils.generateRandomInt(1,100) : value;
     this.checkYourAnswersValue = `£${value}.00`;
     await this._enterIntoField(value);
-    await $('h1').click(); //click out of focus to trigger any errors
+    await $('#global-header').click(); //click out of focus to trigger any errors
   }
 
   /**

@@ -119,8 +119,8 @@ class FieldDataTypes {
    * @returns CCDStringField Object
    */
   async enterIntoCollectionField(){
-    let css = await fields.COLLECTION.cssTag;
-    let collectionField  = await new CollectionField(css);
+    let css = await FIELDS.COLLECTION.cssTag;
+    let collectionField  = await new CCDCollectionField(css);
     await collectionField.enterTextData(3);
     return collectionField;
   }
@@ -129,9 +129,9 @@ class FieldDataTypes {
    * Select random radio butto option
    * @returns CCDStringField Object
    */
-  async enterIntoComplexFiled(){
-    let css = await fields.COMPLEX_TYPE.cssTag;
-    let complexField  = await new ComplexField(css);
+  async enterIntoComplexField(){
+    let css = await FIELDS.COMPLEX_TYPE.cssTag;
+    let complexField  = await new CCDComplexTypeField(css);
     await complexField.enterComplexTextData();
     return complexField;
   }
@@ -141,7 +141,7 @@ class FieldDataTypes {
    * @returns {Promise<String>}
    */
   async getNumberFieldValue(){
-    let css = await fields.NUMBER.cssTag;
+    let css = await FIELDS.NUMBER.cssTag;
     let numberField = await new CCDStringField(css);
     return await numberField.getFieldValue();
   }
@@ -155,6 +155,8 @@ class FieldDataTypes {
   async interactWithField(dataType, value){
     let dt = dataType.toLowerCase();
     switch(dt) {
+      case 'address':
+        return //todo
       case 'text':
         return await this.enterIntoTextField(value);
       case 'textarea':
@@ -171,14 +173,14 @@ class FieldDataTypes {
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
         return await this.selectFromFixedList();
-      case 'phone uk':
+      case 'phone-uk':
         return await this.enterIntoPhoneField(value);
       case 'yes-no':
         return await this.selectYesNoOption();
       case 'collection':
         return await this.enterIntoCollectionField();
       case 'complex':
-        return await this.enterIntoComplexFiled();
+        return await this.enterIntoComplexField();
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -425,7 +427,7 @@ class FieldDataTypes {
           return FIELDS.EMAIL.cssTag;
       case 'fixed-list':
           return FIELDS.FIXED_LIST.cssTag;
-      case 'phone uk':
+      case 'phone-uk':
           return FIELDS.PHONE_NUMBER.cssTag;
       case 'yes-no':
           return FIELDS.YES_NO.cssTag;

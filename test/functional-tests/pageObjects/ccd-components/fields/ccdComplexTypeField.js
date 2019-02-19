@@ -6,8 +6,10 @@ class CcdComplexTypeField {
   constructor(css, type, selectors){
       this.css = css;
       this.stringFields = [];
-      for(var i = selectors.length; i--;) {
-        this.stringFields.push(new CCDStringField(this.css, type, selectors[i]));
+      if (selectors) {
+        for(var i = selectors.length; i--;) {
+          this.stringFields.push(new CCDStringField(this.css, type, selectors[i]));
+        }
       }
       this.inputValue = null;
       this.mainLabel = this._getMainLabel();

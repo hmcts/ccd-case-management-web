@@ -43,7 +43,7 @@ class TextField{
     return await $(this.css).isDisplayed();
   }
 
-
+  /**
    * Clear contents of an input field
    */
   async clearField(){

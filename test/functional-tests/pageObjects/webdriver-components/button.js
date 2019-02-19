@@ -32,6 +32,22 @@ class Button{
   async isEnabled(){
       return await element(by.xpath(this.xpath)).isEnabled();
   }
+  
+  async isDisplayed(){
+    let displayed = null;
+    try {
+      displayed = await $(this.css).isDisplayed();
+    } catch (e) {
+      if (e.name === 'NoSuchElementError'){
+        displayed = false; //element not present so not displayed
+      }
+      else {
+        throw new CustomError(e);
+      }
+    }
+
+    return displayed
+  }
 
   /**
    * Click Button element
@@ -67,7 +83,6 @@ class Button{
   async _getElementFinder() {
     return this.content ? element(by.xpath(this.xpath)) : element(by.css(this.css));
   }
-
 }
 
 module.exports = Button;

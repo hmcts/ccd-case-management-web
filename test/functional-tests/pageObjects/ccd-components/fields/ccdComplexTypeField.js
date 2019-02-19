@@ -1,4 +1,5 @@
 let CCDStringField = require('./ccdStringField.js');
+let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 
 class CcdComplexTypeField {
 
@@ -8,6 +9,12 @@ class CcdComplexTypeField {
       for(var i = selectors.length; i--;) {
         this.stringFields.push(new CCDStringField(this.css, type, selectors[i]));
       }
+      this.inputValue = null;
+      this.mainLabel = this._getMainLabel();
+      this.nestedLabels = this._getNestedLabels();
+      this.checkYourAnswersValue = null;
+      this.textFieldList = `${this.css} ccd-field-write`;
+      this.checkYourAnswersValue = '';
   }
 
   /**
@@ -44,7 +51,7 @@ class CcdComplexTypeField {
   }
 
   async _getMainLabel(){
-    return await $(`${this.css} .heading-small`).getText();
+    return await $(`${this.css} h3:nth-of-type(1)`).getText();
   }
 
   async _getNestedLabels(){
@@ -55,12 +62,33 @@ class CcdComplexTypeField {
         return label.getText().then(function(text){
           nestedLabelsTexts.push(text);
         });
-
     }).then(function(){
         return nestedLabelsTexts;
     });
   }
+    
+  async enterComplexTextData(){
+    let fields = $$(this.textFieldList);
+    let index = 1;
 
+    for(const field of await fields){
+        let data = '';
+
+        let text = await RandomUtils.generateRandomString();
+        await field.$('input').sendKeys(text);
+
+        let label = await field.$('label').getText();
+
+        data += await label.replace(' (Optional)','') + '\n' + text;
+        if(index !== await fields.count()){
+          data += '\n'
+        }
+
+        this.checkYourAnswersValue += data
+
+        index += 1;
+    }
+  }
 }
 
 module.exports = CcdComplexTypeField;

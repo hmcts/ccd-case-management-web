@@ -25,4 +25,16 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Case Progression';
   });
 
+  Given(/^a case with a Mandatory field exists$/, function() {
+    Data.caseType = 'Case Progression';
+  });
+
+  Given(/^a case type containing a regex validated field exists$/, function() {
+    Data.caseType = 'Regex';
+  });
+
+  Given(/^a case type containing conditionals exists$/, function() {
+    Data.caseType = 'Conditionals';
+  });
+
 });

@@ -115,39 +115,70 @@ class FieldDataTypes {
   }
 
   /**
+   * Select random radio butto option
+   * @returns CCDStringField Object
+   */
+  async enterIntoCollectionField(){
+    let css = await fields.COLLECTION.cssTag;
+    let collectionField  = await new CollectionField(css);
+    await collectionField.enterTextData(3);
+    return collectionField;
+  }
+
+  /**
+   * Select random radio butto option
+   * @returns CCDStringField Object
+   */
+  async enterIntoComplexFiled(){
+    let css = await fields.COMPLEX_TYPE.cssTag;
+    let complexField  = await new ComplexField(css);
+    await complexField.enterComplexTextData();
+    return complexField;
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getNumberFieldValue(){
+    let css = await fields.NUMBER.cssTag;
+    let numberField = await new CCDStringField(css);
+    return await numberField.getFieldValue();
+  }
+
+  /**
    * Interact with any field type entering randomly generated data or selecting random options
    * @param dataType
+   * @param value - optional value to enter into field if applicable
    * @returns {Promise<void>}
    */
   async interactWithField(dataType, value){
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'text':
-        return value ? await this.enterIntoTextField(value) : await this.enterIntoTextField();
+        return await this.enterIntoTextField(value);
       case 'textarea':
-        return await this.enterIntoTextAreaField();
+        return await this.enterIntoTextAreaField(value);
       case 'number':
-        return await this.enterIntoNumberField();
-      case 'address':
-        return //todo
+        return await this.enterIntoNumberField(value);
       case 'money-gbp':
-        return await this.enterIntoMoneyField();
+        return await this.enterIntoMoneyField(value);
       case 'date':
-        return await this.enterIntoDateField();
+        return await this.enterIntoDateField(value);
       case 'document':
         return //todo
       case 'email':
-        return await this.enterIntoEmailField();
+        return await this.enterIntoEmailField(value);
       case 'fixed-list':
         return await this.selectFromFixedList();
-      case 'phone-uk':
-        return await this.enterIntoPhoneField();
+      case 'phone uk':
+        return await this.enterIntoPhoneField(value);
       case 'yes-no':
         return await this.selectYesNoOption();
       case 'collection':
-        return //todo
+        return await this.enterIntoCollectionField();
       case 'complex':
-        return //todo
+        return await this.enterIntoComplexFiled();
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -374,7 +405,7 @@ class FieldDataTypes {
    * @param dataType
    * @returns css component of specified field
    */
-  async getFieldCSS(dataType){
+  async _getFieldCSS(dataType){
     switch(dataType.toLowerCase()) {
       case 'text':
           return FIELDS.TEXT.cssTag;

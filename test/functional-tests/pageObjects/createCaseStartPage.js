@@ -1,6 +1,7 @@
 Dropdown = require('./webdriver-components/dropdown.js')
 BasePage = require('./basePage.js');
 CreateCaseWizardPage = require('./createCaseWizardPage.js')
+Button = require('./webdriver-components/button.js')
 
 class CreateCaseStartPage extends BasePage{
 
@@ -9,7 +10,7 @@ class CreateCaseStartPage extends BasePage{
       this._jurisdiction = new Dropdown('#cc-jurisdiction');
       this._caseType = new Dropdown('#cc-case-type');
       this._event = new Dropdown('#cc-event');
-      this._submitButton = '.container-fluid .button';
+      this._submitButton = new Button('.container-fluid .button');
   }
 
   /**
@@ -44,8 +45,8 @@ class CreateCaseStartPage extends BasePage{
    * @returns {Promise<CreateCaseWizardPage|*>}
    */
   async clickStartButton() {
-    await this.waitForElementToBeClickable($(this._submitButton));
-    await $(this._submitButton).click();
+    await this._submitButton.waitForElementToBeClickable();
+    await this._submitButton.click();
     await browser.waitForAngular;
     return new CreateCaseWizardPage;
   }

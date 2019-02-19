@@ -41,22 +41,6 @@ class BasePage {
       await this.waitForElementToBeVisibleWithTimeout(element(locator), DEFAULT_TIMEOUT);
     }
 
-
-  /**
-   * Wait for an element to be clickable or throw an error.
-   * will wait for the DEFAULT_TIMEOUT value of 5000ms
-   * @param element to wait to be clickable
-   */
-    async waitForElementToBeClickable(element){
-      try {
-        await browser.wait(await EC.elementToBeClickable(element), DEFAULT_TIMEOUT);
-      } catch (e) {
-        let message = `timed out after ${timeout} waiting for element ${element} to be clickable`;
-        throw new CustomError(message, e)
-      }
-    }
-
-
     async waitForUrl(expectedUrlRegex){
       let currentURL = await browser.getCurrentUrl();
       await browser.wait(EC.urlContains(expectedUrlRegex))

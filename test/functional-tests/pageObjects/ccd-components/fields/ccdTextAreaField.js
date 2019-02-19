@@ -32,13 +32,33 @@ class CcdTextAreaField{
     if (this.checkYourAnswersValue === null){
       this.checkYourAnswersValue = value;
     }
-    this.label = await this.getLabel();
+    this.label = await this._getLabel();
   }
+
+  /**
+   * Check if field is ready to type
+   * @returns true or false
+   */
+  async isFieldInputReady(){
+    let isPresent = await this.stringField.isPresent();
+    let isDisplayed = await this.stringField.isDisplayed();
+    return isPresent && isDisplayed;
+  }
+
+  /**
+   * Check if field is present
+   * @returns true or false
+   */
+  async hasFieldLabel(label){
+    let labelText = await this._getLabel();
+    return labelText === label;
+  }
+
 
   /**
    * @returns Label name for the Text Area Field
    */
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }
 

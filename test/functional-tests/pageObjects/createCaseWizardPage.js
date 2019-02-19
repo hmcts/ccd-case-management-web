@@ -25,11 +25,12 @@ class CreateCaseWizardPage extends BasePage{
   /**
    * Fill out a specified field type with a random value
    * @param fieldDataType - the field type we are interacting with
+   * @param value - the field value we are entering
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType){
-      return await new FieldUtils().interactWithField(fieldDataType);
+    async interactWithField(fieldDataType, value){
+      return await new FieldUtils().interactWithField(fieldDataType, value);
     }
 
   /**
@@ -40,8 +41,6 @@ class CreateCaseWizardPage extends BasePage{
     async clickContinueButton(){
         await this.continueButton.click();
     }
-
-
 
     async getCheckYourAnswersValueByLabel(labelText){
       let label = await labelText.replace(' (Optional)','');

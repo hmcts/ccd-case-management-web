@@ -23,10 +23,29 @@ class CcdFixedList {
     async selectOption(){
         await this.fixedList.selectAnyOption();
         this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
-        this.label = await this.getLabel();
+        this.label = await this._getLabel();
     }
 
-    async getLabel(){
+      /**
+     * Check if field is ready to type
+     * @returns true or false
+     */
+    async isFieldInputReady(optionsTextValues){
+        let isPresent = await this.fixedList.isPresent(optionsTextValues);
+        let isEnabled = await this.fixedList.isEnabled();
+        return isPresent && isEnabled;
+    }
+
+    /**
+     * Check if field is present
+     * @returns true or false
+     */
+    async hasFieldLabel(label){
+        let labelText = await this._getLabel();
+        return labelText === label;
+    }
+
+    async _getLabel(){
       return await $(`${this.css} .form-label`).getText();
     }
 

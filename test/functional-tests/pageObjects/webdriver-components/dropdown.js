@@ -42,7 +42,7 @@ class Dropdown {
     let options = await this.getOptionElements();
     let elementListSize = await options.length;
     let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
-    let optionToSelect = await options[randomOptionArrayInt];
+    let optionToSelect = await options[randomOptionArrayInt-1];
     await optionToSelect.click();
 
   }
@@ -54,6 +54,15 @@ class Dropdown {
   async getCurrentSelectedOption(){
     let text = await $(this._currentDropdownOptionElement).getText();
     return text.trim();
+  }
+
+    /**
+   * Returns is options selected for a dropdown
+   * @returns boolean
+   */
+  async isOptionSelected(){
+    let isChecked = await $(this._dropdownElement).getAttribute('ng-reflect-model');
+    return null != isChecked;
   }
 
   /**
@@ -82,6 +91,27 @@ class Dropdown {
 
       await optionToSelect.click();
 
+  }
+
+  /**
+   * Check the input tag is present
+   * @returns {Promise<boolean|*>}
+   */
+  async isPresent(expectedTextsValues){
+    let actualTextsValues = await this.getOptionsTextValues();
+    for (var i = expectedTextsValues.length; i--;) {
+      if(!actualTextsValues.includes(expectedTextsValues[i]))
+        return false;
+    }
+    return await $(this._dropdownElement).isPresent();
+  }
+
+  /**
+   * Check the input tag is enabled
+   * @returns {Promise<boolean|*>}
+   */
+  async isEnabled(){
+    return await $(this._dropdownElement).isEnabled();
   }
 
 }

@@ -12,13 +12,19 @@ class CDDStringField {
   /**
    * Must take the parent css tag for the ccd field component
    * in the format ccd-write-XXXX-field
-   *
+   * Selector farther narrows down the location
    * @param css
+   * @param selector
    */
-  constructor(css){
-    this.stringField = new TextField(`${css} input`)
+  constructor(css, type, selector){
+    if (selector) {
+      this.stringField = new TextField(`${css} ${selector}`);
+    } else {
+      this.stringField = new TextField(`${css} input`);
+    }
     this.css = css;
     this.label = null;
+    this.type = type;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
   }
@@ -26,9 +32,8 @@ class CDDStringField {
   /**
    * enter random text into a CCD Text Field
    */
-  async enterText(){
-    let value = await RandomUtils.generateRandomString();
-    await this.enterIntoField(value);
+  async enterText(value){
+    await this.enterIntoField(value ? value : await RandomUtils.generateRandomString());
   }
 
   /**
@@ -67,9 +72,29 @@ class CDDStringField {
     await this.enterIntoField(email)
   }
 
+  /**
+   * Check if field is ready to type
+   * @returns true or false
+   */
+  async isFieldInputReady(){
+    let isCorrectType = await this.stringField.isType(this.type);
+    let isPresent = await this.stringField.isPresent();
+    let isDisplayed = await this.stringField.isDisplayed();
+    return isCorrectType && isPresent && isDisplayed;
+  }
+
+  /**
+   * Check if field is present
+   * @returns true or false
+   */
+  async hasFieldLabel(label){
+    let labelText = await this._getLabel();
+    return labelText === label;
+  }
+
   //private
   async enterIntoField(value){
-    this.label = await this.getLabel();
+    this.label = await this._getLabel();
     await this.stringField.enterText(value);
     this.inputValue = value;
     if (this.checkYourAnswersValue === null){
@@ -79,7 +104,7 @@ class CDDStringField {
   }
 
   //private
-  async getLabel(){
+  async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
   }
 

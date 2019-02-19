@@ -7,7 +7,7 @@ class CaseListComponent extends BasePage {
   constructor(){
     super();
 
-    this.parentCss = '#search-result'
+    this.parentCss = 'ccd-search-result table'
   }
 
   /**

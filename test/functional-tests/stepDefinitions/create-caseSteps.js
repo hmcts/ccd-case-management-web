@@ -1,5 +1,4 @@
 let TestData = require('../utils/TestData.js');
-let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
 let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
@@ -25,7 +24,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   async function fillOutAndSubmitForm(){
     //todo eventually change to be dynamic and automatic
     let wizardPage = new CreateCaseWizardPage();
-    await wizardPage.interactWithField('text');
+    await wizardPage.interactWithField('text', 'text');
     await wizardPage.clickContinueButton();
     await wizardPage.clickContinueButton();
   }

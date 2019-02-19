@@ -1,4 +1,5 @@
 let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
+let RadioField = require('../../webdriver-components/radioField.js');
 
 /**
  * Yes-No  field component deals with interactions with the CCD Yes No Field component - Yes/No radio button options.
@@ -15,12 +16,13 @@ class CcdYesNoField {
    */
   constructor(css){
     this.css = css;
-    this.yesCss = `${css} .form-group > div:nth-of-type(1) input`;
-    this.noCss = `${css} .form-group > div:nth-of-type(2) input`;
+    this.yesCss = `${css} .form-group #YesNoField-Yes`;
+    this.yesRadio = new RadioField(this.yesCss);
+    this.noCss = `${css} .form-group #YesNoField-No`;
+    this.noRadio = new RadioField(this.noCss);
     this.label = null;
 
     this.checkYourAnswersValue = null;
-
   }
 
   /**
@@ -30,14 +32,14 @@ class CcdYesNoField {
   async selectOption(){
       let bool = RandomUtils.generateRandomBoolean();
       await (bool ? await this.selectYes() : await this.selectNo());
-      this.label = await this.getLabel();
+      this.label = await this._getLabel();
   }
 
   /**
    * Select 'Yes' radio button option
    */
   async selectYes(){
-      await $(this.yesCss).click();
+      await this.yesRadio.click();
       this.checkYourAnswersValue = 'Yes';
   }
 
@@ -45,15 +47,48 @@ class CcdYesNoField {
    * Select 'No' radio button option
    */
   async selectNo(){
-      await $(this.noCss).click();
+      await this.noRadio().click();
       this.checkYourAnswersValue = 'No';
   }
 
   /**
-   * @returns Label name for the Text Area Field
+   * Check if field is ready to type
+   * @returns true or false
    */
-  async getLabel(){
+  async isFieldInputReady(){
+    return this._isYesRadioReady() && this._isNoRadioReady();
+  }
+
+  /**
+   * Check if field is present
+   * @returns true or false
+   */
+  async hasFieldLabel(label){
+    let labelTexts = await this._getLabels();
+    return labelTexts.length === 3 &&
+        labelTexts.includes(label) &&
+        labelTexts.includes('Yes') &&
+        labelTexts.includes('No');
+  }
+
+  async _isYesRadioReady() {
+    let isPresent = await this.yesRadio.isPresent();
+    let isEnabled = await this.yesRadio.isEnabled();
+    return isPresent && isEnabled;
+  }
+
+  async _isNoRadioReady() {
+    let isPresent = await this.noRadio.isPresent();
+    let isEnabled = await this.noRadio.isEnabled();
+    return isPresent && isEnabled;
+  }
+
+  async _getLabel(){
       return await $(`${this.css} .form-label`).getText();
+  }
+
+  async _getLabels(){
+      return await $$(`${this.css} .form-label`).getText();
   }
 
 }

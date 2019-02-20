@@ -2,6 +2,7 @@
 let SearchPage = require('../pageObjects/searchPage.js');
 let TestData = require('../utils/TestData.js');
 let chai = require("chai").use(require("chai-as-promised"));
+let baseSteps = require('./baseSteps.js');
 let expect = chai.expect;
 
 var { defineSupportCode } = require("cucumber");
@@ -14,10 +15,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await searchPage.selectJurisdiction(TestData.jurisdiction);
   });
 
-  Given(/^I am on the search page and selected case type$/, async function () {
+  Given(/^I selected case type$/, async function () {
     searchPage = new SearchPage();
-    await searchPage.getNavBarComponent().clickSearchLink();
-    await searchPage.selectJurisdiction(TestData.jurisdiction);
     await searchPage.selectCaseType(TestData.caseType);
   });
 
@@ -63,6 +62,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   When(/^I click the 'Apply' button$/, async function () {
     searchPage = new SearchPage();
     await searchPage.clickApplyButton();
+  });
+
+  When(/^a case exists$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
   Then(/^the banner title matches that of the currently selected jurisdiction$/, async function () {

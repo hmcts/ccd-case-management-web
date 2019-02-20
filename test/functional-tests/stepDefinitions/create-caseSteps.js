@@ -15,24 +15,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   let caseWizardPage = new CreateCaseWizardPage();
   let caseListPage = new CaseListPage();
 
-
-  async function fillOutAndSubmitForm(){
-    //todo eventually change to be dynamic and automatic
-    let wizardPage = new CreateCaseWizardPage();
-    await wizardPage.interactWithField('text', 'text');
-    await wizardPage.clickContinueButton();
-    await wizardPage.clickSubmitCaseButton();
-  }
-
   When(/^I create the case$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await fillOutAndSubmitForm();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
     //todo should we pushing this data in through API instead?
     await baseSteps.navigateToCreateCasePage();
-    await fillOutAndSubmitForm();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {
@@ -63,7 +54,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I select and submit the event '(.*)'$/, async function (event) {
     await new CaseDetailsPage().startEvent(event)
-    await fillOutAndSubmitForm();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
 

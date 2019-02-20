@@ -34,7 +34,8 @@ Feature: Set of scenarios to test functionality of search filters on the search 
 
   Scenario Outline: reset button clears drop down options and removes all dynamic filters
     Given a case type containing every field type exists
-    And I am on the search page and selected case type
+    And I am on the search page
+    And I selected case type
     And I have filled out the search filters including dynamic filters
     When I click the 'Reset' button
     Then The search dropdowns will be empty
@@ -58,8 +59,9 @@ Feature: Set of scenarios to test functionality of search filters on the search 
 
   Scenario: apply button submits search options and returns results list
     Given a case type containing every field type exists
-    And I create the case
-    And I am on the search page and selected case type
+    And a case exists
+    And I am on the search page
+    And I selected case type
     And I have filled out the search filters
     When I click the 'Apply' button
     Then the search result table will be displayed
@@ -67,8 +69,9 @@ Feature: Set of scenarios to test functionality of search filters on the search 
 #   @stickysearch
 #   Scenario: navigating away from search and back again via browser back saves search filters inputs
 #     Given a case type containing every field type exists
-#     And I create the case
-#     And I am on the search page and selected case type
+#     And a case exists
+#     And I am on the search page
+#     And I selected case type
 #     And I have submitted a search
 #     And I navigate to a case
 #     When I click the browser back button

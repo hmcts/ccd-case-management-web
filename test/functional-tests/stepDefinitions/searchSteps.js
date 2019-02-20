@@ -3,7 +3,6 @@ let SearchPage = require('../pageObjects/searchPage.js');
 let TestData = require('../utils/TestData.js');
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
-global._ = require('../utils/fieldUtils.js');
 
 var { defineSupportCode } = require("cucumber");
 

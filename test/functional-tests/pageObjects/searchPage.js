@@ -3,7 +3,6 @@ Dropdown = require('./webdriver-components/dropdown.js')
 BasePage = require('./basePage.js');
 NavBar = require('./ccd-components/globalNavBar.js');
 DateField = require('../pageObjects/ccd-components/fields/ccdDateField.js');
-global._ = require('../utils/fieldUtils.js');
 let FieldUtils = require('../utils/fieldUtils.js');
 CaseList = require('./ccd-components/caseListComponent.js');
 
@@ -134,110 +133,6 @@ class SearchPage extends BasePage {
    */
   async isFieldInputReady(dataType, valueArray) {
     return await new FieldUtils().isInputFieldReady(dataType, valueArray);
-  }
-
-  /**
-   * Check given text field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isTextFieldInputReady() {
-    return await new FieldUtils().isInputFieldReady(FIELDS.TEXT.cssTag, FIELDS.TEXT.type);
-  }
-
-  /**
-   * Check given date's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isDateFieldInputReady() {
-    return await new FieldUtils().isDateFieldInputReady();
-  }
-
-  /**
-   * Check given document field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isDocumentFieldInputReady() {
-    return await new FieldUtils().isDocumentFieldInputReady();
-  }
-
-  /**
-   * Check given fixed list field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isFixedListFieldInputReady(values) {
-    return await new FieldUtils().isFixedListFieldInputReady(values);
-  }
-
-  /**
-   * Check given money gbp field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isMoneyGBPFieldInputReady() {
-    return await new FieldUtils().isInputFieldReady(FIELDS.MONEY_GBP.cssTag, FIELDS.MONEY_GBP.type);
-  }
-
-  /**
-   * Check given number field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isNumberFieldInputReady() {
-    return await new FieldUtils().isInputFieldReady(FIELDS.NUMBER.cssTag, FIELDS.NUMBER.type);
-  }
-
-  /**
-   * Check given phone field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isPhoneFieldInputReady() {
-    return await new FieldUtils().isInputFieldReady(FIELDS.PHONE_NUMBER.cssTag, FIELDS.PHONE_NUMBER.type);
-  }
-
-  /**
-   * Check given text area field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isTextAreaFieldInputReady() {
-    return await new FieldUtils().isTextAreaFieldInputReady();
-  }
-
-  /**
-   * Check given yes no field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isYesNoFieldInputReady() {
-    return await new FieldUtils().isYesNoFieldInputReady();
-  }
-
-  /**
-   * Check given collection field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isCollectionFieldInputReady() {
-    return await new FieldUtils().isCollectionFieldInputReady();
-  }
-
-  /**
-   * Check given complex type field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isComplexTypeFieldInputReady() {
-    return await new FieldUtils().isComplexTypeFieldInputReady();
-  }
-
-  /**
-   * Check given multi select field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isMultiSelectFieldInputReady(selectors) {
-    return await new FieldUtils().isMultiSelectFieldInputReady(selectors);
-  }
-
-  /**
-   * Check given email field's input ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isEmailFieldInputReady() {
-    return await new FieldUtils().isInputFieldReady(FIELDS.EMAIL.cssTag, FIELDS.EMAIL.type);
   }
 
 }

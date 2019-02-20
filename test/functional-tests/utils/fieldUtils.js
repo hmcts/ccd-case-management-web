@@ -385,7 +385,7 @@ module.exports = FieldDataTypes;
 /**
  *  Enum holding css component for each field data type
  */
-global.FIELDS = Object.freeze({
+const FIELDS = Object.freeze({
   TEXT: {
     type: 'text',
     cssTag: 'ccd-write-text-field'

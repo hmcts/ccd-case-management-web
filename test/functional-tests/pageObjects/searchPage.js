@@ -111,45 +111,37 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check text field is present
+   * Check field is present
    * @returns {Promise<boolean|*>}
    */
-  async isTextFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.TEXT.cssTag);
+  async isFieldPresent(dataType) {
+    return await new FieldUtils().isFieldPresent(dataType);
   }
 
   /**
-   * Check text field label matches provided
+   * Check field label matches provided
    * @param label - the label value we are looking for
    * @returns {Promise<boolean|*>}
    */
-  async hasTextFieldLabel(label) {
-    return await new FieldUtils().hasTextFieldLabel(label);
+  async hasFieldLabels(dataType, labelArray) {
+    return await new FieldUtils().hasFieldLabels(dataType, labelArray);
+  }
+
+  /**
+   * Check given field's input ready
+   * @param label - the label value we are looking for
+   * @returns {Promise<boolean|*>}
+   */
+  async isFieldInputReady(dataType, valueArray) {
+    return await new FieldUtils().isInputFieldReady(dataType, valueArray);
   }
 
   /**
    * Check given text field's input ready to type
    * @returns {Promise<boolean|*>}
    */
-  async isTextFieldInputReady(selector) {
-    return await new FieldUtils().isInputFieldReady(FIELDS.TEXT.cssTag, FIELDS.TEXT.type,  selector);
-  }
-
-  /**
-   * Check date field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isDateFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.DATE.cssTag);
-  }
-
-  /**
-   * Check date label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasDateFieldLabel(label) {
-    return await new FieldUtils().hasDateFieldLabel(label);
+  async isTextFieldInputReady() {
+    return await new FieldUtils().isInputFieldReady(FIELDS.TEXT.cssTag, FIELDS.TEXT.type);
   }
 
   /**
@@ -161,53 +153,11 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check document field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isDocumentFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.DOCUMENT.cssTag);
-  }
-
-  /**
-   * Check document field label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasDocumentFieldLabel(label) {
-    return await new FieldUtils().hasDocumentFieldLabel(label);
-  }
-
-  /**
    * Check given document field's input ready to type
    * @returns {Promise<boolean|*>}
    */
   async isDocumentFieldInputReady() {
     return await new FieldUtils().isDocumentFieldInputReady();
-  }
-
-  /**
-   * Check document field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isEmailFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.EMAIL.cssTag);
-  }
-
-  /**
-   * Check fixed list field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isFixedListFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.FIXED_LIST.cssTag);
-  }
-
-  /**
-   * Check fixed list field label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasFixedListFieldLabel(label) {
-    return await new FieldUtils().hasFixedListFieldLabel(label);
   }
 
   /**
@@ -219,53 +169,11 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check money GBP field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isMoneyGBPFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.MONEY_GBP.cssTag);
-  }
-
-  /**
-   * Check money gbp field label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasMoneyGBPFieldLabel(label) {
-    return await new FieldUtils().hasMoneyGBPFieldLabel(label);
-  }
-
-  /**
    * Check given money gbp field's input ready to type
    * @returns {Promise<boolean|*>}
    */
   async isMoneyGBPFieldInputReady() {
     return await new FieldUtils().isInputFieldReady(FIELDS.MONEY_GBP.cssTag, FIELDS.MONEY_GBP.type);
-  }
-  
-  /**
-   * Check multi select field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isMultiSelectFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.MULTI_SELECT.cssTag);
-  }
-
-  /**
-   * Check number field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isNumberFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.NUMBER.cssTag);
-  }
-
-  /**
-   * Check number field label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasNumberFieldLabel(label) {
-    return await new FieldUtils().hasNumberFieldLabel(label);
   }
 
   /**
@@ -277,45 +185,11 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check phone field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isPhoneFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.PHONE_NUMBER.cssTag);
-  }
-
-  /**
-   * Check phone field label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasPhoneFieldLabel(label) {
-    return await new FieldUtils().hasPhoneFieldLabel(label);
-  }
-
-  /**
    * Check given phone field's input ready to type
    * @returns {Promise<boolean|*>}
    */
   async isPhoneFieldInputReady() {
     return await new FieldUtils().isInputFieldReady(FIELDS.PHONE_NUMBER.cssTag, FIELDS.PHONE_NUMBER.type);
-  }
-
-  /**
-   * Check text area field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isTextAreaFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.TEXT_AREA.cssTag);
-  }
-
-  /**
-   * Check text area label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasTextAreaFieldLabel(label) {
-    return await new FieldUtils().hasTextAreaFieldLabel(label);
   }
 
   /**
@@ -327,45 +201,11 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check yes or no field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isYesNoFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.YES_NO.cssTag);
-  }
-
-  /**
-   * Check yes no field label matches provided
-   * @param label - the label value we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasYesNoFieldLabel(label) {
-    return await new FieldUtils().hasYesNoFieldLabel(label);
-  }
-
-  /**
    * Check given yes no field's input ready to type
    * @returns {Promise<boolean|*>}
    */
   async isYesNoFieldInputReady() {
     return await new FieldUtils().isYesNoFieldInputReady();
-  }
-
-  /**
-   * Check collection field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isCollectionFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.COLLECTION.cssTag);
-  }
-
-  /**
-   * Check collection label matches provided
-   * @param labels - the label values we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasCollectionFieldLabel(labels) {
-    return await new FieldUtils().hasCollectionFieldLabel(labels);
   }
 
   /**
@@ -377,37 +217,11 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check complex type field is present
-   * @returns {Promise<boolean|*>}
-   */
-  async isComplexTypeFieldPresent() {
-    return await new FieldUtils().isFieldPresent(FIELDS.COMPLEX_TYPE.cssTag);
-  }
-
-  /**
-   * Check complex type label matches provided
-   * @param labels - the label values we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasComplexTypeFieldLabel(labels, idSelectors) {
-    return await new FieldUtils().hasComplexTypeFieldLabel(labels, idSelectors);
-  }
-
-  /**
    * Check given complex type field's input ready to type
    * @returns {Promise<boolean|*>}
    */
-  async isComplexTypeFieldInputReady(idSelectors) {
-    return await new FieldUtils().isComplexTypeFieldInputReady(idSelectors);
-  }
-
-  /**
-   * Check multi select label matches provided
-   * @param labels - the label values we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasMultiSelectFieldLabel(labels, selectors) {
-    return await new FieldUtils().hasMultiSelectFieldLabel(labels, selectors);
+  async isComplexTypeFieldInputReady() {
+    return await new FieldUtils().isComplexTypeFieldInputReady();
   }
 
   /**
@@ -416,15 +230,6 @@ class SearchPage extends BasePage {
    */
   async isMultiSelectFieldInputReady(selectors) {
     return await new FieldUtils().isMultiSelectFieldInputReady(selectors);
-  }
-
-  /**
-   * Check email label matches provided
-   * @param labels - the label values we are looking for
-   * @returns {Promise<boolean|*>}
-   */
-  async hasEmailFieldLabel(labels) {
-    return await new FieldUtils().hasEmailFieldLabel(labels);
   }
 
   /**

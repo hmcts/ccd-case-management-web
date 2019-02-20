@@ -17,7 +17,7 @@ class FieldDataTypes {
   async enterIntoTextField(value){
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, '#TextField');
+    let field = await new CCDStringField(css, type);
     await field.enterText(value);
     return field;
   }
@@ -26,10 +26,10 @@ class FieldDataTypes {
    * Enter random text into the Text Area field
    * @returns CCDStringField Object
    */
-  async enterIntoTextAreaField(){
+  async enterIntoTextAreaField(value){
     let css = await FIELDS.TEXT_AREA.cssTag;
     let textAreaField = await new CCDTextAreaField(css);
-    await textAreaField.enterText();
+    await textAreaField.enterText(value);
     return textAreaField;
   }
 
@@ -37,11 +37,11 @@ class FieldDataTypes {
    * Enter random number into the Number field field
    * @returns CCDStringField Object
    */
-  async enterIntoNumberField(){
+  async enterIntoNumberField(value){
     let css = await FIELDS.NUMBER.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type, '#NumberField');
-    await textField.enterNumber();
+    let textField = await new CCDStringField(css, type);
+    await textField.enterNumber(value);
     return textField;
   }
 
@@ -49,11 +49,11 @@ class FieldDataTypes {
    * Enter random number in money field
    * @returns CCDStringField Object
    */
-  async enterIntoMoneyField(){
+  async enterIntoMoneyField(value){
     let css = await FIELDS.MONEY_GBP.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type, '#MoneyField');
-    await textField.enterMoney();
+    let textField = await new CCDStringField(css, type);
+    await textField.enterMoney(value);
     return textField;
   }
 
@@ -61,11 +61,11 @@ class FieldDataTypes {
    * Enter random email address into Email field
    * @returns CCDStringField Object
    */
-  async enterIntoEmailField(){
+  async enterIntoEmailField(value){
     let css = await FIELDS.EMAIL.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type, '#EmailField');
-    await textField.enterEmail();
+    let textField = await new CCDStringField(css, type);
+    await textField.enterEmail(value);
     return textField;
   }
 
@@ -73,11 +73,11 @@ class FieldDataTypes {
    * Enter random valid phone number into Phone UK field
    * @returns CCDStringField Object
    */
-  async enterIntoPhoneField(){
+  async enterIntoPhoneField(value){
     let css = await FIELDS.PHONE_NUMBER.cssTag;
     let type = await FIELDS.TEXT.type;
-    let phoneField = await new CCDStringField(css, type, '#PhoneField');
-    await phoneField.enterPhoneNumber();
+    let phoneField = await new CCDStringField(css, type);
+    await phoneField.enterPhoneNumber(value);
     return phoneField;
   }
 
@@ -85,10 +85,10 @@ class FieldDataTypes {
    * Enter random valid date in the past
    * @returns CCDStringField Object
    */
-  async enterIntoDateField(){
+  async enterIntoDateField(value){
     let css = await FIELDS.DATE.cssTag;
     let dateField = await new CCDDateField(css);
-    await dateField.enterDate();
+    await dateField.enterDate(value);
     return dateField;
   }
 
@@ -187,220 +187,111 @@ class FieldDataTypes {
   }
 
   /**
+   * Verify field label
+   * @param dataType
+   * @param label - label to compare field's label with
+   * @returns {Promise<void>}
+   */
+  async hasFieldLabels(dataType, label){
+    let dt = dataType.toLowerCase();
+    switch(dt) {
+      case 'address':
+        return //todo
+      case 'text':
+        return await this.hasDateFieldLabel(label);
+      case 'textarea':
+        return await this.hasTextAreaFieldLabel(label);
+      case 'number':
+        return await this.hasNumberFieldLabel(label);
+      case 'money-gbp':
+        return await this.hasMoneyGBPFieldLabel(label);
+      case 'date':
+        return await this.hasDateFieldLabel(label);
+      case 'document':
+        return await this.hasDocumentFieldLabel(label);
+      case 'email':
+        return await this.hasEmailFieldLabel(label);
+      case 'fixed-list':
+        return await this.hasFixedListFieldLabel(label);
+      case 'phone-uk':
+        return await this.hasPhoneFieldLabel(label);
+      case 'yes-no':
+        return await this.hasYesNoFieldLabel(label);
+      case 'collection':
+        return await this.hasCollectionFieldLabel(label);
+      case 'complex':
+        return await this.hasComplexTypeFieldLabel(label);
+      case 'multi-select':
+        return await this.hasMultiSelectFieldLabel(label);
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
+  /**
    * Check if field is present
    * @returns {Promise<boolean|*>}
    */
-  async isFieldPresent(css){
+  async isFieldPresent(dataType){
+    let css = await this._getFieldCSS(dataType);
     let isPresent = await element(by.css(css)).isPresent();
     return isPresent;
+  }
+
+  /**
+   * Check if field label is present
+   * @returns {Promise<boolean|*>}
+   */
+  async hasFieldLabels(dataType, labelArray){
+    let field = await this._getField(dataType);
+    return await field.hasFieldLabels(labelArray);
   }
 
   /**
    * Check if field is ready to type
    * @returns {Promise<boolean|*>}
    */
-  async isInputFieldReady(css, idSelectors, type){
-    let textField = await new CCDStringField(css, idSelectors, type);
-    let isPresent = await textField.isFieldInputReady();
+  async isInputFieldReady(dataType, valueArray){
+    let field = await this._getField(dataType);
+    let isPresent = await field.isFieldInputReady(valueArray);
     return isPresent;
   }
 
   /**
-   * Check if text field label is present
-   * @returns {Promise<boolean|*>}
+   * retrieve the css component of a given field data type
+   * @param dataType
+   * @returns css component of specified field
    */
-  async hasTextFieldLabel(label){
-    let textField = await new CCDStringField(`${FIELDS.TEXT.cssTag} label[for="TextField"]`);
-    return await textField.hasFieldLabel(label);
+  async _getField(dataType){
+    let css = await this._getFieldCSS(dataType);
+    let type = await this._getFieldInputType(dataType);
+    switch(dataType.toLowerCase()) {
+      case 'text':
+      case 'number':
+      case 'date':
+      case 'document':
+      case 'email':
+      case 'money-gbp':
+      case 'phone-uk':
+          return new CCDStringField(css, type);
+      case 'textarea':
+          return new CCDTextAreaField(css);
+      case 'address':
+      case 'complex':
+          return new CCDComplexTypeField(css, type);
+      case 'fixed-list':
+          return new CCDFixedListField(css);
+      case 'yes-no':
+          return new CCDYesNoField(css);
+      case 'collection':
+          return new CCDCollectionField(css);
+      case 'multi-select':
+          return new CCDMultiSelectField(css);
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
   }
 
-  /**
-   * Check if date is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isDateFieldInputReady(){
-    let dateField = await new CCDDateField(FIELDS.DATE.cssTag);
-    let isPresent = await dateField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if date field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasDateFieldLabel(label){
-    let dateField = await new CCDDateField(FIELDS.DATE.cssTag);
-    return await dateField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if text area is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isTextAreaFieldInputReady(){
-    let textAreaField = await new CCDTextAreaField(FIELDS.TEXT_AREA.cssTag);
-    let isPresent = await textAreaField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if text area label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasTextAreaFieldLabel(label){
-    let textAreaField = await new CCDTextAreaField(FIELDS.TEXT_AREA.cssTag);
-    return await textAreaField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if complex type is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isComplexTypeFieldInputReady(idSelectors){
-    let complexTypeField = await new CCDComplexTypeField(FIELDS.COMPLEX_TYPE.cssTag, FIELDS.COMPLEX_TYPE.type, idSelectors);
-    let isPresent = await complexTypeField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if text area label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasComplexTypeFieldLabel(labels, idSelectors){
-    let complexTypeField = await new CCDComplexTypeField(FIELDS.COMPLEX_TYPE.cssTag, FIELDS.COMPLEX_TYPE.type, idSelectors);
-    return await complexTypeField.hasFieldLabels(labels);
-  }
-
-  /**
-   * Check if phone field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasPhoneFieldLabel(label){
-    let phoneField = await new CCDStringField(FIELDS.PHONE_NUMBER.cssTag);
-    return await phoneField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if phone field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasNumberFieldLabel(label){
-    let numberField = await new CCDStringField(FIELDS.NUMBER.cssTag);
-    return await numberField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if yes no field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasYesNoFieldLabel(label){
-    let yesNoField = await new CCDYesNoField(FIELDS.YES_NO.cssTag);
-    return await yesNoField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if yes no is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isYesNoFieldInputReady(){
-    let yesNoField = await new CCDYesNoField(FIELDS.YES_NO.cssTag);
-    let isPresent = await yesNoField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if collection field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasCollectionFieldLabel(label){
-    let collectionField = await new CCDCollectionField(FIELDS.COLLECTION.cssTag);
-    return await collectionField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if collection is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isCollectionFieldInputReady(){
-    let collectionField = await new CCDCollectionField(FIELDS.COLLECTION.cssTag);
-    let isPresent = await collectionField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if fixed list field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasFixedListFieldLabel(label){
-    let fixedListField = await new CCDFixedListField(FIELDS.FIXED_LIST.cssTag);
-    return await fixedListField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if fixed list is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isFixedListFieldInputReady(values){
-    let fixedListField = await new CCDFixedListField(FIELDS.FIXED_LIST.cssTag);
-    let isPresent = await fixedListField.isFieldInputReady(values);
-    return isPresent;
-  }
-
-  /**
-   * Check if fixed list field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasMoneyGBPFieldLabel(label){
-    let moneyGBPField = await new CCDStringField(FIELDS.MONEY_GBP.cssTag);
-    return await moneyGBPField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if documet field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasDocumentFieldLabel(label){
-    let documentField = await new CCDStringField(FIELDS.DOCUMENT.cssTag);
-    return await documentField.hasFieldLabel(label);
-  }
-
-  /**
-   * Check if document field is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isDocumentFieldInputReady(){
-    let documentField = await new CCDStringField(FIELDS.DOCUMENT.cssTag, FIELDS.DOCUMENT.type);
-    let isPresent = await documentField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if multi select field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasMultiSelectFieldLabel(labels, idSelectors){
-    let multiSelectField = await new CCDMultiSelectField(FIELDS.MULTI_SELECT.cssTag, idSelectors);
-    return await multiSelectField.hasFieldLabels(labels);
-  }
-
-  /**
-   * Check if document field is ready to type
-   * @returns {Promise<boolean|*>}
-   */
-  async isMultiSelectFieldInputReady(idSelectors){
-    let documentField = await new CCDMultiSelectField(FIELDS.MULTI_SELECT.cssTag, idSelectors);
-    let isPresent = await documentField.isFieldInputReady();
-    return isPresent;
-  }
-
-  /**
-   * Check if email field label is present
-   * @returns {Promise<boolean|*>}
-   */
-  async hasEmailFieldLabel(label){
-    let emailField = await new CCDStringField(FIELDS.EMAIL.cssTag);
-    return await emailField.hasFieldLabel(label);
-  }
 
   /**
    * retrieve the css component of a given field data type
@@ -435,6 +326,48 @@ class FieldDataTypes {
           return FIELDS.COLLECTION.cssTag;
       case 'complex':
           return FIELDS.COMPLEX_TYPE.cssTag;
+      case 'multi-select':
+          return FIELDS.MULTI_SELECT.cssTag;
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
+  /**
+   * retrieve the input type component of a given field data type
+   * @param dataType
+   * @returns css component of specified field
+   */
+  async _getFieldInputType(dataType){
+    switch(dataType.toLowerCase()) {
+      case 'text':
+          return FIELDS.TEXT.type;
+      case 'textarea':
+          return FIELDS.TEXT_AREA.type;
+      case 'number':
+          return FIELDS.NUMBER.type;
+      case 'address':
+          return FIELDS.ADDRESS.type;
+      case 'money-gbp':
+          return FIELDS.MONEY_GBP.type;
+      case 'date':
+          return FIELDS.DATE.type;
+      case 'document':
+          return FIELDS.DOCUMENT.type;
+      case 'email':
+          return FIELDS.EMAIL.type;
+      case 'fixed-list':
+          return FIELDS.FIXED_LIST.type;
+      case 'phone-uk':
+          return FIELDS.PHONE_NUMBER.type;
+      case 'yes-no':
+          return FIELDS.YES_NO.type;
+      case 'collection':
+          return FIELDS.COLLECTION.type;
+      case 'complex':
+          return FIELDS.COMPLEX_TYPE.type;
+      case 'multi-select':
+          return FIELDS.MULTI_SELECT.type;
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -496,7 +429,8 @@ global.FIELDS = Object.freeze({
     cssTag: 'ccd-write-phone-uk-field'
   },
   TEXT_AREA: {
-    type: 'textarea',
+    type: 'text',
+    html: 'textarea',
     cssTag: 'ccd-write-text-area-field'
   },
   YES_NO: {

@@ -1,13 +1,19 @@
-let CCDCheckBoxField = require('../../webdriver-components/checkBox.js');
-
 class CcdMultiSelectField {
 
-  constructor(css, fields){
+  constructor(css){
       this.css = css;
-      this.checkboxes = [];
-      for(var i = fields.length; i--;) {
-        this.checkboxes.push(new CCDCheckBoxField(this.css, fields[i]));
-      }
+      this.labels = this._getLabels();
+  }
+
+  /**
+   * Will randomly select any multi select option
+   */
+  async selectAnyOneElement(){
+    let options = await this._getMultiSelectTextValues();
+    let elementListSize = await options.length;
+    let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
+    let optionToSelect = await options[randomOptionArrayInt-1];
+    await optionToSelect.click();
   }
 
   /**
@@ -15,10 +21,10 @@ class CcdMultiSelectField {
    * @returns true or false
    */
   async isFieldInputReady(){
-    for(var i = this.checkboxes.length; i--;) {
-      let field = this.checkboxes[i];
-      let isPresent = await field.isPresent();
-      let isEnabled = await field.isEnabled();
+    let multiSelectElements = await this._getMultiSelectElements();
+    for (const elem of multiSelectElements){
+      let isPresent = await elem.isPresent();
+      let isEnabled = await elem.isEnabled();
       if (!isPresent || !isEnabled) {
         return false;
       }
@@ -56,6 +62,25 @@ class CcdMultiSelectField {
         return labelsTexts;
     });
   }
+
+    //private
+    async _getMultiSelectElements(){
+      return await $$(`${this.css} input`);
+    }
+  
+    /**
+     * Get list of string multi select options
+     * @returns String Array
+     */
+    async _getMultiSelectTextValues(){
+      let multiSelectElements = await this._getMultiSelectElements();
+      let stringArray = [];
+      for (const elem of multiSelectElements){
+        const elemText = await elem.getText();
+        stringArray.push(elemText);
+      }
+      return stringArray;
+    }
 
 }
 

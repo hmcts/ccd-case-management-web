@@ -3,19 +3,15 @@ let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 
 class CcdComplexTypeField {
 
-  constructor(css, type, selectors){
+  constructor(css, type){
       this.css = css;
+      this.type = type;
       this.stringFields = [];
-      if (selectors) {
-        for(var i = selectors.length; i--;) {
-          this.stringFields.push(new CCDStringField(this.css, type, selectors[i]));
-        }
-      }
       this.inputValue = null;
-      this.mainLabel = this._getMainLabel();
+      this.label = this._getMainLabel();
       this.nestedLabels = this._getNestedLabels();
-      this.checkYourAnswersValue = null;
       this.textFieldList = `${this.css} ccd-field-write`;
+      this.checkYourAnswersValue = null;
       this.checkYourAnswersValue = '';
   }
 
@@ -24,10 +20,14 @@ class CcdComplexTypeField {
    * @returns true or false
    */
   async isFieldInputReady(){
-    for(var i = this.stringFields.length; i--;) {
-      let field = this.stringFields[i];
-      if (!field.isFieldInputReady()) {
-        return false;
+    let fields = $$(this.textFieldList);
+    for(const field of await fields){
+      let inputField = await field.$('input');
+      let isCorrectType = await inputField.getAttribute('type') === this.type;
+      let isPresent = await inputField.isPresent();
+      let isDisplayed = await inputField.isDisplayed();
+      if (!isCorrectType || !isPresent || !isDisplayed) {
+        return false
       }
     }
     return true;

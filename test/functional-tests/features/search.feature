@@ -10,19 +10,51 @@ Feature: Set of scenarios to test functionality of search filters on the search 
     When I change the jurisdiction search drop down option
     Then the banner title matches that of the currently selected jurisdiction
 
-  Scenario: dynamic search filters are displayed for all data types
+  Scenario Outline: dynamic search filters are displayed for all data types
     Given a case type containing every field type exists
     And I am on the search page
     When I select the 'Case type' drop down option for dynamic filters
-    Then a dynamic filter of every datatype will be displayed
+    Then I should see a '<dataType>' dynamic filter with '<labels>' labels and '<values>' values
 
-  Scenario: reset button clears drop down options and removes all dynamic filters
+    Examples:
+      | dataType    | labels                                                             | values                                                     |
+      | Text        | Text Field                                                         |                                                            |
+      | TextArea    | Text Area                                                          |                                                            |
+      | Date        | Date Field                                                         |                                                            |
+      | Complex     | Address Field,Address Line 1,Address Line 2,Address Line 3,Country |                                                            |
+      | Phone-UK    | Phone Field                                                        |                                                            |
+      | Number      | Number Field                                                       |                                                            |
+      | Yes-No      | Yes or No Field                                                    |                                                            |
+      | Collection  | Collection Field                                                   |                                                            |
+      | Fixed-List  | Marrital Status Field                                              | --Select a value--,Marriage,Civil Partnership,Single,Widow |
+      | Money-GBP   | Money Field                                                        |                                                            |
+      | Document    | Document Field                                                     |                                                            |
+      | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
+      | Email       | Email Field                                                        |                                                            |
+
+  Scenario Outline: reset button clears drop down options and removes all dynamic filters
     Given a case type containing every field type exists
     And I am on the search page and selected case type
     And I have filled out the search filters including dynamic filters
     When I click the 'Reset' button
     Then The search dropdowns will be empty
-    And there will be no dynamic search filters visible
+    Then I should not see a '<dataType>' dynamic filter
+
+    Examples:
+      | dataType    |
+      | Text        |
+      | TextArea    |
+      | Date        |
+      | Complex     |
+      | Phone-UK    |
+      | Number      |
+      | Yes-No      |
+      | Collection  |
+      | Fixed-List  |
+      | Money-GBP   |
+      | Document    |
+      | Multi-Select|
+      | Email       |
 
   Scenario: apply button submits search options and returns results list
     Given a case type containing every field type exists

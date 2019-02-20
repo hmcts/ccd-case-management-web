@@ -72,60 +72,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(titleLabel).to.equal(TestData.jurisdiction);
   });
 
-  Then(/^a dynamic filter of every datatype will be displayed$/, async function () {
-    expect(await searchPage.isTextFieldPresent()).to.be.true;
-    expect(await searchPage.hasTextFieldLabel('Text Field')).to.be.true;
-    expect(await searchPage.isTextFieldInputReady('#TextField')).to.be.true;
-
-    expect(await searchPage.isTextAreaFieldPresent()).to.be.true;
-    expect(await searchPage.hasTextAreaFieldLabel('Text Area')).to.be.true;
-    expect(await searchPage.isTextAreaFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isDateFieldPresent()).to.be.true;
-    expect(await searchPage.hasDateFieldLabel('Date Field')).to.be.true;
-    expect(await searchPage.isDateFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isComplexTypeFieldPresent()).to.be.true;
-    expect(await searchPage.hasComplexTypeFieldLabel(['Address Field', 'Address Line 1', 'Address Line 2', 'Address Line 3', 'Country'],
-                                                     ['#AddressLine1', '#AddressLine2', '#AddressLine3', '#Country'])).to.be.true;
-    expect(await searchPage.isComplexTypeFieldInputReady(['#AddressLine1', '#AddressLine2', '#AddressLine3', '#Country'])).to.be.true;
-
-    expect(await searchPage.isPhoneFieldPresent()).to.be.true;
-    expect(await searchPage.hasPhoneFieldLabel('Phone Field')).to.be.true;
-    expect(await searchPage.isPhoneFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isNumberFieldPresent()).to.be.true;
-    expect(await searchPage.hasNumberFieldLabel('Number Field')).to.be.true;
-    expect(await searchPage.isNumberFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isYesNoFieldPresent()).to.be.true;
-    expect(await searchPage.hasYesNoFieldLabel('Yes or No Field')).to.be.true;
-    expect(await searchPage.isYesNoFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isCollectionFieldPresent()).to.be.true;
-    expect(await searchPage.hasCollectionFieldLabel('Collection Field')).to.be.true;
-    expect(await searchPage.isCollectionFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isFixedListFieldPresent()).to.be.true;
-    expect(await searchPage.hasFixedListFieldLabel('Marrital Status Field')).to.be.true;
-    expect(await searchPage.isFixedListFieldInputReady(['--Select a value--', ' Marriage ', ' Civil Partnership ', ' Single ', ' Widow '])).to.be.true;
-
-    expect(await searchPage.isMoneyGBPFieldPresent()).to.be.true;
-    expect(await searchPage.hasMoneyGBPFieldLabel('Money Field')).to.be.true;
-    expect(await searchPage.isMoneyGBPFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isDocumentFieldPresent()).to.be.true;
-    expect(await searchPage.hasDocumentFieldLabel('Document Field')).to.be.true;
-    expect(await searchPage.isDocumentFieldInputReady()).to.be.true;
-
-    expect(await searchPage.isMultiSelectFieldPresent()).to.be.true;
-    expect(await searchPage.hasMultiSelectFieldLabel(['Multi Select Field', 'Cardiff', 'Manchester', 'Oxford'],
-                                                     ['#MultiSelectField-CARDIFF', '#MultiSelectField-MANCHESTER', '#MultiSelectField-OXFORD'])).to.be.true;
-    expect(await searchPage.isMultiSelectFieldInputReady(['#MultiSelectField-CARDIFF', '#MultiSelectField-MANCHESTER', '#MultiSelectField-OXFORD'])).to.be.true;
-
-    expect(await searchPage.isEmailFieldPresent()).to.be.true;
-    expect(await searchPage.hasEmailFieldLabel('Email Field')).to.be.true;
-    expect(await searchPage.isEmailFieldInputReady()).to.be.true;
+  Then(/^I should see a '(.*)' dynamic filter with '(.*)' labels and '(.*)' values$/, async function(dataType, labels, values) {
+    expect(await new SearchPage().isFieldPresent(dataType)).to.be.true;
+    expect(await new SearchPage().hasFieldLabels(dataType, labels.split(','))).to.be.true;
+    expect(await new SearchPage().isFieldInputReady(dataType, values.split(','))).to.be.true;
   });
 
   Then(/^The search dropdowns will be empty$/, async function() {
@@ -134,19 +84,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(await searchPage.isCaseTypeSelected()).to.be.false;
   });
 
-  Then(/^there will be no dynamic search filters visible$/, async function() {
-    searchPage = new SearchPage();
-    expect(await searchPage.isTextFieldPresent()).to.be.false;
-    expect(await searchPage.isTextAreaFieldPresent()).to.be.false;
-    expect(await searchPage.isDateFieldPresent()).to.be.false;
-    expect(await searchPage.isComplexTypeFieldPresent()).to.be.false;
-    expect(await searchPage.isYesNoFieldPresent()).to.be.false;
-    expect(await searchPage.isCollectionFieldPresent()).to.be.false;
-    expect(await searchPage.isFixedListFieldPresent()).to.be.false;
-    expect(await searchPage.isMoneyGBPFieldPresent()).to.be.false;
-    expect(await searchPage.isDocumentFieldPresent()).to.be.false;
-    expect(await searchPage.isMultiSelectFieldPresent()).to.be.false;
-    expect(await searchPage.isEmailFieldPresent()).to.be.false;
+  Then(/^I should not see a '(.*)' dynamic filter$/, async function(dataType) {
+    expect(await new SearchPage().isFieldPresent(dataType)).to.be.false;
   });
 
   Then(/^the search result table will be displayed$/, async function() {

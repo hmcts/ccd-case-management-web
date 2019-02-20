@@ -63,10 +63,10 @@ class CcdYesNoField {
    * Check if field is present
    * @returns true or false
    */
-  async hasFieldLabel(label){
+  async hasFieldLabels(labelArray){
     let labelTexts = await this._getLabels();
     return labelTexts.length === 3 &&
-        labelTexts.includes(label) &&
+        labelTexts.includes(labelArray[0]) &&
         labelTexts.includes('Yes') &&
         labelTexts.includes('No');
   }

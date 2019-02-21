@@ -14,7 +14,7 @@ table {
   }
 
   tbody tr td {
-    @include core-14pt;
+    font-size: 16px;
     word-wrap: break-word;
     a {
       color: $blue_table;
@@ -31,10 +31,10 @@ table {
   padding-top: 25px;
   text-decoration: none;
   text-align: center;
-  @include core-14pt;
+  font-size: 16px;
 
   @include media(desktop) {
-    @include core-14pt;
+    font-size: 16px;
   }
   a {
     color: $blue_pagination;

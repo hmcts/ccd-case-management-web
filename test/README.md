@@ -1,6 +1,43 @@
 # Functional Tests
-
 Guide to the front end functional test framework for ccd-case-management-web. This framework is a Javascript framework using Protractor to interact with web pages implementing the Page Object pattern and put together with CucumberJs
+
+## Contents
+
+  * [Getting Started](#getting-started)
+     * [Prerequisites](#prerequisites)
+     * [Running the tests](#running-the-tests)
+        * [troubleshooting](#troubleshooting)
+           * [no connection?](#no-connection)
+  * [Framework Layers &amp; Structure](#framework-layers--structure)
+     * [Page Object Model](#page-object-model)
+     * [Cucumber](#cucumber)
+     * [Layers &amp; Structure](#layers--structure)
+        * [Feature files](#feature-files)
+        * [Step Definitions](#step-definitions)
+        * [Page Objects](#page-objects)
+        * [BasePage.js](#basepagejs)
+        * [BaseSteps.js](#basestepsjs)
+        * [ccd-components](#ccd-components)
+        * [webdriver-components](#webdriver-components)
+     * [Reporting](#reporting)
+  * [Developing Tests](#developing-tests)
+        * [1. Creating Scenario](#1-creating-scenario)
+        * [2. Use or Create Step Definitions](#2-use-or-create-step-definitions)
+           * [Implementing Step Definitions](#implementing-step-definitions)
+              * [Assertions](#assertions)
+              * [Abstracting similar steps](#abstracting-similar-steps)
+              * [Sharing Data Between Steps](#sharing-data-between-steps)
+        * [3. Use or Create Page Objects](#3-use-or-create-page-objects)
+              * [selectors](#selectors)
+              * [naming convention](#naming-convention)
+              * [BasePage](#basepage)
+     * [Tagging](#tagging)
+              * [conditionals](#conditionals)
+     * [Definition file](#definition-file)
+  * [Pipeline](#pipeline)
+              * [Debugging](#debugging)
+  * [Built With](#built-with)
+
 
 ## Getting Started
 
@@ -64,7 +101,6 @@ Containing common functionality/methods that can be used across different `Step 
 #### ccd-components
 It may sometimes be sensible to abstract a component out of a `Page Object` where that component can be found in multiple places. for example the main navigation page is accessible from every page so rather than having duplicated methods to interact with this navigation across many `Page Objects` we can extract the functionality into it's own component. Then have the `Page Objects` return an instance of this so the functionality can be access from that PO
 
-//TODO EXAMPLE
 #### webdriver-components
 To reduce duplicated code we should abstract functionality around a basic web component into a separate class so we can write reusable functionality to interact with the web component. We could also start to put in logging or extra functionality here which would cascade down to be used across the whole framework. Examples of web components are *dropdown bar, button, link, radio button, text field*
 

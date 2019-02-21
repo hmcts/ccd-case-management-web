@@ -21,21 +21,21 @@ Guide to the front end functional test framework for ccd-case-management-web. Th
         * [webdriver-components](#webdriver-components)
      * [Reporting](#reporting)
   * [Developing Tests](#developing-tests)
-        * [1. Creating Scenario](#1-creating-scenario)
-        * [2. Use or Create Step Definitions](#2-use-or-create-step-definitions)
-           * [Implementing Step Definitions](#implementing-step-definitions)
-              * [Assertions](#assertions)
-              * [Abstracting similar steps](#abstracting-similar-steps)
-              * [Sharing Data Between Steps](#sharing-data-between-steps)
-        * [3. Use or Create Page Objects](#3-use-or-create-page-objects)
-              * [selectors](#selectors)
-              * [naming convention](#naming-convention)
-              * [BasePage](#basepage)
-     * [Tagging](#tagging)
-              * [conditionals](#conditionals)
-     * [Definition file](#definition-file)
+    * [1. Creating Scenario](#1-creating-scenario)
+    * [2. Use or Create Step Definitions](#2-use-or-create-step-definitions)
+       * [Implementing Step Definitions](#implementing-step-definitions)
+          * [Assertions](#assertions)
+          * [Abstracting similar steps](#abstracting-similar-steps)
+          * [Sharing Data Between Steps](#sharing-data-between-steps)
+    * [3. Use or Create Page Objects](#3-use-or-create-page-objects)
+      * [selectors](#selectors)
+      * [naming convention](#naming-convention)
+      * [BasePage](#basepage)
+    * [Tagging](#tagging)
+      * [conditionals](#conditionals)
+    * [Definition file](#definition-file)
   * [Pipeline](#pipeline)
-              * [Debugging](#debugging)
+      * [Debugging](#debugging)
   * [Built With](#built-with)
 
 
@@ -105,7 +105,7 @@ It may sometimes be sensible to abstract a component out of a `Page Object` wher
 To reduce duplicated code we should abstract functionality around a basic web component into a separate class so we can write reusable functionality to interact with the web component. We could also start to put in logging or extra functionality here which would cascade down to be used across the whole framework. Examples of web components are *dropdown bar, button, link, radio button, text field*
 
 ### Reporting
-reporting is configured to automatically generate a report on each test run. the configuration for the report can be found in  the
+reporting is configured to automatically generate a report on each test run. the configuration for the report can be found in the `local.conf` file and the actual reports are generated in the `test/functional-tests/results/` dir. Local reports come equiped with screenshots on test failure for a `Scenario`.
 
 ## Developing Tests
 

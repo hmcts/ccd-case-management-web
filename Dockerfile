@@ -1,3 +1,5 @@
+# Keep hub.Dockerfile aligned to this file as far as possible
+
 ARG base=hmcts.azurecr.io/hmcts/base/node/stretch-slim-lts-8:latest
 
 # ---- Build artifacts ----

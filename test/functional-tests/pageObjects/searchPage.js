@@ -59,7 +59,6 @@ class SearchPage extends BasePage {
   async clickApplyButton() {
     await this._applyButton.waitForElementToBeClickable();
     await this._applyButton.click();
-    await browser.waitForAngular;
   }
 
   /**
@@ -69,7 +68,6 @@ class SearchPage extends BasePage {
   async clickResetButton() {
     await this._resetButton. waitForElementToBeClickable();
     await this._resetButton.click();
-    await browser.waitForAngular;
   }
 
   /**

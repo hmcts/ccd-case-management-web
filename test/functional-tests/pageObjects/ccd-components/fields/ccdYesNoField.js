@@ -16,10 +16,8 @@ class CcdYesNoField {
    */
   constructor(css){
     this.css = css;
-    this.yesCss = `${css} .form-group #YesNoField-Yes`;
-    this.yesRadio = new RadioField(this.yesCss);
-    this.noCss = `${css} .form-group #YesNoField-No`;
-    this.noRadio = new RadioField(this.noCss);
+    this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
+    this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
     this.label = null;
 
     this.checkYourAnswersValue = null;
@@ -52,7 +50,7 @@ class CcdYesNoField {
   }
 
   /**
-   * Check if field is ready to type
+   * Check if field is present and enabled
    * @returns true or false
    */
   async isFieldReady(){

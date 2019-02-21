@@ -248,7 +248,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Check if field is ready to type
+   * Check if field is present and enabled
    * @returns {Promise<boolean|*>}
    */
   async isFieldReady(dataType, valueArray){

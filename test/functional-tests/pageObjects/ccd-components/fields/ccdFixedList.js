@@ -26,8 +26,8 @@ class CcdFixedList {
         this.label = await this._getLabel();
     }
 
-      /**
-     * Check if field is ready to type
+   /**
+     * Check if field is present and enabled
      * @returns true or false
      */
     async isFieldReady(optionsTextValues){

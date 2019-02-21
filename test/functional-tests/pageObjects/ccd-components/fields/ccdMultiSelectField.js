@@ -20,7 +20,7 @@ class CcdMultiSelectField {
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     let multiSelectElements = await this._getMultiSelectElements();
     for (const elem of multiSelectElements){
       let isPresent = await elem.isPresent();

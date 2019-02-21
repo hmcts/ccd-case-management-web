@@ -76,7 +76,7 @@ class CDDStringField {
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     let isCorrectType = await this.stringField.isType(this.type);
     let isPresent = await this.stringField.isPresent();
     let isDisplayed = await this.stringField.isDisplayed();

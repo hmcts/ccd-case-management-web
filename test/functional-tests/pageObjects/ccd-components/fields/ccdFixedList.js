@@ -30,7 +30,7 @@ class CcdFixedList {
      * Check if field is ready to type
      * @returns true or false
      */
-    async isFieldInputReady(optionsTextValues){
+    async isFieldReady(optionsTextValues){
         let isPresent = await this.fixedList.isPresent(optionsTextValues);
         let isEnabled = await this.fixedList.isEnabled();
         return isPresent && isEnabled;

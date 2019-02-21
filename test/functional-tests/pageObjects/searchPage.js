@@ -127,12 +127,12 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check given field's input ready
+   * Check given field is ready
    * @param label - the label value we are looking for
    * @returns {Promise<boolean|*>}
    */
-  async isFieldInputReady(dataType, valueArray) {
-    return await new FieldUtils().isInputFieldReady(dataType, valueArray);
+  async isFieldReady(dataType, valueArray) {
+    return await new FieldUtils().isFielddReady(dataType, valueArray);
   }
 
 }

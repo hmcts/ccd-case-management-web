@@ -55,7 +55,7 @@ class CcdYesNoField {
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     return this._isYesRadioReady() && this._isNoRadioReady();
   }
 

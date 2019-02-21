@@ -251,9 +251,9 @@ class FieldDataTypes {
    * Check if field is ready to type
    * @returns {Promise<boolean|*>}
    */
-  async isInputFieldReady(dataType, valueArray){
+  async isFieldReady(dataType, valueArray){
     let field = await this._getField(dataType);
-    let isPresent = await field.isFieldInputReady(valueArray);
+    let isPresent = await field.isFieldReady(valueArray);
     return isPresent;
   }
 

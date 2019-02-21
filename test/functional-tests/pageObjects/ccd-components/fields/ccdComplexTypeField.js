@@ -19,7 +19,7 @@ class CcdComplexTypeField {
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     let fields = $$(this.textFieldList);
     for(const field of await fields){
       let inputField = await field.$('input');

@@ -37,7 +37,7 @@ class CcdFixedList {
     }
 
     /**
-     * Check if field is present
+     * Check if label is present
      * @returns true or false
      */
     async hasFieldLabels(labelArray){

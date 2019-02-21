@@ -50,7 +50,7 @@ This framework uses the [Page Object Design Pattern](https://github.com/Selenium
 Cucumber is used to write tests, called `Scenarios` in plain english in *Given When Then* format with each line automated with a corrosponding `Step Definition` that implements the action stated in the `sceanrio`
 
 ### Layers & Structure
-[[https://github.com/hmcts/ccd-case-management-web/tree/master/test/functional-tests/resources/framework-structure.png]]
+![structure diagram](https://github.com/hmcts/ccd-case-management-web/blob/test-docs/test/functional-tests/resources/framework-structure.png)
 #### Feature files
 Files that contain tests or `Sceanrios`. files must end in `.feature`
 #### Step Definitions

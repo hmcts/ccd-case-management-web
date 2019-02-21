@@ -50,6 +50,7 @@ This framework uses the [Page Object Design Pattern](https://github.com/Selenium
 Cucumber is used to write tests, called `Scenarios` in plain english in *Given When Then* format with each line automated with a corrosponding `Step Definition` that implements the action stated in the `sceanrio`
 
 ### Layers & Structure
+[[https://github.com/hmcts/ccd-case-management-web/tree/master/test/functional-tests/resources/framework-structure.png]]
 #### Feature files
 Files that contain tests or `Sceanrios`. files must end in `.feature`
 #### Step Definitions
@@ -105,24 +106,81 @@ For more information on `Step Definition` organization click [here](https://docs
 #### 3. Use or Create Page Objects
 when implementing your Steps either use existing function from a page object or create a new one. a locator for an element is defined in the constructor. then create a function using that that locator to be used called from your Step.
 
+if a component on a page may be reused across other pages then we may want to abstract it into `ccd-component` class and call that component from our page to avoid code duplication. A good example is the navigation and footer being on most pages. We would still want to call the abstracted class through the `Page Object` page so that it is clear what page we are interacting with it on. If a page has a highly complex component we may also want to abstract it into it's own component to reduce the `Page Object` class size
+Eg: we Have the NavBar class with functionality for the Navigation bar. The CaseListPage class exposes the NavBar through a function.
+
+```
+//ccd-component Class
+class NavBar {
+
+  constructor() {
+    this._createCaseLink = '#menu-links-left li:nth-of-type(2) a';
+  }
+
+  async clickCreateCaseLink() {
+    await $(this._createCaseLink).click();
+    return new CreateCaseStartPage;
+  }
+  
+}
+```
+```
+//Page Object Class
+class CaseListPage extends BasePage {
+  
+  getNavBarComponent() {
+    return new NavBar;
+  }
+  
+}
+```
+We may have a line like this in our `Step Definition` in order to access the Navigation Bar functionality making it clear we are on the Case List page and clicking the Create Case link on the navigation bar:  
+```
+await caseListPage.getNavBarComponent().clickCreateCaseLink();
+```
+
+When dealing with basic web elements (eg *dropdown bar, button, link, radio button, text field etc*) it is better to model these as a `webdriver-component` (`test/functional-tests/pageObjects/webdriver-components/`). Here we use a class such as `button.js`, this class will hold all functionality around interacting with a button which can be be subsequently called anytime we are interacting with any button helping to reduce duplication. Always try to parse the `css` to the `webdriver-component` class rather than pass an `element`
+
+Eg `Dropdown` class encapsulates functionality around a dropdown box. The CaseDetailsPage uses this for the Actions dropdown and now has access to all the methods around dropdowns rather than having to implement itself in the class:
+
+```
+//webdriver-component Class
+class Dropdown {
+
+async selectFromDropdownByText(dropdownOption) {
+    ...
+  }
+
+}
+```
+
+```
+//Page Object Class
+class CaseDetailsPage extends BasePage {
+
+  constructor() {
+    super();
+    this._actionsDropdown = new Dropdown('ccd-event-trigger select');
+    this._goButton = new Button('ccd-event-trigger button');
+  }
+
+  async startEvent(event){
+    await this._actionsDropdown.selectFromDropdownByText(event);
+    await this._goButton.click()
+  }
+}
+```
 
 ###### selectors
 Where possible use `css` selectors and avoid XPath. Many abstracted classes (see below) take a `css` selector as a constructor argument when initalised and so using other selectors may break this pattern.
 
-//todo naming convention?
 
-if a component on a page may be reused across other pages then we may want to abstract it into `ccd-component` class and call that component from our page to avoid code duplication. A good example is the navigation and footer being on most pages. We would still want to call the abstracted class through the `Page Object` page so that it is clear what page we are interacting with it on. If a page has a highly complex component we may also want to abstract it into it's own component to reduce the `Page Object` class size
+###### naming convention
+Name functions for page objects based on the action on the page they are performing. such as `ClickApplyButton` `GetLabelText` `EnterIntoTextDateField` so it is clear in the Steps what actions on the page are being done.
 
-// todo code example of nav bar
-
-When dealing with basic web elements (eg *dropdown bar, button, link, radio button, text field etc*) it is better to model these as a `webdriver-component` (`test/functional-tests/pageObjects/webdriver-components/`). Here we use a class such as `button.js`, this class will hold all functionality around interacting with a button which can be be subsequently called anytime we are interacting with any button helping to reduce duplication. Always try to parse the `css` to the `webdriver-component` class rather than pass an `element`
-
-// todo example of button class
 
 ###### BasePage
 All `Page Objects` extend `BasePage` which contains functionality that could be applied to any page, if find yourself writing  functionality that could be applied to _any_ page then move it to `BasePage`
-
-
 
 For more information on `Page Objects` click [here](https://github.com/SeleniumHQ/selenium/wiki/PageObjects)
 
@@ -145,30 +203,21 @@ Tags can be run in a conditional way. we can run groupings of certain tags but e
 For more information on `Cucumber` tags click [here](https://docs.cucumber.io/cucumber/api/#tags)
 
 ### Definition file
-We currently have  a master definition file that we write our tests agaist. when writing new tests, see if the existing case types suit your needs, if not, unless it is a small change you should create a new case type which you can then use to tests agaist in your new functional tests. don't forget to commit your updated definition file incrementing the version in the file name. 
+We currently have  a master definition file that we write our tests against. when writing new tests, see if the existing case types suit your needs, if not, unless it is a small change you should create a new case type which you can then use to tests agaist in your new functional tests. don't forget to commit your updated definition file incrementing the version in the file name. 
 
 **NOTE: At the moment the definition needs to be manually uploaded to AAT and does not get uploaded as part of test setup**
 
 File location: `test/functional-tests/resources/definitionsFiles`
 
-### Do's and Don'ts
-
 
 ## Pipeline
+the pipeline is automatically configured to run the commands `test:smoke` and `test:functional` which relate to scrips that can be found in the `package.json`. We use the pipeline vault to set the env vars needed for test execution. `TEST_URL` is generate dynamically. There is an intermediate bash script that wraps that that will print out the values of the requires env vars so they can be debugged in the jenkins console log.
 
-Add additional notes about how to deploy this on a live system
+###### Debugging
+If there are test failures it can be a good idea to run the tests from your local but pointing to the AAT URL so you can see the tests run for yourself, you will also be able to see screenshots on test failure on your local report
 
 ## Built With
 
 * [Protractor](https://www.protractortest.org/#/api) - end-to-end test framework for Angular applications
 * [Cucumber](https://docs.cucumber.io/) - runs automated acceptance tests written in a BDD style.
 * [chai-as-promised](https://www.chaijs.com/plugins/chai-as-promised/) - assertion library
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-
-
-
-

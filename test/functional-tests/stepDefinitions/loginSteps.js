@@ -17,8 +17,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I login with correct credentials$/, async function () {
-      let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
-      let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
+      let username = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
+      let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
 
       await loginPage.inputCredentials(username, password);
       await loginPage.clickSignIn();
@@ -78,7 +78,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Then(/^I have a failed test$/, async function () {
     loginPage = await Login.open();
 
-    let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
+    let username = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
 
     await loginPage.inputCredentials(username, 'WRONGPASSWORD');
     await loginPage.clickSignIn();

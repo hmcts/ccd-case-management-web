@@ -7,8 +7,8 @@ services:
       context: ./test
       dockerfile: DockerfileTests
     environment:
-      - CCD_CASEWORKER_AUTOTEST_EMAIL
-      - CCD_CASEWORKER_AUTOTEST_PASSWORD
+      - CCD_CASEWORKER_AUTOTEST_FE_EMAIL
+      - CCD_CASEWORKER_AUTOTEST_FE_PASSWORD
       - TEST_URL
     volumes:
       - "$PWD:/protractor"

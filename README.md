@@ -131,8 +131,8 @@ Tests require 3 environment variables to be set in order to run:
 
 | Name | Description |
 |------|-------------|
-| CCD_CASEWORKER_AUTOTEST_EMAIL | Username for test account |
-| CCD_CASEWORKER_AUTOTEST_PASSWORD | Password for tests account |
+| CCD_CASEWORKER_AUTOTEST_FE_EMAIL | Username for test account |
+| CCD_CASEWORKER_AUTOTEST_FE_PASSWORD | Password for tests account |
 | TEST_URL | Target URL to test against (default if not set is local docker url) |
 
 

@@ -60,8 +60,8 @@ class LoginPage extends BasePage {
    * @returns {Promise<void>}
    */
   async loginToApp(){
-      let username = process.env.CCD_CASEWORKER_AUTOTEST_EMAIL;
-      let password = process.env.CCD_CASEWORKER_AUTOTEST_PASSWORD;
+      let username = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
+      let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
 
       await this.inputCredentials(username,password);
       return await this.clickSignIn();

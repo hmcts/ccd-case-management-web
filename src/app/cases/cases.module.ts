@@ -8,12 +8,12 @@ import { PaletteModule, ConditionalShowModule, MarkdownModule,
 } from '@hmcts/ccd-case-ui-toolkit';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CaseCreatorComponent } from './creator/case-creator.component';
-import { CreateCaseFiltersComponent } from './creator/filters/create-case-filters.component';
 import { CaseCreatorSubmitComponent } from './creator/case-creator-submit.component';
 import { CreateCaseEventTriggerResolver } from './creator/create-case-event-trigger.resolver';
 import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateCaseFiltersModule } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 
 @NgModule({
   imports: [
@@ -32,11 +32,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     ActivityModule,
     CaseHeaderModule,
+    CreateCaseFiltersModule
   ],
   declarations: [
     CaseCreatorComponent,
     CaseCreatorSubmitComponent,
-    CreateCaseFiltersComponent,
   ],
   providers: [
     CaseReferencePipe,

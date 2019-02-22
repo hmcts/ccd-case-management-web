@@ -15,7 +15,7 @@ class CcdCollectionField {
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     let isPresent = await this.button.isPresent();
     let isEnabled = await this.button.isEnabled();
     return isPresent && isEnabled;
@@ -25,9 +25,9 @@ class CcdCollectionField {
    * Check if field is present
    * @returns true or false
    */
-  async hasFieldLabel(label){
+  async hasFieldLabels(labelArray){
     let labelText = await this._getLabel();
-    return labelText === label;
+    return labelText === labelArray[0];
   }
 
   async _getLabel(){

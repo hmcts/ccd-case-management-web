@@ -45,7 +45,7 @@ class CcdDateField{
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     return this._isDayFieldInputReady() 
         && this._isMonthFieldInputReady()
         && this._isYearFieldInputReady();
@@ -55,10 +55,10 @@ class CcdDateField{
    * Check if field is present
    * @returns true or false
    */
-  async hasFieldLabel(label){
+  async hasFieldLabels(labelArray){
     let labelTexts = await this._getLabels();
     return labelTexts.length === 4 &&
-           labelTexts.includes(label) &&
+           labelTexts.includes(labelArray[0]) &&
            labelTexts.includes('Day') &&
            labelTexts.includes('Month') &&
            labelTexts.includes('Year');

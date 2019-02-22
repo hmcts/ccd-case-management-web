@@ -26,8 +26,7 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
     async isFieldPresent(fieldDataType){
-        let css = await new FieldUtils()._getFieldCSS(fieldDataType);
-        return await $(css).isDisplayed();
+        return await new FieldUtils().isFieldPresent(fieldDataType);
     }
 
 

@@ -26,23 +26,23 @@ class CcdFixedList {
         this.label = await this._getLabel();
     }
 
-      /**
-     * Check if field is ready to type
+   /**
+     * Check if field is present and enabled
      * @returns true or false
      */
-    async isFieldInputReady(optionsTextValues){
+    async isFieldReady(optionsTextValues){
         let isPresent = await this.fixedList.isPresent(optionsTextValues);
         let isEnabled = await this.fixedList.isEnabled();
         return isPresent && isEnabled;
     }
 
     /**
-     * Check if field is present
+     * Check if label is present
      * @returns true or false
      */
-    async hasFieldLabel(label){
+    async hasFieldLabels(labelArray){
         let labelText = await this._getLabel();
-        return labelText === label;
+        return labelText === labelArray[0];
     }
 
     async _getLabel(){

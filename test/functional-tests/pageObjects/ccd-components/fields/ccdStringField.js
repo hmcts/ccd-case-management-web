@@ -14,14 +14,9 @@ class CDDStringField {
    * in the format ccd-write-XXXX-field
    * Selector farther narrows down the location
    * @param css
-   * @param selector
    */
-  constructor(css, type, selector){
-    if (selector) {
-      this.stringField = new TextField(`${css} ${selector}`);
-    } else {
-      this.stringField = new TextField(`${css} input`);
-    }
+  constructor(css, type){
+    this.stringField = new TextField(`${css} input`);
     this.css = css;
     this.label = null;
     this.type = type;
@@ -81,7 +76,7 @@ class CDDStringField {
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     let isCorrectType = await this.stringField.isType(this.type);
     let isPresent = await this.stringField.isPresent();
     let isDisplayed = await this.stringField.isDisplayed();
@@ -92,9 +87,9 @@ class CDDStringField {
    * Check if field is present
    * @returns true or false
    */
-  async hasFieldLabel(label){
+  async hasFieldLabels(labelArray){
     let labelText = await this._getLabel();
-    return labelText === label;
+    return labelText === labelArray[0];
   }
 
   async getFieldValue(){

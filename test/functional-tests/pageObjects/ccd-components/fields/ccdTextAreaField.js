@@ -39,7 +39,7 @@ class CcdTextAreaField{
    * Check if field is ready to type
    * @returns true or false
    */
-  async isFieldInputReady(){
+  async isFieldReady(){
     let isPresent = await this.stringField.isPresent();
     let isDisplayed = await this.stringField.isDisplayed();
     return isPresent && isDisplayed;
@@ -49,9 +49,9 @@ class CcdTextAreaField{
    * Check if field is present
    * @returns true or false
    */
-  async hasFieldLabel(label){
+  async hasFieldLabels(labelArray){
     let labelText = await this._getLabel();
-    return labelText === label;
+    return labelText === labelArray[0];
   }
 
 

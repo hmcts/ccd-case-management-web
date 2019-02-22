@@ -96,13 +96,13 @@ class Dropdown {
   }
 
   /**
-   * Check the input tag is present
+   * Check the the options exist and dropown is present
    * @returns {Promise<boolean|*>}
    */
   async isPresent(expectedTextsValues){
     let actualTextsValues = await this.getOptionsTextValues();
-    for (var i = expectedTextsValues.length; i--;) {
-      if(!actualTextsValues.includes(expectedTextsValues[i]))
+    for (var i = actualTextsValues.length; i--;) {
+      if(!expectedTextsValues.includes(actualTextsValues[i].trim()))
         return false;
     }
     return await $(this._dropdownElement).isPresent();

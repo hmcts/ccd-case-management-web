@@ -22,7 +22,8 @@ class Button{
    * @returns {Promise<Boolean>}
    */
   async isPresent(){
-      return await element(by.xpath(this.xpath)).isPresent();
+    let button = await this._getElementFinder();
+    return await button.isPresent();
   }
 
   /**
@@ -30,7 +31,8 @@ class Button{
    * @returns {Promise<Boolean>}
    */
   async isEnabled(){
-      return await element(by.xpath(this.xpath)).isEnabled();
+    let button = await this._getElementFinder();
+    return await button.isEnabled();
   }
   
   async isDisplayed(){

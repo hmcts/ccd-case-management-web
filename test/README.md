@@ -252,6 +252,28 @@ the pipeline is automatically configured to run the commands `test:smoke` and `t
 ###### Debugging
 If there are test failures it can be a good idea to run the tests from your local but pointing to the AAT URL so you can see the tests run for yourself, you will also be able to see screenshots on test failure on your local report
 
+#### Debugging tests locally
+
+If you needed to debug the tests please follow the steps:
+1) In `local.conf.js` `specs` array at the top instead of `['../features/*.feature']` type the feature file you will be debugging (that avoids starting the browser multiple times just to stop it as the features in feature files would be commented out)
+2) Run the following in cmd line: `node --inspect-brk node_modules/protractor/bin/protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@search`
+3) Open url in browser: `chrome://inspect/#devices`
+4) In the `Remote Target` section click `Inspect` on your started node process which will open `chrome-devtools` debugger
+5) Make sure you add `functional-tests` folder to workspace in `chrome-devtools` debugger (`+ Add folder to workspace` on left side)
+6) Set breakpoints in steps or PO js
+7) Run with F8
+
+Notes: If you have a following error:
+```
+14:22:08] E/local - Error code: 135
+[14:22:08] E/local - Error message: No update-config.json found. Run 'webdriver-manager update' to download binaries.
+[14:22:08] E/local - Error: No update-config.json found. Run 'webdriver-manager update' to download binaries.
+```
+make sure you run the following command (mentioned in here https://github.com/angular/webdriver-manager/issues/269):
+`./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35`
+
+You have to also remember to install protractor in your project: `yarn install protractor`
+
 ## Built With
 
 * [Protractor](https://www.protractortest.org/#/api) - end-to-end test framework for Angular applications

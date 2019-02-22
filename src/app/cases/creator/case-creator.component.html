@@ -1,6 +1,29 @@
 <div class="screen-990">
   <h1 class="heading-medium">Create Case</h1>
   <div class="width-50">
-    <ccd-create-case-filters ></ccd-create-case-filters>
+    <div *ngIf="error" class="error-summary" role="group" aria-labelledby="edit-case-event_error-summary-heading" tabindex="-1">
+    <h3 class="heading-medium error-summary-heading" id="edit-case-event_error-summary-heading">
+        The callback data failed validation
+    </h3>
+    <p>{{error.message}}</p>
+    <ul *ngIf="error.details?.field_errors" class="error-summary-list">
+        <li *ngFor="let fieldError of error.details.field_errors">
+        {{fieldError.message}}
+        </li>
+    </ul>
+    </div>
+    <ccd-callback-errors
+        [triggerTextContinue]="triggerTextStart"
+        [triggerTextIgnore]="triggerTextIgnoreWarnings"
+        [callbackErrorsSubject]="callbackErrorsSubject"
+        (callbackErrorsContext)="callbackErrorsNotify($event)">
+    </ccd-callback-errors>
+    <ccd-create-case-filters
+        [jurisdictions]="jurisdictions"
+        [error]="error"
+        [triggerText]="triggerText"
+        (selectionSubmitted)="apply($event)"
+        (selectionChanged)="resetErrors()"
+    ></ccd-create-case-filters>
   </div>
 </div>

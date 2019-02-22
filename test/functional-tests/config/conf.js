@@ -15,7 +15,7 @@ exports.config = {
 
   capabilities: {
     'shardTestFiles': true,
-    'maxInstances': 1,
+    'maxInstances': 5,
     'acceptInsecureCerts': true,
     'marionette': false,
     'browserName': 'chrome',

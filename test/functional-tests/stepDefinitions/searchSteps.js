@@ -69,9 +69,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^I should see a '(.*)' dynamic filter with '(.*)' labels and '(.*)' values$/, async function(dataType, labels, values) {
-    expect(searchPage.isFieldPresent(dataType)).to.be.true;
-    expect(searchPage.hasFieldLabels(dataType, labels.split(','))).to.be.true;
-    expect(searchPage.isFieldReady(dataType, values.split(','))).to.be.true;
+    expect(await searchPage.isFieldPresent(dataType)).to.be.true;
+    expect(await searchPage.hasFieldLabels(dataType, labels.split(','))).to.be.true;
+    expect(await searchPage.isFieldReady(dataType, values.split(','))).to.be.true;
   });
 
   Then(/^The search dropdowns will be empty$/, async function() {

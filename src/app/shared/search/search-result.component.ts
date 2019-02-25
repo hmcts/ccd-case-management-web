@@ -194,7 +194,7 @@ export class SearchResultComponent implements OnChanges {
       return this.caseReferencePipe.transform(result.case_fields[col.case_field_id])
     } else {
       if (col.id) {
-        return result.case_fields[col.id];
+        return this.caseReferencePipe.transform(result.case_fields[col.id]);
       } else {
         return result.case_fields[col.case_field_id];
       }

@@ -32,7 +32,7 @@ class SearchPage extends BasePage {
    */
   getCaseListComponent(){
     return new CaseList;
-  } 
+  }
 
   /**
    * Select a Jurisdiction from the dropdown
@@ -130,7 +130,7 @@ class SearchPage extends BasePage {
    * @returns {Promise<boolean|*>}
    */
   async isFieldReady(dataType, valueArray) {
-    return await new FieldUtils().isFielddReady(dataType, valueArray);
+    return await new FieldUtils().isFieldReady(dataType, valueArray);
   }
 
 }

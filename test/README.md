@@ -75,8 +75,15 @@ If you are running against local docker and the browser wont connect or showing 
       'noProxy': ''
     },
 ```
-
 Note: you will need the proxy if you are running the test against AAT
+
+##### Multiple browser windows 
+The test are configured to open up a browser window for each feature file. this may result in several browser windows opening and closing when you are just working on a single test. you can mitigate this by changing the line below in the `local.conf.js` to point to the specific feature file you are working on instead of the wildcard/all features
+```
+  specs: [
+    '../features/*.feature'
+  ],
+```
 
 ## Framework Layers & Structure
 

@@ -20,8 +20,8 @@
     </ccd-callback-errors>
     <ccd-create-case-filters
         [jurisdictions]="jurisdictions"
-        [error]="error"
-        [triggerText]="triggerText"
+        [isDisabled]="hasErrors()"
+        [startButtonText]="startButtonText"
         (selectionSubmitted)="apply($event)"
         (selectionChanged)="resetErrors()"
     ></ccd-create-case-filters>

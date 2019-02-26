@@ -19,7 +19,7 @@ export class CaseCreatorComponent implements OnInit {
 
   triggerTextStart = CaseCreatorComponent.TRIGGER_TEXT_START;
   triggerTextIgnoreWarnings = CaseCreatorComponent.TRIGGER_TEXT_CONTINUE;
-  triggerText = CaseCreatorComponent.TRIGGER_TEXT_START;
+  startButtonText = CaseCreatorComponent.TRIGGER_TEXT_START;
   ignoreWarning = false;
   error: HttpError;
 
@@ -45,13 +45,14 @@ export class CaseCreatorComponent implements OnInit {
       queryParams
     }).catch(error => {
       this.error = error;
+      console.log(error);
       this.callbackErrorsSubject.next(error);
     });
   }
 
   callbackErrorsNotify(errorContext: CallbackErrorsContext) {
     this.ignoreWarning = errorContext.ignore_warning;
-    this.triggerText = errorContext.trigger_text;
+    this.startButtonText = errorContext.trigger_text;
   }
 
   resetErrors(): void {
@@ -59,5 +60,16 @@ export class CaseCreatorComponent implements OnInit {
     this.ignoreWarning = false;
     this.callbackErrorsSubject.next(null);
     this.alertService.clear();
+  }
+
+  private hasErrors(): boolean {
+    return (this.error
+      && this.error.callbackErrors
+      && this.error.callbackErrors.length)
+      ||
+      (this.error
+        && this.error.details
+        && this.error.details.field_errors
+        && this.error.details.field_errors.length);
   }
 }

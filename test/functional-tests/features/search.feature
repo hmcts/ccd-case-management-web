@@ -4,6 +4,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
   Background:
     Given I have logged in
 
+    @broken
   Scenario: selecting the jurisdiction search drop down changes the main banner title to that jurisdiction name
     Given I am on the search page
     And the banner title matches that of the currently selected jurisdiction
@@ -32,6 +33,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
       | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
       | Email       | Email Field                                                        |                                                            |
 
+    @searchtest
   Scenario Outline: reset button clears drop down options and removes all dynamic filters
     Given a case type containing every field type exists
     And I am on the search page

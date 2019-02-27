@@ -4,6 +4,7 @@ let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
+let TestData = require('../utils/TestData.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -13,7 +14,8 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
-  let caseListPage = new CaseListPage();
+  let caseListPage = new CaseListPage();  
+  let createCaseStartPage = new CreateCaseStartPage();
 
 
   async function fillOutAndSubmitForm(){
@@ -116,9 +118,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(pageHeader).to.equal(expectedPageHeader);
   });
 
-  
+  Given(/^I have filled out the create case filters$/, async function () {
+    await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
+    await createCaseStartPage.selectCaseType(TestData.caseType);
+    await createCaseStartPage.selectEvent(TestData.event);
+  });
+
   When(/^I click the 'Start' button$/, async function () {
-    createCaseStartPage = new CreateCaseStartPage();
     await createCaseStartPage.clickStartButton();
   });
 

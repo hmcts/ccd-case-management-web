@@ -16,15 +16,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await searchPage.selectJurisdiction(TestData.jurisdiction);
   });
 
-  Given(/^I selected case type$/, async function () {
-    await searchPage.selectCaseType(TestData.caseType);
-  });
-
   Given(/^I have filled out the search filters$/, async function() {
+    await searchPage.selectCaseType(TestData.caseType);
     await searchPage.interactWithField('text', 'text');
   });
 
   Given(/^I have filled out the search filters including dynamic filters$/, async function() {
+    await searchPage.selectCaseType(TestData.caseType);
     await searchPage.interactWithField('text');
     await searchPage.interactWithField('textarea');
     await searchPage.interactWithField('number');
@@ -72,11 +70,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(await searchPage.isFieldPresent(dataType)).to.be.true;
     expect(await searchPage.hasFieldLabels(dataType, labels.split(','))).to.be.true;
     expect(await searchPage.isFieldReady(dataType, values.split(','))).to.be.true;
-  });
-
-  Then(/^The search dropdowns will be empty$/, async function() {
-    expect(await searchPage.isJurisdictionSelected()).to.be.false;
-    expect(await searchPage.isCaseTypeSelected()).to.be.false;
   });
 
   Then(/^I should not see a '(.*)' dynamic filter$/, async function(dataType) {

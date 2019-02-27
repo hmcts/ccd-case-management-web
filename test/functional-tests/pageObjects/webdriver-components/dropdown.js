@@ -60,10 +60,11 @@ class Dropdown {
    * Returns is options selected for a dropdown
    * @returns boolean
    */
-  async isOptionSelected(){
-    let isChecked = await $(this._dropdownElement).getAttribute('ng-reflect-model');
-    return null != isChecked;
-  }
+    //todo doesn't work
+  // async isOptionSelected(){
+  //   let isChecked = await $(this._dropdownElement).getAttribute('ng-reflect-model');
+  //   return null != isChecked;
+  // }
 
   /**
    * Select a dropdown option by text value. Case insensitive
@@ -115,7 +116,7 @@ class Dropdown {
   async isEnabled(){
     return await $(this._dropdownElement).isEnabled();
   }
-  
+
   /**
    * Select a dropdown option by text value. Retry 2 more times if fails.
    * @param dropdownOption

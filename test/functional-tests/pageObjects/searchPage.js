@@ -71,24 +71,6 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Check that jurisdiction is selected
-   * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
-   */
-  async isJurisdictionSelected(){
-    let isSelected = this._jurisdiction.isOptionSelected();
-    return isSelected;
-  }
-
-  /**
-   * Check that case type is selected
-   * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
-   */
-  async isCaseTypeSelected(){
-    let isSelected = this._caseType.isOptionSelected();
-    return isSelected;
-  }
-
-  /**
    * Check that case results page is displayed
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */

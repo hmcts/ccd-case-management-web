@@ -116,5 +116,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(pageHeader).to.equal(expectedPageHeader);
   });
 
+  
+  When(/^I click the 'Start' button$/, async function () {
+    createCaseStartPage = new CreateCaseStartPage();
+    await createCaseStartPage.clickStartButton();
+  });
+
+  Then(/^I will be navigated to 'Create Case' wizard form page$/, async function () {
+    expect(await new CreateCaseStartPage().amOnPage()).to.be.true
+  });
+
 
 });

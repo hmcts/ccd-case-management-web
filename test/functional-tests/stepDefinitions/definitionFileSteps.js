@@ -36,4 +36,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Conditionals';
   });
 
+  Given(/^I have filled out the create case filters$/, function () {
+    Data.jurisdiction = 'Divorce';
+    Data.caseType = 'Divorce';
+    Data.event = 'Create case';
+  });
+
+
 });

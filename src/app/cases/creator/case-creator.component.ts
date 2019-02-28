@@ -61,7 +61,7 @@ export class CaseCreatorComponent implements OnInit {
     this.alertService.clear();
   }
 
-  private hasErrors(): boolean {
+  hasErrors(): boolean {
     return (this.error
       && this.error.callbackErrors
       && this.error.callbackErrors.length)

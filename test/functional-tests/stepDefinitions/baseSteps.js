@@ -10,4 +10,12 @@ module.exports = {
     await createCaseStartPage.clickStartButton();
   },
 
+  fillOutAndSubmitForm: async function(){
+    //todo eventually change to be dynamic and automatic
+    let wizardPage = new CreateCaseWizardPage();
+    await wizardPage.interactWithField('text', 'text');
+    await wizardPage.clickContinueButton();
+    await wizardPage.clickSubmitCaseButton();
+  }
+
 };

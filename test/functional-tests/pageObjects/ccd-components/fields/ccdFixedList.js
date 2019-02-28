@@ -26,6 +26,25 @@ class CcdFixedList {
         this.label = await this._getLabel();
     }
 
+   /**
+     * Check if field is present and enabled
+     * @returns true or false
+     */
+    async isFieldReady(optionsTextValues){
+        let isPresent = await this.fixedList.isPresent(optionsTextValues);
+        let isEnabled = await this.fixedList.isEnabled();
+        return isPresent && isEnabled;
+    }
+
+    /**
+     * Check if label is present
+     * @returns true or false
+     */
+    async hasFieldLabels(labelArray){
+        let labelText = await this._getLabel();
+        return labelText === labelArray[0];
+    }
+
     async _getLabel(){
       return await $(`${this.css} .form-label`).getText();
     }

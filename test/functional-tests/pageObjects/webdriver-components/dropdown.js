@@ -42,7 +42,7 @@ class Dropdown {
     let options = await this._getOptionElements();
     let elementListSize = await options.length;
     let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
-    let optionToSelect = await options[randomOptionArrayInt];
+    let optionToSelect = await options[randomOptionArrayInt-1];
     await optionToSelect.click();
 
   }
@@ -56,35 +56,65 @@ class Dropdown {
     return text.trim();
   }
 
+    /**
+   * Returns is options selected for a dropdown
+   * @returns boolean
+   */
+    //todo doesn't work
+  // async isOptionSelected(){
+  //   let isChecked = await $(this._dropdownElement).getAttribute('ng-reflect-model');
+  //   return null != isChecked;
+  // }
+
   /**
    * Select a dropdown option by text value. Case insensitive
    * @param dropdownOption
    */
   async _selectFromDropdownByText(dropdownOption){
-      let optionToSelect;
-      let found = false;
+    let optionToSelect;
+    let found = false;
 
-      let options = await this._getOptionElements();
-      let optionsTextArray = [];
+    let options = await this._getOptionElements();
+    let optionsTextArray = [];
 
 
-      for (const option of options){
-          const optionText = await option.getText();
-          await optionsTextArray.push(optionText)
-          if (optionText.toLowerCase() === dropdownOption.toLowerCase()){
-             optionToSelect = option;
-             found = true;
-             break;
-          }
-      }
+    for (const option of options){
+        const optionText = await option.getText();
+        await optionsTextArray.push(optionText)
+        if (optionText.toLowerCase() === dropdownOption.toLowerCase()){
+           optionToSelect = option;
+           found = true;
+           break;
+        }
+    }
 
-      if (!found){
-        let message = `option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'. Available options: ${optionsTextArray}`
-        throw new CustomError(message)
-      }
+    if (!found){
+      let message = `option '${dropdownOption}' not found in dropdown '${this._dropdownElement.toString()}'. Available options: ${optionsTextArray}`
+      throw new CustomError(message)
+    }
 
-      await optionToSelect.click();
+    await optionToSelect.click();
+  }
 
+  /**
+   * Check the the options exist and dropown is present
+   * @returns {Promise<boolean|*>}
+   */
+  async isPresent(expectedTextsValues){
+    let actualTextsValues = await this.getOptionsTextValues();
+    for (var i = actualTextsValues.length; i--;) {
+      if(!expectedTextsValues.includes(actualTextsValues[i].trim()))
+        return false;
+    }
+    return await $(this._dropdownElement).isPresent();
+  }
+
+  /**
+   * Check the input tag is enabled
+   * @returns {Promise<boolean|*>}
+   */
+  async isEnabled(){
+    return await $(this._dropdownElement).isEnabled();
   }
 
   /**
@@ -112,7 +142,6 @@ class Dropdown {
     if (fail){
       throw new CustomError(failmessage, 'failed 3 retry attempts')
     }
-
   }
 
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HttpError, Jurisdiction, CallbackErrorsContext, AlertService } from '@hmcts/ccd-case-ui-toolkit/';
+import { HttpError, Jurisdiction, CallbackErrorsContext, AlertService, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/';
 import { Router } from '@angular/router';
-import { CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { DefinitionsService } from '../../core/definitions/definitions.service';
 import { CREATE_ACCESS } from '../../shared/domain/case-view/access-types.model';
 

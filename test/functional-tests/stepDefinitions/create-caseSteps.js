@@ -119,6 +119,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Given(/^I have filled out the create case filters$/, async function () {
+    await caseListPage.getNavBarComponent().clickCreateCaseLink();
     await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
     await createCaseStartPage.selectCaseType(TestData.caseType);
     await createCaseStartPage.selectEvent(TestData.event);
@@ -129,7 +130,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^I will be navigated to 'Create Case' wizard form page$/, async function () {
-    expect(await new CreateCaseStartPage().amOnPage()).to.be.true
+    browser.getCurrentUrl().then(function(currentUrl){
+      expect(currentUrl.indexOf('createCaseSingleFormPage') > -1).to.be.true
+    });
   });
 
 

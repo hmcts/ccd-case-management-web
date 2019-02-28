@@ -130,9 +130,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^I will be navigated to 'Create Case' wizard form page$/, async function () {
-    browser.getCurrentUrl().then(function(currentUrl){
-      expect(currentUrl.indexOf('createCaseSingleFormPage') > -1).to.be.true
-    });
+    await browser.getCurrentUrl()
+      .then(function(currentUrl) {
+        expect(currentUrl.indexOf('createCaseSingleFormPage') > -1).to.be.true
+      });
   });
 
 

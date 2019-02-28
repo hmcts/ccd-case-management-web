@@ -36,6 +36,26 @@ class CcdTextAreaField{
   }
 
   /**
+   * Check if field is ready to type
+   * @returns true or false
+   */
+  async isFieldReady(){
+    let isPresent = await this.stringField.isPresent();
+    let isDisplayed = await this.stringField.isDisplayed();
+    return isPresent && isDisplayed;
+  }
+
+  /**
+   * Check if field is present
+   * @returns true or false
+   */
+  async hasFieldLabels(labelArray){
+    let labelText = await this._getLabel();
+    return labelText === labelArray[0];
+  }
+
+
+  /**
    * @returns Label name for the Text Area Field
    */
   async _getLabel(){

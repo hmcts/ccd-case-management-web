@@ -156,7 +156,6 @@ local/docker or desired url and run the following commands:
 Note: if you are trying to run tests agaist local/docker instance you may need to comment out the `proxy` section 
 in the `local.conf.js`:
 
-
 ## Production
 
 To build your application, run:

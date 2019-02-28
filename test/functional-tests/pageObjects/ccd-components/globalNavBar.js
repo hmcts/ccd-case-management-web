@@ -1,4 +1,5 @@
 CreateCaseStartPage = require('../createCaseStartPage.js');
+SearchPage = require('../searchPage.js');
 
 /**
  * This component is not angular therefore we need to set browser.ignoreSynchronization = true before interacting
@@ -18,9 +19,8 @@ class NavBar{
 
   }
 
-
   async getTitleLabel() {
-      return await element(this._bannerHeaderTitle).getText();
+      return await $(this._bannerHeaderTitle).getText();
   }
 
   /**
@@ -33,6 +33,18 @@ class NavBar{
     await $(this._createCaseLink).click();
     browser.ignoreSynchronization = false;
     return new CreateCaseStartPage;
+  }
+
+  /**
+   * Click the 'search' link ignoring synchronisation while interacting
+   * with the button
+   * @returns {Promise<SearchPage|*>}
+   */
+  async clickSearchLink(){
+    browser.ignoreSynchronization = true;
+    await $(this._searchLink).click();
+    browser.ignoreSynchronization = false;
+    return new SearchPage;
   }
 
   async getUserName(){

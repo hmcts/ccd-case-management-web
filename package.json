@@ -115,7 +115,7 @@
     "nsp": "^3.2.1",
     "phantomjs-prebuilt": "^2.1.16",
     "prettier": "^1.7.4",
-    "protractor": "^5.4.1",
+    "protractor": "^5.4.2",
     "protractor-beautiful-reporter": "^1.2.1",
     "protractor-cucumber-framework": "^6.1.1",
     "protractor-multiple-cucumber-html-reporter-plugin": "^1.8.0",

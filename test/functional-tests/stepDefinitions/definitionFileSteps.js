@@ -17,7 +17,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Given(/^a case type containing every field type exists$/, function() {
-    Data.caseType = 'All Data Types';
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
   });
 
   Given(/^a case with Case Progression functionality exists$/, function() {

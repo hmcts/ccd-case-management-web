@@ -19,7 +19,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | Document  |
       | Email     |
       | Fixed-List|
-      | Phone UK  |
+      | Phone-UK  |
       | Yes-No    |
       | Collection|
       | Complex   |
@@ -39,7 +39,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | Date      |
       | Email     |
      #| Fixed-List|
-      | Phone UK  |
+      | Phone-UK   |
       | Yes-No    |
 
     @collection
@@ -69,7 +69,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     @validation
   Scenario: Validation: invalid phone number is not accepted
     Given a case type containing every field type exists
-    And I enter '11111111111' into the 'Phone UK' field
+    And I enter '11111111111' into the 'phone-uk' field
     When I click the Continue button
     Then there will be validation errors
     And the 'Continue' button will be disabled
@@ -85,14 +85,14 @@ Feature: Set of scenarios to check we can read and write to all field data types
     @validation
   Scenario: Validation: invalid Money amount is not accepted
     Given a case type containing every field type exists
-    And I enter '-1' into the 'Money-gbp' field
+    And I enter '-1' into the 'money-gbp' field
     Then there will be a field validation error
     And the 'Continue' button will be disabled
 
     @validation
   Scenario: Validation: invalid date is not accepted
     Given a case type containing every field type exists
-    And I enter '01201990' into the 'Date' field
+    And I enter '01201990' into the 'date' field
     When I click the Continue button
     Then there will be validation errors
     And the 'Continue' button will be disabled
@@ -108,8 +108,8 @@ Feature: Set of scenarios to check we can read and write to all field data types
     @validation @bug
   Scenario: Validation: can continue after correcting Phone UK validation failure
     Given a case type containing every field type exists
-    And I have a validation error from invalid 'phone uk'
-    When I re-enter '07777777777' into the 'phone uk' field
+    And I have a validation error from invalid 'phone-uk'
+    When I re-enter '07777777777' into the 'phone-uk' field
     Then I can navigate to the next page
 
     @validation @bug

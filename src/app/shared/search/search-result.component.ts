@@ -6,8 +6,10 @@ import { SortOrder } from './sorting/sort-order';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
-import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField, DisplayMode,
-  ActivityService, SearchResultView, SearchResultViewColumn, SearchResultViewItem } from '@hmcts/ccd-case-ui-toolkit';
+import {
+  CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField, DisplayMode,
+  ActivityService, SearchResultView, SearchResultViewColumn, SearchResultViewItem, newCaseField
+} from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',
@@ -145,13 +147,8 @@ export class SearchResultComponent implements OnChanges {
   }
 
   buildCaseField(col: SearchResultViewColumn, result: SearchResultViewItem): CaseField {
-    return {
-      id: col.case_field_id,
-      label: col.label,
-      field_type: col.case_field_type,
-      value: result.case_fields[col.case_field_id],
-      display_context: null,
-    };
+    return newCaseField(col.case_field_id, col.label, null, col.case_field_type, null)
+      .withValue(result.case_fields[col.case_field_id]).build();
   }
 
   getColumnsWithPrefix(col: CaseField, result: SearchResultViewItem): CaseField {

@@ -4,6 +4,7 @@ let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
+let TestData = require('../utils/TestData.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -13,26 +14,18 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
-  let caseListPage = new CaseListPage();
-
-
-  async function fillOutAndSubmitForm(){
-    //todo eventually change to be dynamic and automatic
-    let wizardPage = new CreateCaseWizardPage();
-    await wizardPage.interactWithField('text');
-    await wizardPage.clickContinueButton();
-    await wizardPage.clickSubmitCaseButton();
-  }
+  let caseListPage = new CaseListPage();  
+  let createCaseStartPage = new CreateCaseStartPage();
 
   When(/^I create the case$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await fillOutAndSubmitForm();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
     //todo should we pushing this data in through API instead?
     await baseSteps.navigateToCreateCasePage();
-    await fillOutAndSubmitForm();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {
@@ -63,7 +56,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I select and submit the event '(.*)'$/, async function (event) {
     await new CaseDetailsPage().startEvent(event)
-    await fillOutAndSubmitForm();
+    await baseSteps.fillOutAndSubmitForm();
   });
 
 
@@ -114,6 +107,24 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Then(/^I will be on the '(.*)' page$/, async function (expectedPageHeader) {
     let pageHeader = await caseWizardPage.getPageHeader();
     expect(pageHeader).to.equal(expectedPageHeader);
+  });
+
+  Given(/^I have filled out the create case filters$/, async function () {
+    await caseListPage.getNavBarComponent().clickCreateCaseLink();
+    await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
+    await createCaseStartPage.selectCaseType(TestData.caseType);
+    await createCaseStartPage.selectEvent(TestData.event);
+  });
+
+  When(/^I click the 'Start' button$/, async function () {
+    await createCaseStartPage.clickStartButton();
+  });
+
+  Then(/^I will be navigated to 'Create Case' wizard form page$/, async function () {
+    await browser.getCurrentUrl()
+      .then(function(currentUrl) {
+        expect(currentUrl.indexOf('createCaseSingleFormPage') > -1).to.be.true
+      });
   });
 
 

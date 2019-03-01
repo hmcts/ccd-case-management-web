@@ -59,13 +59,13 @@ The tests will require the following environmental variables in order to run. To
 
 The functional tests use both Protractor with Cucumber. Individual tests/scenarios are tagged with annotations eg `@functional` and are executed agaist a run config file (`conf.js` or local.conf.js) via the CLI like so:
 
-`protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags='@functional`
+`protractor test/config/local.conf.js --cucumberOpts.tags='@functional`
 
 ommiting the tags will run all the tests
 
 #### troubleshooting
 ##### no connection?
-If you are running against local docker and the browser wont connect or showing no connection error, you may be configured to use a proxy which you will need to comment out of the `test/functional-tests/config/local.conf.js` the line for the proxy is:
+If you are running against local docker and the browser wont connect or showing no connection error, you may be configured to use a proxy which you will need to comment out of the `test/config/local.conf.js` the line for the proxy is:
 
 ```
      'proxy': {
@@ -94,7 +94,7 @@ This framework uses the [Page Object Design Pattern](https://github.com/Selenium
 Cucumber is used to write tests, called `Scenarios` in plain english in *Given When Then* format with each line automated with a corrosponding `Step Definition` that implements the action stated in the `sceanrio`
 
 ### Layers & Structure
-![structure diagram](https://github.com/hmcts/ccd-case-management-web/blob/test-docs/test/functional-tests/resources/framework-structure.png)
+![structure diagram](https://github.com/hmcts/ccd-case-management-web/blob/test-docs/test/resources/framework-structure.png)
 #### Feature files
 Files that contain tests or `Sceanrios`. files must end in `.feature`
 #### Step Definitions
@@ -112,14 +112,14 @@ It may sometimes be sensible to abstract a component out of a `Page Object` wher
 To reduce duplicated code we should abstract functionality around a basic web component into a separate class so we can write reusable functionality to interact with the web component. We could also start to put in logging or extra functionality here which would cascade down to be used across the whole framework. Examples of web components are *dropdown bar, button, link, radio button, text field*
 
 ### Reporting
-reporting is configured to automatically generate a report on each test run. the configuration for the report can be found in the `local.conf` file and the actual reports are generated in the `test/functional-tests/results/` dir. Local reports come equiped with screenshots on test failure for a `Scenario`.
+reporting is configured to automatically generate a report on each test run. the configuration for the report can be found in the `local.conf` file and the actual reports are generated in the `test/results/` dir. Local reports come equiped with screenshots on test failure for a `Scenario`.
 
 ## Developing Tests
 
 #### 1. Creating Scenario
 We start with our Scenario which is our test written in [Gherkin](https://docs.cucumber.io/gherkin/reference/) syntax. These should be created by either or a combination of QA, BA and/or developers and should preferably be signed of by one of each party but more importantly by a BA. These should be created from the JIRA Story being worked on
 
-Put the `Scenarios` into an exiting `Feature` file which should be a grouping of scenarios testing similar behaviors. Create a new feature file if needed. Location for `Feature` files: `test/functional-tests/features/`
+Put the `Scenarios` into an exiting `Feature` file which should be a grouping of scenarios testing similar behaviors. Create a new feature file if needed. Location for `Feature` files: `test/features/`
 
 For more information on writing `Feature files`, `Scenarios` and `Gherkin` syntax click [here](https://docs.cucumber.io/gherkin/reference/)
 
@@ -139,7 +139,7 @@ Sometimes we may find similar steps that contain similar but not exactly the sam
 ###### Sharing Data Between Steps
 If we really need to share data between steps we can create an object at the top of a Step Definition class and set the value in one Step and get and use the value in another
 
-If we are sharing between `Step Definiton` files then we may want to use an external class for example `test/functional-tests/utils/TestData.js`
+If we are sharing between `Step Definiton` files then we may want to use an external class for example `test/utils/TestData.js`
 
 NOTE: It is preferable to create a new Step Definition rather than piece together an existing Step that makes the Scenario less readable. The Scenario layer is the most important part of the test.
 
@@ -182,7 +182,7 @@ We may have a line like this in our `Step Definition` in order to access the Nav
 await caseListPage.getNavBarComponent().clickCreateCaseLink();
 ```
 
-When dealing with basic web elements (eg *dropdown bar, button, link, radio button, text field etc*) it is better to model these as a `webdriver-component` (`test/functional-tests/pageObjects/webdriver-components/`). Here we use a class such as `button.js`, this class will hold all functionality around interacting with a button which can be be subsequently called anytime we are interacting with any button helping to reduce duplication. Always try to parse the `css` to the `webdriver-component` class rather than pass an `element`
+When dealing with basic web elements (eg *dropdown bar, button, link, radio button, text field etc*) it is better to model these as a `webdriver-component` (`test/pageObjects/webdriver-components/`). Here we use a class such as `button.js`, this class will hold all functionality around interacting with a button which can be be subsequently called anytime we are interacting with any button helping to reduce duplication. Always try to parse the `css` to the `webdriver-component` class rather than pass an `element`
 
 Eg `Dropdown` class encapsulates functionality around a dropdown box. The CaseDetailsPage uses this for the Actions dropdown and now has access to all the methods around dropdowns rather than having to implement itself in the class:
 
@@ -250,7 +250,7 @@ We currently have  a master definition file that we write our tests against. whe
 
 **NOTE: At the moment the definition needs to be manually uploaded to AAT and does not get uploaded as part of test setup**
 
-File location: `test/functional-tests/resources/definitionsFiles`
+File location: `test/resources/definitionsFiles`
 
 
 ## Pipeline
@@ -263,10 +263,10 @@ If there are test failures it can be a good idea to run the tests from your loca
 
 If you needed to debug the tests please follow the steps:
 1) In `local.conf.js` `specs` array at the top instead of `['../features/*.feature']` type the feature file you will be debugging (that avoids starting the browser multiple times just to stop it as the features in feature files would be commented out)
-2) Run the following in cmd line: `node --inspect-brk node_modules/protractor/bin/protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@search`
+2) Run the following in cmd line: `node --inspect-brk node_modules/protractor/bin/protractor test/config/local.conf.js --cucumberOpts.tags=@search`
 3) Open url in browser: `chrome://inspect/#devices`
 4) In the `Remote Target` section click `Inspect` on your started node process which will open `chrome-devtools` debugger
-5) Make sure you add `functional-tests` folder to workspace in `chrome-devtools` debugger (`+ Add folder to workspace` on left side)
+5) Make sure you add `test` folder to workspace in `chrome-devtools` debugger (`+ Add folder to workspace` on left side)
 6) Set breakpoints in steps or PO js
 7) Run with F8
 

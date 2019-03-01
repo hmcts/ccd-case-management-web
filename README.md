@@ -131,8 +131,8 @@ Tests require 3 environment variables to be set in order to run:
 
 | Name | Description |
 |------|-------------|
-| CCD_CASEWORKER_AUTOTEST_EMAIL | Username for test account |
-| CCD_CASEWORKER_AUTOTEST_PASSWORD | Password for tests account |
+| CCD_CASEWORKER_AUTOTEST_FE_EMAIL | Username for test account |
+| CCD_CASEWORKER_AUTOTEST_FE_PASSWORD | Password for tests account |
 | TEST_URL | Target URL to test against (default if not set is local docker url) |
 
 
@@ -155,7 +155,6 @@ local/docker or desired url and run the following commands:
 
 Note: if you are trying to run tests agaist local/docker instance you may need to comment out the `proxy` section 
 in the `local.conf.js`:
-
 
 ## Production
 

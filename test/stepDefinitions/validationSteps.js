@@ -85,7 +85,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       case "money-gbp" :
         await caseWizardPage.interactWithField(dataType,'-10');
         break;
-      case "phone uk":
+      case "phone-uk":
         await caseWizardPage.interactWithField(dataType,'12345');
         await caseWizardPage.clickContinueButton();
         break;

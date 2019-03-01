@@ -12,19 +12,20 @@ class CDDStringField {
   /**
    * Must take the parent css tag for the ccd field component
    * in the format ccd-write-XXXX-field
-   *
+   * Selector farther narrows down the location
    * @param css
    */
-  constructor(css){
-    this.stringField = new TextField(`${css} input`)
+  constructor(css, type){
+    this.stringField = new TextField(`${css} input`);
     this.css = css;
     this.label = null;
+    this.type = type;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
   }
 
   /**
-   * enter random text into a CCD Text Field
+   * enter given or random text into a CCD Text Field
    */
   async enterText(text){
     let value = typeof text === 'undefined' ? await RandomUtils.generateRandomString() : text;
@@ -46,7 +47,7 @@ class CDDStringField {
     value = typeof value === 'undefined' ? await RandomUtils.generateRandomInt(1,100) : value;
     this.checkYourAnswersValue = `£${value}.00`;
     await this._enterIntoField(value);
-    await $('h1').click(); //click out of focus to trigger any errors
+    await $('#global-header').click(); //click out of focus to trigger any errors
   }
 
   /**
@@ -69,6 +70,26 @@ class CDDStringField {
     value = typeof value === 'undefined' ? email : value;
 
     await this._enterIntoField(value)
+  }
+
+  /**
+   * Check if field is ready to type
+   * @returns true or false
+   */
+  async isFieldReady(){
+    let isCorrectType = await this.stringField.isType(this.type);
+    let isPresent = await this.stringField.isPresent();
+    let isDisplayed = await this.stringField.isDisplayed();
+    return isCorrectType && isPresent && isDisplayed;
+  }
+
+  /**
+   * Check if field is present
+   * @returns true or false
+   */
+  async hasFieldLabels(labelArray){
+    let labelText = await this._getLabel();
+    return labelText === labelArray[0];
   }
 
   async getFieldValue(){

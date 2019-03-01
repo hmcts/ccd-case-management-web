@@ -41,18 +41,41 @@ class CcdDateField{
     await this._enterDateWithParams(day, month, year);
   }
 
+   /**
+   * Check if field is ready to type
+   * @returns true or false
+   */
+  async isFieldReady(){
+    return this._isDayFieldInputReady() 
+        && this._isMonthFieldInputReady()
+        && this._isYearFieldInputReady();
+  }
+
+  /**
+   * Check if field is present
+   * @returns true or false
+   */
+  async hasFieldLabels(labelArray){
+    let labelTexts = await this._getLabels();
+    return labelTexts.length === 4 &&
+           labelTexts.includes(labelArray[0]) &&
+           labelTexts.includes('Day') &&
+           labelTexts.includes('Month') &&
+           labelTexts.includes('Year');
+  }
+
   async _enterDateWithParams(day, month, year){
-      await this.dayCss.clearField();
-      await this.dayCss.enterText(day);
+    await this.dayCss.clearField();
+    await this.dayCss.enterText(day);
 
-      await this.monthCss.clearField();
-      await this.monthCss.enterText(month);
+    await this.monthCss.clearField();
+    await this.monthCss.enterText(month);
 
-      await this.yearCss.clearField();
-      await this.yearCss.enterText(year);
+    await this.yearCss.clearField();
+    await this.yearCss.enterText(year);
+    await this._setCheckYourAnswersValue(day, month, year)
 
-      await this._setCheckYourAnswersValue(day, month, year)
-      this.label = await this._getLabel();
+    this.label = await this._getLabel();
   }
 
   async _setCheckYourAnswersValue(day, month, year){
@@ -63,8 +86,30 @@ class CcdDateField{
     this.checkYourAnswersValue = `${day} ${MONTH[month]} ${year}`;
   }
 
+  async _isDayFieldInputReady() {
+    let isDatPresent = await this.dayCss.isPresent();
+    let isDayDisplayed = await this.dayCss.isDisplayed();
+    return isDatPresent && isDayDisplayed;
+  }
+
+  async _isMonthFieldInputReady() {
+    let isMonthPresent = await this.monthCss.isPresent();
+    let isMonthDisplayed = await this.monthCss.isDisplayed();
+    return isMonthPresent && isMonthDisplayed;
+  }
+
+  async _isYearFieldInputReady() {
+    let isYearPresent = await this.yearCss.isPresent();
+    let isYearDisplayed = await this.yearCss.isDisplayed();
+    return isYearPresent && isYearDisplayed;
+  }
+
   async _getLabel(){
     return await $(`${this.css} .form-label`).getText();
+  }
+
+  async _getLabels(){
+    return await $$(`${this.css} .form-label`).getText();
   }
 
 }

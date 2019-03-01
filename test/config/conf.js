@@ -20,6 +20,8 @@ exports.config = {
     'marionette': false,
     'browserName': 'chrome',
 
+    chromeOptions: { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote '] },
+
     'proxy': {
       'proxyType': 'manual',
       'httpProxy': 'proxyout.reform.hmcts.net:8080',
@@ -33,7 +35,7 @@ exports.config = {
       '../stepDefinitions/*.js'
     ],
     tags: false,
-    format: 'json:test/functional-tests/results/results.json',
+    format: 'json:test/results/results.json',
     profile: false,
     'no-source': true,
     plugin: 'json:test/cucumber.json'
@@ -42,8 +44,8 @@ exports.config = {
   plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{
-      jsonOutputPath: 'test/functional-tests/results/',
-      reportPath: 'test/functional-tests/results/',
+      jsonOutputPath: 'test/results/',
+      reportPath: 'test/results/',
 
       automaticallyGenerateReport: true,
       removeExistingJsonReportFile: true,

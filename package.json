@@ -92,7 +92,7 @@
     "@angular/compiler-cli": "~7.0.3",
     "@types/jasmine": "~2.8.0",
     "@types/jasminewd2": "^2.0.3",
-    "@types/node": "^8.0.30",
+    "@types/node": "^11.10.1",
     "codelyzer": "^4.1.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "^4.2.1",

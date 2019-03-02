@@ -407,9 +407,10 @@
   dependencies:
     "@types/jasmine" "*"
 
-"@types/node@^8.0.30":
-  version "8.10.38"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.38.tgz#e05c201a668492e534b48102aca0294898f449f6"
+"@types/node@^11.10.2":
+  version "11.10.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.2.tgz#164758d82b9a23bdb5e9ab0caed5daff51484225"
+  integrity sha512-k2LU5alRZjNGvfPz49t4BgJlozAo66QAXceefsS+azidLEMf3pTwo0jZ1OQdg/ncr1rDGwSuj565fFkW0FDpUg==
 
 "@types/q@^0.0.32":
   version "0.0.32"

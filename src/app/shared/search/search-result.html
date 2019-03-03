@@ -39,7 +39,7 @@
       </a>
       <div *ngIf="colIndex != 0" class="text-16" [style.visibility]="hideRows ? 'hidden' : 'visible'">
         <ccd-field-read ccdLabelSubstitutor
-                        [caseField]="getColumnsWithPrefix(result.columns[col.case_field_id], result)"
+                        [caseField]="result.columns[col.case_field_id]"
                         [eventFields]="result.hydrated_case_fields"
                         [elementsToSubstitute]="['value']"></ccd-field-read>
       </div>

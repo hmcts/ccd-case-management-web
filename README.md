@@ -124,39 +124,9 @@ It will start a JSON-Server instance at `http://localhost:3453`, serving the con
 
 ### 2. Smoke & Functional Tests
 
-Both the smoke and functional tests are written in a cucumber protractor framework, 
-tests are selected using cucumber tags `@smoke` or `@functional`
+See docs [here](https://github.com/hmcts/ccd-case-management-web/blob/master/test/README.md) 
 
-Tests require 3 environment variables to be set in order to run:
-
-| Name | Description |
-|------|-------------|
-| CCD_CASEWORKER_AUTOTEST_FE_EMAIL | Username for test account |
-| CCD_CASEWORKER_AUTOTEST_FE_PASSWORD | Password for tests account |
-| TEST_URL | Target URL to test against (default if not set is local docker url) |
-
-
-#### Running on pipeline
-On the pipeline tests are run with out docker, they are run by scripts in package.json
-
-- Smoke: ``` "test:smoke": "./bin/runSmokeTests.sh", ```
-- Functional: ``` "test:functional": "./bin/runFunctionalTests.sh", ```
-
-These bash scripts in turn execute `test:smokeTest` and `test:functionalTests` respectively in the package.json
-
-#### Running local
-
-If you wish to run tests locally make sure the environment variables listed above are correct and pointing to your
-local/docker or desired url and run the following commands:
-
-
-- Smoke: ``` protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@smoke ```
-- Functional: ``` protractor test/functional-tests/config/local.conf.js --cucumberOpts.tags=@functional ```
-
-Note: if you are trying to run tests agaist local/docker instance you may need to comment out the `proxy` section 
-in the `local.conf.js`:
-
-
+              
 ## Production
 
 To build your application, run:

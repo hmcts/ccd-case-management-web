@@ -70,4 +70,4 @@ package-lock.json
 test-report
 
 # Cucumber report
-test/functional-test/results
+test/results

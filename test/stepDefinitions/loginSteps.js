@@ -36,8 +36,9 @@ defineSupportCode(function ({ Given, When, Then}) {
   Then(/^I should see the '(.*)' on the CCD case list page$/, async function (component) {
     caseListPage = new CaseListPage();
 
-    //isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
-    expect (await caseListPage.isFiltersDisplayed()).to.be.true;
+    await caseListPage.waitForPageLoaded();
+    // isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
+    // expect (await caseListPage.isFiltersDisplayed()).to.be.true;
 
     switch (component){
       case 'filters':

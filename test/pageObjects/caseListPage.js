@@ -11,7 +11,13 @@ class CaseListPage extends BasePage {
 
       this._landingPageFilters = by.css('ccd-workbasket-filters');
       this._createNewCaseButton = '.heading-top > .button';
+  }
 
+  async waitForPageLoaded(){
+    const EC = protractor.ExpectedConditions;
+    let condition = await EC.and(await EC.urlContains('/list/case'), await EC.visibilityOf(element(this._landingPageFilters)));
+    await browser.wait(condition,60000);
+    browser.ignoreSynchronization = false;
   }
 
 
@@ -23,9 +29,8 @@ class CaseListPage extends BasePage {
    * @returns {Promise<boolean>}
    */
   async isFiltersDisplayed(){
-    await this.waitForElementToBeVisibleWithTimeout(element(this._landingPageFilters), 30000);
-    browser.ignoreSynchronization = false;
-    return await element(this._landingPageFilters).isDisplayed()
+      // await this.waitForElementToBeVisibleWithTimeout(element(this._landingPageFilters), 60000);
+      return await element(this._landingPageFilters).isDisplayed()
   }
 
   /**
@@ -55,7 +60,7 @@ class CaseListPage extends BasePage {
   }
 
   async clickCreateNewCaseButton(){
-    await $(this._createNewCaseButton).click();
+      await $(this._createNewCaseButton).click();
   }
 
 }

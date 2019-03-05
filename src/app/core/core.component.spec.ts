@@ -123,11 +123,13 @@ describe('CoreComponent', () => {
           case_types: []
         }
       ],
-      isSolicitor: createSpy()
+      isSolicitor: createSpy(),
+      isCourtAdmin: createSpy()
     };
 
     profile.isSolicitor.and.returnValue(false);
     // TODO Write test where `isSolicitor()` is true
+    profile.isCourtAdmin.and.returnValue(false);
 
     mockRoute = {
       snapshot: {

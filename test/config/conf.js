@@ -15,7 +15,7 @@ exports.config = {
 
   capabilities: {
     'shardTestFiles': true,
-    'maxInstances': 1,
+    'maxInstances': 5,
     'acceptInsecureCerts': true,
     'marionette': false,
     'browserName': 'chrome',
@@ -35,7 +35,7 @@ exports.config = {
       '../stepDefinitions/*.js'
     ],
     tags: false,
-    format: 'json:test/functional-tests/results/results.json',
+    format: 'json:test/results/results.json',
     profile: false,
     'no-source': true,
     plugin: 'json:test/cucumber.json'
@@ -44,8 +44,8 @@ exports.config = {
   plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{
-      jsonOutputPath: 'test/functional-tests/results/',
-      reportPath: 'test/functional-tests/results/',
+      jsonOutputPath: 'test/results/',
+      reportPath: 'test/results/',
 
       automaticallyGenerateReport: true,
       removeExistingJsonReportFile: true,

@@ -234,6 +234,11 @@ describe('SearchResultComponent', () => {
       expect(headRow.children.length).toBe(RESULT_VIEW.columns.length);
     });
 
+    it('should display case reference with hyphens', () => {
+      let caseReference = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(1) a'));
+      expect(caseReference.nativeElement.textContent.trim()).toBe('0000-0000-0000-0002');
+    });
+
     it('should sort columns with higher order last', () => {
       let lastHeader = de.query(By.css('div>table>thead>tr th:nth-child(3)')).nativeElement.textContent.trim();
 

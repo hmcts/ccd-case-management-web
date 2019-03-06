@@ -1,9 +1,9 @@
 provider "azurerm" {
-  version = "1.19.0"
+  version = "1.22.1"
 }
 
 locals {
-  env_ase_url = "${var.env}.service.${data.terraform_remote_state.core_apps_compute.ase_name[0]}.internal"
+  env_ase_url = "${var.env}.service.core-compute-${var.env}.internal"
 
   default_ccd_gateway_url = "https://ccd-api-gateway-web-${local.env_ase_url}"
   ccd_gateway_url = "${var.ccd_gateway_url != "" ? var.ccd_gateway_url : local.default_ccd_gateway_url}"

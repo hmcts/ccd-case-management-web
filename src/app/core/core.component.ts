@@ -57,6 +57,10 @@ export class CoreComponent implements OnInit, OnDestroy {
     return this.profile.isSolicitor();
   }
 
+  isCourtAdmin(): boolean {
+    return this.profile.isCourtAdmin();
+  }
+
   isUnsupportedBrowser(): boolean {
     return this.browserSupportComponent.isUnsupportedBrowser();
   }

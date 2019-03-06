@@ -240,18 +240,40 @@ select::-ms-expand {
 .button-30 {
   height: 30px;
 }
-.markdown h2, .markdown h3 {
-  font-size: 17px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.markdown ul, .markdown p {
-  font-size: 16px;
-  margin-bottom: 25px;
-  white-space: normal;
-}
 .search-result-column-cell .markdown p {
   margin: 0 10px;
+}
+.markdown {
+  h1 {
+    @extend %headers;
+    font-size: 32px;
+  }
+  h2 {
+    @extend %headers;
+    font-size: 24px;
+  }
+  h3 {
+    @extend %headers;
+    font-size: 18px;
+  }
+  h4 {
+    @extend %headers;
+    font-size: 16px;
+  }
+  p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    white-space: normal;
+  }
+  ul {
+    font-size: 16px;
+    margin-bottom: 25px;
+    white-space: normal;
+    li {
+      margin-bottom: 5px;
+      list-style-type: disc;
+    }
+  }
 }
 tr.compound-field .markdown ul,
 tr.compound-field .markdown p,

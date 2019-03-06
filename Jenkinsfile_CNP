@@ -50,7 +50,7 @@ withPipeline("angular", product, component) {
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
 
-    afterCheckout {
+    after('checkout') {
         sh "yarn cache clean"
     }
 

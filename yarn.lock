@@ -299,10 +299,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.26.0":
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.26.0.tgz#8d522c22859145fbb5718f9766ca083ae1d05c28"
-  integrity sha512-Sh4b0cBXt1Ppu7k6PjTXleHxYp37W5V2LrkdowHBFXHvrctIy6ybkcxIBP2Mr7L2nJUiFyybZLLyZ+UQZfwYuA==
+"@hmcts/ccd-case-ui-toolkit@2.31.0":
+  version "2.31.0"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.31.0.tgz#bfb1e4fed14298daad88e88b96facbf874784cb4"
+  integrity sha512-epO5yvZ+EzKmvfYaCvA8Ghr+MRrDlKFbR6ZSzIeCbVBjTyW8XIAYEycE48wwn+iNft45IVQhEzP0fHOM95nhpA==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -407,10 +407,6 @@
   resolved "https://registry.yarnpkg.com/@types/jasminewd2/-/jasminewd2-2.0.6.tgz#2f57a8d9875a6c9ef328a14bd070ba14a055ac39"
   dependencies:
     "@types/jasmine" "*"
-
-"@types/node@^6.0.46":
-  version "6.14.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.14.2.tgz#40b3dbb1221c7d66802cbcc32fe3b85e54569c77"
 
 "@types/node@^8.0.30":
   version "8.10.38"
@@ -7562,11 +7558,10 @@ protractor-screenshoter-plugin@^0.10.1:
     screenshoter-report-analyzer "^0.6"
     uuid "^3.1.0"
 
-protractor@^5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/protractor/-/protractor-5.4.1.tgz#011a99e38df7aa45d22455b889ffbb13a6ce0bd9"
+protractor@^5.4.2:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/protractor/-/protractor-5.4.2.tgz#329efe37f48b2141ab9467799be2d4d12eb48c13"
   dependencies:
-    "@types/node" "^6.0.46"
     "@types/q" "^0.0.32"
     "@types/selenium-webdriver" "^3.0.0"
     blocking-proxy "^1.0.0"

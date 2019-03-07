@@ -3,7 +3,6 @@ CustomError = require('../../utils/errors/custom-error.js');
  * WebDriver Button component class
  */
 const DEFAULT_TIMEOUT = 5000;
-const EC = protractor.ExpectedConditions;
 class Button{
 
   /**
@@ -34,7 +33,7 @@ class Button{
     let button = await this._getElementFinder();
     return await button.isEnabled();
   }
-  
+
   async isDisplayed(){
     let displayed = null;
     try {
@@ -66,6 +65,8 @@ class Button{
    * @param element to wait to be clickable
    */
   async waitForElementToBeClickable(){
+    const EC = protractor.ExpectedConditions;
+
     try {
       await browser.wait(await EC.elementToBeClickable(await this._getElementFinder()), DEFAULT_TIMEOUT);
     } catch (e) {

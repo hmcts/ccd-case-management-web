@@ -29,7 +29,6 @@ class CaseListPage extends BasePage {
    * @returns {Promise<boolean>}
    */
   async isFiltersDisplayed(){
-      // await this.waitForElementToBeVisibleWithTimeout(element(this._landingPageFilters), 60000);
       return await element(this._landingPageFilters).isDisplayed()
   }
 

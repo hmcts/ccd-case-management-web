@@ -37,8 +37,6 @@ defineSupportCode(function ({ Given, When, Then}) {
     caseListPage = new CaseListPage();
 
     await caseListPage.waitForPageLoaded();
-    // isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
-    // expect (await caseListPage.isFiltersDisplayed()).to.be.true;
 
     switch (component){
       case 'filters':
@@ -62,7 +60,6 @@ defineSupportCode(function ({ Given, When, Then}) {
       caseListPage = await loginPage.loginToApp();
 
       await caseListPage.waitForPageLoaded();
-      // expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });
 
 
@@ -83,10 +80,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     await loginPage.clickSignIn();
 
     caseListPage = new CaseListPage();
-
-    //isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
-    expect (await caseListPage.isFiltersDisplayed()).to.be.true;
-
+    await caseListPage.waitForPageLoaded();
   });
 
 

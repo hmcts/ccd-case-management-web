@@ -407,9 +407,9 @@
   dependencies:
     "@types/jasmine" "*"
 
-"@types/node@^8.0.30":
-  version "8.10.38"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.38.tgz#e05c201a668492e534b48102aca0294898f449f6"
+"@types/node@^11.11.0":
+  version "11.11.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.0.tgz#070e9ce7c90e727aca0e0c14e470f9a93ffe9390"
 
 "@types/q@^0.0.32":
   version "0.0.32"

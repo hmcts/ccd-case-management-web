@@ -1,8 +1,6 @@
 let CustomError = require('../utils/errors/custom-error.js');
 let Login = require('../pageObjects/loginPage.js');
 let CaseListPage = require('../pageObjects/caseListPage.js');
-let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
-let NavBar = require('../pageObjects/ccd-components/globalNavBar.js');
 
 
 let chai = require("chai").use(require("chai-as-promised"));
@@ -10,7 +8,7 @@ let expect = chai.expect;
 
 var { defineSupportCode } = require("cucumber");
 
-defineSupportCode(function ({ Given, When, Then, Before, After }) {
+defineSupportCode(function ({ Given, When, Then}) {
 
   Given(/^I am on the CCD login page$/, async function () {
       loginPage = await Login.open();
@@ -27,7 +25,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Then(/^I should see CCD case list page$/, async function () {
       caseListPage = new CaseListPage();
-      failedOnPageTitle = 'page not titled on case list page';
+      await caseListPage.waitForPageLoaded();
 
       expect (await caseListPage.isFiltersDisplayed()).to.be.true;
       expect (await caseListPage.getNavBarComponent().allComponentsDisplayed()).to.be.true;
@@ -38,8 +36,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Then(/^I should see the '(.*)' on the CCD case list page$/, async function (component) {
     caseListPage = new CaseListPage();
 
-    //isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
-    expect (await caseListPage.isFiltersDisplayed()).to.be.true;
+    await caseListPage.waitForPageLoaded();
 
     switch (component){
       case 'filters':
@@ -62,14 +59,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       loginPage = await Login.open();
       caseListPage = await loginPage.loginToApp();
 
-      expect (await caseListPage.isFiltersDisplayed()).to.be.true
+      await caseListPage.waitForPageLoaded();
   });
 
 
   Then(/^I should see the <component> on the CCD case list page$/, async function () {
       await waitForLandingPageToLoad();
       caseListPage = new CaseListPage();
-      failedOnPageTitle = 'page not titled on case list page';
 
       expect (await caseListPage.isFiltersDisplayed()).to.be.true
   });
@@ -84,10 +80,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await loginPage.clickSignIn();
 
     caseListPage = new CaseListPage();
-
-    //isFilteredDisplayed is the most reliable way of waiting for the home page so we do this first
-    expect (await caseListPage.isFiltersDisplayed()).to.be.true;
-
+    await caseListPage.waitForPageLoaded();
   });
 
 

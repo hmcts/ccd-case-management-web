@@ -22,7 +22,7 @@ class CaseListComponent extends BasePage {
   }
 
   /**
-   * dins a column by column name and returns all results for that column in case list table
+   * Gets a column by columns name and returns all results for that column in case list table
    * @param expectedColumnTitle
    * @returns {Promise<*>} Array of WebElements
    */

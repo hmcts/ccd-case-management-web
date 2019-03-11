@@ -38,7 +38,7 @@ class NavBar{
   /**
    * Click the 'caseList' link ignoring synchronisation while interacting
    * with the button
-   * @returns {Promise<CreateCaseStartPage|*>}
+   * @returns {Promise<CaseListPage|*>}
    */
   async clickCaseListLink(){
     browser.ignoreSynchronization = true;

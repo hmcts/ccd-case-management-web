@@ -10,8 +10,8 @@ properties([
 
 def secrets = [
     'ccd-${env}': [
-        secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_EMAIL'),
-        secret('ccd-caseworker-autotest-password', 'CCD_CASEWORKER_AUTOTEST_PASSWORD'),
+        secret('ccd-caseworker-autotest-fe-email', 'CCD_CASEWORKER_AUTOTEST_FE_EMAIL'),
+        secret('ccd-caseworker-autotest-fe-password', 'CCD_CASEWORKER_AUTOTEST_FE_PASSWORD'),
     ]
 ]
 
@@ -36,14 +36,14 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
 
     enableSlackNotifications('#ccd-param-builds')
 
-    afterCheckout {
+    after('checkout') {
         sh "yarn cache clean"
     }
 
     after('functionalTest:saat') {
 
         publishHTML(target:[
-               reportDir            : "test/functional-tests/results/",
+               reportDir            : "test/results/",
                reportFiles          : "index.html",
                reportName           : "Functional Tests",
                alwaysLinkToLastBuild: true

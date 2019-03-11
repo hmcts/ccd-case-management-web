@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { JurisdictionService } from '../shared/jurisdiction.service';
+import { JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
@@ -55,6 +55,10 @@ export class CoreComponent implements OnInit, OnDestroy {
 
   isSolicitor(): boolean {
     return this.profile.isSolicitor();
+  }
+
+  isCourtAdmin(): boolean {
+    return this.profile.isCourtAdmin();
   }
 
   isUnsupportedBrowser(): boolean {

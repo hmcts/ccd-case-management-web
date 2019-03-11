@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchResultComponent } from './search-result.component';
 import { Component, DebugElement, Input, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
-import { SearchResultView } from './search-result-view.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { SortSearchResultPipe } from './sorting/sort-search-result.pipe';
@@ -9,10 +8,10 @@ import { SearchResultViewItemComparatorFactory } from './sorting/search-result-v
 import { MockComponent } from 'ng2-mock-component';
 import { PaginationMetadata } from './pagination-metadata.model';
 import { PaginatePipe, PaginationService } from 'ngx-pagination';
-import { SearchResultViewItem } from './search-result-view-item.model';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
-import { CaseReferencePipe, CaseState, CaseType, DRAFT_PREFIX, Jurisdiction, ActivityService } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseReferencePipe, CaseState, CaseType, DRAFT_PREFIX, Jurisdiction, ActivityService, SearchResultView,
+  SearchResultViewItem } from '@hmcts/ccd-case-ui-toolkit';
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({
@@ -233,6 +232,11 @@ describe('SearchResultComponent', () => {
       let headRow = de.query(By.css('div>table>thead>tr'));
 
       expect(headRow.children.length).toBe(RESULT_VIEW.columns.length);
+    });
+
+    it('should display case reference with hyphens', () => {
+      let caseReference = de.query(By.css('div>table>tbody tr:nth-child(4) td:nth-child(1) a'));
+      expect(caseReference.nativeElement.textContent.trim()).toBe('0000-0000-0000-0002');
     });
 
     it('should sort columns with higher order last', () => {

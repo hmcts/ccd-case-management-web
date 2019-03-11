@@ -5,15 +5,12 @@ import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { WorkbasketComponent } from './workbasket.component';
-import { SearchService } from '../core/search/search.service';
-import { WindowService } from '../core/utils/window.service';
-import { JurisdictionService } from '../shared/jurisdiction.service';
-import { SearchResultView } from '../shared/search/search-result-view.model';
 import { Observable } from 'rxjs';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
-import { Jurisdiction, CaseType, CaseState, AlertService } from '@hmcts/ccd-case-ui-toolkit';
+import { Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
+  SearchResultView } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('WorkbasketComponent', () => {
 

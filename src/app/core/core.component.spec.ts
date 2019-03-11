@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRoutes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { JurisdictionService } from '../shared/jurisdiction.service';
 import { DebugElement } from '@angular/core';
 import { CoreComponent } from './core.component';
 import { MockComponent } from 'ng2-mock-component';
@@ -12,7 +11,7 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('CoreComponent', () => {
 
@@ -124,11 +123,13 @@ describe('CoreComponent', () => {
           case_types: []
         }
       ],
-      isSolicitor: createSpy()
+      isSolicitor: createSpy(),
+      isCourtAdmin: createSpy()
     };
 
     profile.isSolicitor.and.returnValue(false);
     // TODO Write test where `isSolicitor()` is true
+    profile.isCourtAdmin.and.returnValue(false);
 
     mockRoute = {
       snapshot: {

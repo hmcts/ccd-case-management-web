@@ -126,7 +126,7 @@ class Dropdown {
     let fail = true;
     let failmessage = null;
 
-    for (let i = 0; i < 3; i++){
+    for (let i = 1; i < 4; i++){
       try {
         await this._selectFromDropdownByText(dropdownOption)
         fail = false;
@@ -134,8 +134,8 @@ class Dropdown {
       } catch (e) {
         failmessage = e;
         console.log(e);
-        console.log(`Attempt ${i + 1}/3 failed, Retry after 1 second wait`);
-        await browser.sleep(1000)
+        console.log(`Attempt ${i}/3 failed, Retry after wait`);
+        await browser.sleep(2000 * i)
       }
     }
 

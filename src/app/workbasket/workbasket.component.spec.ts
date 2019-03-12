@@ -110,7 +110,8 @@ describe('WorkbasketComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION
+      jurisdiction: JURISDICTION,
+      printableDocumentUrl: 'print-url'
     }
   ];
 

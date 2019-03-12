@@ -20,7 +20,8 @@ const CASE_TYPES: CaseType[] = [
         states: [],
         events: [],
         case_fields: [],
-        jurisdiction: null
+        jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     }
 ];
 

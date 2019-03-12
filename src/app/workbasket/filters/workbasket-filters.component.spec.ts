@@ -55,7 +55,8 @@ describe('WorkbasketFiltersComponent', () => {
       ],
       events: [],
       case_fields: [],
-      jurisdiction: null
+      jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     }
   ];
 
@@ -74,7 +75,8 @@ describe('WorkbasketFiltersComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: null
+      jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     },
     {
       id: 'CT2',
@@ -94,7 +96,8 @@ describe('WorkbasketFiltersComponent', () => {
       ],
       events: [],
       case_fields: [],
-      jurisdiction: null
+      jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     },
     {
       id: 'CT3',
@@ -103,7 +106,8 @@ describe('WorkbasketFiltersComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: null
+      jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     }
   ];
 
@@ -122,7 +126,8 @@ describe('WorkbasketFiltersComponent', () => {
       }],
       events: [],
       case_fields: [],
-      jurisdiction: null
+      jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     },
     {
       id: 'CT3',
@@ -135,7 +140,8 @@ describe('WorkbasketFiltersComponent', () => {
       }],
       events: [],
       case_fields: [],
-      jurisdiction: null
+      jurisdiction: null,
+      printableDocumentUrl: 'print-url'
     }
   ];
   const EMPTY_CASE_TYPES: CaseType[] = [];
@@ -146,7 +152,8 @@ describe('WorkbasketFiltersComponent', () => {
     states: [],
     events: [],
     case_fields: [],
-    jurisdiction: null
+    jurisdiction: null,
+    printableDocumentUrl: 'print-url'
   }];
 
   const TEST_WORKBASKET_INPUTS: WorkbasketInputModel[] = [

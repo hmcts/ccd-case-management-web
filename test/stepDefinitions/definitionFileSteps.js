@@ -37,4 +37,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Conditionals';
   });
 
+  Given(/^a case type exists with case reference configured in the case list results$/, async function () {
+    Data.caseType = 'All Field Data Types';
+  });
+
 });

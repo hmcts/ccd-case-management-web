@@ -10,7 +10,7 @@ class CaseListPage extends BasePage {
       super();
 
       this._landingPageFilters = by.css('ccd-workbasket-filters');
-      this._createNewCaseButton = '.heading-top > .button';
+      this._createNewCaseButton = '#search-result > .button';
   }
 
   async waitForPageLoaded(){

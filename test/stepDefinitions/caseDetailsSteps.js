@@ -44,5 +44,26 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(fields).to.not.include(tabfield)
   });
 
+  Then(/^the Event History Timeline should show the following ordered events:$/, async function (dataTable) {
+    let events = await [].concat(...dataTable.raw());
+    let actualEvents = await caseDetailsPage.getTimelineEvents();
+
+    expect(events).to.deep.equal(actualEvents);
+  });
+
+  Then(/^the details box shows the following$/, async function (dataTable) {
+    // iterate over data table for details box which is an array of arrays
+    for (const detail of dataTable.raw()){
+        let key = detail[0];
+        let expectedValue = detail[1];
+        let actualValue = await caseDetailsPage.getDetailsValueFor(key)
+
+        expect(expectedValue).to.equal(actualValue)
+    }
+  });
+
+  When(/^I select the '(.*)' event in the Event timeline$/, async function (eventName) {
+      await caseDetailsPage.selectTimelineEvent(eventName)
+  });
 
 });

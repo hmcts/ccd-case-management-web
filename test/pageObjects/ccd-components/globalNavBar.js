@@ -36,6 +36,18 @@ class NavBar{
   }
 
   /**
+   * Click the 'caseList' link ignoring synchronisation while interacting
+   * with the button
+   * @returns {Promise<CaseListPage|*>}
+   */
+  async clickCaseListLink(){
+    browser.ignoreSynchronization = true;
+    await $(this._caseListLink).click();
+    browser.ignoreSynchronization = false;
+    return new CreateCaseStartPage;
+  }
+
+  /**
    * Click the 'search' link ignoring synchronisation while interacting
    * with the button
    * @returns {Promise<SearchPage|*>}

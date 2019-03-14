@@ -162,21 +162,33 @@ select::-ms-expand {
   width: 80%;
   padding-right: 15px;
   box-sizing: border-box;
-}
-.search-filter{
-  margin-top: 20px;
-  height: 15px;
+  padding-left: 1.3%;
+  border-left: 1px solid #BFC1C3;
 }
 .screen-990 {
   width: 990px;
   margin: 0 auto;
 }
-.heading-small {
-  margin-top: 30px;
+%headers {
+  font-weight: bold;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
-.heading-17 {
-  font-size: 17px;
+.heading-h1 {
+  @extend %headers;
+  font-size: 32px;
+}
+.heading-h2 {
+  @extend %headers;
+  font-size: 24px;
+}
+.heading-h3 {
+  @extend %headers;
+  font-size: 18px;
+}
+.heading-h4 {
+  @extend %headers;
+  font-size: 16px;
 }
 .form-group, .bottom-0 {
   margin-bottom: 0;
@@ -228,20 +240,37 @@ select::-ms-expand {
 .button-30 {
   height: 30px;
 }
-.button-padding {
-  margin-top: 20px;
-}
-.markdown h2, .markdown h3 {
-  font-size: 17px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.markdown ul, .markdown p {
-  margin-bottom: 25px;
-  white-space: normal;
-}
-.search-result-column-cell .markdown p {
-  margin: 0 10px;
+.markdown {
+  h1 {
+    @extend %headers;
+    font-size: 32px;
+  }
+  h2 {
+    @extend %headers;
+    font-size: 24px;
+  }
+  h3 {
+    @extend %headers;
+    font-size: 18px;
+  }
+  h4 {
+    @extend %headers;
+    font-size: 16px;
+  }
+  p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    white-space: normal;
+  }
+  ul {
+    font-size: 16px;
+    margin-bottom: 25px;
+    white-space: normal;
+    li {
+      margin-bottom: 5px;
+      list-style-type: disc;
+    }
+  }
 }
 tr.compound-field .markdown ul,
 tr.compound-field .markdown p,

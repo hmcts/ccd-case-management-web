@@ -11,21 +11,28 @@ let expect = chai.expect;
 
 var { defineSupportCode } = require("cucumber");
 
-defineSupportCode(function ({ Given, When, Then, Before, After }) {
+defineSupportCode(function ({ Given, When, Then}) {
 
   let caseWizardPage = new CreateCaseWizardPage();
-  let caseListPage = new CaseListPage();  
   let createCaseStartPage = new CreateCaseStartPage();
+  let caseListPage = new CaseListPage();
 
-  When(/^I create the case$/, async function () {
+  async function createCase(){
+    //todo post to data store
     await baseSteps.navigateToCreateCasePage();
     await baseSteps.fillOutAndSubmitForm();
+  }
+
+  When(/^I create the case$/, async function () {
+      await createCase();
+  });
+
+  Given(/^there are cases listed on the case list page for that case type$/, async function () {
+      await createCase();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
-    //todo should we pushing this data in through API instead?
-    await baseSteps.navigateToCreateCasePage();
-    await baseSteps.fillOutAndSubmitForm();
+    await createCase();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {

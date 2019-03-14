@@ -31,7 +31,7 @@ class CcdCollectionField {
   }
 
   async _getLabel(){
-    return await $(`${this.css} h3:nth-of-type(1)`).getText();
+    return await $(`${this.css} h2:nth-of-type(1)`).getText();
   }
 
   /**

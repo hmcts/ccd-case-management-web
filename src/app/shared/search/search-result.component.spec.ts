@@ -40,8 +40,7 @@ describe('SearchResultComponent', () => {
       states: [],
       events: [],
       case_fields: [],
-      jurisdiction: JURISDICTION,
-      printableDocumentUrl: 'print-url'
+      jurisdiction: JURISDICTION
     };
     const CASE_STATE: CaseState = {
       id: 'TEST_STATE',

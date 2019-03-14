@@ -2,14 +2,15 @@
 
   margin-bottom: 20px;
 
-  .heading-medium {
-    margin: 0px;
+  .accordion-heading-h2 {
+    font-weight: bold;
+    font-size: 24px;
   }
   .accordion-heading{
     border-top: 1px solid #bfc1c3;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    height: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    line-height: 20px;
     cursor: pointer;
 
     .accordion-image {
@@ -23,7 +24,7 @@
   }
   .last-accordion {
     border-bottom: 1px solid #bfc1c3;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
   }
 
 }

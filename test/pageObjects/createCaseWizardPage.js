@@ -56,7 +56,6 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<void>}
    */
     async clickContinueButton(){
-      console.log('DEBUGGING CLICKING CONTINUR BUTTON ')
         await this.continueButton.click();
     }
 

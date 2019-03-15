@@ -53,7 +53,7 @@ class CcdComplexTypeField {
   }
 
   async _getMainLabel(){
-    return await $(`${this.css} h3:nth-of-type(1)`).getText();
+    return await $(`${this.css} h2:nth-of-type(1)`).getText();
   }
 
   async _getNestedLabels(){
@@ -68,7 +68,7 @@ class CcdComplexTypeField {
         return nestedLabelsTexts;
     });
   }
-    
+
   async enterComplexTextData(){
     let fields = $$(this.textFieldList);
     let index = 1;

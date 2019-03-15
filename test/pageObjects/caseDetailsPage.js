@@ -145,7 +145,7 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Check to see if the event selector dropdown is predent and displayed
+   * Check to see if the event selector dropdown is present and displayed
    * @returns {Promise<*|boolean|Boolean|Promise<*>|!webdriver.promise.Promise<boolean>|promise.Promise<boolean>>}
    */
   async isEventSelectorPresent(){
@@ -158,7 +158,7 @@ class CaseDetailsPage extends BasePage {
    */
   async canSelectEventInDropdown(){
     let options = await this._actionsDropdown.getOptionsTextValues();
-    console.log(options);
+
     //if only 1 option it is the 'select action' default text so no events available
     if (options.length ===1){
       throw new CustomError('No events in dropdown to select')

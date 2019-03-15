@@ -45,7 +45,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'All Field Data Types';
   });
 
-  Given(/^a case with a single events exists$/, async function () {
+  Given(/^a case with a single event exists$/, async function () {
     Data.caseType = 'All Field Data Types';
   });
 

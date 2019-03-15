@@ -66,9 +66,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I Submit the case$/, async function () {
     while (await caseWizardPage.continueButtonDisplayed()){
-      if (!caseWizardPage.continueButtonEnabled()) {
-        throw new CustomError('Trying to click Continue/Submit button but it is not enabled')
-      }
+      // if (!caseWizardPage.continueButtonEnabled()) {
+      //   throw new CustomError('Trying to click Continue/Submit button but it is not enabled')
+      // }
       await caseWizardPage.clickContinueButton();
     }
   });

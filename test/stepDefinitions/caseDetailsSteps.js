@@ -66,4 +66,18 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       await caseDetailsPage.selectTimelineEvent(eventName)
   });
 
+  Then(/^the Event Selector component is present$/, async function () {
+    expect(await caseDetailsPage.isEventSelectorPresent()).to.be.true
+  });
+
+  Then(/^the Event Selector component is not present$/, async function () {
+    expect(await caseDetailsPage.isEventSelectorPresent()).to.be.false
+  });
+
+  Then(/^I am able to select an event in the Event Selector component$/, async function () {
+    expect(await caseDetailsPage.canSelectEventInDropdown()).to.be.true;
+  });
+
+
+
 });

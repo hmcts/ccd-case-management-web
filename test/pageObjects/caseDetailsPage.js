@@ -11,7 +11,8 @@ class CaseDetailsPage extends BasePage {
     this._latestHistoryEventLink = '.EventLogTable tbody > tr:nth-of-type(1) a';
     this._events = 'ccd-event-log-table tbody tr > td:nth-of-type(1)';
     this._endStateValue = '.EventLogDetails tbody > tr:nth-of-type(3) > td > span';
-    this._actionsDropdown = new Dropdown('ccd-event-trigger select');
+    this._eventSelector = 'ccd-event-trigger select';
+    this._actionsDropdown = new Dropdown(`${this._eventSelector}`);
     this._goButton = new Button('ccd-event-trigger button');
     this._tabs = '.tabs-list li';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
@@ -141,6 +142,35 @@ class CaseDetailsPage extends BasePage {
         throw new CustomError(`could not find a details box item called '${detailKey}'`)
     }
 
+  }
+
+  /**
+   * Check to see if the event selector dropdown is predent and displayed
+   * @returns {Promise<*|boolean|Boolean|Promise<*>|!webdriver.promise.Promise<boolean>|promise.Promise<boolean>>}
+   */
+  async isEventSelectorPresent(){
+    return await $(this._eventSelector).isPresent() && $(await this._eventSelector).isDisplayed();
+  }
+
+  /**
+   * Attempts to pick new event in dropdown and check the selected value is displayed. Throws error if no events available.
+   * @returns {Promise<boolean>}
+   */
+  async canSelectEventInDropdown(){
+    let options = await this._actionsDropdown.getOptionsTextValues();
+    console.log(options);
+    //if only 1 option it is the 'select action' default text so no events available
+    if (options.length ===1){
+      throw new CustomError('No events in dropdown to select')
+    }
+
+    //pick last event so it's not hardcoded
+    let optionToSelect = options[options.length -1]
+
+    await this._actionsDropdown.selectFromDropdownByText(optionToSelect);
+
+    let selectedOption = await this._actionsDropdown.getCurrentSelectedOption();
+    return selectedOption !== 'Select action';
   }
 
 }

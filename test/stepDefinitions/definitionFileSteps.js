@@ -25,6 +25,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Case Progression';
   });
 
+  Given(/^a case with multiple events exists$/, function() {
+    Data.caseType = 'Case Progression';
+  });
+
   Given(/^a case with a Mandatory field exists$/, function() {
     Data.caseType = 'Case Progression';
   });
@@ -40,5 +44,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Given(/^a case type exists with case reference configured in the case list results$/, async function () {
     Data.caseType = 'All Field Data Types';
   });
+
+  Given(/^a case with a single events exists$/, async function () {
+    Data.caseType = 'All Field Data Types';
+  });
+
 
 });

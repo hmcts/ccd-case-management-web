@@ -12,7 +12,7 @@ def component = "case-management-web"
 
 def secrets = [
     'ccd-${env}': [
-        secret('ccd-caseworker-autotest-fe-email', 'CCD_CASEWORKER_AUTOTEST_FE_EMAIL'),
+        secret('ccd-caseworker-autotest-email', 'CCD_CASEWORKER_AUTOTEST_FE_EMAIL'),
         secret('ccd-caseworker-autotest-fe-password', 'CCD_CASEWORKER_AUTOTEST_FE_PASSWORD'),
     ]
 ]

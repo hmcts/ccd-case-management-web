@@ -1,7 +1,6 @@
-import { SearchResultViewItemComparator } from './search-result-view-item-comparator';
 import { Injectable } from '@angular/core';
 import { isUndefined } from 'util';
-import { SearchResultViewColumn, SearchResultViewItem } from '@hmcts/ccd-case-ui-toolkit';
+import { SearchResultViewColumn, SearchResultViewItem, SearchResultViewItemComparator } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class SearchResultViewItemComparatorFactory {

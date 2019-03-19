@@ -6,12 +6,11 @@ import { By } from '@angular/platform-browser';
 import { SortSearchResultPipe } from './sorting/sort-search-result.pipe';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
 import { MockComponent } from 'ng2-mock-component';
-import { PaginationMetadata } from './pagination-metadata.model';
 import { PaginatePipe, PaginationService } from 'ngx-pagination';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { CaseReferencePipe, CaseState, CaseType, DRAFT_PREFIX, Jurisdiction, ActivityService, SearchResultView,
-  SearchResultViewItem } from '@hmcts/ccd-case-ui-toolkit';
+  SearchResultViewItem, PaginationMetadata} from '@hmcts/ccd-case-ui-toolkit';
 import createSpyObj = jasmine.createSpyObj;
 
 @Component({

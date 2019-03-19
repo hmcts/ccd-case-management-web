@@ -1,13 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { PaginationMetadata } from './pagination-metadata.model';
-import { SearchResultViewItemComparator } from './sorting/search-result-view-item-comparator';
-import { SortParameters } from './sorting/sort-parameters';
-import { SortOrder } from './sorting/sort-order';
 import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField, DisplayMode,
-  ActivityService, SearchResultView, SearchResultViewColumn, SearchResultViewItem } from '@hmcts/ccd-case-ui-toolkit';
+  ActivityService, SearchResultView, SearchResultViewColumn, SearchResultViewItem, PaginationMetadata,
+  SortParameters, SearchResultViewItemComparator, SortOrder } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',

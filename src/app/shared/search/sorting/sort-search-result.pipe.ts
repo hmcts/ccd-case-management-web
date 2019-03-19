@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { isUndefined } from 'util';
-import { SortParameters } from './sort-parameters';
-import { SortOrder } from './sort-order';
-import { SearchResultViewItem } from '@hmcts/ccd-case-ui-toolkit';
+import { SearchResultViewItem, SortParameters, SortOrder } from '@hmcts/ccd-case-ui-toolkit';
 
 @Pipe({
   name: 'ccdSortSearchResult'

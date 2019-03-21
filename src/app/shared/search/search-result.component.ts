@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SearchResultViewItemComparatorFactory } from './sorting/search-result-view-item-comparator-factory';
 import { AppConfig } from '../../app.config';
 import { FormGroup } from '@angular/forms';
 import { CaseReferencePipe, DRAFT_PREFIX, Jurisdiction, CaseType, CaseState, CaseField, DisplayMode,
   ActivityService, SearchResultView, SearchResultViewColumn, SearchResultViewItem, PaginationMetadata,
-  SortParameters, SearchResultViewItemComparator, SortOrder } from '@hmcts/ccd-case-ui-toolkit';
+  SortParameters, SearchResultViewItemComparator, SortOrder, SearchResultViewItemComparatorFactory } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-search-result',

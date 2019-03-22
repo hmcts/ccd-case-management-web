@@ -134,5 +134,21 @@ defineSupportCode(function ({ Given, When, Then}) {
       });
   });
 
+  Then(/^I select jurisdiction '(.*)' and casetype '(.*)' and event '(.*)'$/, async function(jurisdiction, casetype, event) {
+    await caseListPage.getNavBarComponent().clickCreateCaseLink();
+    await createCaseStartPage.selectJurisdiction(jurisdiction);
+    await createCaseStartPage.selectCaseType(casetype);
+    await createCaseStartPage.selectEvent(event);
+  });
+
+
+  Then(/^I fill nested collections data$/, async function(){
+    await caseWizardPage.clickAddNewButton();
+    await caseWizardPage.interactWithField('text','Mr');
+    await caseWizardPage.interactWithField('Complex','1 Pickwick');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
 
 });

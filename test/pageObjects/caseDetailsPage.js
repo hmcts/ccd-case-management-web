@@ -14,8 +14,8 @@ class CaseDetailsPage extends BasePage {
     this._actionsDropdown = new Dropdown('ccd-event-trigger select');
     this._goButton = new Button('ccd-event-trigger button');
     this._tabs = '.tabs-list li';
+    this._accordians = 'ccd-read-complex-field-collection-table table>tbody>tr.new-table-row.accordion-heading>td';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
-
     //Details Box
     this._detailsBox = '.EventLog-DetailsPanel';
     this._detailsBoxDate = '.EventLog-DetailsPanel tbody > tr:nth-of-type(1) > td span';
@@ -74,6 +74,11 @@ class CaseDetailsPage extends BasePage {
   async clickTab(tabName){
     let element = await this.getElementWithText(await $$(this._tabs),tabName);
     await element.click();
+  }
+
+  async clickAccordian(){
+    let element = await $$(this._accordians);
+    await element[element.length -1].click();
   }
 
   /**

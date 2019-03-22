@@ -10,6 +10,7 @@ class CreateCaseWizardPage extends BasePage{
     constructor() {
       super();
       this.continueButton = new Button('button[type=submit]');
+      this.addNewButton = new Button('button[type=button]','Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
@@ -112,6 +113,16 @@ class CreateCaseWizardPage extends BasePage{
     async continueButtonDisplayed(){
       return await this.continueButton.isDisplayed();
     }
+
+  /**
+   * Button to progress the case, may be called continue or may be the final
+   * Submit button with a different name as it can be dynamic
+   * @returns {Promise<void>}
+   */
+  async clickAddNewButton(){
+    await this.addNewButton.click();
+  }
+
 }
 
 module.exports = CreateCaseWizardPage;

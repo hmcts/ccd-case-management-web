@@ -33,9 +33,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
-      await caseDetailsPage.clickTab(tabName);
-      let fields =await caseDetailsPage.getTabFields()
-      expect(fields).to.include(tabfield)
+    await caseDetailsPage.clickTab(tabName);
+    let fields =await caseDetailsPage.getTabFields()
+    expect(fields).to.include(tabfield)
+  });
+
+  Then(/^the '(.*)' nested field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
+    await caseDetailsPage.clickTab(tabName);
+    let fields =await caseDetailsPage.getTabNestedFields();
+    expect(fields).to.include(tabfield)
   });
 
   Then(/^the '(.*)' field will NOT be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
@@ -65,5 +71,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   When(/^I select the '(.*)' event in the Event timeline$/, async function (eventName) {
       await caseDetailsPage.selectTimelineEvent(eventName)
   });
+
+  Then('I click on its first accordian', function () {
+    caseDetailsPage.clickAccordian()
+  });
+
 
 });

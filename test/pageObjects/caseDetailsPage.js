@@ -14,8 +14,9 @@ class CaseDetailsPage extends BasePage {
     this._actionsDropdown = new Dropdown('ccd-event-trigger select');
     this._goButton = new Button('ccd-event-trigger button');
     this._tabs = '.tabs-list li';
+    this._accordians = 'ccd-read-complex-field-collection-table table>tbody>tr.new-table-row.accordion-heading>td';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
-
+    this._currentTabNestedFieldKeys = '.tabs-panel:not(.js-hidden) tr > th > td > tbody > tr > th';
     //Details Box
     this._detailsBox = '.EventLog-DetailsPanel';
     this._detailsBoxDate = '.EventLog-DetailsPanel tbody > tr:nth-of-type(1) > td span';
@@ -76,6 +77,11 @@ class CaseDetailsPage extends BasePage {
     await element.click();
   }
 
+  async clickAccordian(){
+    let element = await $$(this._accordians);
+    await element[element.length -1].click();
+  }
+
   /**
    * Get list of tabs
    * @returns Array of Strings
@@ -122,6 +128,13 @@ class CaseDetailsPage extends BasePage {
    */
   async getTabFields(){
     return await this.getElementsText(await $$(this._currentTabFieldKeys))
+  }
+  /**
+   * Get list of the fields displayed on the currency viewed tab
+   * @returns Array of Strings
+   */
+  async getTabNestedFields(){
+    return await this.getElementsText(await $$(this._currentTabNestedFieldKeys))
   }
 
   /**

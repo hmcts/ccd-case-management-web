@@ -14,6 +14,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I enter 'showmethemoney' into the 'text' field
     Then the field with label 'Text Field 2' is visible with grey bar
     And I click the Continue button
+    And the field with label 'Text Field 3' is visible
     And the field with label 'Text Field 3' is visible without grey bar
 
   Scenario: page NOT visible when show & hide condition is NOT met

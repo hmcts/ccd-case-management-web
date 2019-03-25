@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchResultComponent } from './search/search-result.component';
 import { PaletteModule, ConditionalShowModule, MarkdownModule,
   LabelSubstitutorModule, PipesModule, CaseReferencePipe, DialogsModule, CaseHeaderModule,
   ActivityModule, EventTriggerModule } from '@hmcts/ccd-case-ui-toolkit';
@@ -27,11 +26,9 @@ import { EventTriggerHeaderComponent } from './header/event-trigger-header.compo
     ActivityModule,
   ],
   declarations: [
-    SearchResultComponent,
     EventTriggerHeaderComponent
   ],
   exports: [
-    SearchResultComponent,
     EventTriggerModule,
     EventTriggerHeaderComponent,
     CaseReferencePipe,

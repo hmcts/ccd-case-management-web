@@ -50,13 +50,13 @@ withPipeline("angular", product, component) {
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
 
-    afterCheckout {
+    after('checkout') {
         sh "yarn cache clean"
     }
 
     after('functionalTest:aat'){
         publishHTML(target:[
-            reportDir            : "test/functional-tests/results/",
+            reportDir            : "test/results/",
             reportFiles          : "index.html",
             reportName           : "Functional Tests",
             alwaysLinkToLastBuild: true
@@ -65,7 +65,7 @@ withPipeline("angular", product, component) {
 
     after('functionalTest:preview'){
         publishHTML(target:[
-            reportDir            : "test/functional-tests/results",
+            reportDir            : "test/results",
             reportFiles          : "index.html",
             reportName           : "Functional Tests",
             alwaysLinkToLastBuild: true

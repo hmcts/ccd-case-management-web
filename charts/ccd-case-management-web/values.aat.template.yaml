@@ -1,7 +1,7 @@
 nodejs:
   environment:
     #IDAM_LOGIN_URL: https://idam.preprod.ccidam.reform.hmcts.net/login
-    IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
+    IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net/login
     CCD_GW_LOGOUT_URL: https://gateway-ccd.aat.platform.hmcts.net/logout
     CCD_API_URL: https://gateway-ccd.aat.platform.hmcts.net/aggregated
     CCD_DATA_URL: https://gateway-ccd.aat.platform.hmcts.net/data

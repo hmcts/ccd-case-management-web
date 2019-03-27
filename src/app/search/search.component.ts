@@ -19,7 +19,6 @@ export class SearchComponent implements OnInit {
   jurisdiction: Jurisdiction;
   caseType: CaseType;
   caseState: CaseState;
-  caseFilterFG: FormGroup;
   profile: Profile;
   resultView: SearchResultView;
   paginationMetadata: PaginationMetadata;
@@ -40,7 +39,6 @@ export class SearchComponent implements OnInit {
     const paginationParams = {};
     const searchParams = {};
 
-    this.caseFilterFG = filter.formGroup;
     const metafields = this.windowService.getLocalStorage('search-metadata-fields');
     this.metadataFields = metafields ? JSON.parse(metafields) : filter.metadataFields;
     if (filter.caseState) {

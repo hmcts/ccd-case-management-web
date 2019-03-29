@@ -42,7 +42,10 @@ const CONFIG = {
   'activity_next_poll_request_ms': parseInt(process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'], 10) || 5000,
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
-  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25
+  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25,
+  'appInsights_instrumentationKey': process.env['APPLICATIONINSIGHTS_INSTRUMENTATIONKEY'] || 'some-key',
+  'appInsights_enabled': process.env['APPLICATIONINSIGHTS_ENABLED'] || 'true',
+  'appInsights_roleName': process.env['APPLICATIONINSIGHTS_ROLE'] || 'ccd-management-web',
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
@@ -50,7 +53,9 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/mai
 
 import { AppConfig } from './src/app/app.config';
 import { AppServerConfig } from './src/app/app.server.config';
+const enableAppInsights = require('./src/app/app-insights/app-insights');
 
+enableAppInsights();
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [

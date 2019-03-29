@@ -133,6 +133,18 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.firefox_min_required_version;
   }
 
+  public getAppInsightsInstrumentationKey() {
+    return this.config.appInsights_instrumentationKey;
+  }
+
+  public getAppInsightsEnabled() {
+    return this.config.appInsights_enabled;
+  }
+
+  public getAppInsightsRoleName() {
+    return this.config.appInsights_roleName;
+  }
+
   public getCaseHistoryUrl(caseId: string, eventId: string) {
     return this.getCaseDataUrl()
       + `/internal`
@@ -159,4 +171,7 @@ export class Config extends CaseEditorConfig {
   ie_min_required_version: number;
   edge_min_required_version: number;
   firefox_min_required_version: number;
+  appInsights_instrumentationKey: string;
+  appInsights_enabled: string;
+  appInsights_roleName: string;
 }

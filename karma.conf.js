@@ -28,6 +28,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: false,
     browsers: ['PhantomJS'],
+    exclude: ["/**/*app-insights*.ts"],
     singleRun: true
   });
 };

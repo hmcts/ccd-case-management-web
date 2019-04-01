@@ -121,6 +121,19 @@ defineSupportCode(function ({ Given, When, Then}) {
     expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport')).to.be.true;
   });
 
+  Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child full name (UPDATED)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child hint (UPDATED)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', '(Optional)')).to.be.false;
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1', 'Building and Street (Optional)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', 'Child Gender')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', '(Optional)')).to.be.false;
+    expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', 'Autistic child case number reference')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', '(Optional)')).to.be.false;
+    expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic', 'Is the child autistic? (Optional)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport', 'Does the child needs support? (Optional)')).to.be.true;
+  });
+
   //---- conditionals
 
   When(/^I meet the condition for showing the field in the tab$/, async function () {

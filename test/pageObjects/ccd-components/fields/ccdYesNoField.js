@@ -18,6 +18,7 @@ class CcdYesNoField {
     this.css = css;
     this.yesRadio = new RadioField(`${css} .form-group #${radioIdYes}`, radioIdYes);
     this.noRadio = new RadioField(`${css} .form-group #${radioIdNo}`, radioIdNo);
+    this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="${radioIdYes}"]]//legend/span`;
     this.label = null;
 
     this.checkYourAnswersValue = null;
@@ -81,6 +82,11 @@ class CcdYesNoField {
         labelTexts.includes(labelArray[0]) &&
         labelTexts.includes('Yes') &&
         labelTexts.includes('No');
+  }
+
+  async hasFieldLabel(labelMatch) {
+    let label = await element(By.xpath(`${this.labelXPath}`)).getText();
+    return label.indexOf(labelMatch) !== -1;
   }
 
   async _isYesRadioReady() {

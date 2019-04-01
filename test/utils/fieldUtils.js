@@ -22,6 +22,32 @@ class FieldDataTypes {
     return field;
   }
 
+  async textFieldContainsInLabel(value, fieldId) {
+    let css = await FIELDS.TEXT.cssTag;
+    let type = await FIELDS.TEXT.type;
+    let field = await new CCDStringField(css, type, fieldId);
+    return await field.hasFieldLabel(value);
+  }
+
+  async fixedListFieldContainsInLabel(value, fieldId) {
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css, fieldId);
+    return await field.hasFieldLabel(value);
+  }
+
+  async caseLinkFieldContainsInLabel(value, fieldId) {
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, fieldId);
+    return await field.hasFieldLabel(value);
+  }
+
+  async yesNoFieldContainsInLabel(value, radioId) {
+    let css = await FIELDS.YES_NO.cssTag;
+    let field = await new CCDYesNoField(css, radioId + '-Yes', radioId + '-No');
+    return await field.hasFieldLabel(value);
+  }
+
   /**
    * Enter a text into the CaseLink field
    * @returns CCDStringField Object
@@ -272,6 +298,34 @@ class FieldDataTypes {
         return await this.enterIntoCollectionField();
       case 'complex':
         return await this.enterIntoComplexField();
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
+  async fieldLabelContains(dataType, fieldId, value) {
+    let dt = dataType.toLowerCase();
+    switch(dt) {
+      case 'address':
+        return //todo
+      case 'case-link':
+        return await this.caseLinkFieldContainsInLabel(value, fieldId);
+      case 'text':
+        return await this.textFieldContainsInLabel(value, fieldId);
+      case 'fixed-list':
+        return await this.fixedListFieldContainsInLabel(value, fieldId);
+      case 'yes-no':
+        return await this.yesNoFieldContainsInLabel(value, fieldId);
+      case 'textarea':
+      case 'number':
+      case 'money-gbp':
+      case 'date':
+      case 'document':
+      case 'email':
+      case 'phone-uk':
+      case 'collection':
+      case 'complex':
+        throw new CustomError(`fieldLabelContains not implemented for '${dataType}'`);
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }

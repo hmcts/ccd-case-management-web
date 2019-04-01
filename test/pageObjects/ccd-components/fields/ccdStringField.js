@@ -103,6 +103,11 @@ class CCDStringField {
     return labelText === labelArray[0];
   }
 
+  async hasFieldLabel(label) {
+    let labelText = await this._getLabel();
+    return labelText.indexOf(label) !== -1;
+  }
+
   async getFieldValue(){
     return await this.stringField.getText()
   }
@@ -120,7 +125,6 @@ class CCDStringField {
 
   async _getLabel(){
     if (this.fieldId !== undefined) {
-      debugger;
       return await $(`label[for='${this.fieldId}']`).getText();
     } else {
       return await $(`${this.css} .form-label`).getText();

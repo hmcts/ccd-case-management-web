@@ -43,6 +43,10 @@ class CreateCaseWizardPage extends BasePage{
     return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
   }
 
+  async fieldLabelContains(fieldDataType, fieldId, labelText) {
+    return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
+  }
+
   async isTextFieldHiddenById(fieldId) {
     return await new FieldUtils().textFieldIsHidden(fieldId);
   }

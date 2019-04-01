@@ -18,3 +18,8 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data with a support YesOrNo field set to 'Yes'
     Then 'Is child autistic' field should be visible
+
+  Scenario: overrides the complex type data using the definition file EventToComplexTypes sheet
+    Given a case type containing Complex and Collection types exists
+    When I populate the form with the school data
+    Then the fields should have label, hint text and displayContext updated

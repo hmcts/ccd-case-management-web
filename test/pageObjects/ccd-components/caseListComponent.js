@@ -46,6 +46,15 @@ class CaseListComponent extends BasePage {
       return await $$(columnDataCss)
   }
 
+  /**
+   * Returns all results for first column in case list table
+   * @returns {Promise<*>} Array of WebElements
+   */
+  async getFirstColumnResults (){
+      let columnDataCss = this._columnDataCssTemplate.replace('X', 1);
+      return await $$(columnDataCss)
+  }
+
 }
 
 module.exports = CaseListComponent;

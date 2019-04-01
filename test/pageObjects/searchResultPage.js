@@ -14,12 +14,14 @@ class SearchResultPage extends BasePage {
       this._resultCount = by.css('.pagination-top');
       this._sortIcon = by.css('.search-result-column-sort .sort-widget');
       this._landingPageFilters = by.css('ccd-search-filters');
+      this._firstLink = by.css('#search-result table tbody tr:nth-of-type(1) td:nth-of-type(1) a');
+      this._pageTwoLink = by.css('.ngx-pagination li.current+li a');
   }
 
   async waitForPageLoaded(){
     const EC = protractor.ExpectedConditions;
     let condition = await EC.and(await EC.urlContains('/search'), await EC.visibilityOf(element(this._landingPageFilters)));
-    await browser.wait(condition,60000);
+    await browser.wait(condition,90000);
     browser.ignoreSynchronization = false;
   }
 
@@ -77,6 +79,30 @@ class SearchResultPage extends BasePage {
    */
   async clickSortIcon() {
     await element(this._sortIcon).click();
+  }
+
+  /**
+   * Click Sort icon to sort results
+   * @returns {Promise<void|*>}
+   */
+  async clickFirstLink() {
+    await element(this._firstLink).click();
+  }
+
+  /**
+   * Click link "2" on pagination area
+   * @returns {Promise<void|*>}
+   */
+  async clickPageTwo() {
+    await element(this._pageTwoLink).click();
+  }
+
+  /**
+   * get text in first line
+   * @returns {Promise<string|*>}
+   */
+  async getFirstLineText() {
+    return await element(this._firstLink).getText();
   }
 
   /**

@@ -22,9 +22,9 @@ Feature: Set of scenarios to test functionality of search result list
         When I click on the case link
         Then I see case details page
 
-    Scenario: loading results with more than 25 items will display 2 pages 
+    Scenario: loading results with more than 25 items will display at least 2 pages 
         Given I am on the search results page
-        And I have more than 25 results 
+        And I have more than 25 results
         When I click on page link 2
         Then I see results of the second page
         And I see table header with page 2 result count

@@ -14,10 +14,22 @@ class FieldDataTypes {
    * Enter random text into the Text field
    * @returns CCDStringField Object
    */
-  async enterIntoTextField(value){
+  async enterIntoTextField(value, fieldId){
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type);
+    let field = await new CCDStringField(css, type, fieldId);
+    await field.enterText(value);
+    return field;
+  }
+
+  /**
+   * Enter a text into the CaseLink field
+   * @returns CCDStringField Object
+   */
+  async enterIntoCaseLinkField(value, fieldId){
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, fieldId);
     await field.enterText(value);
     return field;
   }
@@ -85,9 +97,9 @@ class FieldDataTypes {
    * Enter random valid date in the past
    * @returns CCDStringField Object
    */
-  async enterIntoDateField(value){
+  async enterIntoDateField(value, fieldId){
     let css = await FIELDS.DATE.cssTag;
-    let dateField = await new CCDDateField(css);
+    let dateField = await new CCDDateField(css, `${fieldId}-day`, `${fieldId}-month`, `${fieldId}-year`);
     await dateField.enterDate(value);
     return dateField;
   }
@@ -96,15 +108,15 @@ class FieldDataTypes {
    * Select a random option from the dropdown
    * @returns CCDStringField Object
    */
-  async selectFromFixedList(){
+  async selectFromFixedList(value, fieldId){
     let css = await FIELDS.FIXED_LIST.cssTag;
-    let fixedListField = await new CCDFixedListField(css);
-    await fixedListField.selectOption();
+    let fixedListField = await new CCDFixedListField(css, fieldId);
+    await fixedListField.selectOption(value);
     return fixedListField;
   }
 
   /**
-   * Select random radio butto option
+   * Select random radio button option
    * @returns CCDStringField Object
    */
   async selectYesNoOption(){
@@ -112,6 +124,83 @@ class FieldDataTypes {
     let yesNoField = await new CCDYesNoField(css);
     await yesNoField.selectOption();
     return yesNoField;
+  }
+
+  /**
+   * Select radio button option
+   * @param radioId id of the YesNo field
+   * @param option Yes | No
+   * @returns {Promise<void>}
+   */
+  async selectYesNoOption(radioId, option){
+    let css = await FIELDS.YES_NO.cssTag;
+    let yesNoField = await new CCDYesNoField(css, radioId + '-Yes', radioId + '-No');
+    await yesNoField.selectOption(option);
+    return yesNoField;
+  }
+
+  async fieldYesNoIsHidden(radioId) {
+    let css = await FIELDS.YES_NO.cssTag;
+    let yesNoField = await new CCDYesNoField(css, radioId + '-Yes', radioId + '-No');
+    return await yesNoField.isHidden();
+  }
+
+  async fieldYesNoIsVisible(radioId) {
+    let css = await FIELDS.YES_NO.cssTag;
+    let yesNoField = await new CCDYesNoField(css, radioId + '-Yes', radioId + '-No');
+    return await yesNoField.isVisible();
+  }
+
+  async textFieldIsHidden(fieldId) {
+    let css = await FIELDS.TEXT.cssTag;
+    let type = await FIELDS.TEXT.type;
+    let field = await new CCDStringField(css, type, fieldId);
+    return await field.isHidden();
+  }
+
+  async textFieldIsVisible(fieldId) {
+    let css = await FIELDS.TEXT.cssTag;
+    let type = await FIELDS.TEXT.type;
+    let field = await new CCDStringField(css, type, fieldId);
+    return await field.isVisible();
+  }
+
+  async caseLinkFieldIsHidden(fieldId) {
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, fieldId);
+    return await field.isHidden();
+  }
+
+  async caseLinkFieldIsVisible(fieldId) {
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, fieldId);
+    return await field.isVisible();
+  }
+
+  async fixedListFieldIsHidden(fieldId) {
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css, fieldId);
+    return await field.isHidden();
+  }
+
+  async fixedListFieldIsVisible(fieldId) {
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css, fieldId);
+    return await field.isVisible();
+  }
+
+  async dateFieldIsHidden(fieldId) {
+    let css = await FIELDS.DATE.cssTag;
+    let field = await new CCDDateField(css, `${fieldId}-day`, `${fieldId}-month`, `${fieldId}-year`);
+    return await field.isHidden();
+  }
+
+  async dateFieldIsVisible(fieldId) {
+    let css = await FIELDS.DATE.cssTag;
+    let field = await new CCDDateField(css, `${fieldId}-day`, `${fieldId}-month`, `${fieldId}-year`);
+    return await field.isVisible();
   }
 
   /**
@@ -152,13 +241,15 @@ class FieldDataTypes {
    * @param value - optional value to enter into field if applicable
    * @returns {Promise<void>}
    */
-  async interactWithField(dataType, value){
+  async interactWithField(dataType, value, fieldId){
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'address':
         return //todo
+      case 'case-link':
+        return await this.enterIntoCaseLinkField(value, fieldId);
       case 'text':
-        return await this.enterIntoTextField(value);
+        return await this.enterIntoTextField(value, fieldId);
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
@@ -172,7 +263,7 @@ class FieldDataTypes {
       case 'email':
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
-        return await this.selectFromFixedList();
+        return await this.selectFromFixedList(value, fieldId);
       case 'phone-uk':
         return await this.enterIntoPhoneField(value);
       case 'yes-no':
@@ -328,6 +419,8 @@ class FieldDataTypes {
           return FIELDS.COMPLEX_TYPE.cssTag;
       case 'multi-select':
           return FIELDS.MULTI_SELECT.cssTag;
+      case 'case-link':
+        return FIELDS.CASE_LINK.cssTag;
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -368,6 +461,8 @@ class FieldDataTypes {
           return FIELDS.COMPLEX_TYPE.type;
       case 'multi-select':
           return FIELDS.MULTI_SELECT.type;
+      case 'case-link':
+        return FIELDS.CASE_LINK.type;
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -446,6 +541,10 @@ const FIELDS = Object.freeze({
   COMPLEX_TYPE: {
     type: 'text',
     cssTag: 'ccd-write-complex-type-field'
+  },
+  CASE_LINK: {
+    type: 'case-link',
+    cssTag: 'ccd-write-case-link-field'
   },
 
 });

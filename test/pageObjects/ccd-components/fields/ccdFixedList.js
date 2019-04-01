@@ -10,20 +10,25 @@ class CcdFixedList {
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
+   * @param fieldId
    */
-    constructor(css){
+    constructor(css, fieldId){
         this.css = css;
-        this.fixedList = new Dropdown(`${this.css} select`);
+        this.fixedList = fieldId !== undefined ? new Dropdown(`${this.css} select#${fieldId}`) : new Dropdown(`${this.css} select`);
         this.label = null;
 
         this.inputValue = null;
         this.checkYourAnswersValue = null;
     }
 
-    async selectOption(){
+    async selectOption(optionLabel) {
+      if (optionLabel === 'undefined') {
         await this.fixedList.selectAnyOption();
-        this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
-        this.label = await this._getLabel();
+      } else {
+        await this.fixedList.selectFromDropdownByText(optionLabel);
+      }
+      this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
+      this.label = await this._getLabel();
     }
 
    /**
@@ -34,6 +39,14 @@ class CcdFixedList {
         let isPresent = await this.fixedList.isPresent(optionsTextValues);
         let isEnabled = await this.fixedList.isEnabled();
         return isPresent && isEnabled;
+    }
+
+    async isHidden() {
+      return await this.fixedList.waitForElementToBeInvisible();
+    }
+
+    async isVisible() {
+      return await this.fixedList.waitForElementToBeVisible();
     }
 
     /**

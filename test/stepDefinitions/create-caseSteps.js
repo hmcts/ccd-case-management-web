@@ -75,6 +75,52 @@ defineSupportCode(function ({ Given, When, Then}) {
     expect(await new CreateCaseStartPage().amOnPage()).to.be.true
   });
 
+  //---- complexTypes
+  When(/^I populate the form with the school data$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes');
+  });
+
+  When(/^I populate the form with the school data with a support YesOrNo field set to '(.*)'$/, async function (supportAnswer) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo(supportAnswer);
+  });
+
+  Then(/^'Is child autistic' field should not be visible$/, async function () {
+    expect(await caseWizardPage.isYesOrNoFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
+  });
+
+  Then(/^'Is child autistic' field should be visible$/, async function () {
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
+  });
+
+  Then(/^only the fields defined in EventToComplexTypes sheet should be visible$/, async function () {
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
+
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherAge')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherAge')).to.be.true;
+
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName')).to.be.true;
+    expect(await caseWizardPage.isFixedListFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildGender')).to.be.true;
+    expect(await caseWizardPage.isDateFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildDOB')).to.be.true;
+
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine2')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine3')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostTown')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__County')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostCode')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__Country')).to.be.true;
+
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
+    expect(await caseWizardPage.isCaseLinkFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport')).to.be.true;
+  });
+
   //---- conditionals
 
   When(/^I meet the condition for showing the field in the tab$/, async function () {
@@ -134,5 +180,20 @@ defineSupportCode(function ({ Given, When, Then}) {
       });
   });
 
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer) {
+    await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
+    await caseWizardPage.setYesOrNoValue('MySchool_ProvidesAutisticChildrenSupport', supportAnswer);
+    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
+    await caseWizardPage.interactWithField('text', 'Class one', 'MySchool_Class_0_ClassName');
+    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
+    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
+    await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
+    await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
+    await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
+    if (supportAnswer === 'Yes') {
+      await caseWizardPage.setYesOrNoValue('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic', 'Yes');
+    }
+    await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
+  }
 
 });

@@ -1,6 +1,6 @@
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
-Button = require('./webdriver-components/button.js')
+Button = require('./webdriver-components/button.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
 
 
@@ -10,6 +10,7 @@ class CreateCaseWizardPage extends BasePage{
     constructor() {
       super();
       this.continueButton = new Button('button[type=submit]');
+      this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
@@ -34,13 +35,62 @@ class CreateCaseWizardPage extends BasePage{
    * Fill out a specified field type with a random value
    * @param fieldDataType - the field type we are interacting with
    * @param value - optional value to enter into field if applicable
+   * @param fieldId - optional id of the field to locate it if there are multiple fields of the same type on one page
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value){
-      return await new FieldUtils().interactWithField(fieldDataType, value);
-    }
+  async interactWithField(fieldDataType, value, fieldId) {
+    return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
+  }
 
+  async isTextFieldHiddenById(fieldId) {
+    return await new FieldUtils().textFieldIsHidden(fieldId);
+  }
+
+  async isTextFieldVisibleById(fieldId) {
+    return await new FieldUtils().textFieldIsVisible(fieldId);
+  }
+
+  async isCaseLinkFieldHiddenById(fieldId) {
+    return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
+  }
+
+  async isCaseLinkFieldVisibleById(fieldId) {
+    return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
+  }
+
+  async isFixedListFieldHiddenById(fieldId) {
+    return await new FieldUtils().fixedListFieldIsHidden(fieldId);
+  }
+
+  async isFixedListFieldVisibleById(fieldId) {
+    return await new FieldUtils().fixedListFieldIsVisible(fieldId);
+  }
+
+  async isDateFieldHiddenById(fieldId) {
+    return await new FieldUtils().dateFieldIsHidden(fieldId);
+  }
+
+  async isDateFieldVisibleById(fieldId) {
+    return await new FieldUtils().dateFieldIsVisible(fieldId);
+  }
+
+  async isYesOrNoFieldHiddenById(fieldId) {
+    return await new FieldUtils().fieldYesNoIsHidden(fieldId);
+  }
+
+  async isYesOrNoFieldVisibleById(fieldId) {
+    return await new FieldUtils().fieldYesNoIsVisible(fieldId);
+  }
+
+  async setYesOrNoValue(radioButtonId, option) {
+    return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+  }
+
+  async clickCollectionAddNewButton(collectionFieldId) {
+    let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
+    await element(by.xpath(xpathLocator)).click();
+  }
 
   /**
    * Get contents of number field

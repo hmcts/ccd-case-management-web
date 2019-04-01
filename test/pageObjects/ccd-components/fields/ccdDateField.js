@@ -11,12 +11,15 @@ class CcdDateField{
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
+   * @param dayId
+   * @param monthId
+   * @param yearId
    */
-  constructor(css){
+  constructor(css, dayId = 'DateField-day', monthId = 'DateField-month', yearId = 'DateField-year'){
     this.css = css;
-    this.dayCss = new TextField(`${css} #DateField-day`);
-    this.monthCss = new TextField(`${css} #DateField-month`);
-    this.yearCss = new TextField(`${css} #DateField-year`);
+    this.dayCss = new TextField(`${css} #${dayId}`);
+    this.monthCss = new TextField(`${css} #${monthId}`);
+    this.yearCss = new TextField(`${css} #${yearId}`);
 
     this.label = null;
     this.inputValue = null;
@@ -46,9 +49,17 @@ class CcdDateField{
    * @returns true or false
    */
   async isFieldReady(){
-    return this._isDayFieldInputReady() 
+    return this._isDayFieldInputReady()
         && this._isMonthFieldInputReady()
         && this._isYearFieldInputReady();
+  }
+
+  async isHidden() {
+    return await this.dayCss.waitForElementToBeInvisible();
+  }
+
+  async isVisible() {
+    return await this.dayCss.waitForElementToBeVisible();
   }
 
   /**

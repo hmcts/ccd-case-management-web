@@ -4,6 +4,7 @@ let RandomUtils = require('../../utils/ccdDataGenerationUtils.js');
 /**
  * Wrapper object to handle all interactions around dealing with a dropdown box. constructor takes locator in plain string
  */
+const DEFAULT_TIMEOUT = 5000;
 class Dropdown {
 
 
@@ -56,16 +57,6 @@ class Dropdown {
     return text.trim();
   }
 
-    /**
-   * Returns is options selected for a dropdown
-   * @returns boolean
-   */
-    //todo doesn't work
-  // async isOptionSelected(){
-  //   let isChecked = await $(this._dropdownElement).getAttribute('ng-reflect-model');
-  //   return null != isChecked;
-  // }
-
   /**
    * Select a dropdown option by text value. Case insensitive
    * @param dropdownOption
@@ -115,6 +106,30 @@ class Dropdown {
    */
   async isEnabled(){
     return await $(this._dropdownElement).isEnabled();
+  }
+
+  async waitForElementToBeInvisible(){
+    const EC = protractor.ExpectedConditions;
+
+    try {
+      await browser.wait(EC.invisibilityOf(await element(by.css(this._dropdownElement))), DEFAULT_TIMEOUT);
+      return true;
+    } catch (e) {
+      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for dropdown element ${element} to be invisible`;
+      throw new CustomError(message, e);
+    }
+  }
+
+  async waitForElementToBeVisible(){
+    const EC = protractor.ExpectedConditions;
+
+    try {
+      await browser.wait(EC.visibilityOf($(this._dropdownElement)), DEFAULT_TIMEOUT);
+      return true;
+    } catch (e) {
+      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for dropdown element ${element} to be visible`;
+      throw new CustomError(message, e);
+    }
   }
 
   /**

@@ -14,10 +14,10 @@ class CcdYesNoField {
    *
    * @param css
    */
-  constructor(css){
+  constructor(css, radioIdYes = 'YesNoField-Yes', radioIdNo = 'YesNoField-No'){
     this.css = css;
-    this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
-    this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
+    this.yesRadio = new RadioField(`${css} .form-group #${radioIdYes}`, radioIdYes);
+    this.noRadio = new RadioField(`${css} .form-group #${radioIdNo}`, radioIdNo);
     this.label = null;
 
     this.checkYourAnswersValue = null;
@@ -27,10 +27,24 @@ class CcdYesNoField {
    * Select random radio button option
    * @returns {Promise<void>}
    */
-  async selectOption(){
+  async selectOption(option){
+    if(option && option === 'Yes') {
+      await this.selectYes();
+    } else if (option && option === 'No') {
+      await this.selectNo();
+    } else {
       let bool = RandomUtils.generateRandomBoolean();
       await (bool ? await this.selectYes() : await this.selectNo());
-      this.label = await this._getLabel();
+    }
+    this.label = await this._getLabel();
+  }
+
+  async isHidden() {
+    return await this.yesRadio.waitForElementToBeInvisible();
+  }
+
+  async isVisible() {
+    return await this.yesRadio.waitForElementToBeVisible();
   }
 
   /**
@@ -45,7 +59,7 @@ class CcdYesNoField {
    * Select 'No' radio button option
    */
   async selectNo(){
-      await this.noRadio().click();
+      await this.noRadio.click();
       this.checkYourAnswersValue = 'No';
   }
 

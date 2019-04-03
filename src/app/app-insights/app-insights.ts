@@ -9,7 +9,9 @@ const enableAppInsights = (config: AppConfig) => {
       .setAutoDependencyCorrelation(true)
       .setAutoCollectConsole(true, true);
     appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = appInsightsRoleName;
+    console.log('Starting appInsights...');
     appInsights.start();
+    console.log('Started appInsights...');
   }
 };
 

@@ -25,6 +25,21 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Case Progression';
   });
 
+  Given(/^a case containing Tabs functionality exists$/, function() {
+    Data.caseType = 'Tabs functionality';
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField1'},
+                            {fieldType: 'text', fieldId: 'TextField2'},
+                            {fieldType: 'text', fieldId: 'TextField3'},
+                            {fieldType: 'text', fieldId: 'TextField4'},
+                            {fieldType: 'text', fieldId: 'TextField5'},
+                            {fieldType: 'text', fieldId: 'TextField6'},
+                            {fieldType: 'text', fieldId: 'TextField7'},
+                            {fieldType: 'text', fieldId: 'ConditionalText', value: 'showmethemoney'},
+                            {fieldType: 'fixed-list', fieldId: 'ConditionalFixedList', value: 'TRUE'},
+                            {fieldType: 'yes-no', fieldId: 'ConditionalYesNo', value: 'Yes'}
+                          ];
+  });
+
   Given(/^a case with a Mandatory field exists$/, function() {
     Data.caseType = 'Case Progression';
   });

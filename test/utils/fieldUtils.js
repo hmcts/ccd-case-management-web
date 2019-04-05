@@ -14,10 +14,10 @@ class FieldDataTypes {
    * Enter random text into the Text field
    * @returns CCDStringField Object
    */
-  async enterIntoTextField(value){
+  async enterIntoTextField(value, id){
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type);
+    let field = await new CCDStringField(css, type, id);
     await field.enterText(value);
     return field;
   }
@@ -93,24 +93,24 @@ class FieldDataTypes {
   }
 
   /**
-   * Select a random option from the dropdown
+   * Select a provided option from the dropdown
    * @returns CCDStringField Object
    */
-  async selectFromFixedList(){
+  async selectFromFixedList(value, id){
     let css = await FIELDS.FIXED_LIST.cssTag;
-    let fixedListField = await new CCDFixedListField(css);
-    await fixedListField.selectOption();
+    let fixedListField = await new CCDFixedListField(css, id);
+    await fixedListField.selectOption(value);
     return fixedListField;
   }
 
   /**
-   * Select random radio butto option
+   * Select a provided radio butto option
    * @returns CCDStringField Object
    */
-  async selectYesNoOption(){
+  async selectYesNoOption(value, id){
     let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css);
-    await yesNoField.selectOption();
+    let yesNoField = await new CCDYesNoField(css, id);
+    await yesNoField.selectOption(value);
     return yesNoField;
   }
 
@@ -152,13 +152,13 @@ class FieldDataTypes {
    * @param value - optional value to enter into field if applicable
    * @returns {Promise<void>}
    */
-  async interactWithField(dataType, value){
+  async interactWithField(dataType, value, id){
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'address':
         return //todo
       case 'text':
-        return await this.enterIntoTextField(value);
+        return await this.enterIntoTextField(value, id);
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
@@ -172,57 +172,15 @@ class FieldDataTypes {
       case 'email':
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
-        return await this.selectFromFixedList();
+        return await this.selectFromFixedList(value, id);
       case 'phone-uk':
         return await this.enterIntoPhoneField(value);
       case 'yes-no':
-        return await this.selectYesNoOption();
+        return await this.selectYesNoOption(value, id);
       case 'collection':
         return await this.enterIntoCollectionField();
       case 'complex':
         return await this.enterIntoComplexField();
-      default:
-        throw new CustomError(`could not find a data type called '${dataType}'`)
-    }
-  }
-
-  /**
-   * Verify field label
-   * @param dataType
-   * @param label - label to compare field's label with
-   * @returns {Promise<void>}
-   */
-  async hasFieldLabels(dataType, label){
-    let dt = dataType.toLowerCase();
-    switch(dt) {
-      case 'address':
-        return //todo
-      case 'text':
-        return await this.hasDateFieldLabel(label);
-      case 'textarea':
-        return await this.hasTextAreaFieldLabel(label);
-      case 'number':
-        return await this.hasNumberFieldLabel(label);
-      case 'money-gbp':
-        return await this.hasMoneyGBPFieldLabel(label);
-      case 'date':
-        return await this.hasDateFieldLabel(label);
-      case 'document':
-        return await this.hasDocumentFieldLabel(label);
-      case 'email':
-        return await this.hasEmailFieldLabel(label);
-      case 'fixed-list':
-        return await this.hasFixedListFieldLabel(label);
-      case 'phone-uk':
-        return await this.hasPhoneFieldLabel(label);
-      case 'yes-no':
-        return await this.hasYesNoFieldLabel(label);
-      case 'collection':
-        return await this.hasCollectionFieldLabel(label);
-      case 'complex':
-        return await this.hasComplexTypeFieldLabel(label);
-      case 'multi-select':
-        return await this.hasMultiSelectFieldLabel(label);
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }

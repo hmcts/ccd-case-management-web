@@ -15,7 +15,9 @@ exports.config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   sauceSeleniumAddress: 'ondemand.saucelabs.com:443/wd/hub',
 
-  specs: ["../functional-tests/features/*.feature"],
+  specs: [
+    '../features/*.feature'
+],
   //seleniumAddress: 'http://ondemand.saucelabs.com:80/wd/hub',
 
   exclude: [],
@@ -109,14 +111,14 @@ exports.config = {
 
   cucumberOpts: {
     require: [
-      '../functional-tests/stepDefinitions/*.js'
+      '../stepDefinitions/*.js'
     ],
     tags: false,
-    format: 'json:test/functional-tests/results/results.json',
+    format: 'json:test/results/results.json',
     profile: false,
     'no-source': true,
     plugin: 'json:test/cucumber.json'
-  },
+},
   
   onComplete() {
         const printSessionId = function (jobName) {
@@ -131,14 +133,14 @@ exports.config = {
     plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{
-      jsonDir: './functional-output/crossbrowser/reports',
-      reportPath: './functional-output/crossbrowser/reports',
+      jsonOutputPath: 'test/results/',
+      reportPath: 'test/results/',
 
       automaticallyGenerateReport: true,
       removeExistingJsonReportFile: true,
       removeOriginalJsonReportFile:true
     }
-  }],
+}],
   
   useAllAngular2AppRoots: true,
 };

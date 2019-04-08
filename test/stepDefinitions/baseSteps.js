@@ -11,15 +11,29 @@ module.exports = {
   },
 
   fillOutAndSubmitForm: async function(){
-    //todo eventually change to be dynamic and automatic
-    // This will create a case for 'All Field Data Types' caseType or any other case
-    //that has a optional text field and no other mandatory fields
     let wizardPage = new CreateCaseWizardPage();
-    for (const elem of TestData.mandatoryFields) {
-      await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
-    }
+    await this.fillOutMandatoryFields();
+    await this.fillOutOptionalFields();
     await wizardPage.clickContinueButton();
     await wizardPage.clickSubmitCaseButton();
+  },
+
+  fillOutMandatoryFields: async function(){
+    let wizardPage = new CreateCaseWizardPage();
+    for (const elem of TestData.mandatoryFields) {
+      if (await wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
+        await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
+      }
+    }
+  },
+
+  fillOutOptionalFields: async function(){
+    let wizardPage = new CreateCaseWizardPage();
+    for (const elem of TestData.optionalFields) {
+      if (wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
+        await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
+      }
+    }
   }
 
 };

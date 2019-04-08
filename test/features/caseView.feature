@@ -6,8 +6,8 @@ Feature: Set of scenarios testing case view functionality
     And a case containing Tabs functionality exists
     And I create the case
 
-Scenario: case reference visible on case view
-   Then the case reference will be visible and formatted well
+  Scenario: case reference visible on case view
+    Then the case reference will be visible and formatted well
 
   Scenario: tabs visible on case view
     Then the success case created bar will be visible

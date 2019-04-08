@@ -190,10 +190,13 @@ class FieldDataTypes {
    * Check if field is present
    * @returns {Promise<boolean|*>}
    */
-  async isFieldPresent(dataType){
+  async isFieldPresent(dataType, id){
     let css = await this._getFieldCSS(dataType);
-    let isPresent = await element(by.css(css)).isPresent();
-    return isPresent;
+    if (id) {
+      return await $(`${css} #${id}`).isPresent();
+    } else {
+      return await element(by.css(css)).isPresent();
+    }
   }
 
   /**

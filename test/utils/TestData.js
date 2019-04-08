@@ -6,5 +6,6 @@ module.exports = {
   jurisdiction: 'Auto Test 1',
   caseType: '',
   event: 'Create a case',
+  optionalFields: [],
   mandatoryFields: []
 };

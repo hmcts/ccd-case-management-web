@@ -25,8 +25,8 @@ class CreateCaseWizardPage extends BasePage{
    * @param fieldDataType
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
-    async isFieldPresent(fieldDataType){
-        return await new FieldUtils().isFieldPresent(fieldDataType);
+    async isFieldPresent(fieldDataType, id){
+        return await new FieldUtils().isFieldPresent(fieldDataType, id);
     }
 
 

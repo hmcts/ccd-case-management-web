@@ -39,7 +39,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
       await caseDetailsPage.clickTab(tabName);
-      let fields =await caseDetailsPage.getTabFields();
+      let fields = await caseDetailsPage.getTabFields();
       expect(fields).to.include(tabfield);
   });
 

@@ -5,5 +5,5 @@ capacity = "2"
 asp_name = "ccd-case-management-web-sprod"
 asp_rg = "ccd-case-management-web-sprod"
 
-idam_authentication_web_url = "https://idam-web-public-idam-sprod.service.core-compute-idam-sprod.internal"
+idam_authentication_web_url = "http://idam-web-public-idam-sprod.service.core-compute-idam-sprod.internal"
 

@@ -13,6 +13,7 @@ class CreateCaseWizardPage extends BasePage{
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
+      this.greyBarfieldLabels = '.show-condition-grey-bar span';
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
@@ -78,6 +79,18 @@ class CreateCaseWizardPage extends BasePage{
         }
 
         return labels;
+    }
+
+    async getGreyBarFieldLabels(){
+      let labelElements = await $$(this.greyBarfieldLabels);
+      let labels = [];
+      for (const labelElem of labelElements){
+        let labelText = await labelElem.getText();
+        let label = labelText.replace(' (Optional)', '');
+        labels.push(label)
+      }
+
+      return labels;
     }
 
     async getCheckYourAnswersValueByLabel(labelText){

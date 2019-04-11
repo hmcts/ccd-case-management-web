@@ -32,6 +32,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(expectedTabs).to.deep.equal(actualTabs);
   });
 
+  Then('no tabs will be visible', async function () {
+      let actualTabs = await caseDetailsPage.getTabsText();
+      expect(actualTabs.length).to.equal(0)
+  });
+
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
       await caseDetailsPage.clickTab(tabName);
       let fields =await caseDetailsPage.getTabFields()
@@ -65,5 +70,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   When(/^I select the '(.*)' event in the Event timeline$/, async function (eventName) {
       await caseDetailsPage.selectTimelineEvent(eventName)
   });
+
+  When(/^I navigate to tab '(.*)'$/, async function (tabName) {
+    await caseDetailsPage.clickTab(tabName);
+    });
 
 });

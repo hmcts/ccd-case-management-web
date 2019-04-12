@@ -13,16 +13,19 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^I am on the search page$/, async function () {
     await searchPage.getNavBarComponent().clickSearchLink();
-    await searchPage.selectJurisdiction(TestData.jurisdiction);
+    await searchPage.getSearchFilters().selectJurisdiction(TestData.jurisdiction);
+    // await searchPage.selectJurisdiction(TestData.jurisdiction);
   });
 
   Given(/^I have filled out the search filters$/, async function() {
-    await searchPage.selectCaseType(TestData.caseType);
+    await searchPage.getSearchFilters().selectCaseType(TestData.caseType);
+    // await searchPage.selectCaseType(TestData.caseType);
     await searchPage.interactWithField('text', 'text');
   });
 
   Given(/^I have filled out the search filters including dynamic filters$/, async function() {
-    await searchPage.selectCaseType(TestData.caseType);
+    await searchPage.getSearchFilters().selectCaseType(TestData.caseType);
+    // await searchPage.selectCaseType(TestData.caseType);
     await searchPage.interactWithField('text');
     await searchPage.interactWithField('textarea');
     await searchPage.interactWithField('number');
@@ -40,20 +43,25 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I change the jurisdiction search drop down option$/, async function () {
     TestData.jurisdiction = 'Test';
-    await searchPage.selectJurisdiction(TestData.jurisdiction);
+    await searchPage.getSearchFilters().selectJurisdiction(TestData.jurisdiction);
+    // await searchPage.selectJurisdiction(TestData.jurisdiction);
   });
 
   When(/^I select the 'Case type' drop down option for dynamic filters$/, async function () {
-    await searchPage.selectJurisdiction(TestData.jurisdiction);
-    await searchPage.selectCaseType(TestData.caseType);
+    await searchPage.getSearchFilters().selectJurisdiction(TestData.jurisdiction);
+    // await searchPage.selectJurisdiction(TestData.jurisdiction);
+    await searchPage.getSearchFilters().selectCaseType(TestData.caseType);
+    // await searchPage.selectCaseType(TestData.caseType);
   });
 
   When(/^I click the 'Reset' button$/, async function () {
-    await searchPage.clickResetButton();
+    await searchPage.getSearchFilters().clickResetButton();
+    // await searchPage.clickResetButton();
   });
 
   When(/^I click the 'Apply' button$/, async function () {
-    await searchPage.clickApplyButton();
+    await searchPage.getSearchFilters().clickApplyButton();
+    // await searchPage.clickApplyButton();
   });
 
   When(/^a case exists$/, async function () {

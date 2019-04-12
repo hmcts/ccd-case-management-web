@@ -97,7 +97,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     Then there will be validation errors
     And the 'Continue' button will be disabled
 
-    @validation @regex
+    @validation @regex @broken
   Scenario: Validation: breaking REGEX validation stops progression of a case
     Given a case type containing a regex validated field exists
     And I enter 'lowercaseisinvalid' into the 'text' field

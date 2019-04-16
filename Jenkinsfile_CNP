@@ -63,15 +63,6 @@ withPipeline("angular", product, component) {
         ])
     }
     
-    after('smokeTest:aat'){
-        publishHTML(target:[
-            reportDir            : "smoke-output/**/*",
-            reportFiles          : "index.html",
-            reportName           : "Smoke Tests",
-            alwaysLinkToLastBuild: true
-        ])
-    }
-
     after('functionalTest:preview'){
         publishHTML(target:[
             reportDir            : "functional-output/**/*",
@@ -81,14 +72,4 @@ withPipeline("angular", product, component) {
         ])
     }
     
-    after('smokeTest:preview'){
-        publishHTML(target:[
-            reportDir            : "smoke-output/**/*",
-            reportFiles          : "index.html",
-            reportName           : "Functional Tests",
-            alwaysLinkToLastBuild: true
-        ])
-    }
-
-
 }

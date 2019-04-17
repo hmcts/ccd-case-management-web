@@ -41,7 +41,8 @@ Feature: Set of scenarios to test functionality of search filters on the search 
     When I click the 'Reset' button
     Then I should not see a '<dataType>' dynamic filter
 
-
+    Examples:
+      | dataType    |
       | TextArea    |
       | Date        |
       | Complex     |

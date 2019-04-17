@@ -5,7 +5,7 @@ NavBar = require('./ccd-components/globalNavBar.js');
 DateField = require('../pageObjects/ccd-components/fields/ccdDateField.js');
 let FieldUtils = require('../utils/fieldUtils.js');
 CaseList = require('./ccd-components/caseListComponent.js');
-
+CaseFilters = require('./ccd-components/caseFilters.js');
 class SearchPage extends BasePage {
 
   constructor(){
@@ -35,12 +35,21 @@ class SearchPage extends BasePage {
   }
 
   /**
+   * Return a new instance if the Case Filters dropdowns and apply/reset button
+   * which is common on search page and workbasket filters on Case List page
+   * @returns {CaseFilters|*}
+   */
+  getSearchFilters(){
+    return new CaseFilters;
+  }
+
+  /**
    * Select a Jurisdiction from the dropdown
    * @param option to select - case insensitive
    * @returns {Promise<void>}
    */
   async selectJurisdiction(option){
-    await this._jurisdiction.selectFromDropdownByText(option);
+    await this._jurisdiction.selectFromDropdownByText(option)
   }
 
   /**

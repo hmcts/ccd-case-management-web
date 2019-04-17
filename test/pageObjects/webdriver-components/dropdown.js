@@ -36,15 +36,18 @@ class Dropdown {
   }
 
   /**
-   * Will randomly select any dropdown option
+   * Will select given value or randomly select any dropdown option if value not present
    */
-  async selectAnyOption(){
-    let options = await this._getOptionElements();
-    let elementListSize = await options.length;
-    let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
-    let optionToSelect = await options[randomOptionArrayInt-1];
-    await optionToSelect.click();
-
+  async selectAnOption(value){
+    if (value) {
+      await $(`${this._dropdownElement} option[value=${value}]`).click();
+    } else {
+      let options = await this._getOptionElements();
+      let elementListSize = await options.length;
+      let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
+      let optionToSelect = await options[randomOptionArrayInt-1];
+      await optionToSelect.click();  
+    }
   }
 
   /**

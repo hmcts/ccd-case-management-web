@@ -36,23 +36,44 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       let actualTabs = await caseDetailsPage.getTabsText();
       expect(actualTabs.length).to.equal(0)
   });
+  
+  Then('the success case created bar will be visible', async function() {
+      let alertBarText = await caseDetailsPage.getSuccessAlertBarText();
+      expect(alertBarText).to.match(/^Case #\d{4}-\d{4}-\d{4}-\d{4} has been created\.$/);
+  });
 
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
       await caseDetailsPage.clickTab(tabName);
-      let fields =await caseDetailsPage.getTabFields()
-      expect(fields).to.include(tabfield)
+      let fields = await caseDetailsPage.getTabFields();
+      expect(fields).to.include(tabfield);
+  });
+
+  Then(/^the following fields will be visible:$/, async function (dataTable) {
+      let expectedFields = await [].concat(...dataTable.raw());
+      let fields = await caseDetailsPage.getTabFields();
+      for (const expectedField of expectedFields) {
+        expect(fields).to.include(expectedField);
+      }
+  });
+
+  Then(/^the print button will be visible$/, async function () {
+    expect(await caseDetailsPage.isPrintButtonReady()).to.be.true;
+  });
+
+  Then(/^the case reference will be visible and formatted well$/, async function () {
+    expect(await caseDetailsPage.isCaseReferenceVisible()).to.be.true;
+    expect(await caseDetailsPage.isCaseReferenceOfCorrectFormat()).to.be.true;
   });
 
   Then(/^the '(.*)' field will NOT be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
       await caseDetailsPage.clickTab(tabName);
-      let fields =await caseDetailsPage.getTabFields()
-      expect(fields).to.not.include(tabfield)
+      let fields =await caseDetailsPage.getTabFields();
+      expect(fields).to.not.include(tabfield);
   });
 
   Then(/^the Event History Timeline should show the following ordered events:$/, async function (dataTable) {
     let events = await [].concat(...dataTable.raw());
     let actualEvents = await caseDetailsPage.getTimelineEvents();
-
     expect(events).to.deep.equal(actualEvents);
   });
 
@@ -72,7 +93,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I navigate to tab '(.*)'$/, async function (tabName) {
-    await caseDetailsPage.clickTab(tabName);
-    });
+      await caseDetailsPage.clickTab(tabName);
+  });
 
 });

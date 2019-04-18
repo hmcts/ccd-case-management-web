@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { FormGroup } from '@angular/forms';
@@ -33,19 +33,23 @@ export class WorkbasketComponent implements OnInit {
   @ViewChild('searchResults')
   searchResults: SearchResultComponent;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private searchService: SearchService,
     private paginationService: PaginationService,
     private jurisdictionService: JurisdictionService,
     private alertService: AlertService,
-    private windowService: WindowService) {
+    private windowService: WindowService,
+    private router: Router,
+  ) {
   }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
   }
 
-  applyFilter(filter): void {
+  applyFilter(returnValue): void {
+    const filter = returnValue.selected;
     if (this.searchResults) {
       this.searchResults.hideRows = true;
     }
@@ -96,6 +100,14 @@ export class WorkbasketComponent implements OnInit {
         });
 
     this.scrollToTop();
+
+    this.router.navigate(['/list/case'], {
+      queryParams: returnValue.queryParams
+    });
+  }
+
+  applyReset() {
+    this.router.navigate(['/list/case']);
   }
 
   private getCaseFilterFromFormGroup(isFormApply: boolean, formGroup?: FormGroup): object {

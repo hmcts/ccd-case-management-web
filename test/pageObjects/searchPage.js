@@ -10,10 +10,6 @@ class SearchPage extends BasePage {
 
   constructor(){
       super();
-      this._jurisdiction = new Dropdown('#s-jurisdiction');
-      this._caseType = new Dropdown('#s-case-type');
-      this._applyButton = new Button('.button', 'Apply');
-      this._resetButton = new Button('#reset');
   }
 
    /**
@@ -41,42 +37,6 @@ class SearchPage extends BasePage {
    */
   getSearchFilters(){
     return new CaseFilters;
-  }
-
-  /**
-   * Select a Jurisdiction from the dropdown
-   * @param option to select - case insensitive
-   * @returns {Promise<void>}
-   */
-  async selectJurisdiction(option){
-    await this._jurisdiction.selectFromDropdownByText(option)
-  }
-
-  /**
-   * Select Case Type from the dropdown
-   * @param option to select - case insensitive
-   * @returns {Promise<void>}
-   */
-  async selectCaseType(option){
-    await this._caseType.selectFromDropdownByText(option);
-  }
-
-  /**
-   * Click Apply button to submit options for search
-   * @returns {Promise<void|*>}
-   */
-  async clickApplyButton() {
-    await this._applyButton.waitForElementToBeClickable();
-    await this._applyButton.click();
-  }
-
-  /**
-   * Click Reset button to reset options for search
-   * @returns {Promise<void|*>}
-   */
-  async clickResetButton() {
-    await this._resetButton. waitForElementToBeClickable();
-    await this._resetButton.click();
   }
 
   /**

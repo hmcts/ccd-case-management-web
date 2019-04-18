@@ -26,8 +26,8 @@ class CreateCaseWizardPage extends BasePage{
    * @param fieldDataType
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
-    async isFieldPresent(fieldDataType){
-        return await new FieldUtils().isFieldPresent(fieldDataType);
+    async isFieldPresent(fieldDataType, id){
+        return await new FieldUtils().isFieldPresent(fieldDataType, id);
     }
 
 
@@ -35,13 +35,13 @@ class CreateCaseWizardPage extends BasePage{
    * Fill out a specified field type with a random value
    * @param fieldDataType - the field type we are interacting with
    * @param value - optional value to enter into field if applicable
+   * @param id - the field id we are interacting with
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value){
-      return await new FieldUtils().interactWithField(fieldDataType, value);
+    async interactWithField(fieldDataType, value, id){
+      return await new FieldUtils().interactWithField(fieldDataType, value, id);
     }
-
 
   /**
    * Get contents of number field

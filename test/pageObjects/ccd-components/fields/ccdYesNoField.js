@@ -14,11 +14,15 @@ class CcdYesNoField {
    *
    * @param css
    */
-  constructor(css, radioIdYes = 'YesNoField-Yes', radioIdNo = 'YesNoField-No'){
+  constructor(css, id){
     this.css = css;
-    this.yesRadio = new RadioField(`${css} .form-group #${radioIdYes}`, radioIdYes);
-    this.noRadio = new RadioField(`${css} .form-group #${radioIdNo}`, radioIdNo);
-    this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="${radioIdYes}"]]//legend/span`;
+    if (id) {
+      this.yesRadio = new RadioField(`${css} .form-group #${id}-Yes`);
+      this.noRadio = new RadioField(`${css} .form-group #${id}-No`);
+    } else {
+      this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
+      this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
+    }
     this.label = null;
 
     this.checkYourAnswersValue = null;
@@ -52,16 +56,16 @@ class CcdYesNoField {
    * Select 'Yes' radio button option
    */
   async selectYes(){
-      await this.yesRadio.click();
-      this.checkYourAnswersValue = 'Yes';
+    await this.yesRadio.click();
+    this.checkYourAnswersValue = 'Yes';
   }
 
   /**
    * Select 'No' radio button option
    */
   async selectNo(){
-      await this.noRadio.click();
-      this.checkYourAnswersValue = 'No';
+    await this.noRadio.click();
+    this.checkYourAnswersValue = 'No';
   }
 
   /**
@@ -102,11 +106,11 @@ class CcdYesNoField {
   }
 
   async _getLabel(){
-      return await $(`${this.css} .form-label`).getText();
+    return await $(`${this.css} .form-label`).getText();
   }
 
   async _getLabels(){
-      return await $$(`${this.css} .form-label`).getText();
+    return await $$(`${this.css} .form-label`).getText();
   }
 
 }

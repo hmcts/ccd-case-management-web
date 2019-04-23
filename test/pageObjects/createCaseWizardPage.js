@@ -27,8 +27,8 @@ class CreateCaseWizardPage extends BasePage{
    * @param fieldDataType
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
-    async isFieldPresent(fieldDataType){
-        return await new FieldUtils().isFieldPresent(fieldDataType);
+    async isFieldPresent(fieldDataType, id){
+        return await new FieldUtils().isFieldPresent(fieldDataType, id);
     }
 
 
@@ -36,66 +36,70 @@ class CreateCaseWizardPage extends BasePage{
    * Fill out a specified field type with a random value
    * @param fieldDataType - the field type we are interacting with
    * @param value - optional value to enter into field if applicable
-   * @param fieldId - optional id of the field to locate it if there are multiple fields of the same type on one page
+   * @param id - the field id we are interacting with
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-  async interactWithField(fieldDataType, value, fieldId) {
-    return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
-  }
+    async interactWithField(fieldDataType, value, id){
+      return await new FieldUtils().interactWithField(fieldDataType, value, id);
+    }
 
-  async fieldLabelContains(fieldDataType, fieldId, labelText) {
-    return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
-  }
+    async interactWithField(fieldDataType, value, fieldId) {
+      return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
+    }
 
-  async isTextFieldHiddenById(fieldId) {
-    return await new FieldUtils().textFieldIsHidden(fieldId);
-  }
+    async fieldLabelContains(fieldDataType, fieldId, labelText) {
+      return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
+    }
 
-  async isTextFieldVisibleById(fieldId) {
-    return await new FieldUtils().textFieldIsVisible(fieldId);
-  }
+    async isTextFieldHiddenById(fieldId) {
+      return await new FieldUtils().textFieldIsHidden(fieldId);
+    }
 
-  async isCaseLinkFieldHiddenById(fieldId) {
-    return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
-  }
+    async isTextFieldVisibleById(fieldId) {
+      return await new FieldUtils().textFieldIsVisible(fieldId);
+    }
 
-  async isCaseLinkFieldVisibleById(fieldId) {
-    return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
-  }
+    async isCaseLinkFieldHiddenById(fieldId) {
+      return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
+    }
 
-  async isFixedListFieldHiddenById(fieldId) {
-    return await new FieldUtils().fixedListFieldIsHidden(fieldId);
-  }
+    async isCaseLinkFieldVisibleById(fieldId) {
+      return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
+    }
 
-  async isFixedListFieldVisibleById(fieldId) {
-    return await new FieldUtils().fixedListFieldIsVisible(fieldId);
-  }
+    async isFixedListFieldHiddenById(fieldId) {
+      return await new FieldUtils().fixedListFieldIsHidden(fieldId);
+    }
 
-  async isDateFieldHiddenById(fieldId) {
-    return await new FieldUtils().dateFieldIsHidden(fieldId);
-  }
+    async isFixedListFieldVisibleById(fieldId) {
+      return await new FieldUtils().fixedListFieldIsVisible(fieldId);
+    }
 
-  async isDateFieldVisibleById(fieldId) {
-    return await new FieldUtils().dateFieldIsVisible(fieldId);
-  }
+    async isDateFieldHiddenById(fieldId) {
+      return await new FieldUtils().dateFieldIsHidden(fieldId);
+    }
 
-  async isYesOrNoFieldHiddenById(fieldId) {
-    return await new FieldUtils().fieldYesNoIsHidden(fieldId);
-  }
+    async isDateFieldVisibleById(fieldId) {
+      return await new FieldUtils().dateFieldIsVisible(fieldId);
+    }
 
-  async isYesOrNoFieldVisibleById(fieldId) {
-    return await new FieldUtils().fieldYesNoIsVisible(fieldId);
-  }
+    async isYesOrNoFieldHiddenById(fieldId) {
+      return await new FieldUtils().fieldYesNoIsHidden(fieldId);
+    }
 
-  async setYesOrNoValue(radioButtonId, option) {
-    return await new FieldUtils().selectYesNoOption(radioButtonId, option);
-  }
+    async isYesOrNoFieldVisibleById(fieldId) {
+      return await new FieldUtils().fieldYesNoIsVisible(fieldId);
+    }
 
-  async clickCollectionAddNewButton(collectionFieldId) {
-    let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
-    await element(by.xpath(xpathLocator)).click();
-  }
+    async setYesOrNoValue(radioButtonId, option) {
+      return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+    }
+
+    async clickCollectionAddNewButton(collectionFieldId) {
+      let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
+      await element(by.xpath(xpathLocator)).click();
+    }
 
   /**
    * Get contents of number field

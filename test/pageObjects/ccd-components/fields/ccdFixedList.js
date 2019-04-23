@@ -10,11 +10,15 @@ class CcdFixedList {
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param fieldId
+   * @param id
    */
-    constructor(css, fieldId){
+    constructor(css, id){
         this.css = css;
-        this.fixedList = fieldId !== undefined ? new Dropdown(`${this.css} select#${fieldId}`) : new Dropdown(`${this.css} select`);
+        if (id) {
+            this.fixedList = new Dropdown(`${this.css} #${id}`);
+        } else {
+            this.fixedList = new Dropdown(`${this.css} select`);
+        }
         this.label = null;
 
         this.inputValue = null;
@@ -31,6 +35,11 @@ class CcdFixedList {
       this.label = await this._getLabel();
     }
 
+  async selectOptionByValue(value){ // TODO: from merge
+    await this.fixedList.selectAnOption(value);
+    this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
+    this.label = await this._getLabel();
+  }
    /**
      * Check if field is present and enabled
      * @returns true or false

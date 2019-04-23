@@ -15,11 +15,16 @@ class CCDStringField {
    * Selector farther narrows down the location
    * @param css
    * @param type
-   * @param fieldId
+   * @param id
    */
-  constructor(css, type, fieldId){
-    this.stringField = fieldId !== undefined ? new TextField(`${css} input#${fieldId}`) : new TextField(`${css} input`);
-    this.fieldId = fieldId;
+  constructor(css, type, id){
+    if (id) {
+      this.stringField = new TextField(`${css} #${id}`);
+      this.id = id;
+    } else {
+      this.stringField = new TextField(`${css} input`);
+      this.id = null;
+    }
     this.css = css;
     this.label = null;
     this.type = type;
@@ -124,11 +129,8 @@ class CCDStringField {
   }
 
   async _getLabel(){
-    if (this.fieldId !== undefined) {
-      return await $(`label[for='${this.fieldId}']`).getText();
-    } else {
-      return await $(`${this.css} .form-label`).getText();
-    }
+    return this.id ? await $(`${this.css} label[for=${this.id}]`).getText()
+                  : await $(`${this.css} .form-label`).getText();
   }
 
 

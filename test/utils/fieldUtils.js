@@ -14,31 +14,31 @@ class FieldDataTypes {
    * Enter random text into the Text field
    * @returns CCDStringField Object
    */
-  async enterIntoTextField(value, fieldId){
+  async enterIntoTextField(value, id){
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, fieldId);
+    let field = await new CCDStringField(css, type, id);
     await field.enterText(value);
     return field;
   }
 
-  async textFieldContainsInLabel(value, fieldId) {
+  async textFieldContainsInLabel(value, id) {
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, fieldId);
+    let field = await new CCDStringField(css, type, id);
     return await field.hasFieldLabel(value);
   }
 
-  async fixedListFieldContainsInLabel(value, fieldId) {
+  async fixedListFieldContainsInLabel(value, id) {
     let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css, fieldId);
+    let field = await new CCDFixedListField(css, id);
     return await field.hasFieldLabel(value);
   }
 
-  async caseLinkFieldContainsInLabel(value, fieldId) {
+  async caseLinkFieldContainsInLabel(value, id) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, fieldId);
+    let field = await new CCDStringField(css, type, id);
     return await field.hasFieldLabel(value);
   }
 
@@ -123,32 +123,32 @@ class FieldDataTypes {
    * Enter random valid date in the past
    * @returns CCDStringField Object
    */
-  async enterIntoDateField(value, fieldId){
+  async enterIntoDateField(value, id){
     let css = await FIELDS.DATE.cssTag;
-    let dateField = await new CCDDateField(css, `${fieldId}-day`, `${fieldId}-month`, `${fieldId}-year`);
+    let dateField = await new CCDDateField(css, `${id}-day`, `${id}-month`, `${id}-year`);
     await dateField.enterDate(value);
     return dateField;
   }
 
   /**
-   * Select a random option from the dropdown
+   * Select a provided option from the dropdown
    * @returns CCDStringField Object
    */
-  async selectFromFixedList(value, fieldId){
+  async selectFromFixedList(value, id){
     let css = await FIELDS.FIXED_LIST.cssTag;
-    let fixedListField = await new CCDFixedListField(css, fieldId);
+    let fixedListField = await new CCDFixedListField(css, id);
     await fixedListField.selectOption(value);
     return fixedListField;
   }
 
   /**
-   * Select random radio button option
+   * Select a provided radio butto option
    * @returns CCDStringField Object
    */
-  async selectYesNoOption(){
+  async selectYesNoOption(value, id){
     let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css);
-    await yesNoField.selectOption();
+    let yesNoField = await new CCDYesNoField(css, id);
+    await yesNoField.selectOption(value);
     return yesNoField;
   }
 
@@ -267,7 +267,7 @@ class FieldDataTypes {
    * @param value - optional value to enter into field if applicable
    * @returns {Promise<void>}
    */
-  async interactWithField(dataType, value, fieldId){
+  async interactWithField(dataType, value, id){
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'address':
@@ -275,7 +275,7 @@ class FieldDataTypes {
       case 'case-link':
         return await this.enterIntoCaseLinkField(value, fieldId);
       case 'text':
-        return await this.enterIntoTextField(value, fieldId);
+        return await this.enterIntoTextField(value, id);
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
@@ -289,11 +289,11 @@ class FieldDataTypes {
       case 'email':
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
-        return await this.selectFromFixedList(value, fieldId);
+        return await this.selectFromFixedList(value, id);
       case 'phone-uk':
         return await this.enterIntoPhoneField(value);
       case 'yes-no':
-        return await this.selectYesNoOption();
+        return await this.selectYesNoOption(value, id);
       case 'collection':
         return await this.enterIntoCollectionField();
       case 'complex':
@@ -377,10 +377,13 @@ class FieldDataTypes {
    * Check if field is present
    * @returns {Promise<boolean|*>}
    */
-  async isFieldPresent(dataType){
+  async isFieldPresent(dataType, id){
     let css = await this._getFieldCSS(dataType);
-    let isPresent = await element(by.css(css)).isPresent();
-    return isPresent;
+    if (id) {
+      return await $(`${css} #${id}`).isPresent();
+    } else {
+      return await element(by.css(css)).isPresent();
+    }
   }
 
   /**

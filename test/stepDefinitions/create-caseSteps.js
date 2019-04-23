@@ -95,7 +95,6 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
-
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.not.include(expectedLabel);
@@ -104,6 +103,16 @@ defineSupportCode(function ({ Given, When, Then}) {
   Then(/^the field with label '(.*)' is visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^the field with label '(.*)' is visible with grey bar$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getGreyBarFieldLabels();
+    expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^the field with label '(.*)' is visible without grey bar$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getGreyBarFieldLabels();
+    expect(labels).to.not.include(expectedLabel);
   });
 
   Then(/^I will not be on the '(.*)' page$/, async function (expectedPageHeader) {

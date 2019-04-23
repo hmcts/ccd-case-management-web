@@ -11,17 +11,21 @@ class CcdFixedList {
    *
    * @param css
    */
-    constructor(css){
+    constructor(css, id){
         this.css = css;
-        this.fixedList = new Dropdown(`${this.css} select`);
+        if (id) {
+            this.fixedList = new Dropdown(`${this.css} #${id}`);
+        } else {
+            this.fixedList = new Dropdown(`${this.css} select`);
+        }
         this.label = null;
 
         this.inputValue = null;
         this.checkYourAnswersValue = null;
     }
 
-    async selectOption(){
-        await this.fixedList.selectAnyOption();
+    async selectOption(value){
+        await this.fixedList.selectAnOption(value);
         this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
         this.label = await this._getLabel();
     }

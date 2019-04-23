@@ -14,9 +14,17 @@ class CDDStringField {
    * in the format ccd-write-XXXX-field
    * Selector farther narrows down the location
    * @param css
+   * @param type
+   * @param id
    */
-  constructor(css, type){
-    this.stringField = new TextField(`${css} input`);
+  constructor(css, type, id){
+    if (id) {
+      this.stringField = new TextField(`${css} #${id}`);
+      this.id = id;
+    } else {
+      this.stringField = new TextField(`${css} input`);
+      this.id = null;
+    }
     this.css = css;
     this.label = null;
     this.type = type;
@@ -108,7 +116,8 @@ class CDDStringField {
   }
 
   async _getLabel(){
-    return await $(`${this.css} .form-label`).getText();
+    return this.id ? await $(`${this.css} label[for=${this.id}]`).getText()
+                  : await $(`${this.css} .form-label`).getText();
   }
 
 

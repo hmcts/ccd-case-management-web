@@ -7,6 +7,7 @@ class RadioField{
   /**
    * This css should be an <input> tag
    * @param css
+   * @param radioButtonId
    */
   constructor(css, radioButtonId){
     this.css = css;

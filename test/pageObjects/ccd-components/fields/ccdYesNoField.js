@@ -13,15 +13,18 @@ class CcdYesNoField {
    * in the format  ccd-write-yes-no-field
    *
    * @param css
+   * @param id
    */
   constructor(css, id){
     this.css = css;
     if (id) {
-      this.yesRadio = new RadioField(`${css} .form-group #${id}-Yes`);
-      this.noRadio = new RadioField(`${css} .form-group #${id}-No`);
+      this.yesRadio = new RadioField(`${css} .form-group #${id}-Yes`, `${id}-Yes`);
+      this.noRadio = new RadioField(`${css} .form-group #${id}-No`, `${id}-No`);
+      this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="${id}-Yes"]]//legend/span`;
     } else {
       this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
       this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
+      this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="YesNoField-Yes"]]//legend/span`;
     }
     this.label = null;
 

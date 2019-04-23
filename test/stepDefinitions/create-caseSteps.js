@@ -45,7 +45,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     // await navigateToCreateCasePage();
     this.fieldObject = await new CreateCaseWizardPage().interactWithField(dataType);
   });
@@ -62,7 +62,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   When(/^I select and submit the event '(.*)'$/, async function (event) {
-    await new CaseDetailsPage().startEvent(event)
+    await new CaseDetailsPage().startEvent(event);
     await baseSteps.fillOutAndSubmitForm();
   });
 
@@ -146,7 +146,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   When(/^I do NOT meet the condition for showing the field in the tab$/, async function () {
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField('text','showmethemoney');
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.interactWithField('text','dontshowmethemoney');
@@ -204,7 +204,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   async function populateFormDataWithSupportFieldSetTo(supportAnswer) {
     await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
-    await caseWizardPage.setYesOrNoValue('MySchool_ProvidesAutisticChildrenSupport', supportAnswer);
+    await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
     await caseWizardPage.interactWithField('text', 'Class one', 'MySchool_Class_0_ClassName');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
@@ -213,7 +213,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
     await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.setYesOrNoValue('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic', 'Yes');
+      await caseWizardPage.interactWithField('yes-no', 'Yes', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
     }
     await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
   }

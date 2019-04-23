@@ -125,7 +125,7 @@ class FieldDataTypes {
    */
   async enterIntoDateField(value, id){
     let css = await FIELDS.DATE.cssTag;
-    let dateField = await new CCDDateField(css, `${id}-day`, `${id}-month`, `${id}-year`);
+    let dateField = await new CCDDateField(css, id);
     await dateField.enterDate(value);
     return dateField;
   }
@@ -206,13 +206,13 @@ class FieldDataTypes {
 
   async dateFieldIsHidden(id) {
     let css = await FIELDS.DATE.cssTag;
-    let field = await new CCDDateField(css, `${id}-day`, `${id}-month`, `${id}-year`);
+    let field = await new CCDDateField(css, id);
     return await field.isHidden();
   }
 
   async dateFieldIsVisible(id) {
     let css = await FIELDS.DATE.cssTag;
-    let field = await new CCDDateField(css, `${id}-day`, `${id}-month`, `${id}-year`);
+    let field = await new CCDDateField(css, id);
     return await field.isVisible();
   }
 

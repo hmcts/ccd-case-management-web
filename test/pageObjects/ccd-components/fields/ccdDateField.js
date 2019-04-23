@@ -11,16 +11,20 @@ class CcdDateField{
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param dayId
-   * @param monthId
-   * @param yearId
+   * @param id
    */
-  constructor(css, dayId = 'DateField-day', monthId = 'DateField-month', yearId = 'DateField-year'){
+  constructor(css, id){
     this.css = css;
-    this.dayCss = new TextField(`${css} #${dayId}`);
-    this.monthCss = new TextField(`${css} #${monthId}`);
-    this.yearCss = new TextField(`${css} #${yearId}`);
 
+    if (id) {
+      this.dayCss = new TextField(`${css} #${id}-day`);
+      this.monthCss = new TextField(`${css} #${id}-month`);
+      this.yearCss = new TextField(`${css} #${id}-year`);
+    } else {
+      this.dayCss = new TextField(`${css} #DateField-day`);
+      this.monthCss = new TextField(`${css} #DateField-month`);
+      this.yearCss = new TextField(`${css} #DateField-year`);
+    }
     this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;

@@ -271,7 +271,7 @@ class FieldDataTypes {
       case 'money-gbp':
         return await this.enterIntoMoneyField(value);
       case 'date':
-        return await this.enterIntoDateField(value);
+        return await this.enterIntoDateField(value, id);
       case 'document':
         return //todo
       case 'email':

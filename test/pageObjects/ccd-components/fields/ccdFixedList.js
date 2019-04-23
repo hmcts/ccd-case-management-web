@@ -1,4 +1,3 @@
-
 let Dropdown = require('../../webdriver-components/dropdown.js');
 
 /**
@@ -12,69 +11,70 @@ class CcdFixedList {
    * @param css
    * @param id
    */
-    constructor(css, id){
-        this.css = css;
-        if (id) {
-            this.fixedList = new Dropdown(`${this.css} #${id}`);
-        } else {
-            this.fixedList = new Dropdown(`${this.css} select`);
-        }
-        this.label = null;
-
-        this.inputValue = null;
-        this.checkYourAnswersValue = null;
+  constructor(css, id) {
+    this.css = css;
+    if (id) {
+      this.fixedList = new Dropdown(`${this.css} #${id}`);
+    } else {
+      this.fixedList = new Dropdown(`${this.css} select`);
     }
+    this.label = null;
 
-    async selectOption(optionLabel) {
-      if (optionLabel === 'undefined') {
-        await this.fixedList.selectAnyOption();
-      } else {
-        await this.fixedList.selectFromDropdownByText(optionLabel);
-      }
-      this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
-      this.label = await this._getLabel();
+    this.inputValue = null;
+    this.checkYourAnswersValue = null;
+  }
+
+  async selectOption(optionLabel) {
+    if (optionLabel === 'undefined') {
+      await this.fixedList.selectAnyOption();
+    } else {
+      await this.fixedList.selectFromDropdownByText(optionLabel);
     }
+    this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
+    this.label = await this._getLabel();
+  }
 
-  async selectOptionByValue(value){ // TODO: from merge
+  async selectOptionByValue(value) {
     await this.fixedList.selectAnOption(value);
     this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
     this.label = await this._getLabel();
   }
-   /**
-     * Check if field is present and enabled
-     * @returns true or false
-     */
-    async isFieldReady(optionsTextValues){
-        let isPresent = await this.fixedList.isPresent(optionsTextValues);
-        let isEnabled = await this.fixedList.isEnabled();
-        return isPresent && isEnabled;
-    }
 
-    async isHidden() {
-      return await this.fixedList.waitForElementToBeInvisible();
-    }
+  /**
+   * Check if field is present and enabled
+   * @returns true or false
+   */
+  async isFieldReady(optionsTextValues) {
+    let isPresent = await this.fixedList.isPresent(optionsTextValues);
+    let isEnabled = await this.fixedList.isEnabled();
+    return isPresent && isEnabled;
+  }
 
-    async isVisible() {
-      return await this.fixedList.waitForElementToBeVisible();
-    }
+  async isHidden() {
+    return await this.fixedList.waitForElementToBeInvisible();
+  }
 
-    /**
-     * Check if label is present
-     * @returns true or false
-     */
-    async hasFieldLabels(labelArray){
-        let labelText = await this._getLabel();
-        return labelText === labelArray[0];
-    }
+  async isVisible() {
+    return await this.fixedList.waitForElementToBeVisible();
+  }
 
-    async hasFieldLabel(label){
-      let labelText = await this._getLabel();
-      return labelText.indexOf(label) !== -1;
-    }
+  /**
+   * Check if label is present
+   * @returns true or false
+   */
+  async hasFieldLabels(labelArray) {
+    let labelText = await this._getLabel();
+    return labelText === labelArray[0];
+  }
 
-    async _getLabel(){
-      return await $(`${this.css} .form-label`).getText();
-    }
+  async hasFieldLabel(label) {
+    let labelText = await this._getLabel();
+    return labelText.indexOf(label) !== -1;
+  }
+
+  async _getLabel() {
+    return await $(`${this.css} .form-label`).getText();
+  }
 
 }
 

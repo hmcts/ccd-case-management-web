@@ -47,7 +47,7 @@ class Dropdown {
       let elementListSize = await options.length;
       let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
       let optionToSelect = await options[randomOptionArrayInt-1];
-      await optionToSelect.click();  
+      await optionToSelect.click();
     }
   }
 
@@ -74,8 +74,8 @@ class Dropdown {
 
     for (const option of options){
         const optionText = await option.getText();
-        await optionsTextArray.push(optionText)
-        if (optionText.toLowerCase() === dropdownOption.toLowerCase()){
+        await optionsTextArray.push(optionText);
+        if (optionText.trim().toLowerCase() === dropdownOption.trim().toLowerCase()){
            optionToSelect = option;
            found = true;
            break;
@@ -146,7 +146,7 @@ class Dropdown {
 
     for (let i = 1; i < 4; i++){
       try {
-        await this._selectFromDropdownByText(dropdownOption)
+        await this._selectFromDropdownByText(dropdownOption);
         fail = false;
         break;
       } catch (e) {

@@ -59,4 +59,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   });
 
+  Given(/^a case type containing Complex and Collection types exists$/, function() {
+    Data.caseType = 'Complex in Coll in Complex';
+    Data.event = 'Create school';
+  });
 });

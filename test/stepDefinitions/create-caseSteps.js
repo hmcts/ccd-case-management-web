@@ -141,6 +141,14 @@ defineSupportCode(function ({ Given, When, Then}) {
     await createCaseStartPage.selectEvent(event);
   });
 
+  Given(/^I have submitted a case with nested collection data$/, async function(){
+    baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickAddNewButton();
+    await caseWizardPage.interactWithField('text','Mr');
+    await caseWizardPage.interactWithField('Complex','1 Pickwick');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton()
+  });
 
   Then(/^I fill nested collections data$/, async function(){
     await caseWizardPage.clickAddNewButton();

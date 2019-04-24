@@ -40,14 +40,25 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Then(/^the '(.*)' nested field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
     await caseDetailsPage.clickTab(tabName);
-    let fields =await caseDetailsPage.getTabNestedFields();
+    let fields = await caseDetailsPage.getTabNestedFields();
     expect(fields).to.include(tabfield)
   });
 
   Then(/^the '(.*)' field will NOT be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
       await caseDetailsPage.clickTab(tabName);
-      let fields =await caseDetailsPage.getTabFields()
+      let fields = await caseDetailsPage.getTabFields()
       expect(fields).to.not.include(tabfield)
+  });
+
+  Then(/^the following fields will be visible on the '(.*)' tab$/, async function (tabName, datatable) {
+      let fieldNames =  await [].concat(...dataTable.raw());
+      await caseDetailsPage.clickTab(tabName);
+      let fields = await caseDetailsPage.getTabFields()
+
+      for (let i=0; i < fieldNames.length; i++) {
+        console.log(fieldNames[i])
+        expect(fields).to.include(fieldNames[i])
+      }
   });
 
   Then(/^the Event History Timeline should show the following ordered events:$/, async function (dataTable) {

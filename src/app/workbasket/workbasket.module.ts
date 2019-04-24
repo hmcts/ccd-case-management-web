@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
-import { WorkbasketFiltersModule } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseUIToolkitModule, WorkbasketFiltersModule } from '@hmcts/ccd-case-ui-toolkit';
 
 @NgModule({
   imports: [

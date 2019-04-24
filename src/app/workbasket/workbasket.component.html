@@ -3,6 +3,7 @@
 
     <div class="display-left" leftBody>
       <ccd-workbasket-filters
+        [jurisdictions]="profile.jurisdictions"
         [defaults]="profile.default.workbasket"
         (onApply)="applyFilter($event)"
         (onReset)="applyReset($event)"

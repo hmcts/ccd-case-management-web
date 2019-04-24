@@ -39,7 +39,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I change the jurisdiction search drop down option$/, async function () {
-    TestData.jurisdiction = 'Test';
+    TestData.jurisdiction = 'Auto Test 1';
     await searchPage.selectJurisdiction(TestData.jurisdiction);
   });
 

@@ -7,16 +7,24 @@ TextField = require('../../webdriver-components/textField.js');
  *
  * returning this object will give access to the expected 'show your answers' page answer for the specified field
  */
-class CDDStringField {
+class CCDStringField {
 
   /**
    * Must take the parent css tag for the ccd field component
    * in the format ccd-write-XXXX-field
    * Selector farther narrows down the location
    * @param css
+   * @param type
+   * @param id
    */
-  constructor(css, type){
-    this.stringField = new TextField(`${css} input`);
+  constructor(css, type, id){
+    if (id) {
+      this.stringField = new TextField(`${css} #${id}`);
+      this.id = id;
+    } else {
+      this.stringField = new TextField(`${css} input`);
+      this.id = null;
+    }
     this.css = css;
     this.label = null;
     this.type = type;
@@ -72,6 +80,14 @@ class CDDStringField {
     await this._enterIntoField(value)
   }
 
+  async isHidden() {
+    return await this.stringField.waitForElementToBeInvisible();
+  }
+
+  async isVisible() {
+    return await this.stringField.waitForElementToBeVisible();
+  }
+
   /**
    * Check if field is ready to type
    * @returns true or false
@@ -92,6 +108,11 @@ class CDDStringField {
     return labelText === labelArray[0];
   }
 
+  async hasFieldLabel(label) {
+    let labelText = await this._getLabel();
+    return labelText.indexOf(label) !== -1;
+  }
+
   async getFieldValue(){
     return await this.stringField.getText()
   }
@@ -108,10 +129,11 @@ class CDDStringField {
   }
 
   async _getLabel(){
-    return await $(`${this.css} .form-label`).getText();
+    return this.id ? await $(`${this.css} label[for=${this.id}]`).getText()
+                  : await $(`${this.css} .form-label`).getText();
   }
 
 
 }
 
-module.exports = CDDStringField;
+module.exports = CCDStringField;

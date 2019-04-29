@@ -325,6 +325,7 @@ describe('CaseCreatorComponent', () => {
 
   it('should notify user about errors/warnings when fields selected and button clicked and response with callback errors/warnings', () => {
     const VALID_ERROR = {
+      error: 'Error heading',
       callbackErrors: ['error1', 'error2'],
       callbackWarnings: ['warning1', 'warning2']
     };
@@ -354,6 +355,7 @@ describe('CaseCreatorComponent', () => {
       }
     ];
     const VALID_ERROR = {
+      error: 'Field error',
       message: 'Field validation failed',
       details: {
         field_errors: FIELD_ERRORS

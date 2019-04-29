@@ -17,7 +17,7 @@ class CaseFilters extends BasePage {
     this._caseType = new Dropdown('select[name=case-type]');
     this._state = new Dropdown('select[name=state]');
     this._applyButton = new Button('.button', 'Apply');
-    this._resetButton = new Button('#reset');
+    this._resetButton = new Button('.button','Reset');
   }
 
   /**
@@ -61,7 +61,7 @@ class CaseFilters extends BasePage {
    * @returns {Promise<void|*>}
    */
   async clickResetButton() {
-    await this._resetButton. waitForElementToBeClickable();
+    // await this._resetButton.waitForElementToBeClickable();
     await this._resetButton.click();
   }
 

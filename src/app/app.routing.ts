@@ -15,6 +15,7 @@ import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
 import { editorRouting as caseEditRouting, viewerRouting as caseViewRouting, CaseResolver } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseViewerConsumerComponent } from './cases/viewer/case-viewer-consumer.components';
 
 const routes: Routes = [
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
         resolve: {
           case: CaseResolver
         },
+        component: CaseViewerConsumerComponent,
         runGuardsAndResolvers: 'always',
         children: caseViewRouting,
       },

@@ -249,6 +249,7 @@ describe('CaseCreatorComponent', () => {
   let component: CaseCreatorComponent;
   let de: DebugElement;
 
+  const $ERROR_HEADER = By.css('.error-summary-heading');
   const $ERROR_SUMMARY = By.css('.error-summary');
   const $ERROR_MESSAGE = By.css('p');
   const $ERROR_FIELD_MESSAGES = By.css('ul');
@@ -379,7 +380,9 @@ describe('CaseCreatorComponent', () => {
 
     let errorElement = de.query($ERROR_SUMMARY);
     expect(errorElement).toBeTruthy();
+    let errorHeader = errorElement.query($ERROR_HEADER);
     let errorMessage = errorElement.query($ERROR_MESSAGE);
+    expect(text(errorHeader)).toBe('Field error');
     expect(text(errorMessage)).toBe('Field validation failed');
     let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages.children.length).toBe(2);

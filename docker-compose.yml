@@ -11,5 +11,6 @@ services:
       - CCD_GATEWAY_BASE_URL=http://localhost:3453
       - CCD_ACTIVITY_BASE_URL=
       - DM_GATEWAY_BASE_URL=http://localhost:3453
+      - INSTRUMENTATION_KEY=<instrumentation_key_for_local_work>
     ports:
       - 3451:3451

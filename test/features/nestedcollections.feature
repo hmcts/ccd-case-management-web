@@ -16,6 +16,3 @@ Feature: Set of scenarios to test collection of complex table view
       | Address Line 2 |
       | Address Line 3 |
       | Country        |
-          console.log(`EXPECT: ${expectedField}`)
-
-c

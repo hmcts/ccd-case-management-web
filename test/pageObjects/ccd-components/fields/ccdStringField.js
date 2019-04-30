@@ -7,7 +7,7 @@ TextField = require('../../webdriver-components/textField.js');
  *
  * returning this object will give access to the expected 'show your answers' page answer for the specified field
  */
-class CDDStringField {
+class CCDStringField {
 
   /**
    * Must take the parent css tag for the ccd field component
@@ -80,6 +80,14 @@ class CDDStringField {
     await this._enterIntoField(value)
   }
 
+  async isHidden() {
+    return await this.stringField.waitForElementToBeInvisible();
+  }
+
+  async isVisible() {
+    return await this.stringField.waitForElementToBeVisible();
+  }
+
   /**
    * Check if field is ready to type
    * @returns true or false
@@ -98,6 +106,11 @@ class CDDStringField {
   async hasFieldLabels(labelArray){
     let labelText = await this._getLabel();
     return labelText === labelArray[0];
+  }
+
+  async hasFieldLabel(label) {
+    let labelText = await this._getLabel();
+    return labelText.indexOf(label) !== -1;
   }
 
   async getFieldValue(){
@@ -123,4 +136,4 @@ class CDDStringField {
 
 }
 
-module.exports = CDDStringField;
+module.exports = CCDStringField;

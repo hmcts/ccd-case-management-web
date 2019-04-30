@@ -45,6 +45,10 @@ const CONFIG = {
   'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25
 };
 
+const fs = require('fs');
+const instrumentationKey = '5c5c686e-2f6f-4901-8350-ad1fcf3d848c'; //to be read from env later
+fs.writeFileSync('./browser/ai-instrumentation-key.js', `const INSTRUMENTATION_KEY = '${instrumentationKey}';`);
+
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 

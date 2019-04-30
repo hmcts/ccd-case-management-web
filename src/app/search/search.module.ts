@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search.component';
 import { WorkbasketModule } from '../workbasket/workbasket.module';
 import { SharedModule } from '../shared/shared.module';
-import { SearchFiltersModule } from '@hmcts/ccd-case-ui-toolkit';
+import { SearchFiltersModule, SearchResultModule } from '@hmcts/ccd-case-ui-toolkit';
 
 @NgModule({
   imports: [
@@ -15,6 +15,7 @@ import { SearchFiltersModule } from '@hmcts/ccd-case-ui-toolkit';
     SharedModule,
     WorkbasketModule,
     SearchFiltersModule,
+    SearchResultModule
   ],
   declarations: [
     SearchComponent

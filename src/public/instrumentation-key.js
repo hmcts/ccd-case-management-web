@@ -1,0 +1,1 @@
+const INSTRUMENTATION_KEY = '5c5c686e-2f6f-4901-8350-ad1fcf3d848c';

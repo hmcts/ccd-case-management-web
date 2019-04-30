@@ -11,13 +11,20 @@ class CcdDateField{
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
+   * @param id
    */
-  constructor(css){
+  constructor(css, id){
     this.css = css;
-    this.dayCss = new TextField(`${css} #DateField-day`);
-    this.monthCss = new TextField(`${css} #DateField-month`);
-    this.yearCss = new TextField(`${css} #DateField-year`);
 
+    if (id) {
+      this.dayCss = new TextField(`${css} #${id}-day`);
+      this.monthCss = new TextField(`${css} #${id}-month`);
+      this.yearCss = new TextField(`${css} #${id}-year`);
+    } else {
+      this.dayCss = new TextField(`${css} #DateField-day`);
+      this.monthCss = new TextField(`${css} #DateField-month`);
+      this.yearCss = new TextField(`${css} #DateField-year`);
+    }
     this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
@@ -46,9 +53,17 @@ class CcdDateField{
    * @returns true or false
    */
   async isFieldReady(){
-    return this._isDayFieldInputReady() 
+    return this._isDayFieldInputReady()
         && this._isMonthFieldInputReady()
         && this._isYearFieldInputReady();
+  }
+
+  async isHidden() {
+    return await this.dayCss.waitForElementToBeInvisible();
+  }
+
+  async isVisible() {
+    return await this.dayCss.waitForElementToBeVisible();
   }
 
   /**

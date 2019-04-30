@@ -1,6 +1,6 @@
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
-Button = require('./webdriver-components/button.js')
+Button = require('./webdriver-components/button.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
 
 
@@ -10,10 +10,12 @@ class CreateCaseWizardPage extends BasePage{
     constructor() {
       super();
       this.continueButton = new Button('button[type=submit]');
-      this.addNewButton = new Button('button[type=button]','Add new');
+      this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
+      this.CollectionOfComplexAddNewButton = new Button('#CollectionComplexField .button');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
+      this.greyBarFieldLabels = '.show-condition-grey-bar span';
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
@@ -26,8 +28,8 @@ class CreateCaseWizardPage extends BasePage{
    * @param fieldDataType
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
-    async isFieldPresent(fieldDataType){
-        return await new FieldUtils().isFieldPresent(fieldDataType);
+    async isFieldPresent(fieldDataType, id){
+        return await new FieldUtils().isFieldPresent(fieldDataType, id);
     }
 
 
@@ -35,13 +37,70 @@ class CreateCaseWizardPage extends BasePage{
    * Fill out a specified field type with a random value
    * @param fieldDataType - the field type we are interacting with
    * @param value - optional value to enter into field if applicable
+   * @param id - the field id we are interacting with
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value){
-      return await new FieldUtils().interactWithField(fieldDataType, value);
+    async interactWithField(fieldDataType, value, id){
+      return await new FieldUtils().interactWithField(fieldDataType, value, id);
     }
 
+    async interactWithField(fieldDataType, value, fieldId) {
+      return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
+    }
+
+    async fieldLabelContains(fieldDataType, fieldId, labelText) {
+      return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
+    }
+
+    async isTextFieldHiddenById(fieldId) {
+      return await new FieldUtils().textFieldIsHidden(fieldId);
+    }
+
+    async isTextFieldVisibleById(fieldId) {
+      return await new FieldUtils().textFieldIsVisible(fieldId);
+    }
+
+    async isCaseLinkFieldHiddenById(fieldId) {
+      return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
+    }
+
+    async isCaseLinkFieldVisibleById(fieldId) {
+      return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
+    }
+
+    async isFixedListFieldHiddenById(fieldId) {
+      return await new FieldUtils().fixedListFieldIsHidden(fieldId);
+    }
+
+    async isFixedListFieldVisibleById(fieldId) {
+      return await new FieldUtils().fixedListFieldIsVisible(fieldId);
+    }
+
+    async isDateFieldHiddenById(fieldId) {
+      return await new FieldUtils().dateFieldIsHidden(fieldId);
+    }
+
+    async isDateFieldVisibleById(fieldId) {
+      return await new FieldUtils().dateFieldIsVisible(fieldId);
+    }
+
+    async isYesOrNoFieldHiddenById(fieldId) {
+      return await new FieldUtils().fieldYesNoIsHidden(fieldId);
+    }
+
+    async isYesOrNoFieldVisibleById(fieldId) {
+      return await new FieldUtils().fieldYesNoIsVisible(fieldId);
+    }
+
+    async setYesOrNoValue(radioButtonId, option) {
+      return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+    }
+
+    async clickCollectionAddNewButton(collectionFieldId) {
+      let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
+      await element(by.xpath(xpathLocator)).click();
+    }
 
   /**
    * Get contents of number field
@@ -81,6 +140,18 @@ class CreateCaseWizardPage extends BasePage{
         return labels;
     }
 
+    async getGreyBarFieldLabels(){
+      let labelElements = await $$(this.greyBarFieldLabels);
+      let labels = [];
+      for (const labelElem of labelElements){
+        let labelText = await labelElem.getText();
+        let label = labelText.replace(' (Optional)', '');
+        labels.push(label)
+      }
+
+      return labels;
+    }
+
     async getCheckYourAnswersValueByLabel(labelText){
       let label = await labelText.replace(' (Optional)','');
       let xpathLocator = await this.answerValueXpathTemplate.replace('LABEL-TEXT-PLACEHOLDER',label);
@@ -114,14 +185,9 @@ class CreateCaseWizardPage extends BasePage{
       return await this.continueButton.isDisplayed();
     }
 
-  /**
-   * Button to progress the case, may be called continue or may be the final
-   * Submit button with a different name as it can be dynamic
-   * @returns {Promise<void>}
-   */
-  async clickAddNewButton(){
-    await this.addNewButton.click();
-  }
+    async clickCollectionOfComplexAddNewButton() {
+      await this.CollectionOfComplexAddNewButton.click();
+    }
 
 }
 

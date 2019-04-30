@@ -46,7 +46,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
     await baseSteps.navigateToCreateCasePage()
-    // await navigateToCreateCasePage();
     this.fieldObject = await new CreateCaseWizardPage().interactWithField(dataType);
   });
 
@@ -62,7 +61,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   When(/^I select and submit the event '(.*)'$/, async function (event) {
-    await new CaseDetailsPage().startEvent(event)
+    await new CaseDetailsPage().startEvent(event);
     await baseSteps.fillOutAndSubmitForm();
   });
 
@@ -73,6 +72,65 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Then(/^I will be navigated to the 'Create Case' page$/, async function () {
     expect(await new CreateCaseStartPage().amOnPage()).to.be.true
+  });
+
+  //---- complexTypes
+  When(/^I populate the form with the school data$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes');
+  });
+
+  When(/^I populate the form with the school data with a support YesOrNo field set to '(.*)'$/, async function (supportAnswer) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo(supportAnswer);
+  });
+
+  Then(/^'Is child autistic' field should not be visible$/, async function () {
+    expect(await caseWizardPage.isYesOrNoFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
+  });
+
+  Then(/^'Is child autistic' field should be visible$/, async function () {
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
+  });
+
+  Then(/^only the fields defined in EventToComplexTypes sheet should be visible$/, async function () {
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
+
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherAge')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherAge')).to.be.true;
+
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName')).to.be.true;
+    expect(await caseWizardPage.isFixedListFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildGender')).to.be.true;
+    expect(await caseWizardPage.isDateFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildDOB')).to.be.true;
+
+    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine2')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine3')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostTown')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__County')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostCode')).to.be.true;
+    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__Country')).to.be.true;
+
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
+    expect(await caseWizardPage.isCaseLinkFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport')).to.be.true;
+  });
+
+  Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child full name (UPDATED)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child hint (UPDATED)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', '(Optional)')).to.be.false;
+    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1', 'Building and Street (Optional)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', 'Child Gender')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', '(Optional)')).to.be.false;
+    expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', 'Autistic child case number reference')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', '(Optional)')).to.be.false;
+    expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic', 'Is the child autistic? (Optional)')).to.be.true;
+    expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport', 'Does the child needs support? (Optional)')).to.be.true;
   });
 
   //---- conditionals
@@ -87,14 +145,13 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   When(/^I do NOT meet the condition for showing the field in the tab$/, async function () {
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField('text','showmethemoney');
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.interactWithField('text','dontshowmethemoney');
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
-
 
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
@@ -104,6 +161,16 @@ defineSupportCode(function ({ Given, When, Then}) {
   Then(/^the field with label '(.*)' is visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^the field with label '(.*)' is visible with grey bar$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getGreyBarFieldLabels();
+    expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^the field with label '(.*)' is visible without grey bar$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getGreyBarFieldLabels();
+    expect(labels).to.not.include(expectedLabel);
   });
 
   Then(/^I will not be on the '(.*)' page$/, async function (expectedPageHeader) {
@@ -134,30 +201,26 @@ defineSupportCode(function ({ Given, When, Then}) {
       });
   });
 
-  Then(/^I select jurisdiction '(.*)' and casetype '(.*)' and event '(.*)'$/, async function(jurisdiction, casetype, event) {
-    await caseListPage.getNavBarComponent().clickCreateCaseLink();
-    await createCaseStartPage.selectJurisdiction(jurisdiction);
-    await createCaseStartPage.selectCaseType(casetype);
-    await createCaseStartPage.selectEvent(event);
-  });
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer) {
+    await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
+    await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
+    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
+    await caseWizardPage.interactWithField('text', 'Class one', 'MySchool_Class_0_ClassName');
+    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
+    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
+    await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
+    await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
+    await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
+    if (supportAnswer === 'Yes') {
+      await caseWizardPage.interactWithField('yes-no', 'Yes', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+    }
+    await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
+  }
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
-    baseSteps.navigateToCreateCasePage()
-    await caseWizardPage.clickAddNewButton();
-    await caseWizardPage.interactWithField('text','Mr');
-    await caseWizardPage.interactWithField('Complex','1 Pickwick');
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickSubmitCaseButton()
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickCollectionOfComplexAddNewButton();
+    await baseSteps.fillOutAndSubmitForm();
   });
-
-  Then(/^I fill nested collections data$/, async function(){
-    await caseWizardPage.clickAddNewButton();
-    await caseWizardPage.interactWithField('text','Mr');
-    await caseWizardPage.interactWithField('Complex','1 Pickwick');
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickSubmitCaseButton();
-  });
-
 
 });

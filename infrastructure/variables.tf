@@ -87,8 +87,8 @@ variable "common_tags" {
   type = "map"
 }
 
-variable "instrumentation_key" {
-  default = "<instrumentation_key_for_local_work>"
+variable "web_pages_appinsights_instrumentation_key" {
+  default = ""
 }
 
 variable "appinsights_instrumentation_key" {

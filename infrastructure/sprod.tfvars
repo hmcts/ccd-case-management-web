@@ -6,4 +6,3 @@ asp_name = "ccd-case-management-web-sprod"
 asp_rg = "ccd-case-management-web-sprod"
 
 idam_authentication_web_url = "http://idam-web-public-idam-sprod.service.core-compute-idam-sprod.internal"
-instrumentation_key = "<instrumentation_key_for_sprod>"

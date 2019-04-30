@@ -39,6 +39,6 @@ var appInsights = window.appInsights
 			}
 			return c
 		}({
-			instrumentationKey : INSTRUMENTATION_KEY
+			instrumentationKey : WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY
 		});
 window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length && appInsights.trackPageView();

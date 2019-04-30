@@ -5,4 +5,3 @@ document_management_url = "^https?://(?:api-gateway\\.preprod\\.dm\\.reform\\.hm
 ccd_print_service_url = "https://return-case-doc-ccd.nonprod.platform.hmcts.net"
 #idam_api_url = "https://preprod-idamapi.reform.hmcts.net:3511"
 idam_api_url = "https://idam-api.aat.platform.hmcts.net"
-instrumentation_key = "<instrumentation_key_for_preview>"

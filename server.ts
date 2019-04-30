@@ -43,12 +43,12 @@ const CONFIG = {
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
   'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25,
-  'instrumentation_key': process.env['INSTRUMENTATION_KEY'] || '<instrumentation_key_for_local_work>',
+  'web_pages_instrumentation_key': process.env['WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY'] || '',
 };
 
 const fs = require('fs');
 const key_file_name = './browser/ai-instrumentation-key.js';
-const key_file_content = `const INSTRUMENTATION_KEY = '${CONFIG.instrumentation_key}';`;
+const key_file_content = `const WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY = '${CONFIG.web_pages_instrumentation_key}';`;
 fs.writeFileSync(key_file_name, key_file_content);
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack

@@ -2,6 +2,7 @@
   <div class="search-left">
     <h2 class="heading-h2" aria-label="Criteria">Criteria</h2>  <!--  search-filter -->
     <ccd-search-filters
+      [jurisdictions]="profile.jurisdictions"
       (onApply)="applyFilter($event)"
       (onReset)="applyReset($event)"
       (onJurisdiction)="applyJurisdiction($event)"

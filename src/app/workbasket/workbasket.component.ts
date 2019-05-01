@@ -25,6 +25,7 @@ export class WorkbasketComponent implements OnInit {
   resultView: SearchResultView;
   page: number;
   paginationMetadata: PaginationMetadata;
+  caseFilterFG: FormGroup;
   metadataFields: string[];
 
   @ViewChild('searchResults')
@@ -50,6 +51,7 @@ export class WorkbasketComponent implements OnInit {
       this.notifyDefaultJurisdiction();
     }
 
+    this.caseFilterFG = filter.formGroup;
     this.metadataFields = filter.metadataFields;
 
     const paginationParams = {};

@@ -11,7 +11,7 @@
     <div class="display-right" id="search-result" aria-live="polite" role="region" rightBody>
       <a routerLink="/create/case" class="button">Create new case</a>
       <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
-                         [page]="page" [paginationMetadata]="paginationMetadata"
+                         [caseFilterFG]="caseFilterFG" [page]="page" [paginationMetadata]="paginationMetadata"
                          [metadataFields]="metadataFields" (changePage)="applyFilter($event)" #searchResults></ccd-search-result>
     </div>
   </cut-body>

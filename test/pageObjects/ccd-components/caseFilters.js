@@ -61,7 +61,6 @@ class CaseFilters extends BasePage {
    * @returns {Promise<void|*>}
    */
   async clickResetButton() {
-    // await this._resetButton.waitForElementToBeClickable();
     await this._resetButton.click();
   }
 

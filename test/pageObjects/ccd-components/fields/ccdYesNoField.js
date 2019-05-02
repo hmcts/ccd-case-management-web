@@ -13,15 +13,18 @@ class CcdYesNoField {
    * in the format  ccd-write-yes-no-field
    *
    * @param css
+   * @param id
    */
   constructor(css, id){
     this.css = css;
     if (id) {
-      this.yesRadio = new RadioField(`${css} .form-group #${id}-Yes`);
-      this.noRadio = new RadioField(`${css} .form-group #${id}-No`);
+      this.yesRadio = new RadioField(`${css} .form-group #${id}-Yes`, `${id}-Yes`);
+      this.noRadio = new RadioField(`${css} .form-group #${id}-No`, `${id}-No`);
+      this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="${id}-Yes"]]//legend/span`;
     } else {
       this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
       this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
+      this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="YesNoField-Yes"]]//legend/span`;
     }
     this.label = null;
 
@@ -32,14 +35,24 @@ class CcdYesNoField {
    * Select random radio button option
    * @returns {Promise<void>}
    */
-  async selectOption(value){
-    if (value) {
-      await (value === 'Yes' ? await this.selectYes() : await this.selectNo());
+  async selectOption(option){
+    if(option && option === 'Yes') {
+      await this.selectYes();
+    } else if (option && option === 'No') {
+      await this.selectNo();
     } else {
       let bool = RandomUtils.generateRandomBoolean();
       await (bool ? await this.selectYes() : await this.selectNo());
-      this.label = await this._getLabel();
     }
+    this.label = await this._getLabel();
+  }
+
+  async isHidden() {
+    return await this.yesRadio.waitForElementToBeInvisible();
+  }
+
+  async isVisible() {
+    return await this.yesRadio.waitForElementToBeVisible();
   }
 
   /**
@@ -78,6 +91,11 @@ class CcdYesNoField {
         labelTexts.includes('No');
   }
 
+  async hasFieldLabel(labelMatch) {
+    let label = await element(By.xpath(`${this.labelXPath}`)).getText();
+    return label.indexOf(labelMatch) !== -1;
+  }
+
   async _isYesRadioReady() {
     let isPresent = await this.yesRadio.isPresent();
     let isEnabled = await this.yesRadio.isEnabled();
@@ -91,11 +109,11 @@ class CcdYesNoField {
   }
 
   async _getLabel(){
-      return await $(`${this.css} .form-label`).getText();
+    return await $(`${this.css} .form-label`).getText();
   }
 
   async _getLabels(){
-      return await $$(`${this.css} .form-label`).getText();
+    return await $$(`${this.css} .form-label`).getText();
   }
 
 }

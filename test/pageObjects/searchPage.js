@@ -5,15 +5,11 @@ NavBar = require('./ccd-components/globalNavBar.js');
 DateField = require('../pageObjects/ccd-components/fields/ccdDateField.js');
 let FieldUtils = require('../utils/fieldUtils.js');
 CaseList = require('./ccd-components/caseListComponent.js');
-
+CaseFilters = require('./ccd-components/caseFilters.js');
 class SearchPage extends BasePage {
 
   constructor(){
       super();
-      this._jurisdiction = new Dropdown('#s-jurisdiction');
-      this._caseType = new Dropdown('#s-case-type');
-      this._applyButton = new Button('.button', 'Apply');
-      this._resetButton = new Button('#reset');
   }
 
    /**
@@ -35,39 +31,12 @@ class SearchPage extends BasePage {
   }
 
   /**
-   * Select a Jurisdiction from the dropdown
-   * @param option to select - case insensitive
-   * @returns {Promise<void>}
+   * Return a new instance if the Case Filters dropdowns and apply/reset button
+   * which is common on search page and workbasket filters on Case List page
+   * @returns {CaseFilters|*}
    */
-  async selectJurisdiction(option){
-    await this._jurisdiction.selectFromDropdownByText(option);
-  }
-
-  /**
-   * Select Case Type from the dropdown
-   * @param option to select - case insensitive
-   * @returns {Promise<void>}
-   */
-  async selectCaseType(option){
-    await this._caseType.selectFromDropdownByText(option);
-  }
-
-  /**
-   * Click Apply button to submit options for search
-   * @returns {Promise<void|*>}
-   */
-  async clickApplyButton() {
-    await this._applyButton.waitForElementToBeClickable();
-    await this._applyButton.click();
-  }
-
-  /**
-   * Click Reset button to reset options for search
-   * @returns {Promise<void|*>}
-   */
-  async clickResetButton() {
-    await this._resetButton. waitForElementToBeClickable();
-    await this._resetButton.click();
+  getSearchFilters(){
+    return new CaseFilters;
   }
 
   /**

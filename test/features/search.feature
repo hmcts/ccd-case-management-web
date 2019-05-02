@@ -34,7 +34,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
       | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
       | Email       | Email Field                                                        |                                                            |
 
-    @searchtest
+  @searchtest
   Scenario Outline: reset button clears drop down options and removes all dynamic filters
     Given I am on the search page
     And I have filled out the search filters including dynamic filters
@@ -80,8 +80,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
 
   @searchCaseList
   Scenario: click on sorting icon on the first column will sort the results in descending order
-    Given I am on the search page
-    And I have some cases listed in the results table
+    Given I have some cases listed in the results table
     When I click on sorting icon on the first column
     Then the results of the page should be sorted in the descending order
 

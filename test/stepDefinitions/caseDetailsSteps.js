@@ -47,7 +47,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     let fields = await caseDetailsPage.getTabFields();
     expect(fields).to.include(tabfield);
   });
-  clickCollectionAddNewButton
+
   Then(/^the following fields will be visible:$/, async function (dataTable) {
       let expectedFields = await [].concat(...dataTable.raw());
       let actualFields = await caseDetailsPage.getTabFields();

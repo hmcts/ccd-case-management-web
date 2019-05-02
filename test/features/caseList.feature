@@ -1,4 +1,4 @@
-@functional @caseList @broken
+@functional @caseList
 Feature: Set of Scenarios testing the functionality of the Case List table
 
   Background:

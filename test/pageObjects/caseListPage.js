@@ -16,9 +16,7 @@ class CaseListPage extends BasePage {
   async waitForPageLoaded(){
     const EC = protractor.ExpectedConditions;
     let condition = await EC.and(await EC.urlContains('/list/case'), await EC.visibilityOf(element(this._landingPageFilters)));
-    console.log("Before 9000");
     await browser.wait(condition,90000);
-    console.log("After 9000");
     browser.ignoreSynchronization = false;
   }
 

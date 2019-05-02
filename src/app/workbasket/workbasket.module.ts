@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { CaseUIToolkitModule, WorkbasketFiltersModule } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseUIToolkitModule, WorkbasketFiltersModule, SearchResultModule } from '@hmcts/ccd-case-ui-toolkit';
 
 @NgModule({
   imports: [
@@ -14,7 +14,8 @@ import { CaseUIToolkitModule, WorkbasketFiltersModule } from '@hmcts/ccd-case-ui
     SharedModule,
     CaseUIToolkitModule,
     ReactiveFormsModule,
-    WorkbasketFiltersModule
+    WorkbasketFiltersModule,
+    SearchResultModule
   ],
   declarations: [
     WorkbasketComponent

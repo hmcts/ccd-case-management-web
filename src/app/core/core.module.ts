@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
-  DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard,
-  RouterHelperService, DraftService, CasesService, ProfileService, ActivityService,
-  ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
+  DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard, RouterHelperService, DraftService,
+  CasesService, ProfileService, ActivityService, ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService,
+  JurisdictionService, SearchResultViewItemComparatorFactory } from '@hmcts/ccd-case-ui-toolkit';
 import { DefinitionsService } from './definitions/definitions.service';
 import { DocumentService } from './utils/document.service';
 import { CoreComponent } from './core.component';
@@ -57,6 +57,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     AuthService,
     OAuth2Service,
     CcdBrowserSupportComponent,
+    SearchResultViewItemComparatorFactory,
   ],
   declarations: [
     CoreComponent,

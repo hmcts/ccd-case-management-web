@@ -5,7 +5,7 @@ Feature: Set of scenarios to test collection of complex table view
     Given I have logged in
     And a case type containing a collection of complex types exists
 
-  Scenario: Nested Collection data on Case Details page not visible by default
+  Scenario: Nested Collection data on Case Details page not visible by default when accordion is collapsed
     Given I have submitted a case with nested collection data
     Then the 'Address Line 2' field will NOT be visible on the 'Details' tab
 

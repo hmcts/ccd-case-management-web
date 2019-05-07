@@ -47,9 +47,9 @@ const CONFIG = {
 };
 
 const fs = require('fs');
-const key_file_name = './browser/ai-instrumentation-key.js';
-const key_file_content = `const WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY = '${CONFIG.web_pages_instrumentation_key}';`;
-fs.writeFileSync(key_file_name, key_file_content);
+const KEY_FILE_NAME = './browser/ai-instrumentation-key.js';
+const KEY_FILE_CONTENT = `const WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY = '${CONFIG.web_pages_instrumentation_key}';`;
+fs.writeFileSync(KEY_FILE_NAME, KEY_FILE_CONTENT);
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');

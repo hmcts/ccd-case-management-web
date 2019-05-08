@@ -11,7 +11,7 @@ class CreateCaseWizardPage extends BasePage{
       super();
       this.continueButton = new Button('button[type=submit]');
       this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
-      this.CollectionOfComplexAddNewButton = new Button('#CollectionComplexField .button');
+      this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
@@ -185,8 +185,8 @@ class CreateCaseWizardPage extends BasePage{
       return await this.continueButton.isDisplayed();
     }
 
-    async clickCollectionOfComplexAddNewButton() {
-      await this.CollectionOfComplexAddNewButton.click();
+    async clickCollectionAddNewButton() {
+      await this.CollectionNewButton.click();
     }
 
 }

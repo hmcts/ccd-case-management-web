@@ -219,7 +219,13 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
     await baseSteps.navigateToCreateCasePage()
-    await caseWizardPage.clickCollectionOfComplexAddNewButton();
+    await caseWizardPage.clickCollectionAddNewButton();
+    await baseSteps.fillOutAndSubmitForm();
+  });
+
+  Given(/^I have submitted a case with a collection of complex with a complex data$/, async function(){
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
   });
 

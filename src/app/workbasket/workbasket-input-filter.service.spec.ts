@@ -6,7 +6,7 @@ import { WorkbasketInput, WorkbasketInputModel } from './workbasket-input.model'
 import createSpyObj = jasmine.createSpyObj;
 import { HttpService } from '@hmcts/ccd-case-ui-toolkit';
 
-describe('DefinitionsService', () => {
+describe('WorkbasketInputFilterService', () => {
   const API_DATA_URL = 'http://data.ccd.reform/aggregated';
   const JurisdictionId = 'PROBATE';
   const CaseTypeId = 'TestAddressBookCase';

@@ -3,7 +3,6 @@ import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesServi
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard, RouterHelperService, DraftService,
   CasesService, ProfileService, ActivityService, ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService,
   JurisdictionService, SearchResultViewItemComparatorFactory } from '@hmcts/ccd-case-ui-toolkit';
-import { DefinitionsService } from './definitions/definitions.service';
 import { DocumentService } from './utils/document.service';
 import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
@@ -33,7 +32,6 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     CasesService,
     DraftService,
     HttpErrorService,
-    DefinitionsService,
     DocumentService,
     FormErrorService,
     FormValueService,

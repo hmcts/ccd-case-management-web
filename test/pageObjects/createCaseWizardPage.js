@@ -185,7 +185,7 @@ class CreateCaseWizardPage extends BasePage{
       return await this.continueButton.isDisplayed();
     }
 
-    async clickCollectionAddNewButton() {
+    async clickGenericCollectionAddNewButton() {
       await this.CollectionNewButton.click();
     }
 

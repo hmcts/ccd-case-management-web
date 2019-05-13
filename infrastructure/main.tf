@@ -55,7 +55,6 @@ module "case-management-web" {
   website_local_cache_sizeinmb = 500
   capacity = "${var.capacity}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
-  web_pages_appinsights_instrumentation_key = "${var.web_pages_appinsights_instrumentation_key}"
 
   app_settings = {
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"

@@ -25,8 +25,8 @@ class CcdFixedList {
   }
 
   async selectOption(optionLabel) {
-    if (optionLabel === 'undefined') {
-      await this.fixedList.selectAnyOption();
+    if (typeof optionLabel === 'undefined') {
+      await this.fixedList.selectAnOption()
     } else {
       await this.fixedList.selectFromDropdownByText(optionLabel);
     }

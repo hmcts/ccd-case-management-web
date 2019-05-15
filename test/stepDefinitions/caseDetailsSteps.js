@@ -32,6 +32,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(expectedTabs).to.deep.equal(actualTabs);
   });
 
+  Then('no tabs will be visible', async function () {
+      let actualTabs = await caseDetailsPage.getTabsText();
+      expect(actualTabs.length).to.equal(0)
+  });
+  
   Then('the success case created bar will be visible', async function() {
       let alertBarText = await caseDetailsPage.getSuccessAlertBarText();
       expect(alertBarText).to.match(/^Case #\d{4}-\d{4}-\d{4}-\d{4} has been created\.$/);

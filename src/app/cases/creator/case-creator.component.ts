@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpError, Jurisdiction, CallbackErrorsContext, AlertService, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/';
 import { Router } from '@angular/router';
-import { DefinitionsService } from '../../core/definitions/definitions.service';
-import { CREATE_ACCESS } from '../../shared/domain/case-view/access-types.model';
 
 @Component({
   templateUrl: 'case-creator.component.html'
@@ -24,15 +22,10 @@ export class CaseCreatorComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private definitionsService: DefinitionsService,
     private alertService: AlertService) {
   }
 
   ngOnInit(): void {
-    this.definitionsService.getJurisdictions(CREATE_ACCESS)
-      .subscribe(jurisdictions => {
-        this.jurisdictions = jurisdictions;
-      });
   }
 
   apply(selected: CreateCaseFiltersSelection) {

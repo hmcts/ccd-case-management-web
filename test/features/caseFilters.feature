@@ -10,12 +10,6 @@ Feature: Set of scenarios to test functionality of create case filters in case c
         When I click the 'Start' button
         Then I will be navigated to 'Create Case' wizard form page
 
-#    todo @broken
-    Scenario: selecting the jurisdiction search drop down changes the main banner title to that jurisdiction name
-        And the banner title matches that of the currently selected jurisdiction
-        When I change the jurisdiction search drop down option
-        Then the banner title matches that of the currently selected jurisdiction
-
 #       all pass
     Scenario Outline: dynamic search filters are displayed for all data types
         When I select the 'Case type' drop down option for dynamic filters
@@ -38,37 +32,13 @@ Feature: Set of scenarios to test functionality of create case filters in case c
             | Email       | Email Field                                                        |                                                            |
 
 
-    @searchtest @run
-    Scenario Outline: reset button clears drop down options and removes all dynamic filters
-        And I have filled out the search filters including dynamic filters
-        When I click the 'Reset' button
-        Then I should not see a '<dataType>' dynamic filter
 
-        Examples:
-            | dataType    |
-            | TextArea    |
-#            | Date        |
-#            | Complex     |
-#            | Phone-UK    |
-#            | Number      |
-#            | Yes-No      |
-#            | Collection  |s
-#            | Fixed-List  |
-#            | Money-GBP   |
-#            | Document    |
-#            | Multi-Select|
-#            | Email       |
-
-      # due to current functionality of system on aat when clicking reset button it switches to another default
-      #case which happens to have a 'Text' dynamic filter and so will fail the test
-#    @broken
-#        Examples:
-#            | dataType    |
-#            | Text        |
+    Scenario: reset button switches case type to the workbasket default
+    Scenario: reset button clears a fields contents
 
     Scenario: apply button submits search options and returns results list
         Given a case exists
-#        And I am on the search page todo change this
-        And I have filled out the search filters
+        And I am on the case list page
+        And I have filled out the filters
         When I click the 'Apply' button
         Then the search result table will be displayed

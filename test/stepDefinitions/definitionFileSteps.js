@@ -38,6 +38,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case with Case Progression functionality exists$/, function() {
     Data.caseType = 'Case Progression';
+    Data.optionalFields = [];
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField0'},
                             {fieldType: 'text', fieldId: 'TextField1'},
                             {fieldType: 'text', fieldId: 'TextField2'}];

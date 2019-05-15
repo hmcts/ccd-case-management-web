@@ -3,8 +3,6 @@ Feature: Set of scenarios testing case view functionality
 
   Background:
     Given I have logged in
-    And a case containing Tabs functionality exists
-    And I create the case
 
   Scenario: case reference visible on case view
     Then the case reference will be visible and formatted well
@@ -27,5 +25,14 @@ Feature: Set of scenarios testing case view functionality
       | Text Field 3        |
       | Text Field 4        |
 
+  @functional
   Scenario: print button visible on case view
-   Then the print button will be visible
+    When a case type containing every field type exists
+    And I create the case
+    Then the print button will be visible
+
+  @functional
+  Scenario: print button not visible on case view
+    When a case with Case Progression functionality exists
+    And I create the case
+    Then the print button will not be visible

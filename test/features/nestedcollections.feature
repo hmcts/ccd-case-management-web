@@ -23,7 +23,7 @@ Feature: Set of scenarios to test collection of complex table view
     And I have submitted a case with a collection of complex with a complex data
     When I click on its first accordion on the 'Company Details' tab
     Then the following fields will be visible:
-      | Name           |
+      | Name ▲         |
       | Address Line 1 |
       | Address Line 2 |
       | Address Line 3 |

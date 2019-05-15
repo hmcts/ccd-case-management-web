@@ -45,8 +45,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
-    await baseSteps.navigateToCreateCasePage();
-    // await navigateToCreateCasePage();
+    await baseSteps.navigateToCreateCasePage()
     this.fieldObject = await new CreateCaseWizardPage().interactWithField(dataType);
   });
 
@@ -217,5 +216,17 @@ defineSupportCode(function ({ Given, When, Then}) {
     }
     await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
   }
+
+  Given(/^I have submitted a case with nested collection data$/, async function(){
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickGenericCollectionAddNewButton();
+    await baseSteps.fillOutAndSubmitForm();
+  });
+
+  Given(/^I have submitted a case with a collection of complex with a complex data$/, async function(){
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickGenericCollectionAddNewButton();
+    await baseSteps.fillOutAndSubmitForm();
+  });
 
 });

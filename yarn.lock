@@ -309,7 +309,7 @@
     esutils "^2.0.2"
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
-
+    
 "@hmcts/ccd-case-ui-toolkit@2.48.0":
   version "2.48.0"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.48.0.tgz#28f4f128736428cf72c8fd9f7b1f1c72839bea9e"

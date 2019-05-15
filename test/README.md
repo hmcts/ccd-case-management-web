@@ -50,8 +50,8 @@ The tests will require the following environmental variables in order to run. To
 
 | Name | Description |
 |------|-------------|
-| CCD_CASEWORKER_AUTOTEST_EMAIL | Username for test account |
-| CCD_CASEWORKER_AUTOTEST_PASSWORD | Password for tests account |
+| CCD_CASEWORKER_AUTOTEST_FE_EMAIL | Username for test account |
+| CCD_CASEWORKER_AUTOTEST_FE_PASSWORD | Password for tests account |
 | TEST_URL | Target URL to test against (default if not set is local ccd-docker url) |
 
 

@@ -58,4 +58,11 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I do NOT meet the condition for showing the field in the tab
     Then the 'Text Field 3' field will NOT be visible on the 'Conditional Tab 1' tab
 
-
+  @BugFix-4622
+  Scenario: Page Show Condition works for read only field in previous event
+    Given a case type containing conditionals exists
+    And I have created a case with fixed list item
+    And I progress to the next event which contains read-only value of the selected fixed list value
+    And The fixed list item is hidden on the first page
+    When I continue to the 3rd page
+    Then The page that satisfies show condition of the fixed list item value is displayed

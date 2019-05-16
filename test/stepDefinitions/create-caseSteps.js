@@ -230,39 +230,27 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Given(/^I have created a case with fixed list item$/, async function() {
-    TestData.caseType = "Conditionals";
     await baseSteps.navigateToCreateCasePage();
-    await fillFormWithFixedListItems();
-  });
-
-  When(/^I progress to the next event which contains read-only value of the selected fixed list value$/, async function() {
+    await caseWizardPage.interactWithField("text");
+    await caseWizardPage.interactWithField("fixed-list", "Marriage");
     await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
   });
 
   When(/^The fixed list item is hidden on the first page$/, async function() {
-    await caseWizardPage.clickSubmitCaseButton();
+    let fieldPresent = await caseWizardPage.isFieldPresent('fixed-list')
+    expect(fieldPresent).to.be.false;
   });
 
-  When(/^The next page's show condition is based on the value of the hidden readonly fixed list item$/, async function() {
-    await caseWizardPage.clickContinueButton();
-  });
-
-  When(/^I navigate to the next page$/, async function() {
+  When(/^I continue to the 3rd page$/, async function() {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickSubmitCaseButton();
   });
 
   Then(/^The page that satisfies show condition of the fixed list item value is displayed$/, async function() {
-    let readOnlyMaritalStatusValue = await element(by.css(".case-viewer-label")).getText();
-    //expect(readOnlyMaritalStatusValue).to.not.include("Marital Status");
-    expect(readOnlyMaritalStatusValue).to.equal("Marital Status");
+    let pageHeader = await caseWizardPage.getPageHeader();
+    let expectedPageHeader = 'Conditional Page 3 - Approve a case';
+    expect(expectedPageHeader).to.equal(pageHeader);
   });
-
-  async function fillFormWithFixedListItems() {
-    await caseWizardPage.interactWithField("text", "Text value", "TextField");
-    await caseWizardPage.interactWithField("fixed-list", "Marriage", "MaritalStatusField");
-  }
 
 });

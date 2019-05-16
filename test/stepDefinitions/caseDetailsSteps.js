@@ -97,9 +97,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I click on its first accordion on the '(.*)' tab$/, async function (tabName) {
-    await caseDetailsPage.clickTab(tabName);
-    await caseDetailsPage.clickFirstAccordian();
+      await caseDetailsPage.clickTab(tabName);
+      await caseDetailsPage.clickFirstAccordian();
   });
 
+  When(/^I progress to the next event which contains read-only value of the selected fixed list value$/, async function() {
+      await caseDetailsPage.startEvent('Approve a case')
+  });
 
 });

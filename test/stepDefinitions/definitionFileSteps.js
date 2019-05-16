@@ -15,6 +15,27 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   });
 
+  Given(/^a case type containing a collection of complex types exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Complex in Coll in Complex';
+    Data.event = 'Create Collection of Complex';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine1'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'}];
+    });
+
+  Given(/^a case type containing a collection of complex types containing complex exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Complex in Coll in Complex';
+    Data.event = 'Create Company';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'MyCompany_0_Name'},
+                            {fieldType: 'text', fieldId: 'MyCompany_0_BusinessAddress_AddressLine1'},
+                            {fieldType: 'text', fieldId: 'MyCompany_0_BusinessAddress_AddressLine2'},
+                            {fieldType: 'text', fieldId: 'MyCompany_0_BusinessAddress_AddressLine3'},
+                            {fieldType: 'text', fieldId: 'MyCompany_0_BusinessAddress_Country'}];
+    });
+
   Given(/^a case with Case Progression functionality exists$/, function() {
     Data.caseType = 'Case Progression';
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField0'},

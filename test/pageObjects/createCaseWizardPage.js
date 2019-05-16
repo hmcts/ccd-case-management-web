@@ -11,6 +11,7 @@ class CreateCaseWizardPage extends BasePage{
       super();
       this.continueButton = new Button('button[type=submit]');
       this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
+      this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
@@ -183,6 +184,11 @@ class CreateCaseWizardPage extends BasePage{
     async continueButtonDisplayed(){
       return await this.continueButton.isDisplayed();
     }
+
+    async clickGenericCollectionAddNewButton() {
+      await this.CollectionNewButton.click();
+    }
+
 }
 
 module.exports = CreateCaseWizardPage;

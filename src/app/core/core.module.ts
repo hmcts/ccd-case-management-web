@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ProfileResolver } from './profile/profile.resolver';
 import { PaginationService } from './pagination/pagination.service';
 import { AlertModule } from './alert/alert.module';
+import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
 import { CookiesComponent } from '../footer-nav/cookies.component';
@@ -54,6 +55,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     AddressesService,
     AuthService,
     OAuth2Service,
+    WorkbasketInputFilterService,
     CcdBrowserSupportComponent,
     SearchResultViewItemComparatorFactory,
   ],

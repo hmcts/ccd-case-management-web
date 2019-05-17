@@ -6,6 +6,7 @@
         [jurisdictions]="profile.jurisdictions"
         [defaults]="profile.default.workbasket"
         (onApply)="applyFilter($event)"
+        (onReset)="applyReset()"
       ></ccd-workbasket-filters>
     </div>
     <div class="display-right" id="search-result" aria-live="polite" role="region" rightBody>

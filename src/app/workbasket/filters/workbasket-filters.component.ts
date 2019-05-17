@@ -141,8 +141,7 @@ export class WorkbasketFiltersComponent implements OnInit {
       this.workbasketInputFilterService.getWorkbasketInputs(this.selected.jurisdiction.id, this.selected.caseType.id)
         .subscribe(workbasketInputs => {
           this.workbasketInputsReady = true;
-          this.workbasketInputs = workbasketInputs
-            .sort(this.orderService.sortAsc);
+          this.workbasketInputs = workbasketInputs.sort(this.orderService.sortAsc);
           const formValue = this.windowService.getLocalStorage(FORM_GROUP_VAL_LOC_STORAGE);
 
           workbasketInputs.forEach(item => {

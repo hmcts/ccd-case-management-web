@@ -101,8 +101,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       await caseDetailsPage.clickFirstAccordian();
   });
 
-  When(/^I progress to the next event which contains read-only value of the selected fixed list value$/, async function() {
-      await caseDetailsPage.startEvent('Approve a case')
+  When(/^I progress to the next event '(.*)'$/, async function(event) {
+      await caseDetailsPage.startEvent(event)
   });
 
 });

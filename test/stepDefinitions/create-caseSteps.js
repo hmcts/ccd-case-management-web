@@ -179,9 +179,17 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Then(/^I will be on the '(.*)' page$/, async function (expectedPageHeader) {
-    let pageHeader = await caseWizardPage.getPageHeader();
-    expect(pageHeader).to.equal(expectedPageHeader);
+    await IAmOnPageWithHeader(expectedPageHeader)
+  })
+
+  Then(/^the '(.*)' page should be displayed as a result of the fixed list show condition$/, async function(expectedPageHeader) {
+    await IAmOnPageWithHeader(expectedPageHeader);
   });
+
+  async function IAmOnPageWithHeader(expectedPage){
+    let pageHeader = await caseWizardPage.getPageHeader();
+    expect(pageHeader).to.equal(expectedPage);
+  }
 
   Given(/^I have filled out the create case filters$/, async function () {
     await caseListPage.getNavBarComponent().clickCreateCaseLink();
@@ -247,10 +255,5 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickContinueButton();
   });
 
-  Then(/^The page that satisfies show condition of the fixed list item value is displayed$/, async function() {
-    let pageHeader = await caseWizardPage.getPageHeader();
-    let expectedPageHeader = 'Conditional Page 3 - Approve a case';
-    expect(expectedPageHeader).to.equal(pageHeader);
-  });
 
 });

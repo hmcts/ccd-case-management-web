@@ -40,9 +40,9 @@ data "azurerm_key_vault" "ccd_shared_key_vault" {
 
 resource "azurerm_application_insights" "ccd_frontend_appinsights" {
   name = "${var.product}-frontend-${var.env}"
-  resource_group_name = ""
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   location = "${var.location}"
-  application_type = ""
+  application_type = "${var.application_type}"
 }
 
 module "case-management-web" {

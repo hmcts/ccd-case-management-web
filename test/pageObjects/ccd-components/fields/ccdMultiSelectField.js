@@ -16,6 +16,19 @@ class CcdMultiSelectField {
     await optionToSelect.click();
   }
 
+  async anyCheckboxesSelected(){
+    let checked = false;
+    let checkboxes = $$(`${this.css} input`)
+    for (const checkbox in checkboxes){
+      if (await checkbox.enabled()){
+        checked = true;
+        break
+      }
+    }
+
+    return checked;
+  }
+
   /**
    * Check if field is ready to type
    * @returns true or false
@@ -67,7 +80,7 @@ class CcdMultiSelectField {
     async _getMultiSelectElements(){
       return await $$(`${this.css} input`);
     }
-  
+
     /**
      * Get list of string multi select options
      * @returns String Array

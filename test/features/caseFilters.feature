@@ -34,7 +34,16 @@ Feature: Set of scenarios to test functionality of create case filters in case c
 
 
     Scenario: reset button switches case type to the workbasket default
+        Given I have filled the the create case filters for a case other than the workbasket default
+        When I click the 'Reset' button
+        Then the filters are switched to the default 'All Field Data Types' case type
+#        And navigating back to the original case type shows a cleared field
+
     Scenario: reset button clears a fields contents
+        Given I have filled out the create case filters
+        When I click the 'Reset' button
+        Then I will remain on the 'All Field Data Types' case type filter
+        And the dynamic filters will be cleared
 
     Scenario: apply button submits search options and returns results list
         Given a case exists

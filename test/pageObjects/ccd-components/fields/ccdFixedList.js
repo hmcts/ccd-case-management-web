@@ -30,6 +30,11 @@ class CcdFixedList {
         this.label = await this._getLabel();
     }
 
+    async getCurrentOption(){
+      this.fixedList.getCurrentSelectedOption()
+    }
+
+
    /**
      * Check if field is present and enabled
      * @returns true or false

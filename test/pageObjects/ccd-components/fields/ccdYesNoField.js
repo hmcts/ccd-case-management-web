@@ -23,6 +23,9 @@ class CcdYesNoField {
       this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
       this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
     }
+
+    this.yesRadioSelectedCss = `${css} .form-group .selected #YesNoField-Yes`;
+    this.noRadioSelectedCss = `${css} .form-group .selected #YesNoField-No`;
     this.label = null;
 
     this.checkYourAnswersValue = null;
@@ -40,6 +43,28 @@ class CcdYesNoField {
       await (bool ? await this.selectYes() : await this.selectNo());
       this.label = await this._getLabel();
     }
+  }
+
+  async getCurrentOption(){
+    let option = 'undefined';
+    try {
+      if ($(this.yesRadioSelectedCss).isDisplayed()) {
+        option = 'yes';
+      }
+    } catch (e) {
+      //do nothing
+    }
+
+    try {
+      if ($(this.noRadioSelectedCss).isDisplayed()) {
+        option = 'no';
+      }
+    } catch (e) {
+      //do nothing
+    }
+
+    return option;
+
   }
 
   /**

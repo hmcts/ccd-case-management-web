@@ -1,6 +1,8 @@
 Button = require('../webdriver-components/button.js')
 Dropdown = require('../webdriver-components/dropdown.js')
 BasePage = require('../basePage.js');
+let FieldUtils = require('../utils/fieldUtils.js');
+
 
 
 /**
@@ -36,6 +38,25 @@ class CaseFilters extends BasePage {
    */
   async selectCaseType(option){
     await this._caseType.selectFromDropdownByText(option);
+  }
+
+    /**
+   * Return value of Case Type dropdown
+   * @returns {Promise<String>}
+   */
+  async getSelectedCaseType(){
+    return await this._caseType.getCurrentSelectedOption();
+  }
+
+  /**
+   * Fill out a specified field type with a random value
+   * @param fieldDataType - the field type we are interacting with
+   * @param value - the field value we are entering
+   * @returns An object containing data about the field we are interacting with
+   * including the value in which we have entered
+   */
+  async interactWithField(fieldDataType, value){
+    return await new FieldUtils().interactWithField(fieldDataType, value);
   }
 
   /**

@@ -147,6 +147,96 @@ class FieldDataTypes {
   }
 
   /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getEmailFieldValue(){
+    let css = await FIELDS.EMAIL.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getTextFieldValue(){
+    let css = await FIELDS.TEXT.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getMoneyFieldValue(){
+    let css = await FIELDS.MONEY_GBP.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getPhoneUKFieldValue(){
+    let css = await FIELDS.PHONE_NUMBER.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getDateFieldValue(){
+    let css = await FIELDS.DATE.cssTag;
+    let field = await new CCDDateField(css);
+    return await field.getDate();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getTextAreaFieldValue(){
+    let css = await FIELDS.TEXT_AREA.cssTag;
+    let field = await new CCDTextAreaField(css);
+    return await field.getValue();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getFixedListFieldValue(){
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css);
+    return await field.getCurrentOption();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getYesNoFieldValue(){
+    let css = await FIELDS.YES_NO.cssTag;
+    let field = await new CCDYesNoField(css);
+    return await field.getCurrentOption();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Promise<String>}
+   */
+  async getCheckboxesSelected(){
+    let css = await FIELDS.MULTI_SELECT.cssTag;
+    let field = await new CCDMultiSelectField(css);
+    return await field.anyCheckboxesSelected();
+  }
+
+  /**
    * Interact with any field type entering randomly generated data or selecting random options
    * @param dataType
    * @param value - optional value to enter into field if applicable
@@ -185,6 +275,46 @@ class FieldDataTypes {
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
   }
+
+
+  /**
+   * Interact with any field type entering randomly generated data or selecting random options
+   * @param dataType
+   * @param value - optional value to enter into field if applicable
+   * @returns {Promise<void>}
+   */
+  async getFieldValue(dataType, value){
+    let dt = dataType.toLowerCase();
+    switch(dt) {
+      case 'text':
+        return await this.getTextFieldValue()
+      case 'number':
+        return await this.getNumberFieldValue();
+      case 'date':
+        return await this.getDateFieldValue()
+      case 'email':
+        return await this.getEmailFieldValue();
+      case 'money-gbp':
+        return await this.getMoneyFieldValue();
+      case 'phone-uk':
+        return await this.getPhoneUKFieldValue();
+      case 'textarea':
+        return await this.getTextAreaFieldValue();
+      case 'fixed-list':
+        return await this.getFixedListFieldValue();
+      case 'yes-no':
+        return await this.getYesNoFieldValue();
+      case 'multi-select':
+        return await this.getCheckboxesSelected();
+      case ' collection' :
+        //todo
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
+
+
 
   /**
    * Check if field is present

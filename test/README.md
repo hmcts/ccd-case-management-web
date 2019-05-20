@@ -84,10 +84,12 @@ The test are configured to open up a browser window for each feature file. this 
     '../features/*.feature'
   ],
 ```
+##### My tests can't find the nav bar links(create case, case list)?
+The links are in different places for a solicitor user. make sure you are using a caseworker user only
 
 ## Framework Layers & Structure
 
-### Page Object Model
+### Page Object Model   
 This framework uses the [Page Object Design Pattern](https://github.com/SeleniumHQ/selenium/wiki/PageObjects) which briefly means each UI web page is modeled as a class containing all services of this page. Interacting with this page in a test should only be done through this class.
 
 ### Cucumber

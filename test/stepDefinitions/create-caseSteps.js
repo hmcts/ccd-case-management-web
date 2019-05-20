@@ -182,7 +182,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     await IAmOnPageWithHeader(expectedPageHeader)
   })
 
-  Then(/^the '(.*)' page should be displayed as a result of the fixed list show condition$/, async function(expectedPageHeader) {
+  Then(/^the '(.*)' page should be displayed$/, async function(expectedPageHeader) {
     await IAmOnPageWithHeader(expectedPageHeader);
   });
 
@@ -245,14 +245,15 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
-  When(/^The fixed list item is hidden on the first page$/, async function() {
+  When(/^The fixed list item is hidden$/, async function() {
     let fieldPresent = await caseWizardPage.isFieldPresent('fixed-list')
     expect(fieldPresent).to.be.false;
   });
 
-  When(/^I continue to the 3rd page$/, async function() {
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickContinueButton();
+  When(/^I move forward (\d+) pages$/, async function(pages) {
+    for (let i = 0; i <pages ; i++) {
+      await caseWizardPage.clickContinueButton();
+    }
   });
 
 

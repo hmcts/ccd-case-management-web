@@ -189,13 +189,11 @@ describe('WorkbasketComponent', () => {
 
   it('should make inputs fields turn into query parameters', () => {
     let filter = {
-      selected: {
-        init: true,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        caseState: CASE_STATE,
-        page: 1
-      }
+      init: true,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      caseState: CASE_STATE,
+      page: 1
     };
 
     comp.applyFilter(filter);
@@ -210,13 +208,11 @@ describe('WorkbasketComponent', () => {
   it('should alert warning when result has error', () => {
     mockSearchService.search.and.returnValue(RESULT_VIEW_ERROR_OBS);
     let filter = {
-      selected: {
-        init: true,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        caseState: CASE_STATE,
-        page: 1
-      }
+      init: true,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      caseState: CASE_STATE,
+      page: 1
     };
 
     comp.applyFilter(filter);
@@ -227,13 +223,11 @@ describe('WorkbasketComponent', () => {
   it('should clear errors when result has no error', () => {
     mockSearchService.search.and.returnValue(RESULT_VIEW_OBS);
     let filter = {
-      selected: {
-        init: true,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        caseState: CASE_STATE,
-        page: 1
-      }
+      init: true,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      caseState: CASE_STATE,
+      page: 1
     };
 
     comp.applyFilter(filter);
@@ -252,13 +246,11 @@ describe('WorkbasketComponent', () => {
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
-      selected: {
-        init: true,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        caseState: CASE_STATE,
-        formGroup: formGroup
-      }
+      init: true,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      caseState: CASE_STATE,
+      formGroup: formGroup
     };
 
     comp.applyFilter(filter);
@@ -279,10 +271,8 @@ describe('WorkbasketComponent', () => {
 
   it('should not proceed to search when no jurisdiction is defines', () => {
     let filter = {
-      selected: {
-        init: true,
-        jurisdiction: null
-      }
+      init: true,
+      jurisdiction: null
     };
     comp.applyFilter(filter);
     expect(mockSearchService.search).not.toHaveBeenCalled();
@@ -303,13 +293,11 @@ describe('WorkbasketComponent', () => {
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
-      selected: {
-        formGroup: formGroup,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        page: 1,
-        metadataFields: ['[META]']
-      }
+      formGroup: formGroup,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      page: 1,
+      metadataFields: ['[META]']
     };
     windowService.getLocalStorage.and.returnValue(workbasketfiltervalue);
     comp.applyFilter(filter);
@@ -337,13 +325,11 @@ describe('WorkbasketComponent', () => {
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
-      selected: {
-        formGroup: formGroup,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        page: 1,
-        metadataFields: ['[META]']
-      }
+      formGroup: formGroup,
+      jurisdiction: JURISDICTION,
+      caseType: CASE_TYPES[0],
+      page: 1,
+      metadataFields: ['[META]']
     };
     comp.applyFilter(filter);
     expect(mockPaginationService.getPaginationMetadata)

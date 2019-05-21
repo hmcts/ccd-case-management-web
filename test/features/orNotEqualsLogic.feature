@@ -1,5 +1,5 @@
-@OrNotEqualsLogic
-Feature: Set of Scenarios testing the functionality of the OR, NOT Equals logic
+@OrAndNotEqualsLogic
+Feature: Set of Scenarios testing the functionality of the OR, AND, NOT Equals logic
 
   Background:
     Given I have logged in
@@ -60,16 +60,5 @@ Feature: Set of Scenarios testing the functionality of the OR, NOT Equals logic
     And populate field 'TextField9' with value 'orValue2'
     And submit create a case and navigate to next 'Conditional Page 2' page
     Then the page 'Conditional Page 2 - Create a case AND' should display
-
-#  Scenario: Event complex type field show and hide OR condition using case Text Field value
-#    Given
-#    When
-#    Then
-#
-#
-#  Scenario: Event complex type field show and hide NOT condition using case Text Field value
-#    Given
-#    When
-#    Then
 
 

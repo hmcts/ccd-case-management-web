@@ -33,7 +33,12 @@ defineSupportCode(function({ Given, When, Then }) {
 
   Then(/^the field '(.*)' is visible$/, async function(fieldType) {
     let fieldPresent = await caseWizardPage.isFieldPresent(fieldType);
-    expect(fieldPresent).to.be.false;
+    expect(fieldPresent).to.be.true;
+  });
+
+  Then(/^the field with labelText '(.*)' is visible$/, async function(labelText) {
+    let valueExists = await caseWizardPage.getCheckYourAnswersValueByLabel(labelText);
+    expect(valueExists);
   });
 
   Then(/^the page '(.*)' should display$/, async function(pageHeaderToDisplay) {

@@ -85,3 +85,18 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.event = 'Create school';
   });
 });
+
+Given(/^a case type containing conditionals exists for OR event$/, function() {
+  Data.caseType = "Conditionals";
+  Data.event = "Create a case OR";
+});
+
+Given(/^a case type containing conditionals exists for AND event$/, function() {
+  Data.caseType = "Conditionals";
+  Data.event = "Create a case AND";
+});
+
+Given(/^a case type containing conditionals exists for NOT event$/, function() {
+  Data.caseType = "Conditionals";
+  Data.event = "Create a case NOT";
+});

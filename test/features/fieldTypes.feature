@@ -29,7 +29,6 @@ Feature: Set of scenarios to check we can read and write to all field data types
     And I have filled out the '<dataType>' field
     When I navigate to the 'check your answers' form page
     Then I should see my value displayed
-
     Examples:
       | dataType  |
       | Text      |
@@ -38,8 +37,8 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | Money-gbp |
       | Date      |
       | Email     |
-     #| Fixed-List|
-      | Phone-UK   |
+      | Fixed-List|
+      | Phone-UK  |
       | Yes-No    |
 
     @collection
@@ -52,8 +51,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     Examples:
       | dataType  |
       | Complex   |
-
-
+    
     @validation
   Scenario: Validation: cannot progress to next page without filling in mandatory field
     Given a case with a Mandatory field exists

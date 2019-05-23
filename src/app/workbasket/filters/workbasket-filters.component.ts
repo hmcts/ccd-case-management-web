@@ -141,19 +141,20 @@ export class WorkbasketFiltersComponent implements OnInit {
       this.workbasketInputFilterService.getWorkbasketInputs(this.selected.jurisdiction.id, this.selected.caseType.id)
         .subscribe(workbasketInputs => {
           this.workbasketInputsReady = true;
-          this.workbasketInputs = workbasketInputs
-            .sort(this.orderService.sortAsc);
+          workbasketInputs.sort(this.orderService.sortAsc);
+          this.workbasketInputs = workbasketInputs;
           const formValue = this.windowService.getLocalStorage(FORM_GROUP_VAL_LOC_STORAGE);
 
-          for (let i = 0; i < workbasketInputs.length; i++) {
-            let item = workbasketInputs[i];
+          workbasketInputs.forEach(item => {
+            if (item.field.elementPath) {
+              item.field.id = item.field.id + '.' + item.field.elementPath;
+            }
             item.field.label = item.label;
             if (formValue) {
               const searchFormValueObject = JSON.parse(formValue);
               item.field.value = searchFormValueObject[item.field.id];
             }
-          }
-
+          });
         }, error => {
           console.log('Workbasket input fields request will be discarded reason: ', error.message);
         });

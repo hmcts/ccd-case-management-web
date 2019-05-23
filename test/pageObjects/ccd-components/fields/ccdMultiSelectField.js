@@ -3,6 +3,7 @@ class CcdMultiSelectField {
   constructor(css){
       this.css = css;
       this.labels = this._getLabels();
+      this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
   }
 
   /**
@@ -16,17 +17,17 @@ class CcdMultiSelectField {
     await optionToSelect.click();
   }
 
-  async anyCheckboxesSelected(){
-    let checked = false;
-    let checkboxes = $$(`${this.css} input`)
-    for (const checkbox in checkboxes){
-      if (await checkbox.enabled()){
-        checked = true;
-        break
-      }
-    }
 
-    return checked;
+  /**
+   * return array of names of all selected checkboxes
+   * @returns {Promise<Array>}
+   */
+  async getSelectedCheckboxes(){
+    let checkboxNames = [];
+    for (const checkbox of await $$(this.selectedCheckboxes)) {
+      checkboxNames.push(await checkbox.getText())
+    }
+    return checkboxNames;
   }
 
   /**

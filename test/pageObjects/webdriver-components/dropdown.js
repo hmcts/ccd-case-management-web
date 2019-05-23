@@ -46,7 +46,7 @@ class Dropdown {
       let elementListSize = await options.length;
       let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
       let optionToSelect = await options[randomOptionArrayInt-1];
-      await optionToSelect.click();  
+      await optionToSelect.click();
     }
   }
 
@@ -55,8 +55,8 @@ class Dropdown {
    * @returns String
    */
   async getCurrentSelectedOption(){
-    let text = await $(this._currentDropdownOptionElement).getText();
-    return text.trim();
+      let text = await $(this._currentDropdownOptionElement).getText();
+      return text.trim();
   }
 
     /**

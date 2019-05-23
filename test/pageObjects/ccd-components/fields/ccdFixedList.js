@@ -31,7 +31,12 @@ class CcdFixedList {
     }
 
     async getCurrentOption(){
-      this.fixedList.getCurrentSelectedOption()
+      try {
+        await this.fixedList.getCurrentSelectedOption()
+      } catch (e) {
+        console.log('no option selected on dropdown')
+        return 'undefined'
+      }
     }
 
 

@@ -48,7 +48,7 @@ class CcdYesNoField {
   async getCurrentOption(){
     let option = 'undefined';
     try {
-      if ($(this.yesRadioSelectedCss).isDisplayed()) {
+      if (await $(this.yesRadioSelectedCss).isDisplayed()) {
         option = 'yes';
       }
     } catch (e) {
@@ -56,7 +56,7 @@ class CcdYesNoField {
     }
 
     try {
-      if ($(this.noRadioSelectedCss).isDisplayed()) {
+      if (await $(this.noRadioSelectedCss).isDisplayed()) {
         option = 'no';
       }
     } catch (e) {

@@ -230,10 +230,10 @@ class FieldDataTypes {
    * Get contents of the number field
    * @returns {Promise<String>}
    */
-  async getCheckboxesSelected(){
+  async getSelectedCheckboxes(){
     let css = await FIELDS.MULTI_SELECT.cssTag;
     let field = await new CCDMultiSelectField(css);
-    return await field.anyCheckboxesSelected();
+    return await field.getSelectedCheckboxes();
   }
 
   /**
@@ -278,7 +278,7 @@ class FieldDataTypes {
 
 
   /**
-   * Interact with any field type entering randomly generated data or selecting random options
+   * Get value from the
    * @param dataType
    * @param value - optional value to enter into field if applicable
    * @returns {Promise<void>}
@@ -305,9 +305,7 @@ class FieldDataTypes {
       case 'yes-no':
         return await this.getYesNoFieldValue();
       case 'multi-select':
-        return await this.getCheckboxesSelected();
-      case ' collection' :
-        //todo
+        return await this.getSelectedCheckboxes();
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }

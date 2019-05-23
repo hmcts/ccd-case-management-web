@@ -1,7 +1,7 @@
 Button = require('../webdriver-components/button.js')
 Dropdown = require('../webdriver-components/dropdown.js')
 BasePage = require('../basePage.js');
-let FieldUtils = require('../utils/fieldUtils.js');
+let FieldUtils = require('../../utils/fieldUtils.js');
 
 
 
@@ -20,6 +20,8 @@ class CaseFilters extends BasePage {
     this._state = new Dropdown('select[name=state]');
     this._applyButton = new Button('.button', 'Apply');
     this._resetButton = new Button('.button','Reset');
+
+    this.fieldUtils = new FieldUtils();
   }
 
   /**
@@ -56,7 +58,7 @@ class CaseFilters extends BasePage {
    * including the value in which we have entered
    */
   async interactWithField(fieldDataType, value){
-    return await new FieldUtils().interactWithField(fieldDataType, value);
+    return await this.fieldUtils.interactWithField(fieldDataType, value);
   }
 
   /**
@@ -82,7 +84,6 @@ class CaseFilters extends BasePage {
    * @returns {Promise<void|*>}
    */
   async clickResetButton() {
-    // await this._resetButton.waitForElementToBeClickable();
     await this._resetButton.click();
   }
 

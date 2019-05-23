@@ -10,8 +10,10 @@ Feature: Set of scenarios to test functionality of create case filters in case c
         When I click the 'Start' button
         Then I will be navigated to 'Create Case' wizard form page
 
-#       all pass
+
+    @caseListFilters
     Scenario Outline: dynamic search filters are displayed for all data types
+        Given And I am on the case list page
         When I select the 'Case type' drop down option for dynamic filters
         Then I should see a '<dataType>' dynamic filter with '<labels>' labels and '<values>' values
 
@@ -32,22 +34,24 @@ Feature: Set of scenarios to test functionality of create case filters in case c
             | Email       | Email Field                                                        |                                                            |
 
 
-
+    @caseListFilters
     Scenario: reset button switches case type to the workbasket default
-        Given I have filled the the create case filters for a case other than the workbasket default
+        Given I have filled the create case filters for a case other than the workbasket default
         When I click the 'Reset' button
         Then the filters are switched to the default 'All Field Data Types' case type
-#        And navigating back to the original case type shows a cleared field
+        And navigating back to the original case type shows a cleared field
 
+    @caseListFilters
     Scenario: reset button clears a fields contents
-        Given I have filled out the create case filters
+        Given I have filled out the case list filters
         When I click the 'Reset' button
         Then I will remain on the 'All Field Data Types' case type filter
         And the dynamic filters will be cleared
 
+    @caseListFilters
     Scenario: apply button submits search options and returns results list
         Given a case exists
         And I am on the case list page
-        And I have filled out the filters
+        And I have filled out the case list filters
         When I click the 'Apply' button
         Then the search result table will be displayed

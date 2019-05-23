@@ -1,3 +1,6 @@
+let CustomError = require('../../utils/errors/custom-error');
+
+
 /**
  * Class to encapsulate functionality around the case list table on the landing page
  * and the case list seatch result table
@@ -16,6 +19,10 @@ class CaseListComponent extends BasePage {
     this._firstLink = by.css('#search-result table tbody tr:nth-of-type(1) td:nth-of-type(1) a');
     this._pageTwoLink = by.css('.ngx-pagination li.current+li a');
     this._selectedPaginationControlNumber = 'pagination-template li.current span:nth-of-type(2)';
+    this._paginationItems = 'pagination-template > ul > li';
+    this._paginationPageNumberLinks = 'pagination-template > ul > li > a >span:nth-of-type(2)';
+    this._paginationNext = 'pagination-template .pagination-next > a';
+    this._paginationPrevious = 'pagination-template .pagination-previous > a';
   }
 
   /**
@@ -99,6 +106,65 @@ class CaseListComponent extends BasePage {
    */
   async getResultCountText(){
     return await element(this._resultCount).getText();
+  }
+
+  async clickPaginationLink(linkToClick){
+    console.log(`attemting to click '${linkToClick}'`)
+    if (linkToClick.toLowerCase() === 'next'){
+       await $(this._paginationNext).click();
+    } else if (linkToClick.toLowerCase() === 'previous'){
+       await $(this._paginationPrevious).click();
+    } else {
+      let linkFound = false;
+      for (const link of await $$(this._paginationPageNumberLinks)){
+        let linkText = await link.getText();
+        console.log(`${linkText} = ${linkToClick} ??`)
+
+        if (await linkText === linkToClick){
+          await link.click();
+          linkFound = true;
+          break;
+        }
+      }
+
+      if (!linkFound){
+        throw new CustomError(`Could not find pagination link to click: '${linkToClick}'`)
+      }
+    }
+
+  }
+
+  async getPaginationItems(){
+    let items = []
+    for (const link of await $$(this._paginationPageNumberLinks)) {
+        items.push(await link.getText())
+    }
+    return items;
+  }
+
+  async clickLastPaginationPage(){
+    let paginationItems = await $$(this._paginationItems).count();
+    console.log(paginationItems)
+    let itemToClick = await $$(this._paginationItems).get(paginationItems - 2)
+    console.log(itemToClick)
+    await itemToClick.click()
+  }
+
+
+  async isPaginationPreviousLinkDisplayed(){
+    if (await $(this._paginationPrevious).isPresent()) {
+      return await $(this._paginationPrevious).isDisplayed()
+    } else {
+      return false
+    }
+  }
+
+  async isPaginationNextLinkDisplayed(){
+    if (await $(this._paginationNext).isPresent()) {
+      return await $(this._paginationNext).isDisplayed()
+    } else {
+      return false
+    }
   }
 
   /**

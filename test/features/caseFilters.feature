@@ -12,7 +12,7 @@ Feature: Set of scenarios to test functionality of create case filters in case c
 
 
     @caseListFilters
-    Scenario Outline: dynamic search filters are displayed for all data types
+    Scenario Outline: dynamic case list filters are displayed for all data types
         Given And I am on the case list page
         When I select the 'Case type' drop down option for dynamic filters
         Then I should see a '<dataType>' dynamic filter with '<labels>' labels and '<values>' values
@@ -39,17 +39,17 @@ Feature: Set of scenarios to test functionality of create case filters in case c
         Given I have filled the create case filters for a case other than the workbasket default
         When I click the 'Reset' button
         Then the filters are switched to the default 'All Field Data Types' case type
-        And navigating back to the original case type shows a cleared field
+        And navigating back to the original case type shows cleared dynamic filters
 
     @caseListFilters
-    Scenario: reset button clears a fields contents
+    Scenario: Reset button clears dynamic filter field contents
         Given I have filled out the case list filters
         When I click the 'Reset' button
         Then I will remain on the 'All Field Data Types' case type filter
         And the dynamic filters will be cleared
 
     @caseListFilters
-    Scenario: apply button submits search options and returns results list
+    Scenario: Apply button submits search options and returns results list
         Given a case exists
         And I am on the case list page
         And I have filled out the case list filters

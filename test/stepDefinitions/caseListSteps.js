@@ -54,7 +54,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     await searchPage.interactWithField('complex');
   });
 
-  Then(/^navigating back to the original case type shows a cleared field$/, async function () {
+  Then(/^navigating back to the original case type shows cleared dynamic filters$/, async function () {
     await wbFilters.selectCaseType(TestData.caseType);
     await dynamicFiltersCleared();
   });

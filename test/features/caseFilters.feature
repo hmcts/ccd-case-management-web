@@ -13,7 +13,7 @@ Feature: Set of scenarios to test functionality of create case filters in case c
 
     @caseListFilters
     Scenario Outline: dynamic case list filters are displayed for all data types
-        Given And I am on the case list page
+        Given I am on the case list page
         When I select the 'Case type' drop down option for dynamic filters
         Then I should see a '<dataType>' dynamic filter with '<labels>' labels and '<values>' values
 

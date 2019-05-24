@@ -1,4 +1,4 @@
-idam_authentication_web_url = "http://idam-web-public-idam-perftest.service.core-compute-idam-perftest.internal"
+idam_authentication_web_url = "https://idam-web-public.perftest.platform.hmcts.net"
 ccd_gateway_url = "https://gateway-ccd.perftest.platform.hmcts.net"
 
 

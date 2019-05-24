@@ -14,11 +14,13 @@ class CaseDetailsPage extends BasePage {
     this._actionsDropdown = new Dropdown('ccd-event-trigger select');
     this._goButton = new Button('ccd-event-trigger button');
     this._tabs = '.tabs-list li';
+    this._accordians = 'ccd-read-complex-field-collection-table img';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
     this._printButton = '#case-viewer-control-print';
     this._caseReference = 'ccd-case-header .heading-h1';
     this._alertSuccessBar = '.alert-success';
 
+    this._currentTabNestedFieldKeys = '.tabs-panel:not(.js-hidden) tr > th > td > tbody > tr > th';
     //Details Box
     this._detailsBox = '.EventLog-DetailsPanel';
     this._detailsBoxDate = '.EventLog-DetailsPanel tbody > tr:nth-of-type(1) > td span';
@@ -62,8 +64,12 @@ class CaseDetailsPage extends BasePage {
    */
 
   async isPrintButtonReady() {
-    return await $(this._printButton).isDisplayed()
+    try {
+      return await $(this._printButton).isDisplayed()
         && await $(this._printButton).isEnabled();
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -167,6 +173,14 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
+   * Get list of the fields displayed on the currency viewed tab
+   * @returns Array of Strings
+   */
+  async getTabNestedFields(){
+    return await this.getElementsText(await $$(this._currentTabNestedFieldKeys))
+  }
+
+  /**
    * Get the value for an item in the details box by parsing the name of the detail
    * @param detailKey
    * @returns {Promise<string>}
@@ -183,6 +197,11 @@ class CaseDetailsPage extends BasePage {
         throw new CustomError(`could not find a details box item called '${detailKey}'`)
     }
 
+  }
+
+  async clickFirstAccordian(){
+    let first = await $$(this._accordians).first();
+    await first.click();
   }
 
 }

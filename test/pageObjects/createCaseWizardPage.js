@@ -1,6 +1,6 @@
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
-Button = require('./webdriver-components/button.js')
+Button = require('./webdriver-components/button.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
 
 
@@ -10,6 +10,8 @@ class CreateCaseWizardPage extends BasePage{
     constructor() {
       super();
       this.continueButton = new Button('button[type=submit]');
+      this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
+      this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
@@ -41,6 +43,63 @@ class CreateCaseWizardPage extends BasePage{
    */
     async interactWithField(fieldDataType, value, id){
       return await new FieldUtils().interactWithField(fieldDataType, value, id);
+    }
+
+    async interactWithField(fieldDataType, value, fieldId) {
+      return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
+    }
+
+    async fieldLabelContains(fieldDataType, fieldId, labelText) {
+      return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
+    }
+
+    async isTextFieldHiddenById(fieldId) {
+      return await new FieldUtils().textFieldIsHidden(fieldId);
+    }
+
+    async isTextFieldVisibleById(fieldId) {
+      return await new FieldUtils().textFieldIsVisible(fieldId);
+    }
+
+    async isCaseLinkFieldHiddenById(fieldId) {
+      return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
+    }
+
+    async isCaseLinkFieldVisibleById(fieldId) {
+      return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
+    }
+
+    async isFixedListFieldHiddenById(fieldId) {
+      return await new FieldUtils().fixedListFieldIsHidden(fieldId);
+    }
+
+    async isFixedListFieldVisibleById(fieldId) {
+      return await new FieldUtils().fixedListFieldIsVisible(fieldId);
+    }
+
+    async isDateFieldHiddenById(fieldId) {
+      return await new FieldUtils().dateFieldIsHidden(fieldId);
+    }
+
+    async isDateFieldVisibleById(fieldId) {
+      return await new FieldUtils().dateFieldIsVisible(fieldId);
+    }
+
+    async isYesOrNoFieldHiddenById(fieldId) {
+      return await new FieldUtils().fieldYesNoIsHidden(fieldId);
+    }
+
+    async isYesOrNoFieldVisibleById(fieldId) {
+      return await new FieldUtils().fieldYesNoIsVisible(fieldId);
+    }
+
+    async setYesOrNoValue(radioButtonId, option) {
+      return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+    }
+
+    async clickCollectionAddNewButton(collectionFieldId) {
+      let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
+      await element(by.xpath(xpathLocator)).click();
     }
 
   /**
@@ -125,6 +184,11 @@ class CreateCaseWizardPage extends BasePage{
     async continueButtonDisplayed(){
       return await this.continueButton.isDisplayed();
     }
+
+    async clickGenericCollectionAddNewButton() {
+      await this.CollectionNewButton.click();
+    }
+
 }
 
 module.exports = CreateCaseWizardPage;

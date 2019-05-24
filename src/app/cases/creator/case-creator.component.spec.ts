@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
   CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
-import { DefinitionsService } from '../../core/definitions/definitions.service';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
 
@@ -236,7 +235,6 @@ class CallbackErrorsComponent {
 
 }
 
-let mockDefinitionsService;
 let mockRouter: any;
 let mockOrderService: any;
 let mockCallbackErrorSubject: any;
@@ -256,8 +254,6 @@ describe('CaseCreatorComponent', () => {
   beforeEach(async(() => {
     mockOrderService = createSpyObj<OrderService>('orderService', ['sort']);
     mockOrderService.sort.and.returnValue(SORTED_CASE_EVENTS);
-    mockDefinitionsService = createSpyObj('mockDefinitionsService', ['getJurisdictions']);
-    mockDefinitionsService.getJurisdictions.and.returnValue(Observable.of([JURISDICTION_2]));
     mockRouter = createSpyObj<Router>('router', ['navigate']);
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
@@ -279,8 +275,7 @@ describe('CaseCreatorComponent', () => {
           { provide: Router, useValue: mockRouter },
           { provide: OrderService, useValue: mockOrderService },
           { provide: AlertService, useValue: mockAlertService },
-          { provide: JurisdictionService, useValue: jurisdictionService },
-          { provide: DefinitionsService, useValue: mockDefinitionsService }
+          { provide: JurisdictionService, useValue: jurisdictionService }
         ]
       })
       .compileComponents();

@@ -34,7 +34,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
       | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
       | Email       | Email Field                                                        |                                                            |
 
-    @searchtest
+  @searchtest
   Scenario Outline: reset button clears drop down options and removes all dynamic filters
     Given I am on the search page
     And I have filled out the search filters including dynamic filters
@@ -69,7 +69,6 @@ Feature: Set of scenarios to test functionality of search filters on the search 
     And I have filled out the search filters
     When I click the 'Apply' button
     Then the search result table will be displayed
-
 
   @searchCaseList
   Scenario: loading the results table will display correct result count

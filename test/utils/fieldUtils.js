@@ -22,6 +22,44 @@ class FieldDataTypes {
     return field;
   }
 
+  async textFieldContainsInLabel(value, id) {
+    let css = await FIELDS.TEXT.cssTag;
+    let type = await FIELDS.TEXT.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.hasFieldLabel(value);
+  }
+
+  async fixedListFieldContainsInLabel(value, id) {
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css, id);
+    return await field.hasFieldLabel(value);
+  }
+
+  async caseLinkFieldContainsInLabel(value, id) {
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.hasFieldLabel(value);
+  }
+
+  async yesNoFieldContainsInLabel(value, radioId) {
+    let css = await FIELDS.YES_NO.cssTag;
+    let field = await new CCDYesNoField(css, radioId);
+    return await field.hasFieldLabel(value);
+  }
+
+  /**
+   * Enter a text into the CaseLink field
+   * @returns CCDStringField Object
+   */
+  async enterIntoCaseLinkField(value, id){
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, id);
+    await field.enterText(value);
+    return field;
+  }
+
   /**
    * Enter random text into the Text Area field
    * @returns CCDStringField Object
@@ -112,6 +150,70 @@ class FieldDataTypes {
     let yesNoField = await new CCDYesNoField(css, id);
     await yesNoField.selectOption(value);
     return yesNoField;
+  }
+
+  async fieldYesNoIsHidden(radioId) {
+    let css = await FIELDS.YES_NO.cssTag;
+    let yesNoField = await new CCDYesNoField(css, radioId);
+    return await yesNoField.isHidden();
+  }
+
+  async fieldYesNoIsVisible(radioId) {
+    let css = await FIELDS.YES_NO.cssTag;
+    let yesNoField = await new CCDYesNoField(css, radioId);
+    return await yesNoField.isVisible();
+  }
+
+  async textFieldIsHidden(id) {
+    let css = await FIELDS.TEXT.cssTag;
+    let type = await FIELDS.TEXT.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.isHidden();
+  }
+
+  async textFieldIsVisible(id) {
+    let css = await FIELDS.TEXT.cssTag;
+    let type = await FIELDS.TEXT.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.isVisible();
+  }
+
+  async caseLinkFieldIsHidden(id) {
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.isHidden();
+  }
+
+  async caseLinkFieldIsVisible(id) {
+    let css = await FIELDS.CASE_LINK.cssTag;
+    let type = await FIELDS.CASE_LINK.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.isVisible();
+  }
+
+  async fixedListFieldIsHidden(id) {
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css, id);
+    return await field.isHidden();
+  }
+
+  async fixedListFieldIsVisible(id) {
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css, id);
+    return await field.isVisible();
+  }
+
+  async dateFieldIsHidden(id) {
+    let css = await FIELDS.DATE.cssTag;
+    let field = await new CCDDateField(css, id);
+    return await field.isHidden();
+  }
+
+  async dateFieldIsVisible(id) {
+    let css = await FIELDS.DATE.cssTag;
+    let field = await new CCDDateField(css, id);
+    return await field.isVisible();
   }
 
   /**
@@ -240,6 +342,7 @@ class FieldDataTypes {
    * Interact with any field type entering randomly generated data or selecting random options
    * @param dataType
    * @param value - optional value to enter into field if applicable
+   * @param id - field id
    * @returns {Promise<void>}
    */
   async interactWithField(dataType, value, id){
@@ -247,6 +350,8 @@ class FieldDataTypes {
     switch(dt) {
       case 'address':
         return //todo
+      case 'case-link':
+        return await this.enterIntoCaseLinkField(value, id);
       case 'text':
         return await this.enterIntoTextField(value, id);
       case 'textarea':
@@ -256,7 +361,7 @@ class FieldDataTypes {
       case 'money-gbp':
         return await this.enterIntoMoneyField(value);
       case 'date':
-        return await this.enterIntoDateField(value);
+        return await this.enterIntoDateField(value, id);
       case 'document':
         return //todo
       case 'email':
@@ -271,6 +376,34 @@ class FieldDataTypes {
         return await this.enterIntoCollectionField();
       case 'complex':
         return await this.enterIntoComplexField();
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
+  async fieldLabelContains(dataType, id, value) {
+    let dt = dataType.toLowerCase();
+    switch(dt) {
+      case 'address':
+        return //todo
+      case 'case-link':
+        return await this.caseLinkFieldContainsInLabel(value, id);
+      case 'text':
+        return await this.textFieldContainsInLabel(value, id);
+      case 'fixed-list':
+        return await this.fixedListFieldContainsInLabel(value, id);
+      case 'yes-no':
+        return await this.yesNoFieldContainsInLabel(value, id);
+      case 'textarea':
+      case 'number':
+      case 'money-gbp':
+      case 'date':
+      case 'document':
+      case 'email':
+      case 'phone-uk':
+      case 'collection':
+      case 'complex':
+        throw new CustomError(`fieldLabelContains not implemented for '${dataType}'`);
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -417,6 +550,8 @@ class FieldDataTypes {
           return FIELDS.COMPLEX_TYPE.cssTag;
       case 'multi-select':
           return FIELDS.MULTI_SELECT.cssTag;
+      case 'case-link':
+        return FIELDS.CASE_LINK.cssTag;
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -457,6 +592,8 @@ class FieldDataTypes {
           return FIELDS.COMPLEX_TYPE.type;
       case 'multi-select':
           return FIELDS.MULTI_SELECT.type;
+      case 'case-link':
+        return FIELDS.CASE_LINK.type;
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -535,6 +672,10 @@ const FIELDS = Object.freeze({
   COMPLEX_TYPE: {
     type: 'text',
     cssTag: 'ccd-write-complex-type-field'
+  },
+  CASE_LINK: {
+    type: 'case-link',
+    cssTag: 'ccd-write-case-link-field'
   },
 
 });

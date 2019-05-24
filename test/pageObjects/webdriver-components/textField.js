@@ -1,6 +1,7 @@
 /**
  * WebDriver Text field component class
  */
+const DEFAULT_TIMEOUT = 5000;
 class TextField{
 
   /**
@@ -41,6 +42,30 @@ class TextField{
    */
   async isDisplayed(){
     return await $(this.css).isDisplayed();
+  }
+
+  async waitForElementToBeInvisible(){
+    const EC = protractor.ExpectedConditions;
+
+    try {
+      await browser.wait(EC.invisibilityOf(await element(by.css(this.css))), DEFAULT_TIMEOUT);
+      return true;
+    } catch (e) {
+      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for text element ${element} to be invisible`;
+      throw new CustomError(message, e);
+    }
+  }
+
+  async waitForElementToBeVisible(){
+    const EC = protractor.ExpectedConditions;
+
+    try {
+      await browser.wait(EC.visibilityOf(await element(by.css(this.css))), DEFAULT_TIMEOUT);
+      return true;
+    } catch (e) {
+      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for text element ${element} to be visible`;
+      throw new CustomError(message, e);
+    }
   }
 
   /**

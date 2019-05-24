@@ -71,11 +71,6 @@ defineSupportCode(function ({ Given, When, Then}) {
     await assertCaseTypeWorkbasketFilter(caseType)
   });
 
-  Then(/^I will remain on the '(.*)' case type filtere$/, async function (caseType) {
-    let actualCaseType = await caseListPage.getCaseListComponent().getSelectedCaseType();
-    expect(actualCaseType, 'Not on correct case type filter').to.equal(caseType)
-  });
-
   async function assertCaseTypeWorkbasketFilter(caseType){
     let actualCaseTypeOption = await caseListPage.getWorkBasketFilters().getSelectedCaseType();
     expect(actualCaseTypeOption).to.equal(caseType)
@@ -91,10 +86,9 @@ defineSupportCode(function ({ Given, When, Then}) {
     if (await fieldUtils.isFieldPresent('text')) {
       let textFieldValue = await fieldUtils.getTextFieldValue()
       if (textFieldValue !==''){
-        console.log(textFieldValue)
+        console.log(textFieldValue);
         allFiltersCleared = false;
         errMessage = `text field has value ${textFieldValue}`
-
       }
     }
 

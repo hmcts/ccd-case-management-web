@@ -123,9 +123,9 @@ class FieldDataTypes {
    * Enter random valid date in the past
    * @returns CCDStringField Object
    */
-  async enterIntoDateField(value){
+  async enterIntoDateField(value, id){
     let css = await FIELDS.DATE.cssTag;
-    let dateField = await new CCDDateField(css);
+    let dateField = await new CCDDateField(css, id);
     await dateField.enterDate(value);
     return dateField;
   }
@@ -227,10 +227,7 @@ class FieldDataTypes {
     return collectionField;
   }
 
-  /**
-   * Select random radio butto option
-   * @returns CCDStringField Object
-   */
+
   async enterIntoComplexField(){
     let css = await FIELDS.COMPLEX_TYPE.cssTag;
     let complexField  = await new CCDComplexTypeField(css);
@@ -249,7 +246,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
+   * Get contents of the email field
    * @returns {Promise<String>}
    */
   async getEmailFieldValue(){
@@ -259,7 +256,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
+   * Get contents of the text field
    * @returns {Promise<String>}
    */
   async getTextFieldValue(){
@@ -269,7 +266,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
+   * Get contents of the money field
    * @returns {Promise<String>}
    */
   async getMoneyFieldValue(){
@@ -279,7 +276,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
+   * Get contents of the phoneUK field
    * @returns {Promise<String>}
    */
   async getPhoneUKFieldValue(){
@@ -289,8 +286,8 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
-   * @returns {Promise<String>}
+   * Get contents of the date field
+   * @returns {Promise<String>} eg 10102019
    */
   async getDateFieldValue(){
     let css = await FIELDS.DATE.cssTag;
@@ -299,7 +296,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
+   * Get contents of the text area field
    * @returns {Promise<String>}
    */
   async getTextAreaFieldValue(){
@@ -309,8 +306,8 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
-   * @returns {Promise<String>}
+   * Get contents of the fixed list field
+   * @returns {Promise<String>}, returns 'undefined' if no option selected
    */
   async getFixedListFieldValue(){
     let css = await FIELDS.FIXED_LIST.cssTag;
@@ -319,8 +316,8 @@ class FieldDataTypes {
   }
 
   /**
-   * Get contents of the number field
-   * @returns {Promise<String>}
+   * Get contents of the yes-no field
+   * @returns {Promise<String>}, returns 'undefined' if no option selected
    */
   async getYesNoFieldValue(){
     let css = await FIELDS.YES_NO.cssTag;
@@ -330,7 +327,7 @@ class FieldDataTypes {
 
   /**
    * Get contents of the number field
-   * @returns {Promise<String>}
+   * @returns {Array<String>}, returns array of names of selected checkboxes
    */
   async getSelectedCheckboxes(){
     let css = await FIELDS.MULTI_SELECT.cssTag;

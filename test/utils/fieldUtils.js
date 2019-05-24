@@ -408,12 +408,11 @@ class FieldDataTypes {
 
 
   /**
-   * Get value from the
+   * Get value from the field
    * @param dataType
-   * @param value - optional value to enter into field if applicable
-   * @returns {Promise<void>}
+   * @returns Value -can be string, or array for checkboxes
    */
-  async getFieldValue(dataType, value){
+  async getFieldValue(dataType){
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'text':

@@ -78,6 +78,10 @@ class CcdFixedList {
     return labelText === labelArray[0];
   }
 
+  async hasFieldLabel(label) {
+    let labelText = await this._getLabel();
+    return labelText.indexOf(label) !== -1;
+  }
 
   async _getLabel() {
     return await $(`${this.css} .form-label`).getText();

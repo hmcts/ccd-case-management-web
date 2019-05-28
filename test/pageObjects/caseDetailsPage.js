@@ -64,8 +64,12 @@ class CaseDetailsPage extends BasePage {
    */
 
   async isPrintButtonReady() {
-    return await $(this._printButton).isDisplayed()
+    try {
+      return await $(this._printButton).isDisplayed()
         && await $(this._printButton).isEnabled();
+    } catch (e) {
+      return false;
+    }
   }
 
   /**

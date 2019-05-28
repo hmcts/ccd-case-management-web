@@ -250,7 +250,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.interactWithField('text', 'showpage3', 'TextField3');
     await caseWizardPage.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'dontshowline4', 'AddressComplex1_AddressLine3');
+    await caseWizardPage.interactWithField('text', 'donotshowline4', 'AddressComplex1_AddressLine3');
   });
 
   When(/^I populate the non-conditional fields and the shown conditional fields on the complex type$/, async function(){
@@ -275,6 +275,56 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     await caseWizardPage.interactWithField('text', 'showline5', 'AddressComplex1_AddressLine4');
     // AddressComplex1_AddressLine5 is empty
+  });
+
+  Given(/^I do meet the condition for showing fields on the collection of complex types that are conditional$/, async function(){
+    await baseSteps.navigateToCreateCasePage();
+
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', 'showpage4', 'TextField3');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.clickCollectionAddNewButton('CollectionComplexField');
+    await caseWizardPage.interactWithField('text', 'showline4', 'CollectionComplexField_0_AddressLine3');
+  });
+
+  Given(/^I do NOT meet the condition for showing fields on the collection of complex types that are conditional$/, async function(){
+    await baseSteps.navigateToCreateCasePage();
+
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', 'showpage4', 'TextField3');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.clickCollectionAddNewButton('CollectionComplexField');
+    await caseWizardPage.interactWithField('text', 'donotshowline4', 'CollectionComplexField_0_AddressLine3');
+  });
+
+  When(/^I populate the non-conditional fields and the shown conditional fields on the collection of complex types$/, async function(){
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'CollectionComplexField_0_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'PMO', 'CollectionComplexField_0_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'UK', 'CollectionComplexField_0_Country');
+
+    await caseWizardPage.interactWithField('text', 'showline5', 'CollectionComplexField_0_AddressLine4');
+    await caseWizardPage.interactWithField('text', 'London', 'CollectionComplexField_0_AddressLine5');
+  });
+
+  When(/^I populate the non-conditional fields on the collection of complex types$/, async function(){
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'CollectionComplexField_0_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'PMO', 'CollectionComplexField_0_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'UK', 'CollectionComplexField_0_Country');
+  });
+
+  When(/^I populate the non-conditional fields but NOT the shown conditional fields on the collection of complex types$/, async function(){
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'CollectionComplexField_0_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'PMO', 'CollectionComplexField_0_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'UK', 'CollectionComplexField_0_Country');
+
+    await caseWizardPage.interactWithField('text', 'showline5', 'CollectionComplexField_0_AddressLine4');
+    // CollectionComplexField_0_AddressLine5 is empty
   });
 
   Then(/^I can submit the case$/, async function () {

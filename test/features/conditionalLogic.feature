@@ -58,4 +58,21 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I do NOT meet the condition for showing the field in the tab
     Then the 'Text Field 3' field will NOT be visible on the 'Conditional Tab 1' tab
 
+  Scenario: completed non-conditional fields and completed shown conditional fields are required on a mandatory complex type to submit a case
+    Given a case type containing conditional mandatory complex type exists
+    And I do meet the condition for showing fields on the complex type that are conditional
+    When I populate the non-conditional fields and the shown conditional fields on the complex type
+    Then I can submit the case
+
+  Scenario: only completed non-conditional fields but not hidden fields are required on a mandatory complex type to submit a case
+    Given a case type containing conditional mandatory complex type exists
+    And I do NOT meet the condition for showing fields on the complex type that are conditional
+    When I populate the non-conditional fields on the complex type
+    Then I can submit the case
+
+  Scenario: completed non-conditional fields and incomplete shown conditional fields on a mandatory complex type prevent a case from being submitted
+    Given a case type containing conditional mandatory complex type exists
+    And I do meet the condition for showing fields on the complex type that are conditional
+    When I populate the non-conditional fields but NOT the shown conditional fields on the complex type
+    Then I CANNOT submit the case
 

@@ -229,4 +229,67 @@ defineSupportCode(function ({ Given, When, Then}) {
     await baseSteps.fillOutAndSubmitForm();
   });
 
+  Given(/^I do meet the condition for showing fields on the complex type that are conditional$/, async function(){
+    await baseSteps.navigateToCreateCasePage();
+
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', 'showpage3', 'TextField3');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', 'showline4', 'AddressComplex1_AddressLine3');
+  });
+
+  Given(/^I do NOT meet the condition for showing fields on the complex type that are conditional$/, async function(){
+    await baseSteps.navigateToCreateCasePage();
+
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', 'showpage3', 'TextField3');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', 'dontshowline4', 'AddressComplex1_AddressLine3');
+  });
+
+  When(/^I populate the non-conditional fields and the shown conditional fields on the complex type$/, async function(){
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'PMO', 'AddressComplex1_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+
+    await caseWizardPage.interactWithField('text', 'showline5', 'AddressComplex1_AddressLine4');
+    await caseWizardPage.interactWithField('text', 'London', 'AddressComplex1_AddressLine5');
+  });
+
+  When(/^I populate the non-conditional fields on the complex type$/, async function(){
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'PMO', 'AddressComplex1_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+  });
+
+  When(/^I populate the non-conditional fields but NOT the shown conditional fields on the complex type$/, async function(){
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'PMO', 'AddressComplex1_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+
+    await caseWizardPage.interactWithField('text', 'showline5', 'AddressComplex1_AddressLine4');
+    // AddressComplex1_AddressLine5 is empty
+  });
+
+  Then(/^I can submit the case$/, async function () {
+    while (await caseWizardPage.continueButtonDisplayed()){
+      if (!caseWizardPage.continueButtonEnabled()) {
+        throw new CustomError('Trying to click Continue/Submit button but it is not enabled')
+      }
+      await caseWizardPage.clickContinueButton();
+    }
+  });
+
+  Then(/^I CANNOT submit the case$/, async function () {
+    while (await caseWizardPage.continueButtonEnabled()) {
+      expect(caseWizardPage.continueButtonEnabled()).to.be.false;
+    }
+  });
+
 });

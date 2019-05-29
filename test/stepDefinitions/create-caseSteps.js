@@ -229,4 +229,23 @@ defineSupportCode(function ({ Given, When, Then}) {
     await baseSteps.fillOutAndSubmitForm();
   });
 
+  Given(/^I have created a case with fixed list item$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField("text");
+    await caseWizardPage.interactWithField("fixed-list", "Marriage");
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+  When(/^The fixed list item is hidden$/, async function() {
+    let fieldPresent = await caseWizardPage.isFieldPresent('fixed-list')
+    expect(fieldPresent).to.be.false;
+  });
+
+  When(/^I move forward (\d+) pages$/, async function(pages) {
+    for (let i = 0; i <pages ; i++) {
+      await caseWizardPage.clickContinueButton();
+    }
+  });
+
 });

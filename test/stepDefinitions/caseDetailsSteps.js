@@ -105,5 +105,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseDetailsPage.clickFirstAccordian();
   });
 
+  When(/^I start the event '(.*)'$/, async function(event) {
+    await caseDetailsPage.startEvent(event)
+  });
 
 });

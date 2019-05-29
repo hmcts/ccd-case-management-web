@@ -334,12 +334,11 @@ defineSupportCode(function ({ Given, When, Then}) {
       }
       await caseWizardPage.clickContinueButton();
     }
+    await new CaseDetailsPage().waitForPageToLoad();
   });
 
   Then(/^I CANNOT submit the case$/, async function () {
-    while (await caseWizardPage.continueButtonEnabled()) {
-      expect(caseWizardPage.continueButtonEnabled()).to.be.false;
-    }
+    expect(await caseWizardPage.continueButtonEnabled()).to.be.false;
   });
 
 });

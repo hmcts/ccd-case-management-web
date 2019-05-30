@@ -36,8 +36,7 @@ export class SearchComponent implements OnInit {
     this.profile = this.route.parent.snapshot.data.profile;
   }
 
-  applyFilter(returnValue): void {
-    const filter = returnValue.selected;
+  applyFilter(filter): void {
     const paginationParams = {};
     const searchParams = {};
 

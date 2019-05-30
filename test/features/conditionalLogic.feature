@@ -71,4 +71,4 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I have created a case with fixed list item
     And I start the event 'Approve a case'
     When I move forward 2 pages
-    And the 'Conditional Page 3 - Approve a case' page should be displayed
+    Then I will be on the 'Conditional Page 3 - Approve a case' page

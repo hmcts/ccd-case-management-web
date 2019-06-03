@@ -86,7 +86,6 @@ defineSupportCode(function ({ Given, When, Then}) {
     if (await fieldUtils.isFieldPresent('text')) {
       let textFieldValue = await fieldUtils.getTextFieldValue()
       if (textFieldValue !==''){
-        console.log(textFieldValue);
         allFiltersCleared = false;
         errMessage = `text field has value ${textFieldValue}`
       }
@@ -102,7 +101,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('date')) {
       let dateFieldValue = await fieldUtils.getDateFieldValue();
-      console.log(dateFieldValue);
       if (dateFieldValue !== ''){
         allFiltersCleared = false;
         errMessage = `date field has value ${dateFieldValue}`
@@ -111,7 +109,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('email')) {
       let emailFieldValue = await fieldUtils.getEmailFieldValue();
-      console.log(emailFieldValue)
       if (emailFieldValue !== ''){
         allFiltersCleared = false;
         errMessage = `email field has value ${emailFieldValue}`
@@ -120,7 +117,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('money-gbp')) {
       let moneyFieldValue = await fieldUtils.getMoneyFieldValue();
-      console.log(moneyFieldValue);
       if (moneyFieldValue !== ''){
         allFiltersCleared = false;
         errMessage = `money field has value ${moneyFieldValue}`
@@ -130,7 +126,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('phone-uk')) {
       let phoneFieldValue = await fieldUtils.getPhoneUKFieldValue();
-      console.log(phoneFieldValue);
       if (phoneFieldValue !== ''){
         allFiltersCleared = false;
         errMessage = `phone field has value ${phoneFieldValue}`
@@ -140,7 +135,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('number')) {
       let numberFieldValue = await fieldUtils.getNumberFieldValue();
-      console.log(numberFieldValue)
       if (numberFieldValue !== ''){
         allFiltersCleared = false;
         errMessage = `number field has value ${numberFieldValue}`
@@ -159,7 +153,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('yes-no')) {
       let yesNoValue = await fieldUtils.getYesNoFieldValue()
-      console.log(yesNoValue)
       if (yesNoValue !== 'undefined'){
         allFiltersCleared = false;
         errMessage = `yes-no field has value ${yesNoValue}`

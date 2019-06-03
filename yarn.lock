@@ -310,9 +310,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.50.2.tgz#57069b81b4930c09f1adfa589d51aaa97b73170a"
+"@hmcts/ccd-case-ui-toolkit@2.51.0":
+  version "2.51.0"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.51.0.tgz#c1d5be7baedfbb8b6e2921e52a054354b936e8c7"
+  integrity sha512-ARqX4fslMN1uDCV+zec5sk7cLIEj1G4jeSKOD0BsFt7TxYSIPdNiULjA2uYpyq9i0NiujxEbc/ucjzwucMWwpg==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -322,6 +323,7 @@
     karma-jasmine-html-reporter "^1.2.0"
     mocha "^5.0.5"
     typescript "3.1.1"
+    underscore "^1.9.1"
 
 "@hmcts/ccpay-web-component@~1.8.1":
   version "1.8.4"
@@ -9988,6 +9990,11 @@ uglifyjs-webpack-plugin@^1.2.4, uglifyjs-webpack-plugin@^1.2.5:
 ultron@1.0.x:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.0.2.tgz#ace116ab557cd197386a4e88f4685378c8b2e4fa"
+
+underscore@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
+  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 underscore@~1.6.0:
   version "1.6.0"

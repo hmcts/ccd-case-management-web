@@ -66,12 +66,16 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    await baseSteps.navigateToCreateCasePage()
-    await caseWizardPage.interactWithField(fieldType,value);
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField(fieldType, value);
   });
 
   When(/^I re-enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    await caseWizardPage.interactWithField(fieldType,value);
+    await caseWizardPage.interactWithField(fieldType, value);
+  });
+
+  When(/^I re-enter '(.*)' into the '(.*)' field with id '(.*)'$/, async function (value, fieldType, id) {
+    await caseWizardPage.interactWithField(fieldType, value, id);
   });
 
   When(/^I have a validation error from invalid '(.*)'$/, async function (dataType) {

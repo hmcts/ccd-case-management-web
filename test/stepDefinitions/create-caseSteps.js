@@ -179,9 +179,17 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Then(/^I will be on the '(.*)' page$/, async function (expectedPageHeader) {
-    let pageHeader = await caseWizardPage.getPageHeader();
-    expect(pageHeader).to.equal(expectedPageHeader);
+    await IAmOnPageWithHeader(expectedPageHeader)
+  })
+
+  Then(/^the '(.*)' page should be displayed$/, async function(expectedPageHeader) {
+    await IAmOnPageWithHeader(expectedPageHeader);
   });
+
+  async function IAmOnPageWithHeader(expectedPage){
+    let pageHeader = await caseWizardPage.getPageHeader();
+    expect(pageHeader).to.equal(expectedPage);
+  }
 
   Given(/^I have filled out the create case filters$/, async function () {
     await caseListPage.getNavBarComponent().clickCreateCaseLink();
@@ -228,5 +236,25 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
   });
+
+  Given(/^I have created a case with fixed list item$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField("text");
+    await caseWizardPage.interactWithField("fixed-list", "Marriage");
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+  When(/^The fixed list item is hidden$/, async function() {
+    let fieldPresent = await caseWizardPage.isFieldPresent('fixed-list')
+    expect(fieldPresent).to.be.false;
+  });
+
+  When(/^I move forward (\d+) pages$/, async function(pages) {
+    for (let i = 0; i <pages ; i++) {
+      await caseWizardPage.clickContinueButton();
+    }
+  });
+
 
 });

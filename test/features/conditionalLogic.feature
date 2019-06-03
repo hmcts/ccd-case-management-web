@@ -58,4 +58,17 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I do NOT meet the condition for showing the field in the tab
     Then the 'Text Field 3' field will NOT be visible on the 'Conditional Tab 1' tab
 
+  @RDM-4622
+  Scenario: Field show/hide condition works when an event contains a read only field value from a previous event
+    Given a case type containing conditionals exists
+    And I have created a case with fixed list item
+    When I start the event 'Approve a case'
+    Then The fixed list item is hidden
 
+  @RDM-4622
+  Scenario: Page Show Condition works when an event contains a read only field value from a previous event
+    Given a case type containing conditionals exists
+    And I have created a case with fixed list item
+    And I start the event 'Approve a case'
+    When I move forward 2 pages
+    And the 'Conditional Page 3 - Approve a case' page should be displayed

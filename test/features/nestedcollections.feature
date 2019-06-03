@@ -18,6 +18,9 @@ Feature: Set of scenarios to test collection of complex table view
       | Address Line 3 |
       | Country        |
       | Second Line 1  |
+    And the following fields will NOT be visible:
+      | ZipCode        |
+      | Second Line 2  |
 
   Scenario: Clicking accordion on nested collection data view in Case Details shows datas
     Given a case type containing conditional data of collection of complex types exists

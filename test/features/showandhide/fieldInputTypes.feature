@@ -24,7 +24,7 @@ Feature: Hide and show of basic fields different types
     | CARDIFF          | multi-select  | Text Field ShowHide 12 |
 
 
-  Scenario Outline: fields on the same page NOT visible when show & hide condition is met
+  Scenario Outline: fields on the same page NOT visible when show & hide condition is NOT met
     Given a case type containing conditionals exists
     When I enter '<value>' into the '<fieldType>' field
     Then the field with label '<expectedLabel>' is not visible

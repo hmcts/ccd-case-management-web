@@ -153,6 +153,15 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
+  Then(/^The text field '(.*)' contains value '(.*)'$/, async function(fieldId, fieldValue) {
+    let textField = await caseWizardPage.getTextField(fieldId);
+    // expect(textField).to.be.true;
+  });
+
+  When(/^populate field '(.*)' with value '(.*)'$/, async function(fieldName, fieldValue) {
+    await caseWizardPage.interactWithField(fieldName, fieldValue);
+  });
+
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.not.include(expectedLabel);

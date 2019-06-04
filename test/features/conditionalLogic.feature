@@ -108,3 +108,15 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I do meet the condition for showing fields on the collection of complex types that are conditional
     When I populate the non-conditional fields but NOT the shown conditional fields on the collection of complex types
     Then I CANNOT submit the case
+    
+  @RDM-4781
+  Scenario: PageShowCondition - should not clear further pages fields after finding next page
+    Given a case type containing conditionals exists
+    And I navigate to the case creation form page
+    And populate field 'Text' with value 'page3'
+    When I click the Continue button
+    And populate field 'Text' with value 'page4'
+    And I click the Continue button
+    And populate field 'Text' with value 'valueToCheck'
+    And I move forward 5 pages
+    Then The text field 'TextField5' contains value 'valueToCheck'

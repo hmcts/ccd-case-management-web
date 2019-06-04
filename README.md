@@ -50,9 +50,9 @@ The following environment variables are required:
 | Name | Description |
 |------|-------------|
 | IDAM_LOGIN_URL | URL for IdAM's login web page. `https://idam-web-public.aat.platform.hmcts.net` for the `AAT` environment. |
-| CCD_GATEWAY_BASE_URL | Base URL for CCD API gateway. `https://case-api-gateway-web.dev.ccd.reform.hmcts.net` for the `dev` instance. |
+| CCD_GATEWAY_BASE_URL | Base URL for CCD API gateway. `https://gateway-ccd.aat.platform.hmcts.net` for the `AAT` environment. |
 | CCD_ACTIVITY_BASE_URL | Base URL for CCD Case Activity service. `https://case-activity-api.dev.ccd.reform.hmcts.net/health` for the `dev` instance. |
-| DM_GATEWAY_BASE_URL | Base URL for Document Management gateway. `https://api-gateway.dev.dm.reform.hmcts.net` for the `dev` instance. |
+| DM_GATEWAY_BASE_URL | Base URL for Document Management gateway. `https://gateway-ccd.aat.platform.hmcts.net` for the `AAT` environment. |
 
 Environment variables:
 

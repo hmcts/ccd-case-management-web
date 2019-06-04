@@ -74,10 +74,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.interactWithField(fieldType, value);
   });
 
-  When(/^I re-enter '(.*)' into the '(.*)' field with id '(.*)'$/, async function (value, fieldType, id) {
-    await caseWizardPage.interactWithField(fieldType, value, id);
-  });
-
   When(/^I have a validation error from invalid '(.*)'$/, async function (dataType) {
     await baseSteps.navigateToCreateCasePage()
 

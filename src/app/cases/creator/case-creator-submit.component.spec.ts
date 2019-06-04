@@ -1,27 +1,13 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MockComponent} from 'ng2-mock-component';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {CaseCreatorSubmitComponent} from './case-creator-submit.component';
-import {
-  AlertService,
-  CaseDetails,
-  CaseEditPageComponent,
-  CaseEventData,
-  CaseEventTrigger,
-  CaseField,
-  CaseReferencePipe,
-  CasesService,
-  CaseView,
-  createCaseEventTrigger,
-  DRAFT_PREFIX,
-  DraftService,
-  FormErrorService,
-  FormValueService,
-  HttpError
-} from '@hmcts/ccd-case-ui-toolkit';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MockComponent } from 'ng2-mock-component';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import createSpyObj = jasmine.createSpyObj;
+import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
+  FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
+  DraftService, CaseField } from '@hmcts/ccd-case-ui-toolkit';
 
 let CaseEditComponent: any = MockComponent({
   selector: 'ccd-case-edit',

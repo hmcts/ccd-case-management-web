@@ -116,8 +116,12 @@ class CaseListComponent extends BasePage {
     return totalCases
   }
 
+  /**
+   * Click a pagination item, can be a page number or the 'next' / 'previous' button
+   * @param linkToClick
+   * @returns {Promise<void>}
+   */
   async clickPaginationLink(linkToClick){
-    // console.log(`attemting to click '${linkToClick}'`)
     if (linkToClick.toLowerCase() === 'next'){
        await $(this._paginationNext).click();
     } else if (linkToClick.toLowerCase() === 'previous'){
@@ -126,8 +130,6 @@ class CaseListComponent extends BasePage {
       let linkFound = false;
       for (const link of await $$(this._paginationPageNumberLinks)){
         let linkText = await link.getText();
-        // console.log(`${linkText} = ${linkToClick} ??`)
-
         if (await linkText === linkToClick){
           await link.click();
           linkFound = true;
@@ -142,6 +144,10 @@ class CaseListComponent extends BasePage {
 
   }
 
+  /**
+   * Get String Array of pagination items
+   * @returns {Promise<Array>}
+   */
   async getPaginationItems(){
     let items = []
     for (const link of await $$(this._paginationPageNumberLinks)) {
@@ -150,15 +156,21 @@ class CaseListComponent extends BasePage {
     return items;
   }
 
+  /**
+   * Click the last available page via the pagination display
+   * @returns {Promise<void>}
+   */
   async clickLastPaginationPage(){
     let paginationItems = await $$(this._paginationItems).count();
-    // console.log(paginationItems)
     let itemToClick = await $$(this._paginationItems).get(paginationItems - 2)
-    // console.log(itemToClick)
     await itemToClick.click()
   }
 
 
+  /**
+   * Returns boolean of the previous pagination link being displayed
+   * @returns {Promise<Boolean>}
+   */
   async isPaginationPreviousLinkDisplayed(){
     if (await $(this._paginationPrevious).isPresent()) {
       return await $(this._paginationPrevious).isDisplayed()
@@ -167,6 +179,10 @@ class CaseListComponent extends BasePage {
     }
   }
 
+  /**
+   * Returns boolean of the next pagination link being displayed
+   * @returns {Promise<Boolean>}
+   */
   async isPaginationNextLinkDisplayed(){
     if (await $(this._paginationNext).isPresent()) {
       return await $(this._paginationNext).isDisplayed()

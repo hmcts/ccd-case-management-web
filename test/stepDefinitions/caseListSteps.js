@@ -27,7 +27,6 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Given(/^I am on page (.*) of results$/, async function (pageNum) {
       let currentPage = await caseListPage.getCaseListComponent().getSelectedPaginationControlNumber();
-      // console.log(`currentpage: ${currentPage}`);
       if (currentPage !== pageNum){
           await caseListPage.getCaseListComponent().clickPaginationLink(pageNum);
       }
@@ -91,10 +90,8 @@ defineSupportCode(function ({ Given, When, Then}) {
     let items = await caseListPage.getCaseListComponent().getPaginationItems();
     let pageFound = false;
 
-    // console.log(items)
     for (let i = 0; i <items.length ; i++) {
       let currentItem = items[i];
-      // console.log(`CurrentItem: ${currentItem}`);
       if (currentItem === pageNumber) {
         expect(items[i + 1] === '...');
         pageFound = true

@@ -17,22 +17,16 @@ defineSupportCode(function ({ Given, When, Then}) {
   let createCaseStartPage = new CreateCaseStartPage();
   let caseListPage = new CaseListPage();
 
-  async function createCase(){
-    //todo post to data store
-    await baseSteps.navigateToCreateCasePage();
-    await baseSteps.fillOutAndSubmitForm();
-  }
-
   When(/^I create the case$/, async function () {
-      await createCase();
+      await baseSteps.createCase();
   });
 
   Given(/^there are cases listed on the case list page for that case type$/, async function () {
-      await createCase();
+      await baseSteps.createCase();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
-    await createCase();
+    await baseSteps.createCase();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {

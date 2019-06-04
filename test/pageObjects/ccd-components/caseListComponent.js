@@ -95,7 +95,7 @@ class CaseListComponent extends BasePage {
    * get text in first line
    * @returns {Promise<string|*>}
    */
-  async clickFirstColumnResultText() {
+  async getFirstColumnResultText() {
     return await element(this._firstLink).getText();
   }
 
@@ -108,8 +108,16 @@ class CaseListComponent extends BasePage {
     return await element(this._resultCount).getText();
   }
 
+
+  async getTotalCases(){
+    let resultText = await this.getResultCountText();
+    let regex = /(?<=of )\d+(?= results)/;
+    let totalCases = await resultText.match(regex)
+    return totalCases
+  }
+
   async clickPaginationLink(linkToClick){
-    console.log(`attemting to click '${linkToClick}'`)
+    // console.log(`attemting to click '${linkToClick}'`)
     if (linkToClick.toLowerCase() === 'next'){
        await $(this._paginationNext).click();
     } else if (linkToClick.toLowerCase() === 'previous'){
@@ -118,7 +126,7 @@ class CaseListComponent extends BasePage {
       let linkFound = false;
       for (const link of await $$(this._paginationPageNumberLinks)){
         let linkText = await link.getText();
-        console.log(`${linkText} = ${linkToClick} ??`)
+        // console.log(`${linkText} = ${linkToClick} ??`)
 
         if (await linkText === linkToClick){
           await link.click();
@@ -144,9 +152,9 @@ class CaseListComponent extends BasePage {
 
   async clickLastPaginationPage(){
     let paginationItems = await $$(this._paginationItems).count();
-    console.log(paginationItems)
+    // console.log(paginationItems)
     let itemToClick = await $$(this._paginationItems).get(paginationItems - 2)
-    console.log(itemToClick)
+    // console.log(itemToClick)
     await itemToClick.click()
   }
 

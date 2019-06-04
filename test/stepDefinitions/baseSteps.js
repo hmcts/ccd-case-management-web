@@ -34,6 +34,11 @@ module.exports = {
         await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
       }
     }
+  },
+
+  createCase: async function(){
+    await this.navigateToCreateCasePage();
+    await this.fillOutAndSubmitForm();
   }
 
 };

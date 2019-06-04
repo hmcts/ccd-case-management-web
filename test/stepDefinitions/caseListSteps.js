@@ -1,6 +1,7 @@
 let CaseListPage = require('../pageObjects/caseListPage.js');
 let TestData = require('../utils/TestData.js');
 CaseFilters = require('../pageObjects/ccd-components/caseFilters.js');
+let baseSteps = require('./baseSteps.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -26,10 +27,12 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Given(/^I am on page (.*) of results$/, async function (pageNum) {
       let currentPage = await caseListPage.getCaseListComponent().getSelectedPaginationControlNumber();
-      console.log(`currentpage: ${currentPage}`);
+      // console.log(`currentpage: ${currentPage}`);
       if (currentPage !== pageNum){
           await caseListPage.getCaseListComponent().clickPaginationLink(pageNum);
       }
+
+      this.topResult = await caseListPage.getCaseListComponent().getFirstColumnResultText()
   });
 
 
@@ -71,7 +74,6 @@ defineSupportCode(function ({ Given, When, Then}) {
       }
   });
 
-
   When(/^I navigate to page (.*) of results$/, async function(pageNumber){
     await caseListPage.getCaseListComponent().clickPaginationLink(pageNumber);
   });
@@ -79,7 +81,6 @@ defineSupportCode(function ({ Given, When, Then}) {
   When(/^I click the pagination '(.*)' button$/, async function(button){
     await caseListPage.getCaseListComponent().clickPaginationLink(button);
   });
-
 
   Then(/^page '(.*)' will be selected on the pagination$/, async function(pageNumber){
     let selected = await caseListPage.getCaseListComponent().getSelectedPaginationControlNumber();
@@ -90,10 +91,10 @@ defineSupportCode(function ({ Given, When, Then}) {
     let items = await caseListPage.getCaseListComponent().getPaginationItems();
     let pageFound = false;
 
-    console.log(items)
+    // console.log(items)
     for (let i = 0; i <items.length ; i++) {
       let currentItem = items[i];
-      console.log(`CurrentItem: ${currentItem}`);
+      // console.log(`CurrentItem: ${currentItem}`);
       if (currentItem === pageNumber) {
         expect(items[i + 1] === '...');
         pageFound = true
@@ -102,22 +103,25 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (!pageFound){
         throw new CustomError(`Could not find a page ${pageNumber}`)
-
     }
   });
 
-  When(/^I will be on the 2nd results page$/, async function(){
-    //todo
+  When(/^I will see a different page of results$/, async function(){
+    let currentPageTopResult =  await caseListPage.getCaseListComponent().getFirstColumnResultText();
+    let errorMsg = 'first result in the case list page should be different to the one saved from a previous page';
+    expect(this.topResult, errorMsg).to.not.equal(currentPageTopResult)
   });
 
-  When(/^I will be on the 1st results page$/, async function(){
-    //todo
+  Given(/^there are more than (\d+) page of results$/, async function(pages){
+    let totalCases = await caseListPage.getCaseListComponent().getTotalCases();
+    let casesToCreate = ((parseInt(pages) * 25) +1) - parseInt(totalCases);
+
+    if (Math.sign(casesToCreate) === 1){
+      console.log(`about to create ${casesToCreate} cases`)
+      for (let i = 0; i < casesToCreate; i++) {
+        await baseSteps.createCase();
+      }
+    }
   });
-
-  Given(/^there are more than (.*) page of results$/, async function(pages){
-    //todo check and create cases
-  });
-
-
 
 });

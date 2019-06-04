@@ -49,7 +49,6 @@ variable "jenkins_AAD_objectId" {
 }
 
 variable "idam_authentication_web_url" {
-  default = "https://idam-test.dev.ccidam.reform.hmcts.net"
 }
 
 variable "ccd_gateway_url" {

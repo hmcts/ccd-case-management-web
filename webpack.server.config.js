@@ -42,6 +42,7 @@ module.exports = {
       /(.+)?express(\\|\/)(.+)?/,
       path.join(__dirname, "src"),
       {}
-    )
+    ),
+    new webpack.DefinePlugin({ "global.GENTLY": false })
   ]
 };

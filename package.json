@@ -58,6 +58,7 @@
     "@angular/upgrade": "~7.0.3",
     "@hmcts/ccd-case-ui-toolkit": "2.51.0",
     "@hmcts/ccpay-web-component": "~1.8.1",
+    "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^1.0.0",

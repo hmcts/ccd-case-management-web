@@ -70,9 +70,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^the '(.*)' field will NOT be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
-      await caseDetailsPage.clickTab(tabName);
-      let fields = await caseDetailsPage.getTabFields();
-      expect(fields).to.not.include(tabfield);
+    await caseDetailsPage.clickTab(tabName);
+    let fields = await caseDetailsPage.getTabFields();
+    expect(fields).to.not.include(tabfield);
+  });
+
+  Then(/^the '(.*)' label will be visible on the '(.*)' tab$/, async function (labelValue, tabName) {
+    await caseDetailsPage.clickTab(tabName);
+    let fields = await caseDetailsPage.getTabLabelFields();
+    expect(fields[0]).to.match(new RegExp(labelValue));
   });
 
   Then(/^the Event History Timeline should show the following ordered events:$/, async function (dataTable) {

@@ -281,6 +281,13 @@ Notes: If you have a following error:
 make sure you run the following command (mentioned in here https://github.com/angular/webdriver-manager/issues/269):
 `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35`
 
+If you want to debug locally a useful change is to increase timeout from 60 s to some higher value. This can be done for all steps globally in `testSetup.js`:
+
+```
+let {setDefaultTimeout} = require('cucumber');
+setDefaultTimeout(60 * 1000);
+```
+
 You have to also remember to install protractor in your project: `yarn install protractor`
 
 ## Built With

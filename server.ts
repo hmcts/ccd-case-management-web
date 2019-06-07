@@ -9,12 +9,14 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import * as express from 'express';
 import { join } from 'path';
 import * as xFrameOptions from 'x-frame-options';
+import * as healthcheck from "@hmcts/nodejs-healthcheck";
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
 // Express server
 const app = express();
+const appHealth = express();
 
 const PORT = process.env.PORT || 3451;
 const DIST_FOLDER = join(process.cwd());
@@ -70,17 +72,12 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 
 app.use(xFrameOptions());
 
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    'status': 'UP',
-    'buildInfo': {
-      'environment': 'development',
-      'project': 'ccd',
-      'name': 'case-management-web',
-      'version': '1.2.0'
-    }
-  });
-});
+// health check
+const healthConfig = {
+  checks: {},
+};
+healthcheck.addTo(appHealth, healthConfig);
+app.use(appHealth);
 
 app.get('/config', (req, res) => {
   res.status(200).json(CONFIG);

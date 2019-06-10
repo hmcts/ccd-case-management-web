@@ -25,11 +25,11 @@ class CcdTextAreaField{
   /**
    * Enter random text into the Text Area Field
    */
-  async enterText(){
-    let value = await RandomUtils.generateRandomString();
-    await this.stringField.enterText(value)
+  async enterText(value) {
+    value = typeof value === 'undefined' ? await RandomUtils.generateRandomString() : value;
+    await this.stringField.enterText(value);
     this.inputValue = value;
-    if (this.checkYourAnswersValue === null){
+    if (this.checkYourAnswersValue === null) {
       this.checkYourAnswersValue = value;
     }
     this.label = await this._getLabel();

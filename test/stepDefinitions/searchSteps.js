@@ -117,8 +117,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await bulkUpdateCases();
   });
 
-  When(/^I click on sorting icon on the first column$/, async function () {
-    await searchPage.getCaseListComponent().clickSortIcon();
+  When(/^I click on sorting icon on the first column to '(.*)'$/, async function (sortOrder) {
+    switch (sortOrder){
+      case 'ascending':
+        return await searchPage.getCaseListComponent().clickSortIconAscending();
+      case 'descending':
+        return await searchPage.getCaseListComponent().clickSortIconDescending();
+      default:
+        throw new CustomError(`Invalid option, options are 'ascending' 'descending'`)
+    }
   });
 
   When(/^I click on the case link$/, async function () {

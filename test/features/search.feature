@@ -81,7 +81,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
   Scenario: click on sorting icon on the first column will sort the results in descending order
     Given I am on the search page
     And I have some cases listed in the results table
-    When I click on sorting icon on the first column
+    When I click on sorting icon on the first column to 'descending'
     Then the results of the page should be sorted in the descending order
 
   @searchCaseList

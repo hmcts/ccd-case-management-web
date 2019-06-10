@@ -63,7 +63,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing conditionals exists for OR event
     And I navigate to the case creation form page
     And populate field 'TextField4' with value 'orValue4'
-    When I click continue button
+    When I click the Continue button
     Then the field with labelText 'Complex Type 1' is visible
 
   @OrAndNotEqualsLogic
@@ -71,7 +71,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing conditionals exists for NOT event
     And I navigate to the case creation form page
     And populate field 'TextField6' with value 'orValue1'
-    When I click continue button
+    When I click the Continue button
     Then the field 'fixed-list' is NOT visible
 
   @OrAndNotEqualsLogic
@@ -79,7 +79,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing conditionals exists for NOT event
     And I navigate to the case creation form page
     And populate field 'TextField6' with value 'orValue1'
-    When I click continue button
+    When I click the Continue button
     Then the field with labelText 'Complex Type 2' is visible
 
   @OrAndNotEqualsLogic
@@ -87,7 +87,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing conditionals exists for OR event
     And I navigate to the case creation form page
     And populate field 'TextField4' with value 'orValue1'
-    When I click continue button
+    When I click the Continue button
     Then I will be on the 'Conditional Page 2 - Create a case OR' page
 
   @OrAndNotEqualsLogic
@@ -95,7 +95,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing conditionals exists for NOT event
     And I navigate to the case creation form page
     And populate field 'TextField6' with value 'orValue4'
-    When I click continue button
+    When I click the Continue button
     Then I will be on the 'Conditional Page 2 - Create a case NOT' page
 
   @OrAndNotEqualsLogic
@@ -104,7 +104,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I navigate to the case creation form page
     And populate field 'TextField8' with value 'orValue1'
     And  populate field 'TextField9' with value 'orValue2'
-    When I click continue button
+    When I click the Continue button
     Then the field with labelText 'Complex Type 1' is visible
 
   @OrAndNotEqualsLogic
@@ -113,7 +113,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I navigate to the case creation form page
     And populate field 'TextField8' with value 'orValue1'
     And populate field 'TextField9' with value 'orValue5'
-    When I click continue button
+    When I click the Continue button
     Then the field 'fixed-list' is NOT visible
 
   @OrAndNotEqualsLogic
@@ -122,7 +122,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I navigate to the case creation form page
     And populate field 'TextField8' with value 'orValue1'
     And populate field 'TextField9' with value 'orValue3'
-    When I click continue button
+    When I click the Continue button
     Then I will be on the 'Conditional Page 2 - Create a case AND' page
 
   @RDM-4622

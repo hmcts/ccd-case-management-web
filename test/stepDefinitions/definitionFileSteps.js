@@ -121,19 +121,21 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine5'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'}];
   });
+
+  Given(/^a case type containing conditionals exists for OR event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case OR";
+  });
+
+  Given(/^a case type containing conditionals exists for AND event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case AND";
+  });
+
+  Given(/^a case type containing conditionals exists for NOT event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case NOT";
+  });
+
 });
 
-Given(/^a case type containing conditionals exists for OR event$/, function() {
-  Data.caseType = "Conditionals";
-  Data.event = "Create a case OR";
-});
-
-Given(/^a case type containing conditionals exists for AND event$/, function() {
-  Data.caseType = "Conditionals";
-  Data.event = "Create a case AND";
-});
-
-Given(/^a case type containing conditionals exists for NOT event$/, function() {
-  Data.caseType = "Conditionals";
-  Data.event = "Create a case NOT";
-});

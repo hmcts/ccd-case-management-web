@@ -124,3 +124,55 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And populate field 'TextField9' with value 'orValue3'
     When I click continue button
     Then I will be on the 'Conditional Page 2 - Create a case AND' page
+
+  @RDM-4622
+  Scenario: Field show/hide condition works when an event contains a read only field value from a previous event
+    Given a case type containing conditionals exists
+    And I have created a case with fixed list item
+    When I start the event 'Approve a case'
+    Then The fixed list item is hidden
+
+  @RDM-4622
+  Scenario: Page Show Condition works when an event contains a read only field value from a previous event
+    Given a case type containing conditionals exists
+    And I have created a case with fixed list item
+    And I start the event 'Approve a case'
+    When I move forward 2 pages
+    And the 'Conditional Page 3 - Approve a case' page should be displayed
+
+  Scenario: completed non-conditional fields and completed shown conditional fields are required on a mandatory complex type to submit a case
+    Given a case type containing conditional mandatory complex type exists
+    And I do meet the condition for showing fields on the complex type that are conditional
+    When I populate the non-conditional fields and the shown conditional fields on the complex type
+    Then I can submit the case
+
+  Scenario: only completed non-conditional fields but not hidden fields are required on a mandatory complex type to submit a case
+    Given a case type containing conditional mandatory complex type exists
+    And I do NOT meet the condition for showing fields on the complex type that are conditional
+    When I populate the non-conditional fields on the complex type
+    Then I can submit the case
+
+  Scenario: completed non-conditional fields and incomplete shown conditional fields on a mandatory complex type prevent a case from being submitted
+    Given a case type containing conditional mandatory complex type exists
+    And I do meet the condition for showing fields on the complex type that are conditional
+    When I populate the non-conditional fields but NOT the shown conditional fields on the complex type
+    Then I CANNOT submit the case
+
+  Scenario: completed non-conditional fields and completed shown condition fields are required on a mandatory collection of complex types to submit a case
+    Given a case type containing conditional mandatory collection of complex types exists
+    And I do meet the condition for showing fields on the collection of complex types that are conditional
+    When I populate the non-conditional fields and the shown conditional fields on the collection of complex types
+    Then I can submit the case
+
+  Scenario: only completed non-conditional fields but not hidden fields are required on a mandatory collection of complex types to submit a case
+    Given a case type containing conditional mandatory collection of complex types exists
+    And I do NOT meet the condition for showing fields on the collection of complex types that are conditional
+    When I populate the non-conditional fields on the collection of complex types
+    Then I can submit the case
+
+  Scenario: completed non-conditional fields and incomplete shown conditional fields on a mandatory collection of   complex type prevent a case from being submitted
+    Given a case type containing conditional mandatory collection of complex types exists
+    And I do meet the condition for showing fields on the collection of complex types that are conditional
+    When I populate the non-conditional fields but NOT the shown conditional fields on the collection of complex types
+    Then I CANNOT submit the case
+

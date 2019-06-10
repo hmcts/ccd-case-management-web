@@ -80,17 +80,19 @@ defineSupportCode(function ({ Given, When, Then}) {
     await populateFormDataWithSupportFieldSetTo('Yes');
   });
 
+  When(/^I populate the form with the school data with a ClassMember IsAutistic field set to '(.*)'$/, async function (isAutistic) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes', 'A team', isAutistic);
+  });
+
+  When(/^I populate the form with the school data with a ClassName field set to '(.*)'$/, async function (className) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes', className);
+  });
+
   When(/^I populate the form with the school data with a support YesOrNo field set to '(.*)'$/, async function (supportAnswer) {
     await baseSteps.navigateToCreateCasePage();
     await populateFormDataWithSupportFieldSetTo(supportAnswer);
-  });
-
-  Then(/^'Is child autistic' field should not be visible$/, async function () {
-    expect(await caseWizardPage.isYesOrNoFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
-  });
-
-  Then(/^'Is child autistic' field should be visible$/, async function () {
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
   });
 
   Then(/^only the fields defined in EventToComplexTypes sheet should be visible$/, async function () {
@@ -209,18 +211,18 @@ defineSupportCode(function ({ Given, When, Then}) {
       });
   });
 
-  async function populateFormDataWithSupportFieldSetTo(supportAnswer) {
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
     await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
     await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
-    await caseWizardPage.interactWithField('text', 'Class one', 'MySchool_Class_0_ClassName');
+    await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
     await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
     await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
     await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.interactWithField('yes-no', 'Yes', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+      await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
     }
     await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
   }
@@ -235,6 +237,15 @@ defineSupportCode(function ({ Given, When, Then}) {
     await baseSteps.navigateToCreateCasePage()
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
+  });
+
+  Given(/^I have created a case with text fields$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField("text", "showmethemoney", "TextField");
+    await caseWizardPage.interactWithField("text", "showme", "TextFieldOptional");
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
   });
 
   Given(/^I have created a case with fixed list item$/, async function() {

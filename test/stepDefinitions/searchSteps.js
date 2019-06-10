@@ -26,7 +26,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await searchPage.interactWithField('text');
     await searchPage.interactWithField('textarea');
     await searchPage.interactWithField('number');
-    await searchPage.interactWithField('address');
     await searchPage.interactWithField('money-gbp');
     await searchPage.interactWithField('date');
     await searchPage.interactWithField('document');

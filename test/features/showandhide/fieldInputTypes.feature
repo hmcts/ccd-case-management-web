@@ -7,7 +7,7 @@ Feature: Hide and show of basic fields different types
   Scenario Outline: fields on the same page visible when show & hide condition is met
     Given a case type containing conditionals exists
     When I enter '<value>' into the '<fieldType>' field
-    Then the field with label '<expectedLabel>' is visible
+    Then verify the field with label '<expectedLabel>' is visible
 
   Examples:
     | value            | fieldType     | expectedLabel          |
@@ -27,7 +27,7 @@ Feature: Hide and show of basic fields different types
   Scenario Outline: fields on the same page NOT visible when show & hide condition is NOT met
     Given a case type containing conditionals exists
     When I enter '<value>' into the '<fieldType>' field
-    Then the field with label '<expectedLabel>' is not visible
+    Then verify the field with label '<expectedLabel>' is not visible
 
   Examples:
     | value                 | fieldType     | expectedLabel          |

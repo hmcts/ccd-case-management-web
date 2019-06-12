@@ -3,39 +3,38 @@ Feature: Hide and show of basic fields
 
   Background:
     Given I have logged in
+    And a case type containing show and hide functionality exists
 
-  Scenario Outline: fields on the same page visible when show & hide condition is met based on mandatory and optional fields
-    Given a case type containing conditionals exists
-    And I start createCase event
-    And the field with label '<expectedLabel>' is not visible
-    When I enter '<value>' into the text field with id '<fieldId>'
-    Then verify the field with label '<expectedLabel>' is visible
-
-    Examples:
-      | value            | fieldId           | expectedLabel          |
-      | showmethemoney   | TextField         | Text Field 2           |
-      | showme           | TextFieldOptional | Text Field ShowHide 13 |
-
-  Scenario Outline: fields on the same page NOT visible when show & hide condition is NOT met based on mandatory and optional fields
-    Given a case type containing conditionals exists
-    And I start createCase event
-    And the field with label '<expectedLabel>' is not visible
-    When I enter '<value>' into the text field with id '<fieldId>'
-    Then verify the field with label '<expectedLabel>' is not visible
+  Scenario Outline: field on same page appears when hide and show condition is met
+    Given I start createCase event
+    And there is an '<fieldType>' field on page1
+    And a conditional text field on the same page is hidden
+    When I complete the show condition to show the field
+    Then a conditional text field on the same page is displayed
 
     Examples:
-      | value                | fieldId           | expectedLabel          |
-      | dontshowmethemoney   | TextField         | Text Field 2           |
-      | dontshowme           | TextFieldOptional | Text Field ShowHide 13 |
+      | fieldType       |
+      | Mandatory text  |
+      | Optional text   |
+
+  Scenario Outline: field on same page hides when hide and show condition is not met
+    Given I start createCase event
+    And there is an '<fieldType>' field on page1 with a matching show condition
+    And a conditional text field on the same page is displayed
+    When I complete the show condition to hide the field
+    Then a conditional text field on the same page is hidden
+
+    Examples:
+      | fieldType       |
+      | Mandatory text  |
+      | Optional text   |
 
   Scenario: field on the same page visible when show & hide condition is met based on the Readonly field
-    Given a case type containing conditionals exists
-    And I have created a case with text fields
+    Given I have created a case with text fields
     When I start the event 'Approve a case'
     Then verify the field with label 'Text Field ShowHide 13' is visible
 
   Scenario: field on the same page not visible when show & hide condition is not met based on the Readonly field
-    Given a case type containing conditionals exists
-    And I have created a case with text fields
+    Given I have created a case with text fields
     When I start the event 'Approve a case'
     Then verify the field with label 'Text Field ShowHide 14' is not visible

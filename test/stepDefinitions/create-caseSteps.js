@@ -5,6 +5,7 @@ let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
 let TestData = require('../utils/TestData.js');
+let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/conditionals_CreateCase_ConditionalPage1.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -14,6 +15,7 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then}) {
 
   let caseWizardPage = new CreateCaseWizardPage();
+  let createCasePage1 = new ConditionalsCreateCasePage1();
   let createCaseStartPage = new CreateCaseStartPage();
   let caseListPage = new CaseListPage();
 
@@ -25,6 +27,46 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   When(/^I create the case$/, async function () {
       await createCase();
+  });
+
+  Given('I start createCase event', async function () {
+    await baseSteps.navigateToCreateCasePage();
+  });
+
+  Given(/^there is an '(.*)' field on page1$/, async function (field) {
+    if (field === 'Mandatory text') {
+      await createCasePage1.enterIntoMandatoryTextField(undefined);
+    } else if (field === 'Optional text') {
+      await createCasePage1.enterIntoOptionalTextField(undefined);
+    }
+  });
+
+  Given(/^there is an '(.*)' field on page1 with a matching show condition$/, async function (field) {
+    if (field === 'Mandatory text') {
+      await createCasePage1.enterIntoMandatoryTextField(undefined);
+      await createCasePage1.completeShowConditionToShowField();
+    } else if (field === 'Optional text') {
+      await createCasePage1.enterIntoOptionalTextField(undefined);
+      await createCasePage1.completeShowConditionToShowField();
+    }
+  });
+
+  When('I complete the show condition to show the field', async function () {
+    await createCasePage1.completeShowConditionToShowField();
+  });
+
+  When('I complete the show condition to hide the field', async function () {
+    await createCasePage1.completeShowConditionToHideField();
+  });
+
+  Then(/^a conditional text field on the same page is displayed$/, async function() {
+    let fieldDisplayed = await createCasePage1.isConditionalFieldPresent();
+    expect(fieldDisplayed).to.be.true;
+  });
+
+  Then(/^a conditional text field on the same page is hidden/, async function() {
+    let fieldDisplayed = await createCasePage1.isConditionalFieldPresent();
+    expect(fieldDisplayed).to.be.false;
   });
 
   Given(/^there are cases listed on the case list page for that case type$/, async function () {

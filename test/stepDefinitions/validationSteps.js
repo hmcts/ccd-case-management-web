@@ -70,14 +70,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.interactWithField(fieldType, value);
   });
 
-  Given('I start createCase event', async function () {
-    await baseSteps.navigateToCreateCasePage();
-  });
-
-  When(/^I enter '(.*)' into the text field with id '(.*)'$/, async function (value, id) {
-    await caseWizardPage.interactWithField('text', value, id);
-  });
-
   When(/^I re-enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
     await caseWizardPage.interactWithField(fieldType, value);
   });

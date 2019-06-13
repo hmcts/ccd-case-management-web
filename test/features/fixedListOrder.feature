@@ -1,7 +1,7 @@
 @functional @fixedListOrder
 Feature: Set of scenarios to test functionality of the order of fixed list
 
-  Scenario Outline: Correct order of fixed list items is displayed
+  Scenario: Correct order of fixed list items is displayed
 
     # Definition setup
     #  Complex Types
@@ -10,7 +10,7 @@ Feature: Set of scenarios to test functionality of the order of fixed list
     #  | School                |  Class                | Collection	           | SchoolClass
     #  | SchoolClass	       |  ClassDetails         | SchoolClassDetails    |
     #  | SchoolClassDetails	   |  ClassLocation	       | SchoolClassLocation   |
-    #  | SchoolClassLocation   |  ClassMandatoryFor	   | MultiSelectList	   | mandatoryClassForEnum
+    #  | SchoolClassLocation   |  ClassMandatoryFor	   | MultiSelectList	   | classMandatoryForEnum
     #  | SchoolClassLocation   |  Building	           | SchoolBuildingDetails |
     #  | SchoolBuildingDetails |  Floor                | FixedList             | floorEnum
     #  Fixed Lists
@@ -32,7 +32,7 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | MANCHESTER      |
       | CARDIFF         |
       | OXFORD          |
-    And school class location should have the mandatory for field as a multiselect list with options in the following order '<listItemsOrder>':
+    And school class should have the mandatory for field as a multiselect list with options in the following order '<listItemsOrder>':
       | listItemsOrder  |
       | BSc             |
       | MSc             |
@@ -42,6 +42,6 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | ONE             |
       | TWO             |
       | THREE           | 
-      | FOUR           | 
+      | FOUR            | 
 
 

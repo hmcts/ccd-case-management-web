@@ -36,7 +36,7 @@ const config = {
             name: 'MAC_CHROME_LATEST',
             platform: 'macOS 10.13',
             version: 'latest',
-           'tunnel-identifier': 'reformtunnel'
+           'tunnel-identifier': 'reformtunnel',
             shardTestFiles: true,
             maxInstances: 1
          
@@ -59,7 +59,7 @@ const config = {
             platform: 'macOS 10.13',
             version: 'latest',
             'tunnel-identifier': 'reformtunnel',
-            shardTestFiles: true,
+            shardTestFiles: false,
             maxInstances: 1
         }
         

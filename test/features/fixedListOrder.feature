@@ -27,6 +27,7 @@ Feature: Set of scenarios to test functionality of the order of fixed list
     #  | floorEnum             |  FOUR                 | Four                  | 7
 
     Given a case type containing a collection of nested complex types exists
+    And I start the event 'Create school'
     Then school should have regional centre field as a fixed radio list with the following order '<listItemsOrder>':
       | listItemsOrder  |
       | MANCHESTER      |

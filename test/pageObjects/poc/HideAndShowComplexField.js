@@ -1,4 +1,4 @@
-CcdStringField = require('../../ccd-components/ccdStringField.js.js');
+CcdStringField = require('../ccd-components/fields/ccdStringField.js');
 
 
 class HideAndShowComplexField {

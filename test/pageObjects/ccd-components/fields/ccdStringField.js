@@ -17,7 +17,7 @@ class CCDStringField {
    * @param type
    * @param id
    */
-  constructor(css, type, id){
+  constructor(css, type,id ){
     if (id) {
       this.stringField = new TextField(`${css} #${id}`);
       this.id = id;
@@ -35,7 +35,6 @@ class CCDStringField {
   async getFieldData(){
     let data = [];
     let key = this.id; //this would NOT be the id in the html but id in the def file, we would think of this as a key to identify the field
-    let label = await this._getLabel();
     let value = await this.getFieldValue();
     let isHidden = await this.isHidden();
     return data.push(key, label, value, isHidden)

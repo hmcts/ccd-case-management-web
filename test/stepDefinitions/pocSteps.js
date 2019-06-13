@@ -9,6 +9,10 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
+  /**
+   * NOTE the 'page' would have to be non static, might need a switch statement depending on
+   * what page you are on so you can call individual page object methods
+   */
   Given('the page contains the following fields', async function (dataTable) {
 
     /**

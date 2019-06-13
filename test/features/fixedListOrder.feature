@@ -13,7 +13,7 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | SchoolClassLocation   |  Building	          | SchoolBuildingDetails |                       |
       | SchoolBuildingDetails |  Floor                | FixedList             | floorEnum             |
     And the definition sheet 'FixedList' looks like this
-      | id                    |  ListElementCode      | ListElement           | DisplayOrder
+      | ID                    |  ListElementCode      | ListElement           | DisplayOrder
       | mandatoryClassForEnum |  MSc	              | Master of Science	  | 4                     |
       | mandatoryClassForEnum |  ScD	              | Doctor of Science	  |                       |
       | mandatoryClassForEnum |  BSc                  | Bachelor of Science   | 2                     |

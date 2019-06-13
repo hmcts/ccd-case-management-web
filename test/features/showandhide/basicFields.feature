@@ -2,6 +2,15 @@
 Feature: Hide and show of basic fields
 
   Background:
+    Given the definition sheet 'CaseEventToFields' looks like this
+      | CaseTypeID   | CaseEventID   | CaseFieldID          | DisplayContext  | FieldShowCondition             |
+      | Conditionals | createCase    | TextField            | Mandatory       |                                |
+      | Conditionals | createCase    | TextFieldOptional    | Optional        |                                |
+      | Conditionals | createCase    | TextField2           | Optional        | TextField="showmethemoney"     |
+      | Conditionals | createCase    | TextFieldShowHide13  | Optional        | TextFieldOptional="showme"     |
+      | Conditionals | approveCase   | TextFieldShowHide13  | Optional        | TextFieldOptional="showme"     |
+      | Conditionals | approveCase   | TextFieldShowHide14  | Optional        | TextFieldOptional="dontshowme" |
+
     Given I have logged in
     And a case type containing show and hide functionality exists
 

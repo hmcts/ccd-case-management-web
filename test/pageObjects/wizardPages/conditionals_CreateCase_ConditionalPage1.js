@@ -1,33 +1,37 @@
+let CCDStringField = require('../ccd-components/fields/ccdStringField.js');
+
 class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
 
   constructor() {
     super();
     this._fieldUsedInShowCondition = ''; // TextField | TextFieldOptional
+    this.mandatoryTextField = new CCDStringField('ccd-write-text-field', 'text', 'TextField');
+    this.optionalTextField = new CCDStringField('ccd-write-text-field', 'text', 'TextFieldOptional');
   }
 
   async enterIntoMandatoryTextField(text) {
-    await this.interactWithField('text', text, 'TextField');
+    await this.mandatoryTextField.enterText(text);
     this._fieldUsedInShowCondition = 'TextField';
   }
 
   async enterIntoOptionalTextField(text) {
-    await this.interactWithField('text', text, 'TextFieldOptional');
+    await this.optionalTextField.enterText(text);
     this._fieldUsedInShowCondition = 'TextFieldOptional';
   }
 
   async completeShowConditionToShowField() {
     if (this._fieldUsedInShowCondition === 'TextField') {
-      await this.interactWithField('text', 'showmethemoney', this._fieldUsedInShowCondition);
+      await this.mandatoryTextField.enterText('showmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
-      await this.interactWithField('text', 'showme', this._fieldUsedInShowCondition);
+      await this.optionalTextField.enterText('showme');
     }
   }
 
   async completeShowConditionToHideField() {
     if (this._fieldUsedInShowCondition === 'TextField') {
-      await this.interactWithField('text', 'dontshowmethemoney', this._fieldUsedInShowCondition);
+      await this.mandatoryTextField.enterText('dontshowmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
-      await this.interactWithField('text', 'dontshowme', this._fieldUsedInShowCondition);
+      await this.optionalTextField.enterText('dontshowme');
     }
   }
 

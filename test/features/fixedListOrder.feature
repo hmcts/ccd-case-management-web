@@ -8,8 +8,8 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | School                |  SchoolRegionalCentre | FixedRadioList        | regionalCentreEnum    |
       | School                |  Class                | Collection	          | SchoolClass           |
       | SchoolClass	          |  ClassDetails         | SchoolClassDetails    |                       |
+      | SchoolClass           |  ClassMandatoryFor    | MultiSelectList	      | classMandatoryForEnum |
       | SchoolClassDetails    |  ClassLocation	      | SchoolClassLocation   |                       |
-      | SchoolClassLocation   |  ClassMandatoryFor    | MultiSelectList	      | classMandatoryForEnum |
       | SchoolClassLocation   |  Building	          | SchoolBuildingDetails |                       |
       | SchoolBuildingDetails |  Floor                | FixedList             | floorEnum             |
     And the definition sheet 'FixedList' looks like this
@@ -26,21 +26,16 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | floorEnum             |  FOUR                 | Four                  | 7                     |
     And a case type containing a collection of nested complex types exists
     And I start the event 'Create school'
-    Then school should have regional centre field as a fixed radio list with the following order '<listItemsOrder>':
-      | listItemsOrder  |
-      | MANCHESTER      |
-      | CARDIFF         |
-      | OXFORD          |
-    And school class should have the mandatory for field as a multiselect list with options in the following order '<listItemsOrder>':
-      | listItemsOrder  |
-      | BSc             |
-      | MSc             |
-      | ScD             |
-    And school class location building should have the floor field as a fixed list with options in the following order '<listItemsOrder>':
-      | listItemsOrder  |
-      | ONE             |
-      | TWO             |
-      | THREE           | 
-      | FOUR            | 
-
+    Then the page contains the following fields
+      | field                                                           | displayOrder   |
+      | MySchool.SchoolRegionalCentre.MANCHESTER                        | 1              |
+      | MySchool.SchoolRegionalCentre.CARDIFF                           | 2              |
+      | MySchool.SchoolRegionalCentre.OXFORD                            | 3              |
+      | MySchool.Class.ClassMandatoryFor.BsC                            | 1              |
+      | MySchool.Class.ClassMandatoryFor.MSc                            | 2              |
+      | MySchool.Class.ClassMandatoryFor.ScD                            | 3              |
+      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.ONE    | 1              |
+      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.TWO    | 2              |
+      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.THREE  | 3              |
+      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.FOUR   | 4              |
 

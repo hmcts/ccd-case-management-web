@@ -64,8 +64,37 @@ class CaseListComponent extends BasePage {
    * Click Sort icon to sort results
    * @returns {Promise<void|*>}
    */
-  async clickSortIcon() {
+  async clickSortIconAscending() {
     await element(this._sortIcon).click();
+
+    if (await this._getSortOrderIcon() !== 'ascending'){
+      await element(this._sortIcon).click();
+    }
+  }
+
+  /**
+   * Click Sort icon to sort results
+   * @returns {Promise<void|*>}
+   */
+  async clickSortIconDescending() {
+    await element(this._sortIcon).click();
+
+    if (await this._getSortOrderIcon() !== 'descending'){
+      await element(this._sortIcon).click();
+    }
+  }
+
+  async _getSortOrderIcon(){
+    let asc = '▼';
+    let desc = '▲';
+    let sortIcon = await element(this._sortIcon).getText();
+    if (await sortIcon === asc){
+      return 'ascending'
+    } else if (sortIcon === desc) {
+      return 'descending'
+    } else {
+      throw new CustomError(`Could not detect sort icon sort direction`)
+    }
   }
 
   /**

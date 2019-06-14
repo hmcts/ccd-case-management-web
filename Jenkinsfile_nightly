@@ -3,16 +3,16 @@
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
     pipelineTriggers([cron('H 05 * * *')]),
-    parameters([
-        string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
-        string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
-        string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password'),
-        booleanParam(
-            name: 'RUN_XBROWSER',
-            defaultValue: false,
-            description: 'Run Cross Browser tests'
-        )
-    ]),
+    //parameters([
+      //  string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
+        //string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
+       // string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password'),
+        //booleanParam(
+          //  name: 'RUN_XBROWSER',
+            //defaultValue: false,
+            //description: 'Run Cross Browser tests'
+        //)
+    //]),
 ])
 
 @Library("Infrastructure")
@@ -41,9 +41,9 @@ withNightlyPipeline(type, product, app) {
 
     enableSlackNotifications('#ccd-nightly-builds')
 
-    if (params.RUN_XBROWSER) {
+    //if (params.RUN_XBROWSER) {
         enableCrossBrowserTest()
-    }
+    //}
 
     loadVaultSecrets(secrets)
     env.TEST_URL = params.TEST_URL_PARAM

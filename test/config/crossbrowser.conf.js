@@ -19,8 +19,10 @@ const config = {
 
     useAllAngular2AppRoots: true,
     multiCapabilities: [
+      
         {
             browserName: 'chrome',
+            name: 'CCD_WIN_CHROME_LATEST',
             version: 'latest',
             platform: 'Windows 10',
             name: 'chrome-tests',
@@ -33,10 +35,10 @@ const config = {
 
         {
             browserName: 'chrome',
-            name: 'MAC_CHROME_LATEST',
+            name: 'CCD_MAC_CHROME_LATEST',
             platform: 'macOS 10.13',
             version: 'latest',
-           'tunnel-identifier': 'reformtunnel',
+            'tunnel-identifier': 'reformtunnel',
             shardTestFiles: true,
             maxInstances: 1
          
@@ -44,7 +46,7 @@ const config = {
 
         {
             browserName: 'firefox',
-            name: 'WIN_FIREFOX_LATEST',
+            name: 'CCD_WIN_FIREFOX_LATEST',
             platform: 'Windows 10',
             version: 'latest',
             'tunnel-identifier': 'reformtunnel',
@@ -55,7 +57,7 @@ const config = {
         
         {
             browserName: 'firefox',
-            name: 'MAC_FIREFOX_LATEST',
+            name: 'CCD_MAC_FIREFOX_LATEST',
             platform: 'macOS 10.13',
             version: 'latest',
             'tunnel-identifier': 'reformtunnel',

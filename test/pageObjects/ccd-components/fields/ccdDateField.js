@@ -48,6 +48,13 @@ class CcdDateField{
     await this._enterDateWithParams(day, month, year);
   }
 
+  async getDate(){
+    let day = await this.dayCss.getText();
+    let month = await this.monthCss.getText();
+    let year = await this.yearCss.getText();
+    return day + month + year;
+  }
+
    /**
    * Check if field is ready to type
    * @returns true or false

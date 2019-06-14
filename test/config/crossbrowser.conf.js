@@ -70,7 +70,7 @@ const config = {
     cucumberOpts: {
         strict: true,
         format: ['node_modules/cucumber-pretty', 'json:cb_reports/saucelab_results.json' ],
-        require: [''../stepDefinitions/*.js''],
+        require: ['../stepDefinitions/*.js'],
         tags: ['@functional']
     },
 
@@ -93,7 +93,7 @@ const config = {
 
       SELENIUM_PROMISE_MANAGER: false,
 
-      allScriptsTimeout: 60000
+      allScriptsTimeout: 60000,
     
       onPrepare() {
         const caps = browser.getCapabilities();

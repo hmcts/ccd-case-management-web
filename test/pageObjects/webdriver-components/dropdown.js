@@ -17,7 +17,6 @@ class Dropdown {
     this._currentDropdownOptionElement = `${css} option:checked`;
   }
 
-  //private
   async getOptionElements(){
     return await $$(`${this._dropdownElement} option`);
   }

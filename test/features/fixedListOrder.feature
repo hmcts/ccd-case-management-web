@@ -18,7 +18,7 @@ Feature: Set of scenarios to test functionality of the order of fixed list
     And the following definition for 'fixed lists'
       | ID                    | ListElementCode      | ListElement           | DisplayOrder          |
       | mandatoryClassForEnum | MSc                  | Master of Science     | 4                     |
-      | mandatoryClassForEnum | ScD	                 | Doctor of Science     |                       |
+      | mandatoryClassForEnum | ScD                  | Doctor of Science     |                       |
       | mandatoryClassForEnum | BSc                  | Bachelor of Science   | 2                     |
       | regionalCentreEnum    | CARDIFF              | Cardiff               | 5                     |
       | regionalCentreEnum    | MANCHESTER           | Manchester            | 2                     |

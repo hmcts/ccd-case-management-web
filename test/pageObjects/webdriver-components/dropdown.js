@@ -18,7 +18,7 @@ class Dropdown {
   }
 
   //private
-  async _getOptionElements(){
+  async getOptionElements(){
     return await $$(`${this._dropdownElement} option`);
   }
 
@@ -27,7 +27,7 @@ class Dropdown {
    * @returns String Array
    */
   async getOptionsTextValues(){
-    let dropdownElements = await this._getOptionElements();
+    let dropdownElements = await this.getOptionElements();
     let stringArray = [];
     for (const option of dropdownElements){
       const optionText = await option.getText();
@@ -43,7 +43,7 @@ class Dropdown {
     if (value) {
       await $(`${this._dropdownElement} option[value=${value}]`).click();
     } else {
-      let options = await this._getOptionElements();
+      let options = await this.getOptionElements();
       let elementListSize = await options.length;
       let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
       let optionToSelect = await options[randomOptionArrayInt-1];
@@ -68,7 +68,7 @@ class Dropdown {
     let optionToSelect;
     let found = false;
 
-    let options = await this._getOptionElements();
+    let options = await this.getOptionElements();
     let optionsTextArray = [];
 
 

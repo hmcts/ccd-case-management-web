@@ -18,10 +18,24 @@ class CcdFixedList {
     } else {
       this.fixedList = new Dropdown(`${this.css} select`);
     }
+    this.options = this.fixedList.getOptionElements();
     this.label = null;
 
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  /**
+   * Returns an options array
+   * @returns array of options
+   */
+  async getOptions() {
+    let optionValues = [];
+    for(const field of await this.options){
+      let value = await field.getAttribute('ng-reflect-value');
+      optionValues.push(value);
+    }
+    return optionValues;
   }
 
   async selectOption(optionLabel) {

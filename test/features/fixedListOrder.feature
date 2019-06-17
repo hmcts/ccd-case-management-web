@@ -1,9 +1,12 @@
 @functional @fixedListOrder
 Feature: Set of scenarios to test functionality of the order of fixed list
 
-  Scenario: Correct order of fixed list items is displayed
-
-    Given the definition sheet 'ComplexTypes' looks like this
+  Background:
+    Given I have logged in
+    And the following definition for 'case fields'
+      | ID                    | FieldType             |
+      | MySchool	          | School                |
+    And the following definition for 'complex types'
       | ID                    |  ListElementCode      | FieldType             | FieldTypeParameter    |
       | School                |  SchoolRegionalCentre | FixedRadioList        | regionalCentreEnum    |
       | School                |  Class                | Collection	          | SchoolClass           |
@@ -12,8 +15,8 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | SchoolClassDetails    |  ClassLocation	      | SchoolClassLocation   |                       |
       | SchoolClassLocation   |  Building	          | SchoolBuildingDetails |                       |
       | SchoolBuildingDetails |  Floor                | FixedList             | floorEnum             |
-    And the definition sheet 'FixedList' looks like this
-      | ID                    |  ListElementCode      | ListElement           | DisplayOrder
+    And the following definition for 'fixed lists'
+      | ID                    |  ListElementCode      | ListElement           | DisplayOrder          |
       | mandatoryClassForEnum |  MSc	              | Master of Science	  | 4                     |
       | mandatoryClassForEnum |  ScD	              | Doctor of Science	  |                       |
       | mandatoryClassForEnum |  BSc                  | Bachelor of Science   | 2                     |
@@ -24,18 +27,27 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | floorEnum             |  TWO                  | Two                   | 4                     |
       | floorEnum             |  THREE                | Three                 | 5                     |
       | floorEnum             |  FOUR                 | Four                  | 7                     |
-    And a case type containing a collection of nested complex types exists
-    And I start the event 'Create school'
-    Then the page contains the following fields
-      | field                                                           | displayOrder   |
-      | MySchool.SchoolRegionalCentre.MANCHESTER                        | 1              |
-      | MySchool.SchoolRegionalCentre.CARDIFF                           | 2              |
-      | MySchool.SchoolRegionalCentre.OXFORD                            | 3              |
-      | MySchool.Class.ClassMandatoryFor.BsC                            | 1              |
-      | MySchool.Class.ClassMandatoryFor.MSc                            | 2              |
-      | MySchool.Class.ClassMandatoryFor.ScD                            | 3              |
-      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.ONE    | 1              |
-      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.TWO    | 2              |
-      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.THREE  | 3              |
-      | MySchool.Class.ClassDetails.ClassLocation.Building.Floor.FOUR   | 4              |
+
+  Scenario: Correct order of fixed list items is displayed
+
+    Given a case type containing a collection of nested complex types exists
+    And I navigate to the case creation form page
+    And I click on add collection item button
+    Then the page contains the following field:
+      | field                                                           | fieldType        | value          | displayOrder   |
+      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | MANCHESTER     | 1              |
+      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | CARDIFF        | 2              |
+      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | OXFORD         | 3              |
+    And the page contains the following field:
+      | field                                                           | fieldType        | value          | displayOrder   |
+      | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | BSc            | 1              |
+      | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | MSc            | 2              |
+      | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | ScD            | 3              |
+    And the page contains the following field:
+      | field                                                           | fieldType        | value          | displayOrder   |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       |                | 1              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | ONE            | 2              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | TWO            | 3              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | THREE          | 4              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | FOUR           | 5              |
 

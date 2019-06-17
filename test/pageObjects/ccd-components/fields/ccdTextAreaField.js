@@ -62,6 +62,10 @@ class CcdTextAreaField{
     return await $(`${this.css} .form-label`).getText();
   }
 
+  async getValue(){
+    return await this.stringField.getText();
+  }
+
 }
 
 module.exports = CcdTextAreaField;

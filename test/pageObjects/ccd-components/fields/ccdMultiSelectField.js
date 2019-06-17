@@ -7,6 +7,7 @@ class CcdMultiSelectField {
     }
     this.optionsDiv = $$(`${this.css} .multiple-choice input`);;
     this.labels = this._getLabels();
+    this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
   }
 
   /**
@@ -39,6 +40,19 @@ class CcdMultiSelectField {
       let optionToSelect = await this._getMultiSelectOption(optionValue);
       optionToSelect.click();
     }
+  }
+
+
+  /**
+   * return array of names of all selected checkboxes
+   * @returns {Promise<Array>}
+   */
+  async getSelectedCheckboxes(){
+    let checkboxNames = [];
+    for (const checkbox of await $$(this.selectedCheckboxes)) {
+      checkboxNames.push(await checkbox.getText())
+    }
+    return checkboxNames;
   }
 
   /**
@@ -89,7 +103,7 @@ class CcdMultiSelectField {
   }
 
   //private
-  async _getMultiSelectElements() {
+  async _getMultiSelectElements(){
     return await $$(`${this.css} input`);
   }
 

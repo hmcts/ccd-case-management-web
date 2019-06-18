@@ -44,8 +44,14 @@ const CONFIG = {
   'activity_next_poll_request_ms': parseInt(process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'], 10) || 5000,
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
-  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25
+  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25,
+  'web_pages_instrumentation_key': process.env['WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY'] || '',
 };
+
+const fs = require('fs');
+const KEY_FILE_NAME = './browser/ai-instrumentation-key.js';
+const KEY_FILE_CONTENT = `const WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY = '${CONFIG.web_pages_instrumentation_key}';`;
+fs.writeFileSync(KEY_FILE_NAME, KEY_FILE_CONTENT);
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');

@@ -3,6 +3,7 @@ let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 let baseSteps = require('./baseSteps.js');
+let Data = require('../utils/TestData.js');
 CustomError = require('../utils/errors/custom-error.js');
 let TestData = require('../utils/TestData.js');
 
@@ -11,7 +12,7 @@ let expect = chai.expect;
 
 var { defineSupportCode } = require("cucumber");
 
-defineSupportCode(function ({ Given, When, Then}) {
+defineSupportCode(function ({ Given, When, Then, And}) {
 
   let caseWizardPage = new CreateCaseWizardPage();
   let createCaseStartPage = new CreateCaseStartPage();
@@ -37,7 +38,50 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   When(/^I navigate to the case creation form page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
+});
+
+  Given(/^a postcode field exist in a page$/, async function () {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+    await baseSteps.navigateToCreateCasePage();
   });
+
+  Given(/^a list of addresses listed for postcode '(.*)'$/, async function(postcode){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.enterPostcode(postcode);
+    await caseWizardPage.clickFindAddressButton();
+  })
+
+  Then(/^I should expect address list to be empty$/, async function(){
+    let options = caseWizardPage.ccdAddressUKField.addressListDropDown._getOptionElements();
+    options.then(options => expect(options.length).equals(0));
+  });
+
+  When(/^I enter a postcode '(.*)' and click find address$/, async function (postcode) {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.enterPostcode(postcode);
+    await caseWizardPage.clickFindAddressButton();
+    browser.waitForAngularEnabled(true);
+  });
+
+  Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
+    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    expect(currentSelection).to.be.equals(count+ " addresses found");
+  });
+
+  When(/^I Select a option '(.*)' from the list$/, async function(index) {
+    await caseWizardPage.ccdAddressUKField.addressListDropDown.selectAnOption();
+  });
+
+  Then(/^I should expect '(.*)' is populated using the selected address$/, async function(line) {
+    let text = await caseWizardPage.ccdAddressUKField[line].getText();
+    expect(text).to.not.be.null;
+  });
+
 
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
       let fieldDisplayed = await new CreateCaseWizardPage().isFieldPresent(dataType);
@@ -54,7 +98,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Then(/^I should see my value displayed$/, async function() {
-    let label = await this.fieldObject.label;
+    let xlabel = await this.fieldObject.label;
     let expectedValue = await this.fieldObject.checkYourAnswersValue.toString();
     let value = await new CreateCaseWizardPage().getCheckYourAnswersValueByLabel(label);
     expect(expectedValue).to.equal(value);

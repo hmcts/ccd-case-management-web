@@ -1,11 +1,14 @@
+
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
 Button = require('./webdriver-components/button.js');
+TextField = require('./webdriver-components/textField');
+DropDown = require('./webdriver-components/dropdown');
+CCDAddressUKField = require('./ccd-components/fields/ccdAddressUKField.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
 
 
 class CreateCaseWizardPage extends BasePage{
-
 
     constructor() {
       super();
@@ -19,8 +22,9 @@ class CreateCaseWizardPage extends BasePage{
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
-
+      this.ccdAddressUKField = new CCDAddressUKField("#postcodeInput");
       this.fieldUtils =  new FieldUtils();
+      this.alertError  = '.alert-message';
     }
 
   /**
@@ -115,6 +119,16 @@ class CreateCaseWizardPage extends BasePage{
         await this.continueButton.click();
     }
 
+
+    async enterPostcode(postcode) {
+      await element(this.ccdAddressUKField.postcodeText).sendKeys(postcode);
+    }
+
+    async clickFindAddressButton() {
+      await this.ccdAddressUKField.findAdressButton.click();
+      await new CaseDetailsPage()
+    }
+
   /**
    * Final button to submit the case/event
    * @returns {Promise<void>}
@@ -173,7 +187,16 @@ class CreateCaseWizardPage extends BasePage{
       return await this.elementDisplayed($(this.fieldError));
     }
 
-    async continueButtonEnabled(){
+  async isAlertErrorDisplayed() {
+    var alertElement = await element(by.css('.container-fluid'));
+    // browser.wait(protractor.ExpectedConditions.until.presenceOf(alertElement), 9000, 'element is taking too long to appear');
+    // var alertElement = element(by.cssContainingText('.container-fluid ccd-alert.cut-alert div.alert-message >', "An error occurred retrieving addresses for"));
+    browser.sleep(5000);
+
+    return await alertElement.isPresent();
+  }
+
+  async continueButtonEnabled(){
       return await this.continueButton.isEnabled();
     }
 

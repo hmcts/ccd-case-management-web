@@ -21,7 +21,8 @@ module.exports = {
   fillOutMandatoryFields: async function(){
     let wizardPage = new CreateCaseWizardPage();
     for (const elem of TestData.mandatoryFields) {
-      if (await wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
+      let id = elem.fieldType === 'yes-no' ? elem.fieldId + '-' + elem.value : elem.fieldId;
+      if (await wizardPage.isFieldPresent(elem.fieldType, id)) {
         await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
       }
     }
@@ -30,7 +31,8 @@ module.exports = {
   fillOutOptionalFields: async function(){
     let wizardPage = new CreateCaseWizardPage();
     for (const elem of TestData.optionalFields) {
-      if (wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
+      let id = elem.fieldType === 'yes-no' ? elem.fieldId + '-' + elem.value : elem.fieldId;
+      if (wizardPage.isFieldPresent(elem.fieldType, id)) {
         await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
       }
     }

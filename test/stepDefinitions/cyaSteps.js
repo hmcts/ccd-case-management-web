@@ -13,7 +13,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^I am on the check your answers page$/, async function () {
     //multiple pages caseType
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField('text');
     await caseWizardPage.clickContinueButton();
     this.fieldObject = await caseWizardPage.interactWithField('text');
@@ -52,7 +52,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.clickContinueButton();
 
     let fieldLabel = await this.fieldObject.label;
-    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel)
+    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel);
     let expectedValue = await this.fieldObject.checkYourAnswersValue;
 
     expect(actualValue, 'wrong value for CYA').to.equal(expectedValue)

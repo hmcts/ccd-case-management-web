@@ -64,11 +64,13 @@ describe('SearchComponent', () => {
         };
         let formGroup = new FormGroup(filterContents);
         let filter = {
-            formGroup: formGroup,
-            jurisdiction: JURISDICTION,
-            caseType: CASE_TYPES[0],
-            caseState: CASE_STATE,
-            page: 1
+            selected: {
+                formGroup: formGroup,
+                jurisdiction: JURISDICTION,
+                caseType: CASE_TYPES[0],
+                caseState: CASE_STATE,
+                page: 1
+            }
         };
 
         subject.applyFilter(filter);
@@ -94,11 +96,13 @@ describe('SearchComponent', () => {
         };
         let formGroup = new FormGroup(filterContents);
         let filter = {
-            formGroup: formGroup,
-            jurisdiction: JURISDICTION,
-            caseType: CASE_TYPES[0],
-            caseState: CASE_STATE,
-            page: 1
+            selected: {
+                formGroup: formGroup,
+                jurisdiction: JURISDICTION,
+                caseType: CASE_TYPES[0],
+                caseState: CASE_STATE,
+                page: 1
+            }
         };
 
         subject.applyFilter(filter);
@@ -129,11 +133,13 @@ describe('SearchComponent', () => {
         };
         let formGroup = new FormGroup(filterContents);
         let filter = {
-            formGroup: formGroup,
-            jurisdiction: JURISDICTION,
-            caseType: CASE_TYPES[0],
-            page: 1,
-            metadataFields: ['[META]']
+            selected: {
+                formGroup: formGroup,
+                jurisdiction: JURISDICTION,
+                caseType: CASE_TYPES[0],
+                page: 1,
+                metadataFields: ['[META]']
+            }
         };
 
         subject.applyFilter(filter);

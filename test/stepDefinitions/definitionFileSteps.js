@@ -89,7 +89,19 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type containing conditionals exists$/, function() {
     Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+  });
+
+  Given(/^a case type containing conditional mandatory complex type exists$/, function() {
+    Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'AddressComplex1_AddressLine1'},
+                            {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine2'},
+                            {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine3'},
+                            {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine4'},
+                            {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine5'},
+                            {fieldType: 'text', fieldId: 'AddressComplex1_Country'}];
   });
 
   Given(/^a case type exists with case reference configured in the case list results$/, async function () {
@@ -101,4 +113,32 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'Complex in Coll in Complex';
     Data.event = 'Create school';
   });
+
+  Given(/^a case type containing conditional mandatory collection of complex types exists$/, function() {
+    Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine1'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine4'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine5'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'}];
+  });
+
+  Given(/^a case type containing conditionals exists for OR event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case OR";
+  });
+
+  Given(/^a case type containing conditionals exists for AND event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case AND";
+  });
+
+  Given(/^a case type containing conditionals exists for NOT event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case NOT";
+  });
+
 });
+

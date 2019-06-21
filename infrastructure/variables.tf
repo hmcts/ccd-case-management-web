@@ -87,6 +87,10 @@ variable "common_tags" {
   type = "map"
 }
 
+variable "web_pages_appinsights_instrumentation_key" {
+  default = ""
+}
+
 variable "appinsights_instrumentation_key" {
   description = "Instrumentation key of the App Insights instance this webapp should use. Module will create own App Insights resource if this is not provided"
   default = ""

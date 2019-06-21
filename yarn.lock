@@ -342,7 +342,7 @@
     esutils "^2.0.2"
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
-
+    
 "@hmcts/ccd-case-ui-toolkit@2.55.2-prerelease":
   version "2.55.2-prerelease"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.55.2-prerelease.tgz#a2ae0bd95a17c95a2bccba73e8a7370eb0ca4336"
@@ -2388,6 +2388,7 @@ camelcase@^5.0.0:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000864:
+
   version "1.0.30000976"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000976.tgz#d30fe12662cb2a21e130d307db9907513ca830a2"
   integrity sha512-tleNB1IwPRqZiod6nUNum63xQCMN96BUO2JTeiwuRM7p9d616EHsMBjBWJMudX39qCaPuWY8KEWzMZq7A9XQMQ==
@@ -5754,9 +5755,11 @@ inquirer@^5.2.0:
     through "^2.3.6"
 
 inquirer@^6.0.0, inquirer@^6.2.2:
+
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.4.1.tgz#7bd9e5ab0567cd23b41b0180b68e0cfa82fc3c0b"
   integrity sha512-/Jw+qPZx4EDYsaT6uz7F4GJRNFMRdKNeUZw3ZnKV8lyuUgz/YWRCSUAJMZSVhSq4Ec0R2oYnyi6b3d4JXcL5Nw==
+
   dependencies:
     ansi-escapes "^3.2.0"
     chalk "^2.4.2"
@@ -10671,6 +10674,7 @@ snyk@^1.124.1:
     snyk-config "^2.2.1"
     snyk-docker-plugin "1.25.1"
     snyk-go-plugin "1.10.2"
+    snyk-go-plugin "1.10.1"
     snyk-gradle-plugin "2.12.4"
     snyk-module "1.9.1"
     snyk-mvn-plugin "2.3.0"

@@ -1,7 +1,7 @@
 exports.config = {
 
   specs: [
-    '../features/*.feature'
+    '../features/postcodelookup.feature'
   ],
 
   exclude: [],

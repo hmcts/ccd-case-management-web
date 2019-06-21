@@ -57,8 +57,8 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   })
 
   Then(/^I should expect address list to be empty$/, async function(){
-    let options = caseWizardPage.ccdAddressUKField.addressListDropDown._getOptionElements();
-    options.then(options => expect(options.length).equals(0));
+    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    expect(currentSelection).to.be.equals("No address found");
   });
 
   When(/^I enter a postcode '(.*)' and click find address$/, async function (postcode) {
@@ -69,6 +69,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
+    debugger;
     let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
     expect(currentSelection).to.be.equals(count+ " addresses found");
   });

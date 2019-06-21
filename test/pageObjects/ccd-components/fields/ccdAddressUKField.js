@@ -11,7 +11,7 @@ class CCDAddressUKField {
 
     this.postcodeText = new TextField('.postcodeinput');
     this.findAdressButton = new Button('.button', 'Find address');
-    this.addressListDropDown = new DropDown('#addressList');
+    this.addressListDropDown = new DropDown('ccd-write-address-field select');
     this.addressLine1 = new TextField('#AddressUKField__AddressLine1');
     this.addressLine2 = new TextField('#AddressUKField__AddressLine2');
     this.postTown = new TextField('#AddressUKField__PostTown');

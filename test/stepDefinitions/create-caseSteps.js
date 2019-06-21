@@ -153,6 +153,8 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
+
+
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.not.include(expectedLabel);
@@ -367,6 +369,32 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Then(/^I CANNOT submit the case$/, async function () {
     expect(await caseWizardPage.continueButtonEnabled()).to.be.false;
+  });
+
+  Given(/^I have successfully submitted this case$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await baseSteps.fillOutAndSubmitEvent();
+  });
+
+  When(/^I navigate through to the page '(.*)'$/, async function(pageTitle) {
+    while(await caseWizardPage.getPageHeader() !== pageTitle){
+      await caseWizardPage.clickContinueButton();
+
+      if (await caseWizardPage.errorSummaryDispalyed()){
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but found an error on page and cannot continue`;
+        throw new CustomError(errMsg)
+      }
+
+      if (await caseWizardPage.amOnCheckYourAnswersPage()){
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but have reached Check Your Answers page`;
+        throw new CustomError(errMsg)
+      }
+    }
+  });
+
+  Then(/^the originally entered value will be shown in the '(.*)' field on the page$/, async function(dataType) {
+    let val = await caseWizardPage.getFieldValue(dataType);
+    expect(val).to.eq(TestData.savedValue);
   });
 
 });

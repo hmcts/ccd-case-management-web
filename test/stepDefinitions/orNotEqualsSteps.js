@@ -19,7 +19,7 @@ defineSupportCode(function({ Given, When, Then }) {
   });
 
   When(/^populate field '(.*)' with value '(.*)'$/, async function(fieldName, fieldValue) {
-    await caseWizardPage.interactWithField("text", value, fieldId);
+    await caseWizardPage.interactWithField("text", fieldValue, fieldName);
   });
 
   Then(/^the field '(.*)' is NOT visible$/, async function(fieldType) {

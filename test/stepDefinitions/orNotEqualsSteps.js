@@ -19,11 +19,7 @@ defineSupportCode(function({ Given, When, Then }) {
   });
 
   When(/^populate field '(.*)' with value '(.*)'$/, async function(fieldName, fieldValue) {
-    await populateTextFieldValue(fieldValue, fieldName);
-  });
-
-  When(/^submit create a case and navigate to next '(.*)' page$/, async function(nextPage) {
-    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField("text", value, fieldId);
   });
 
   Then(/^the field '(.*)' is NOT visible$/, async function(fieldType) {
@@ -31,33 +27,9 @@ defineSupportCode(function({ Given, When, Then }) {
     expect(fieldPresent).to.be.false;
   });
 
-  Then(/^the field '(.*)' is visible$/, async function(fieldType) {
-    let fieldPresent = await caseWizardPage.isFieldPresent(fieldType);
-    expect(fieldPresent).to.be.true;
-  });
-
   Then(/^the field with labelText '(.*)' is visible$/, async function(labelText) {
     let valueExists = await caseWizardPage.getCheckYourAnswersValueByLabel(labelText);
     expect(valueExists);
   });
 
-  Then(/^the page '(.*)' should display$/, async function(pageHeaderToDisplay) {
-    let pageHeader = await caseWizardPage.getPageHeader();
-    expect(pageHeaderToDisplay).to.equal(pageHeader);
-  });
-
-  // Then(/^The text field '(.*)' contains value '(.*)'$/, async function(fieldId, fieldValue) {
-  //   let textField = await caseWizardPage.getTextField(fieldId);
-  //   // expect(textField).to.be.true;
-  // });
-
-  //
-  // When(/^populate field '(.*)' with value '(.*)'$/, async function(fieldName, fieldValue) {
-  //   await caseWizardPage.interactWithField(fieldName, fieldValue);
-  // });
-
-
-  async function populateTextFieldValue(value, fieldId) {
-    await caseWizardPage.interactWithField("text", value, fieldId);
-  }
 });

@@ -381,19 +381,19 @@ defineSupportCode(function ({ Given, When, Then}) {
       await caseWizardPage.clickContinueButton();
 
       if (await caseWizardPage.errorSummaryDispalyed()){
-        let errMsg = `Attempting to navigate thought to page '${pageTitle}' but found an error on page and cannot continue`;
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but found an error on page and cannot continue`;
         throw new CustomError(errMsg)
       }
 
       if (await caseWizardPage.amOnCheckYourAnswersPage()){
-        let errMsg = `Attempting to navigate thought to page '${pageTitle}' but have reached Check Your Answers page`;
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but have reached Check Your Answers page`;
         throw new CustomError(errMsg)
       }
     }
   });
 
   Then(/^the originally entered value will be shown in the '(.*)' field on the page$/, async function(dataType) {
-    let val = await caseWizardPage.getFieldValue(dataType)
+    let val = await caseWizardPage.getFieldValue(dataType);
     expect(val).to.eq(TestData.savedValue);
   });
 

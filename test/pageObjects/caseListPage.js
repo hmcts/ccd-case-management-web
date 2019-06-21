@@ -2,6 +2,8 @@ BasePage = require('./basePage.js')
 NavBar = require('./ccd-components/globalNavBar.js');
 CaseList= require('./ccd-components/caseListComponent.js');
 Footer = require('./ccd-components/footerComponent.js');
+CaseFilters = require('./ccd-components/caseFilters.js');
+
 const selfUrlPath = '/list';
 
 class CaseListPage extends BasePage {
@@ -48,6 +50,15 @@ class CaseListPage extends BasePage {
    */
   getCaseListComponent(){
       return new CaseList;
+  }
+
+  /**
+   * Return a new instance of the Case Filters dropdowns and apply/reset button
+   * which is common on search page and workbasket filters on Case List page
+   * @returns {CaseFilters|*}
+   */
+  getWorkBasketFilters(){
+    return new CaseFilters;
   }
 
   /**

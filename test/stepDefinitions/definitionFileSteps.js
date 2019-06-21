@@ -89,11 +89,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type containing conditionals exists$/, function() {
     Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   });
 
   Given(/^a case type containing conditional mandatory complex type exists$/, function() {
     Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'AddressComplex1_AddressLine1'},
                             {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine2'},
                             {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine3'},
@@ -114,6 +116,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type containing conditional mandatory collection of complex types exists$/, function() {
     Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine1'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
@@ -121,4 +124,30 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine5'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'}];
   });
+
+  Given(/^a case type containing conditionals exists for OR event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case OR";
+  });
+
+  Given(/^a case type containing conditionals exists for AND event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case AND";
+  });
+
+  Given(/^a case type containing conditionals exists for NOT event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case NOT";
+  });
+
+  Given(/^a case with an 'AND show page condition' across different pages exists$/, async function() {
+    Data.caseType = 'Conditionals';
+    Data.event = ' Create a case';
+    Data.savedValue = 'conditional page value';
+    Data.eventFields = [[{fieldType: 'text', fieldId: 'TextField',value: 'showmethemoney'}],
+                          [{fieldType: 'text', fieldId: 'TextField3',value: 'showpage5'}],
+                          [{fieldType: 'text', fieldId: 'TextField11',value: Data.savedValue}]];
+  });
+
 });
+

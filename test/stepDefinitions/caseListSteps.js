@@ -18,7 +18,6 @@ defineSupportCode(function ({ Given, When, Then}) {
   Then(/^the case reference is displayed in the case list results with hyphens$/, async function () {
     await caseListPage.getNavBarComponent().clickCaseListLink();
 
-
     await wbFilters.selectJurisdiction(TestData.jurisdiction);
     await wbFilters.selectCaseType(TestData.caseType);
     await wbFilters.clickApplyButton();
@@ -109,6 +108,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     let currentPageTopResult =  await caseListPage.getCaseListComponent().getFirstColumnResultText();
     let errorMsg = 'first result in the case list page should be different to the one saved from a previous page';
     expect(this.topResult, errorMsg).to.not.equal(currentPageTopResult)
+    this.topResult = currentPageTopResult;
   });
 
   Given(/^there are more than (\d+) page of results$/, async function(pages){

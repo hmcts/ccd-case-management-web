@@ -10,39 +10,28 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     Then the case reference is displayed in the case list results with hyphens
 
   @pagination
-  Scenario: Next and previous buttons do not appear when at last or first page respectively
+  Scenario: Next and previous buttons appear appropriatley based on pagination position selected
     Given I am on case list page
     And there are more than 1 page of results
     And I am on page 1 of results
     And the 'Previous' button will not be displayed on pagination
+    And I navigate to page 2 of results
+    And the 'Previous' button will be displayed on pagination
+    And the 'Next' button will be displayed on pagination
     When I am on the last page of results
     Then the 'Next' button will not be displayed on pagination
 
   @pagination
-  Scenario: Both Next and Previous button visible on pagination when not on first or last page
-    Given I am on case list page
-    And there are more than 2 page of results
-    When I navigate to page 2 of results
-    Then the 'Previous' button will be displayed on pagination
-    And the 'Next' button will be displayed on pagination
-
-  @pagination
-  Scenario: Clicking Next button will navigate to next page and show next page selected on pagination
+  Scenario: Clicking Next/Previous button will navigate to respective next/previous page and show that page selected on pagination
     Given I am on case list page
     And there are more than 1 page of results
     And I am on page 1 of results
-    When I click the pagination 'Next' button
-    Then I will see a different page of results
+    And I click the pagination 'Next' button
+    And I will see a different page of results
     And page '2' will be selected on the pagination
-
-  @pagination
-  Scenario: Clicking Previous button will navigate to previous page and show previous page selected on pagination
-    Given I am on case list page
-    And there are more than 1 page of results
-    And I am on page 2 of results
-    When I click the pagination 'Previous' button
-    Then I will see a different page of results
-    And page '1' will be selected on the pagination
+    And I click the pagination 'Previous' button
+    And I will see a different page of results
+    Then page '1' will be selected on the pagination
 
   @pagination
   Scenario: Clicking 2 button on pagination will navigate to 2nd page and show 2 page selected on pagination

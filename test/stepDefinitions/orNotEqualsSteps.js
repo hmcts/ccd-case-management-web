@@ -46,6 +46,17 @@ defineSupportCode(function({ Given, When, Then }) {
     expect(pageHeaderToDisplay).to.equal(pageHeader);
   });
 
+  // Then(/^The text field '(.*)' contains value '(.*)'$/, async function(fieldId, fieldValue) {
+  //   let textField = await caseWizardPage.getTextField(fieldId);
+  //   // expect(textField).to.be.true;
+  // });
+
+  //
+  // When(/^populate field '(.*)' with value '(.*)'$/, async function(fieldName, fieldValue) {
+  //   await caseWizardPage.interactWithField(fieldName, fieldValue);
+  // });
+
+
   async function populateTextFieldValue(value, fieldId) {
     await caseWizardPage.interactWithField("text", value, fieldId);
   }

@@ -148,5 +148,14 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.event = "Create a case NOT";
   });
 
+  Given(/^a case with an 'AND show page condition' across different pages exists$/, async function() {
+    Data.caseType = 'Conditionals';
+    Data.event = ' Create a case';
+    Data.savedValue = 'conditional page value';
+    Data.eventFields = [[{fieldType: 'text', fieldId: 'TextField',value: 'showmethemoney'}],
+                          [{fieldType: 'text', fieldId: 'TextField3',value: 'showpage5'}],
+                          [{fieldType: 'text', fieldId: 'TextField11',value: Data.savedValue}]];
+  });
+
 });
 

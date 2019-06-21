@@ -166,3 +166,10 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I populate the non-conditional fields but NOT the shown conditional fields on the collection of complex types
     Then I CANNOT submit the case
 
+  @RDM-4781
+  Scenario: PageShowCondition - should not clear further pages fields after finding next page
+    Given a case with an 'AND show page condition' across different pages exists
+    And I have successfully submitted this case
+    When I start the event 'Approve a case'
+    And I navigate through to the page 'Conditional Page 5 - Approve a case'
+    Then the originally entered value will be shown in the 'text' field on the page

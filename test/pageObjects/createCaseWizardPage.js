@@ -93,6 +93,10 @@ class CreateCaseWizardPage extends BasePage{
       return await this.fieldUtils.selectYesNoOption(radioButtonId, option);
     }
 
+    async getFieldValue(dataType){
+      return await new FieldUtils().getFieldValue(dataType);
+    }
+
     async clickCollectionAddNewButton(collectionFieldId) {
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
@@ -183,6 +187,11 @@ class CreateCaseWizardPage extends BasePage{
 
     async clickGenericCollectionAddNewButton() {
       await this.CollectionNewButton.click();
+    }
+
+    async amOnCheckYourAnswersPage(){
+      let url = await browser.getCurrentUrl();
+      return url.includes('/submit')
     }
 
 }

@@ -10,25 +10,13 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     Then the case reference is displayed in the case list results with hyphens
 
   @pagination
-  Scenario: No Previous button on pagination when on page 1
+  Scenario: Next and previous buttons do not appear when at last or first page respectively
     Given I am on case list page
     And there are more than 1 page of results
-    When I am on page 1 of results
-    Then the 'Previous' button will not be displayed on pagination
-
-  @pagination
-  Scenario: No Next button on pagination when on last page
-    Given I am on case list page
-    And there are more than 1 page of results
+    And I am on page 1 of results
+    And the 'Previous' button will not be displayed on pagination
     When I am on the last page of results
     Then the 'Next' button will not be displayed on pagination
-
-  @pagination
-  Scenario: Previous button visible on pagination when on page 2
-    Given I am on case list page
-    And there are more than 1 page of results
-    When I navigate to page 2 of results
-    Then the 'Previous' button will be displayed on pagination
 
   @pagination
   Scenario: Both Next and Previous button visible on pagination when not on first or last page
@@ -65,15 +53,11 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     And page '2' will be selected on the pagination
 
   @pagination
-  Scenario: display three dots (...) at end of pagination if there are 8 or more pages
+  Scenario: display three dots (...) at beginning or end of pagination if there are 8 or more pages
     Given I am on case list page
     And there are more than 8 page of results
-    When I am on page 1 of results
-    Then three dots will be displayed after page 6 on the pagination
-
-  @pagination
-  Scenario: display three dots (...) at beginning of pagination if there are 8 or more pages
-    Given I am on case list page
-    And there are more than 8 page of results
+    And I am on page 1 of results
+    And three dots will be displayed after page 6 on the pagination
     When I am on the last page of results
     Then three dots will be displayed after page 1 on the pagination
+

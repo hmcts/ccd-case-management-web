@@ -101,9 +101,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I click on its first accordion on the '(.*)' tab$/, async function (tabName) {
-    await caseDetailsPage.clickTab(tabName);
-    await caseDetailsPage.clickFirstAccordian();
+      await caseDetailsPage.clickTab(tabName);
+      await caseDetailsPage.clickFirstAccordian();
   });
 
+  When(/^I start the event '(.*)'$/, async function(event) {
+      await caseDetailsPage.startEvent(event)
+  });
 
 });

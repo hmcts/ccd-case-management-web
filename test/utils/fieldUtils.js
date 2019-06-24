@@ -7,6 +7,7 @@ let CCDTextAreaField = require('../pageObjects/ccd-components/fields/ccdTextArea
 let CCDComplexTypeField = require('../pageObjects/ccd-components/fields/ccdComplexTypeField.js');
 let CCDMultiSelectField = require('../pageObjects/ccd-components/fields/ccdMultiSelectField.js');
 let CCDCollectionField = require('../pageObjects/ccd-components/fields/ccdCollectionField.js');
+let CCDAddressUKField = require('../pageObjects/ccd-components/fields/ccdAddressUKField.js');
 
 class FieldDataTypes {
 
@@ -52,11 +53,26 @@ class FieldDataTypes {
    * Enter a text into the CaseLink field
    * @returns CCDStringField Object
    */
-  async enterIntoCaseLinkField(value, id){
+  async enterIntoCaseLinkField(value, id) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;
     let field = await new CCDStringField(css, type, id);
     await field.enterText(value);
+    return field;
+  }
+
+  /**
+   * Sets the value into the AddressLine1 field of the address field specified by id.
+   * If no id is specified it will populate AddressLine1 of the first found address.
+   * @param value
+   * @param id
+   * @returns CCDAddressUKField Object
+   */
+  async enterIntoAddressLine1Field(value, id) {
+    let css = await FIELDS.ADDRESS.cssTag;
+    let type = await FIELDS.ADDRESS.type;
+    let field = await new CCDAddressUKField(css, id);
+    await field.enterTextIntoAddressLine1(value);
     return field;
   }
 
@@ -139,6 +155,13 @@ class FieldDataTypes {
     let fixedListField = await new CCDFixedListField(css, id);
     await fixedListField.selectOption(value);
     return fixedListField;
+  }
+
+  async selectFromMultiSelect(value, id){
+    let css = await FIELDS.MULTI_SELECT.cssTag;
+    let multiSelectField = await new CCDMultiSelectField(css, id);
+    await multiSelectField.selectAnyOneElement(value);
+    return multiSelectField;
   }
 
   /**
@@ -227,10 +250,7 @@ class FieldDataTypes {
     return collectionField;
   }
 
-  /**
-   * Select random radio butto option
-   * @returns CCDStringField Object
-   */
+
   async enterIntoComplexField(){
     let css = await FIELDS.COMPLEX_TYPE.cssTag;
     let complexField  = await new CCDComplexTypeField(css);
@@ -249,6 +269,96 @@ class FieldDataTypes {
   }
 
   /**
+   * Get contents of the email field
+   * @returns {Promise<String>}
+   */
+  async getEmailFieldValue(){
+    let css = await FIELDS.EMAIL.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the text field
+   * @returns {Promise<String>}
+   */
+  async getTextFieldValue(){
+    let css = await FIELDS.TEXT.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the money field
+   * @returns {Promise<String>}
+   */
+  async getMoneyFieldValue(){
+    let css = await FIELDS.MONEY_GBP.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the phoneUK field
+   * @returns {Promise<String>}
+   */
+  async getPhoneUKFieldValue(){
+    let css = await FIELDS.PHONE_NUMBER.cssTag;
+    let field = await new CCDStringField(css);
+    return await field.getFieldValue();
+  }
+
+  /**
+   * Get contents of the date field
+   * @returns {Promise<String>} eg 10102019
+   */
+  async getDateFieldValue(){
+    let css = await FIELDS.DATE.cssTag;
+    let field = await new CCDDateField(css);
+    return await field.getDate();
+  }
+
+  /**
+   * Get contents of the text area field
+   * @returns {Promise<String>}
+   */
+  async getTextAreaFieldValue(){
+    let css = await FIELDS.TEXT_AREA.cssTag;
+    let field = await new CCDTextAreaField(css);
+    return await field.getValue();
+  }
+
+  /**
+   * Get contents of the fixed list field
+   * @returns {Promise<String>}, returns 'undefined' if no option selected
+   */
+  async getFixedListFieldValue(){
+    let css = await FIELDS.FIXED_LIST.cssTag;
+    let field = await new CCDFixedListField(css);
+    return await field.getCurrentOption();
+  }
+
+  /**
+   * Get contents of the yes-no field
+   * @returns {Promise<String>}, returns 'undefined' if no option selected
+   */
+  async getYesNoFieldValue(){
+    let css = await FIELDS.YES_NO.cssTag;
+    let field = await new CCDYesNoField(css);
+    return await field.getCurrentOption();
+  }
+
+  /**
+   * Get contents of the number field
+   * @returns {Array<String>}, returns array of names of selected checkboxes
+   */
+  async getSelectedCheckboxes(){
+    let css = await FIELDS.MULTI_SELECT.cssTag;
+    let field = await new CCDMultiSelectField(css);
+    return await field.getSelectedCheckboxes();
+  }
+
+  /**
    * Interact with any field type entering randomly generated data or selecting random options
    * @param dataType
    * @param value - optional value to enter into field if applicable
@@ -259,7 +369,7 @@ class FieldDataTypes {
     let dt = dataType.toLowerCase();
     switch(dt) {
       case 'address':
-        return //todo
+        return await this.enterIntoAddressLine1Field(value, id);
       case 'case-link':
         return await this.enterIntoCaseLinkField(value, id);
       case 'text':
@@ -278,6 +388,8 @@ class FieldDataTypes {
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
         return await this.selectFromFixedList(value, id);
+      case 'multi-select':
+        return await this.selectFromMultiSelect(value, id);
       case 'phone-uk':
         return await this.enterIntoPhoneField(value);
       case 'yes-no':
@@ -318,6 +430,43 @@ class FieldDataTypes {
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
   }
+
+
+  /**
+   * Get value from the field
+   * @param dataType
+   * @returns Value -can be string, or array for checkboxes
+   */
+  async getFieldValue(dataType){
+    let dt = dataType.toLowerCase();
+    switch(dt) {
+      case 'text':
+        return await this.getTextFieldValue()
+      case 'number':
+        return await this.getNumberFieldValue();
+      case 'date':
+        return await this.getDateFieldValue()
+      case 'email':
+        return await this.getEmailFieldValue();
+      case 'money-gbp':
+        return await this.getMoneyFieldValue();
+      case 'phone-uk':
+        return await this.getPhoneUKFieldValue();
+      case 'textarea':
+        return await this.getTextAreaFieldValue();
+      case 'fixed-list':
+        return await this.getFixedListFieldValue();
+      case 'yes-no':
+        return await this.getYesNoFieldValue();
+      case 'multi-select':
+        return await this.getSelectedCheckboxes();
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
+
+
 
   /**
    * Check if field is present
@@ -371,6 +520,7 @@ class FieldDataTypes {
       case 'textarea':
           return new CCDTextAreaField(css);
       case 'address':
+        return new CCDComplexTypeField(css, type);
       case 'complex':
           return new CCDComplexTypeField(css, type);
       case 'fixed-list':
@@ -548,6 +698,10 @@ const FIELDS = Object.freeze({
   CASE_LINK: {
     type: 'case-link',
     cssTag: 'ccd-write-case-link-field'
+  },
+  ADDRESS: {
+    type: 'address-uk',
+    cssTag: 'ccd-write-address-field'
   },
 
 });

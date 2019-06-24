@@ -45,10 +45,6 @@ class CreateCaseWizardPage extends BasePage{
       return await new FieldUtils().interactWithField(fieldDataType, value, id);
     }
 
-    async interactWithField(fieldDataType, value, fieldId) {
-      return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
-    }
-
     async fieldLabelContains(fieldDataType, fieldId, labelText) {
       return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
     }
@@ -95,6 +91,10 @@ class CreateCaseWizardPage extends BasePage{
 
     async setYesOrNoValue(radioButtonId, option) {
       return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+    }
+
+    async getFieldValue(dataType){
+      return await new FieldUtils().getFieldValue(dataType);
     }
 
     async clickCollectionAddNewButton(collectionFieldId) {
@@ -187,6 +187,11 @@ class CreateCaseWizardPage extends BasePage{
 
     async clickGenericCollectionAddNewButton() {
       await this.CollectionNewButton.click();
+    }
+
+    async amOnCheckYourAnswersPage(){
+      let url = await browser.getCurrentUrl();
+      return url.includes('/submit')
     }
 
 }

@@ -90,7 +90,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Given(/^a case type containing conditionals exists$/, function() {
     Data.caseType = 'Conditionals';
     Data.event = 'Create a case';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldOptional'}];
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField'}];
+  });
+
+  Given(/^a case type containing show and hide functionality exists$/, function() {
+    Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldOptional'}];
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField'}];
   });
 
   Given(/^a case type containing conditional mandatory complex type exists$/, function() {

@@ -1,5 +1,5 @@
 @functional @complexcollections @showandhide
-Feature: Set of scenarios testing show & hide functionality and conditional logic
+Feature: Set of scenarios testing complexTypes definition
 
   Background:
     Given the definition sheet 'CaseField' looks like this
@@ -28,17 +28,17 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
       | School      | ProvidesAutisticChildrenSupport | YesOrNo         |                    | School supports autistic children    |
       | School      | Class                           | Collection      | SchoolClass        | School clas                          |
     Given the definition sheet 'EventToComplexTypes' looks like this
-      | ID	        | CaseEventID  | CaseFieldId | ListElementCode                                                   | EventElementLabel         | EventHintText        | FieldShowCondition                              |
-      | SchoolClass | createSchool | MySchool    | Name                                                              |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | ProvidesAutisticChildrenSupport                                   |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassName                                                   |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassNumber                                                 |                           |                      | MySchool.Class.ClassName="A team"               |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.IsAutistic                            |                           |                      | MySchool.ProvidesAutisticChildrenSupport="Yes"  |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildFullName                         | Child full name (UPDATED) | Child hint (UPDATED) |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildGender                           |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildAddress.AddressLine1             |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.NeedsSupport                          |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.AutisticChildCaseNumber.CaseReference |                           |                      |                                                 |
+      | ID	        | CaseEventID  | CaseFieldId | ListElementCode                                                   | DisplayContext| EventElementLabel         | EventHintText        | FieldShowCondition                              |
+      | SchoolClass | createSchool | MySchool    | Name                                                              | MANDATORY     |                           |                      |                                                 |
+      | SchoolClass | createSchool | MySchool    | ProvidesAutisticChildrenSupport                                   | MANDATORY     |                           |                      |                                                 |
+      | SchoolClass | createSchool | MySchool    | Class.ClassName                                                   | MANDATORY     |                           |                      |                                                 |
+      | SchoolClass | createSchool | MySchool    | Class.ClassNumber                                                 | OPTIONAL      |                           |                      | MySchool.Class.ClassName="A team"               |
+      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.IsAutistic                            | OPTIONAL      |                           |                      | MySchool.ProvidesAutisticChildrenSupport="Yes"  |
+      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildFullName                         | MANDATORY     | Child full name (UPDATED) | Child hint (UPDATED) |                                                 |
+      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildGender                           | MANDATORY     |                           |                      |                                                 |
+      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildAddress.AddressLine1             | OPTIONAL      |                           |                      |                                                 |
+      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.NeedsSupport                          | OPTIONAL      |                           |                      |                                                 |
+      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.AutisticChildCaseNumber.CaseReference | OPTIONAL      |                           |                      |                                                 |
     Given I have logged in
 
   Scenario: limits the complex type using the EventToComplexTypes sheet

@@ -17,22 +17,16 @@ defineSupportCode(function ({ Given, When, Then}) {
   let createCaseStartPage = new CreateCaseStartPage();
   let caseListPage = new CaseListPage();
 
-  async function createCase(){
-    //todo post to data store
-    await baseSteps.navigateToCreateCasePage();
-    await baseSteps.fillOutAndSubmitForm();
-  }
-
   When(/^I create the case$/, async function () {
-      await createCase();
+      await baseSteps.createCase();
   });
 
   Given(/^there are cases listed on the case list page for that case type$/, async function () {
-      await createCase();
+      await baseSteps.createCase();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
-    await createCase();
+    await baseSteps.createCase();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {
@@ -152,6 +146,8 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
+
+
 
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
@@ -367,6 +363,32 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Then(/^I CANNOT submit the case$/, async function () {
     expect(await caseWizardPage.continueButtonEnabled()).to.be.false;
+  });
+
+  Given(/^I have successfully submitted this case$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await baseSteps.fillOutAndSubmitEvent();
+  });
+
+  When(/^I navigate through to the page '(.*)'$/, async function(pageTitle) {
+    while(await caseWizardPage.getPageHeader() !== pageTitle){
+      await caseWizardPage.clickContinueButton();
+
+      if (await caseWizardPage.errorSummaryDispalyed()){
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but found an error on page and cannot continue`;
+        throw new CustomError(errMsg)
+      }
+
+      if (await caseWizardPage.amOnCheckYourAnswersPage()){
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but have reached Check Your Answers page`;
+        throw new CustomError(errMsg)
+      }
+    }
+  });
+
+  Then(/^the originally entered value will be shown in the '(.*)' field on the page$/, async function(dataType) {
+    let val = await caseWizardPage.getFieldValue(dataType);
+    expect(val).to.eq(TestData.savedValue);
   });
 
 });

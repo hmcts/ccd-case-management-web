@@ -132,7 +132,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I click on page link 2$/, async function () {
-    pageOneColumnOneFirstResult = await await searchPage.getCaseListComponent().clickFirstColumnResultText()
+    pageOneColumnOneFirstResult = await await searchPage.getCaseListComponent().getFirstColumnResultText()
     await searchPage.getCaseListComponent().clickPageTwo();
   });
 
@@ -179,7 +179,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^I see results of the second page$/, async function () {
-    let pageTwoColumnOneFirstResult = await await searchPage.getCaseListComponent().clickFirstColumnResultText()
+    let pageTwoColumnOneFirstResult = await searchPage.getCaseListComponent().getFirstColumnResultText()
     expect (pageTwoColumnOneFirstResult).to.not.equal(pageOneColumnOneFirstResult);
   });
 

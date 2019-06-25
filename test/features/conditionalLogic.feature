@@ -4,16 +4,6 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
   Background:
     Given I have logged in
 
-  Scenario: field NOT visible when show & hide condition is NOT met
-    Given a case type containing conditionals exists
-    When I enter 'dontshowmethemoney' into the 'text' field
-    Then the field with label 'Text Field 2' is not visible
-
-  Scenario: field visible when show & hide condition is met
-    Given a case type containing conditionals exists
-    When I enter 'showmethemoney' into the 'text' field
-    Then the field with label 'Text Field 2' is visible
-
   Scenario: grey bar display when show & hide condition is met
     Given a case type containing conditionals exists
     When I enter 'showmethemoney' into the 'text' field
@@ -38,7 +28,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I enter 'showmethemoney' into the 'text' field
     When I Submit the case
     Then the following tabs will be visible:
-      | History |
+      | History             |
       | Conditional Tab 1   |
 
   Scenario: tab NOT visible when show & hide condition is NOT met

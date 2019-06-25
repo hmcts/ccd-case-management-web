@@ -38,7 +38,7 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     And I enter 'showmethemoney' into the 'text' field
     When I Submit the case
     Then the following tabs will be visible:
-      | History |
+      | History             |
       | Conditional Tab 1   |
 
   Scenario: tab NOT visible when show & hide condition is NOT met

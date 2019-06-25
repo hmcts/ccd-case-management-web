@@ -5,6 +5,7 @@ let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
 let TestData = require('../utils/TestData.js');
+let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/conditionals_CreateCase_ConditionalPage1.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -14,25 +15,60 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then}) {
 
   let caseWizardPage = new CreateCaseWizardPage();
+  let createCasePage1 = new ConditionalsCreateCasePage1();
   let createCaseStartPage = new CreateCaseStartPage();
   let caseListPage = new CaseListPage();
 
-  async function createCase(){
-    //todo post to data store
-    await baseSteps.navigateToCreateCasePage();
-    await baseSteps.fillOutAndSubmitForm();
-  }
-
   When(/^I create the case$/, async function () {
-      await createCase();
+      await baseSteps.createCase();
+  });
+
+  Given('I start createCase event', async function () {
+    await baseSteps.navigateToCreateCasePage();
+  });
+
+  Given(/^there is an '(.*)' field on page1$/, async function (field) {
+    if (field === 'Mandatory text') {
+      await createCasePage1.enterIntoMandatoryTextField(undefined);
+    } else if (field === 'Optional text') {
+      await createCasePage1.enterIntoOptionalTextField(undefined);
+    }
+  });
+
+  Given(/^there is an '(.*)' field on page1 with a matching show condition$/, async function (field) {
+    if (field === 'Mandatory text') {
+      await createCasePage1.enterIntoMandatoryTextField(undefined);
+      await createCasePage1.completeShowConditionToShowField();
+    } else if (field === 'Optional text') {
+      await createCasePage1.enterIntoOptionalTextField(undefined);
+      await createCasePage1.completeShowConditionToShowField();
+    }
+  });
+
+  When('I complete the show condition to show the field', async function () {
+    await createCasePage1.completeShowConditionToShowField();
+  });
+
+  When('I complete the show condition to hide the field', async function () {
+    await createCasePage1.completeShowConditionToHideField();
+  });
+
+  Then(/^a conditional text field on the same page is displayed$/, async function() {
+    let fieldDisplayed = await createCasePage1.isConditionalFieldPresent();
+    expect(fieldDisplayed).to.be.true;
+  });
+
+  Then(/^a conditional text field on the same page is hidden/, async function() {
+    let fieldDisplayed = await createCasePage1.isConditionalFieldPresent();
+    expect(fieldDisplayed).to.be.false;
   });
 
   Given(/^there are cases listed on the case list page for that case type$/, async function () {
-      await createCase();
+      await baseSteps.createCase();
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
-    await createCase();
+    await baseSteps.createCase();
   });
 
   When(/^I navigate to the case creation form page$/, async function () {
@@ -80,17 +116,19 @@ defineSupportCode(function ({ Given, When, Then}) {
     await populateFormDataWithSupportFieldSetTo('Yes');
   });
 
+  When(/^I populate the form with the school data with a ClassMember IsAutistic field set to '(.*)'$/, async function (isAutistic) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes', 'A team', isAutistic);
+  });
+
+  When(/^I populate the form with the school data with a ClassName field set to '(.*)'$/, async function (className) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes', className);
+  });
+
   When(/^I populate the form with the school data with a support YesOrNo field set to '(.*)'$/, async function (supportAnswer) {
     await baseSteps.navigateToCreateCasePage();
     await populateFormDataWithSupportFieldSetTo(supportAnswer);
-  });
-
-  Then(/^'Is child autistic' field should not be visible$/, async function () {
-    expect(await caseWizardPage.isYesOrNoFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
-  });
-
-  Then(/^'Is child autistic' field should be visible$/, async function () {
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
   });
 
   Then(/^only the fields defined in EventToComplexTypes sheet should be visible$/, async function () {
@@ -153,12 +191,24 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
+
+
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.not.include(expectedLabel);
   });
 
-  Then(/^the field with label '(.*)' is visible$/, async function (expectedLabel) {
+  Given(/^the field with label '(.*)' is visible$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getFieldLabels();
+    expect(labels).to.include(expectedLabel);
+  });
+
+  Then(/^verify the field with label '(.*)' is not visible$/, async function (expectedLabel) {
+    let labels = await caseWizardPage.getFieldLabels();
+    expect(labels).to.not.include(expectedLabel);
+  });
+
+  Then(/^verify the field with label '(.*)' is visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.include(expectedLabel);
   });
@@ -209,18 +259,18 @@ defineSupportCode(function ({ Given, When, Then}) {
       });
   });
 
-  async function populateFormDataWithSupportFieldSetTo(supportAnswer) {
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
     await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
     await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
-    await caseWizardPage.interactWithField('text', 'Class one', 'MySchool_Class_0_ClassName');
+    await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
     await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
     await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
     await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.interactWithField('yes-no', 'Yes', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+      await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
     }
     await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
   }
@@ -235,6 +285,15 @@ defineSupportCode(function ({ Given, When, Then}) {
     await baseSteps.navigateToCreateCasePage()
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
+  });
+
+  Given(/^I have created a case with text fields$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField("text", "showmethemoney", "TextField");
+    await caseWizardPage.interactWithField("text", "showme", "TextFieldOptional");
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
   });
 
   Given(/^I have created a case with fixed list item$/, async function() {
@@ -367,6 +426,32 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Then(/^I CANNOT submit the case$/, async function () {
     expect(await caseWizardPage.continueButtonEnabled()).to.be.false;
+  });
+
+  Given(/^I have successfully submitted this case$/, async function() {
+    await baseSteps.navigateToCreateCasePage();
+    await baseSteps.fillOutAndSubmitEvent();
+  });
+
+  When(/^I navigate through to the page '(.*)'$/, async function(pageTitle) {
+    while(await caseWizardPage.getPageHeader() !== pageTitle){
+      await caseWizardPage.clickContinueButton();
+
+      if (await caseWizardPage.errorSummaryDispalyed()){
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but found an error on page and cannot continue`;
+        throw new CustomError(errMsg)
+      }
+
+      if (await caseWizardPage.amOnCheckYourAnswersPage()){
+        let errMsg = `Attempting to navigate through to page '${pageTitle}' but have reached Check Your Answers page`;
+        throw new CustomError(errMsg)
+      }
+    }
+  });
+
+  Then(/^the originally entered value will be shown in the '(.*)' field on the page$/, async function(dataType) {
+    let val = await caseWizardPage.getFieldValue(dataType);
+    expect(val).to.eq(TestData.savedValue);
   });
 
 });

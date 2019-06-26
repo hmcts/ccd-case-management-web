@@ -19,4 +19,4 @@ tags:
 idam-pr:
   service:
     name: CCD # this is the label (name) of the service as configured in IDAM.
-    redirect_uri: https://${SERVICE_FQDN}/oauth2redirect # this is the application callback URL where IDAM will send back the authentication code. SERVICE_FQDN is injected by Jenkins.
+    redirect_uri: https://${SERVICE_FQDN}/oauth2redirect

@@ -1,4 +1,6 @@
 nodejs:
+  image: ${IMAGE_NAME}
+  ingressHost: ${SERVICE_FQDN}
   environment:
     IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
     CCD_GW_LOGOUT_URL: https://gateway-ccd.aat.platform.hmcts.net/logout

@@ -38,6 +38,11 @@ data "azurerm_key_vault" "ccd_shared_key_vault" {
   resource_group_name = "${local.sharedResourceGroup}"
 }
 
+data "azurerm_application_insights" "ccd_webpages_appinsights" {
+  name = "${var.product}-webpages-${var.env}"
+  resource_group_name = "${local.sharedResourceGroup}"
+}
+
 module "case-management-web" {
   source   = "git@github.com:hmcts/cnp-module-webapp?ref=master"
   product  = "${var.product}-case-management-web"
@@ -75,5 +80,7 @@ module "case-management-web" {
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS = 1
     CCD_ACTIVITY_MAX_REQUEST_PER_BATCH = 25 // Better have this same as CCD_PAGE_SIZE
     PAYMENTS_URL = "${local.ccd_gateway_url}/payments"
+    WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY = "${data.azurerm_application_insights.ccd_webpages_appinsights.instrumentation_key}"
+    DUMMY_TEMP_FOR_BUILD = "dummy value"
   }
 }

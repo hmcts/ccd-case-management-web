@@ -16,6 +16,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Given(/^the following definition for '(.*)'$/, async function (sheetName, dataTable) {
     console.log('sheetName=', sheetName);
     console.log(dataTable);
+  });
+
+    Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
     // TODO: No check for now - should be implemented as a part of RDM-5022
   });
 

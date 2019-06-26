@@ -313,6 +313,7 @@
 "@hmcts/ccd-case-ui-toolkit@2.57.0":
   version "2.57.0"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.57.0.tgz#bf7d636b3762f7880590cccc6d9eda3c1f74b627"
+
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

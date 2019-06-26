@@ -343,10 +343,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.54.0":
-  version "2.54.0"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.54.0.tgz#99b40bdfd88659137cf8badf387ada692ec5f6ae"
-  integrity sha512-XpoIxDtrqL54I1e9/selIJRG+n6vkqvBNleFjpKEF4BMrZe6Q+7ASg9iajrj46OhDcPZ1NgPWoQ+F8xwmrqcvw==
+"@hmcts/ccd-case-ui-toolkit@2.56.0":
+  version "2.56.0"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.56.0.tgz#c853f5fce8efd2478ebc1065ac0bc49bf3c4b842"
+  integrity sha512-tplG7n3Nr9pTGrp60SfPB3KNZwmj2+aPsxt4tTHQslg/nodexg5RWvJ49znvXt9raUSESNsM1PA3xnd4H/Q3Qw==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -11737,7 +11737,6 @@ ultron@1.0.x:
 underscore@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
-  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 underscore@~1.6.0:
   version "1.6.0"

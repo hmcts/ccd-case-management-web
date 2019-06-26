@@ -13,10 +13,3 @@ nodejs:
     CCD_ACTIVITY_RETRY: 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
     CCD_ACTIVITY_MAX_REQUEST_PER_BATCH: 25
-
-tags:
-  - idam-pr
-idam-pr:
-  service:
-    name: CCD # this is the label (name) of the service as configured in IDAM.
-    redirect_uri: https://${SERVICE_FQDN}/oauth2redirect

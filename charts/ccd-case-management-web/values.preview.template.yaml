@@ -1,3 +1,6 @@
+tags:
+  - idam-pr
+
 nodejs:
   environment:
     IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
@@ -12,3 +15,8 @@ nodejs:
     PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
     CCD_ACTIVITY_URL: https://gateway-ccd.aat.platform.hmcts.net/activity
     PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
+
+idam-pr:
+  service:
+    name: CCD # this is the label (name) of the service as configured in IDAM.
+    redirect_uri: https://${SERVICE_FQDN}/oauth2redirect

@@ -10,7 +10,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     Then I should see a 'address' field
 
   Scenario: Post code search brings up a list of addresses for a given postcode
-    Given a postcode field exist in a page
+    Given a case type containing every field type exists
     When I enter a postcode 'WD61SY' and click find address
     Then I should see a '12' addresses populated in the address list
 
@@ -21,7 +21,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     And  I should expect 'addressLine2' is populated using the selected address
 
   Scenario: Enter a wrong postcode value
-    Given a postcode field exist in a page
+    Given a case type containing every field type exists
     When I enter a postcode 'INVALID' and click find address
     Then I should expect address list to be empty
 

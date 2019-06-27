@@ -17,24 +17,6 @@ class CCDAddressUKField {
     this.postTown = new TextField('#AddressUKField__PostTown');
   }
 
-  async isAlertDisplayed() {
-    const EC = protractor.ExpectedConditions;
-    let DEFAULT_TIMEOUT = 10000;
-
-    try {
-      debugger;
-      await browser.waitForAngular;
-      console.log(browser.getSession());
-      let element = element(by.xpath(`//ccd-alert/cut-alert//div[contains(text(), 'postcode')]`));
-      await browser.wait(EC.visibilityOf(element1), DEFAULT_TIMEOUT)  ;
-      await browser.waitForAngular;
-      return true;
-    } catch (e) {
-      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for radio element ${element} to be visible`;
-      throw new CustomError(message, e);
-    }
-  }
-
   async enterTextIntoAddressLine1(value) {
     value = typeof value === 'undefined' ? await RandomUtils.generateRandomString() : value;
 

@@ -40,13 +40,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.navigateToCreateCasePage();
 });
 
-  Given(/^a postcode field exist in a page$/, async function () {
-    Data.jurisdiction = 'Auto Test 1';
-    Data.caseType = 'All Field Data Types';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
-    await baseSteps.navigateToCreateCasePage();
-  });
-
   Given(/^a list of addresses listed for postcode '(.*)'$/, async function(postcode){
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'All Field Data Types';
@@ -99,7 +92,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^I should see my value displayed$/, async function() {
-    let xlabel = await this.fieldObject.label;
+    let label = await this.fieldObject.label;
     let expectedValue = await this.fieldObject.checkYourAnswersValue.toString();
     let value = await new CreateCaseWizardPage().getCheckYourAnswersValueByLabel(label);
     expect(expectedValue).to.equal(value);

@@ -187,16 +187,7 @@ class CreateCaseWizardPage extends BasePage{
       return await this.elementDisplayed($(this.fieldError));
     }
 
-  async isAlertErrorDisplayed() {
-    var alertElement = await element(by.css('.container-fluid'));
-    // browser.wait(protractor.ExpectedConditions.until.presenceOf(alertElement), 9000, 'element is taking too long to appear');
-    // var alertElement = element(by.cssContainingText('.container-fluid ccd-alert.cut-alert div.alert-message >', "An error occurred retrieving addresses for"));
-    browser.sleep(5000);
-
-    return await alertElement.isPresent();
-  }
-
-  async continueButtonEnabled(){
+    async continueButtonEnabled(){
       return await this.continueButton.isEnabled();
     }
 

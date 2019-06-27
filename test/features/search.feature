@@ -2,6 +2,36 @@
 Feature: Set of scenarios to test functionality of search filters on the search page
 
   Background:
+    Given the definition sheet 'CaseField' looks like this
+      | CaseTypeID    | ID               | Label              | FieldType         | FieldTypeParameter |
+      | AllDataTypes2 | TextField        | Text Field         | Text              |                    |
+      | AllDataTypes2 | TextAreaField    | Text Area          | TextArea          |                    |
+      | AllDataTypes2 | DateField        | Date Field         | Date              |                    |
+      | AllDataTypes2 | AddressField     | Address Field      | Address           |                    |
+      | AllDataTypes2 | PhoneField       | Phone Field        | PhoneUK           |                    |
+      | AllDataTypes2 | NumberField      | Number Field       | Number            |                    |
+      | AllDataTypes2 | YesNoField       | Yes or No Field    | YesOrNo           |                    |
+      | AllDataTypes2 | CollectionField  | Collection Field   | Collection        | Text               |
+      | AllDataTypes2 | MarritalStatus   | Fixed List         | FixedList         | marritalStatusEnum |
+      | AllDataTypes2 | MoneyField       | Money Field        | MoneyGBP          |                    |
+      | AllDataTypes2 | DocumentField    | Document Field     | Document          |                    |
+      | AllDataTypes2 | EmailField       | Email Field        | Email             |                    |
+      | AllDataTypes2 | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
+      | AllDataTypes2 | CaseHistory      | History            | CaseHistoryViewer |                    |
+    Given the definition sheet 'FixedLists' looks like this
+      | ID                 | ListElementCode      | ListElement       |
+      | marritalStatusEnum | MARRIAGE             | Marriage          |
+      | marritalStatusEnum | CIVIL_PARTNERSHIP    | Civil Partnership |
+      | marritalStatusEnum | SINGLE	Single        |                   |
+      | marritalStatusEnum | WIDOW                | Widow             |
+      | regionalCentreEnum | CARDIFF              | Cardiff           |
+      | regionalCentreEnum | MANCHESTER           | Manchester        |
+      | regionalCentreEnum | OXFORD               | Oxford            |
+      | gender             | MALE                 | Male              |
+      | gender             | FEMALE               | Female            |
+      | gender             | OTHER                | Other             |
+      | boolean            | TRUE                 | true              |
+      | boolean            | FALSE                | false             |
     Given I have logged in
     And a case type containing every field type exists
 

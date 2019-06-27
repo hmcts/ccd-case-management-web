@@ -39,7 +39,7 @@ data "azurerm_key_vault" "ccd_shared_key_vault" {
 }
 
 module "case-management-web" {
-  source   = "git@github.com:hmcts/cnp-module-webapp?ref=Bump-JCV"
+  source   = "git@github.com:hmcts/cnp-module-webapp?ref=master"
   product  = "${var.product}-case-management-web"
   location = "${var.location}"
   appinsights_location = "${var.location}"

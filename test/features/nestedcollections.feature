@@ -2,6 +2,18 @@
 Feature: Set of scenarios to test collection of complex table view
 
   Background:
+    Given the definition sheet 'CaseField' looks like this
+      | CaseTypeID               | ID                     | FieldType     | FieldTypeParameter |
+      | ComplexCollectionComplex | CollectionComplexField | Collection    | Address            |
+    Given the definition sheet 'CaseEventToFields' looks like this
+      | CaseTypeID               | CaseEventID               | CaseFieldID               | DisplayContext  | PageID              |
+      | ComplexCollectionComplex | createCollectionOfComplex | CollectionComplexField    | Optional        | CollectionOfComplex |
+    Given the definition sheet 'ComplexTypes' looks like this
+      | ID          | ListElementCode  | FieldType   |
+      | Address     | AddressLine1     | Text        |
+      | Address     | AddressLine2     | Text        |
+      | Address     | AddressLine3     | Text        |
+      | Address     | Country          | Text        |
     Given I have logged in
 
   Scenario: Nested Collection data on Case Details page not visible by default when accordion is collapsed

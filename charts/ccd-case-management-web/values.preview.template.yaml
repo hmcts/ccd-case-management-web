@@ -19,6 +19,6 @@ nodejs:
     PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
 
 idam-pr:
-  service:
-    name: CCD # this is the label (name) of the service as configured in IDAM.
-    redirect_uri: https://${SERVICE_FQDN}/oauth2redirect
+  redirect_uris:
+    CCD:
+    - https://${SERVICE_FQDN}/oauth2redirect

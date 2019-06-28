@@ -116,8 +116,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await bulkUpdateCases();
   });
 
-  When(/^I click on sorting icon on the first column$/, async function () {
-    await searchPage.getCaseListComponent().clickSortIcon();
+  When(/^I click on sorting icon on the first column to '(.*)'$/, async function (sortOrder) {
+    switch (sortOrder){
+      case 'ascending':
+        return await searchPage.getCaseListComponent().clickSortIconAscending();
+      case 'descending':
+        return await searchPage.getCaseListComponent().clickSortIconDescending();
+      default:
+        throw new CustomError(`Invalid option, options are 'ascending' 'descending'`)
+    }
   });
 
   When(/^I click on the case link$/, async function () {
@@ -125,7 +132,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I click on page link 2$/, async function () {
-    pageOneColumnOneFirstResult = await await searchPage.getCaseListComponent().clickFirstColumnResultText()
+    pageOneColumnOneFirstResult = await await searchPage.getCaseListComponent().getFirstColumnResultText()
     await searchPage.getCaseListComponent().clickPageTwo();
   });
 
@@ -172,7 +179,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^I see results of the second page$/, async function () {
-    let pageTwoColumnOneFirstResult = await await searchPage.getCaseListComponent().clickFirstColumnResultText()
+    let pageTwoColumnOneFirstResult = await searchPage.getCaseListComponent().getFirstColumnResultText()
     expect (pageTwoColumnOneFirstResult).to.not.equal(pageOneColumnOneFirstResult);
   });
 

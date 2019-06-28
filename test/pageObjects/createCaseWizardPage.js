@@ -33,7 +33,7 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
     async isFieldPresent(fieldDataType, id){
-        return await new FieldUtils().isFieldPresent(fieldDataType, id);
+        return await this.fieldUtils.isFieldPresent(fieldDataType, id);
     }
 
 
@@ -46,55 +46,59 @@ class CreateCaseWizardPage extends BasePage{
    * including the value in which we have entered
    */
     async interactWithField(fieldDataType, value, id){
-      return await new FieldUtils().interactWithField(fieldDataType, value, id);
+      return await this.fieldUtils.interactWithField(fieldDataType, value, id);
     }
 
     async fieldLabelContains(fieldDataType, fieldId, labelText) {
-      return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
+      return await this.fieldUtils.fieldLabelContains(fieldDataType, fieldId, labelText);
     }
 
     async isTextFieldHiddenById(fieldId) {
-      return await new FieldUtils().textFieldIsHidden(fieldId);
+      return await this.fieldUtils.textFieldIsHidden(fieldId);
     }
 
     async isTextFieldVisibleById(fieldId) {
-      return await new FieldUtils().textFieldIsVisible(fieldId);
+      return await this.fieldUtils.textFieldIsVisible(fieldId);
     }
 
     async isCaseLinkFieldHiddenById(fieldId) {
-      return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
+      return await this.fieldUtils.caseLinkFieldIsHidden(fieldId);
     }
 
     async isCaseLinkFieldVisibleById(fieldId) {
-      return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
+      return await this.fieldUtils.caseLinkFieldIsVisible(fieldId);
     }
 
     async isFixedListFieldHiddenById(fieldId) {
-      return await new FieldUtils().fixedListFieldIsHidden(fieldId);
+      return await this.fieldUtils.fixedListFieldIsHidden(fieldId);
     }
 
     async isFixedListFieldVisibleById(fieldId) {
-      return await new FieldUtils().fixedListFieldIsVisible(fieldId);
+      return await this.fieldUtils.fixedListFieldIsVisible(fieldId);
     }
 
     async isDateFieldHiddenById(fieldId) {
-      return await new FieldUtils().dateFieldIsHidden(fieldId);
+      return await this.fieldUtils.dateFieldIsHidden(fieldId);
     }
 
     async isDateFieldVisibleById(fieldId) {
-      return await new FieldUtils().dateFieldIsVisible(fieldId);
+      return await this.fieldUtils.dateFieldIsVisible(fieldId);
     }
 
     async isYesOrNoFieldHiddenById(fieldId) {
-      return await new FieldUtils().fieldYesNoIsHidden(fieldId);
+      return await this.fieldUtils.fieldYesNoIsHidden(fieldId);
     }
 
     async isYesOrNoFieldVisibleById(fieldId) {
-      return await new FieldUtils().fieldYesNoIsVisible(fieldId);
+      return await this.fieldUtils.fieldYesNoIsVisible(fieldId);
     }
 
     async setYesOrNoValue(radioButtonId, option) {
-      return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+      return await this.fieldUtils.selectYesNoOption(radioButtonId, option);
+    }
+
+    async getFieldValue(dataType){
+      return await new FieldUtils().getFieldValue(dataType);
     }
 
     async clickCollectionAddNewButton(collectionFieldId) {
@@ -197,6 +201,11 @@ class CreateCaseWizardPage extends BasePage{
 
     async clickGenericCollectionAddNewButton() {
       await this.CollectionNewButton.click();
+    }
+
+    async amOnCheckYourAnswersPage(){
+      let url = await browser.getCurrentUrl();
+      return url.includes('/submit')
     }
 
 }

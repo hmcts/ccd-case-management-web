@@ -6,6 +6,7 @@ let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
 let TestData = require('../utils/TestData.js');
 let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/conditionals_CreateCase_ConditionalPage1.js');
+let ConditionalsCreateCasePage2 = require('../pageObjects/wizardPages/conditionals_CreateCase_ConditionalPage2.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -18,6 +19,11 @@ defineSupportCode(function ({ Given, When, Then}) {
   let createCasePage1 = new ConditionalsCreateCasePage1();
   let createCaseStartPage = new CreateCaseStartPage();
   let caseListPage = new CaseListPage();
+  let conditionals_createCase_conditionalPage1 = new ConditionalsCreateCasePage1();
+  let conditionals_createCase_conditionalPage2 = new ConditionalsCreateCasePage2();
+
+
+
 
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
@@ -270,7 +276,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
     await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+      await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');s
     }
     await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
   }
@@ -367,11 +373,11 @@ defineSupportCode(function ({ Given, When, Then}) {
   Given(/^I do meet the condition for showing fields on the collection of complex types that are conditional$/, async function(){
     await baseSteps.navigateToCreateCasePage();
 
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoMandatoryTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'showpage4', 'TextField3');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage4');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
 
     await caseWizardPage.clickCollectionAddNewButton('CollectionComplexField');
     await caseWizardPage.interactWithField('text', 'showline4', 'CollectionComplexField_0_AddressLine3');

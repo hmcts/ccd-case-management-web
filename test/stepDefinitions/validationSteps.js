@@ -1,6 +1,8 @@
 
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage.js');
 let baseSteps = require('./baseSteps.js');
+let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/conditionals_CreateCase_ConditionalPage1.js');
+
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -12,6 +14,57 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
+
+  Given(/^the '(.*)' page contains the following fields:$/, async function (page, dataTable) {
+
+    //Set page object class to use according to page parsed from Step
+    switch (page){
+      case 'Conditional Page 1' :
+        page = new ConditionalsCreateCasePage1();
+        break;
+      default: throw new CustomError(`This step has not been implemented for '${page}' page yet `)
+    }
+
+    let errMsg = `trying to check fields on page '${page}' but not on correct page when checking against page header`;
+    expect(await page.getPageHeader(), errMsg).to.have.string(page);
+å
+    //Page object class needs to have this method for this step to be used
+    let pageData = await page.getFieldData();
+
+    //Iterate through rows on Gherkin datatable
+    for (const row of dataTable.hashes()){
+
+      let fieldFound = false;
+
+      //For each row of the datatable, iterate through the fields from the page to find the field then compare and assert
+      // the attributes of the field
+      for (const pageField of pageData){
+
+        if (pageField.get('field') === row.field){
+          fieldFound = true;
+
+          //Only do the assertion if the column exists, this gives us flexibility so we don't always need the same columns
+          //for every scenario using this step
+          if (typeof row.value !== 'undefined'){
+            expect(row.value).to.eq(pageField.get('value'));
+          }
+
+          if (typeof row.hidden !== 'undefined'){
+            expect(row.hidden).to.eq(String(pageField.get('hidden')));
+          }
+
+          break;
+        }
+
+      }
+
+      if (!fieldFound){
+        throw new CustomError(`Page field data returned but could not find field with name/key: '${row.field}'`)
+      }
+
+    }
+
+  });
 
   Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
     // TODO: No check for now - should be implemented as a part of RDM-5022

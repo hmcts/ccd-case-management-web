@@ -10,26 +10,40 @@ TextField = require('../../webdriver-components/textField.js');
 class CCDStringField {
 
   /**
-   * Must take the parent css tag for the ccd field component
-   * in the format ccd-write-XXXX-field
+   * Input tag
+   * in the format ccd-write-XXXX-fieldF
    * Selector farther narrows down the location
-   * @param css
-   * @param type
-   * @param id
+   * @param css - css of the input field
+   * @param key - key,
    */
-  constructor(css, type, id){
-    if (id) {
-      this.stringField = new TextField(`${css} #${id}`);
-      this.id = id;
-    } else {
-      this.stringField = new TextField(`${css} input`);
-      this.id = null;
-    }
+  constructor(css, key){
     this.css = css;
+    this.stringField = new TextField(css);
+    this.key = this.setKey(key);
     this.label = null;
-    this.type = type;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+  async getFieldData(){
+    var data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    data.set(field, this.key);
+    data.set(value, await this.getFieldValue());
+    data.set(hidden, await !this.stringField.isDisplayed())
+
+    return data;
   }
 
   /**
@@ -118,7 +132,7 @@ class CCDStringField {
   }
 
   async _enterIntoField(value){
-    this.label = await this._getLabel();
+    // this.label = await this._getLabel();
     await this.stringField.clearField();
     await this.stringField.enterText(value);
     this.inputValue = value;

@@ -15,31 +15,31 @@ class FieldDataTypes {
    * Enter random text into the Text field
    * @returns CCDStringField Object
    */
-  async enterIntoTextField(value, id){
+  async enterIntoTextField(value){
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     await field.enterText(value);
     return field;
   }
 
-  async textFieldContainsInLabel(value, id) {
+  async textFieldContainsInLabel(value) {
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     return await field.hasFieldLabel(value);
   }
 
-  async fixedListFieldContainsInLabel(value, id) {
+  async fixedListFieldContainsInLabel(value) {
     let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css, id);
+    let field = await new CCDFixedListField(css);
     return await field.hasFieldLabel(value);
   }
 
-  async caseLinkFieldContainsInLabel(value, id) {
+  async caseLinkFieldContainsInLabel(value) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     return await field.hasFieldLabel(value);
   }
 
@@ -53,10 +53,10 @@ class FieldDataTypes {
    * Enter a text into the CaseLink field
    * @returns CCDStringField Object
    */
-  async enterIntoCaseLinkField(value, id) {
+  async enterIntoCaseLinkField(value) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     await field.enterText(value);
     return field;
   }
@@ -94,7 +94,7 @@ class FieldDataTypes {
   async enterIntoNumberField(value){
     let css = await FIELDS.NUMBER.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type);
+    let textField = await new CCDStringField(css);
     await textField.enterNumber(value);
     return textField;
   }
@@ -106,7 +106,7 @@ class FieldDataTypes {
   async enterIntoMoneyField(value){
     let css = await FIELDS.MONEY_GBP.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type);
+    let textField = await new CCDStringField(css);
     await textField.enterMoney(value);
     return textField;
   }
@@ -118,7 +118,7 @@ class FieldDataTypes {
   async enterIntoEmailField(value){
     let css = await FIELDS.EMAIL.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type);
+    let textField = await new CCDStringField(css);
     await textField.enterEmail(value);
     return textField;
   }
@@ -130,7 +130,7 @@ class FieldDataTypes {
   async enterIntoPhoneField(value){
     let css = await FIELDS.PHONE_NUMBER.cssTag;
     let type = await FIELDS.TEXT.type;
-    let phoneField = await new CCDStringField(css, type);
+    let phoneField = await new CCDStringField(css);
     await phoneField.enterPhoneNumber(value);
     return phoneField;
   }
@@ -190,28 +190,28 @@ class FieldDataTypes {
   async textFieldIsHidden(id) {
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     return await field.isHidden();
   }
 
   async textFieldIsVisible(id) {
     let css = await FIELDS.TEXT.cssTag;
     let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     return await field.isVisible();
   }
 
   async caseLinkFieldIsHidden(id) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     return await field.isHidden();
   }
 
   async caseLinkFieldIsVisible(id) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(css);
     return await field.isVisible();
   }
 
@@ -373,7 +373,7 @@ class FieldDataTypes {
       case 'case-link':
         return await this.enterIntoCaseLinkField(value, id);
       case 'text':
-        return await this.enterIntoTextField(value, id);
+        return await this.enterIntoTextField(value);
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
@@ -516,13 +516,13 @@ class FieldDataTypes {
       case 'email':
       case 'money-gbp':
       case 'phone-uk':
-          return new CCDStringField(css, type);
+          return new CCDStringField(css);
       case 'textarea':
           return new CCDTextAreaField(css);
       case 'address':
-        return new CCDComplexTypeField(css, type);
+        return new CCDComplexTypeField(css);
       case 'complex':
-          return new CCDComplexTypeField(css, type);
+          return new CCDComplexTypeField(css);
       case 'fixed-list':
           return new CCDFixedListField(css);
       case 'yes-no':
@@ -636,7 +636,7 @@ module.exports = FieldDataTypes;
 const FIELDS = Object.freeze({
   TEXT: {
     type: 'text',
-    cssTag: 'ccd-write-text-field'
+    cssTag: 'ccd-write-text-field input'
   },
   DATE: {
     type: 'number',
@@ -648,7 +648,7 @@ const FIELDS = Object.freeze({
   },
   EMAIL: {
     type: 'email',
-    cssTag: 'ccd-write-email-field'
+    cssTag: 'ccd-write-email-field input'
   },
   FIXED_LIST: {
     htmlTag: 'select',
@@ -656,7 +656,7 @@ const FIELDS = Object.freeze({
   },
   MONEY_GBP: {
     type: 'text',
-    cssTag: 'ccd-write-money-gbp-field'
+    cssTag: 'ccd-write-money-gbp-field input'
   },
   MULTI_SELECT: {
     type: 'checkbox',
@@ -664,7 +664,7 @@ const FIELDS = Object.freeze({
   },
   NUMBER: {
     type: 'number',
-    cssTag: 'ccd-write-number-field'
+    cssTag: 'ccd-write-number-field input'
   },
   ORDER_SUMMARY: {
     cssTag: 'ccd-write-order-summary-field'
@@ -674,7 +674,7 @@ const FIELDS = Object.freeze({
   },
   PHONE_NUMBER: {
     type: 'tel',
-    cssTag: 'ccd-write-phone-uk-field'
+    cssTag: 'ccd-write-phone-uk-field input'
   },
   TEXT_AREA: {
     type: 'text',

@@ -47,3 +47,19 @@ Feature: Hide and show of basic fields
     Given I have created a case with text fields
     When I start the event 'Approve a case'
     Then verify the field with label 'Text Field ShowHide 14' is not visible
+
+    @poc
+  Scenario: POC scenario for new step on conditionals
+    Given I start createCase event
+    When I enter 'showmethemoney' into the 'text' field
+    Then the 'Conditional Page 1' page contains the following fields:
+      | field         | value          |  hidden  |
+      | TextField2    |                |  false   |
+
+
+  Scenario: POC scenario for new step on conditionals
+    Given I start createCase event
+    When I enter 'dontshowmethemoney' into the 'text' field
+    Then the page will include the following fields:
+      | field         | value          |  hidden  |
+      | TextField2    |                |  true    |

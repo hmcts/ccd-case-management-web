@@ -1,6 +1,5 @@
 nodejs:
-  ingressHost: ${SERVICE_FQDN}
-  image: ${IMAGE_NAME}
+  image: hmcts.azurecr.io/hmcts/ccd-case-management-web:latest
   applicationPort: 3451
   memoryRequests: 256Mi
   cpuRequests: 25m

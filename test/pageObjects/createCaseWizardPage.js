@@ -130,7 +130,6 @@ class CreateCaseWizardPage extends BasePage{
 
     async clickFindAddressButton() {
       await this.ccdAddressUKField.findAdressButton.click();
-      await new CaseDetailsPage()
     }
 
   /**

@@ -259,6 +259,7 @@ File location: `test/resources/definitionsFiles`
 ## Pipeline
 the pipeline is automatically configured to run the commands `test:smoke` and `test:functional` which relate to scrips that can be found in the `package.json`. We use the pipeline vault to set the env vars needed for test execution. `TEST_URL` is generate dynamically. There is an intermediate bash script that wraps that that will print out the values of the requires env vars so they can be debugged in the jenkins console log.
 
+
 ###### Debugging
 If there are test failures it can be a good idea to run the tests from your local but pointing to the AAT URL so you can see the tests run for yourself, you will also be able to see screenshots on test failure on your local report
 

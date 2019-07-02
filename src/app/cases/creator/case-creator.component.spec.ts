@@ -247,6 +247,7 @@ describe('CaseCreatorComponent', () => {
   let component: CaseCreatorComponent;
   let de: DebugElement;
 
+  const $ERROR_HEADER = By.css('.error-summary-heading');
   const $ERROR_SUMMARY = By.css('.error-summary');
   const $ERROR_MESSAGE = By.css('p');
   const $ERROR_FIELD_MESSAGES = By.css('ul');
@@ -320,6 +321,7 @@ describe('CaseCreatorComponent', () => {
 
   it('should notify user about errors/warnings when fields selected and button clicked and response with callback errors/warnings', () => {
     const VALID_ERROR = {
+      error: 'Error heading',
       callbackErrors: ['error1', 'error2'],
       callbackWarnings: ['warning1', 'warning2']
     };
@@ -349,6 +351,7 @@ describe('CaseCreatorComponent', () => {
       }
     ];
     const VALID_ERROR = {
+      error: 'Field error',
       message: 'Field validation failed',
       details: {
         field_errors: FIELD_ERRORS
@@ -372,7 +375,9 @@ describe('CaseCreatorComponent', () => {
 
     let errorElement = de.query($ERROR_SUMMARY);
     expect(errorElement).toBeTruthy();
+    let errorHeader = errorElement.query($ERROR_HEADER);
     let errorMessage = errorElement.query($ERROR_MESSAGE);
+    expect(text(errorHeader)).toBe('Field error');
     expect(text(errorMessage)).toBe('Field validation failed');
     let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages.children.length).toBe(2);

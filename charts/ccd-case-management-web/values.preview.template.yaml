@@ -1,3 +1,6 @@
+tags:
+  - idam-pr
+
 nodejs:
   image: ${IMAGE_NAME}
   ingressHost: ${SERVICE_FQDN}
@@ -14,3 +17,8 @@ nodejs:
     PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
     CCD_ACTIVITY_URL: https://gateway-ccd.aat.platform.hmcts.net/activity
     PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
+
+idam-pr:
+  redirect_uris:
+    CCD:
+    - https://${SERVICE_FQDN}/oauth2redirect

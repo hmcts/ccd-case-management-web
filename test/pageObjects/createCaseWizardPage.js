@@ -57,6 +57,14 @@ class CreateCaseWizardPage extends BasePage{
       return await this.fieldUtils.textFieldIsVisible(fieldId);
     }
 
+  async isNumberFieldHiddenById(fieldId) {
+    return await this.fieldUtils.numberFieldIsHidden(fieldId);
+  }
+
+  async isNumberFieldVisibleById(fieldId) {
+    return await this.fieldUtils.numberFieldIsVisible(fieldId);
+  }
+
     async isCaseLinkFieldHiddenById(fieldId) {
       return await this.fieldUtils.caseLinkFieldIsHidden(fieldId);
     }
@@ -101,6 +109,11 @@ class CreateCaseWizardPage extends BasePage{
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
     }
+
+  async isCollectionAddNewButtonEnabled(collectionFieldId) {
+    let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
+    return await element(by.xpath(xpathLocator)).isEnabled();
+  }
 
   /**
    * Get contents of number field

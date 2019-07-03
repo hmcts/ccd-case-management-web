@@ -201,6 +201,20 @@ class FieldDataTypes {
     return await field.isVisible();
   }
 
+  async numberFieldIsHidden(id) {
+    let css = await FIELDS.NUMBER.cssTag;
+    let type = await FIELDS.NUMBER.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.isHidden();
+  }
+
+  async numberFieldIsVisible(id) {
+    let css = await FIELDS.NUMBER.cssTag;
+    let type = await FIELDS.NUMBER.type;
+    let field = await new CCDStringField(css, type, id);
+    return await field.isVisible();
+  }
+
   async caseLinkFieldIsHidden(id) {
     let css = await FIELDS.CASE_LINK.cssTag;
     let type = await FIELDS.CASE_LINK.type;

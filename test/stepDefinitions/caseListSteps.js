@@ -125,7 +125,19 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Given('I am on the case list page', async  function () {
     await caseListPage.getNavBarComponent().clickCaseListLink()
+  });
 
+  Given('I am on the case list page and selected CaseType CRUDComplex', async  function () {
+    TestData.caseType = 'Complex CRUD';
+    await caseListPage.getNavBarComponent().clickCaseListLink();
+    await wbFilters.selectJurisdiction(TestData.jurisdiction);
+    await wbFilters.selectCaseType(TestData.caseType);
+    await wbFilters.clickApplyButton();
+  });
+
+  Then(/^the school number is NOT displayed in the case list results$/, async function() {
+    let columnResults = await caseListPage.getCaseListComponent().getColumnResults('Child full name');
+    expect(await columnResults[0].getText()).to.equal('Child full nameee');
   });
 
   Given(/^I have filled the create case filters for a case other than the workbasket default$/, async function () {

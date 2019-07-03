@@ -30,7 +30,7 @@ class Dropdown {
     let stringArray = [];
     for (const option of dropdownElements){
       const optionText = await option.getText();
-      stringArray.push(optionText);
+      stringArray.push(optionText.trim());
     }
     return stringArray
   }

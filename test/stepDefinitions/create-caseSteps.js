@@ -106,7 +106,7 @@ defineSupportCode(function ({ Given, When, Then}) {
         fieldsExpectedOrder[fieldOrder - 1] = fieldValue;
     }
     let fieldsActualOrder = await caseWizardPage.getFieldDetails(fieldType, fieldId)
-    expect(fieldsExpectedOrder).to.deep.equal(fieldsActualOrder)
+    expect(fieldsActualOrder).to.deep.equal(fieldsExpectedOrder)
   });
 
   When(/^I navigate to the 'check your answers' form page$/, async function() {

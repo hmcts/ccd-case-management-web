@@ -29,25 +29,24 @@ Feature: Set of scenarios to test functionality of the order of fixed list
       | floorEnum             | FOUR                 | Four                  | 7                     |
 
   Scenario: Correct order of fixed list items is displayed
-
     Given a case type containing a collection of nested complex types exists
     And I navigate to the case creation form page
     And I click on add collection item button
     Then the page contains the following field:
       | field                                                           | fieldType        | value          | displayOrder   |
-      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | MANCHESTER     | 1              |
-      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | CARDIFF        | 2              |
-      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | OXFORD         | 3              |
+      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | Manchester     | 1              |
+      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | Cardiff        | 2              |
+      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | Oxford         | 3              |
     And the page contains the following field:
       | field                                                           | fieldType        | value          | displayOrder   |
       | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | BSc            | 1              |
       | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | MSc            | 2              |
       | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | ScD            | 3              |
     And the page contains the following field:
-      | field                                                           | fieldType        | value          | displayOrder   |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       |                | 1              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | ONE            | 2              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | TWO            | 3              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | THREE          | 4              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | FOUR           | 5              |
+      | field                                                           | fieldType        | value              | displayOrder   |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | --Select a value-- | 1              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | One                | 2              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | Two                | 3              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | Three              | 4              |
+      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | Four               | 5              |
 

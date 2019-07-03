@@ -31,12 +31,7 @@ class CcdFixedList {
    * @returns array of options
    */
   async getOptions() {
-    let optionValues = [];
-    for(const field of await this.options){
-      let value = await field.getAttribute('ng-reflect-value');
-      optionValues.push(value);
-    }
-    return optionValues;
+    return await this.fixedList.getOptionsTextValues()
   }
 
   async selectOption(optionLabel) {

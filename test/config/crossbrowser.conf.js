@@ -7,7 +7,10 @@ const config = {
 
     host: 'ondemand.eu-central-1.saucelabs.com',
     sauceregion: 'eu',
-    specs: ['../features/*.feature'],
+    specs: [
+      '../features/*.feature',
+      '../features/*/*.feature'
+    ],
 
     baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
 
@@ -19,7 +22,7 @@ const config = {
 
     useAllAngular2AppRoots: true,
     multiCapabilities: [
-      
+
         {
             browserName: 'chrome',
             name: 'CCD_WIN_CHROME_LATEST',
@@ -41,7 +44,7 @@ const config = {
             'tunnel-identifier': 'reformtunnel',
             shardTestFiles: true,
             maxInstances: 1
-         
+
         },
 
         {
@@ -54,7 +57,7 @@ const config = {
             maxInstances: 1
 
         },
-        
+
         {
             browserName: 'firefox',
             name: 'CCD_MAC_FIREFOX_LATEST',
@@ -64,7 +67,7 @@ const config = {
             shardTestFiles: false,
             maxInstances: 1
         }
-        
+
     ],
 
     exclude: [],
@@ -90,13 +93,13 @@ const config = {
             }
         }
     ],
-    
+
       useAllAngular2AppRoots: true,
 
       SELENIUM_PROMISE_MANAGER: false,
 
       allScriptsTimeout: 60000,
-    
+
       onPrepare() {
         const caps = browser.getCapabilities();
         browser.manage()

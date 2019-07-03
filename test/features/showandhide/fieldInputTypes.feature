@@ -2,32 +2,32 @@
 Feature: Hide and show of basic fields different types
 
   Background:
-    Given the definition sheet 'CaseEventToFields' looks like this
-      | CaseTypeID   | CaseEventID   | CaseFieldID          | DisplayContext  | FieldShowCondition                     |
-      | Conditionals | createCase    | TextField            | Mandatory       |                                        |
-      | Conditionals | createCase    | TextFieldOptional    | Optional        |                                        |
-      | Conditionals | createCase    | TextAreaField        | Optional        |                                        |
-      | Conditionals | createCase    | DateField            | Optional        |                                        |
-      | Conditionals | createCase    | AddressUKField       | Optional        |                                        |
-      | Conditionals | createCase    | PhoneField           | Optional        |                                        |
-      | Conditionals | createCase    | NumberField          | Optional        |                                        |
-      | Conditionals | createCase    | YesNoField           | Optional        |                                        |
-      | Conditionals | createCase    | MoneyField           | Optional        |                                        |
-      | Conditionals | createCase    | EmailField           | Optional        |                                        |
-      | Conditionals | createCase    | MultiSelectField     | Optional        |                                        |
-      | Conditionals | createCase    | MaritalStatusField   | Optional        |                                        |
-      | Conditionals | createCase    | TextField2           | Optional        | TextField="showmethemoney"             |
-      | Conditionals | createCase    | TextFieldShowHide13  | Optional        | TextAreaField="showme"                 |
-      | Conditionals | createCase    | TextFieldShowHide3   | Optional        | DateField="2011-11-26"                 |
-      | Conditionals | createCase    | TextFieldShowHide4   | Optional        | AddressUKField.AddressLine1="Ferry Rd" |
-      | Conditionals | createCase    | TextFieldShowHide5   | Optional        | PhoneField="07777777777"               |
-      | Conditionals | createCase    | TextFieldShowHide6   | Optional        | NumberField="42"                       |
-      | Conditionals | createCase    | TextFieldShowHide7   | Optional        | YesNoField="Yes"                       |
-      | Conditionals | createCase    | TextFieldShowHide8   | Optional        | MaritalStatusField="WIDOW"             |
-      | Conditionals | createCase    | TextFieldShowHide9   | Optional        | MoneyField="9912"                      |
-      | Conditionals | createCase    | TextFieldShowHide10  | Optional        | EmailField="test@test.com"             |
-      | Conditionals | createCase    | TextFieldShowHide11  | Optional        | MultiSelectField="CARDIFF"             |
-      | Conditionals | createCase    | TextFieldShowHide12  | Optional        | TextFieldOptional="showme"             |
+    Given the following definition for 'case fields'
+      | ID                   | Display context | Field show condition                   |
+      | TextField            | Mandatory       |                                        |
+      | TextFieldOptional    | Optional        |                                        |
+      | TextAreaField        | Optional        |                                        |
+      | DateField            | Optional        |                                        |
+      | AddressUKField       | Optional        |                                        |
+      | PhoneField           | Optional        |                                        |
+      | NumberField          | Optional        |                                        |
+      | YesNoField           | Optional        |                                        |
+      | MoneyField           | Optional        |                                        |
+      | EmailField           | Optional        |                                        |
+      | MultiSelectField     | Optional        |                                        |
+      | MaritalStatusField   | Optional        |                                        |
+      | TextField2           | Optional        | TextField="showmethemoney"             |
+      | TextFieldShowHide13  | Optional        | TextAreaField="showme"                 |
+      | TextFieldShowHide3   | Optional        | DateField="2011-11-26"                 |
+      | TextFieldShowHide4   | Optional        | AddressUKField.AddressLine1="Ferry Rd" |
+      | TextFieldShowHide5   | Optional        | PhoneField="07777777777"               |
+      | TextFieldShowHide6   | Optional        | NumberField="42"                       |
+      | TextFieldShowHide7   | Optional        | YesNoField="Yes"                       |
+      | TextFieldShowHide8   | Optional        | MaritalStatusField="WIDOW"             |
+      | TextFieldShowHide9   | Optional        | MoneyField="9912"                      |
+      | TextFieldShowHide10  | Optional        | EmailField="test@test.com"             |
+      | TextFieldShowHide11  | Optional        | MultiSelectField="CARDIFF"             |
+      | TextFieldShowHide12  | Optional        | TextFieldOptional="showme"             |
     And I have logged in
     And a case type containing conditionals exists
 

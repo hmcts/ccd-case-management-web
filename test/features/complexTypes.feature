@@ -2,43 +2,41 @@
 Feature: Set of scenarios testing complexTypes definition
 
   Background:
-    Given the definition sheet 'CaseField' looks like this
-      | CaseTypeID               | ID       | FieldType |
-      | ComplexCollectionComplex | MySchool | School    |
-    Given the definition sheet 'ComplexTypes' looks like this
-      | ID          | ListElementCode                 | FieldType       | FieldTypeParameter | ElementLabel                         |
-      | Child       | ChildFullName                   | Text            |                    | Child Full Name                      |
-      | Child       | ChildGender                     | FixedList       | gender             | Child Gender                         |
-      | Child       | ChildDOB                        | Date            |                    | Child date of Birth                  |
-      | Child       | ChildAddress                    | AddressUK       |                    | Child address                        |
-      | Child       | IsAutistic                      | YesOrNo         |                    | Is the child autistic?               |
-      | Child       | NeedsSupport                    | YesOrNo         |                    | Does the child needs support?        |
-      | Child       | AutisticChildCaseNumber         | CaseLink        |                    | Autistic child case number reference |
-      | Family      | MotherFullName                  | Text            |                    | Mother Full Name                     |
-      | Family      | MotherAge                       | Text            |                    | Mother Age                           |
-      | Family      | FatherFullName                  | Text            |                    | Father Full Name                     |
-      | Family      | FatherAge                       | Text            |                    | Father Age                           |
-      | Family      | Children                        | Collection      | Child              | Children (collection label)          |
-      | Family      | FamilyAddress                   | AddressUK       |                    | Family Address                       |
-      | SchoolClass | ClassName                       | Text            |                    | Class name                           |
-      | SchoolClass | ClassNumber                     | Number          |                    | Class number                         |
-      | SchoolClass | ClassMembers                    | Collection      | Family             | Class members (collection)           |
-      | School      | Number                          | Number          |                    | School number                        |
-      | School      | Name                            | Text            |                    | School name                          |
-      | School      | ProvidesAutisticChildrenSupport | YesOrNo         |                    | School supports autistic children    |
-      | School      | Class                           | Collection      | SchoolClass        | School clas                          |
-    Given the definition sheet 'EventToComplexTypes' looks like this
-      | ID	        | CaseEventID  | CaseFieldId | ListElementCode                                                   | DisplayContext| EventElementLabel         | EventHintText        | FieldShowCondition                              |
-      | SchoolClass | createSchool | MySchool    | Name                                                              | MANDATORY     |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | ProvidesAutisticChildrenSupport                                   | MANDATORY     |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassName                                                   | MANDATORY     |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassNumber                                                 | OPTIONAL      |                           |                      | MySchool.Class.ClassName="A team"               |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.IsAutistic                            | OPTIONAL      |                           |                      | MySchool.ProvidesAutisticChildrenSupport="Yes"  |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildFullName                         | MANDATORY     | Child full name (UPDATED) | Child hint (UPDATED) |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildGender                           | MANDATORY     |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.ChildAddress.AddressLine1             | OPTIONAL      |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.NeedsSupport                          | OPTIONAL      |                           |                      |                                                 |
-      | SchoolClass | createSchool | MySchool    | Class.ClassMembers.Children.AutisticChildCaseNumber.CaseReference | OPTIONAL      |                           |                      |                                                 |
+    Given the following definition for 'case fields'
+      | ID          | Path                             | FieldType   | FieldTypeParameter | Label                                |
+      | MySchool    | Number                           | Number      |                    | School number                        |
+      | MySchool    | Name                             | Text        |                    | School name                          |
+      | MySchool    | ProvidesAutisticChildrenSupport  | YesOrNo     |                    | School supports autistic children    |
+      | MySchool    | Class                            | Collection  | SchoolClass        | School class                         |
+      | SchoolClass | ClassName                        | Text        |                    | Class name                           |
+      | SchoolClass | ClassNumber                      | Number      |                    | Class number                         |
+      | SchoolClass | ClassMembers                     | Collection  | Family             | Class members (collection)           |
+      | Family      | MotherFullName                   | Text        |                    | Mother Full Name                     |
+      | Family      | FatherAge                        | Text        |                    | Mother Age                           |
+      | Family      | FatherFullName                   | Text        |                    | Father Full Name                     |
+      | Family      | FatherAge                        | Text        |                    | Father Age                           |
+      | Family      | FamilyAddress                    | AddressUK   |                    | Family Address                       |
+      | Family      | Children                         | Collection  | Child              | Children (collection label)          |
+      | Child       | ChildFullName                    | Text        |                    | Child Full Name                      |
+      | Child       | ChildGender                      | FixedList   | gender             | Child Gender                         |
+      | Child       | ChildDOB                         | Date        |                    | Child date of Birth                  |
+      | Child       | ChildAddress                     | AddressUK   |                    | Child address                        |
+      | Child       | IsAutistic                       | YesOrNo     |                    | Is the child autistic?               |
+      | Child       | NeedsSupport                     | YesOrNo     |                    | Does the child needs support?        |
+      | Child       | AutisticChildCaseNumber          | CaseLink    |                    | Autistic child case number reference |
+
+    Given the following definition for 'complex case fields overrides'
+      | Id       | Path                                                              | Display context | Label                     | Hint text            | Field show condition                            |
+      | MySchool | Name                                                              | MANDATORY       |                           |                      |                                                 |
+      | MySchool | ProvidesAutisticChildrenSupport                                   | MANDATORY       |                           |                      |                                                 |
+      | MySchool | Class.ClassName                                                   | MANDATORY       |                           |                      |                                                 |
+      | MySchool | Class.ClassNumber                                                 | OPTIONAL        |                           |                      | MySchool.Class.ClassName="A team"               |
+      | MySchool | Class.ClassMembers.Children.IsAutistic                            | OPTIONAL        |                           |                      | MySchool.ProvidesAutisticChildrenSupport="Yes"  |
+      | MySchool | Class.ClassMembers.Children.ChildFullName                         | MANDATORY       | Child full name (UPDATED) | Child hint (UPDATED) |                                                 |
+      | MySchool | Class.ClassMembers.Children.ChildGender                           | MANDATORY       |                           |                      |                                                 |
+      | MySchool | Class.ClassMembers.Children.ChildAddress.AddressLine1             | OPTIONAL        |                           |                      |                                                 |
+      | MySchool | Class.ClassMembers.Children.NeedsSupport                          | OPTIONAL        |                           |                      |                                                 |
+      | MySchool | Class.ClassMembers.Children.AutisticChildCaseNumber.CaseReference | OPTIONAL        |                           |                      |                                                 |
     Given I have logged in
 
   Scenario: limits the complex type using the EventToComplexTypes sheet

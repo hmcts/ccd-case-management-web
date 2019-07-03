@@ -2,23 +2,23 @@
 Feature: Set of scenarios to test functionality of search filters on the search page
 
   Background:
-    Given the definition sheet 'CaseField' looks like this
-      | CaseTypeID    | ID               | Label              | FieldType         | FieldTypeParameter |
-      | AllDataTypes2 | TextField        | Text Field         | Text              |                    |
-      | AllDataTypes2 | TextAreaField    | Text Area          | TextArea          |                    |
-      | AllDataTypes2 | DateField        | Date Field         | Date              |                    |
-      | AllDataTypes2 | AddressField     | Address Field      | Address           |                    |
-      | AllDataTypes2 | PhoneField       | Phone Field        | PhoneUK           |                    |
-      | AllDataTypes2 | NumberField      | Number Field       | Number            |                    |
-      | AllDataTypes2 | YesNoField       | Yes or No Field    | YesOrNo           |                    |
-      | AllDataTypes2 | CollectionField  | Collection Field   | Collection        | Text               |
-      | AllDataTypes2 | MarritalStatus   | Fixed List         | FixedList         | marritalStatusEnum |
-      | AllDataTypes2 | MoneyField       | Money Field        | MoneyGBP          |                    |
-      | AllDataTypes2 | DocumentField    | Document Field     | Document          |                    |
-      | AllDataTypes2 | EmailField       | Email Field        | Email             |                    |
-      | AllDataTypes2 | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
-      | AllDataTypes2 | CaseHistory      | History            | CaseHistoryViewer |                    |
-    Given the definition sheet 'FixedLists' looks like this
+    Given the following definition for 'case fields'
+      | ID               | Label              | FieldType         | FieldTypeParameter |
+      | TextField        | Text Field         | Text              |                    |
+      | TextAreaField    | Text Area          | TextArea          |                    |
+      | DateField        | Date Field         | Date              |                    |
+      | AddressField     | Address Field      | Address           |                    |
+      | PhoneField       | Phone Field        | PhoneUK           |                    |
+      | NumberField      | Number Field       | Number            |                    |
+      | YesNoField       | Yes or No Field    | YesOrNo           |                    |
+      | CollectionField  | Collection Field   | Collection        | Text               |
+      | MarritalStatus   | Fixed List         | FixedList         | marritalStatusEnum |
+      | MoneyField       | Money Field        | MoneyGBP          |                    |
+      | DocumentField    | Document Field     | Document          |                    |
+      | EmailField       | Email Field        | Email             |                    |
+      | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
+      | CaseHistory      | History            | CaseHistoryViewer |                    |
+    Given the following definition for 'case enums'
       | ID                 | ListElementCode      | ListElement       |
       | marritalStatusEnum | MARRIAGE             | Marriage          |
       | marritalStatusEnum | CIVIL_PARTNERSHIP    | Civil Partnership |

@@ -2,19 +2,19 @@
 Feature: Set of scenarios testing case view functionality
 
   Background:
-    Given the definition sheet 'CaseTypeTab' looks like this
-      | CaseTypeID | TabID            | TabLabel          | TabDisplayOrder | CaseFieldID          | TabFieldDisplayOrder | TabShowCondition                 |
-      | Tabs       | History          | History           | 1               | CaseHistory          | 1                    |                                  |
-      | Tabs       | Tab2             | Tab2              | 3               | TextField4           | 3                    |                                  |
-      | Tabs       | Tab2             | Tab2              | 3               | TextField3           | 2                    |                                  |
-      | Tabs       | Tab2             | Tab2              | 3               | TextField2           | 1                    |                                  |
-      | Tabs       | Tab1             | Tab1              | 2               | TextField1           | 1                    |                                  |
-      | Tabs       | Tab3             | Tab3              | 4               | ConditionalText      | 3                    |                                  |
-      | Tabs       | Tab3             | Tab3              | 4               | ConditionalFixedList | 3                    |                                  |
-      | Tabs       | Tab3             | Tab3              | 4               | ConditionalYesNo     | 3                    |                                  |
-      | Tabs       | ConditionalTab1  | Conditional Tab 1 | 5               | TextField5           | 1                    | ConditionalText="showmethemoney" |
-      | Tabs       | ConditionalTab2  | Conditional Tab 2 | 6               | TextField6           | 1                    | ConditionalFixedList="TRUE"      |
-      | Tabs       | ConditionalTab3  | Conditional Tab 3 | 7               | TextField7           | 1                    | ConditionalYesNo="Yes"           |
+    Given the following definition for 'tab case fields'
+      | ID               | Label             | Tab Display order   | CaseFieldID          | Field Display order | Tab show condition               |
+      | History          | History           | 1                   | CaseHistory          | 1                   |                                  |
+      | Tab2             | Tab2              | 3                   | TextField4           | 3                   |                                  |
+      | Tab2             | Tab2              | 3                   | TextField3           | 2                   |                                  |
+      | Tab2             | Tab2              | 3                   | TextField2           | 1                   |                                  |
+      | Tab1             | Tab1              | 2                   | TextField1           | 1                   |                                  |
+      | Tab3             | Tab3              | 4                   | ConditionalText      | 3                   |                                  |
+      | Tab3             | Tab3              | 4                   | ConditionalFixedList | 3                   |                                  |
+      | Tab3             | Tab3              | 4                   | ConditionalYesNo     | 3                   |                                  |
+      | ConditionalTab1  | Conditional Tab 1 | 5                   | TextField5           | 1                   | ConditionalText="showmethemoney" |
+      | ConditionalTab2  | Conditional Tab 2 | 6                   | TextField6           | 1                   | ConditionalFixedList="TRUE"      |
+      | ConditionalTab3  | Conditional Tab 3 | 7                   | TextField7           | 1                   | ConditionalYesNo="Yes"           |
 
     Given I have logged in
 

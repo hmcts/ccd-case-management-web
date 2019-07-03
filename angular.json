@@ -27,13 +27,24 @@
                 "glob": "**/*",
                 "input": "src/public",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@hmcts/media-viewer/assets",
+                "output": "/assets"
               }
             ],
             "styles": [
               "src/style/app.scss",
-              "node_modules/govuk_template_mustache/assets/stylesheets/govuk-template.css"
+              "node_modules/govuk_template_mustache/assets/stylesheets/govuk-template.css",
+              "node_modules/@hmcts/media-viewer/assets/aui-styles.scss",
+              "node_modules/@hmcts/document-viewer-webcomponent/assets/aui-styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@hmcts/document-viewer-webcomponent/assets/js/pdf.combined.min.js",
+              "node_modules/@hmcts/document-viewer-webcomponent/assets/js/pdf_viewer.min.js",
+              "node_modules/@hmcts/document-viewer-webcomponent/assets/js/pdf-annotate.min.js"
+            ]
           },
           "configurations": {
             "production": {

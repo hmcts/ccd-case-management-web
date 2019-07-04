@@ -15,6 +15,11 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, And}) {
 
+  const FIELD_ID = 0;
+  const FIELD_TYPE = 1;
+  const FIELD_VALUE = 2;
+  const FIELD_ORDER = 3;
+
   let caseWizardPage = new CreateCaseWizardPage();
   let createCasePage1 = new ConditionalsCreateCasePage1();
   let createCaseStartPage = new CreateCaseStartPage();
@@ -114,13 +119,32 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
 
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
-      let fieldDisplayed = await new CreateCaseWizardPage().isFieldPresent(dataType);
+      let fieldDisplayed = await caseWizardPage.isFieldPresent(dataType);
       expect(fieldDisplayed).to.be.true;
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
     await baseSteps.navigateToCreateCasePage()
-    this.fieldObject = await new CreateCaseWizardPage().interactWithField(dataType);
+    this.fieldObject = await caseWizardPage.interactWithField(dataType);
+  });
+
+  When(/^I click on add collection item button$/, async function () {
+    await caseWizardPage.clickGenericCollectionAddNewButton();
+  });
+
+  Then(/^the page contains the following field:$/, async function (fieldDetails) {
+    fieldDetails.rawTable.shift();
+    let fieldId = fieldDetails.rawTable[0][FIELD_ID];
+    let fieldType = fieldDetails.rawTable[0][FIELD_TYPE];
+    let fieldsExpectedOrder = new Array(fieldDetails.rawTable.length);
+    // iterate over data table for field details
+    for (const detail of fieldDetails.rawTable){
+        let fieldValue = detail[FIELD_VALUE];
+        let fieldOrder = detail[FIELD_ORDER];
+        fieldsExpectedOrder[fieldOrder - 1] = fieldValue;
+    }
+    let fieldsActualOrder = await caseWizardPage.getFieldDetails(fieldType, fieldId)
+    expect(fieldsActualOrder).to.deep.equal(fieldsExpectedOrder)
   });
 
   When(/^I navigate to the 'check your answers' form page$/, async function() {

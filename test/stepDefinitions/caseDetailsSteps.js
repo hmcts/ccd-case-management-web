@@ -106,7 +106,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I start the event '(.*)'$/, async function(event) {
-      await caseDetailsPage.startEvent(event)
+      await caseDetailsPage.startEvent(event);
   });
 
 });

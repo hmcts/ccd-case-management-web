@@ -1,9 +1,10 @@
 let TestData = require('../utils/TestData.js');
+let CaseListPage = require('../pageObjects/caseListPage.js')
 
 module.exports = {
 
   navigateToCreateCasePage: async function(){
-    createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
+    createCaseStartPage = await new CaseListPage().getNavBarComponent().clickCreateCaseLink();
     await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
     await createCaseStartPage.selectCaseType(TestData.caseType);
     await createCaseStartPage.selectEvent(TestData.event);

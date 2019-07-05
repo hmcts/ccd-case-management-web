@@ -1,16 +1,9 @@
 let CCDStringField = require('./ccdStringField.js');
 
-class CCDAddressUKField {
+class CCDAddressUKFieldHidden {
 
   constructor(id) {
-    // this.id = id;
-    this.id = "#AddressField_AddressField";
-
-    //todo add postcode lookup stuff
-    // let selectorPrefix = typeof id === "undefined" ? `${css}` : `${css} div[id="${id}"]`;
-    // this.button = new Button(selectorPrefix + " .manual-link", "t enter a UK postcode");
-
-
+    this.id = "#AddressComplex1_AddressComplex1";
     this.initialiseFields(this.id)
   }
 
@@ -29,6 +22,8 @@ class CCDAddressUKField {
     this.addLine1 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(1) input`, `${collectionPrefix}Address.AddressLine1AddressLine1`);
     this.addLine2 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(2) input`, `${collectionPrefix}Address.AddressLine1AddressLine2`);
     this.addLine3 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(3) input`, `${collectionPrefix}Address.AddressLine1AddressLine3`);
+    this.addLine4 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) input`, `${collectionPrefix}Address.AddressLine1AddressLine4`);
+    this.addLine5 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(6) input`, `${collectionPrefix}Address.AddressLine1AddressLine5`);
     this.country = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(4) input`, `${collectionPrefix}Address.Country`);
   }
 
@@ -43,8 +38,10 @@ class CCDAddressUKField {
     let addLine1Data = await this.addLine1.getFieldData();
     let addLine2Data = await this.addLine2.getFieldData();
     let addLine3Data = await this.addLine3.getFieldData();
+    let addLine4Data = await this.addLine4.getFieldData();
+    let addLine5Data = await this.addLine5.getFieldData();
     let countryData = await this.country.getFieldData();
-    return Array.of(addLine1Data,addLine2Data,addLine3Data,countryData);
+    return Array.of(addLine1Data,addLine2Data,addLine3Data,countryData,addLine4Data,addLine5Data);
   }
 
   async enterAddressLine1(text) {
@@ -59,10 +56,18 @@ class CCDAddressUKField {
     await this.addLine3.enterText(text);
   }
 
+  async enterAddressLine4(text) {
+    await this.addLine4.enterText(text);
+  }
+
+  async enterAddressLine5(text) {
+    await this.addLine5.enterText(text);
+  }
+
   async enterCountry(text) {
     await this.country.enterText(text);
   }
 
 }
 
-module.exports = CCDAddressUKField;
+module.exports = CCDAddressUKFieldHidden;

@@ -34,14 +34,16 @@ class CCDStringField {
   }
 
   async getFieldData(){
-    var data = new Map();
+    let data = new Map();
     let field = 'field';
     let value = 'value';
     let hidden = 'hidden';
 
+    let displayed = await this.stringField.isDisplayed();
+
     data.set(field, this.key);
     data.set(value, await this.getFieldValue());
-    data.set(hidden, await !this.stringField.isDisplayed())
+    data.set(hidden, !displayed);
 
     return data;
   }

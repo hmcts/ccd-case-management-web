@@ -12,6 +12,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   async function populateCaseFields(){
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
@@ -155,6 +156,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.eventFields = [[{fieldType: 'text', fieldId: 'TextField',value: 'showmethemoney'}],
                           [{fieldType: 'text', fieldId: 'TextField3',value: 'showpage5'}],
                           [{fieldType: 'text', fieldId: 'TextField11',value: Data.savedValue}]];
+  });
+
+  Given(/^I have a case with a simple collection of complex$/, function() {
+    Data.caseType = "Complex in Coll in Complex";
+    Data.event = "Create Collection of Complex";
   });
 
 });

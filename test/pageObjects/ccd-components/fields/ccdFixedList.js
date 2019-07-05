@@ -19,10 +19,19 @@ class CcdFixedList {
     } else {
       this.fixedList = new Dropdown(`${this.css} select`);
     }
+    this.options = this.fixedList.getOptionElements();
     this.label = null;
 
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  /**
+   * Returns an options array
+   * @returns array of options
+   */
+  async getOptions() {
+    return await this.fixedList.getOptionsTextValues()
   }
 
   async selectOption(optionLabel) {

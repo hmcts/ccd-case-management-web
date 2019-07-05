@@ -2,6 +2,7 @@ let CustomError = require('./errors/custom-error.js');
 let CCDStringField = require('../pageObjects/ccd-components/fields/ccdStringField.js');
 let CCDDateField = require('../pageObjects/ccd-components/fields/ccdDateField.js');
 let CCDFixedListField = require('../pageObjects/ccd-components/fields/ccdFixedList.js');
+let CCDFixedRadioListField = require('../pageObjects/ccd-components/fields/ccdFixedRadioList.js');
 let CCDYesNoField = require('../pageObjects/ccd-components/fields/ccdYesNoField.js');
 let CCDTextAreaField = require('../pageObjects/ccd-components/fields/ccdTextAreaField.js');
 let CCDComplexTypeField = require('../pageObjects/ccd-components/fields/ccdComplexTypeField.js');
@@ -514,6 +515,29 @@ class FieldDataTypes {
     return isPresent;
   }
 
+  async getFieldDetails(dataType, fieldId) {
+    let css = await this._getFieldCSS(dataType);
+    switch(dataType.toLowerCase()) {
+      case 'fixed-list':
+        return new CCDFixedListField(css, fieldId).getOptions();
+      case 'fixed-radio-list':
+        return new CCDFixedRadioListField(css, fieldId).getOptions();
+      case 'multi-select':
+        return new CCDMultiSelectField(css, fieldId).getOptions();
+      case 'text':
+      case 'number':
+      case 'date':
+      case 'document':
+      case 'email':
+      case 'money-gbp':
+      case 'phone-uk':
+      case 'yes-no':
+      case 'collection':
+      default:
+        throw new CustomError(`could not find a data type called '${dataType}'`)
+    }
+  }
+
   /**
    * retrieve the css component of a given field data type
    * @param dataType
@@ -574,6 +598,8 @@ class FieldDataTypes {
           return FIELDS.DOCUMENT.cssTag;
       case 'email':
           return FIELDS.EMAIL.cssTag;
+      case 'fixed-radio-list':
+          return FIELDS.FIXED_RADIO_LIST.cssTag;
       case 'fixed-list':
           return FIELDS.FIXED_LIST.cssTag;
       case 'phone-uk':
@@ -616,6 +642,8 @@ class FieldDataTypes {
           return FIELDS.DOCUMENT.type;
       case 'email':
           return FIELDS.EMAIL.type;
+      case 'fixed-radio-list':
+          return FIELDS.FIXED_RADIO_LIST.type;
       case 'fixed-list':
           return FIELDS.FIXED_LIST.type;
       case 'phone-uk':
@@ -667,6 +695,10 @@ const FIELDS = Object.freeze({
   FIXED_LIST: {
     htmlTag: 'select',
     cssTag: 'ccd-write-fixed-list-field'
+  },
+  FIXED_RADIO_LIST: {
+    htmlTag: 'input',
+    cssTag: 'ccd-write-fixed-radio-list-field'
   },
   MONEY_GBP: {
     type: 'text',

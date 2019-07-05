@@ -1,9 +1,26 @@
 class CcdMultiSelectField {
 
-  constructor(css){
-      this.css = css;
-      this.labels = this._getLabels();
-      this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
+  constructor(css, id) {
+    this.css = css;
+    if (id) {
+      this.css = `${this.css} #${id}`;
+    }
+    this.optionsDiv = $$(`${this.css} .multiple-choice input`);;
+    this.labels = this._getLabels();
+    this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
+  }
+
+  /**
+   * Returns an options array
+   * @returns array of options
+   */
+  async getOptions() {
+    let optionValues = [];
+    for(const field of await this.optionsDiv){
+      let value = await field.getAttribute('value');
+      optionValues.push(value);
+    }
+    return optionValues;
   }
 
   /**

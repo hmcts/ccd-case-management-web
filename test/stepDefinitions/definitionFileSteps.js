@@ -44,6 +44,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                             {fieldType: 'text', fieldId: 'MyCompany_0_BusinessAddress_Country'}];
     });
 
+  Given(/^a case type containing a collection of nested complex types exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Complex in Coll in Complex';
+    Data.event = 'Create school';
+  });
+
   async function populateCaseProgressionType(){
     Data.caseType = 'Case Progression';
     Data.optionalFields = [];

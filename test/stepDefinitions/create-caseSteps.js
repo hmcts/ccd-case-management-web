@@ -3,6 +3,7 @@ let CreateCaseStartPage = require('../pageObjects/createCaseStartPage');
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let CaseDetailsPage = require('../pageObjects/caseDetailsPage.js');
 let baseSteps = require('./baseSteps.js');
+let Data = require('../utils/TestData.js');
 CustomError = require('../utils/errors/custom-error.js');
 let TestData = require('../utils/TestData.js');
 let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage1.js');
@@ -17,7 +18,12 @@ let expect = chai.expect;
 
 var { defineSupportCode } = require("cucumber");
 
-defineSupportCode(function ({ Given, When, Then}) {
+defineSupportCode(function ({ Given, When, Then, And}) {
+
+  const FIELD_ID = 0;
+  const FIELD_TYPE = 1;
+  const FIELD_VALUE = 2;
+  const FIELD_ORDER = 3;
 
   let caseWizardPage = new CreateCaseWizardPage();
   let createCasePage1 = new ConditionalsCreateCasePage1();
@@ -119,16 +125,72 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   When(/^I navigate to the case creation form page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
+});
+
+  Given(/^a list of addresses listed for postcode '(.*)'$/, async function(postcode){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.enterPostcode(postcode);
+    await caseWizardPage.clickFindAddressButton();
+  })
+
+  Then(/^I should expect address list to be empty$/, async function(){
+    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    expect(currentSelection).to.be.equals("No address found");
   });
 
+  When(/^I enter a postcode '(.*)' and click find address$/, async function (postcode) {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.enterPostcode(postcode);
+    await caseWizardPage.clickFindAddressButton();
+    browser.waitForAngularEnabled(true);
+  });
+
+  Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
+    debugger;
+    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    expect(currentSelection).to.be.equals(count+ " addresses found");
+  });
+
+  When(/^I Select a option '(.*)' from the list$/, async function(index) {
+    await caseWizardPage.ccdAddressUKField.addressListDropDown.selectAnOption();
+  });
+
+  Then(/^I should expect '(.*)' is populated using the selected address$/, async function(line) {
+    let text = await caseWizardPage.ccdAddressUKField[line].getText();
+    expect(text).to.not.be.null;
+  });
+
+
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
-      let fieldDisplayed = await new CreateCaseWizardPage().isFieldPresent(dataType);
+      let fieldDisplayed = await caseWizardPage.isFieldPresent(dataType);
       expect(fieldDisplayed).to.be.true;
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
     await baseSteps.navigateToCreateCasePage()
-    this.fieldObject = await new CreateCaseWizardPage().interactWithField(dataType);
+    this.fieldObject = await caseWizardPage.interactWithField(dataType);
+  });
+
+  When(/^I click on add collection item button$/, async function () {
+    await caseWizardPage.clickGenericCollectionAddNewButton();
+  });
+
+  Then(/^the page contains the following field:$/, async function (fieldDetails) {
+    fieldDetails.rawTable.shift();
+    let fieldId = fieldDetails.rawTable[0][FIELD_ID];
+    let fieldType = fieldDetails.rawTable[0][FIELD_TYPE];
+    let fieldsExpectedOrder = new Array(fieldDetails.rawTable.length);
+    // iterate over data table for field details
+    for (const detail of fieldDetails.rawTable){
+        let fieldValue = detail[FIELD_VALUE];
+        let fieldOrder = detail[FIELD_ORDER];
+        fieldsExpectedOrder[fieldOrder - 1] = fieldValue;
+    }
+    let fieldsActualOrder = await caseWizardPage.getFieldDetails(fieldType, fieldId)
+    expect(fieldsActualOrder).to.deep.equal(fieldsExpectedOrder)
   });
 
   When(/^I navigate to the 'check your answers' form page$/, async function() {

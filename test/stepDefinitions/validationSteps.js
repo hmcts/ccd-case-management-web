@@ -17,6 +17,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
 
+  Given(/^the following definition for '(.*)'$/, async function (sheetName, dataTable) {
+    console.log('sheetName=', sheetName);
+    console.log(dataTable);
+  });
+
+    Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
   Given(/^the '(.*)' page contains the following fields:$/, async function (page, dataTable) {
     let pageObject = null;
 

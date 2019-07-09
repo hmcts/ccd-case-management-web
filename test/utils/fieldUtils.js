@@ -92,10 +92,10 @@ class FieldDataTypes {
    * Enter random number into the Number field field
    * @returns CCDStringField Object
    */
-  async enterIntoNumberField(value){
+  async enterIntoNumberField(value, id){
     let css = await FIELDS.NUMBER.cssTag;
     let type = await FIELDS.TEXT.type;
-    let textField = await new CCDStringField(css, type);
+    let textField = await new CCDStringField(css, type, id);
     await textField.enterNumber(value);
     return textField;
   }
@@ -378,7 +378,7 @@ class FieldDataTypes {
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
-        return await this.enterIntoNumberField(value);
+        return await this.enterIntoNumberField(value, id);
       case 'money-gbp':
         return await this.enterIntoMoneyField(value);
       case 'date':

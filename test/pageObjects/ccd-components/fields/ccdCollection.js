@@ -1,5 +1,5 @@
 let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
-
+let Button = require('../../webdriver-components/button.js');
 /**
  * This is a decoupled class from the dataType classes and should not have any specific methods or locators pointing
  * towards specific classes. It's purpose is to take an instance of a dataType class and initialise it in a list format
@@ -20,21 +20,7 @@ class CcdCollection {
     this.removeButtons = `${id} .float-right button`;
     this.collectionItemsCount = `${this.id} .collection-title`
 
-  }
-
-  /**
-   * Directly choose which item in the collection list to use then enter data into that field(s)
-   * @param collectionItemInt - Item in collection eg 1st field/complex
-   * @param data - data to enter into that field/complex type - requires data type class to have 'enterData' method
-   * @returns {Promise<void>}
-   */
-  async enterData(collectionItemInt, data){
-    //starts at zero index
-    collectionItemInt = collectionItemInt -1;
-
-    let currentCollectionId = `${this.id}_${collectionItemInt}_${collectionItemInt}`;
-    await this.dataTypeObject.initialiseFields(currentCollectionId);
-    await this.dataTypeObject.enterData(data)
+    console.log(`collection field inialized with id ${this.id}`)
   }
 
   /**
@@ -45,7 +31,7 @@ class CcdCollection {
    */
   async getCollectionItem(collectionItemInt){
     //index in id starts from 0 so we -1 from the order position
-    let currentCollectionId = `${this.id}_${collectionItemInt -1}_${collectionItemInt -1}`;
+    let currentCollectionId = await `${this.id}_${collectionItemInt -1}_${collectionItemInt -1}`;
     await this.dataTypeObject.initialiseFields(currentCollectionId,collectionItemInt);
     return this.dataTypeObject;
   }

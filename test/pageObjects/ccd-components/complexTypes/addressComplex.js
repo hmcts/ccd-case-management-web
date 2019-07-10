@@ -1,16 +1,13 @@
-let CCDStringField = require('./ccdStringField.js');
-
-class CCDAddressUKField {
-
-  constructor(id) {
-    // this.id = id;
-    this.id = "#AddressField_AddressField";
-
-    //todo add postcode lookup stuff
-    // let selectorPrefix = typeof id === "undefined" ? `${css}` : `${css} div[id="${id}"]`;
-    // this.button = new Button(selectorPrefix + " .manual-link", "t enter a UK postcode");
+let CCDStringField = require('../fields/ccdStringField.js');
+let ComplexBase = require('../fields/ccdComplexTypeBaseField.js');
+let id = "#AddressField_AddressField";
 
 
+class AddressComplex extends ComplexBase {
+
+  constructor() {
+    super(id);
+    this.id = id;
     this.initialiseFields(this.id)
   }
 
@@ -65,4 +62,4 @@ class CCDAddressUKField {
 
 }
 
-module.exports = CCDAddressUKField;
+module.exports = AddressComplex;

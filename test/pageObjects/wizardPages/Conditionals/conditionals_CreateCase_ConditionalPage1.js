@@ -6,7 +6,7 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
     super();
     this._fieldUsedInShowCondition = ''; // TextField | TextFieldOptional
     this.TextField = new CCDStringField('#TextField');
-    this.optionalTextField = new CCDStringField('TextFieldOptional');
+    this.textFieldOptional = new CCDStringField('#TextFieldOptional');
 
     this.TextField2 = new CCDStringField('#TextField2')
   }
@@ -32,7 +32,7 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
   }
 
   async enterIntoOptionalTextField(text) {
-    await this.optionalTextField.enterText(text);
+    await this.textFieldOptional.enterText(text);
     this._fieldUsedInShowCondition = 'TextFieldOptional';
   }
 
@@ -40,7 +40,7 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
     if (this._fieldUsedInShowCondition === 'TextField') {
       await this.TextField.enterText('showmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
-      await this.optionalTextField.enterText('showme');
+      await this.textFieldOptional.enterText('showme');
     }
   }
 
@@ -48,7 +48,7 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
     if (this._fieldUsedInShowCondition === 'TextField') {
       await this.TextField.enterText('dontshowmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
-      await this.optionalTextField.enterText('dontshowme');
+      await this.textFieldOptional.enterText('dontshowme');
     }
   }
 

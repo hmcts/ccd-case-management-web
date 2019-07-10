@@ -1,9 +1,11 @@
-let CCDStringField = require('./ccdStringField.js');
+let CCDStringField = require('../fields/ccdStringField.js');
+let ComplexBase = require('../fields/ccdComplexTypeBaseField.js');
+const id = "#AddressComplex1_AddressComplex1";
+class AddressHiddenComplex extends ComplexBase {
 
-class CCDAddressUKFieldHidden {
-
-  constructor(id) {
-    this.id = "#AddressComplex1_AddressComplex1";
+  constructor() {
+    super(id);
+    this.id = id;
     this.initialiseFields(this.id)
   }
 
@@ -70,4 +72,4 @@ class CCDAddressUKFieldHidden {
 
 }
 
-module.exports = CCDAddressUKFieldHidden;
+module.exports = AddressHiddenComplex;

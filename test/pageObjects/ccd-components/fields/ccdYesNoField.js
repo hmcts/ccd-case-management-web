@@ -15,23 +15,43 @@ class CcdYesNoField {
    * @param css
    * @param id
    */
-  constructor(css, id){
+  constructor(css, key ){
     this.css = css;
-    if (id) {
-      this.yesRadio = new RadioField(`${css} .form-group #${id}-Yes`, `${id}-Yes`);
-      this.noRadio = new RadioField(`${css} .form-group #${id}-No`, `${id}-No`);
-      this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="${id}-Yes"]]//legend/span`;
-    } else {
-      this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
-      this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
-      this.labelXPath = `//ccd-field-write[div/ccd-write-yes-no-field//*[@id="YesNoField-Yes"]]//legend/span`;
-    }
+    this.key = this.setKey(key)
+
+    this.yesRadio = new RadioField(`${this.css} fieldset > div > .multiple-choice:nth-of-type(1) input`);
+    this.noRadio = new RadioField(`${this.css} fieldset > div > .multiple-choice:nth-of-type(2) input`);
+    this.label = `${this.css} legend`;
 
     this.yesRadioSelectedCss = `${css} .form-group .selected #YesNoField-Yes`;
     this.noRadioSelectedCss = `${css} .form-group .selected #YesNoField-No`;
     this.label = null;
 
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+
+  async getFieldData(){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, this.key);
+    data.set(value, await this.getDate());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**

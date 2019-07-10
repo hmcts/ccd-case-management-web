@@ -22,7 +22,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     console.log(dataTable);
   });
 
-    Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
   Given(/^the '(.*)' page contains the following fields:$/, async function (page, dataTable) {
     let pageObject = null;
 
@@ -63,11 +62,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
           //Only do the assertion if the column exists, this gives us flexibility so we don't always need the same columns
           //for every scenario using this step
           if (typeof row.value !== 'undefined'){
-            expect(row.value).to.eq(pageField.get('value'));
+            expect(pageField.get('value')).to.eq(row.value);
           }
 
           if (typeof row.hidden !== 'undefined'){
-            expect(row.hidden).to.eq(String(pageField.get('hidden')));
+            expect(String(pageField.get('hidden'))).to.eq(row.hidden);
           }
 
           break;
@@ -88,7 +87,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^no text will appear in the number field$/, async function() {
-    let fieldContents = await caseWizardPage.getNumberFieldValue();
+    let fieldContents = await caseWizardPage.getFieldValue('number');
     console.log(fieldContents);
     expect(fieldContents).to.be.empty;
   });

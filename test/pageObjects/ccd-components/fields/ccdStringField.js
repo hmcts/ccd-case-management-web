@@ -17,6 +17,7 @@ class CCDStringField {
    * @param key - key,
    */
   constructor(css, key){
+    // this.component = 'ccd-write-text-field';
     this.css = css;
     this.stringField = new TextField(css);
     this.key = this.setKey(key);
@@ -109,10 +110,9 @@ class CCDStringField {
    * @returns true or false
    */
   async isFieldReady(){
-    let isCorrectType = await this.stringField.isType(this.type);
     let isPresent = await this.stringField.isPresent();
     let isDisplayed = await this.stringField.isDisplayed();
-    return isCorrectType && isPresent && isDisplayed;
+    return isPresent && isDisplayed;
   }
 
   /**
@@ -120,12 +120,12 @@ class CCDStringField {
    * @returns true or false
    */
   async hasFieldLabels(labelArray){
-    let labelText = await this._getLabel();
+    let labelText = await this.getLabel();
     return labelText === labelArray[0];
   }
 
   async hasFieldLabel(label) {
-    let labelText = await this._getLabel();
+    let labelText = await this.getLabel();
     return labelText.indexOf(label) !== -1;
   }
 
@@ -134,7 +134,7 @@ class CCDStringField {
   }
 
   async _enterIntoField(value){
-    // this.label = await this._getLabel();
+    this.label = await this.getLabel();
     await this.stringField.clearField();
     await this.stringField.enterText(value);
     this.inputValue = value;
@@ -144,9 +144,10 @@ class CCDStringField {
     return value;
   }
 
-  async _getLabel(){
-    return this.id ? await $(`${this.css} label[for=${this.id}]`).getText()
-                  : await $(`${this.css} .form-label`).getText();
+  async getLabel(){
+    let id = await $(this.css).getAttribute('id');
+    let label = await $('label[for=' + id + ']').getText();
+    return label;
   }
 
 

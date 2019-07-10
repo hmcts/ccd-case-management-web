@@ -4,7 +4,7 @@ let Dropdown = require('../../webdriver-components/dropdown.js');
 /**
  * CCD Fixed List dropdown field component
  */
-class CcdFixedList {
+class CcdFixedList extends Dropdown{
 
   /**
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
@@ -12,18 +12,39 @@ class CcdFixedList {
    * @param css
    * @param id
    */
-  constructor(css, id) {
+  constructor(css, key) {
+    super(css);
     this.css = css;
-    if (id) {
-      this.fixedList = new Dropdown(`${this.css} #${id}`);
-    } else {
-      this.fixedList = new Dropdown(`${this.css} select`);
-    }
+    this.key = this.setKey(key);
+    this.fixedList = new Dropdown(this.css);
     this.options = this.fixedList.getOptionElements();
     this.label = null;
 
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+  async getFieldData(){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, this.key);
+    data.set(value, await this.getCurrentOption());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**
@@ -92,8 +113,10 @@ class CcdFixedList {
     return labelText.indexOf(label) !== -1;
   }
 
-  async _getLabel() {
-    return await $(`${this.css} .form-label`).getText();
+  async _getLabel(){
+    let id = await $(this.css).getAttribute('id');
+    let label = await $('label[for=' + id + ']').getText();
+    return label;
   }
 
 }

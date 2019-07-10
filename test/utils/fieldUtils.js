@@ -5,10 +5,11 @@ let CCDFixedListField = require('../pageObjects/ccd-components/fields/ccdFixedLi
 let CCDFixedRadioListField = require('../pageObjects/ccd-components/fields/ccdFixedRadioList.js');
 let CCDYesNoField = require('../pageObjects/ccd-components/fields/ccdYesNoField.js');
 let CCDTextAreaField = require('../pageObjects/ccd-components/fields/ccdTextAreaField.js');
-let CCDComplexTypeField = require('../pageObjects/ccd-components/fields/ccdComplexTypeField.js');
+let CCDComplexTypeField = require('../pageObjects/ccd-components/fields/ccdComplexTypeBaseField.js');
 let CCDMultiSelectField = require('../pageObjects/ccd-components/fields/ccdMultiSelectField.js');
 let CCDCollectionField = require('../pageObjects/ccd-components/fields/ccdCollectionField.js');
-let CCDAddressUKField = require('../pageObjects/ccd-components/fields/ccdAddressUKField.js');
+let CCDAddressUKField = require('../pageObjects/ccd-components/complexTypes/addressComplex.js');
+let CCDDocumentField = require('../pageObjects/ccd-components/fields/ccdDocumentField.js');
 
 class FieldDataTypes {
 
@@ -16,16 +17,17 @@ class FieldDataTypes {
    * Enter random text into the Text field
    * @returns CCDStringField Object
    */
-  async enterIntoTextField(value){
+  async enterIntoTextField(value, id){
     let css = await FIELDS.TEXT.cssTag;
-    let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css);
+    let locator = id ? `#${id}` : css;
+    console.log(`DEBUG ${locator}`)
+    let field = await new CCDStringField(locator);
     await field.enterText(value);
     return field;
   }
 
   async textFieldContainsInLabel(value) {
-    let css = await FIELDS.TEXT.cssTag;
+    let css = await FIELDS.TEXT.cssTag;a
     let type = await FIELDS.TEXT.type;
     let field = await new CCDStringField(css);
     return await field.hasFieldLabel(value);
@@ -71,9 +73,8 @@ class FieldDataTypes {
    */
   async enterIntoAddressLine1Field(value, id) {
     let css = await FIELDS.ADDRESS.cssTag;
-    let type = await FIELDS.ADDRESS.type;
     let field = await new CCDAddressUKField(css, id);
-    await field.enterTextIntoAddressLine1(value);
+    await field.enterAddressLine1(value);
     return field;
   }
 
@@ -153,7 +154,8 @@ class FieldDataTypes {
    */
   async selectFromFixedList(value, id){
     let css = await FIELDS.FIXED_LIST.cssTag;
-    let fixedListField = await new CCDFixedListField(css, id);
+    let locator = id ? `#${id}` : css;
+    let fixedListField = await new CCDFixedListField(locator);
     await fixedListField.selectOption(value);
     return fixedListField;
   }
@@ -171,7 +173,8 @@ class FieldDataTypes {
    */
   async selectYesNoOption(value, id){
     let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css, id);
+    let locator = id ? `#${id}` : css;
+    let yesNoField = await new CCDYesNoField(locator);
     await yesNoField.selectOption(value);
     return yesNoField;
   }
@@ -374,7 +377,7 @@ class FieldDataTypes {
       case 'case-link':
         return await this.enterIntoCaseLinkField(value, id);
       case 'text':
-        return await this.enterIntoTextField(value);
+        return await this.enterIntoTextField(value, id);
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
@@ -476,7 +479,7 @@ class FieldDataTypes {
   async isFieldPresent(dataType, id){
     let css = await this._getFieldCSS(dataType);
     if (id) {
-      return await $(`${css} #${id}`).isPresent();
+      return await $(`#${id}`).isPresent();
     } else {
       return await element(by.css(css)).isPresent();
     }
@@ -492,7 +495,7 @@ class FieldDataTypes {
   }
 
   /**
-   * Check if field is present and enabled
+   * Check if field is present and enabledstring
    * @returns {Promise<boolean|*>}
    */
   async isFieldReady(dataType, valueArray){
@@ -531,12 +534,9 @@ class FieldDataTypes {
    */
   async _getField(dataType){
     let css = await this._getFieldCSS(dataType);
-    let type = await this._getFieldInputType(dataType);
     switch(dataType.toLowerCase()) {
       case 'text':
       case 'number':
-      case 'date':
-      case 'document':
       case 'email':
       case 'money-gbp':
       case 'phone-uk':
@@ -555,6 +555,10 @@ class FieldDataTypes {
           return new CCDCollectionField(css);
       case 'multi-select':
           return new CCDMultiSelectField(css);
+      case 'date':
+        return new CCDDateField(css)
+     case 'document':
+        return new CCDDocumentField(css)
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }
@@ -605,49 +609,7 @@ class FieldDataTypes {
     }
   }
 
-  /**
-   * retrieve the input type component of a given field data type
-   * @param dataType
-   * @returns css component of specified field
-   */
-  async _getFieldInputType(dataType){
-    switch(dataType.toLowerCase()) {
-      case 'text':
-          return FIELDS.TEXT.type;
-      case 'textarea':
-          return FIELDS.TEXT_AREA.type;
-      case 'number':
-          return FIELDS.NUMBER.type;
-      case 'address':
-          return FIELDS.ADDRESS.type;
-      case 'money-gbp':
-          return FIELDS.MONEY_GBP.type;
-      case 'date':
-          return FIELDS.DATE.type;
-      case 'document':
-          return FIELDS.DOCUMENT.type;
-      case 'email':
-          return FIELDS.EMAIL.type;
-      case 'fixed-radio-list':
-          return FIELDS.FIXED_RADIO_LIST.type;
-      case 'fixed-list':
-          return FIELDS.FIXED_LIST.type;
-      case 'phone-uk':
-          return FIELDS.PHONE_NUMBER.type;
-      case 'yes-no':
-          return FIELDS.YES_NO.type;
-      case 'collection':
-          return FIELDS.COLLECTION.type;
-      case 'complex':
-          return FIELDS.COMPLEX_TYPE.type;
-      case 'multi-select':
-          return FIELDS.MULTI_SELECT.type;
-      case 'case-link':
-        return FIELDS.CASE_LINK.type;
-      default:
-        throw new CustomError(`could not find a data type called '${dataType}'`)
-    }
-  }
+
 
   async hasClass (element, cls) {
     let classes = await element.getAttribute('class');
@@ -680,7 +642,7 @@ const FIELDS = Object.freeze({
   },
   FIXED_LIST: {
     htmlTag: 'select',
-    cssTag: 'ccd-write-fixed-list-field'
+    cssTag: 'ccd-write-fixed-list-field select'
   },
   FIXED_RADIO_LIST: {
     htmlTag: 'input',

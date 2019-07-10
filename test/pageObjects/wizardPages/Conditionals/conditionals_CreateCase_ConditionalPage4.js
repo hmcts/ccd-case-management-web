@@ -1,4 +1,4 @@
-let AddressComplex = require('../../ccd-components/fields/ccdAddressUKFieldHidden.js')
+let AddressComplex = require('../../ccd-components/complexTypes/addressHiddenComplex.js')
 let Collection = require('../../ccd-components/fields/ccdCollection.js');
 
 class ConditionalsCreateCasePage4WizardPage extends CreateCaseWizardPage {

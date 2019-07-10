@@ -162,6 +162,16 @@ class Dropdown {
     }
   }
 
+  /**
+   * Index starts at 1
+   * @param index
+   * @returns {Promise<void>}
+   */
+  async selectFromDropdownByIndex(index){
+    let option = $$(`${this._dropdownElement} option`).get(index);
+    await option.click();
+  }
+
 }
 
 module.exports = Dropdown;

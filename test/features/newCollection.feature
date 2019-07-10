@@ -1,10 +1,10 @@
-@ash
+@unit
 Feature: poc for new collection page object component
 
   Background:
     And I have logged in
 
-    @run
+
   Scenario: Test for complex in collection
     Given I have a case with a simple collection of complex
     And I navigate to the case creation form page
@@ -21,7 +21,6 @@ Feature: poc for new collection page object component
       | 2.Address.Country                   | UK                 |
 
 
-#  @ash
   Scenario: Test for basic complex
     Given a case type containing every field type exists
     And I navigate to the case creation form page
@@ -34,7 +33,7 @@ Feature: poc for new collection page object component
       | Address.Country                     | UK             |  false   |
 
 
-  @poc
+
   Scenario: POC scenario for new step on conditionals
     Given a case type containing show and hide functionality exists
     When I enter 'showmethemoney' into the 'text' field
@@ -43,7 +42,6 @@ Feature: poc for new collection page object component
       | TextField2    |                |  false   |
 
 
-    @ash
   Scenario: POC scenario for new step on conditionals
     Given a case type containing show and hide functionality exists
     Given I start createCase event
@@ -51,3 +49,9 @@ Feature: poc for new collection page object component
     Then the 'Conditional Page 1' page contains the following fields:
       | field         | value          |  hidden  |
       | TextField2    |                |  true    |
+
+  @poc
+  Scenario: Refactoring of the create school page / event
+    Given a case type containing Complex and Collection types exists
+    When I navigate to the case creation form page
+    Then I am able to fill out data on the school form

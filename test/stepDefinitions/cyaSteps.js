@@ -17,6 +17,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.interactWithField('text');
     await caseWizardPage.clickContinueButton();
     this.fieldObject = await caseWizardPage.interactWithField('text');
+    this.label = await this.fieldObject.getLabel();
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.interactWithField('text');
     await caseWizardPage.clickContinueButton();
@@ -24,8 +25,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
   When('I click the change link', async function () {
-    let label = this.fieldObject.label.toString();
-    await caseWizardPage.clickChangeLink(label)
+    await caseWizardPage.clickChangeLink(this.label)
   });
 
 
@@ -51,8 +51,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickContinueButton();
 
-    let fieldLabel = await this.fieldObject.label;
-    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel)
+    // let fieldLabel = await this.fieldObject.label;
+    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(this.label);
     let expectedValue = await this.fieldObject.checkYourAnswersValue;
 
     expect(actualValue, 'wrong value for CYA').to.equal(expectedValue)

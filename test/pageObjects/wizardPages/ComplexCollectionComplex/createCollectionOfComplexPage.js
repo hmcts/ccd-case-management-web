@@ -1,5 +1,5 @@
 let Collection = require('../../ccd-components/fields/ccdCollection.js');
-let AddressComplex = require('../../ccd-components/fields/ccdAddressUKField.js')
+let AddressComplex = require('../../ccd-components/complexTypes/addressComplex.js')
 
 class ConditionalsCreateCollectionOfComplex extends CreateCaseWizardPage {
 
@@ -34,10 +34,6 @@ class ConditionalsCreateCollectionOfComplex extends CreateCaseWizardPage {
     return await this.collectionOfAddressComplex.getCollectionItem(complexItemInt);
   }
 
-  async enterIntoCollection(collectionItemInt, data){
-    await this.collectionOfAddressComplex.clickAddNewButton();
-    await this.collectionOfAddressComplex.enterData(collectionItemInt,data)
-  }
 
 }
 

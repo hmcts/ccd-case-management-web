@@ -12,6 +12,7 @@ let ConditionalsCreateCasePage3 = require('../pageObjects/wizardPages/Conditiona
 let ConditionalsCreateCasePage4 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage4.js');
 let CreateCollectionOfComplexPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createCollectionOfComplexPage.js');
 let DataTypesPage = require('../pageObjects/wizardPages/dataFieldTypesPage');
+let CreateSchoolPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createSchoolPage.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -37,9 +38,61 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   let dataTypesPage = new DataTypesPage();
 
 
+
+
+  Then(/^I am able to fill out data on the school form$/, async function () {
+    let createSchoolPage = new CreateSchoolPage();
+
+    //Enter School Name
+    await createSchoolPage.enterSchoolName('Dulwich College');
+
+    //Enter Details for School Class
+    await createSchoolPage.clickAddNewSchoolClassButton();
+    let schoolClass1 = await createSchoolPage.getCollectionOfSchoolClass(1);
+    await schoolClass1.printInfo('schoolClass1');
+    await schoolClass1.enterClassName('A team');
+    await schoolClass1.enterClassNumber('1');
+    await schoolClass1.enterClassRanking('1');
+    await schoolClass1.enterClassBuilding('North Cloister');
+    await schoolClass1.selectClassFloor('Two');
+    await schoolClass1.enterClassTeacher('Mr Henderson');
+
+    //Enter Details for Another School Class (another collection item)
+    await createSchoolPage.clickAddNewSchoolClassButton();
+    let schoolClass2 = await createSchoolPage.getCollectionOfSchoolClass(2);
+    await schoolClass2.enterClassName('B team');
+
+    //Add Members for first School Class
+    await schoolClass1.clickAddNewMembersButton();
+    let class1Members1 = await schoolClass1.getCollectionOfClassMembersComplex(1);
+
+    //Add first Child to members for first School class
+    await class1Members1.clickAddNewChildrenButton();
+    let class1Members1Child1 = await class1Members1.getCollectionOfClassMemberChildrenComplex(1);
+    await class1Members1Child1.enterChildFullName('Ashley Noronha');
+    await class1Members1Child1.enterBuildingAndStreet('5a Westway');
+    await class1Members1Child1.selectChildGender('Male');
+    await class1Members1Child1.enterAutisticChildCaseRefNumber('12345A');
+
+    //Add second Child to members for first School class
+    await class1Members1.clickAddNewChildrenButton();
+    let class1Members1Child2 = await class1Members1.getCollectionOfClassMemberChildrenComplex(2);
+    await class1Members1Child2.enterChildFullName('Finn Noronha');
+
+    //Add Member and a child for Second School Class
+    await schoolClass2.clickAddNewMembersButton();
+    let class2Members1 = await schoolClass2.getCollectionOfClassMembersComplex(1);
+    await class2Members1.clickAddNewChildrenButton();
+    let class2Members1Child1 = await class2Members1.getCollectionOfClassMemberChildrenComplex(1);
+    await class2Members1Child1.enterChildFullName('Harry Potter');
+
+    //Change child 2 name from first school class
+    await class1Members1Child2.enterChildFullName('Cam Noronha');
+
+  });
+
+
   Then(/^I successfully fill out 2 collection items$/, async function () {
-    // let data1 = ['70 massingberd way', 'tooting'];
-    // let data2 = ['5a westway', 'raynes park'];
 
     await createCollectionOfComplexPage.clickAddNewButton();
     let addressComplex1 = await createCollectionOfComplexPage.getCollectionOfAddressComplex(1);
@@ -53,23 +106,14 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await addressComplex2.enterAddressLine2('Tooting');
     await addressComplex2.enterCountry('UK');
 
-    // await createCollectionOfComplexPage.enterIntoCollection('1',data1);
-    // await createCollectionOfComplexPage.enterIntoCollection('2',data2);
-
   });
 
   Then(/^I successfully fill out the complex type$/, async function () {
-    // let data1 = ['70 massingberd way', 'tooting'];
-
     let addressComplex = await dataTypesPage.getAddressComplex();
     await addressComplex.enterAddressLine1('5a Westway')
     await addressComplex.enterAddressLine2('Raynes Park')
     await addressComplex.enterCountry('UK')
-    // await dataTypesPage.enterIntoComplex(data1);
   });
-
-
-
 
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
@@ -125,42 +169,36 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When(/^I navigate to the case creation form page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-});
+  });
 
-  Given(/^a list of addresses listed for postcode '(.*)'$/, async function(postcode){
-    Data.jurisdiction = 'Auto Test 1';
-    Data.caseType = 'All Field Data Types';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
-    await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.enterPostcode(postcode);
-    await caseWizardPage.clickFindAddressButton();
-  })
 
   Then(/^I should expect address list to be empty$/, async function(){
-    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    let addressUK = await dataTypesPage.getAddressUKComplex();
+
+    let addressDropdown = await addressUK.getAddressDropdown();
+    let currentSelection = await addressDropdown.getCurrentSelectedOption();
     expect(currentSelection).to.be.equals("No address found");
   });
 
   When(/^I enter a postcode '(.*)' and click find address$/, async function (postcode) {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.enterPostcode(postcode);
-    await caseWizardPage.clickFindAddressButton();
-    browser.waitForAngularEnabled(true);
+
+    let addressUK = await dataTypesPage.getAddressUKComplex();
+    await addressUK.enterPostcode(postcode);
+    await addressUK.clickAddressButton();
   });
 
   Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
-    debugger;
-    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    let addressUK = await dataTypesPage.getAddressUKComplex();
+
+    let addressDropdown = await addressUK.getAddressDropdown();
+    let currentSelection = await addressDropdown.getCurrentSelectedOption();
     expect(currentSelection).to.be.equals(count+ " addresses found");
   });
 
-  When(/^I Select a option '(.*)' from the list$/, async function(index) {
-    await caseWizardPage.ccdAddressUKField.addressListDropDown.selectAnOption();
-  });
-
-  Then(/^I should expect '(.*)' is populated using the selected address$/, async function(line) {
-    let text = await caseWizardPage.ccdAddressUKField[line].getText();
-    expect(text).to.not.be.null;
+  When(/^I Select a option '(.*)' from the address list$/, async function(index) {
+    let addressDropdown = await (await dataTypesPage.getAddressUKComplex()).getAddressDropdown();
+    await addressDropdown.selectFromDropdownByIndex(index)
   });
 
 
@@ -178,6 +216,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickGenericCollectionAddNewButton();
   });
 
+  //todo redo
   Then(/^the page contains the following field:$/, async function (fieldDetails) {
     fieldDetails.rawTable.shift();
     let fieldId = fieldDetails.rawTable[0][FIELD_ID];
@@ -371,40 +410,72 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
-    await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
-    await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
-    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
-    await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
-    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
-    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
-    await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
-    await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
-    await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
+    let createSchoolPage = new CreateSchoolPage();
+
+    await createSchoolPage.enterSchoolName('Busy Bees');
+    await createSchoolPage.selectProvidesAutisticSupport(supportAnswer);
+
+    await createSchoolPage.clickAddNewSchoolClassButton();
+    let classDetails = createSchoolPage.getCollectionOfSchoolClass(1);
+
+    await classDetails.enterClassName(className);
+
+    await classDetails.clickAddNewMembersButton();
+    let classMembers = await classDetails.getCollectionOfClassMembersComplex(1);
+
+    await classMembers.clickAddNewChildrenButton();
+    let childrenDetails = await classMembers.getCollectionOfClassMemberChildrenComplex(1);
+    await childrenDetails.enterChildFullName('Joe Kember');
+    await childrenDetails.selectChildGender('Male');
+    await childrenDetails.enterBuildingAndStreet('150 Boyson Road');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');s
+      await childrenDetails.selectIsAutistic(isClassMemeberAutistic);
     }
-    await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
+    await childrenDetails.enterAutisticChildCaseRefNumber('1111222233334444');
+
+    //todo test replacement code
+    // await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
+    // await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
+    // await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
+    // await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
+    // await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
+    // await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
+    // await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
+    // await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
+    // await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
+    // if (supportAnswer === 'Yes') {
+    //   await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+    // }
+    // await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
+    //
   }
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
   });
 
   Given(/^I have submitted a case with a collection of complex with a complex data$/, async function(){
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
   });
 
   Given(/^I have created a case with text fields$/, async function() {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField("text", "showmethemoney", "TextField");
-    await caseWizardPage.interactWithField("text", "showme", "TextFieldOptional");
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickSubmitCaseButton();
+
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney')
+    await conditionals_createCase_conditionalPage1.enterIntoOptionalTextField('showme')
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.clickSubmitCaseButton();
+
+    // await caseWizardPage.interactWithField("text", "showmethemoney", "TextField");
+    // await caseWizardPage.interactWithField("text", "showme", "TextFieldOptional");
+    // await caseWizardPage.clickContinueButton();
+    // await caseWizardPage.clickContinueButton();
+    // await caseWizardPage.clickSubmitCaseButton();
   });
 
   Given(/^I have created a case with fixed list item$/, async function() {

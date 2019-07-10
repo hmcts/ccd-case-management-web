@@ -14,12 +14,37 @@ class CcdTextAreaField{
    *
    * @param css
    */
-  constructor(css){
+  constructor(css, key){
     this.css = css;
+    this.key = this.setKey(key)
     this.stringField = new TextField(`${this.css} textarea`);
     this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+
+  async getFieldData(){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, this.key);
+    data.set(value, await this.getValue());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**

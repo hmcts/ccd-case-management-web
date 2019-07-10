@@ -1,23 +1,27 @@
-let AddressComplex = require('../ccd-components/fields/ccdAddressUKField.js')
+let AddressComplex = require('../ccd-components/complexTypes/addressComplex.js')
+let CcdAddressUKComplex = require('../ccd-components/fields/ccdAddressUK.js')
 
 class DataFieldTypesPage extends CreateCaseWizardPage {
 
   constructor() {
     super();
-    this.addressComplex = new AddressComplex('#AddressField_AddressField')
+    this.addressComplex = new AddressComplex();
+    this.addressUKComplex = new CcdAddressUKComplex();
 
   }
 
   async getFieldData(){
-    return Array.of(await this.addressComplex.getFieldData());
+    let addressData = await this.addressComplex.getFieldData();
+    let addressUKData = await this.addressUKComplex.getFieldData();
+    return Array.of(addressData, addressUKData);
   }
 
   async getAddressComplex(){
     return this.addressComplex;
   }
 
-  async enterIntoComplex(data){
-    await this.addressComplex.enterData(data);
+  async getAddressUKComplex(){
+    return this.addressUKComplex;
   }
 
 }

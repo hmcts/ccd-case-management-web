@@ -91,7 +91,7 @@
     "x-frame-options": "^1.0.0",
     "zone.js": "^0.8.26",
     "@hmcts/document-viewer-webcomponent": "^1.1.5",
-    "@hmcts/media-viewer": "^0.1.0",
+    "@hmcts/media-viewer": "0.1.0-credentials-fix",
     "@ng-toolkit/universal": "^1.1.45"
   },
   "devDependencies": {

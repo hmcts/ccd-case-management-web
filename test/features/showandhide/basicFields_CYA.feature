@@ -3,12 +3,12 @@ Feature: Hide and show of basic fields on the Check Your Answers page
 
   Background:
     Given the following definition for 'case fields in events'
-      | Event         | ID                   | Display context | Field show condition           |
-      | createCase    | TextField            | Mandatory       |                                |
-      | createCase    | TextField2           | Optional        | TextField="showmethemoney"     |
-      | createCase    | MaritalStatusField   | Optional        |                                |
-      | createCase    | TextField3           | Optional        |                                |
-      | createCase    | AddressComplex1      | Optional        | TextField3="showpage3"         |
+      | Event         | ID                   | Display context | Field show condition           | Page show condition        |
+      | createCase    | TextField            | Mandatory       |                                |                            |
+      | createCase    | TextField2           | Optional        | TextField="showmethemoney"     |                            |
+      | createCase    | MaritalStatusField   | Optional        |                                |                            |
+      | createCase    | TextField3           | Optional        |                                | TextField="showmethemoney" |
+      | createCase    | AddressComplex1      | Optional        | TextField3="showpage3"         | TextField3="showpage3"     |
     And I have logged in
     And a case type containing show and hide functionality exists
 

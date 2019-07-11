@@ -18,8 +18,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     console.log(dataTable);
   });
 
-  // TODO: remove when RDM-5022 is merged
-  Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
+    Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
     // TODO: No check for now - should be implemented as a part of RDM-5022
   });
 

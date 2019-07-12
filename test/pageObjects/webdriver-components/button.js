@@ -11,7 +11,6 @@ class Button{
    * @param content
    */
   constructor(css, content){
-    // console.log(`DEBUG THIS BUTTON HAS FOLLOWING LOCATOR: ${css}`);
     this.css = css;
     this.content = content;
     this.xpath = `.//*[contains(text(), '${this.content}')]`;

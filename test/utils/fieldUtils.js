@@ -20,36 +20,9 @@ class FieldDataTypes {
   async enterIntoTextField(value, id){
     let css = await FIELDS.TEXT.cssTag;
     let locator = id ? `#${id}` : css;
-    console.log(`DEBUG ${locator}`)
     let field = await new CCDStringField(locator);
     await field.enterText(value);
     return field;
-  }
-
-  async textFieldContainsInLabel(value) {
-    let css = await FIELDS.TEXT.cssTag;a
-    let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css);
-    return await field.hasFieldLabel(value);
-  }
-
-  async fixedListFieldContainsInLabel(value) {
-    let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css);
-    return await field.hasFieldLabel(value);
-  }
-
-  async caseLinkFieldContainsInLabel(value) {
-    let css = await FIELDS.CASE_LINK.cssTag;
-    let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css);
-    return await field.hasFieldLabel(value);
-  }
-
-  async yesNoFieldContainsInLabel(value, radioId) {
-    let css = await FIELDS.YES_NO.cssTag;
-    let field = await new CCDYesNoField(css, radioId);
-    return await field.hasFieldLabel(value);
   }
 
   /**
@@ -58,7 +31,6 @@ class FieldDataTypes {
    */
   async enterIntoCaseLinkField(value) {
     let css = await FIELDS.CASE_LINK.cssTag;
-    let type = await FIELDS.CASE_LINK.type;
     let field = await new CCDStringField(css);
     await field.enterText(value);
     return field;
@@ -95,7 +67,6 @@ class FieldDataTypes {
    */
   async enterIntoNumberField(value){
     let css = await FIELDS.NUMBER.cssTag;
-    let type = await FIELDS.TEXT.type;
     let textField = await new CCDStringField(css);
     await textField.enterNumber(value);
     return textField;
@@ -107,7 +78,6 @@ class FieldDataTypes {
    */
   async enterIntoMoneyField(value){
     let css = await FIELDS.MONEY_GBP.cssTag;
-    let type = await FIELDS.TEXT.type;
     let textField = await new CCDStringField(css);
     await textField.enterMoney(value);
     return textField;
@@ -119,7 +89,6 @@ class FieldDataTypes {
    */
   async enterIntoEmailField(value){
     let css = await FIELDS.EMAIL.cssTag;
-    let type = await FIELDS.TEXT.type;
     let textField = await new CCDStringField(css);
     await textField.enterEmail(value);
     return textField;
@@ -131,7 +100,6 @@ class FieldDataTypes {
    */
   async enterIntoPhoneField(value){
     let css = await FIELDS.PHONE_NUMBER.cssTag;
-    let type = await FIELDS.TEXT.type;
     let phoneField = await new CCDStringField(css);
     await phoneField.enterPhoneNumber(value);
     return phoneField;
@@ -177,70 +145,6 @@ class FieldDataTypes {
     let yesNoField = await new CCDYesNoField(locator);
     await yesNoField.selectOption(value);
     return yesNoField;
-  }
-
-  async fieldYesNoIsHidden(radioId) {
-    let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css, radioId);
-    return await yesNoField.isHidden();
-  }
-
-  async fieldYesNoIsVisible(radioId) {
-    let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css, radioId);
-    return await yesNoField.isVisible();
-  }
-
-  async textFieldIsHidden(id) {
-    let css = await FIELDS.TEXT.cssTag;
-    let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css);
-    return await field.isHidden();
-  }
-
-  async textFieldIsVisible(id) {
-    let css = await FIELDS.TEXT.cssTag;
-    let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css);
-    return await field.isVisible();
-  }
-
-  async caseLinkFieldIsHidden(id) {
-    let css = await FIELDS.CASE_LINK.cssTag;
-    let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css);
-    return await field.isHidden();
-  }
-
-  async caseLinkFieldIsVisible(id) {
-    let css = await FIELDS.CASE_LINK.cssTag;
-    let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css);
-    return await field.isVisible();
-  }
-
-  async fixedListFieldIsHidden(id) {
-    let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css, id);
-    return await field.isHidden();
-  }
-
-  async fixedListFieldIsVisible(id) {
-    let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css, id);
-    return await field.isVisible();
-  }
-
-  async dateFieldIsHidden(id) {
-    let css = await FIELDS.DATE.cssTag;
-    let field = await new CCDDateField(css, id);
-    return await field.isHidden();
-  }
-
-  async dateFieldIsVisible(id) {
-    let css = await FIELDS.DATE.cssTag;
-    let field = await new CCDDateField(css, id);
-    return await field.isVisible();
   }
 
   /**
@@ -402,34 +306,6 @@ class FieldDataTypes {
         return await this.enterIntoCollectionField();
       case 'complex':
         return await this.enterIntoComplexField();
-      default:
-        throw new CustomError(`could not find a data type called '${dataType}'`)
-    }
-  }
-
-  async fieldLabelContains(dataType, id, value) {
-    let dt = dataType.toLowerCase();
-    switch(dt) {
-      case 'address':
-        return //todo
-      case 'case-link':
-        return await this.caseLinkFieldContainsInLabel(value, id);
-      case 'text':
-        return await this.textFieldContainsInLabel(value, id);
-      case 'fixed-list':
-        return await this.fixedListFieldContainsInLabel(value, id);
-      case 'yes-no':
-        return await this.yesNoFieldContainsInLabel(value, id);
-      case 'textarea':
-      case 'number':
-      case 'money-gbp':
-      case 'date':
-      case 'document':
-      case 'email':
-      case 'phone-uk':
-      case 'collection':
-      case 'complex':
-        throw new CustomError(`fieldLabelContains not implemented for '${dataType}'`);
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }

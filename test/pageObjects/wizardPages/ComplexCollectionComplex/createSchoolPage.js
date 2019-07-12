@@ -5,7 +5,6 @@ let CCDYesNoField = require('../../ccd-components/fields/ccdYesNoField.js');
 let CCDFixedRadioList = require('../../ccd-components/fields/ccdFixedRadioList.js');
 let CCDMultiSelectField = require('../../ccd-components/fields/ccdMultiSelectField.js');
 let Button = require('../../webdriver-components/button.js');
-// let SchoolClassComplex = require('./schoolClassComplex');
 
 class CreateSchoolPage extends CreateCaseWizardPage {
 

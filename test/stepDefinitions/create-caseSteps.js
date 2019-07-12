@@ -222,8 +222,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   Then(/^the '(.*)' list is in the following order:$/, async function (listDataType, fieldDetails) {
     let actualOrder = await caseWizardPage.getListOrder(listDataType);
     let expectedOrder = [].concat(...fieldDetails.rawTable);
-    console.log(expectedOrder)
-    console.log(actualOrder)
     expect(actualOrder).to.deep.equal(expectedOrder)
   });
 

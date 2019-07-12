@@ -23,27 +23,9 @@ class CcdAddressUKComplex extends ComplexBase {
     this.addressCounty = new CCDStringField(`${this.id} ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(5) input`,'AddressUK.County');
     this.addressPostcode = new CCDStringField(`${this.id} ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(6) input`,'AddressUK.PostCode');
     this.addressCountry = new CCDStringField(`${this.id} ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(7) input`,'AddressUK.Country');
-
-    // this.initialiseFields(this.id)
   }
 
-  // /**
-  //  * Allows us to also re-initialise fields fpr a collection by parsing collection parent id here
-  //  * @param id - id of the complex OR may be the id of the collection (of this complex)
-  //  * @param collectionOrderIndex
-  //  */
-  // initialiseFields(id,collectionOrderIndex) {
-  //   //if this is part of a collection we want to prefix the key with the index ie 1.Complex.field
-  //   let collectionPrefix = '';
-  //   if (typeof collectionOrderIndex !== 'undefined'){
-  //     collectionPrefix = `${collectionOrderIndex}.`
-  //   }
-  //   this.id = id;
-  //   this.addLine1 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(1) input`, `${collectionPrefix}Address.AddressLine1AddressLine1`);
-  //   this.addLine2 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(2) input`, `${collectionPrefix}Address.AddressLine1AddressLine2`);
-  //   this.addLine3 = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(3) input`, `${collectionPrefix}Address.AddressLine1AddressLine3`);
-  //   this.country = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(4) input`, `${collectionPrefix}Address.Country`);
-  // }
+
 
   async getFieldData(){
     let addLine1Data = await this.addressLine1.getFieldData();

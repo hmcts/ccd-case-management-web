@@ -53,7 +53,6 @@ class CcdCollection {
   }
 
   async getItemsInCollection(){
-    console.log(`debug collection count. locator | ${this.collectionItemsCount}`)
     return await element.all(by.css(this.collectionItemsCount)).count();
   }
 

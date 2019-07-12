@@ -15,7 +15,7 @@ import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
 import { editorRouting as caseEditRouting, viewerRouting as caseViewRouting, CaseResolver } from '@hmcts/ccd-case-ui-toolkit';
-import { DocViewerComponent } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components/palette/document/doc-viewer.component';
+import { MediaViewerComponent } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components/palette/document/media-viewer.component';
 
 const routes: Routes = [
   {
@@ -26,8 +26,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'doc-viewer',
-    component: DocViewerComponent,
+    path: 'media-viewer',
+    component: MediaViewerComponent,
   },
   {
     path: '',

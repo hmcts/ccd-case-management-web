@@ -55,8 +55,8 @@ class CcdFixedRadioList {
   async _getRadioOption(optionValue) {
     let radioElements = await this._getRadioElements();
     for (const elem of radioElements) {
-      const elemText = await elem.getAttribute("ng-reflect-value");
-      if (elemText === optionValue) {
+      const elemText = await elem.getAttribute("id");
+      if (elemText.includes(optionValue)) {
         return elem;
       }
     }

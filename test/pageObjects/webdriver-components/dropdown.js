@@ -124,14 +124,15 @@ class Dropdown {
 
   async waitForElementToBeVisible(){
     const EC = protractor.ExpectedConditions;
-
+    let result = false;
     try {
       await browser.wait(EC.visibilityOf($(this._dropdownElement)), DEFAULT_TIMEOUT);
       return true;
     } catch (e) {
       let message = `timed out after ${DEFAULT_TIMEOUT} waiting for dropdown element ${element} to be visible`;
-      throw new CustomError(message, e);
+      console.log(message);
     }
+    return result;
   }
 
   /**

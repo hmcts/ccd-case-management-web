@@ -38,7 +38,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       case 'Collection of complex type' :
         pageObject = new CreateCollectionOfComplexPage();
         break;
-      case 'create school':
+      case 'Create school':
         pageObject = new CreateSchoolPage();
         break;
       default: throw new CustomError(`This step has not been implemented for '${page}' page yet `)

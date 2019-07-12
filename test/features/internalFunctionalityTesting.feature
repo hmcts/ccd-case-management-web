@@ -1,4 +1,4 @@
-@unit
+@unit @poc
 Feature: poc for new collection page object component and demo the use of new step - this file can be deleted before final merge
 
   Background:
@@ -50,9 +50,20 @@ Feature: poc for new collection page object component and demo the use of new st
       | field         | value          |  hidden  |
       | TextField2    |                |  true    |
 
-  @poc
+
   Scenario: Refactoring of the create school page / event
     Given a case type containing Complex and Collection types exists
-    When I navigate to the case creation form page
-    Then I am able to fill out data on the school form
-    And I can data regarding the form page
+    And I navigate to the case creation form page
+    When I am able to fill out data on the school form
+    Then the 'Create school' page contains the following fields:
+      | field                                                                             | value               |
+      | MySchool.Name                                                                     | Dulwich College     |
+      | MySchool.Class.1.ClassName                                                        | A team              |
+      | MySchool.Class.1.ClassDetails.ClassTeacher                                        | Mr Henderson        |
+      | MySchool.Class.1.ClassDetails.ClassLocation.Building.Name                         | North Cloister      |
+      | MySchool.Class.1.ClassDetails.ClassRanking                                        | 1                   |
+      | MySchool.Class.1.ClassMembers.1.Children.1.ChildFullName                          | Ashley Noronha      |
+      | MySchool.Class.1.ClassMembers.1.Children.1.ChildAddress.AddressLine1              | 5a Westway          |
+      | MySchool.Class.1.ClassMembers.1.Children.1.AutisticChildCaseNumber.CaseReference  | 12345A              |
+      | MySchool.Class.1.ClassMembers.1.Children.2.ChildFullName                          | Cam Noronha         |
+      | MySchool.Class.2.ClassMembers.1.Children.1.ChildFullName                          | Harry Potter        |

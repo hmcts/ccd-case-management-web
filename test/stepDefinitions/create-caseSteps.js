@@ -89,8 +89,8 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     let createSchoolPage = new CreateSchoolPage();
     let data = await createSchoolPage.getFieldData();
     let flattenedPageData = [].concat(...data);
-    console.log(flattenedPageData)
-    process.exit()
+    console.log(flattenedPageData);
+    // process.exit()
   });
 
   //todo delete before final merge

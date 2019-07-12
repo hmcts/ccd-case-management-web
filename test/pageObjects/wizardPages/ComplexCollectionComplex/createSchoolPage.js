@@ -62,10 +62,9 @@ class SchoolClassComplex  {
   async initialiseFields(collectionId, collectionOrderIndex){
     this.key = 'MySchool.Class';
     this.id = collectionId;
-    this.collectionOrderIndex = collectionOrderIndex
 
     //Main Fields
-    this.className = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(1) input`,`MySchool.Class.${collectionOrderIndex}.lassName`);
+    this.className = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(1) input`,`MySchool.Class.${collectionOrderIndex}.ClassName`);
     this.classNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(2) input`,`MySchool.Class.${collectionOrderIndex}.ClassNumber`); // hidden (className='A team')
     this.classDegreeMultiSelectList = new CCDMultiSelectField(`${this.id} > ccd-field-write:nth-of-type(3) ccd-write-multi-select-list-field > div`); // CLASS REQUIRED FOR MULTI SELECT
 
@@ -91,12 +90,13 @@ class SchoolClassComplex  {
   }
 
   async getFieldData(prependKey){
+    let classNameData = await this.className.getFieldData();
     let classRankData = await this.classRanking.getFieldData();
     let classBuildingData = await this.classBuilding.getFieldData();
     let classFloorData = await this.classFloor.getFieldData();
     let classTeacherData = await this.classTeacher.getFieldData()
 
-    let complexData = [classRankData, classBuildingData,classFloorData, classTeacherData ];
+    let complexData = [classRankData, classBuildingData,classFloorData, classTeacherData, classNameData];
 
     let itemsInCollection = await this.collectionoOfclassMembersComplex.getItemsInCollection();
     for (let i = 1; i < itemsInCollection + 1; i++) {

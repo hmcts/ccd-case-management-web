@@ -4,6 +4,7 @@ let baseSteps = require('./baseSteps.js');
 let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage1.js');
 let CreateCollectionOfComplexPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createCollectionOfComplexPage.js');
 let DataTypesPage = require('../pageObjects/wizardPages/dataFieldTypesPage');
+let CreateSchoolPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createSchoolPage.js');
 
 
 let chai = require("chai").use(require("chai-as-promised"));
@@ -36,6 +37,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
         break;
       case 'Collection of complex type' :
         pageObject = new CreateCollectionOfComplexPage();
+        break;
+      case 'create school':
+        pageObject = new CreateSchoolPage();
         break;
       default: throw new CustomError(`This step has not been implemented for '${page}' page yet `)
     }

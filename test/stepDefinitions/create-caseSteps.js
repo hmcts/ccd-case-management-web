@@ -21,10 +21,6 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, And}) {
 
-  const FIELD_ID = 0;
-  const FIELD_TYPE = 1;
-  const FIELD_VALUE = 2;
-  const FIELD_ORDER = 3;
 
   let caseWizardPage = new CreateCaseWizardPage();
   let createCasePage1 = new ConditionalsCreateCasePage1();
@@ -37,6 +33,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   let createCollectionOfComplexPage = new CreateCollectionOfComplexPage();
   let dataTypesPage = new DataTypesPage();
 
+  //todo delete before final merge
   Then(/^I am able to fill out data on the school form$/, async function () {
     let createSchoolPage = new CreateSchoolPage();
 
@@ -87,7 +84,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   });
 
-
+  //todo delete before final merge
   Then(/^I can data regarding the form page$/, async function () {
     let createSchoolPage = new CreateSchoolPage();
     let data = await createSchoolPage.getFieldData();
@@ -96,6 +93,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     process.exit()
   });
 
+  //todo delete before final merge
   Then(/^I successfully fill out 2 collection items$/, async function () {
 
     await createCollectionOfComplexPage.clickAddNewButton();
@@ -112,6 +110,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   });
 
+  //todo delete before final merge
   Then(/^I successfully fill out the complex type$/, async function () {
     let addressComplex = await dataTypesPage.getAddressComplex();
     await addressComplex.enterAddressLine1('5a Westway')
@@ -220,22 +219,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickGenericCollectionAddNewButton();
   });
 
-  //todo redo
-  Then(/^the page contains the following field:$/, async function (fieldDetails) {
-    fieldDetails.rawTable.shift();
-    let fieldId = fieldDetails.rawTable[0][FIELD_ID];
-    let fieldType = fieldDetails.rawTable[0][FIELD_TYPE];
-    let fieldsExpectedOrder = new Array(fieldDetails.rawTable.length);
-    // iterate over data table for field details
-    for (const detail of fieldDetails.rawTable){
-        let fieldValue = detail[FIELD_VALUE];
-        let fieldOrder = detail[FIELD_ORDER];
-        fieldsExpectedOrder[fieldOrder - 1] = fieldValue;
-    }
-    let fieldsActualOrder = await caseWizardPage.getFieldDetails(fieldType, fieldId)
-    expect(fieldsActualOrder).to.deep.equal(fieldsExpectedOrder)
-  });
-
   Then(/^the '(.*)' list is in the following order:$/, async function (listDataType, fieldDetails) {
     let actualOrder = await caseWizardPage.getListOrder(listDataType);
     let expectedOrder = [].concat(...fieldDetails.rawTable);
@@ -321,17 +304,12 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.include('Child full name (UPDATED)');
-    //todo do the rest
-    // expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child full name (UPDATED)')).to.be.true;
-    // expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child hint (UPDATED)')).to.be.true;
-    // expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', '(Optional)')).to.be.false;
-    // expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1', 'Building and Street (Optional)')).to.be.true;
-    // expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', 'Child Gender')).to.be.true;
-    // expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', '(Optional)')).to.be.false;
-    // expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', 'Autistic child case number reference')).to.be.true;
-    // expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', '(Optional)')).to.be.false;
-    // expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic', 'Is the child autistic? (Optional)')).to.be.true;
-    // expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport', 'Does the child needs support? (Optional)')).to.be.true;
+    expect(labels).to.include('Child hint (UPDATED)');
+    expect(labels).to.include('Building and Street (Optional)');
+    expect(labels).to.include('Child Gender');
+    expect(labels).to.include('Autistic child case number reference');
+    expect(labels).to.include('Is the child autistic? (Optional)');
+    expect(labels).to.include('Does the child needs support? (Optional)');
   });
 
   //---- conditionals
@@ -448,22 +426,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       await childrenDetails.selectIsAutistic(isClassMemeberAutistic);
     }
     await childrenDetails.enterAutisticChildCaseRefNumber('1111222233334444');
-
-    //todo test replacement code
-    // await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
-    // await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
-    // await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
-    // await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
-    // await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
-    // await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
-    // await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
-    // await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
-    // await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
-    // if (supportAnswer === 'Yes') {
-    //   await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
-    // }
-    // await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
-    //
   }
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
@@ -486,12 +448,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await conditionals_createCase_conditionalPage1.clickContinueButton();
     await conditionals_createCase_conditionalPage1.clickContinueButton();
     await conditionals_createCase_conditionalPage1.clickSubmitCaseButton();
-
-    // await caseWizardPage.interactWithField("text", "showmethemoney", "TextField");
-    // await caseWizardPage.interactWithField("text", "showme", "TextFieldOptional");
-    // await caseWizardPage.clickContinueButton();
-    // await caseWizardPage.clickContinueButton();
-    // await caseWizardPage.clickSubmitCaseButton();
   });
 
   Given(/^I have created a case with fixed list item$/, async function() {

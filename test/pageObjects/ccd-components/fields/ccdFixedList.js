@@ -32,15 +32,17 @@ class CcdFixedList extends Dropdown{
     }
   }
 
-  async getFieldData(){
+  async getFieldData(key){
     let data = new Map();
     let field = 'field';
     let value = 'value';
     let hidden = 'hidden';
 
+    key = key ? key : this.key;
+
     let displayed = await $(this.css).isDisplayed();
 
-    data.set(field, this.key);
+    data.set(field, key);
     data.set(value, await this.getCurrentOption());
     data.set(hidden, !displayed);
 

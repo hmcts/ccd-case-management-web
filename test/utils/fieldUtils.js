@@ -470,6 +470,11 @@ class FieldDataTypes {
   }
 
 
+  async getListOptions(listType){
+    let field = await this._getField(listType);
+    return await field.getOptions();
+  }
+
 
 
   /**
@@ -559,6 +564,8 @@ class FieldDataTypes {
         return new CCDDateField(css)
      case 'document':
         return new CCDDocumentField(css)
+      case 'fixed-radio-list':
+        return new CCDFixedRadioListField(css);
       default:
         throw new CustomError(`could not find a data type called '${dataType}'`)
     }

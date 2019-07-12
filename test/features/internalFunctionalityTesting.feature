@@ -1,5 +1,5 @@
 @unit
-Feature: poc for new collection page object component
+Feature: poc for new collection page object component and demo the use of new step - this file can be deleted before final merge
 
   Background:
     And I have logged in
@@ -55,3 +55,4 @@ Feature: poc for new collection page object component
     Given a case type containing Complex and Collection types exists
     When I navigate to the case creation form page
     Then I am able to fill out data on the school form
+    And I can data regarding the form page

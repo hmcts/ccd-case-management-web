@@ -1,10 +1,7 @@
 class CcdMultiSelectField {
 
-  constructor(css, id) {
+  constructor(css) {
     this.css = css;
-    if (id) {
-      this.css = `${this.css} #${id}`;
-    }
     this.optionsDiv = $$(`${this.css} .multiple-choice input`);;
     this.labels = this._getLabels();
     this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`

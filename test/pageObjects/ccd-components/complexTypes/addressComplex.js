@@ -29,13 +29,6 @@ class AddressComplex extends ComplexBase {
     this.country = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(4) input`, `${collectionPrefix}Address.Country`);
   }
 
-  async enterData(dataArray) {
-    await this.enterAddressLine1(dataArray[0]);
-    await this.enterAddressLine2(dataArray[1]);
-    await this.enterAddressLine3(dataArray[3]);
-    await this.enterCountry(dataArray[4]);
-  }
-
   async getFieldData(){
     let addLine1Data = await this.addLine1.getFieldData();
     let addLine2Data = await this.addLine2.getFieldData();

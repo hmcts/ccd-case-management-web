@@ -34,7 +34,7 @@ class CCDStringField {
     }
   }
 
-  async getFieldData(){
+  async getFieldData(key){
     let data = new Map();
     let field = 'field';
     let value = 'value';
@@ -42,7 +42,9 @@ class CCDStringField {
 
     let displayed = await this.stringField.isDisplayed();
 
-    data.set(field, this.key);
+    key = key ? key : this.key;
+
+    data.set(field, key);
     data.set(value, await this.getFieldValue());
     data.set(hidden, !displayed);
 

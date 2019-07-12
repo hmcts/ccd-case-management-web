@@ -18,9 +18,7 @@ class CcdCollection {
 
     this.addNewButton = new Button(`${this.id} > div > button`);
     this.removeButtons = `${id} .float-right button`;
-    this.collectionItemsCount = `${this.id} .collection-title`
-
-    console.log(`collection field inialized with id ${this.id}`)
+    this.collectionItemsCount = `${this.id} > div > div > div`;
   }
 
   /**
@@ -55,6 +53,7 @@ class CcdCollection {
   }
 
   async getItemsInCollection(){
+    console.log(`debug collection count. locator | ${this.collectionItemsCount}`)
     return await element.all(by.css(this.collectionItemsCount)).count();
   }
 

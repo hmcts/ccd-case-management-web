@@ -2,6 +2,8 @@ let CCDStringField = require('../../ccd-components/fields/ccdStringField.js');
 let CCDFixedList = require('../../ccd-components/fields/ccdFixedList.js');
 let Collection = require('../../ccd-components/fields/ccdCollection.js');
 let CCDYesNoField = require('../../ccd-components/fields/ccdYesNoField.js');
+let CCDFixedRadioList = require('../../ccd-components/fields/ccdFixedRadioList.js');
+let CCDMultiSelectField = require('../../ccd-components/fields/ccdMultiSelectField.js');
 let Button = require('../../webdriver-components/button.js');
 // let SchoolClassComplex = require('./schoolClassComplex');
 
@@ -11,11 +13,28 @@ class CreateSchoolPage extends CreateCaseWizardPage {
   //School Complex
   constructor() {
     super();
-    this.id = 'MySchool_MySchool';
+    this.key = 'MySchool';
     this.schoolName = new CCDStringField('#MySchool_Name','MySchool.Name');
-    this.providesAutisticSupport = new CCDYesNoField('#MySchool_ProvidesAutisticChildrenSupport');
+    this.providesAutisticSupport = new CCDYesNoField('#MySchool_ProvidesAutisticChildrenSupport','MySchool.ProvidesAutisticChildrenSupport');
+    this.schoolRegionalCentre = new CCDFixedRadioList('#MySchool_SchoolRegionalCentre','MySchool.SchoolRegionalCentre');
     this._schoolClassComplexCollectionID = '#MySchool_Class' ;
-    this.collectionOfSchoolClass = new Collection('#MySchool_Class',null);
+    this.collectionOfSchoolClass = new Collection('#MySchool_Class',new SchoolClassComplex());
+  }
+
+  async getFieldData(){
+    let nameData = await this.schoolName.getFieldData();
+    let autisticSupportData = await this.providesAutisticSupport.getFieldData();
+
+    let pageData = [nameData,autisticSupportData];
+
+    let itemsInCollection = await this.collectionOfSchoolClass.getItemsInCollection();
+    for (let i = 1; i < itemsInCollection + 1; i++) {
+      let collectionItemObject = await this.collectionOfSchoolClass.getCollectionItem(i);
+      let collectionItemData = await collectionItemObject.getFieldData(`${this.key}.Class.${i}`);
+      pageData.push(collectionItemData);
+    }
+
+    return pageData;
   }
 
   async enterSchoolName(text){
@@ -34,17 +53,22 @@ class CreateSchoolPage extends CreateCaseWizardPage {
     return await new Collection(this._schoolClassComplexCollectionID,new SchoolClassComplex()).getCollectionItem(index);
   }
 
+  async getFixedRadioListOrder(){
+    return await this.schoolRegionalCentre.getOptions();
+  }
 }
 
 class SchoolClassComplex  {
 
   async initialiseFields(collectionId, collectionOrderIndex){
+    this.key = 'MySchool.Class';
     this.id = collectionId;
+    this.collectionOrderIndex = collectionOrderIndex
 
     //Main Fields
-    this.className = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(1) input`);
-    this.classNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(2) input`); // hidden (className='A team')
-    // `${this.id} > ccd-field-write:nth-of-type(3) input`; // CLASS REQUIRED FOR MULTI SELECT
+    this.className = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(1) input`,`MySchool.Class.${collectionOrderIndex}.lassName`);
+    this.classNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(2) input`,`MySchool.Class.${collectionOrderIndex}.ClassNumber`); // hidden (className='A team')
+    this.classDegreeMultiSelectList = new CCDMultiSelectField(`${this.id} > ccd-field-write:nth-of-type(3) ccd-write-multi-select-list-field > div`); // CLASS REQUIRED FOR MULTI SELECT
 
     //Class Members Collection
     this._classMembersComplex = new SchoolClassMembersComplex();
@@ -53,11 +77,37 @@ class SchoolClassComplex  {
 
 
     //ClassDetailsComplex ${this.id} ccd-field-write:nth-of-type(5)
-    this.classRanking = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(1) input`);
-    this.classBuilding = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) input`);
-    this.classFloor = new CCDFixedList(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) select`);
-    this.classTeacher = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(3) input`);
+    let classRankKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassRanking`;
+    this.classRanking = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(1) input`, classRankKey);
 
+    let classBuildingNameKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassLocation.Building.Name`;
+    this.classBuilding = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) input`, classBuildingNameKey);
+
+    let classFloorKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassLocation.Building.Floor`;
+    this.classFloor = new CCDFixedList(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) select`, classFloorKey);
+
+    let classTeacherKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassTeacher`;
+    this.classTeacher = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(3) input`, classTeacherKey);
+
+  }
+
+  async getFieldData(prependKey){
+    let classRankData = await this.classRanking.getFieldData();
+    let classBuildingData = await this.classBuilding.getFieldData();
+    let classFloorData = await this.classFloor.getFieldData();
+    let classTeacherData = await this.classTeacher.getFieldData()
+
+    let complexData = [classRankData, classBuildingData,classFloorData, classTeacherData ];
+
+    let itemsInCollection = await this.collectionoOfclassMembersComplex.getItemsInCollection();
+    for (let i = 1; i < itemsInCollection + 1; i++) {
+      let membersCollectionObject = await this.getCollectionOfClassMembersComplex(i);
+      let membersCollectionData = await membersCollectionObject.getFieldData(`${prependKey}.ClassMembers.${i}`);
+      complexData.push(membersCollectionData);
+    }
+
+    //Flatten array
+    return [].concat(...complexData);
   }
 
   async enterClassName(text){
@@ -68,10 +118,13 @@ class SchoolClassComplex  {
     await this.classNumber.enterNumber(number)
   }
 
+  async getClassDegreeMultiSelectOptions(){
+    return await this.classDegreeMultiSelectList.getOptions();
+  }
+
+
   //--- Class Members Collection ---
   async clickAddNewMembersButton(log){
-    console.log(log)
-    console.log('current id for this SchoolClassComplex is' + this.id);
     await this.collectionoOfclassMembersComplex.clickAddNewButton();
   }
 
@@ -112,7 +165,6 @@ class SchoolClassMembersComplex {
     this._childrenComplex = new SchoolClassMembersChildrenComplex();
     let collectionOfChildrenComplexID = this._generateCollectionOfChildrenComplexID(collectionId);
     this.collectionOfChildrenComplex = new Collection(collectionOfChildrenComplexID, this._childrenComplex);
-    return
   }
 
   _generateCollectionOfChildrenComplexID(schoolClassMembersComplexCollectionID){
@@ -122,19 +174,30 @@ class SchoolClassMembersComplex {
 
     //append 'Children'
     outputId = outputId + '_Children';
-    console.log(outputId);
     return outputId;
   }
 
+  async getFieldData(prependKey){
+    let complexData = [];
+
+    let itemsInCollection = await this.collectionOfChildrenComplex.getItemsInCollection();
+    for (let i = 1; i < itemsInCollection + 1; i++){
+      let ChildCollectionObject = await this.getCollectionOfClassMemberChildrenComplex(i);
+      let childCollectionData = await ChildCollectionObject.getFieldData(`${prependKey}.Children.${i}`);
+      complexData.push(childCollectionData);
+    }
+
+    //Flatten array
+    return [].concat(...complexData);
+  }
+
   async clickAddNewChildrenButton(){
-    console.log('clickAddNewChildrenButton')
     await this.collectionOfChildrenComplex.clickAddNewButton();
   }
 
   async getCollectionOfClassMemberChildrenComplex(collectionIndex){
     return await this.collectionOfChildrenComplex.getCollectionItem(collectionIndex);
   }
-
 
 }
 
@@ -148,6 +211,18 @@ class SchoolClassMembersChildrenComplex {
     this.childGenderDropdown = new CCDFixedList(`${this.id} > ccd-field-write:nth-of-type(4) select`);
     this.autisticChildCaseRefNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(6) input`);
     this.isAutistic = new CCDYesNoField(`${this.id} > ccd-field-write:nth-of-type(5)`);
+    this.needsSupport = new CCDYesNoField(`${this.id} > ccd-field-write:nth-of-type(7)`);
+  }
+
+  async getFieldData(prependKey){
+    let childFullNameData = await this.childFullName.getFieldData(`${prependKey}.ChildFullName`);
+    let buildingAndStreetData = await this.buildingAndStreet.getFieldData(`${prependKey}.ChildAddress.AddressLine1`);
+    let childGenderDropdownData = await this.childGenderDropdown.getFieldData(`${prependKey}.ChildGender`);
+    let autisticChildCaseRefNumberData = await this.autisticChildCaseRefNumber.getFieldData(`${prependKey}.AutisticChildCaseNumber.CaseReference`);
+    let isAutisticData = await this.isAutistic.getFieldData(`${prependKey}.IsAutistic`);
+    let needsSupport = await this.needsSupport.getFieldData(`${prependKey}.NeedsSupport`);
+
+    return Array.of(childFullNameData,buildingAndStreetData,childGenderDropdownData,autisticChildCaseRefNumberData,isAutisticData,needsSupport);
   }
 
   async enterChildFullName(text){

@@ -48,74 +48,18 @@ class CreateCaseWizardPage extends BasePage{
       return await this.fieldUtils.interactWithField(fieldDataType, value);
     }
 
-    // async fieldLabelContains(fieldDataType, fieldId, labelText) {
-    //   return await this.fieldUtils.fieldLabelContains(fieldDataType, fieldId, labelText);
-    // }
-    //
-    // async getFieldDetails(fieldDataType, fieldId) {
-    //   return await new FieldUtils().getFieldDetails(fieldDataType, fieldId);
-    // }
-
-    // async isTextFieldHiddenById(fieldId) {
-    //   return await this.fieldUtils.textFieldIsHidden(fieldId);
-    // }
-    //
-    // async isTextFieldVisibleById(fieldId) {
-    //   return await this.fieldUtils.textFieldIsVisible(fieldId);
-    // }
-    //
-    // async isCaseLinkFieldHiddenById(fieldId) {
-    //   return await this.fieldUtils.caseLinkFieldIsHidden(fieldId);
-    // }
-    //
-    // async isCaseLinkFieldVisibleById(fieldId) {
-    //   return await this.fieldUtils.caseLinkFieldIsVisible(fieldId);
-    // }
-    //
-    // async isFixedListFieldHiddenById(fieldId) {
-    //   return await this.fieldUtils.fixedListFieldIsHidden(fieldId);
-    // }
-    //
-    // async isFixedListFieldVisibleById(fieldId) {
-    //   return await this.fieldUtils.fixedListFieldIsVisible(fieldId);
-    // }
-    //
-    // async isDateFieldHiddenById(fieldId) {
-    //   return await this.fieldUtils.dateFieldIsHidden(fieldId);
-    // }
-    //
-    // async isDateFieldVisibleById(fieldId) {
-    //   return await this.fieldUtils.dateFieldIsVisible(fieldId);
-    // }
-    //
-    // async isYesOrNoFieldHiddenById(fieldId) {
-    //   return await this.fieldUtils.fieldYesNoIsHidden(fieldId);
-    // }
-    //
-    // async isYesOrNoFieldVisibleById(fieldId) {
-    //   return await this.fieldUtils.fieldYesNoIsVisible(fieldId);
-    // }
-
-    // async setYesOrNoValue(radioButtonId, option) {
-    //   return await this.fieldUtils.selectYesNoOption(radioButtonId, option);
-    // }
-
     async getFieldValue(dataType){
       return await new FieldUtils().getFieldValue(dataType);
+    }
+
+    async getListOrder(listDataType){
+      return await new FieldUtils().getListOptions(listDataType);
     }
 
     async clickCollectionAddNewButton(collectionFieldId) {
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
     }
-
-  // /**
-  //  * Get contents of number field
-  //  * @returns {Promise<Promise<*>|Promise<String>>}
-  //  */
-  //   async getNumberFieldValue(){
-  //     return await this.fieldUtils.getNumberFieldValue();
-  //   }
 
   /**
    * Button to progress the case, may be called continue or may be the final

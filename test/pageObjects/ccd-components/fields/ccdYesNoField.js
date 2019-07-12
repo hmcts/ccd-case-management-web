@@ -13,9 +13,8 @@ class CcdYesNoField {
    * in the format  ccd-write-yes-no-field
    *
    * @param css
-   * @param id
    */
-  constructor(css, key ){
+  constructor(css, key){
     this.css = css;
     this.key = this.setKey(key)
 
@@ -39,16 +38,18 @@ class CcdYesNoField {
   }
 
 
-  async getFieldData(){
+  async getFieldData(key){
     let data = new Map();
     let field = 'field';
     let value = 'value';
     let hidden = 'hidden';
 
+    key = key ? key : this.key;
+
     let displayed = await $(this.css).isDisplayed();
 
-    data.set(field, this.key);
-    data.set(value, await this.getDate());
+    data.set(field, key);
+    data.set(value, await this.getCurrentOption());
     data.set(hidden, !displayed);
 
     return data;

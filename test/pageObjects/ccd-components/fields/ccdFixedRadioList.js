@@ -7,11 +7,9 @@ class CcdFixedRadioList {
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param id
    */
-  constructor(css, id) {
-    this.css = css;
-    this.optionsDiv = $$(`#${id} .multiple-choice label`);
+  constructor(css) {
+    this.optionsDiv = $$(`${css} .multiple-choice label`);
   }
 
   /**

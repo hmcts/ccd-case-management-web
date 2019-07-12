@@ -50,25 +50,25 @@ class CcdFixedList {
     this.label = await this._getLabel();
   }
 
-    async getCurrentOption(){
-      try {
-        await this.fixedList.getCurrentSelectedOption()
-      } catch (e) {
-        console.log('no option selected on dropdown')
-        return 'undefined'
-      }
+  async getCurrentOption(){
+    try {
+      await this.fixedList.getCurrentSelectedOption()
+    } catch (e) {
+      console.log('no option selected on dropdown')
+      return 'undefined'
     }
+  }
 
 
-   /**
-     * Check if field is present and enabled
-     * @returns true or false
-     */
-    async isFieldReady(optionsTextValues){
-        let isPresent = await this.fixedList.isPresent(optionsTextValues);
-        let isEnabled = await this.fixedList.isEnabled();
-        return isPresent && isEnabled;
-    }
+  /**
+   * Check if field is present and enabled
+   * @returns true or false
+   */
+  async isFieldReady(optionsTextValues){
+      let isPresent = await this.fixedList.isPresent(optionsTextValues);
+      let isEnabled = await this.fixedList.isEnabled();
+      return isPresent && isEnabled;
+  }
 
   async isHidden() {
     return await this.fixedList.waitForElementToBeInvisible();

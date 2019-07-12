@@ -158,6 +158,17 @@ class FieldDataTypes {
     return fixedListField;
   }
 
+  /**
+   * Select a provided option from the dropdown
+   * @returns CCDStringField Object
+   */
+  async selectFromFixedRadioList(value, id){
+    let css = await FIELDS.FIXED_RADIO_LIST.cssTag;
+    let fixedRadioListField = await new CCDFixedRadioListField(css, id);
+    await fixedRadioListField.selectOption(value);
+    return fixedRadioListField;
+  }
+
   async selectFromMultiSelect(value, id){
     let css = await FIELDS.MULTI_SELECT.cssTag;
     let multiSelectField = await new CCDMultiSelectField(css, id);
@@ -389,6 +400,8 @@ class FieldDataTypes {
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
         return await this.selectFromFixedList(value, id);
+      case 'fixed-radio-list':
+        return await this.selectFromFixedRadioList(value, id);
       case 'multi-select':
         return await this.selectFromMultiSelect(value, id);
       case 'phone-uk':

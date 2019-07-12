@@ -50,16 +50,19 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.event = 'Create school';
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'MySchool_Name', value: 'Technical University'},
       {fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes'},
+      {fieldType: 'fixed-radio-list', fieldId: 'MySchool_SchoolRegionalCentre', value: 'MANCHESTER'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassName', value: 'Analytical Maths'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: 10},
+      {fieldType: 'multi-select', fieldId: 'MySchool_Class_0_ClassMandatoryFor', value: 'BSc'},
+      {fieldType: 'number', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: '10'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassTeacher', value: 'Smith'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor', value: 3},
+      {fieldType: 'fixed-list', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor', value: 'THREE'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassName', value: 'Discrete Maths'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: 8},
+      {fieldType: 'multi-select', fieldId: 'MySchool_Class_1_ClassMandatoryFor', value: 'ScD'},
+      {fieldType: 'number', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: '8'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassTeacher', value: 'Brown'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Floor', value: 1},
+      {fieldType: 'fixed-list', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Floor', value: 'ONE'},
   ];
   });
 

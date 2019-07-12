@@ -18,7 +18,7 @@ Feature: Set of scenarios to test functionality of search filters on the search 
       | EmailField       | Email Field        | Email             |                    |
       | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
       | CaseHistory      | History            | CaseHistoryViewer |                    |
-    Given the following definition for 'case enums'
+    Given the following definition for 'list types'
       | ID                 | ListElementCode      | ListElement       |
       | marritalStatusEnum | MARRIAGE             | Marriage          |
       | marritalStatusEnum | CIVIL_PARTNERSHIP    | Civil Partnership |

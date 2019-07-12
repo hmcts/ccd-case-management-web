@@ -1,5 +1,5 @@
 @functional @complexcollections @showandhide
-Feature: Set of scenarios testing complexTypes definition
+Feature: Set of scenarios testing complexTypes override
 
   Background:
     Given the following definition for 'case fields'
@@ -39,12 +39,12 @@ Feature: Set of scenarios testing complexTypes definition
       | MySchool | Class.ClassMembers.Children.AutisticChildCaseNumber.CaseReference | OPTIONAL        |                           |                      |                                                 |
     Given I have logged in
 
-  Scenario: limits the complex type using the EventToComplexTypes sheet
+  Scenario: filters the complex type fields using the Event to Complex Type override feature
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data
     Then only the fields defined in EventToComplexTypes sheet should be visible
 
-  Scenario: overrides the complex type data using the definition file EventToComplexTypes sheet
+  Scenario: overrides the complex type data using the Event to Complex Type override feature
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data
     Then the fields should have label, hint text and displayContext updated

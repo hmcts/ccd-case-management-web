@@ -3,12 +3,12 @@ Feature: Set of scenarios to test case creation and case progression
 
   Background:
     Given the following definition for 'events'
-      | ID                 | Name                    | Description             | Display order | Pre condition sate | Post condition state |
-      | createCase         | Create a case           | Create a case           | 1             |                    | CaseCreated          |
-      | transitionToState1 | progress to state1      | progress to state1      | 1             | CaseCreated        | State1               |
-      | transitionToState2 | progress to state2      | progress to state2      | 1             | State1             | State2               |
-      | backToState2       | progress back to state1 | progress back to state1 | 1             | State2             | State1               |
-      | update             | update current state    | update current state    | 2             | *                  | *                    |
+      | ID                 | Name                    | Pre condition sate | Post condition state |
+      | createCase         | Create a case           |                    | CaseCreated          |
+      | transitionToState1 | progress to state1      | CaseCreated        | State1               |
+      | transitionToState2 | progress to state2      | State1             | State2               |
+      | backToState2       | progress back to state1 | State2             | State1               |
+      | update             | update current state    | *                  | *                    |
     Given the following definition for 'states'
       | ID          | Name         |
       | CaseCreated | Case created |

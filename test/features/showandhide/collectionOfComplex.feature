@@ -2,7 +2,7 @@
 Feature: Set of scenarios testing show & hide functionality using conditions based on fields in collections of complex
 
   Background:
-    Given the following definition for 'case fields'
+    Given the following definition for 'complex case fields'
       | ID       | Path                                 | FieldType       | Field show condition                                                                                     |
       | MySchool | ProvidesAutisticChildrenSupport      | YesOrNo         |                                                                                                          |
       | MySchool | Family.Children.Child.IsAutistic     | YesOrNo         | MySchool.ProvidesAutisticChildrenSupport="Yes"                                                           |

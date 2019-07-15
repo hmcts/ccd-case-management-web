@@ -16,6 +16,7 @@ class CaseDetailsPage extends BasePage {
     this._tabs = '.tabs-list li';
     this._accordians = 'ccd-read-complex-field-collection-table img';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
+    this._currentTabLabelFieldKeys = '.tabs-panel:not(.js-hidden) tr > th markdown';
     this._printButton = '#case-viewer-control-print';
     this._caseReference = 'ccd-case-header .heading-h1';
     this._alertSuccessBar = '.alert-success';
@@ -165,11 +166,20 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Get list of the fields displayed on the currency viewed tab
+   * Get list of the fields displayed on the currently viewed tab
    * @returns Array of Strings
    */
   async getTabFields(){
     return await this.getElementsText(await $$(this._currentTabFieldKeys))
+  }
+
+  /**
+   * Get field displayed on the currently viewed tab by id
+   * @param fieldId
+   * @returns Array of Strings
+   */
+  async getTabLabelFields(){
+    return await this.getElementsText(await $$(this._currentTabLabelFieldKeys))
   }
 
   /**

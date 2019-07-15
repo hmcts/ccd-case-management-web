@@ -50,7 +50,7 @@ module.exports = {
   fillOutOptionalFields: async function(){
     let wizardPage = new CreateCaseWizardPage();
     for (const elem of TestData.optionalFields) {
-      if (wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
+      if (await wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
         await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
       }
     }

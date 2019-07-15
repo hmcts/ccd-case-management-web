@@ -158,11 +158,16 @@ class FieldDataTypes {
     return fixedListField;
   }
 
+  /**
+   * Select a provided option from the dropdown
+   * @returns CCDStringField Object
+   */
   async selectFromFixedRadioList(value, id){
     let css = await FIELDS.FIXED_RADIO_LIST.cssTag;
-    let fixedListField = await new CCDFixedRadioListField(css, id);
-    await fixedListField.selectRandomOption();
-    return fixedListField;
+    let fixedRadioListField = await new CCDFixedRadioListField(css, id);
+    await fixedRadioListField.selectOption(value);
+    return fixedRadioListField;
+
   }
 
   async selectFromMultiSelect(value, id){

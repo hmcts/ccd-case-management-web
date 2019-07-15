@@ -1,10 +1,11 @@
 # Keep hub.Dockerfile aligned to this file as far as possible
 
-FROM hmctspublic.azurecr.io/base/node/stretch-slim-lts-8:8-stretch-slim as base
+ARG base=hmctspublic.azurecr.io/base/node/stretch-slim-lts-8:8-stretch-slim
 
 # ---- Build artifacts ----
 # Both frontend and backend codebases are bundled from their
 # .ts source into .js, producing self-sufficient scripts.
+FROM ${base} AS build
 USER root
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -19,6 +20,6 @@ COPY . .
 RUN yarn build:ssr
 
 # ---- Runtime image ----
-FROM base as runtime
+FROM ${base} AS runtime
 COPY --from=build ${WORKDIR}/dist/ ./
 CMD node ./server.js

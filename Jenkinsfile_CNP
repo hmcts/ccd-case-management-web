@@ -4,7 +4,7 @@ properties(
      pipelineTriggers([[$class: 'GitHubPushTrigger']])]
 )
 
-@Library("Infrastructure")
+@Library("Infrastructure@add-missing-subscription-flag")
 
 def product = "ccd"
 def component = "case-management-web"

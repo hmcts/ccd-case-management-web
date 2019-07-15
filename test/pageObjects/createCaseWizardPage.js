@@ -1,11 +1,14 @@
+
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
 Button = require('./webdriver-components/button.js');
+TextField = require('./webdriver-components/textField');
+DropDown = require('./webdriver-components/dropdown');
+CCDAddressUKField = require('./ccd-components/fields/ccdAddressUKField.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
 
 
 class CreateCaseWizardPage extends BasePage{
-
 
     constructor() {
       super();
@@ -19,8 +22,9 @@ class CreateCaseWizardPage extends BasePage{
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
-
+      this.ccdAddressUKField = new CCDAddressUKField("#postcodeInput");
       this.fieldUtils =  new FieldUtils();
+      this.alertError  = '.alert-message';
     }
 
   /**
@@ -47,6 +51,10 @@ class CreateCaseWizardPage extends BasePage{
 
     async fieldLabelContains(fieldDataType, fieldId, labelText) {
       return await this.fieldUtils.fieldLabelContains(fieldDataType, fieldId, labelText);
+    }
+
+    async getFieldDetails(fieldDataType, fieldId) {
+      return await new FieldUtils().getFieldDetails(fieldDataType, fieldId);
     }
 
     async isTextFieldHiddenById(fieldId) {
@@ -117,6 +125,15 @@ class CreateCaseWizardPage extends BasePage{
    */
     async clickContinueButton(){
         await this.continueButton.click();
+    }
+
+
+    async enterPostcode(postcode) {
+      await element(this.ccdAddressUKField.postcodeText).sendKeys(postcode);
+    }
+
+    async clickFindAddressButton() {
+      await this.ccdAddressUKField.findAdressButton.click();
     }
 
   /**

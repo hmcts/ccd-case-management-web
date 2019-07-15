@@ -1,22 +1,37 @@
 class CcdMultiSelectField {
 
-  constructor(css){
-      this.css = css;
-      this.labels = this._getLabels();
-      this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
+  constructor(css, id) {
+    this.css = css;
+    if (id) {
+      this.css = `${this.css} #${id}`;
+    }
+    this.optionsDiv = $$(`${this.css} .multiple-choice input`);
+    this.labels = this._getLabels();
+    this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
   }
 
   /**
-   * Will randomly select any multi select option
+   * Returns an options array
+   * @returns array of options
+   */
+  async getOptions() {
+    let optionValues = [];
+    for(const field of await this.optionsDiv){
+      let value = await field.getAttribute('value');
+      optionValues.push(value);
+    }
+    return optionValues;
+  }
+
+  /**
+   * Will randomly select any multi select option or a specified option value
    */
   async selectAnyOneElement(optionValue) {
 
-    let multiSelectElements = await this._getMultiSelectElements();
-    let elementListSize = await multiSelectElements.length;
-
     if (typeof optionValue === 'undefined') {
+      let multiSelectElements = await this._getMultiSelectElements();
+      let elementListSize = await multiSelectElements.length;
       let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
-      console.log('Random number: ' + randomOptionArrayInt);
       let optionToSelect = await multiSelectElements[randomOptionArrayInt - 1];
       await optionToSelect.click();
     } else {

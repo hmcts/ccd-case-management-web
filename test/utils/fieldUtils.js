@@ -65,7 +65,7 @@ class FieldDataTypes {
    * Enter random number into the Number field field
    * @returns CCDStringField Object
    */
-  async enterIntoNumberField(value){
+  async enterIntoNumberField(value, id){
     let css = await FIELDS.NUMBER.cssTag;
     let textField = await new CCDStringField(css);
     await textField.enterNumber(value);
@@ -126,6 +126,17 @@ class FieldDataTypes {
     let fixedListField = await new CCDFixedListField(locator);
     await fixedListField.selectOption(value);
     return fixedListField;
+  }
+
+  /**
+   * Select a provided option from the dropdown
+   * @returns CCDStringField Object
+   */
+  async selectFromFixedRadioList(value, id){
+    let css = await FIELDS.FIXED_RADIO_LIST.cssTag;
+    let fixedRadioListField = await new CCDFixedRadioListField(css, id);
+    await fixedRadioListField.selectOption(value);
+    return fixedRadioListField;
   }
 
   async selectFromMultiSelect(value, id){
@@ -285,7 +296,7 @@ class FieldDataTypes {
       case 'textarea':
         return await this.enterIntoTextAreaField(value);
       case 'number':
-        return await this.enterIntoNumberField(value);
+        return await this.enterIntoNumberField(value, id);
       case 'money-gbp':
         return await this.enterIntoMoneyField(value);
       case 'date':
@@ -296,6 +307,8 @@ class FieldDataTypes {
         return await this.enterIntoEmailField(value);
       case 'fixed-list':
         return await this.selectFromFixedList(value, id);
+      case 'fixed-radio-list':
+        return await this.selectFromFixedRadioList(value, id);
       case 'multi-select':
         return await this.selectFromMultiSelect(value, id);
       case 'phone-uk':

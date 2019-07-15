@@ -432,6 +432,14 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.fillOutAndSubmitForm();
   });
 
+  Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
+    await baseSteps.navigateToCreateCasePage()
+    for (let i = 0; i < numberOfItems; i++) {
+      await caseWizardPage.clickGenericCollectionAddNewButton();
+    }
+    await baseSteps.fillOutAndSubmitForm();
+  });
+
   Given(/^I have submitted a case with a collection of complex with a complex data$/, async function(){
     await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.clickGenericCollectionAddNewButton();

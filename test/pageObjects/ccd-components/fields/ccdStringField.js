@@ -118,7 +118,7 @@ class CCDStringField {
   }
 
   /**
-   * Check if field is present
+   * Check if field has given labels
    * @returns true or false
    */
   async hasFieldLabels(labelArray){
@@ -126,6 +126,10 @@ class CCDStringField {
     return labelText === labelArray[0];
   }
 
+  /**
+   * Check if field has given label
+   * @returns true or false
+   */
   async hasFieldLabel(label) {
     let labelText = await this.getLabel();
     return labelText.indexOf(label) !== -1;

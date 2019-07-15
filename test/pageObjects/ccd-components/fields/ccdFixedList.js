@@ -1,4 +1,4 @@
-
+let BasePage = require('../../basePage');
 let Dropdown = require('../../webdriver-components/dropdown.js');
 
 /**
@@ -93,8 +93,8 @@ class CcdFixedList extends Dropdown{
       return isPresent && isEnabled;
   }
 
-  async isHidden() {
-    return await this.fixedList.waitForElementToBeInvisible();
+  async isDisplayed(){
+    return new BasePage().elementDisplayed($(this.css));
   }
 
   async isVisible() {

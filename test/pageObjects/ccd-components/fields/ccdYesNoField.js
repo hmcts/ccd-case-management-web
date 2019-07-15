@@ -80,7 +80,7 @@ class CcdYesNoField {
   }
 
   async getCurrentOption(){
-    let option = 'undefined';
+    let option = '';
     try {
       if (await $(this.yesRadioSelectedCss).isDisplayed()) {
         option = 'yes';

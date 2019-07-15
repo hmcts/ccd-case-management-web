@@ -66,11 +66,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
           //Only do the assertion if the column exists, this gives us flexibility so we don't always need the same columns
           //for every scenario using this step
           if (typeof row.value !== 'undefined'){
-            expect(pageField.get('value')).to.eq(row.value);
+            let errMsg = `error for value of '${row.field}'`;
+            expect(pageField.get('value'), errMsg).to.eq(row.value);
           }
 
           if (typeof row.hidden !== 'undefined'){
-            expect(String(pageField.get('hidden'))).to.eq(row.hidden);
+            let errMsg = `error for hidden boolean of '${row.field}'`;
+            expect(String(pageField.get('hidden')),errMsg).to.eq(row.hidden);
           }
 
           break;

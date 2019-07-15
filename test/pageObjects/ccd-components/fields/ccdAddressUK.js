@@ -13,7 +13,7 @@ class CcdAddressUKComplex extends ComplexBase {
 
     this.postodeInput = new CCDStringField(`${this.id} input[name=postcode]`,'AddressUK.EnterAUKPostcode');
     this.findAddressButton = new Button(`${this.id} #postcodeLookup button`);
-    this.cantEnterPostcodeLink = $(`${this.id} #postcodeLookup link`);
+    this.cantEnterPostcodeLink = $(`${this.id} a`);
     this.selectAddressDropdown = new CCDFixedList('#AddressUKField_AddressUKField_addressList','AddressUK.SelectAnAddress');
 
     this.addressLine1 = new CCDStringField(`${this.id} ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(1) input`,'AddressUK.AddressLine1');
@@ -36,6 +36,14 @@ class CcdAddressUKComplex extends ComplexBase {
     let countryData = await this.addressCountry.getFieldData();
     let postCodeData = await this.addressPostcode.getFieldData();
     return Array.of(addLine1Data,addLine2Data,addLine3Data,countryData,addTownCityData,countyData,postCodeData);
+  }
+
+  async clickCantEnterPostcodeLink(){
+    await this.cantEnterPostcodeLink.click();
+  }
+
+  async enterAddressLine1(text){
+    await this.addressLine1.enterText(text);
   }
 
   async enterPostcode(text){

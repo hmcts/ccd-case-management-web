@@ -79,16 +79,30 @@ class CreateCaseWizardPage extends BasePage{
         await new CaseDetailsPage().waitForPageToLoad();
     }
 
-    async getFieldLabels(){
-        let labelElements = await $$(this.fieldLabels);
-        let labels = [];
-        for (const labelElem of labelElements){
-            let labelText = await labelElem.getText();
-            let label = labelText.replace(' (Optional)', '');
-            labels.push(label)
-        }
+  /**
+   * Strips out (Optional) string if present to return just label value
+   * @returns {Promise<Array>}
+   */
+  async getFieldLabels(){
+      let labels = [];
+      for (const label of await this.getFullFieldLabels()){
+          labels.push(label.replace(' (Optional)', ''))
+      }
 
-        return labels;
+      return labels;
+    }
+
+  /**
+   * Includes (Optional) if present
+   * @returns {Promise<Array>}
+   */
+  async getFullFieldLabels(){
+      let labelElements = await $$(this.fieldLabels);
+      let labels = [];
+      for (const labelElem of labelElements){
+          labels.push(await labelElem.getText())
+      }
+      return labels;
     }
 
     async getGreyBarFieldLabels(){

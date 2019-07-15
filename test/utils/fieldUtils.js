@@ -8,7 +8,7 @@ let CCDTextAreaField = require('../pageObjects/ccd-components/fields/ccdTextArea
 let CCDComplexTypeField = require('../pageObjects/ccd-components/fields/ccdComplexTypeBaseField.js');
 let CCDMultiSelectField = require('../pageObjects/ccd-components/fields/ccdMultiSelectField.js');
 let CCDCollectionField = require('../pageObjects/ccd-components/fields/ccdCollectionField.js');
-let CCDAddressUKField = require('../pageObjects/ccd-components/complexTypes/addressComplex.js');
+let CCDAddressUKField = require('../pageObjects/ccd-components/fields/ccdAddressUK.js');
 let CCDDocumentField = require('../pageObjects/ccd-components/fields/ccdDocumentField.js');
 
 class FieldDataTypes {
@@ -42,10 +42,12 @@ class FieldDataTypes {
    * @param value
    * @param id
    * @returns CCDAddressUKField Object
+   * @deprecated: not highly reusable, use page objects instead
    */
   async enterIntoAddressLine1Field(value, id) {
     let css = await FIELDS.ADDRESS.cssTag;
     let field = await new CCDAddressUKField(css, id);
+    await field.clickCantEnterPostcodeLink();
     await field.enterAddressLine1(value);
     return field;
   }

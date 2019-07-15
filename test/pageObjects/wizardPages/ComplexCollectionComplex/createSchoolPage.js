@@ -79,13 +79,17 @@ class SchoolClassComplex  {
     this.classRanking = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(1) input`, classRankKey);
 
     let classBuildingNameKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassLocation.Building.Name`;
-    this.classBuilding = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) input`, classBuildingNameKey);
+    this.classBuilding = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(3) input`, classBuildingNameKey);
+    // this.classBuilding = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) input`, classBuildingNameKey);
+
 
     let classFloorKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassLocation.Building.Floor`;
-    this.classFloor = new CCDFixedList(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) select`, classFloorKey);
+    this.classFloor = new CCDFixedList(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(3) select`, classFloorKey);
+    // this.classFloor = new CCDFixedList(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) select`, classFloorKey); //null
 
     let classTeacherKey = `${this.key}.${collectionOrderIndex}.ClassDetails.ClassTeacher`;
-    this.classTeacher = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(3) input`, classTeacherKey);
+    // this.classTeacher = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(3) input`, classTeacherKey);
+    this.classTeacher = new CCDStringField(`${this.id} ccd-field-write:nth-of-type(5) > div > ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(2) input`, classTeacherKey);
 
   }
 
@@ -94,7 +98,7 @@ class SchoolClassComplex  {
     let classRankData = await this.classRanking.getFieldData();
     let classBuildingData = await this.classBuilding.getFieldData();
     let classFloorData = await this.classFloor.getFieldData();
-    let classTeacherData = await this.classTeacher.getFieldData()
+    let classTeacherData = await this.classTeacher.getFieldData();
 
     let complexData = [classRankData, classBuildingData,classFloorData, classTeacherData, classNameData];
 

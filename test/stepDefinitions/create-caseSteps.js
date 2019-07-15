@@ -300,7 +300,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
-    let labels = await caseWizardPage.getFieldLabels();
+    let labels = await caseWizardPage.getFullFieldLabels();
     expect(labels).to.include('Child full name (UPDATED)');
     expect(labels).to.include('Child hint (UPDATED)');
     expect(labels).to.include('Building and Street (Optional)');

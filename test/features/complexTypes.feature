@@ -1,4 +1,4 @@
-@functional @complexcollections @showandhide
+@functional @complexcollections @showandhide @rerun
 Feature: Set of scenarios testing show & hide functionality and conditional logic
 
   Background:
@@ -8,15 +8,15 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data
 #    Then only the fields defined in EventToComplexTypes sheet should be visible
-    Then the 'create school' page has the following fields:
-      | field                                                                             | value              |
-      | MySchool.Name                                                                     | 102 Petty France   |
-      | MySchool.Class.1.ClassName                                                        | 102 Petty France   |
-      | MySchool.Class.1.ClassMembers.1.Children.1.ChildFullName                          | 102 Petty France   |
-      | MySchool.Class.1.ClassMembers.1.Children.1.ChildAddress.AddressLine1              | 102 Petty France   |
-      | MySchool.Class.1.ClassMembers.1.Children.1.NeedsSupport                           | 102 Petty France   |
-      | MySchool.Class.1.ClassMembers.1.Children.1.IsAutistic                             | 102 Petty France   |
-      | MySchool.Class.1.ClassMembers.1.Children.1.AutisticChildCaseNumber.CaseReference  | 102 Petty France   |
+    Then the 'Create school' page contains the following fields:
+      | field                                                                             | value              | hidden |
+      | MySchool.Name                                                                     | Busy Bees          | false  |
+      | MySchool.Class.1.ClassName                                                        | A team             | false  |
+      | MySchool.Class.1.ClassMembers.1.Children.1.ChildFullName                          | Joe Kember         | false  |
+      | MySchool.Class.1.ClassMembers.1.Children.1.ChildAddress.AddressLine1              | 150 Boyson Road    | false  |
+      | MySchool.Class.1.ClassMembers.1.Children.1.NeedsSupport                           |                    | false  |
+      | MySchool.Class.1.ClassMembers.1.Children.1.IsAutistic                             |                    | false  |
+      | MySchool.Class.1.ClassMembers.1.Children.1.AutisticChildCaseNumber.CaseReference  | 1111222233334444   | false  |
 
 
   Scenario: overrides the complex type data using the definition file EventToComplexTypes sheet

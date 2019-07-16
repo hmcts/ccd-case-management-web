@@ -5,7 +5,7 @@ class CcdMultiSelectField {
     if (id) {
       this.css = `${this.css} #${id}`;
     }
-    this.optionsDiv = $$(`${this.css} .multiple-choice input`);;
+    this.optionsDiv = $$(`${this.css} .multiple-choice input`);
     this.labels = this._getLabels();
     this.selectedCheckboxes = `${this.css} input[type="checkbox"]:checked + label`
   }
@@ -24,16 +24,14 @@ class CcdMultiSelectField {
   }
 
   /**
-   * Will randomly select any multi select option
+   * Will randomly select any multi select option or a specified option value
    */
   async selectAnyOneElement(optionValue) {
 
-    let multiSelectElements = await this._getMultiSelectElements();
-    let elementListSize = await multiSelectElements.length;
-
     if (typeof optionValue === 'undefined') {
+      let multiSelectElements = await this._getMultiSelectElements();
+      let elementListSize = await multiSelectElements.length;
       let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
-      console.log('Random number: ' + randomOptionArrayInt);
       let optionToSelect = await multiSelectElements[randomOptionArrayInt - 1];
       await optionToSelect.click();
     } else {

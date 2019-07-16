@@ -103,7 +103,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
-    debugger;
     let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
     expect(currentSelection).to.be.equals(count+ " addresses found");
   });
@@ -253,7 +252,42 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
+  When(/^I do NOT meet the condition for showing the field$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','dontshowmethemoney');
+    await caseWizardPage.clickContinueButton();
+  });
 
+  When(/^I do meet the condition for showing the field$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await caseWizardPage.clickContinueButton();
+  });
+
+  When(/^I do NOT meet the condition for showing the page$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await caseWizardPage.clickContinueButton();
+  });
+
+  When(/^I do meet the condition for showing the page$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','showpage3');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'SW1A 2AA', 'AddressComplex1_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'Westminster', 'AddressComplex1_AddressLine3');
+    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+
+    await caseWizardPage.clickContinueButton();
+  });
 
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
@@ -321,25 +355,42 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       });
   });
 
-  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemberAutistic = 'Yes') {
     await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
     await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
+    await caseWizardPage.interactWithField('fixed-radio-list', '', 'MySchool_SchoolRegionalCentre');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
     await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
+    if (className === 'A team') {
+      await caseWizardPage.interactWithField('number', '12345', 'MySchool_Class_0_ClassNumber');
+    }
+    await caseWizardPage.interactWithField('multi-select', 'BSc', 'MySchool_Class_0_ClassMandatoryFor');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
     await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
     await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
     await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
     await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.interactWithField('yes-no', isClassMemeberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+      await caseWizardPage.interactWithField('yes-no', isClassMemberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
     }
     await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
+    await caseWizardPage.interactWithField('number', '12', 'MySchool_Class_0_ClassDetails_ClassRanking');
+    await caseWizardPage.interactWithField('text', 'Test buiding name', 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Name');
+    await caseWizardPage.interactWithField('fixed-list', ' One ', 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor');
+    await caseWizardPage.interactWithField('text', 'Zohan', 'MySchool_Class_0_ClassDetails_ClassTeacher');
   }
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
     await baseSteps.navigateToCreateCasePage()
     await caseWizardPage.clickGenericCollectionAddNewButton();
+    await baseSteps.fillOutAndSubmitForm();
+  });
+
+  Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
+    await baseSteps.navigateToCreateCasePage()
+    for (let i = 0; i < numberOfItems; i++) {
+      await caseWizardPage.clickGenericCollectionAddNewButton();
+    }
     await baseSteps.fillOutAndSubmitForm();
   });
 

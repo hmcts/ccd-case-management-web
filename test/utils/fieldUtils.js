@@ -167,6 +167,7 @@ class FieldDataTypes {
     let fixedRadioListField = await new CCDFixedRadioListField(css, id);
     await fixedRadioListField.selectOption(value);
     return fixedRadioListField;
+
   }
 
   async selectFromMultiSelect(value, id){

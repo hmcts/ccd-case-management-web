@@ -2,6 +2,13 @@
 Feature: Set of scenarios to test collection of complex table view
 
   Background:
+    Given the following definition for 'case fields'
+      | ID                     | Path         | FieldType  |
+      | CollectionComplexField | AddressLine1 | Text       |
+      | CollectionComplexField | AddressLine2 | Text       |
+      | CollectionComplexField | AddressLine3 | Text       |
+      | CollectionComplexField | Country      | Text       |
+
     Given I have logged in
 
   Scenario: Nested Collection data on Case Details page not visible by default when accordion is collapsed

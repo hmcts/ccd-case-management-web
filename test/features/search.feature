@@ -2,6 +2,36 @@
 Feature: Set of scenarios to test functionality of search filters on the search page
 
   Background:
+    Given the following definition for 'case fields'
+      | ID               | Label              | FieldType         | FieldTypeParameter |
+      | TextField        | Text Field         | Text              |                    |
+      | TextAreaField    | Text Area          | TextArea          |                    |
+      | DateField        | Date Field         | Date              |                    |
+      | AddressField     | Address Field      | Address           |                    |
+      | PhoneField       | Phone Field        | PhoneUK           |                    |
+      | NumberField      | Number Field       | Number            |                    |
+      | YesNoField       | Yes or No Field    | YesOrNo           |                    |
+      | CollectionField  | Collection Field   | Collection        | Text               |
+      | MarritalStatus   | Fixed List         | FixedList         | marritalStatusEnum |
+      | MoneyField       | Money Field        | MoneyGBP          |                    |
+      | DocumentField    | Document Field     | Document          |                    |
+      | EmailField       | Email Field        | Email             |                    |
+      | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
+      | CaseHistory      | History            | CaseHistoryViewer |                    |
+    Given the following definition for 'list types'
+      | ID                 | ListElementCode      | ListElement       |
+      | marritalStatusEnum | MARRIAGE             | Marriage          |
+      | marritalStatusEnum | CIVIL_PARTNERSHIP    | Civil Partnership |
+      | marritalStatusEnum | SINGLE	Single        |                   |
+      | marritalStatusEnum | WIDOW                | Widow             |
+      | regionalCentreEnum | CARDIFF              | Cardiff           |
+      | regionalCentreEnum | MANCHESTER           | Manchester        |
+      | regionalCentreEnum | OXFORD               | Oxford            |
+      | gender             | MALE                 | Male              |
+      | gender             | FEMALE               | Female            |
+      | gender             | OTHER                | Other             |
+      | boolean            | TRUE                 | true              |
+      | boolean            | FALSE                | false             |
     Given I have logged in
     And a case type containing every field type exists
 
@@ -70,7 +100,6 @@ Feature: Set of scenarios to test functionality of search filters on the search 
     When I click the 'Apply' button
     Then the search result table will be displayed
 
-
   @searchCaseList
   Scenario: loading the results table will display correct result count
     Given I am on the search page
@@ -80,8 +109,9 @@ Feature: Set of scenarios to test functionality of search filters on the search 
 
   @searchCaseList
   Scenario: click on sorting icon on the first column will sort the results in descending order
-    Given I have some cases listed in the results table
-    When I click on sorting icon on the first column
+    Given I am on the search page
+    And I have some cases listed in the results table
+    When I click on sorting icon on the first column to 'descending'
     Then the results of the page should be sorted in the descending order
 
   @searchCaseList

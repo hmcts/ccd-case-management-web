@@ -58,6 +58,28 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                             {fieldType: 'text', fieldId: 'MyCompany_0_BusinessAddress_Country'}];
     });
 
+  Given(/^a case type containing a collection of nested complex types exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Complex in Coll in Complex';
+    Data.event = 'Create school';
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'MySchool_Name', value: 'Technical University'},
+      {fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes'},
+      {fieldType: 'fixed-radio-list', fieldId: 'MySchool_SchoolRegionalCentre', value: 'MANCHESTER'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassName', value: 'Analytical Maths'},
+      {fieldType: 'multi-select', fieldId: 'MySchool_Class_0_ClassMandatoryFor', value: 'BSc'},
+      {fieldType: 'number', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: '10'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassTeacher', value: 'Smith'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
+      {fieldType: 'fixed-list', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor', value: 'THREE'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassName', value: 'Discrete Maths'},
+      {fieldType: 'multi-select', fieldId: 'MySchool_Class_1_ClassMandatoryFor', value: 'ScD'},
+      {fieldType: 'number', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: '8'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassTeacher', value: 'Brown'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
+      {fieldType: 'fixed-list', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Floor', value: 'ONE'},
+  ];
+  });
+
   async function populateCaseProgressionType(){
     Data.caseType = 'Case Progression';
     Data.optionalFields = [];
@@ -103,11 +125,21 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type containing conditionals exists$/, function() {
     Data.caseType = 'Conditionals';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+    Data.event = 'Create a case';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldOptional'}];
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField'}];
+  });
+
+  Given(/^a case type containing show and hide functionality exists$/, function() {
+    Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldOptional'}];
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField'}];
   });
 
   Given(/^a case type containing conditional mandatory complex type exists$/, function() {
     Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'AddressComplex1_AddressLine1'},
                             {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine2'},
                             {fieldType: 'text', fieldId: 'AddressComplex1_AddressLine3'},
@@ -128,6 +160,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type containing conditional mandatory collection of complex types exists$/, function() {
     Data.caseType = 'Conditionals';
+    Data.event = 'Create a case';
     Data.mandatoryFields = [{fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine1'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
@@ -135,4 +168,30 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine5'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'}];
   });
+
+  Given(/^a case type containing conditionals exists for OR event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case OR";
+  });
+
+  Given(/^a case type containing conditionals exists for AND event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case AND";
+  });
+
+  Given(/^a case type containing conditionals exists for NOT event$/, function() {
+    Data.caseType = "Conditionals";
+    Data.event = "Create a case NOT";
+  });
+
+  Given(/^a case with an 'AND show page condition' across different pages exists$/, async function() {
+    Data.caseType = 'Conditionals';
+    Data.event = ' Create a case';
+    Data.savedValue = 'conditional page value';
+    Data.eventFields = [[{fieldType: 'text', fieldId: 'TextField',value: 'showmethemoney'}],
+                          [{fieldType: 'text', fieldId: 'TextField3',value: 'showpage5'}],
+                          [{fieldType: 'text', fieldId: 'TextField11',value: Data.savedValue}]];
+  });
+
 });
+

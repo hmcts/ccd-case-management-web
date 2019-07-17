@@ -13,6 +13,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
 
+  Given(/^the following definition for '(.*)'$/, async function (sheetName, dataTable) {
+    console.log('sheetName=', sheetName);
+    console.log(dataTable);
+  });
+
   Then(/^no text will appear in the number field$/, async function() {
     let fieldContents = await caseWizardPage.getNumberFieldValue();
     console.log(fieldContents);
@@ -66,12 +71,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    await baseSteps.navigateToCreateCasePage()
-    await caseWizardPage.interactWithField(fieldType,value);
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField(fieldType, value);
   });
 
   When(/^I re-enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    await caseWizardPage.interactWithField(fieldType,value);
+    await caseWizardPage.interactWithField(fieldType, value);
   });
 
   When(/^I have a validation error from invalid '(.*)'$/, async function (dataType) {

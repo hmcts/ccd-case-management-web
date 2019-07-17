@@ -1,4 +1,5 @@
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
+let CyaPage = require('../pageObjects/cyaPage');
 let baseSteps = require('./baseSteps.js');
 CustomError = require('../utils/errors/custom-error.js');
 
@@ -10,10 +11,11 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
+  let cyaPage = new CyaPage();
 
   Given(/^I am on the check your answers page$/, async function () {
     //multiple pages caseType
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField('text');
     await caseWizardPage.clickContinueButton();
     this.fieldObject = await caseWizardPage.interactWithField('text');
@@ -52,7 +54,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.clickContinueButton();
 
     let fieldLabel = await this.fieldObject.label;
-    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel)
+    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel);
     let expectedValue = await this.fieldObject.checkYourAnswersValue;
 
     expect(actualValue, 'wrong value for CYA').to.equal(expectedValue)
@@ -65,7 +67,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
   When(/^I Submit the case$/, async function () {
-    while (await caseWizardPage.continueButtonDisplayed()){
+    while (await caseWizardPage.continueButtonDisplayed()) {
       if (!caseWizardPage.continueButtonEnabled()) {
         throw new CustomError('Trying to click Continue/Submit button but it is not enabled')
       }
@@ -73,6 +75,36 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     }
   });
 
+  Then(/^the following fields will be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.include(expectedField);
+    }
+  });
 
+  Then(/^the following fields will NOT be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).not.to.include(expectedField);
+    }
+  });
+
+  Then(/^the following complex fields will be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getComplexFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.include(expectedField);
+    }
+  });
+
+  Then(/^the following complex fields will NOT be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getComplexFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).not.to.include(expectedField);
+    }
+  });
 });
 

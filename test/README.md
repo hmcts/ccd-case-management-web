@@ -81,7 +81,8 @@ Note: you will need the proxy if you are running the test against AAT
 The test are configured to open up a browser window for each feature file. this may result in several browser windows opening and closing when you are just working on a single test. you can mitigate this by changing the line below in the `local.conf.js` to point to the specific feature file you are working on instead of the wildcard/all features
 ```
   specs: [
-    '../features/*.feature'
+    '../features/*.feature',
+    '../features/*/*.feature'
   ],
 ```
 ##### My tests can't find the nav bar links(create case, case list)?
@@ -264,7 +265,7 @@ If there are test failures it can be a good idea to run the tests from your loca
 #### Debugging tests locally
 
 If you needed to debug the tests please follow the steps:
-1) In `local.conf.js` `specs` array at the top instead of `['../features/*.feature']` type the feature file you will be debugging (that avoids starting the browser multiple times just to stop it as the features in feature files would be commented out)
+1) In `local.conf.js` `specs` array at the top instead of `['../features/*.feature', '../features/*/*.feature']` type the feature file you will be debugging (that avoids starting the browser multiple times just to stop it as the features in feature files would be commented out)
 2) Run the following in cmd line: `node --inspect-brk node_modules/protractor/bin/protractor test/config/local.conf.js --cucumberOpts.tags=@search`
 3) Open url in browser: `chrome://inspect/#devices`
 4) In the `Remote Target` section click `Inspect` on your started node process which will open `chrome-devtools` debugger
@@ -280,6 +281,13 @@ Notes: If you have a following error:
 ```
 make sure you run the following command (mentioned in here https://github.com/angular/webdriver-manager/issues/269):
 `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35`
+
+If you want to debug locally a useful change is to increase timeout from 60 s to some higher value. This can be done for all steps globally in `testSetup.js`:
+
+```
+let {setDefaultTimeout} = require('cucumber');
+setDefaultTimeout(60 * 1000);
+```
 
 You have to also remember to install protractor in your project: `yarn install protractor`
 

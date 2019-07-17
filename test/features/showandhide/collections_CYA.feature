@@ -1,19 +1,23 @@
-@functional @showandhide
-Feature: Set of scenarios testing show & hide functionality using conditions based on fields in collections
+@functional @showandhide @cya
+Feature: Hide and show of basic fields in collections on the Check Your Answers page
 
   Background:
     Given the following definition for 'case fields'
       | ID       | Path                                 | FieldType       | Field show condition               |
       | MySchool | Class.ClassName                      | Text            |                                    |
       | MySchool | Class.ClassNumber                    | Number          | MySchool.Class.ClassName="A team"  |
-    Given I have logged in
+    And I have logged in
 
-  Scenario: shows complex element nested in collections when showCondition uses data from the element in a collection on the same page
+  Scenario: Check Your Answers shows complex field nested in collections when showCondition uses data from the element in a collection
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data with a ClassName field set to 'A team'
-    Then verify the field with label 'Class number' is visible
+    And I move forward 1 pages
+    Then the following complex fields will be visible on CYA page:
+      | Class number |
 
-  Scenario: hides complex element nested in collections when showCondition uses data from the element in a collection on the same page
+  Scenario: Check Your Answers hides complex field nested in collections when showCondition uses data from the element in a collection
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data with a ClassName field set to 'B team'
-    Then verify the field with label 'Class number' is not visible
+    And I move forward 1 pages
+    Then the following complex fields will NOT be visible on CYA page:
+      | Class number |

@@ -15,6 +15,7 @@ class CcdFixedRadioList {
       this.css = `${this.css} #${id}`;
     }
     this.optionsDiv = $$(`#${id} .multiple-choice label`);
+    this.optionsRadioIds = $$(`#${id} .multiple-choice input`);
   }
 
   /**
@@ -28,6 +29,14 @@ class CcdFixedRadioList {
       optionValues.push(value);
     }
     return optionValues;
+  }
+
+  async selectRandomOption() {
+    let radioInputOptions = await this.optionsRadioIds;
+    let elementListSize = await radioInputOptions.length;
+    let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
+    let optionToSelect = await radioInputOptions[randomOptionArrayInt-1];
+    await optionToSelect.click();
   }
 
   /**
@@ -61,6 +70,7 @@ class CcdFixedRadioList {
       }
     }
   }
+
 
 }
 

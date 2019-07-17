@@ -4,16 +4,17 @@ let Dropdown = require('../../webdriver-components/dropdown.js');
 /**
  * CCD Fixed List dropdown field component
  */
-class CcdFixedList extends Dropdown{
+class CcdFixedList {
 
   /**
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param id
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
    */
   constructor(css, key) {
-    super(css);
     this.css = css;
     this.key = this.setKey(key);
     this.fixedList = new Dropdown(this.css);

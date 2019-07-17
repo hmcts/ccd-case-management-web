@@ -271,33 +271,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await populateFormDataWithSupportFieldSetTo(supportAnswer);
   });
 
-  Then(/^only the fields defined in EventToComplexTypes sheet should be visible$/, async function () {
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Name')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
-
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherFullName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherAge')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherFullName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherAge')).to.be.true;
-
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName')).to.be.true;
-    expect(await caseWizardPage.isFixedListFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildGender')).to.be.true;
-    expect(await caseWizardPage.isDateFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildDOB')).to.be.true;
-
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine2')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine3')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostTown')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__County')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostCode')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__Country')).to.be.true;
-
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
-    expect(await caseWizardPage.isCaseLinkFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport')).to.be.true;
-  });
-
   Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
     let labels = await caseWizardPage.getFullFieldLabels();
     expect(labels).to.include('Child full name (UPDATED)');

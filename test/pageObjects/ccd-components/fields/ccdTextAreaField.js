@@ -9,14 +9,14 @@ let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 class CcdTextAreaField{
 
   /**
-   * Must take the parent css tag for the ccd field component
-   * in the format ccd-write-text-area-field
-   *
    * @param css
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
    */
   constructor(css, key){
     this.css = css;
-    this.key = this.setKey(key)
+    this.key = this.setKey(key);
     this.stringField = new TextField(`${this.css} textarea`);
     this.label = null;
     this.inputValue = null;

@@ -24,7 +24,8 @@ class CcdCollection {
   /**
    * Select item in the collection (1st, 2nd, 3rd in collection list), intitalise that object and return it back to the
    * Page Object to be used and have it's functionas called
-   * @param collectionItemInt
+   * @param collectionItemInt - position in the collection, for example if you are initialising the 2nd item in
+   * a collection you would enter 2 as the collectionOrderIndex
    * @returns {Promise<*>}
    */
   async getCollectionItem(collectionItemInt){
@@ -44,7 +45,7 @@ class CcdCollection {
 
   /**
    * Remove a specific item in the collection
-   * @param collectionItemInt - tem in collection (eg 1st field/complex) to remove
+   * @param collectionItemInt - item in collection (eg 1st field/complex) to remove
    * @returns {Promise<void>}
    */
   async clickRemoveButton(collectionItemInt){

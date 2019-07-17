@@ -1,4 +1,4 @@
-@functional @complexcollections @showandhide @rerun
+@functional @complexcollections @showandhide
 Feature: Set of scenarios testing show & hide functionality and conditional logic
 
   Background:
@@ -7,7 +7,6 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
   Scenario: limits the complex type using the EventToComplexTypes sheet
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data
-#    Then only the fields defined in EventToComplexTypes sheet should be visible
     Then the 'Create school' page contains the following fields:
       | field                                                                             | value              | hidden |
       | MySchool.Name                                                                     | Busy Bees          | false  |
@@ -23,3 +22,4 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data
     Then the fields should have label, hint text and displayContext updated
+

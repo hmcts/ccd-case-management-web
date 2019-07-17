@@ -10,12 +10,11 @@ TextField = require('../../webdriver-components/textField.js');
 class CCDStringField {
 
   /**
-   * Input tag
-   * in the format ccd-write-XXXX-fieldF
-   * Selector farther narrows down the location
    * @param css - css of the input field
-   * @param key - key,
-   */
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
+   * */
   constructor(css, key){
     // this.component = 'ccd-write-text-field';
     this.css = css;

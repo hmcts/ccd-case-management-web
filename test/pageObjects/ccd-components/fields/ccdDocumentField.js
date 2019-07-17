@@ -1,5 +1,5 @@
 /**
- * CCD Fixed Radio List field component
+ * CCD Document field component
  */
 class CcdDocumentField {
 
@@ -7,8 +7,10 @@ class CcdDocumentField {
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param id
-   */
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
+   * */
   constructor(css, key) {
     this.css = css;
     this.key = this.setKey(key);
@@ -24,9 +26,9 @@ class CcdDocumentField {
       return key;
     }
   }
+
   /**
-   * Returns an options array
-   * @returns array of options
+   * @returns label of the document field
    */
   async getLabel() {
     return await $(this.label).getText();

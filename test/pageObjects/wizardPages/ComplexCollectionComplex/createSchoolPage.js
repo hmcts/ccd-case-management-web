@@ -159,7 +159,7 @@ class SchoolClassComplex  {
   }
 
   async selectClassFloor(dropdownOption){
-    await this.classFloor.selectFromDropdownByText(dropdownOption)
+    await this.classFloor.selectOption(dropdownOption)
   }
 
   async enterClassTeacher(text){
@@ -244,6 +244,10 @@ class SchoolClassMembersChildrenComplex {
     await this.childFullName.enterText(text);
   }
 
+
+
+
+
   async enterBuildingAndStreet(text){
     await this.buildingAndStreet.enterText(text)
   }
@@ -253,7 +257,7 @@ class SchoolClassMembersChildrenComplex {
   }
 
   async selectChildGender(optionText){
-    await this.childGenderDropdown.selectFromDropdownByText(optionText);
+    await this.childGenderDropdown.selectOption(optionText);
   }
 
   async enterAutisticChildCaseRefNumber(text){

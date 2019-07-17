@@ -9,10 +9,10 @@ let RadioField = require('../../webdriver-components/radioField.js');
 class CcdYesNoField {
 
   /**
-   * Must take the parent css tag for the ccd field component
-   * in the format  ccd-write-yes-no-field
-   *
    * @param css
+   *  * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
    */
   constructor(css, key){
     this.css = css;

@@ -5,29 +5,27 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
   constructor() {
     super();
     this._fieldUsedInShowCondition = ''; // TextField | TextFieldOptional
-    this.TextField = new CCDStringField('#TextField');
+    this.textField = new CCDStringField('#TextField');
     this.textFieldOptional = new CCDStringField('#TextFieldOptional');
 
-    this.TextField2 = new CCDStringField('#TextField2')
+    this.textField2 = new CCDStringField('#TextField2')
   }
 
   async getFieldData(){
-    let mandatoryTextFieldData = await this.TextField.getFieldData();
-    let textField2Data = await this.TextField2.getFieldData();
+    let mandatoryTextFieldData = await this.textField.getFieldData();
+    let textField2Data = await this.textField2.getFieldData();
     return Array.of(mandatoryTextFieldData,textField2Data);
-    // return fields.push(mandatoryTextFieldData,textField2Data);
   }
 
 
-
   async enterIntoTextField(text) {
-    await this.TextField.enterText(text);
+    await this.textField.enterText(text);
     this._fieldUsedInShowCondition = 'TextField';
   }
 
 
   async enterIntoMandatoryTextField(text) {
-    await this.TextField.enterText(text);
+    await this.textField.enterText(text);
     this._fieldUsedInShowCondition = 'TextField';
   }
 
@@ -38,7 +36,7 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
 
   async completeShowConditionToShowField() {
     if (this._fieldUsedInShowCondition === 'TextField') {
-      await this.TextField.enterText('showmethemoney');
+      await this.textField.enterText('showmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
       await this.textFieldOptional.enterText('showme');
     }
@@ -46,7 +44,7 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
 
   async completeShowConditionToHideField() {
     if (this._fieldUsedInShowCondition === 'TextField') {
-      await this.TextField.enterText('dontshowmethemoney');
+      await this.textField.enterText('dontshowmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
       await this.textFieldOptional.enterText('dontshowme');
     }

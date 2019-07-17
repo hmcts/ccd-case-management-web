@@ -12,11 +12,12 @@ class AddressComplex extends ComplexBase {
   }
 
   /**
-   * Allows us to also re-initialise fields fpr a collection by parsing collection parent id here
+   * Allows us to also re-initialise fields for a collection by parsing collection parent id here
    * @param id - id of the complex OR may be the id of the collection (of this complex)
-   * @param collectionOrderIndex
+   * @param collectionOrderIndex - position in the collection, for example if you are initialising the 2nd item in
+   * a collection you would enter 2 as the collectionOrderIndex
    */
-  initialiseFields(id,collectionOrderIndex) {
+  initialiseFields(id, collectionOrderIndex) {
     //if this is part of a collection we want to prefix the key with the index ie 1.Complex.field
     let collectionPrefix = '';
     if (typeof collectionOrderIndex !== 'undefined'){

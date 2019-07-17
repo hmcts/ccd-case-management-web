@@ -81,6 +81,5 @@ module "case-management-web" {
     CCD_ACTIVITY_MAX_REQUEST_PER_BATCH = 25 // Better have this same as CCD_PAGE_SIZE
     PAYMENTS_URL = "${local.ccd_gateway_url}/payments"
     WEB_PAGES_APPINSIGHTS_INSTRUMENTATION_KEY = "${data.azurerm_application_insights.ccd_webpages_appinsights.instrumentation_key}"
-    DUMMY_TEMP_FOR_BUILD = "dummy value"
   }
 }

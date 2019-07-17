@@ -31,7 +31,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'},
-                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_SecondAddress_SecondLine1'];
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_SecondAddress_SecondLine1'}];
     });
 
   Given(/^a case type containing conditional data of collection of complex types exists$/, function() {

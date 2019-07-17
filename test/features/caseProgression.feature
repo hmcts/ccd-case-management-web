@@ -1,7 +1,20 @@
-@caseProgression @functional
+@functional @caseProgression
 Feature: Set of scenarios to test case creation and case progression
 
   Background:
+    Given the following definition for 'events'
+      | ID                 | Name                    | Pre condition sate | Post condition state |
+      | createCase         | Create a case           |                    | CaseCreated          |
+      | transitionToState1 | progress to state1      | CaseCreated        | State1               |
+      | transitionToState2 | progress to state2      | State1             | State2               |
+      | backToState2       | progress back to state1 | State2             | State1               |
+      | update             | update current state    | *                  | *                    |
+    Given the following definition for 'states'
+      | ID          | Name         |
+      | CaseCreated | Case created |
+      | State1      | State1       |
+      | State2      | State2       |
+
     Given I have logged in
     And a case with Case Progression functionality exists
 
@@ -14,7 +27,6 @@ Feature: Set of scenarios to test case creation and case progression
       | progress to state1   |
       | update current state |
 
-
   Scenario: Case can be progressed
     Given I have navigated to a case in the state 'Case created'
     When I select and submit the event 'progress to state1'
@@ -24,7 +36,6 @@ Feature: Set of scenarios to test case creation and case progression
     And the available actions should be:
       | progress to state2   |
       | update current state |
-
 
   Scenario: Case remains in the same state after being updated
     Given I have navigated to a case in the state 'Case created'

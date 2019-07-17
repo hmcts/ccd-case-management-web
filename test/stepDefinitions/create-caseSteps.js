@@ -225,7 +225,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     expect(actualOrder).to.deep.equal(expectedOrder)
   });
 
-
   When(/^I navigate to the 'check your answers' form page$/, async function() {
       await new CreateCaseWizardPage().clickContinueButton();
   });
@@ -333,7 +332,42 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickSubmitCaseButton();
   });
 
+  When(/^I do NOT meet the condition for showing the field$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','dontshowmethemoney');
+    await caseWizardPage.clickContinueButton();
+  });
 
+  When(/^I do meet the condition for showing the field$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await caseWizardPage.clickContinueButton();
+  });
+
+  When(/^I do NOT meet the condition for showing the page$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await caseWizardPage.clickContinueButton();
+  });
+
+  When(/^I do meet the condition for showing the page$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField('text','showmethemoney');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.interactWithField('text','showpage3');
+    await caseWizardPage.clickContinueButton();
+
+    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'SW1A 2AA', 'AddressComplex1_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'Westminster', 'AddressComplex1_AddressLine3');
+    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+
+    await caseWizardPage.clickContinueButton();
+  });
 
   Then(/^the field with label '(.*)' is not visible$/, async function (expectedLabel) {
     let labels = await caseWizardPage.getFieldLabels();
@@ -406,16 +440,25 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
     await createSchoolPage.enterSchoolName('Busy Bees');
     await createSchoolPage.selectProvidesAutisticSupport(supportAnswer);
+    await createSchoolPage.selectSchoolRegionalCentre();
 
     await createSchoolPage.clickAddNewSchoolClassButton();
     let classDetails = await createSchoolPage.getCollectionOfSchoolClass(1);
 
     await classDetails.enterClassName(className);
-
+    await classDetails.enterClassTeacher('Zohan');
+    await classDetails.enterClassRanking('12');
+    await classDetails.enterClassBuilding('Test Building Name');
+    await classDetails.selectClassFloor('One')
+    await classDetails.selectDegreeOption('BSc')
+    if (className === 'A team') {
+      await classDetails.enterClassNumber('12345')
+    }
     await classDetails.clickAddNewMembersButton();
-    let classMembers = await classDetails.getCollectionOfClassMembersComplex(1);
 
+    let classMembers = await classDetails.getCollectionOfClassMembersComplex(1);
     await classMembers.clickAddNewChildrenButton();
+
     let childrenDetails = await classMembers.getCollectionOfClassMemberChildrenComplex(1);
     await childrenDetails.enterChildFullName('Joe Kember');
     await childrenDetails.selectChildGender('Male');

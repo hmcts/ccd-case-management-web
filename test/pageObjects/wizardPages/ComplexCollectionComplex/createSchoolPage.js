@@ -52,6 +52,10 @@ class CreateSchoolPage extends CreateCaseWizardPage {
     return await new Collection(this._schoolClassComplexCollectionID,new SchoolClassComplex()).getCollectionItem(index);
   }
 
+  async selectSchoolRegionalCentre(option){
+    await this.schoolRegionalCentre.selectOption(option)
+  }
+
   async getFixedRadioListOrder(){
     return await this.schoolRegionalCentre.getOptions();
   }
@@ -119,6 +123,14 @@ class SchoolClassComplex  {
 
   async enterClassNumber(number){
     await this.classNumber.enterNumber(number)
+  }
+
+  async enterClassTeacher(text){
+    await this.classTeacher.enterText(text);
+  }
+
+  async selectDegreeOption(option){
+    await this.classDegreeMultiSelectList.selectAnyOneElement(option);
   }
 
   async getClassDegreeMultiSelectOptions(){

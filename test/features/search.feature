@@ -2,6 +2,36 @@
 Feature: Set of scenarios to test functionality of search filters on the search page
 
   Background:
+    Given the following definition for 'case fields'
+      | ID               | Label              | FieldType         | FieldTypeParameter |
+      | TextField        | Text Field         | Text              |                    |
+      | TextAreaField    | Text Area          | TextArea          |                    |
+      | DateField        | Date Field         | Date              |                    |
+      | AddressField     | Address Field      | Address           |                    |
+      | PhoneField       | Phone Field        | PhoneUK           |                    |
+      | NumberField      | Number Field       | Number            |                    |
+      | YesNoField       | Yes or No Field    | YesOrNo           |                    |
+      | CollectionField  | Collection Field   | Collection        | Text               |
+      | MarritalStatus   | Fixed List         | FixedList         | marritalStatusEnum |
+      | MoneyField       | Money Field        | MoneyGBP          |                    |
+      | DocumentField    | Document Field     | Document          |                    |
+      | EmailField       | Email Field        | Email             |                    |
+      | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
+      | CaseHistory      | History            | CaseHistoryViewer |                    |
+    Given the following definition for 'list types'
+      | ID                 | ListElementCode      | ListElement       |
+      | marritalStatusEnum | MARRIAGE             | Marriage          |
+      | marritalStatusEnum | CIVIL_PARTNERSHIP    | Civil Partnership |
+      | marritalStatusEnum | SINGLE	Single        |                   |
+      | marritalStatusEnum | WIDOW                | Widow             |
+      | regionalCentreEnum | CARDIFF              | Cardiff           |
+      | regionalCentreEnum | MANCHESTER           | Manchester        |
+      | regionalCentreEnum | OXFORD               | Oxford            |
+      | gender             | MALE                 | Male              |
+      | gender             | FEMALE               | Female            |
+      | gender             | OTHER                | Other             |
+      | boolean            | TRUE                 | true              |
+      | boolean            | FALSE                | false             |
     Given I have logged in
     And a case type containing every field type exists
 

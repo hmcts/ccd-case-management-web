@@ -1,5 +1,6 @@
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let baseSteps = require('./baseSteps.js');
+let CyaPage = require('../pageObjects/cyaPage')
 CustomError = require('../utils/errors/custom-error.js');
 
 let chai = require("chai").use(require("chai-as-promised"));

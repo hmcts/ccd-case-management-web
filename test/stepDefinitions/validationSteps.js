@@ -20,7 +20,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^the following definition for '(.*)'$/, async function (sheetName, dataTable) {
     console.log('sheetName=', sheetName);
-    console.log(dataTable);
+    // console.log(dataTable); this is causing to much stuff in the logs so commenting out
   });
 
   Given(/^the '(.*)' page contains the following fields:$/, async function (page, dataTable) {

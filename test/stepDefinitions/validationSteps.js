@@ -18,10 +18,6 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     console.log(dataTable);
   });
 
-    Given(/^the definition sheet '(.*)' looks like this$/, async function (sheetName, dataTable) {
-    // TODO: No check for now - should be implemented as a part of RDM-5022
-  });
-
   Then(/^no text will appear in the number field$/, async function() {
     let fieldContents = await caseWizardPage.getNumberFieldValue();
     console.log(fieldContents);

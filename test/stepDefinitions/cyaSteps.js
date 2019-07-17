@@ -54,7 +54,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.clickContinueButton();
 
     let fieldLabel = await this.fieldObject.label;
-    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel)
+    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel);
     let expectedValue = await this.fieldObject.checkYourAnswersValue;
 
     expect(actualValue, 'wrong value for CYA').to.equal(expectedValue)

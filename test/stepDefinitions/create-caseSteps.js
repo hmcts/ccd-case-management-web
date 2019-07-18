@@ -179,7 +179,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     let addressUK = await dataTypesPage.getAddressUKComplex();
 
     let addressDropdown = await addressUK.getAddressDropdown();
-    let currentSelection = await addressDropdown.getCurrentSelectedOption();
+    let currentSelection = await addressDropdown.getCurrentOption();
     expect(currentSelection).to.be.equals("No address found");
   });
 

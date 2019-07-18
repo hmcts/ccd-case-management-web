@@ -386,6 +386,19 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.fillOutAndSubmitForm();
   });
 
+  Given(/^I have submitted a case with conditional nested collection data$/, async function(){
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickGenericCollectionAddNewButton();
+    await caseWizardPage.interactWithField('text', '10', 'CollectionComplexField_0_AddressLine1');
+    await caseWizardPage.interactWithField('text', 'Great Bouleverd', 'CollectionComplexField_0_AddressLine2');
+    await caseWizardPage.interactWithField('text', 'San Jose', 'CollectionComplexField_0_AddressLine3');
+    await caseWizardPage.interactWithField('text', 'US', 'CollectionComplexField_0_Country');
+    await caseWizardPage.interactWithField('text', '19078', 'CollectionComplexField_0_ZipCode');
+    await caseWizardPage.interactWithField('text', '1', 'CollectionComplexField_0_SecondAddress_SecondLine1');
+    await caseWizardPage.interactWithField('text', 'Tick tock close', 'CollectionComplexField_0_SecondAddress_SecondLine2');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
   Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
     await baseSteps.navigateToCreateCasePage()
     for (let i = 0; i < numberOfItems; i++) {

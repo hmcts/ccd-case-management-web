@@ -154,8 +154,10 @@ export class WorkbasketComponent implements OnInit {
   private notifyDefaultJurisdiction() {
     Promise.resolve(null).then(() => {
       let profile = this.route.parent.snapshot.data.profile;
-      let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
-      this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
+      if (profile.default.workbasket.jurisdiction_id) {
+        let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
+        this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
+      }
     });
   }
 

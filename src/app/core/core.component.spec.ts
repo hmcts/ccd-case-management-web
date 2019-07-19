@@ -298,19 +298,6 @@ describe('CoreComponent', () => {
 
     expect(oauth2Service.signOut).toHaveBeenCalled();
   });
-
-  it('should update jurisdiction id if notified about selected jurisdiction', () => {
-    let headerBar = de.query(By.directive(HeaderComponent));
-
-    expect(headerBar).toBeTruthy();
-    expect(headerBar.componentInstance.title).toEqual('Probate');
-
-    jurisdictionService.announceSelectedJurisdiction(SELECTED_JURISDICTION);
-    fixture.detectChanges();
-
-    expect(headerBar).toBeTruthy();
-    expect(headerBar.componentInstance.title).toEqual('Divorce');
-  });
 });
 
 describe('CoreComponent when defaults in the profile', () => {

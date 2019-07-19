@@ -300,7 +300,7 @@ describe('CoreComponent', () => {
   });
 });
 
-describe('CoreComponent when defaults in the profile', () => {
+describe('CoreComponent when no defaults in the profile', () => {
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
       'title',
@@ -445,7 +445,7 @@ describe('CoreComponent when defaults in the profile', () => {
     de = fixture.debugElement;
   });
 
-  it('should update jurisdiction id if notified about selected jurisdiction', () => {
+  it('should not update jurisdiction id in the title when no profile defaults', () => {
     let headerBar = de.query(By.directive(HeaderComponent));
 
     expect(headerBar).toBeTruthy();

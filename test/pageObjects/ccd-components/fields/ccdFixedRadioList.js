@@ -11,7 +11,7 @@ class CcdFixedRadioList {
   constructor(css, key) {
     this.css = css;
     this.key = this.setKey(key);
-    this.optionsDiv = $$(`#${css} .multiple-choice label`);
+    this.optionsDiv = $$(`${css} .multiple-choice label`);
     this.selectedOption = $('#MySchool_SchoolRegionalCentre .selected label');
   }
 

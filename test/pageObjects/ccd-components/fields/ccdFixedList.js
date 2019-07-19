@@ -68,6 +68,10 @@ class CcdFixedList {
     this.label = await this._getLabel();
   }
 
+  async selectOptionByIndex(index) {
+    await this.fixedList.selectFromDropdownByIndex(index);
+  }
+
   async selectOptionByValue(value) {
     await this.fixedList.selectAnOption(value);
     this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
@@ -76,7 +80,7 @@ class CcdFixedList {
 
   async getCurrentOption(){
     try {
-      await this.fixedList.getCurrentSelectedOption()
+      return await this.fixedList.getCurrentSelectedOption();
     } catch (e) {
       console.log('no option selected on dropdown')
       return 'undefined'

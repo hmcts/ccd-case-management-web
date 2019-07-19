@@ -177,7 +177,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   Then(/^I should expect address list to be empty$/, async function(){
     let addressUK = await dataTypesPage.getAddressUKComplex();
-
     let addressDropdown = await addressUK.getAddressDropdown();
     let currentSelection = await addressDropdown.getCurrentOption();
     expect(currentSelection).to.be.equals("No address found");
@@ -195,13 +194,13 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     let addressUK = await dataTypesPage.getAddressUKComplex();
 
     let addressDropdown = await addressUK.getAddressDropdown();
-    let currentSelection = await addressDropdown.getCurrentSelectedOption();
+    let currentSelection = await addressDropdown.getCurrentOption();
     expect(currentSelection).to.be.equals(count+ " addresses found");
   });
 
   When(/^I Select a option '(.*)' from the address list$/, async function(index) {
     let addressDropdown = await (await dataTypesPage.getAddressUKComplex()).getAddressDropdown();
-    await addressDropdown.selectFromDropdownByIndex(index)
+    await addressDropdown.selectOptionByIndex(index)
   });
 
 
@@ -307,38 +306,38 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When(/^I do NOT meet the condition for showing the field$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','dontshowmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
   });
 
   When(/^I do meet the condition for showing the field$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('text','dontshowpage3');
     await caseWizardPage.clickContinueButton();
   });
 
   When(/^I do NOT meet the condition for showing the page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('text','dontshowpage3');
     await caseWizardPage.clickContinueButton();
   });
 
   When(/^I do meet the condition for showing the page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','showpage3');
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage3');
     await caseWizardPage.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'SW1A 2AA', 'AddressComplex1_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'Westminster', 'AddressComplex1_AddressLine3');
-    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
-
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine1('10 Downing Street');
+    await address.enterAddressLine2('SW1A 2AA');
+    await address.enterAddressLine3('Westminster');
+    await address.enterCountry('UK');
     await caseWizardPage.clickContinueButton();
   });
 

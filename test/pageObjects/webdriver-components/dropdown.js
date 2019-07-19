@@ -56,7 +56,7 @@ class Dropdown {
    */
   async getCurrentSelectedOption(){
       let text = await $(this._currentDropdownOptionElement).getText();
-      return text.trim();
+      return await text.trim();
   }
 
   /**

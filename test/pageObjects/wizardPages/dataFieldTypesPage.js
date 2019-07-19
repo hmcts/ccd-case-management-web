@@ -21,7 +21,7 @@ class DataFieldTypesPage extends CreateCaseWizardPage {
   }
 
   async getAddressUKComplex(){
-    return this.addressUKComplex;
+    return await this.addressUKComplex;
   }
 
 }

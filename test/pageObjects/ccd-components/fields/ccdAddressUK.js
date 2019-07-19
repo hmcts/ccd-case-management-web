@@ -54,8 +54,8 @@ class CcdAddressUKComplex extends ComplexBase {
     await this.findAddressButton.click();
   }
 
-  getAddressDropdown(){
-    return this.selectAddressDropdown;
+  async getAddressDropdown(){
+    return await this.selectAddressDropdown;
   }
 
 

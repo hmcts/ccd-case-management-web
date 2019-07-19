@@ -249,7 +249,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('yes-no')) {
       let yesNoValue = await fieldUtils.getYesNoFieldValue()
-      if (yesNoValue !== 'undefined'){
+      if (yesNoValue !== ''){
         allFiltersCleared = false;
         errMessage = `yes-no field has value ${yesNoValue}`
 

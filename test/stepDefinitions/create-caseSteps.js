@@ -306,7 +306,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When(/^I do NOT meet the condition for showing the field$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('dontshowmethemoney');
     await conditionals_createCase_conditionalPage1.clickContinueButton();
   });
 

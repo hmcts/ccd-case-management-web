@@ -144,7 +144,8 @@ class FieldDataTypes {
 
   async selectFromMultiSelect(value, id){
     let css = await FIELDS.MULTI_SELECT.cssTag;
-    let multiSelectField = await new CCDMultiSelectField(css, id);
+    let locator = id ? `#${id}` : css;
+    let multiSelectField = await new CCDMultiSelectField(locator);
     await multiSelectField.selectAnyOneElement(value);
     return multiSelectField;
   }

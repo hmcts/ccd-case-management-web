@@ -33,7 +33,7 @@ class CcdMultiSelectField {
       await optionToSelect.click();
     } else {
       let optionToSelect = await this._getMultiSelectOption(optionValue);
-      optionToSelect.click();
+      await optionToSelect.click();
     }
   }
 

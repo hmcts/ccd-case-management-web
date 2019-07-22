@@ -12,6 +12,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   async function populateCaseFields(){
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
@@ -53,13 +54,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       {fieldType: 'fixed-radio-list', fieldId: 'MySchool_SchoolRegionalCentre', value: 'MANCHESTER'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassName', value: 'Analytical Maths'},
       {fieldType: 'multi-select', fieldId: 'MySchool_Class_0_ClassMandatoryFor', value: 'BSc'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: '10'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: '10'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassTeacher', value: 'Smith'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
       {fieldType: 'fixed-list', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor', value: 'THREE'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassName', value: 'Discrete Maths'},
       {fieldType: 'multi-select', fieldId: 'MySchool_Class_1_ClassMandatoryFor', value: 'ScD'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: '8'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: '8'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassTeacher', value: 'Brown'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
       {fieldType: 'fixed-list', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Floor', value: 'ONE'},
@@ -177,6 +178,11 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.eventFields = [[{fieldType: 'text', fieldId: 'TextField',value: 'showmethemoney'}],
                           [{fieldType: 'text', fieldId: 'TextField3',value: 'showpage5'}],
                           [{fieldType: 'text', fieldId: 'TextField11',value: Data.savedValue}]];
+  });
+
+  Given(/^I have a case with a simple collection of complex$/, function() {
+    Data.caseType = "Complex in Coll in Complex";
+    Data.event = "Create Collection of Complex";
   });
 
 });

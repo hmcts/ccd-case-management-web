@@ -17,6 +17,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
                            {fieldType: 'document', fieldId: 'DocumentField'}];
   }
 
+  Given(/^a case type with a document upload file exists$/, async function() {
+    await populateCaseFields();
+  });
+
   Given(/^a case type containing every field type exists$/, async function() {
     await populateCaseFields();
   });

@@ -215,14 +215,16 @@ class CaseDetailsPage extends BasePage {
   }
 
   async clickDocumentLink(){
-    let first = await $(this._documentLink);
-    await first.click();
+    let documentLink = await $(this._documentLink);
+    await documentLink.click();
+  }
+
+  async openMediaViewer(){
     let handles = await browser.getAllWindowHandles();
     await browser.switchTo().window(handles[1]);
     await browser.waitForAngularEnabled(false);
     return await browser.getCurrentUrl();
   }
-
 }
 
 module.exports = CaseDetailsPage;

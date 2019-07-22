@@ -1,4 +1,4 @@
-
+let BasePage = require('../../basePage');
 let Dropdown = require('../../webdriver-components/dropdown.js');
 
 /**
@@ -10,20 +10,44 @@ class CcdFixedList {
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param id
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
    */
-  constructor(css, id) {
+  constructor(css, key) {
     this.css = css;
-    if (id) {
-      this.fixedList = new Dropdown(`${this.css} #${id}`);
-    } else {
-      this.fixedList = new Dropdown(`${this.css} select`);
-    }
+    this.key = this.setKey(key);
+    this.fixedList = new Dropdown(this.css);
     this.options = this.fixedList.getOptionElements();
     this.label = null;
 
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+  async getFieldData(key){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    key = key ? key : this.key;
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, key);
+    data.set(value, await this.getCurrentOption());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**
@@ -44,6 +68,10 @@ class CcdFixedList {
     this.label = await this._getLabel();
   }
 
+  async selectOptionByIndex(index) {
+    await this.fixedList.selectFromDropdownByIndex(index);
+  }
+
   async selectOptionByValue(value) {
     await this.fixedList.selectAnOption(value);
     this.checkYourAnswersValue = await this.fixedList.getCurrentSelectedOption();
@@ -52,7 +80,7 @@ class CcdFixedList {
 
   async getCurrentOption(){
     try {
-      await this.fixedList.getCurrentSelectedOption()
+      return await this.fixedList.getCurrentSelectedOption();
     } catch (e) {
       console.log('no option selected on dropdown')
       return 'undefined'
@@ -70,8 +98,8 @@ class CcdFixedList {
       return isPresent && isEnabled;
   }
 
-  async isHidden() {
-    return await this.fixedList.waitForElementToBeInvisible();
+  async isDisplayed(){
+    return new BasePage().elementDisplayed($(this.css));
   }
 
   async isVisible() {
@@ -92,8 +120,10 @@ class CcdFixedList {
     return labelText.indexOf(label) !== -1;
   }
 
-  async _getLabel() {
-    return await $(`${this.css} .form-label`).getText();
+  async _getLabel(){
+    let id = await $(this.css).getAttribute('id');
+    let label = await $('label[for=' + id + ']').getText();
+    return label;
   }
 
 }

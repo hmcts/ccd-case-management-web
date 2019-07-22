@@ -10,26 +10,44 @@ TextField = require('../../webdriver-components/textField.js');
 class CCDStringField {
 
   /**
-   * Must take the parent css tag for the ccd field component
-   * in the format ccd-write-XXXX-field
-   * Selector farther narrows down the location
-   * @param css
-   * @param type
-   * @param id
-   */
-  constructor(css, type, id){
-    if (id) {
-      this.stringField = new TextField(`${css} #${id}`);
-      this.id = id;
-    } else {
-      this.stringField = new TextField(`${css} input`);
-      this.id = null;
-    }
+   * @param css - css of the input field
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
+   * */
+  constructor(css, key){
+    // this.component = 'ccd-write-text-field';
     this.css = css;
+    this.stringField = new TextField(css);
+    this.key = this.setKey(key);
     this.label = null;
-    this.type = type;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+  async getFieldData(key){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await this.stringField.isDisplayed();
+
+    key = key ? key : this.key;
+
+    data.set(field, key);
+    data.set(value, await this.getFieldValue());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**
@@ -93,10 +111,9 @@ class CCDStringField {
    * @returns true or false
    */
   async isFieldReady(){
-    let isCorrectType = await this.stringField.isType(this.type);
     let isPresent = await this.stringField.isPresent();
     let isDisplayed = await this.stringField.isDisplayed();
-    return isCorrectType && isPresent && isDisplayed;
+    return isPresent && isDisplayed;
   }
 
   /**
@@ -104,7 +121,7 @@ class CCDStringField {
    * @returns true or false
    */
   async hasFieldLabels(labelArray){
-    let labelText = await this._getLabel();
+    let labelText = await this.getLabel();
     return labelText === labelArray[0];
   }
 
@@ -113,7 +130,7 @@ class CCDStringField {
    * @returns true or false
    */
   async hasFieldLabel(label) {
-    let labelText = await this._getLabel();
+    let labelText = await this.getLabel();
     return labelText.indexOf(label) !== -1;
   }
 
@@ -122,7 +139,7 @@ class CCDStringField {
   }
 
   async _enterIntoField(value){
-    this.label = await this._getLabel();
+    this.label = await this.getLabel();
     await this.stringField.clearField();
     await this.stringField.enterText(value);
     this.inputValue = value;
@@ -132,9 +149,10 @@ class CCDStringField {
     return value;
   }
 
-  async _getLabel(){
-    return this.id ? await $(`${this.css} label[for=${this.id}]`).getText()
-                  : await $(`${this.css} .form-label`).getText();
+  async getLabel(){
+    let id = await $(this.css).getAttribute('id');
+    let label = await $('label[for=' + id + ']').getText();
+    return label;
   }
 
 

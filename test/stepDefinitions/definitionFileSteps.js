@@ -13,7 +13,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'All Field Data Types';
     Data.event = 'Create a case';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
+                           {fieldType: 'document', fieldId: 'DocumentField'}];
   }
 
   Given(/^a case type containing every field type exists$/, async function() {

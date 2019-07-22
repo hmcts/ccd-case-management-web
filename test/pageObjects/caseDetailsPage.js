@@ -30,7 +30,7 @@ class CaseDetailsPage extends BasePage {
     this._detailsBoxEvent = '.EventLog-DetailsPanel tbody > tr:nth-of-type(4) > td span';
     this._detailsBoxSummary = '.EventLog-DetailsPanel tbody > tr:nth-of-type(5) > td span';
     this._detailsBoxComment = '.EventLog-DetailsPanel tbody > tr:nth-of-type(6) > td span';
-
+    this._documentLink = 'ccd-read-document-field > a';
 
   }
 
@@ -212,6 +212,15 @@ class CaseDetailsPage extends BasePage {
   async clickFirstAccordian(){
     let first = await $$(this._accordians).first();
     await first.click();
+  }
+
+  async clickDocumentLink(){
+    let first = await $(this._documentLink);
+    await first.click();
+    let handles = await browser.getAllWindowHandles();
+    await browser.switchTo().window(handles[1]);
+    await browser.waitForAngularEnabled(false);
+    return await browser.getCurrentUrl();
   }
 
 }

@@ -115,4 +115,9 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       await caseDetailsPage.startEvent(event);
   });
 
+  When(/^I click the document link to open media in new tab$/, async function () {
+    let newTabUrl = await caseDetailsPage.clickDocumentLink();
+    expect(newTabUrl.includes('/media-viewer')).to.true;
+  });
+
 });

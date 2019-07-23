@@ -449,14 +449,15 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   Given(/^I have submitted a case with conditional nested collection data$/, async function(){
     await baseSteps.navigateToCreateCasePage()
-    await caseWizardPage.clickGenericCollectionAddNewButton();
-    await caseWizardPage.interactWithField('text', '10', 'CollectionComplexField_0_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'Great Bouleverd', 'CollectionComplexField_0_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'San Jose', 'CollectionComplexField_0_AddressLine3');
-    await caseWizardPage.interactWithField('text', 'US', 'CollectionComplexField_0_Country');
-    await caseWizardPage.interactWithField('text', '19078', 'CollectionComplexField_0_ZipCode');
-    await caseWizardPage.interactWithField('text', '1', 'CollectionComplexField_0_SecondAddress_SecondLine1');
-    await caseWizardPage.interactWithField('text', 'Tick tock close', 'CollectionComplexField_0_SecondAddress_SecondLine2');
+    await caseWizardPage.clickGenericCollectionAddNewButton()
+    let addressComplex = await createCollectionOfComplexPage.getCollectionOfAddressComplex(1);
+    await addressComplex.enterAddressLine1('10');
+    await addressComplex.enterAddressLine2('Great Bouleverd');
+    await addressComplex.enterAddressLine3('San Jose');
+    await addressComplex.enterCountry('US');
+    await addressComplex.enterZipCode('19078');
+    await addressComplex.enterSecondLine1('1');
+    await addressComplex.enterSecondLine2('Tick tock close');
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });

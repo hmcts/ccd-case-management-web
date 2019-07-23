@@ -1,5 +1,5 @@
 let Collection = require('../../ccd-components/fields/ccdCollection.js');
-let AddressComplex = require('../../ccd-components/complexTypes/addressComplex.js')
+let AddressComplex = require('../../ccd-components/complexTypes/addressShowAndHide.js')
 
 class ConditionalsCreateCollectionOfComplex extends CreateCaseWizardPage {
 

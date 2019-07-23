@@ -4,8 +4,8 @@ nodejs:
   environment:
     IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
     CCD_GW_LOGOUT_URL: https://gateway-ccd.aat.platform.hmcts.net/logout
-    CCD_API_URL: https://gateway-ccd.aat.platform.hmcts.net/aggregated
-    CCD_DATA_URL: https://apim-preview.service.core-compute-preview.internal/public-ccd-data-store-api-with-fixed-paths/data
+    CCD_API_URL: https://apim-preview.service.core-compute-preview.internal/public-ccd-data-store-api-with-fixed-paths/aggregated
+    CCD_DATA_URL: https://gateway-ccd.aat.platform.hmcts.net/data
     CCD_GW_OAUTH2_URL: https://gateway-ccd.aat.platform.hmcts.net/oauth2
     DM_URL: https://gateway-ccd.aat.platform.hmcts.net/documents
     DM_URL_REMOTE: ^https?://(?:api-gateway\\.preprod\\.dm\\.reform\\.hmcts\\.net|dm-store-aat\\.service\\.core-compute-aat\\.internal(?::\\d+)?)/documents

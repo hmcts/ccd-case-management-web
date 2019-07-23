@@ -56,6 +56,14 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
         }
   });
 
+  Then(/^the following fields will NOT be visible:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await caseDetailsPage.getTabFields();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.not.include(expectedField);
+    }
+  });
+
   Then(/^the print button will be visible$/, async function () {
     expect(await caseDetailsPage.isPrintButtonReady()).to.be.true;
   });

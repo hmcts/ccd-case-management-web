@@ -174,6 +174,18 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.navigateToCreateCasePage();
   });
 
+  When(/^I navigate to multiple pages case type form pages$/, async function (){
+    await baseSteps.navigateToCreateCaseMultiPage();
+    await new CreateCaseWizardPage().clickContinueButton();
+  })
+
+  When(/^I create a case with multiple pages$/, async function (){
+    await baseSteps.navigateToCreateCaseMultiPage();
+    await new CreateCaseWizardPage().clickContinueButton();
+    await new CreateCaseWizardPage().clickContinueButton();
+    await new CreateCaseWizardPage().clickContinueButton();
+    await new CreateCaseWizardPage().clickSubmitCaseButton();
+  })
 
   Then(/^I should expect address list to be empty$/, async function(){
     let addressUK = await dataTypesPage.getAddressUKComplex();
@@ -189,6 +201,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await addressUK.enterPostcode(postcode);
     await addressUK.clickAddressButton();
   });
+
 
   Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
     let addressUK = await dataTypesPage.getAddressUKComplex();
@@ -207,6 +220,12 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
       let fieldDisplayed = await caseWizardPage.isFieldPresent(dataType);
       expect(fieldDisplayed).to.be.true;
+  });
+
+  Then('the Dynamic list is populated with the following values', async function (dataTable) {
+    let expectedDynamicListItems = await [].concat(...dataTable.raw());
+    let actualDynamicListItems = await dataTypesPage.getDynamicListItems();
+    expect(expectedDynamicListItems).to.deep.equal(actualDynamicListItems);
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {

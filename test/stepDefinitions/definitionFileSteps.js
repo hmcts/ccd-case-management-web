@@ -20,6 +20,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await populateCaseFields();
   });
 
+  Given(/^a case type containing a Dynamic Fixed List field exists$/, async function() {
+    await populateCaseFields();
+  });
+
   Given(/^a case type with the print button configured exist$/, async function() {
     await populateCaseFields();
   });

@@ -125,7 +125,7 @@ class FieldDataTypes {
   async enterIntoDocumentField(value, id){
     let css = await FIELDS.DOCUMENT.cssTag;
     let docField = new CCDDocumentField(css, id);
-    await docField.uploadFile('C:\\test\\framework-structure.png');
+    await docField.uploadFile(process.cwd() + '\\test\\resources\\framework-structure.png');
     return docField;
   }
 

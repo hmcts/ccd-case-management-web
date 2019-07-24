@@ -447,6 +447,20 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.fillOutAndSubmitForm();
   });
 
+  Given(/^I have submitted a case with conditional nested collection data$/, async function(){
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickGenericCollectionAddNewButton()
+    let addressComplex = await createCollectionOfComplexPage.getCollectionOfAddressComplex(1);
+    await addressComplex.enterAddressLine1('10');
+    await addressComplex.enterAddressLine2('Great Bouleverd');
+    await addressComplex.enterAddressLine3('San Jose');
+    await addressComplex.enterCountry('US');
+    await addressComplex.enterZipCode('19078');
+    await addressComplex.enterSecondLine1('1');
+    await addressComplex.enterSecondLine2('Tick tock close');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
   Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
     await baseSteps.navigateToCreateCasePage()
     for (let i = 0; i < numberOfItems; i++) {

@@ -44,3 +44,13 @@ Feature: Set of scenarios testing case view functionality
       | Text Field 2        |
       | Text Field 3        |
       | Text Field 4        |
+
+  Scenario: print button visible on case view when configured
+    Given a case type with the print button configured exist
+    And I create the case
+    Then the print button will be visible
+
+  Scenario: print button not visible on case view by default
+    Given a case with the print button not configured exists
+    And I create the case
+    Then the print button will not be visible

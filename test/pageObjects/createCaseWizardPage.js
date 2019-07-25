@@ -4,8 +4,9 @@ let FieldUtils = require('../utils/fieldUtils.js');
 Button = require('./webdriver-components/button.js');
 TextField = require('./webdriver-components/textField');
 DropDown = require('./webdriver-components/dropdown');
-CCDAddressUKField = require('./ccd-components/fields/ccdAddressUKField.js');
+CCDAddressUKField = require('./ccd-components/complexTypes/addressComplex.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
+
 
 
 class CreateCaseWizardPage extends BasePage{
@@ -22,9 +23,7 @@ class CreateCaseWizardPage extends BasePage{
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
-      this.ccdAddressUKField = new CCDAddressUKField("#postcodeInput");
       this.fieldUtils =  new FieldUtils();
-      this.alertError  = '.alert-message';
     }
 
   /**
@@ -45,77 +44,21 @@ class CreateCaseWizardPage extends BasePage{
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value, id){
-      return await this.fieldUtils.interactWithField(fieldDataType, value, id);
-    }
-
-    async fieldLabelContains(fieldDataType, fieldId, labelText) {
-      return await this.fieldUtils.fieldLabelContains(fieldDataType, fieldId, labelText);
-    }
-
-    async getFieldDetails(fieldDataType, fieldId) {
-      return await new FieldUtils().getFieldDetails(fieldDataType, fieldId);
-    }
-
-    async isTextFieldHiddenById(fieldId) {
-      return await this.fieldUtils.textFieldIsHidden(fieldId);
-    }
-
-    async isTextFieldVisibleById(fieldId) {
-      return await this.fieldUtils.textFieldIsVisible(fieldId);
-    }
-
-    async isCaseLinkFieldHiddenById(fieldId) {
-      return await this.fieldUtils.caseLinkFieldIsHidden(fieldId);
-    }
-
-    async isCaseLinkFieldVisibleById(fieldId) {
-      return await this.fieldUtils.caseLinkFieldIsVisible(fieldId);
-    }
-
-    async isFixedListFieldHiddenById(fieldId) {
-      return await this.fieldUtils.fixedListFieldIsHidden(fieldId);
-    }
-
-    async isFixedListFieldVisibleById(fieldId) {
-      return await this.fieldUtils.fixedListFieldIsVisible(fieldId);
-    }
-
-    async isDateFieldHiddenById(fieldId) {
-      return await this.fieldUtils.dateFieldIsHidden(fieldId);
-    }
-
-    async isDateFieldVisibleById(fieldId) {
-      return await this.fieldUtils.dateFieldIsVisible(fieldId);
-    }
-
-    async isYesOrNoFieldHiddenById(fieldId) {
-      return await this.fieldUtils.fieldYesNoIsHidden(fieldId);
-    }
-
-    async isYesOrNoFieldVisibleById(fieldId) {
-      return await this.fieldUtils.fieldYesNoIsVisible(fieldId);
-    }
-
-    async setYesOrNoValue(radioButtonId, option) {
-      return await this.fieldUtils.selectYesNoOption(radioButtonId, option);
+    async interactWithField(fieldDataType, value){
+      return await this.fieldUtils.interactWithField(fieldDataType, value);
     }
 
     async getFieldValue(dataType){
       return await new FieldUtils().getFieldValue(dataType);
     }
 
+    async getListOrder(listDataType){
+      return await new FieldUtils().getListOptions(listDataType);
+    }
+
     async clickCollectionAddNewButton(collectionFieldId) {
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
-    }
-
-  /**
-   * Get contents of number field
-   * @returns {Promise<Promise<*>|Promise<String>>}
-   */
-    async getNumberFieldValue(){
-      return await this.fieldUtils.getNumberFieldValue();
     }
 
   /**
@@ -127,15 +70,6 @@ class CreateCaseWizardPage extends BasePage{
         await this.continueButton.click();
     }
 
-
-    async enterPostcode(postcode) {
-      await element(this.ccdAddressUKField.postcodeText).sendKeys(postcode);
-    }
-
-    async clickFindAddressButton() {
-      await this.ccdAddressUKField.findAdressButton.click();
-    }
-
   /**
    * Final button to submit the case/event
    * @returns {Promise<void>}
@@ -145,16 +79,30 @@ class CreateCaseWizardPage extends BasePage{
         await new CaseDetailsPage().waitForPageToLoad();
     }
 
-    async getFieldLabels(){
-        let labelElements = await $$(this.fieldLabels);
-        let labels = [];
-        for (const labelElem of labelElements){
-            let labelText = await labelElem.getText();
-            let label = labelText.replace(' (Optional)', '');
-            labels.push(label)
-        }
+  /**
+   * Strips out (Optional) string if present to return just label value
+   * @returns {Promise<Array>}
+   */
+  async getFieldLabels(){
+      let labels = [];
+      for (const label of await this.getFullFieldLabels()){
+          labels.push(label.replace(' (Optional)', ''))
+      }
 
-        return labels;
+      return labels;
+    }
+
+  /**
+   * Includes (Optional) if present
+   * @returns {Promise<Array>}
+   */
+  async getFullFieldLabels(){
+      let labelElements = await $$(this.fieldLabels);
+      let labels = [];
+      for (const labelElem of labelElements){
+          labels.push(await labelElem.getText())
+      }
+      return labels;
     }
 
     async getGreyBarFieldLabels(){

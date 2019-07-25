@@ -229,23 +229,6 @@ describe('WorkbasketComponent', () => {
     expect(alertService.warning).toHaveBeenCalledWith('ERROR');
   });
 
-  it('should clear errors when result has no error', () => {
-    mockSearchService.search.and.returnValue(RESULT_VIEW_OBS);
-    let filter = {
-      selected: {
-        init: true,
-        jurisdiction: JURISDICTION,
-        caseType: CASE_TYPES[0],
-        caseState: CASE_STATE,
-        page: 1
-      }
-    };
-
-    comp.applyFilter(filter);
-
-    expect(alertService.clear).toHaveBeenCalled();
-  });
-
   it('should make inputs fields turn into query parameters with structure', () => {
     const nameControl = new FormControl();
     const NAME_VALUE = 'something';

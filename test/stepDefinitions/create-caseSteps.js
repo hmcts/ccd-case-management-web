@@ -6,7 +6,13 @@ let baseSteps = require('./baseSteps.js');
 let Data = require('../utils/TestData.js');
 CustomError = require('../utils/errors/custom-error.js');
 let TestData = require('../utils/TestData.js');
-let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/conditionals_CreateCase_ConditionalPage1.js');
+let ConditionalsCreateCasePage1 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage1.js');
+let ConditionalsCreateCasePage2 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage2.js');
+let ConditionalsCreateCasePage3 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage3.js');
+let ConditionalsCreateCasePage4 = require('../pageObjects/wizardPages/Conditionals/conditionals_CreateCase_ConditionalPage4.js');
+let CreateCollectionOfComplexPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createCollectionOfComplexPage.js');
+let DataTypesPage = require('../pageObjects/wizardPages/dataFieldTypesPage');
+let CreateSchoolPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createSchoolPage.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -15,15 +21,102 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, And}) {
 
-  const FIELD_ID = 0;
-  const FIELD_TYPE = 1;
-  const FIELD_VALUE = 2;
-  const FIELD_ORDER = 3;
 
   let caseWizardPage = new CreateCaseWizardPage();
   let createCasePage1 = new ConditionalsCreateCasePage1();
   let createCaseStartPage = new CreateCaseStartPage();
   let caseListPage = new CaseListPage();
+  let conditionals_createCase_conditionalPage1 = new ConditionalsCreateCasePage1();
+  let conditionals_createCase_conditionalPage2 = new ConditionalsCreateCasePage2();
+  let conditionals_createCase_conditionalPage3 = new ConditionalsCreateCasePage3();
+  let conditionals_createCase_conditionalPage4 = new ConditionalsCreateCasePage4();
+  let createCollectionOfComplexPage = new CreateCollectionOfComplexPage();
+  let dataTypesPage = new DataTypesPage();
+
+  //todo delete before final merge
+  Then(/^I am able to fill out data on the school form$/, async function () {
+    let createSchoolPage = new CreateSchoolPage();
+
+    //Enter School Name
+    await createSchoolPage.enterSchoolName('Dulwich College');
+
+    //Enter Details for School Class
+    await createSchoolPage.clickAddNewSchoolClassButton();
+    let schoolClass1 = await createSchoolPage.getCollectionOfSchoolClass(1);
+    await schoolClass1.enterClassName('A team');
+    await schoolClass1.enterClassNumber('1');
+    await schoolClass1.enterClassRanking('1');
+    await schoolClass1.enterClassBuilding('North Cloister');
+    await schoolClass1.selectClassFloor('Two');
+    await schoolClass1.enterClassTeacher('Mr Henderson');
+
+    //Enter Details for Another School Class (another collection item)
+    await createSchoolPage.clickAddNewSchoolClassButton();
+    let schoolClass2 = await createSchoolPage.getCollectionOfSchoolClass(2);
+    await schoolClass2.enterClassName('B team');
+
+    //Add Members for first School Class
+    await schoolClass1.clickAddNewMembersButton();
+    let class1Members1 = await schoolClass1.getCollectionOfClassMembersComplex(1);
+
+    //Add first Child to members for first School class
+    await class1Members1.clickAddNewChildrenButton();
+    let class1Members1Child1 = await class1Members1.getCollectionOfClassMemberChildrenComplex(1);
+    await class1Members1Child1.enterChildFullName('Ashley Noronha');
+    await class1Members1Child1.enterBuildingAndStreet('5a Westway');
+    await class1Members1Child1.selectChildGender('Male');
+    await class1Members1Child1.enterAutisticChildCaseRefNumber('12345A');
+
+    //Add second Child to members for first School class
+    await class1Members1.clickAddNewChildrenButton();
+    let class1Members1Child2 = await class1Members1.getCollectionOfClassMemberChildrenComplex(2);
+    await class1Members1Child2.enterChildFullName('Finn Noronha');
+
+    //Add Member and a child for Second School Class
+    await schoolClass2.clickAddNewMembersButton();
+    let class2Members1 = await schoolClass2.getCollectionOfClassMembersComplex(1);
+    await class2Members1.clickAddNewChildrenButton();
+    let class2Members1Child1 = await class2Members1.getCollectionOfClassMemberChildrenComplex(1);
+    await class2Members1Child1.enterChildFullName('Harry Potter');
+
+    //Change child 2 name from first school class
+    await class1Members1Child2.enterChildFullName('Cam Noronha');
+
+  });
+
+  //todo delete before final merge
+  Then(/^I can data regarding the form page$/, async function () {
+    let createSchoolPage = new CreateSchoolPage();
+    let data = await createSchoolPage.getFieldData();
+    let flattenedPageData = [].concat(...data);
+    console.log(flattenedPageData);
+    // process.exit()
+  });
+
+  //todo delete before final merge
+  Then(/^I successfully fill out 2 collection items$/, async function () {
+
+    await createCollectionOfComplexPage.clickAddNewButton();
+    let addressComplex1 = await createCollectionOfComplexPage.getCollectionOfAddressComplex(1);
+    await addressComplex1.enterAddressLine1('102 Petty France');
+    await addressComplex1.enterAddressLine2('St James Park');
+    await addressComplex1.enterCountry('UK');
+
+    await createCollectionOfComplexPage.clickAddNewButton();
+    let addressComplex2 = await createCollectionOfComplexPage.getCollectionOfAddressComplex(2);
+    await addressComplex2.enterAddressLine1('70 Massingberd way');
+    await addressComplex2.enterAddressLine2('Tooting');
+    await addressComplex2.enterCountry('UK');
+
+  });
+
+  //todo delete before final merge
+  Then(/^I successfully fill out the complex type$/, async function () {
+    let addressComplex = await dataTypesPage.getAddressComplex();
+    await addressComplex.enterAddressLine1('5a Westway')
+    await addressComplex.enterAddressLine2('Raynes Park')
+    await addressComplex.enterCountry('UK')
+  });
 
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
@@ -79,41 +172,35 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When(/^I navigate to the case creation form page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-});
+  });
 
-  Given(/^a list of addresses listed for postcode '(.*)'$/, async function(postcode){
-    Data.jurisdiction = 'Auto Test 1';
-    Data.caseType = 'All Field Data Types';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
-    await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.enterPostcode(postcode);
-    await caseWizardPage.clickFindAddressButton();
-  })
 
   Then(/^I should expect address list to be empty$/, async function(){
-    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    let addressUK = await dataTypesPage.getAddressUKComplex();
+    let addressDropdown = await addressUK.getAddressDropdown();
+    let currentSelection = await addressDropdown.getCurrentOption();
     expect(currentSelection).to.be.equals("No address found");
   });
 
   When(/^I enter a postcode '(.*)' and click find address$/, async function (postcode) {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.enterPostcode(postcode);
-    await caseWizardPage.clickFindAddressButton();
-    browser.waitForAngularEnabled(true);
+
+    let addressUK = await dataTypesPage.getAddressUKComplex();
+    await addressUK.enterPostcode(postcode);
+    await addressUK.clickAddressButton();
   });
 
   Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
-    let currentSelection = await caseWizardPage.ccdAddressUKField.addressListDropDown.getCurrentSelectedOption();
+    let addressUK = await dataTypesPage.getAddressUKComplex();
+
+    let addressDropdown = await addressUK.getAddressDropdown();
+    let currentSelection = await addressDropdown.getCurrentOption();
     expect(currentSelection).to.be.equals(count+ " addresses found");
   });
 
-  When(/^I Select a option '(.*)' from the list$/, async function(index) {
-    await caseWizardPage.ccdAddressUKField.addressListDropDown.selectAnOption();
-  });
-
-  Then(/^I should expect '(.*)' is populated using the selected address$/, async function(line) {
-    let text = await caseWizardPage.ccdAddressUKField[line].getText();
-    expect(text).to.not.be.null;
+  When(/^I Select a option '(.*)' from the address list$/, async function(index) {
+    let addressDropdown = await (await dataTypesPage.getAddressUKComplex()).getAddressDropdown();
+    await addressDropdown.selectOptionByIndex(index)
   });
 
 
@@ -131,19 +218,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickGenericCollectionAddNewButton();
   });
 
-  Then(/^the page contains the following field:$/, async function (fieldDetails) {
-    fieldDetails.rawTable.shift();
-    let fieldId = fieldDetails.rawTable[0][FIELD_ID];
-    let fieldType = fieldDetails.rawTable[0][FIELD_TYPE];
-    let fieldsExpectedOrder = new Array(fieldDetails.rawTable.length);
-    // iterate over data table for field details
-    for (const detail of fieldDetails.rawTable){
-        let fieldValue = detail[FIELD_VALUE];
-        let fieldOrder = detail[FIELD_ORDER];
-        fieldsExpectedOrder[fieldOrder - 1] = fieldValue;
-    }
-    let fieldsActualOrder = await caseWizardPage.getFieldDetails(fieldType, fieldId)
-    expect(fieldsActualOrder).to.deep.equal(fieldsExpectedOrder)
+  Then(/^the '(.*)' list is in the following order:$/, async function (listDataType, fieldDetails) {
+    let actualOrder = await caseWizardPage.getListOrder(listDataType);
+    let expectedOrder = [].concat(...fieldDetails.rawTable);
+    expect(actualOrder).to.deep.equal(expectedOrder)
   });
 
   When(/^I navigate to the 'check your answers' form page$/, async function() {
@@ -192,100 +270,74 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await populateFormDataWithSupportFieldSetTo(supportAnswer);
   });
 
-  Then(/^only the fields defined in EventToComplexTypes sheet should be visible$/, async function () {
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Name')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
-
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherFullName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_MotherAge')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherFullName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_FatherAge')).to.be.true;
-
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName')).to.be.true;
-    expect(await caseWizardPage.isFixedListFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildGender')).to.be.true;
-    expect(await caseWizardPage.isDateFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildDOB')).to.be.true;
-
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine2')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine3')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostTown')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__County')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__PostCode')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__Country')).to.be.true;
-
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic')).to.be.true;
-    expect(await caseWizardPage.isCaseLinkFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport')).to.be.true;
-  });
-
   Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
-    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child full name (UPDATED)')).to.be.true;
-    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', 'Child hint (UPDATED)')).to.be.true;
-    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName', '(Optional)')).to.be.false;
-    expect(await caseWizardPage.fieldLabelContains('text', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1', 'Building and Street (Optional)')).to.be.true;
-    expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', 'Child Gender')).to.be.true;
-    expect(await caseWizardPage.fieldLabelContains('fixed-list', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender', '(Optional)')).to.be.false;
-    expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', 'Autistic child case number reference')).to.be.true;
-    expect(await caseWizardPage.fieldLabelContains('case-link', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber', '(Optional)')).to.be.false;
-    expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic', 'Is the child autistic? (Optional)')).to.be.true;
-    expect(await caseWizardPage.fieldLabelContains('yes-no', 'MySchool_Class_0_ClassMembers_0_Children_0_NeedsSupport', 'Does the child needs support? (Optional)')).to.be.true;
+    let labels = await caseWizardPage.getFullFieldLabels();
+    expect(labels).to.include('Child full name (UPDATED)');
+    expect(labels).to.include('Child hint (UPDATED)');
+    expect(labels).to.include('Building and Street (Optional)');
+    expect(labels).to.include('Child Gender');
+    expect(labels).to.include('Autistic child case number reference');
+    expect(labels).to.include('Is the child autistic? (Optional)');
+    expect(labels).to.include('Does the child needs support? (Optional)');
   });
 
   //---- conditionals
 
   When(/^I meet the condition for showing the field in the tab$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showmethemoney');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
 
   When(/^I do NOT meet the condition for showing the field in the tab$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','dontshowmethemoney');
-    await caseWizardPage.clickContinueButton();
+
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('dontshowmethemoney');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
 
   When(/^I do NOT meet the condition for showing the field$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','dontshowmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('dontshowmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
   });
 
   When(/^I do meet the condition for showing the field$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('text','dontshowpage3');
     await caseWizardPage.clickContinueButton();
   });
 
   When(/^I do NOT meet the condition for showing the page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','dontshowpage3');
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('text','dontshowpage3');
     await caseWizardPage.clickContinueButton();
   });
 
   When(/^I do meet the condition for showing the page$/, async function () {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField('text','showmethemoney');
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
     await caseWizardPage.clickContinueButton();
-    await caseWizardPage.interactWithField('text','showpage3');
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage3');
     await caseWizardPage.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'SW1A 2AA', 'AddressComplex1_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'Westminster', 'AddressComplex1_AddressLine3');
-    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
-
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine1('10 Downing Street');
+    await address.enterAddressLine2('SW1A 2AA');
+    await address.enterAddressLine3('Westminster');
+    await address.enterCountry('UK');
     await caseWizardPage.clickContinueButton();
   });
 
@@ -355,37 +407,60 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       });
   });
 
-  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemberAutistic = 'Yes') {
-    await caseWizardPage.interactWithField('text', 'Busy Bees', 'MySchool_Name');
-    await caseWizardPage.interactWithField('yes-no', supportAnswer, 'MySchool_ProvidesAutisticChildrenSupport');
-    await caseWizardPage.interactWithField('fixed-radio-list', '', 'MySchool_SchoolRegionalCentre');
-    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class');
-    await caseWizardPage.interactWithField('text', className, 'MySchool_Class_0_ClassName');
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
+    let createSchoolPage = new CreateSchoolPage();
+
+    await createSchoolPage.enterSchoolName('Busy Bees');
+    await createSchoolPage.selectProvidesAutisticSupport(supportAnswer);
+    await createSchoolPage.selectSchoolRegionalCentre();
+
+    await createSchoolPage.clickAddNewSchoolClassButton();
+    let classDetails = await createSchoolPage.getCollectionOfSchoolClass(1);
+
+    await classDetails.enterClassName(className);
+    await classDetails.enterClassTeacher('Zohan');
+    await classDetails.enterClassRanking('12');
+    await classDetails.enterClassBuilding('Test Building Name');
+    await classDetails.selectClassFloor('One')
+    await classDetails.selectDegreeOption('BSc')
     if (className === 'A team') {
-      await caseWizardPage.interactWithField('number', '12345', 'MySchool_Class_0_ClassNumber');
+      await classDetails.enterClassNumber('12345')
     }
-    await caseWizardPage.interactWithField('multi-select', 'BSc', 'MySchool_Class_0_ClassMandatoryFor');
-    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers');
-    await caseWizardPage.clickCollectionAddNewButton('MySchool_Class_0_ClassMembers_0_Children');
-    await caseWizardPage.interactWithField('text', 'Joe Kember', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildFullName');
-    await caseWizardPage.interactWithField('fixed-list', ' Male ', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildGender');
-    await caseWizardPage.interactWithField('text', '150 Boyson Road', 'MySchool_Class_0_ClassMembers_0_Children_0_ChildAddress__AddressLine1');
+    await classDetails.clickAddNewMembersButton();
+
+    let classMembers = await classDetails.getCollectionOfClassMembersComplex(1);
+    await classMembers.clickAddNewChildrenButton();
+
+    let childrenDetails = await classMembers.getCollectionOfClassMemberChildrenComplex(1);
+    await childrenDetails.enterChildFullName('Joe Kember');
+    await childrenDetails.selectChildGender('Male');
+    await childrenDetails.enterBuildingAndStreet('150 Boyson Road');
     if (supportAnswer === 'Yes') {
-      await caseWizardPage.interactWithField('yes-no', isClassMemberAutistic, 'MySchool_Class_0_ClassMembers_0_Children_0_IsAutistic');
+      await childrenDetails.selectIsAutistic(isClassMemeberAutistic);
     }
-    await caseWizardPage.interactWithField('case-link', '1111222233334444', 'MySchool_Class_0_ClassMembers_0_Children_0_AutisticChildCaseNumber');
-    await caseWizardPage.interactWithField('number', '12', 'MySchool_Class_0_ClassDetails_ClassRanking');
-    await caseWizardPage.interactWithField('text', 'Test buiding name', 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Name');
-    await caseWizardPage.interactWithField('fixed-list', ' One ', 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor');
-    await caseWizardPage.interactWithField('text', 'Zohan', 'MySchool_Class_0_ClassDetails_ClassTeacher');
+    await childrenDetails.enterAutisticChildCaseRefNumber('1111222233334444');
   }
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
   });
 
+  Given(/^I have submitted a case with conditional nested collection data$/, async function(){
+    await baseSteps.navigateToCreateCasePage()
+    await caseWizardPage.clickGenericCollectionAddNewButton()
+    let addressComplex = await createCollectionOfComplexPage.getCollectionOfAddressComplex(1);
+    await addressComplex.enterAddressLine1('10');
+    await addressComplex.enterAddressLine2('Great Bouleverd');
+    await addressComplex.enterAddressLine3('San Jose');
+    await addressComplex.enterCountry('US');
+    await addressComplex.enterZipCode('19078');
+    await addressComplex.enterSecondLine1('1');
+    await addressComplex.enterSecondLine2('Tick tock close');
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
   Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
     await baseSteps.navigateToCreateCasePage()
     for (let i = 0; i < numberOfItems; i++) {
@@ -395,18 +470,19 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Given(/^I have submitted a case with a collection of complex with a complex data$/, async function(){
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.clickGenericCollectionAddNewButton();
     await baseSteps.fillOutAndSubmitForm();
   });
 
   Given(/^I have created a case with text fields$/, async function() {
     await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField("text", "showmethemoney", "TextField");
-    await caseWizardPage.interactWithField("text", "showme", "TextFieldOptional");
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickContinueButton();
-    await caseWizardPage.clickSubmitCaseButton();
+
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney')
+    await conditionals_createCase_conditionalPage1.enterIntoOptionalTextField('showme')
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.clickSubmitCaseButton();
   });
 
   Given(/^I have created a case with fixed list item$/, async function() {
@@ -432,98 +508,111 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   Given(/^I do meet the condition for showing fields on the complex type that are conditional$/, async function(){
     await baseSteps.navigateToCreateCasePage();
 
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'showpage3', 'TextField3');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage3');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'showline4', 'AddressComplex1_AddressLine3');
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine3('showline4');
   });
 
   Given(/^I do NOT meet the condition for showing fields on the complex type that are conditional$/, async function(){
     await baseSteps.navigateToCreateCasePage();
 
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'showpage3', 'TextField3');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage3');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'donotshowline4', 'AddressComplex1_AddressLine3');
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine3('donotshowline4');
   });
 
   When(/^I populate the non-conditional fields and the shown conditional fields on the complex type$/, async function(){
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'PMO', 'AddressComplex1_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine1('10 Downing Street');
+    await address.enterAddressLine2('PMO');
+    await address.enterCountry('UK');
 
-    await caseWizardPage.interactWithField('text', 'showline5', 'AddressComplex1_AddressLine4');
-    await caseWizardPage.interactWithField('text', 'London', 'AddressComplex1_AddressLine5');
+    await address.enterAddressLine4('showline5');
+    await address.enterAddressLine5('London');
   });
 
   When(/^I populate the non-conditional fields on the complex type$/, async function(){
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'PMO', 'AddressComplex1_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine1('10 Downing Street');
+    await address.enterAddressLine2('PMO');
+    await address.enterCountry('UK');
   });
 
   When(/^I populate the non-conditional fields but NOT the shown conditional fields on the complex type$/, async function(){
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'AddressComplex1_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'PMO', 'AddressComplex1_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'UK', 'AddressComplex1_Country');
+    let address = await conditionals_createCase_conditionalPage3.getAddressComplex();
+    await address.enterAddressLine1('10 Downing Street');
+    await address.enterAddressLine2('PMO');
+    await address.enterCountry('UK');
 
-    await caseWizardPage.interactWithField('text', 'showline5', 'AddressComplex1_AddressLine4');
+    await address.enterAddressLine4('showline5');
     // AddressComplex1_AddressLine5 is empty
   });
 
   Given(/^I do meet the condition for showing fields on the collection of complex types that are conditional$/, async function(){
     await baseSteps.navigateToCreateCasePage();
 
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'showpage4', 'TextField3');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage4');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
 
-    await caseWizardPage.clickCollectionAddNewButton('CollectionComplexField');
-    await caseWizardPage.interactWithField('text', 'showline4', 'CollectionComplexField_0_AddressLine3');
+    await conditionals_createCase_conditionalPage4.clickAddNewButton();
+    let addressInCollection = await conditionals_createCase_conditionalPage4.getCollectionOfAddressComplex(1);
+    await addressInCollection.enterAddressLine3('showline4')
   });
 
   Given(/^I do NOT meet the condition for showing fields on the collection of complex types that are conditional$/, async function(){
     await baseSteps.navigateToCreateCasePage();
 
-    await caseWizardPage.interactWithField('text','showmethemoney');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage1.enterIntoTextField('showmethemoney');
+    await conditionals_createCase_conditionalPage1.clickContinueButton();
 
-    await caseWizardPage.interactWithField('text', 'showpage4', 'TextField3');
-    await caseWizardPage.clickContinueButton();
+    await conditionals_createCase_conditionalPage2.enterIntoTextField3('showpage4');
+    await conditionals_createCase_conditionalPage2.clickContinueButton();
 
-    await caseWizardPage.clickCollectionAddNewButton('CollectionComplexField');
-    await caseWizardPage.interactWithField('text', 'donotshowline4', 'CollectionComplexField_0_AddressLine3');
+    await conditionals_createCase_conditionalPage4.clickAddNewButton();
+    let addressInCollection = await conditionals_createCase_conditionalPage4.getCollectionOfAddressComplex(1);
+    await addressInCollection.enterAddressLine3('donotshowline4')
   });
 
   When(/^I populate the non-conditional fields and the shown conditional fields on the collection of complex types$/, async function(){
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'CollectionComplexField_0_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'PMO', 'CollectionComplexField_0_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'UK', 'CollectionComplexField_0_Country');
+    let addressInCollection = await conditionals_createCase_conditionalPage4.getCollectionOfAddressComplex(1);
 
-    await caseWizardPage.interactWithField('text', 'showline5', 'CollectionComplexField_0_AddressLine4');
-    await caseWizardPage.interactWithField('text', 'London', 'CollectionComplexField_0_AddressLine5');
+    await addressInCollection.enterAddressLine1('10 Downing Street');
+    await addressInCollection.enterAddressLine2('PMO');
+    await addressInCollection.enterCountry('UK');
+
+    await addressInCollection.enterAddressLine4('showline5');
+    await addressInCollection.enterAddressLine5('London');
   });
 
   When(/^I populate the non-conditional fields on the collection of complex types$/, async function(){
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'CollectionComplexField_0_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'PMO', 'CollectionComplexField_0_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'UK', 'CollectionComplexField_0_Country');
+    let addressInCollection = await conditionals_createCase_conditionalPage4.getCollectionOfAddressComplex(1);
+
+    await addressInCollection.enterAddressLine1('10 Downing Street');
+    await addressInCollection.enterAddressLine2('PMO');
+    await addressInCollection.enterCountry('UK');
   });
 
   When(/^I populate the non-conditional fields but NOT the shown conditional fields on the collection of complex types$/, async function(){
-    await caseWizardPage.interactWithField('text', '10 Downing Street', 'CollectionComplexField_0_AddressLine1');
-    await caseWizardPage.interactWithField('text', 'PMO', 'CollectionComplexField_0_AddressLine2');
-    await caseWizardPage.interactWithField('text', 'UK', 'CollectionComplexField_0_Country');
+    let addressInCollection = await conditionals_createCase_conditionalPage4.getCollectionOfAddressComplex(1);
 
-    await caseWizardPage.interactWithField('text', 'showline5', 'CollectionComplexField_0_AddressLine4');
+    await addressInCollection.enterAddressLine1('10 Downing Street');
+    await addressInCollection.enterAddressLine2('PMO');
+    await addressInCollection.enterCountry('UK');
+
+    await addressInCollection.enterAddressLine4('showline5');
     // CollectionComplexField_0_AddressLine5 is empty
   });
 

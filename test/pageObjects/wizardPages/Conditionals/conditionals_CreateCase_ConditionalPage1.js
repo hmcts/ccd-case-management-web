@@ -6,9 +6,11 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
     super();
     this._fieldUsedInShowCondition = ''; // TextField | TextFieldOptional
     this.textField = new CCDStringField('#TextField');
+    this.textFieldOptionalButtonTest = new CCDStringField('#TextFieldOptionalButtonTest');
     this.textFieldOptional = new CCDStringField('#TextFieldOptional');
 
-    this.textField2 = new CCDStringField('#TextField2')
+    this.textField2 = new CCDStringField('#TextField2');
+    this.textFieldMandatoryButtonTest = new CCDStringField('#TextFieldMandatoryButtonTest')
   }
 
   async getFieldData(){
@@ -17,16 +19,23 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
     return Array.of(mandatoryTextFieldData,textField2Data);
   }
 
-
   async enterIntoTextField(text) {
     await this.textField.enterText(text);
     this._fieldUsedInShowCondition = 'TextField';
   }
 
-
   async enterIntoMandatoryTextField(text) {
     await this.textField.enterText(text);
     this._fieldUsedInShowCondition = 'TextField';
+  }
+
+  async enterIntoOptionalContinueButtonTextField(text) {
+    await this.textFieldOptionalButtonTest.enterText(text);
+    this._fieldUsedInShowCondition = 'TextFieldOptionalButtonTest';
+  }
+
+  async enterIntoMandatoryButtonTestTextField(text) {
+    await this.textFieldMandatoryButtonTest.enterText(text);
   }
 
   async enterIntoOptionalTextField(text) {
@@ -39,6 +48,8 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
       await this.textField.enterText('showmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
       await this.textFieldOptional.enterText('showme');
+    } else if (this._fieldUsedInShowCondition === 'TextFieldOptionalButtonTest') {
+      await this.textFieldOptionalButtonTest.enterText('showmemandatorytextfield');
     }
   }
 
@@ -47,6 +58,8 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
       await this.textField.enterText('dontshowmethemoney');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
       await this.textFieldOptional.enterText('dontshowme');
+    } else if (this._fieldUsedInShowCondition === 'TextFieldOptionalButtonTest') {
+      await this.textFieldOptionalButtonTest.enterText('dontshowme');
     }
   }
 
@@ -57,6 +70,16 @@ class ConditionalsCreateCasePage1WizardPage extends CreateCaseWizardPage {
       return labels.includes('Text Field 2');
     } else if (this._fieldUsedInShowCondition === 'TextFieldOptional') {
       return labels.includes('Text Field ShowHide 13');
+    } else if (this._fieldUsedInShowCondition === 'TextFieldOptionalButtonTest') {
+      return labels.includes('Text Field Mandatory Continue Button test');
+    }
+  }
+
+  async enterIntoConditionalField() {
+    if (this._fieldUsedInShowCondition === 'TextFieldOptionalButtonTest') {
+      return await this.enterIntoMandatoryButtonTestTextField('any text');
+    } else {
+      return null;
     }
   }
 }

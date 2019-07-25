@@ -31,9 +31,7 @@ class CaseDetailsPage extends BasePage {
     this._detailsBoxSummary = '.EventLog-DetailsPanel tbody > tr:nth-of-type(5) > td span';
     this._detailsBoxComment = '.EventLog-DetailsPanel tbody > tr:nth-of-type(6) > td span';
     this._documentLink = 'ccd-read-document-field > a';
-
   }
-
 
   async waitForPageToLoad(){
     await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
@@ -118,7 +116,6 @@ class CaseDetailsPage extends BasePage {
     await this._actionsDropdown.selectFromDropdownByText(event);
     await this._goButton.click()
   }
-
 
   async clickTab(tabName){
     let element = await this.getElementWithText(await $$(this._tabs),tabName);
@@ -214,16 +211,42 @@ class CaseDetailsPage extends BasePage {
     await first.click();
   }
 
+  /**
+   * Clicking on the document link
+   * @returns {Promise<void>}
+   */
   async clickDocumentLink(){
     let documentLink = await $(this._documentLink);
     await documentLink.click();
   }
 
+  /**
+   * Checks if the media viewer is loaded in the new tab
+   * @returns {Promise<string>}
+   */
   async openMediaViewer(){
     let handles = await browser.getAllWindowHandles();
     await browser.switchTo().window(handles[1]);
     await browser.waitForAngularEnabled(false);
     return await browser.getCurrentUrl();
+  }
+
+  /**
+   * Makes sure that the media viewer content is visible for the supported document
+   * without error
+   * @returns {Promise<void>}
+   */
+  async documentContentVisible(){
+    return await $('ccd-media-viewer').isPresent() && !$('mv-error-message').isPresent();
+  }
+
+  /**
+   * Makes sure that the media viewer content is not visible for the unsupported document
+   * and displays an error
+   * @returns {Promise<void>}
+   */
+  async documentContentNotVisible(){
+    return await $('ccd-media-viewer').isPresent() && $('mv-error-message').isPresent();
   }
 }
 

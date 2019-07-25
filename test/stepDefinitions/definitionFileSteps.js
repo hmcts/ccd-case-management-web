@@ -13,12 +13,39 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'All Field Data Types';
     Data.event = 'Create a case';
-    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
-                           {fieldType: 'document', fieldId: 'DocumentField'}];
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
-  Given(/^a case type with a document upload file exists$/, async function() {
-    await populateCaseFields();
+  async function populateCaseFieldsWithFileUpload(extension){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
+      {fieldType: 'document', value: '\\test\\resources\\dm-store\\dm-store' + extension, fieldId: 'DocumentField'}];
+  }
+
+  Given(/^a case type with a PNG image uploaded$/, async function() {
+    await populateCaseFieldsWithFileUpload('.PNG');
+  });
+
+  Given(/^a case type with a JPG image uploaded$/, async function() {
+    await populateCaseFieldsWithFileUpload('.JPG');
+  });
+
+  Given(/^a case type with a GIF image uploaded$/, async function() {
+    await populateCaseFieldsWithFileUpload('.GIF');
+  });
+
+  Given(/^a case type with a TIF image uploaded$/, async function() {
+    await populateCaseFieldsWithFileUpload('.TIF');
+  });
+
+  Given(/^a case type with a PDF document uploaded$/, async function() {
+    await populateCaseFieldsWithFileUpload('.pdf');
+  });
+
+  Given(/^a case type with a DOC type document uploaded$/, async function() {
+    await populateCaseFieldsWithFileUpload('.docx');
   });
 
   Given(/^a case type containing every field type exists$/, async function() {

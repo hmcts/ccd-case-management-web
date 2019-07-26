@@ -32,27 +32,44 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(expectedTabs).to.deep.equal(actualTabs);
   });
 
+  Then('no tabs will be visible', async function () {
+      let actualTabs = await caseDetailsPage.getTabsText();
+      expect(actualTabs.length).to.equal(0)
+  });
+
   Then('the success case created bar will be visible', async function() {
       let alertBarText = await caseDetailsPage.getSuccessAlertBarText();
       expect(alertBarText).to.match(/^Case #\d{4}-\d{4}-\d{4}-\d{4} has been created\.$/);
   });
 
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
-      await caseDetailsPage.clickTab(tabName);
-      let fields = await caseDetailsPage.getTabFields();
-      expect(fields).to.include(tabfield);
+    await caseDetailsPage.clickTab(tabName);
+    let fields = await caseDetailsPage.getTabFields();
+    expect(fields).to.include(tabfield);
   });
 
   Then(/^the following fields will be visible:$/, async function (dataTable) {
       let expectedFields = await [].concat(...dataTable.raw());
-      let fields = await caseDetailsPage.getTabFields();
+      let actualFields = await caseDetailsPage.getTabFields();
       for (const expectedField of expectedFields) {
-        expect(fields).to.include(expectedField);
-      }
+          expect(actualFields).to.include(expectedField);
+        }
+  });
+
+  Then(/^the following fields will NOT be visible:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await caseDetailsPage.getTabFields();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.not.include(expectedField);
+    }
   });
 
   Then(/^the print button will be visible$/, async function () {
     expect(await caseDetailsPage.isPrintButtonReady()).to.be.true;
+  });
+
+  Then(/^the print button will not be visible$/, async function () {
+    expect(await caseDetailsPage.isPrintButtonReady()).to.be.false;
   });
 
   Then(/^the case reference will be visible and formatted well$/, async function () {
@@ -61,9 +78,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   Then(/^the '(.*)' field will NOT be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
-      await caseDetailsPage.clickTab(tabName);
-      let fields =await caseDetailsPage.getTabFields();
-      expect(fields).to.not.include(tabfield);
+    await caseDetailsPage.clickTab(tabName);
+    let fields = await caseDetailsPage.getTabFields();
+    expect(fields).to.not.include(tabfield);
+  });
+
+  Then(/^the '(.*)' label will be visible on the '(.*)' tab$/, async function (labelValue, tabName) {
+    await caseDetailsPage.clickTab(tabName);
+    let fields = await caseDetailsPage.getTabLabelFields();
+    expect(fields[0]).to.match(new RegExp(labelValue));
   });
 
   Then(/^the Event History Timeline should show the following ordered events:$/, async function (dataTable) {
@@ -89,6 +112,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I navigate to tab '(.*)'$/, async function (tabName) {
       await caseDetailsPage.clickTab(tabName);
+  });
+
+  When(/^I click on its first accordion on the '(.*)' tab$/, async function (tabName) {
+      await caseDetailsPage.clickTab(tabName);
+      await caseDetailsPage.clickFirstAccordian();
+  });
+
+  When(/^I start the event '(.*)'$/, async function(event) {
+      await caseDetailsPage.startEvent(event);
   });
 
 });

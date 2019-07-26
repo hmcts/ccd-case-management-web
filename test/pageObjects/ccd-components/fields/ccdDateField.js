@@ -11,23 +11,45 @@ class CcdDateField{
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param id
-   */
-  constructor(css, id){
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
+   * */
+  constructor(css, key){
     this.css = css;
+    this.key = this.setKey(key);
 
-    if (id) {
-      this.dayCss = new TextField(`${css} #${id}-day`);
-      this.monthCss = new TextField(`${css} #${id}-month`);
-      this.yearCss = new TextField(`${css} #${id}-year`);
-    } else {
-      this.dayCss = new TextField(`${css} #DateField-day`);
-      this.monthCss = new TextField(`${css} #DateField-month`);
-      this.yearCss = new TextField(`${css} #DateField-year`);
-    }
+    this.dayCss = new TextField(`${css} .form-date > div:nth-of-type(1) input`);
+    this.monthCss = new TextField(`${css} .form-date > div:nth-of-type(2) input`);
+    this.yearCss = new TextField(`${css} .form-date > div:nth-of-type(3) input`);
+
     this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+
+  async getFieldData(){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, this.key);
+    data.set(value, await this.getDate());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   async enterDate(value){
@@ -46,6 +68,13 @@ class CcdDateField{
     }
 
     await this._enterDateWithParams(day, month, year);
+  }
+
+  async getDate(){
+    let day = await this.dayCss.getText();
+    let month = await this.monthCss.getText();
+    let year = await this.yearCss.getText();
+    return day + month + year;
   }
 
    /**
@@ -72,6 +101,7 @@ class CcdDateField{
    */
   async hasFieldLabels(labelArray){
     let labelTexts = await this._getLabels();
+
     return labelTexts.length === 4 &&
            labelTexts.includes(labelArray[0]) &&
            labelTexts.includes('Day') &&
@@ -120,7 +150,7 @@ class CcdDateField{
   }
 
   async _getLabel(){
-    return await $(`${this.css} .form-label`).getText();
+    return await $(`${this.css} legend`).getText();
   }
 
   async _getLabels(){

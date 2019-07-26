@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
-  DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard,
-  RouterHelperService, DraftService, CasesService, ProfileService, ActivityService,
-  ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
-import { DefinitionsService } from './definitions/definitions.service';
+  DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard, RouterHelperService, DraftService,
+  CasesService, ProfileService, ActivityService, ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService,
+  JurisdictionService, SearchResultViewItemComparatorFactory } from '@hmcts/ccd-case-ui-toolkit';
 import { DocumentService } from './utils/document.service';
 import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
@@ -11,7 +10,6 @@ import { RouterModule } from '@angular/router';
 import { ProfileResolver } from './profile/profile.resolver';
 import { PaginationService } from './pagination/pagination.service';
 import { AlertModule } from './alert/alert.module';
-import { WorkbasketInputFilterService } from '../workbasket/workbasket-input-filter.service';
 import { OAuth2Service } from './auth/oauth2.service';
 import { ActivityResolver } from './activity/activity.resolver';
 import { CookiesComponent } from '../footer-nav/cookies.component';
@@ -34,7 +32,6 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     CasesService,
     DraftService,
     HttpErrorService,
-    DefinitionsService,
     DocumentService,
     FormErrorService,
     FormValueService,
@@ -57,8 +54,8 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     AddressesService,
     AuthService,
     OAuth2Service,
-    WorkbasketInputFilterService,
     CcdBrowserSupportComponent,
+    SearchResultViewItemComparatorFactory,
   ],
   declarations: [
     CoreComponent,

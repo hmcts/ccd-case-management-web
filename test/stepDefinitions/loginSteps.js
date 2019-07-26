@@ -10,6 +10,8 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then}) {
 
+  let caseListPage = new CaseListPage()
+
   Given(/^I am on the CCD login page$/, async function () {
       loginPage = await Login.open();
   });
@@ -58,7 +60,6 @@ defineSupportCode(function ({ Given, When, Then}) {
   Given(/^I have logged in$/, async function () {
       loginPage = await Login.open();
       caseListPage = await loginPage.loginToApp();
-
       await caseListPage.waitForPageLoaded();
   });
 

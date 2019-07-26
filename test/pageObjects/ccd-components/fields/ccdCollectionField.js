@@ -1,5 +1,8 @@
 let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 
+/**
+ * @deprecated - use ccdCollection.js
+ */
 class CcdCollectionField {
 
   constructor(css){

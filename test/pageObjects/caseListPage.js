@@ -2,6 +2,8 @@ BasePage = require('./basePage.js')
 NavBar = require('./ccd-components/globalNavBar.js');
 CaseList= require('./ccd-components/caseListComponent.js');
 Footer = require('./ccd-components/footerComponent.js');
+CaseFilters = require('./ccd-components/caseFilters.js');
+
 const selfUrlPath = '/list';
 
 class CaseListPage extends BasePage {
@@ -16,7 +18,7 @@ class CaseListPage extends BasePage {
   async waitForPageLoaded(){
     const EC = protractor.ExpectedConditions;
     let condition = await EC.and(await EC.urlContains('/list/case'), await EC.visibilityOf(element(this._landingPageFilters)));
-    await browser.wait(condition,60000);
+    await browser.wait(condition,90000);
     browser.ignoreSynchronization = false;
   }
 
@@ -48,6 +50,15 @@ class CaseListPage extends BasePage {
    */
   getCaseListComponent(){
       return new CaseList;
+  }
+
+  /**
+   * Return a new instance of the Case Filters dropdowns and apply/reset button
+   * which is common on search page and workbasket filters on Case List page
+   * @returns {CaseFilters|*}
+   */
+  getWorkBasketFilters(){
+    return new CaseFilters;
   }
 
   /**

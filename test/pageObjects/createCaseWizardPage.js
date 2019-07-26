@@ -1,16 +1,21 @@
+
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
 Button = require('./webdriver-components/button.js');
+TextField = require('./webdriver-components/textField');
+DropDown = require('./webdriver-components/dropdown');
+CCDAddressUKField = require('./ccd-components/complexTypes/addressComplex.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
 
 
-class CreateCaseWizardPage extends BasePage{
 
+class CreateCaseWizardPage extends BasePage{
 
     constructor() {
       super();
       this.continueButton = new Button('button[type=submit]');
       this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
+      this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
       this.fieldLabels = 'fieldset span';
@@ -18,7 +23,6 @@ class CreateCaseWizardPage extends BasePage{
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
-
       this.fieldUtils =  new FieldUtils();
     }
 
@@ -28,7 +32,7 @@ class CreateCaseWizardPage extends BasePage{
    * @returns {Promise<promise.Promise<boolean> | !webdriver.promise.Promise<boolean> | jQuery>}
    */
     async isFieldPresent(fieldDataType, id){
-        return await new FieldUtils().isFieldPresent(fieldDataType, id);
+        return await this.fieldUtils.isFieldPresent(fieldDataType, id);
     }
 
 
@@ -40,73 +44,21 @@ class CreateCaseWizardPage extends BasePage{
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value, id){
-      return await new FieldUtils().interactWithField(fieldDataType, value, id);
+    async interactWithField(fieldDataType, value){
+      return await this.fieldUtils.interactWithField(fieldDataType, value);
     }
 
-    async interactWithField(fieldDataType, value, fieldId) {
-      return await new FieldUtils().interactWithField(fieldDataType, value, fieldId);
+    async getFieldValue(dataType){
+      return await new FieldUtils().getFieldValue(dataType);
     }
 
-    async fieldLabelContains(fieldDataType, fieldId, labelText) {
-      return await new FieldUtils().fieldLabelContains(fieldDataType, fieldId, labelText);
-    }
-
-    async isTextFieldHiddenById(fieldId) {
-      return await new FieldUtils().textFieldIsHidden(fieldId);
-    }
-
-    async isTextFieldVisibleById(fieldId) {
-      return await new FieldUtils().textFieldIsVisible(fieldId);
-    }
-
-    async isCaseLinkFieldHiddenById(fieldId) {
-      return await new FieldUtils().caseLinkFieldIsHidden(fieldId);
-    }
-
-    async isCaseLinkFieldVisibleById(fieldId) {
-      return await new FieldUtils().caseLinkFieldIsVisible(fieldId);
-    }
-
-    async isFixedListFieldHiddenById(fieldId) {
-      return await new FieldUtils().fixedListFieldIsHidden(fieldId);
-    }
-
-    async isFixedListFieldVisibleById(fieldId) {
-      return await new FieldUtils().fixedListFieldIsVisible(fieldId);
-    }
-
-    async isDateFieldHiddenById(fieldId) {
-      return await new FieldUtils().dateFieldIsHidden(fieldId);
-    }
-
-    async isDateFieldVisibleById(fieldId) {
-      return await new FieldUtils().dateFieldIsVisible(fieldId);
-    }
-
-    async isYesOrNoFieldHiddenById(fieldId) {
-      return await new FieldUtils().fieldYesNoIsHidden(fieldId);
-    }
-
-    async isYesOrNoFieldVisibleById(fieldId) {
-      return await new FieldUtils().fieldYesNoIsVisible(fieldId);
-    }
-
-    async setYesOrNoValue(radioButtonId, option) {
-      return await new FieldUtils().selectYesNoOption(radioButtonId, option);
+    async getListOrder(listDataType){
+      return await new FieldUtils().getListOptions(listDataType);
     }
 
     async clickCollectionAddNewButton(collectionFieldId) {
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
-    }
-
-  /**
-   * Get contents of number field
-   * @returns {Promise<Promise<*>|Promise<String>>}
-   */
-    async getNumberFieldValue(){
-      return await this.fieldUtils.getNumberFieldValue();
     }
 
   /**
@@ -127,16 +79,30 @@ class CreateCaseWizardPage extends BasePage{
         await new CaseDetailsPage().waitForPageToLoad();
     }
 
-    async getFieldLabels(){
-        let labelElements = await $$(this.fieldLabels);
-        let labels = [];
-        for (const labelElem of labelElements){
-            let labelText = await labelElem.getText();
-            let label = labelText.replace(' (Optional)', '');
-            labels.push(label)
-        }
+  /**
+   * Strips out (Optional) string if present to return just label value
+   * @returns {Promise<Array>}
+   */
+  async getFieldLabels(){
+      let labels = [];
+      for (const label of await this.getFullFieldLabels()){
+          labels.push(label.replace(' (Optional)', ''))
+      }
 
-        return labels;
+      return labels;
+    }
+
+  /**
+   * Includes (Optional) if present
+   * @returns {Promise<Array>}
+   */
+  async getFullFieldLabels(){
+      let labelElements = await $$(this.fieldLabels);
+      let labels = [];
+      for (const labelElem of labelElements){
+          labels.push(await labelElem.getText())
+      }
+      return labels;
     }
 
     async getGreyBarFieldLabels(){
@@ -183,6 +149,16 @@ class CreateCaseWizardPage extends BasePage{
     async continueButtonDisplayed(){
       return await this.continueButton.isDisplayed();
     }
+
+    async clickGenericCollectionAddNewButton() {
+      await this.CollectionNewButton.click();
+    }
+
+    async amOnCheckYourAnswersPage(){
+      let url = await browser.getCurrentUrl();
+      return url.includes('/submit')
+    }
+
 }
 
 module.exports = CreateCaseWizardPage;

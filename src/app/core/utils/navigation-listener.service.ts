@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AlertService, HttpError, NavigationNotifier, NavOrigins } from '@hmcts/ccd-case-ui-toolkit';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { AlertService, HttpError, NavigationNotifier, NavigationOrigin } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class NavigationListenerService {
@@ -14,18 +14,20 @@ export class NavigationListenerService {
     private alertService: AlertService,
     private navigationNotifier: NavigationNotifier,
     private router: Router) {
+  }
+
+  public init() {
     this.navigationSubscription = this.navigationNotifier.navigation.subscribe(navigation => {
-      console.log('navigation=', navigation);
       switch (navigation.action) {
-        case NavOrigins.DRAFT_DELETED:
+        case NavigationOrigin.DRAFT_DELETED:
           return this.router.navigate(['list/case'])
             .then(() => {
               this.alertService.setPreserveAlerts(true);
               this.alertService.success(`The draft has been successfully deleted`);
             });
-        case NavOrigins.ERROR_DELETING_DRAFT:
+        case NavigationOrigin.ERROR_DELETING_DRAFT:
           return this.router.navigate(['list/case']);
-        case NavOrigins.DRAFT_RESUMED:
+        case NavigationOrigin.DRAFT_RESUMED:
           return this.router.navigate(
             ['create/case',
               navigation.jid,
@@ -33,14 +35,15 @@ export class NavigationListenerService {
               navigation.etid], { queryParams: navigation.theQueryParams }).catch(error => {
             this.handleError(error, navigation.etid);
           });
-        case NavOrigins.EVENT_TRIGGERED:
+        case NavigationOrigin.EVENT_TRIGGERED:
           return this.router.navigate(['trigger', navigation.etid], {
             queryParams: navigation.theQueryParams,
             relativeTo: navigation.relativeTo
           }).catch(error => {
             this.handleError(error, navigation.etid);
           });
-          // TODO add NO_READ_ACCESS_REDIRECTION
+        case NavigationOrigin.NO_READ_ACCESS_REDIRECTION:
+          return this.router.navigate((['/list/case']));
       }
     });
   }

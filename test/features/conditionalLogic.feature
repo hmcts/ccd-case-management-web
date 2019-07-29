@@ -120,12 +120,21 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
     When I start the event 'Approve a case'
     Then The fixed list item is hidden
 
+  @pickme
   Scenario: Page Show Condition works when an event contains a read only field value from a previous event
     Given a case type containing conditionals exists
     And I have created a case with fixed list item
     And I start the event 'Approve a case'
     When I move forward 2 pages
     And the 'Conditional Page 3 - Approve a case' page should be displayed
+
+  @pickme
+  Scenario: Field Show Condition works when an event contains a read only field value from a previous event
+    Given a case type containing conditionals exists
+    And I have created a case with fixed list item
+    And I start the event 'Approve a case'
+    When I move forward 3 pages
+    Then verify the field with label 'Text Field ShowHide 15' is visible
 
   Scenario: completed non-conditional fields and completed shown conditional fields are required on a mandatory complex type to submit a case
     Given a case type containing conditional mandatory complex type exists

@@ -123,8 +123,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
   Then(/^the 'Continue' button will be enabled/, async function() {
-    expect(await caseWizardPage.continueButtonEnabled()).to.be.true
-
+    expect(await caseWizardPage.continueButtonEnabled()).to.be.true;
   });
 
 

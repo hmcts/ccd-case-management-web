@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationNotifier, DRAFT_DELETED, ERROR_DELETING_DRAFT, DRAFT_RESUMED, EVENT_TRIGGERED,
-    AlertService, HttpError} from '@hmcts/ccd-case-ui-toolkit';
+import { NavigationNotifier, AlertService, HttpError, NavOrigins } from '@hmcts/ccd-case-ui-toolkit';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 
@@ -23,15 +22,15 @@ export class CaseViewerConsumerComponent implements OnInit, OnDestroy {
         this.navigationSubscription = this.navigationNotifier.navigation.subscribe(navigation => {
             console.log('navigation=', navigation);
             switch (navigation.action) {
-                case DRAFT_DELETED:
+                case NavOrigins.DRAFT_DELETED:
                     return this.router.navigate(['list/case'])
                         .then(() => {
                             this.alertService.setPreserveAlerts(true);
                             this.alertService.success(`The draft has been successfully deleted`);
                         });
-                case ERROR_DELETING_DRAFT:
+                case NavOrigins.ERROR_DELETING_DRAFT:
                     return this.router.navigate(['list/case']);
-                case DRAFT_RESUMED:
+                case NavOrigins.DRAFT_RESUMED:
                     return this.router.navigate(
                         ['create/case',
                             navigation.jid,
@@ -39,7 +38,7 @@ export class CaseViewerConsumerComponent implements OnInit, OnDestroy {
                             navigation.etid], { queryParams: navigation.theQueryParams } ).catch(error => {
                         this.handleError(error, navigation.etid)
                         });
-                case EVENT_TRIGGERED:
+                case NavOrigins.EVENT_TRIGGERED:
                     return this.router.navigate(['trigger', navigation.etid], {
                         queryParams: navigation.theQueryParams,
                         relativeTo: navigation.relativeTo

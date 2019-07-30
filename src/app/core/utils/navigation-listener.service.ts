@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { AlertService, HttpError, NavigationOrigin } from '@hmcts/ccd-case-ui-toolkit';
-import { NavigationNotifier } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/navigation/navigation.notifier';
+import { AlertService, HttpError, NavigationNotifierService, NavigationOrigin } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class NavigationListenerService {
@@ -13,7 +12,7 @@ export class NavigationListenerService {
 
   constructor(
     private alertService: AlertService,
-    private navigationNotifier: NavigationNotifier,
+    private navigationNotifier: NavigationNotifierService,
     private router: Router) {
   }
 

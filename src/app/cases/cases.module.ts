@@ -14,10 +14,9 @@ import {
   ConditionalShowModule, CreateCaseFiltersModule,
   EventLogModule, FieldsPurger,
   LabelSubstitutorModule,
-  MarkdownModule, PageValidationService,
+  MarkdownModule, NavigationNotifierService, PageValidationService,
   PaletteModule, PlaceholderService
 } from '@hmcts/ccd-case-ui-toolkit';
-import { NavigationNotifier } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/navigation/navigation.notifier';
 
 @NgModule({
   imports: [
@@ -48,7 +47,7 @@ import { NavigationNotifier } from '@hmcts/ccd-case-ui-toolkit/dist/shared/servi
     FieldsPurger,
     PlaceholderService,
     PageValidationService,
-    NavigationNotifier,
+    NavigationNotifierService,
   ]
 })
 export class CasesModule {}

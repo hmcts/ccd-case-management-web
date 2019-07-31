@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, provideRoutes } from '@angular/router';
+import { ActivatedRoute, provideRoutes, Router } from '@angular/router';
 import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
@@ -9,8 +9,10 @@ import { Observable } from 'rxjs';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
-import { Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
-  SearchResultView } from '@hmcts/ccd-case-ui-toolkit';
+import {
+  Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
+  SearchResultView
+} from '@hmcts/ccd-case-ui-toolkit';
 
 describe('WorkbasketComponent', () => {
 
@@ -79,7 +81,8 @@ describe('WorkbasketComponent', () => {
           profile: PROFILE
         }
       }
-    }
+    },
+    navigate: (param) => true
   };
 
   const RESULT_VIEW: SearchResultView = {
@@ -137,6 +140,7 @@ describe('WorkbasketComponent', () => {
   let mockJurisdictionService: JurisdictionService;
   let alertService: AlertService;
   let windowService;
+  let mockRouter;
 
   beforeEach(async(() => {
 
@@ -147,10 +151,12 @@ describe('WorkbasketComponent', () => {
     mockJurisdictionService = createSpyObj<any>('jurisdictionService', ['search']);
     alertService = createSpyObj<AlertService>('alertService', ['warning', 'clear']);
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+    mockRouter = createSpyObj<Router>('router', ['navigate']);
+    mockRouter.navigate.and.callThrough();
 
     TestBed
       .configureTestingModule({
-        imports: [RouterTestingModule],
+        imports: [],
         declarations: [
           WorkbasketComponent,
           // Mocks
@@ -165,20 +171,19 @@ describe('WorkbasketComponent', () => {
           { provide: PaginationService, useValue: mockPaginationService },
           { provide: JurisdictionService, useValue: mockJurisdictionService },
           { provide: AlertService, useValue: alertService },
-          { provide: WindowService, useValue: windowService }
+          { provide: WindowService, useValue: windowService },
+          { provide: Router, useValue: mockRouter }
         ]
       })
       .compileComponents();  // compile template and css
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WorkbasketComponent);
     fixture.detectChanges();
 
     comp = fixture.componentInstance;
 
     de = fixture.debugElement;
-  });
+  }));
 
   it('should have a `cut-body`', () => {
     let cutBodyEl = de.query($BODY);
@@ -189,11 +194,13 @@ describe('WorkbasketComponent', () => {
 
   it('should make inputs fields turn into query parameters', () => {
     let filter = {
-      init: true,
-      jurisdiction: JURISDICTION,
-      caseType: CASE_TYPES[0],
-      caseState: CASE_STATE,
-      page: 1
+      selected: {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        page: 1
+      }
     };
 
     comp.applyFilter(filter);
@@ -208,31 +215,18 @@ describe('WorkbasketComponent', () => {
   it('should alert warning when result has error', () => {
     mockSearchService.search.and.returnValue(RESULT_VIEW_ERROR_OBS);
     let filter = {
-      init: true,
-      jurisdiction: JURISDICTION,
-      caseType: CASE_TYPES[0],
-      caseState: CASE_STATE,
-      page: 1
+      selected: {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        page: 1
+      }
     };
 
     comp.applyFilter(filter);
 
     expect(alertService.warning).toHaveBeenCalledWith('ERROR');
-  });
-
-  it('should clear errors when result has no error', () => {
-    mockSearchService.search.and.returnValue(RESULT_VIEW_OBS);
-    let filter = {
-      init: true,
-      jurisdiction: JURISDICTION,
-      caseType: CASE_TYPES[0],
-      caseState: CASE_STATE,
-      page: 1
-    };
-
-    comp.applyFilter(filter);
-
-    expect(alertService.clear).toHaveBeenCalled();
   });
 
   it('should make inputs fields turn into query parameters with structure', () => {
@@ -246,11 +240,13 @@ describe('WorkbasketComponent', () => {
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
-      init: true,
-      jurisdiction: JURISDICTION,
-      caseType: CASE_TYPES[0],
-      caseState: CASE_STATE,
-      formGroup: formGroup
+      selected: {
+        init: true,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        caseState: CASE_STATE,
+        formGroup: formGroup
+      }
     };
 
     comp.applyFilter(filter);
@@ -271,8 +267,10 @@ describe('WorkbasketComponent', () => {
 
   it('should not proceed to search when no jurisdiction is defines', () => {
     let filter = {
-      init: true,
-      jurisdiction: null
+      selected: {
+        init: true,
+        jurisdiction: null
+      }
     };
     comp.applyFilter(filter);
     expect(mockSearchService.search).not.toHaveBeenCalled();
@@ -293,11 +291,13 @@ describe('WorkbasketComponent', () => {
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
-      formGroup: formGroup,
-      jurisdiction: JURISDICTION,
-      caseType: CASE_TYPES[0],
-      page: 1,
-      metadataFields: ['[META]']
+      selected: {
+        formGroup: formGroup,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        page: 1,
+        metadataFields: ['[META]']
+      }
     };
     windowService.getLocalStorage.and.returnValue(workbasketfiltervalue);
     comp.applyFilter(filter);
@@ -325,11 +325,13 @@ describe('WorkbasketComponent', () => {
     };
     let formGroup = new FormGroup(filterContents);
     let filter = {
-      formGroup: formGroup,
-      jurisdiction: JURISDICTION,
-      caseType: CASE_TYPES[0],
-      page: 1,
-      metadataFields: ['[META]']
+      selected: {
+        formGroup: formGroup,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        page: 1,
+        metadataFields: ['[META]']
+      }
     };
     comp.applyFilter(filter);
     expect(mockPaginationService.getPaginationMetadata)
@@ -337,6 +339,42 @@ describe('WorkbasketComponent', () => {
 
     expect(mockSearchService.search).toHaveBeenCalledWith(JURISDICTION.id, CASE_TYPE.id, { page: 1 },
       {}, SearchService.VIEW_WORKBASKET);
+
+  });
+
+  it('should navigate when filter applied', () => {
+    const nameControl1 = new FormControl();
+    const NAME_VALUE1 = 'something';
+    nameControl1.setValue(NAME_VALUE1);
+
+    const nameControl2 = new FormControl();
+    const NAME_VALUE2 = 100;
+    nameControl2.setValue(NAME_VALUE2);
+
+    const filterContents = {
+      'name': nameControl1,
+      '[META]': nameControl2
+    };
+    let formGroup = new FormGroup(filterContents);
+    let filter = {
+      selected: {
+        formGroup: formGroup,
+        jurisdiction: JURISDICTION,
+        caseType: CASE_TYPES[0],
+        page: 1,
+        metadataFields: ['[META]']
+      }
+    };
+    comp.applyFilter(filter);
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/list/case'], { queryParams: undefined });
+
+  });
+
+  it('should navigate when reset called', () => {
+    comp.applyReset();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/list/case']);
 
   });
 });

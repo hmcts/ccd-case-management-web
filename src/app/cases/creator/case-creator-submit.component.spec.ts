@@ -5,8 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import createSpyObj = jasmine.createSpyObj;
-import {
-  HttpError, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
+import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
   FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
   DraftService, newCaseField
 } from '@hmcts/ccd-case-ui-toolkit';

@@ -14,8 +14,14 @@ class CaseDetailsPage extends BasePage {
     this._actionsDropdown = new Dropdown('ccd-event-trigger select');
     this._goButton = new Button('ccd-event-trigger button');
     this._tabs = '.tabs-list li';
+    this._accordians = 'ccd-read-complex-field-collection-table img';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
+    this._currentTabLabelFieldKeys = '.tabs-panel:not(.js-hidden) tr > th markdown';
+    this._printButton = '#case-viewer-control-print';
+    this._caseReference = 'ccd-case-header .heading-h1';
+    this._alertSuccessBar = '.alert-success';
 
+    this._currentTabNestedFieldKeys = '.tabs-panel:not(.js-hidden) tr > th > td > tbody > tr > th';
     //Details Box
     this._detailsBox = '.EventLog-DetailsPanel';
     this._detailsBoxDate = '.EventLog-DetailsPanel tbody > tr:nth-of-type(1) > td span';
@@ -31,6 +37,49 @@ class CaseDetailsPage extends BasePage {
 
   async waitForPageToLoad(){
     await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
+  }
+
+  /**
+   * Check if case reference is visible
+   * @returns {Promise<boolean>}
+   */
+
+  async isCaseReferenceVisible() {
+    return await $(this._caseReference).isDisplayed();
+  }
+
+  /**
+   * Check if case reference is matching right format
+   * @returns {Promise<boolean>}
+   */
+
+  async isCaseReferenceOfCorrectFormat() {
+    let caseReferenceText = await $(this._caseReference).getText();
+    let matched = caseReferenceText.match(/^#\d{4}-\d{4}-\d{4}-\d{4}$/);
+    return matched && matched.length === 1;
+  }
+
+  /**
+   * Check if print button is ready to click
+   * @returns {Promise<boolean>}
+   */
+
+  async isPrintButtonReady() {
+    try {
+      return await $(this._printButton).isDisplayed()
+        && await $(this._printButton).isEnabled();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Get text value for the latest event in the History tab
+   * @returns {Promise<String>}
+   */
+  async getSuccessAlertBarText(){
+    let text = await $(this._alertSuccessBar).getText();
+    return text
   }
 
   /**
@@ -117,11 +166,28 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Get list of the fields displayed on the currency viewed tab
+   * Get list of the fields displayed on the currently viewed tab
    * @returns Array of Strings
    */
   async getTabFields(){
     return await this.getElementsText(await $$(this._currentTabFieldKeys))
+  }
+
+  /**
+   * Get field displayed on the currently viewed tab by id
+   * @param fieldId
+   * @returns Array of Strings
+   */
+  async getTabLabelFields(){
+    return await this.getElementsText(await $$(this._currentTabLabelFieldKeys))
+  }
+
+  /**
+   * Get list of the fields displayed on the currency viewed tab
+   * @returns Array of Strings
+   */
+  async getTabNestedFields(){
+    return await this.getElementsText(await $$(this._currentTabNestedFieldKeys))
   }
 
   /**
@@ -141,6 +207,11 @@ class CaseDetailsPage extends BasePage {
         throw new CustomError(`could not find a details box item called '${detailKey}'`)
     }
 
+  }
+
+  async clickFirstAccordian(){
+    let first = await $$(this._accordians).first();
+    await first.click();
   }
 
 }

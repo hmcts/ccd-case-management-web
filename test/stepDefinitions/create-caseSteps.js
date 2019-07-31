@@ -131,6 +131,18 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       await createCasePage1.enterIntoMandatoryTextField(undefined);
     } else if (field === 'Optional text') {
       await createCasePage1.enterIntoOptionalTextField(undefined);
+    } else if (field === 'Optional Button Test text') {
+      await createCasePage1.enterIntoOptionalContinueButtonTextField(undefined);
+    }
+  });
+
+  Given(/^there is an '(.*)' field on page1 with a text '(.*)'$/, async function (field, text) {
+    if (field === 'Mandatory text') {
+      await createCasePage1.enterIntoMandatoryTextField(text);
+    } else if (field === 'Optional text') {
+      await createCasePage1.enterIntoOptionalTextField(text);
+    } else if (field === 'Optional Button Test text') {
+      await createCasePage1.enterIntoOptionalContinueButtonTextField(text);
     }
   });
 
@@ -141,6 +153,9 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     } else if (field === 'Optional text') {
       await createCasePage1.enterIntoOptionalTextField(undefined);
       await createCasePage1.completeShowConditionToShowField();
+    } else if (field === 'Text Field Optional Continue Button test') {
+      await createCasePage1.enterIntoOptionalContinueButtonTextField(undefined);
+      await createCasePage1.completeShowConditionToShowField();
     }
   });
 
@@ -150,6 +165,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When('I complete the show condition to hide the field', async function () {
     await createCasePage1.completeShowConditionToHideField();
+  });
+
+  When('I complete the conditional field', async function () {
+    await createCasePage1.enterIntoConditionalField();
   });
 
   Then(/^a conditional text field on the same page is displayed$/, async function() {

@@ -43,6 +43,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     switch (component){
       case 'filters':
         //we are waiting for the page to load by waiting for the filters so this is already done
+        break;
       case 'banners':
         expect (await caseListPage.getNavBarComponent().allComponentsDisplayed()).to.be.true;
         expect (await caseListPage.getFooter().isDisplayed()).to.be.true;

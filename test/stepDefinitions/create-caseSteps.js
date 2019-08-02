@@ -175,12 +175,12 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   When(/^I navigate to multiple pages case type form pages$/, async function (){
-    await baseSteps.navigateToCreateCaseMultiPage();
+    await baseSteps.navigateToCreateCasePage();
     await new CreateCaseWizardPage().clickContinueButton();
   })
 
   When(/^I create a case with multiple pages$/, async function (){
-    await baseSteps.navigateToCreateCaseMultiPage();
+    await baseSteps.navigateToCreateCasePage();
     await new CreateCaseWizardPage().clickContinueButton();
     await new CreateCaseWizardPage().clickContinueButton();
     await new CreateCaseWizardPage().clickContinueButton();

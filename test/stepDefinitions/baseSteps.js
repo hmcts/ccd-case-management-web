@@ -12,13 +12,6 @@ module.exports = {
     await createCaseStartPage.clickStartButton();
   },
 
-  navigateToCreateCaseMultiPage: async function(){
-    createCaseStartPage = await new CaseListPage().getNavBarComponent().clickCreateCaseLink();
-    await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
-    await createCaseStartPage.selectCaseType('Multiple Pages');
-    await createCaseStartPage.clickStartButton();
-  },
-
   fillOutAndSubmitForm: async function(){
     let wizardPage = new CreateCaseWizardPage();
     await this._fillOutMandatoryFields();

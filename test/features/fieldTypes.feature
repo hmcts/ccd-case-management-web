@@ -69,18 +69,6 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | dataType  |
       | Complex   |
 
-  Scenario: Dynamic fixed list is populated with values from AboutToStart Callback
-    Given a case type containing a Dynamic Fixed List field exists
-    When I navigate to the case creation form page
-    Then the Dynamic list is populated with the following values
-    |--Select a value--|
-    | List 1|
-    | List 2|
-    | List 3|
-    | List 4|
-    | List 5|
-    | List 6|
-    | List 7|
 
   Scenario: Dynamic fixed list is populated with values from AboutToStart Callback
     Given a case type containing a Dynamic Fixed List field exists
@@ -95,8 +83,8 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | List 6|
       | List 7|
 
-  Scenario: Dynamic fixed list is populated with values from AboutToStart Callback
-    Given a case type containing a Dynamic Fixed List field exists
+  Scenario: Dynamic fixed list is populated with values from MidEvent Callback
+    Given a case type with multiple pages containing a dynamic fixed list exists
     When I navigate to multiple pages case type form pages
     Then the Dynamic list is populated with the following values
       |--Select a value--|
@@ -109,9 +97,9 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | List 7|
 
   @dynamiclistmohammed
-  Scenario: Dynamic fixed list is populated with values from AboutToStart Callback
-    Given a case type containing a Dynamic Fixed List field exists
-    When I create a case with multiple pages
+  Scenario: Dynamic fixed list is populated with values from MidEvent Callback when case is being updated
+    Given a case type with multiple pages containing a dynamic fixed list exists
+    And I create a case with multiple pages
     When I start the event 'Add Details'
     Then the Dynamic list is populated with the following values
       |--Select a value--|

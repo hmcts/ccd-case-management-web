@@ -19,7 +19,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   let caseWizardPage = new CreateCaseWizardPage();
 
   Given(/^the following definition for '(.*)'$/, async function (sheetName, dataTable) {
-    console.log('sheetName=', sheetName);
+    // to much output in jenkins logs so commenting this out
+    // console.log('sheetName=', sheetName);
     // console.log(dataTable); this is causing to much stuff in the logs so commenting out
   });
 
@@ -123,8 +124,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
   Then(/^the 'Continue' button will be enabled/, async function() {
-    expect(await caseWizardPage.continueButtonEnabled()).to.be.true
-
+    expect(await caseWizardPage.continueButtonEnabled()).to.be.true;
   });
 
 

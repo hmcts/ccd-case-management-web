@@ -1,4 +1,4 @@
-@functional @conditional @showandhide
+@functional @conditional @showandhide @run
 Feature: Set of scenarios testing show & hide functionality and conditional logic
 
   Background:
@@ -12,13 +12,13 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
   Scenario: shows a field when Show Condition uses a readonly nested in complex field value from a previous event
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data with a degree field set to 'MSc'
-    And I Submit the case
+    And I submit the case
     And I start the event 'Update school'
     Then verify the field with label 'Class name' is visible
 
   Scenario: hides a field when Show Condition uses a readonly nested in complex field value from a previous event
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data with a degree field set to 'BSc'
-    And I Submit the case
+    And I submit the case
     And I start the event 'Update school'
     Then verify the field with label 'Class name' is not visible

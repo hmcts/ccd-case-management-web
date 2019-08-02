@@ -651,7 +651,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     // CollectionComplexField_0_AddressLine5 is empty
   });
 
-  Then(/^I can submit the case$/, async function () {
+  Then(/^I (?:can |)?submit the case$/, async function () {
     while (await caseWizardPage.continueButtonDisplayed()){
       if (!caseWizardPage.continueButtonEnabled()) {
         throw new CustomError('Trying to click Continue/Submit button but it is not enabled')

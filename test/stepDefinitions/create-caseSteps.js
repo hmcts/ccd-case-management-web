@@ -294,6 +294,11 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await populateFormDataWithSupportFieldSetTo(supportAnswer);
   });
 
+  When(/^I populate the form with the school data with a degree field set to '(.*)'$/, async function (degreeOption) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes', 'A team', 'Yes', degreeOption);
+  });
+
   Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
     let labels = await caseWizardPage.getFullFieldLabels();
     expect(labels).to.include('Child full name (UPDATED)');
@@ -431,7 +436,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       });
   });
 
-  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes',
+                                                       className = 'A team',
+                                                       isClassMemeberAutistic = 'Yes',
+                                                       degreeOption = 'BSc') {
     let createSchoolPage = new CreateSchoolPage();
 
     await createSchoolPage.enterSchoolName('Busy Bees');
@@ -445,8 +453,8 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await classDetails.enterClassTeacher('Zohan');
     await classDetails.enterClassRanking('12');
     await classDetails.enterClassBuilding('Test Building Name');
-    await classDetails.selectClassFloor('One')
-    await classDetails.selectDegreeOption('BSc')
+    await classDetails.selectClassFloor('One');
+    await classDetails.selectDegreeOption(degreeOption);
     if (className === 'A team') {
       await classDetails.enterClassNumber('12345')
     }
@@ -513,6 +521,14 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField("text");
     await caseWizardPage.interactWithField("fixed-list", "Marriage");
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+  Given(/^I have created a case with '(.*)' fixed list item$/, async function(marritalStatus) {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField("text");
+    await caseWizardPage.interactWithField("fixed-list", marritalStatus);
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
@@ -640,7 +656,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     // CollectionComplexField_0_AddressLine5 is empty
   });
 
-  Then(/^I can submit the case$/, async function () {
+  Then(/^I (?:can |)?submit the case$/, async function () {
     while (await caseWizardPage.continueButtonDisplayed()){
       if (!caseWizardPage.continueButtonEnabled()) {
         throw new CustomError('Trying to click Continue/Submit button but it is not enabled')

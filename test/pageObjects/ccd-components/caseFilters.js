@@ -21,7 +21,7 @@ class CaseFilters extends BasePage {
     this._applyButton = new Button('.button', 'Apply');
     this._resetButton = new Button('.button','Reset');
 
-    this._caseRferenceField = element(by.xpath('//span[text() = \'Case Reference\']/../following-sibling::input'));
+    this._caseReferenceField = element(by.xpath('//span[text() = \'Case Reference\']/../following-sibling::input'));
 
     this.fieldUtils = new FieldUtils();
   }
@@ -74,7 +74,7 @@ class CaseFilters extends BasePage {
 
   async enterIntoCaseReferenceField(caseref){
     caseref = caseref.replace(/#|-/g,'');
-    await this._caseRferenceField.sendKeys(caseref)
+    await this._caseReferenceField.sendKeys(caseref)
   }
 
   /**

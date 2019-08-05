@@ -4,6 +4,11 @@ Feature: Set of Scenarios testing the functionality of the Case List table
   Background:
     Given I have logged in
 
+  Scenario: Notification box displayed when searching for a case type that contains no cases
+    Given a case type without any cases exists
+    When I search for this Case Type on the workbasket filters
+    Then a box stating No Cases Found is displayed
+
   Scenario: A Case Reference column in case list results has hyphens every 4 digits
     Given the following definition for 'case fields'
       | ID          | Display context |
@@ -21,7 +26,7 @@ Feature: Set of Scenarios testing the functionality of the Case List table
       | Text Field | TextAreaField | DateField   | PhoneField  | NumberField | YesNoField | MarritalStatus | MoneyField    | EmailField   | MultiSelectField |
       | qwerty     | area text     | 10 Oct 2010 | 07777777777 | 123         | No         | Widow          | £20.00        | 123@test.com | Manchester       |
 
-   @interpolation
+  @interpolation
   Scenario: Case list results displays label fields and interpolation
     Given a case type exists with a label configured in the case list results
     And I have created a case for the caseType with data
@@ -29,11 +34,6 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     Then the list table displays the following:
       | Text Field | LabelData                      |
       | qwerty     | LabelData: textField is qwerty |
-
-  Scenario: Notification box displayed when searching for a case type that contains no cases
-    Given a case type without any cases exists
-    When I search for this Case Type on the workbasket filters
-    Then a box stating No Cases Found is displayed
 
   @pagination
   Scenario: Next and previous buttons appear appropriately based on pagination position selected

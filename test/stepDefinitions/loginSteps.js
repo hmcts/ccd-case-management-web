@@ -58,9 +58,11 @@ defineSupportCode(function ({ Given, When, Then}) {
 
 
 
-  Given(/^I have logged in$/, async function () {
+  Given(/^I have logged in$/,{timeout: 120 * 1000}, async function () {
       loginPage = await Login.open();
-      caseListPage = await loginPage.loginToApp();
+      await loginPage.loginToApp();
+
+      caseListPage = new CaseListPage();
       await caseListPage.waitForPageLoaded();
   });
 

@@ -12,6 +12,7 @@ import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
 import { HttpService, Jurisdiction, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
+import { NavigationListenerService } from './utils/navigation-listener.service';
 
 describe('CoreComponent', () => {
 
@@ -80,6 +81,7 @@ describe('CoreComponent', () => {
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
+  let navigationListenerService: NavigationListenerService;
   let httpService: any;
   let appConfig: any;
   let browserSupport: any;
@@ -90,6 +92,7 @@ describe('CoreComponent', () => {
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
+    navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
     httpService = createSpyObj('HttpService', ['get']);
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
@@ -171,6 +174,7 @@ describe('CoreComponent', () => {
           { provide: AppConfig, useValue: appConfig },
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
+          { provide: NavigationListenerService, useValue: navigationListenerService },
         ]
       })
       .compileComponents();  // compile template and css

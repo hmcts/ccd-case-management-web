@@ -9,17 +9,42 @@ let RandomUtils = require('../../../utils/ccdDataGenerationUtils.js');
 class CcdTextAreaField{
 
   /**
-   * Must take the parent css tag for the ccd field component
-   * in the format ccd-write-text-area-field
-   *
    * @param css
+   * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
    */
-  constructor(css){
+  constructor(css, key){
     this.css = css;
+    this.key = this.setKey(key);
     this.stringField = new TextField(`${this.css} textarea`);
     this.label = null;
     this.inputValue = null;
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+
+  async getFieldData(){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, this.key);
+    data.set(value, await this.getValue());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**

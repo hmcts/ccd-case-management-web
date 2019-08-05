@@ -56,7 +56,7 @@ class Dropdown {
    */
   async getCurrentSelectedOption(){
       let text = await $(this._currentDropdownOptionElement).getText();
-      return text.trim();
+      return await text.trim();
   }
 
   /**
@@ -160,6 +160,16 @@ class Dropdown {
     if (fail){
       throw new CustomError(failmessage, 'failed 3 retry attempts')
     }
+  }
+
+  /**
+   * Index starts at 1
+   * @param index
+   * @returns {Promise<void>}
+   */
+  async selectFromDropdownByIndex(index){
+    let option = $$(`${this._dropdownElement} option`).get(index);
+    await option.click();
   }
 
 }

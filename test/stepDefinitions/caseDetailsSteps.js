@@ -56,6 +56,14 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
         }
   });
 
+  Then(/^the following fields will NOT be visible:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await caseDetailsPage.getTabFields();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.not.include(expectedField);
+    }
+  });
+
   Then(/^the print button will be visible$/, async function () {
     expect(await caseDetailsPage.isPrintButtonReady()).to.be.true;
   });
@@ -99,20 +107,20 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I select the '(.*)' event in the Event timeline$/, async function (eventName) {
-      await caseDetailsPage.selectTimelineEvent(eventName)
+    await caseDetailsPage.selectTimelineEvent(eventName)
   });
 
   When(/^I navigate to tab '(.*)'$/, async function (tabName) {
-      await caseDetailsPage.clickTab(tabName);
+    await caseDetailsPage.clickTab(tabName);
   });
 
   When(/^I click on its first accordion on the '(.*)' tab$/, async function (tabName) {
-      await caseDetailsPage.clickTab(tabName);
-      await caseDetailsPage.clickFirstAccordian();
+    await caseDetailsPage.clickTab(tabName);
+    await caseDetailsPage.clickFirstAccordian();
   });
 
   When(/^I start the event '(.*)'$/, async function(event) {
-      await caseDetailsPage.startEvent(event);
+    await caseDetailsPage.startEvent(event);
   });
 
 });

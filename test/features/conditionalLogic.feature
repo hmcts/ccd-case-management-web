@@ -110,25 +110,15 @@ Feature: Set of scenarios testing show & hide functionality and conditional logi
   Scenario: Event page show and hide AND condition using case Text Field value
     Given a case type containing conditionals exists for AND event
     And I navigate to the case creation form page
-    And populate field 'TextField8' with value 'orValue1'
-    And populate field 'TextField9' with value 'orValue3'
+    And I fill out the form satisfying the AND condition
     When I click the Continue button
     Then I will be on the 'Conditional Page 2 - Create a case AND' page
 
-  @RDM-4622
   Scenario: Field show/hide condition works when an event contains a read only field value from a previous event
     Given a case type containing conditionals exists
     And I have created a case with fixed list item
     When I start the event 'Approve a case'
     Then The fixed list item is hidden
-
-  @RDM-4622
-  Scenario: Page Show Condition works when an event contains a read only field value from a previous event
-    Given a case type containing conditionals exists
-    And I have created a case with fixed list item
-    And I start the event 'Approve a case'
-    When I move forward 2 pages
-    And the 'Conditional Page 3 - Approve a case' page should be displayed
 
   Scenario: completed non-conditional fields and completed shown conditional fields are required on a mandatory complex type to submit a case
     Given a case type containing conditional mandatory complex type exists

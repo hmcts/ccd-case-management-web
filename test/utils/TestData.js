@@ -10,5 +10,6 @@ module.exports = {
   optionalFields: [],
   mandatoryFields: [],
   eventFields:[],
+  caseReference: '',
   savedValue: 'undefined'
 };

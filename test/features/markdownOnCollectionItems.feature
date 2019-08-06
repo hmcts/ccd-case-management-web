@@ -4,6 +4,7 @@ Feature: Set of scenarios to test markdown on collection items
   Background:
     Given I have logged in
 
+    @interpolation
   Scenario: Label refers to collection of nested complex data items on Case Details page
     Given a case type containing a collection of nested complex types exists
     And I have submitted a case with nested collection data containing 2 items

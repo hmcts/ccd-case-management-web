@@ -12,6 +12,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   async function populateCaseFields(){
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
@@ -23,6 +24,26 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await populateCaseFields();
   });
 
+
+  Given(/^a case type exists with (?:case fields|a label)? configured in the case list results$/, async function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+    Data.optionalFields = [
+                            { fieldType: 'text', value: 'qwerty'},
+                            { fieldType: 'textarea', value: 'area text'},
+                            { fieldType: 'number', value: '123'},
+                            { fieldType: 'money-gbp', value: '20'},
+                            { fieldType: 'date', value: ''},
+                            { fieldType: 'date', value: '10102010'},
+                            { fieldType: 'email', value: '123@test.com'},
+                            { fieldType: 'fixed-list', value: 'Widow'},
+                            { fieldType: 'phone-uk', value: '07777777777'},
+                            { fieldType: 'yes-no', value: 'No'},
+                            { fieldType: 'multi-select', value: 'MANCHESTER'},
+                          ];
+  });
+
   Given(/^a case type containing a collection of complex types exists$/, function() {
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'Complex in Coll in Complex';
@@ -30,8 +51,22 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine1'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
                             {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
-                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'}];
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'},
+                            {fieldType: 'text', fieldId: 'CollectionComplexField_0_SecondAddress_SecondLine1'}];
     });
+
+  Given(/^a case type containing conditional data of collection of complex types exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Complex in Coll in Complex';
+    Data.event = 'Create Collection of Complex';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine1'},
+      {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine2'},
+      {fieldType: 'text', fieldId: 'CollectionComplexField_0_AddressLine3'},
+      {fieldType: 'text', fieldId: 'CollectionComplexField_0_Country'},
+      {fieldType: 'text', fieldId: 'CollectionComplexField_0_ZipCode'},
+      {fieldType: 'text', fieldId: 'CollectionComplexField_0_SecondAddress_SecondLine1'},
+      {fieldType: 'text', fieldId: 'CollectionComplexField_0_SecondAddress_SecondLine2'}];
+  });
 
   Given(/^a case type containing a collection of complex types containing complex exists$/, function() {
     Data.jurisdiction = 'Auto Test 1';
@@ -53,13 +88,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       {fieldType: 'fixed-radio-list', fieldId: 'MySchool_SchoolRegionalCentre', value: 'MANCHESTER'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassName', value: 'Analytical Maths'},
       {fieldType: 'multi-select', fieldId: 'MySchool_Class_0_ClassMandatoryFor', value: 'BSc'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: '10'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassRanking', value: '10'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassTeacher', value: 'Smith'},
       {fieldType: 'text', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
       {fieldType: 'fixed-list', fieldId: 'MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor', value: 'THREE'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassName', value: 'Discrete Maths'},
       {fieldType: 'multi-select', fieldId: 'MySchool_Class_1_ClassMandatoryFor', value: 'ScD'},
-      {fieldType: 'number', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: '8'},
+      {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassRanking', value: '8'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassTeacher', value: 'Brown'},
       {fieldType: 'text', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Name', value: 'Maths Institute'},
       {fieldType: 'fixed-list', fieldId: 'MySchool_Class_1_ClassDetails_ClassLocation_Building_Floor', value: 'ONE'},
@@ -177,6 +212,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.eventFields = [[{fieldType: 'text', fieldId: 'TextField',value: 'showmethemoney'}],
                           [{fieldType: 'text', fieldId: 'TextField3',value: 'showpage5'}],
                           [{fieldType: 'text', fieldId: 'TextField11',value: Data.savedValue}]];
+  });
+
+  Given(/^I have a case with a simple collection of complex$/, function() {
+    Data.caseType = "Complex in Coll in Complex";
+    Data.event = "Create Collection of Complex";
+  });
+
+  Given(/^a case type without any cases exists$/, function() {
+    Data.caseType = "CaseType With No Cases";
   });
 
 });

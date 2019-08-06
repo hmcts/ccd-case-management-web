@@ -32,21 +32,18 @@ Feature: Set of scenarios to test functionality of the order of fixed list
     Given a case type containing a collection of nested complex types exists
     And I navigate to the case creation form page
     And I click on add collection item button
-    Then the page contains the following field:
-      | field                                                           | fieldType        | value          | displayOrder   |
-      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | Manchester     | 1              |
-      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | Cardiff        | 2              |
-      | MySchool_SchoolRegionalCentre                                   | fixed-radio-list | Oxford         | 3              |
-    And the page contains the following field:
-      | field                                                           | fieldType        | value          | displayOrder   |
-      | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | BSc            | 1              |
-      | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | MSc            | 2              |
-      | MySchool_Class_0_ClassMandatoryFor                              | multi-select     | ScD            | 3              |
-    And the page contains the following field:
-      | field                                                           | fieldType        | value              | displayOrder   |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | --Select a value-- | 1              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | One                | 2              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | Two                | 3              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | Three              | 4              |
-      | MySchool_Class_0_ClassDetails_ClassLocation_Building_Floor      | fixed-list       | Four               | 5              |
+      Then the 'fixed-radio-list' list is in the following order:
+      | Manchester    |
+      | Cardiff       |
+      | Oxford        |
+    Then the 'multi-select' list is in the following order:
+      | BSc           |
+      | MSc           |
+      | ScD           |
+    Then the 'fixed-list' list is in the following order:
+      | --Select a value-- |
+      | One                |
+      | Two                |
+      | Three              |
+      | Four               |
 

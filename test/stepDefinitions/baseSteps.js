@@ -1,9 +1,11 @@
 let TestData = require('../utils/TestData.js');
+let CaseListPage = require('../pageObjects/caseListPage.js')
+let FieldUtils = require('../utils/fieldUtils.js')
 
 module.exports = {
 
   navigateToCreateCasePage: async function(){
-    createCaseStartPage = await caseListPage.getNavBarComponent().clickCreateCaseLink();
+    createCaseStartPage = await new CaseListPage().getNavBarComponent().clickCreateCaseLink();
     await createCaseStartPage.selectJurisdiction(TestData.jurisdiction);
     await createCaseStartPage.selectCaseType(TestData.caseType);
     await createCaseStartPage.selectEvent(TestData.event);
@@ -12,8 +14,8 @@ module.exports = {
 
   fillOutAndSubmitForm: async function(){
     let wizardPage = new CreateCaseWizardPage();
-    await this.fillOutMandatoryFields();
-    await this.fillOutOptionalFields();
+    await this._fillOutMandatoryFields();
+    await this._fillOutOptionalFields();
     await wizardPage.clickContinueButton();
     await wizardPage.clickSubmitCaseButton();
   },
@@ -26,11 +28,12 @@ module.exports = {
    */
   fillOutAndSubmitEvent: async function(){
     let wizardPage = new CreateCaseWizardPage();
+    let fieldUtils = new FieldUtils();
 
     for (const page of TestData.eventFields) {
       for (const field of page) {
-        if (await wizardPage.isFieldPresent(field.fieldType, field.fieldId)) {
-          await wizardPage.interactWithField(field.fieldType, field.value || field.fieldType, field.fieldId);
+        if (await fieldUtils.isFieldPresent(field.fieldType, field.fieldId)) {
+          await fieldUtils.interactWithField(field.fieldType, field.value || field.fieldType, field.fieldId);
         }
       }
       await wizardPage.clickContinueButton();
@@ -38,20 +41,22 @@ module.exports = {
     await wizardPage.clickSubmitCaseButton();
   },
 
-  fillOutMandatoryFields: async function(){
-    let wizardPage = new CreateCaseWizardPage();
+  _fillOutMandatoryFields: async function(){
+    let fieldUtils = new FieldUtils();
+
     for (const elem of TestData.mandatoryFields) {
-      if (await wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
-        await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
+      if (await fieldUtils.isFieldPresent(elem.fieldType, elem.fieldId)) {
+        await fieldUtils.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
       }
     }
   },
 
-  fillOutOptionalFields: async function(){
-    let wizardPage = new CreateCaseWizardPage();
+  _fillOutOptionalFields: async function(){
+    let fieldUtils = new FieldUtils();
+
     for (const elem of TestData.optionalFields) {
-      if (await wizardPage.isFieldPresent(elem.fieldType, elem.fieldId)) {
-        await wizardPage.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
+      if (fieldUtils.isFieldPresent(elem.fieldType, elem.fieldId)) {
+        await fieldUtils.interactWithField(elem.fieldType, elem.value || elem.fieldType, elem.fieldId);
       }
     }
   },

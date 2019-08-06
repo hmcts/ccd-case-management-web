@@ -93,8 +93,9 @@ export class WorkbasketComponent implements OnInit {
           this.caseState = filter.caseState;
           this.page = filter.page;
           this.paginationMetadata = results[1];
-          // Clearing the errors is only on the assumption this is the only place we display errors on case list page
-          this.resultView.result_error ? this.alertService.warning(this.resultView.result_error) : this.alertService.clear();
+          if (this.resultView.result_error) {
+            this.alertService.warning(this.resultView.result_error);
+          }
         });
 
     this.scrollToTop();
@@ -154,8 +155,10 @@ export class WorkbasketComponent implements OnInit {
   private notifyDefaultJurisdiction() {
     Promise.resolve(null).then(() => {
       let profile = this.route.parent.snapshot.data.profile;
-      let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
-      this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
+      if (profile.default.workbasket.jurisdiction_id) {
+        let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
+        this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
+      }
     });
   }
 

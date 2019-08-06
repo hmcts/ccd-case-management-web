@@ -7,14 +7,37 @@ class CcdFixedRadioList {
    * Must take the parent css tag for the ccd date field component: ccd-write-date-field
    *
    * @param css
-   * @param id
    */
-  constructor(css, id) {
+  constructor(css, key) {
     this.css = css;
-    if (id) {
-      this.css = `${this.css} #${id}`;
+    this.key = this.setKey(key);
+    this.optionsDiv = $$(`${css} .multiple-choice label`);
+    this.selectedOption = $('#MySchool_SchoolRegionalCentre .selected label');
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
     }
-    this.optionsDiv = $$(`#${id} .multiple-choice label`);
+  }
+
+  async getFieldData(key){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    let displayed = await $(this.css).isDisplayed();
+
+    key = key ? key : this.key;
+
+    data.set(field, key);
+    data.set(value, await this.selectedOption.getText());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**
@@ -37,7 +60,7 @@ class CcdFixedRadioList {
 
     if (typeof optionValue === 'undefined') {
       let radioElements = await this._getRadioElements();
-      let elementListSize = await radioElements.length;  
+      let elementListSize = await radioElements.length;
       let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
       let optionToSelect = await radioElements[randomOptionArrayInt - 1];
       await optionToSelect.click();

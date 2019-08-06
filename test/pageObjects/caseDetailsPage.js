@@ -31,7 +31,6 @@ class CaseDetailsPage extends BasePage {
     this._detailsBoxSummary = '.EventLog-DetailsPanel tbody > tr:nth-of-type(5) > td span';
     this._detailsBoxComment = '.EventLog-DetailsPanel tbody > tr:nth-of-type(6) > td span';
 
-
   }
 
 
@@ -39,11 +38,14 @@ class CaseDetailsPage extends BasePage {
     await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
   }
 
+  async getCaseReference() {
+    return await $(this._caseReference).getText();
+  }
+
   /**
    * Check if case reference is visible
    * @returns {Promise<boolean>}
    */
-
   async isCaseReferenceVisible() {
     return await $(this._caseReference).isDisplayed();
   }

@@ -1,9 +1,6 @@
 nodejs:
-  image: hmcts.azurecr.io/hmcts/ccd-case-management-web:latest
+  image: hmctspublic.azurecr.io/ccd/case-management-web:latest
   applicationPort: 3451
-  memoryRequests: 256Mi
-  cpuRequests: 25m
-  memoryLimits: 512Mi
   cpuLimits: 1
   postcodeParam: "$${postcode}"
   environment:

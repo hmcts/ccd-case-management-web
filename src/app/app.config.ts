@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
@@ -11,30 +9,18 @@ export class AppConfig extends AbstractAppConfig {
 
   protected config: Config;
 
-  constructor(private http: Http) {
+  constructor() {
     super();
+    this.initConfig();
   }
 
   public load(): Promise<void> {
-    console.log('Loading app config...');
+    console.log('Loaded app config...');
+    return Promise.resolve();
+  }
 
-    let configUrl = environment.configUrl;
-
-    return new Promise<void>((resolve, reject) => {
-      this.http
-        .get(configUrl)
-        .map(response => response.json())
-        .catch((error: any): any => {
-          console.error(`Configuration ${configUrl} could not be read`, error);
-          reject();
-          return throwError(error.json().error || 'Server error');
-        })
-        .subscribe((config: Config) => {
-          this.config = config;
-          console.log('Loading app config: OK');
-          resolve();
-        });
-    });
+  protected initConfig(): void {
+    this.config = Object.assign(environment);
   }
 
   public getLoginUrl(): string {
@@ -138,7 +124,7 @@ export class AppConfig extends AbstractAppConfig {
       + `/internal`
       + `/cases/${caseId}`
       + `/events/${eventId}`;
-}
+  }
 
   public getCreateOrUpdateDraftsUrl(ctid: string) {
     return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;

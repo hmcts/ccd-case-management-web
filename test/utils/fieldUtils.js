@@ -545,7 +545,7 @@ const FIELDS = Object.freeze({
   },
   DOCUMENT: {
     type: 'file',
-    cssTag: 'ccd-write-document-field'
+    cssTag: 'ccd-write-document-field input'
   },
   EMAIL: {
     type: 'email',

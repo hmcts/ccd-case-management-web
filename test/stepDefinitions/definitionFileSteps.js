@@ -21,7 +21,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = 'All Field Data Types';
     Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
-      {fieldType: 'document', value: '\\test\\resources\\dm-store\\dm-store' + extension, fieldId: 'DocumentField'}];
+      {fieldType: 'document', value: '/test/resources/dm-store/dm-store' + extension, fieldId: 'DocumentField'}];
   }
 
   Given(/^a case type with a PNG image uploaded$/, async function() {

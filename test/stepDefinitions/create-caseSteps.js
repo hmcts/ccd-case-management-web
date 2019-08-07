@@ -118,6 +118,11 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await addressComplex.enterCountry('UK')
   });
 
+  When(/^I have created a case for the caseType with data$/, async function () {
+      await baseSteps.createCase()
+      TestData.caseReference = await new CaseDetailsPage().getCaseReference();
+  });
+
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
   });
@@ -131,6 +136,18 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       await createCasePage1.enterIntoMandatoryTextField(undefined);
     } else if (field === 'Optional text') {
       await createCasePage1.enterIntoOptionalTextField(undefined);
+    } else if (field === 'Optional Button Test text') {
+      await createCasePage1.enterIntoOptionalContinueButtonTextField(undefined);
+    }
+  });
+
+  Given(/^there is an '(.*)' field on page1 with a text '(.*)'$/, async function (field, text) {
+    if (field === 'Mandatory text') {
+      await createCasePage1.enterIntoMandatoryTextField(text);
+    } else if (field === 'Optional text') {
+      await createCasePage1.enterIntoOptionalTextField(text);
+    } else if (field === 'Optional Button Test text') {
+      await createCasePage1.enterIntoOptionalContinueButtonTextField(text);
     }
   });
 
@@ -141,6 +158,9 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     } else if (field === 'Optional text') {
       await createCasePage1.enterIntoOptionalTextField(undefined);
       await createCasePage1.completeShowConditionToShowField();
+    } else if (field === 'Text Field Optional Continue Button test') {
+      await createCasePage1.enterIntoOptionalContinueButtonTextField(undefined);
+      await createCasePage1.completeShowConditionToShowField();
     }
   });
 
@@ -150,6 +170,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When('I complete the show condition to hide the field', async function () {
     await createCasePage1.completeShowConditionToHideField();
+  });
+
+  When('I complete the conditional field', async function () {
+    await createCasePage1.enterIntoConditionalField();
   });
 
   Then(/^a conditional text field on the same page is displayed$/, async function() {
@@ -289,6 +313,11 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await populateFormDataWithSupportFieldSetTo(supportAnswer);
   });
 
+  When(/^I populate the form with the school data with a degree field set to '(.*)'$/, async function (degreeOption) {
+    await baseSteps.navigateToCreateCasePage();
+    await populateFormDataWithSupportFieldSetTo('Yes', 'A team', 'Yes', degreeOption);
+  });
+
   Then(/^the fields should have label, hint text and displayContext updated$/, async function () {
     let labels = await caseWizardPage.getFullFieldLabels();
     expect(labels).to.include('Child full name (UPDATED)');
@@ -426,7 +455,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       });
   });
 
-  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes', className = 'A team', isClassMemeberAutistic = 'Yes') {
+  async function populateFormDataWithSupportFieldSetTo(supportAnswer = 'Yes',
+                                                       className = 'A team',
+                                                       isClassMemeberAutistic = 'Yes',
+                                                       degreeOption = 'BSc') {
     let createSchoolPage = new CreateSchoolPage();
 
     await createSchoolPage.enterSchoolName('Busy Bees');
@@ -440,8 +472,8 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await classDetails.enterClassTeacher('Zohan');
     await classDetails.enterClassRanking('12');
     await classDetails.enterClassBuilding('Test Building Name');
-    await classDetails.selectClassFloor('One')
-    await classDetails.selectDegreeOption('BSc')
+    await classDetails.selectClassFloor('One');
+    await classDetails.selectDegreeOption(degreeOption);
     if (className === 'A team') {
       await classDetails.enterClassNumber('12345')
     }
@@ -508,6 +540,14 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField("text");
     await caseWizardPage.interactWithField("fixed-list", "Marriage");
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
+
+  Given(/^I have created a case with '(.*)' fixed list item$/, async function(marritalStatus) {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.interactWithField("text");
+    await caseWizardPage.interactWithField("fixed-list", marritalStatus);
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
@@ -635,7 +675,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     // CollectionComplexField_0_AddressLine5 is empty
   });
 
-  Then(/^I can submit the case$/, async function () {
+  Then(/^I (?:can |)?submit the case$/, async function () {
     while (await caseWizardPage.continueButtonDisplayed()){
       if (!caseWizardPage.continueButtonEnabled()) {
         throw new CustomError('Trying to click Continue/Submit button but it is not enabled')

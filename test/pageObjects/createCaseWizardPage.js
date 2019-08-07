@@ -13,7 +13,7 @@ class CreateCaseWizardPage extends BasePage{
 
     constructor() {
       super();
-      this.continueButton = new Button('button[type=submit]');
+      this.continueButton = new Button('ccd-case-edit button[type=submit]');
       this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
       this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';

@@ -5,7 +5,7 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     Given I have logged in
 
   Scenario: create a case with PNG image uploaded and test with media viewer
-    Given a case type with a PNG image uploaded
+    Given a case type to upload a PNG image exists
     And I create the case
     And I navigate to tab 'Details'
     When I click the document link
@@ -13,7 +13,7 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     And the document content is visible in the new tab
 
   Scenario: create a case with JPG image uploaded and test with media viewer
-    Given a case type with a JPG image uploaded
+    Given a case type to upload a JPG image exists
     And I create the case
     And I navigate to tab 'Details'
     When I click the document link
@@ -21,7 +21,7 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     And the document content is visible in the new tab
 
   Scenario: create a case with GIF image uploaded and test with media viewer
-    Given a case type with a GIF image uploaded
+    Given a case type to upload a GIF image exists
     And I create the case
     And I navigate to tab 'Details'
     When I click the document link
@@ -29,7 +29,7 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     And the document content is visible in the new tab
 
   Scenario: create a case with TIF image uploaded and test with media viewer
-    Given a case type with a TIF image uploaded
+    Given a case type to upload a TIF image exists
     And I create the case
     And I navigate to tab 'Details'
     When I click the document link
@@ -37,7 +37,7 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     And the document content is not visible in the new tab
 
   Scenario: create a case with PDF document uploaded and test with media viewer
-    Given a case type with a PDF document uploaded
+    Given a case type to upload a PDF document exists
     And I create the case
     And I navigate to tab 'Details'
     When I click the document link
@@ -45,7 +45,7 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     And the document content is visible in the new tab
 
   Scenario: create a case with DOC uploaded and test with media viewer
-    Given a case type with a DOC type document uploaded
+    Given a case type to upload a DOC exists
     And I create the case
     And I navigate to tab 'Details'
     When I click the document link

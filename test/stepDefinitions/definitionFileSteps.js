@@ -24,27 +24,27 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       {fieldType: 'document', value: '/test/resources/dm-store/dm-store' + extension, fieldId: 'DocumentField'}];
   }
 
-  Given(/^a case type with a PNG image uploaded$/, async function() {
+  Given(/^a case type to upload a PNG image exists$/, async function() {
     await populateCaseFieldsWithFileUpload('.PNG');
   });
 
-  Given(/^a case type with a JPG image uploaded$/, async function() {
+  Given(/^a case type to upload a JPG image exists$/, async function() {
     await populateCaseFieldsWithFileUpload('.JPG');
   });
 
-  Given(/^a case type with a GIF image uploaded$/, async function() {
+  Given(/^a case type to upload a GIF image exists$/, async function() {
     await populateCaseFieldsWithFileUpload('.GIF');
   });
 
-  Given(/^a case type with a TIF image uploaded$/, async function() {
+  Given(/^a case type to upload a TIF image exists$/, async function() {
     await populateCaseFieldsWithFileUpload('.TIF');
   });
 
-  Given(/^a case type with a PDF document uploaded$/, async function() {
+  Given(/^a case type to upload a PDF document exists$/, async function() {
     await populateCaseFieldsWithFileUpload('.pdf');
   });
 
-  Given(/^a case type with a DOC type document uploaded$/, async function() {
+  Given(/^a case type to upload a DOC exists$/, async function() {
     await populateCaseFieldsWithFileUpload('.docx');
   });
 

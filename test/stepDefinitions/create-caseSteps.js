@@ -118,6 +118,11 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await addressComplex.enterCountry('UK')
   });
 
+  When(/^I have created a case for the caseType with data$/, async function () {
+      await baseSteps.createCase()
+      TestData.caseReference = await new CaseDetailsPage().getCaseReference();
+  });
+
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
   });

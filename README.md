@@ -61,7 +61,7 @@ Environment variables:
 | CCD_ACTIVITY_NEXT_POLL_REQUEST_MS | Frequency of activity requests. A good setting for it is the value of ACTIVITY_TTL_SEC in the activity service backend (avoid setting it lower than ACTIVITY_TTL_SEC) |
 | CCD_ACTIVITY_RETRY | Number of attempts in case of unsuccessful calls to Activity service |
 | CCD_ACTIVITY_MAX_REQUEST_PER_BATCH | Max number of cases activity requests batched in a single activity call. A good setting for it is the value of CCD_PAGE_SIZE |
-| CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS | Max delay before a batch activity call is issued |
+| CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS | Max delay before a batch activity call is issued. |
 
 ## Install dependencies
 

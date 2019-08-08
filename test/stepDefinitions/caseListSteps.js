@@ -82,9 +82,19 @@ defineSupportCode(function ({ Given, When, Then}) {
     await caseListPage.getCaseListComponent().clickPaginationLink(button);
   });
 
+  When(/^I search for this Case Type on the workbasket filters$/, async function(){
+    await caseListPage.getWorkBasketFilters().selectCaseType(TestData.caseType);
+    await caseListPage.getWorkBasketFilters().clickApplyButton();
+  });
+
   Then(/^page '(.*)' will be selected on the pagination$/, async function(pageNumber){
     let selected = await caseListPage.getCaseListComponent().getSelectedPaginationControlNumber();
     expect(selected).to.equal(pageNumber);
+  });
+
+  Then(/^a box stating No Cases Found is displayed$/, async function(){
+    let boxFound = await caseListPage.isNoCasesBoxDisplayed();
+    expect(boxFound, "could not locate 'No Cases Found' notification box").to.be.true;
   });
 
   Then(/^three dots will be displayed after page (.*) on the pagination$/, async function(pageNumber){
@@ -268,5 +278,32 @@ defineSupportCode(function ({ Given, When, Then}) {
     expect(allFiltersCleared, errMessage).to.be.true
 
   }
+
+  When(/^I search for that case by case reference$/, async function () {
+    await caseListPage.getNavBarComponent().clickCaseListLink();
+    await caseListPage.getWorkBasketFilters().enterIntoCaseReferenceField(TestData.caseReference);
+    await caseListPage.getWorkBasketFilters().clickApplyButton();
+  });
+
+  Then(/^the list table displays the following:$/, async function (datatable) {
+    let caselist = await caseListPage.getCaseListComponent();
+
+    let dt = datatable.raw();
+    let fieldsCount = dt[0].length;
+    let rows = datatable.raw().length;
+
+    for (let i = 1; i <rows ; i++) {
+
+      for (let j = 0; j <fieldsCount; j++) {
+        let columnResults = await caselist.getColumnResultsValues(dt[0][j]);
+        let expectedValue = dt[i][j];
+        expect(columnResults).to.include(expectedValue)
+      }
+
+    }
+
+  });
+
+
 
 });

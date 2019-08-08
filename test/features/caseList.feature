@@ -4,6 +4,11 @@ Feature: Set of Scenarios testing the functionality of the Case List table
   Background:
     Given I have logged in
 
+  Scenario: Notification box displayed when searching for a case type that contains no cases
+    Given a case type without any cases exists
+    When I search for this Case Type on the workbasket filters
+    Then a box stating No Cases Found is displayed
+
   Scenario: A Case Reference column in case list results has hyphens every 4 digits
     Given the following definition for 'case fields'
       | ID          | Display context |
@@ -13,8 +18,25 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     And there are cases listed on the case list page for that case type
     Then the case reference is displayed in the case list results with hyphens
 
+  Scenario: Case list results table displays case field values
+    Given a case type exists with case fields configured in the case list results
+    And I have created a case for the caseType with data
+    When I search for that case by case reference
+    Then the list table displays the following:
+      | Text Field | TextAreaField | DateField   | PhoneField  | NumberField | YesNoField | MarritalStatus | MoneyField    | EmailField   | MultiSelectField |
+      | qwerty     | area text     | 10 Oct 2010 | 07777777777 | 123         | No         | Widow          | £20.00        | 123@test.com | Manchester       |
+
+  @interpolation
+  Scenario: Case list results displays label fields and interpolation
+    Given a case type exists with a label configured in the case list results
+    And I have created a case for the caseType with data
+    When I search for that case by case reference
+    Then the list table displays the following:
+      | Text Field | LabelData                      |
+      | qwerty     | LabelData: textField is qwerty |
+
   @pagination
-  Scenario: Next and previous buttons appear appropriatley based on pagination position selected
+  Scenario: Next and previous buttons appear appropriately based on pagination position selected
     Given I am on case list page
     And there are more than 1 page of results
     And I am on page 1 of results

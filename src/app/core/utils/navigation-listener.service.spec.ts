@@ -6,57 +6,103 @@ import createSpyObj = jasmine.createSpyObj;
 describe('NavigationListenerService', () => {
 
   let navigationListenerService: NavigationListenerService;
-  let alertService: AlertService;
-  let navigationNotifier: NavigationNotifierService;
+  let mockAlertService: any;
+  let navigationNotifierService: NavigationNotifierService;
   let mockRouter: any;
+  let mockCallbackErrorSubject: any;
 
   beforeEach(() => {
-    alertService = jasmine.createSpyObj<AlertService>('alertService', ['setPreserveAlerts', 'success']);
     mockRouter = createSpyObj<Router>('router', ['navigate']);
+    mockAlertService = jasmine.createSpyObj<AlertService>('mockAlertService', ['setPreserveAlerts', 'success']);
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
-    navigationNotifier = new NavigationNotifierService();
-    navigationListenerService = new NavigationListenerService(alertService, navigationNotifier, mockRouter);
+    navigationNotifierService = new NavigationNotifierService();
+    navigationListenerService = new NavigationListenerService(mockAlertService, navigationNotifierService, mockRouter);
+    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next', 'subscribe', 'unsubscribe']);
+    navigationListenerService.callbackErrorsSubject = mockCallbackErrorSubject;
+    navigationListenerService.init();
   });
 
   it('test DRAFT_DELETED navigation subscription', () => {
-    let DRAFT_DELETED = NavigationOrigin.DRAFT_DELETED;
-    navigationNotifier.announceNavigation({ action: DRAFT_DELETED });
-    navigationListenerService.init();
+    mockRouter.navigate.and.returnValue(Promise.resolve());
+    let navigationResult = Promise.resolve('someResult');
+    navigationNotifierService.announceNavigation({ action: NavigationOrigin.DRAFT_DELETED });
     expect(mockRouter.navigate).toHaveBeenCalledWith(['list/case']);
+    navigationResult.then(() => {
+      expect(mockAlertService.setPreserveAlerts).toHaveBeenCalledWith(true);
+      expect(mockAlertService.success).toHaveBeenCalledWith(NavigationListenerService.DRAFT_DELETED_MSG);
+    });
   });
 
   it('test ERROR_DELETING_DRAFT navigation subscription', () => {
     let ERROR_DELETING_DRAFT = NavigationOrigin.ERROR_DELETING_DRAFT;
-    navigationNotifier.announceNavigation({ action: ERROR_DELETING_DRAFT });
-    navigationListenerService.init();
+    navigationNotifierService.announceNavigation({ action: ERROR_DELETING_DRAFT });
     expect(mockRouter.navigate).toHaveBeenCalledWith(['list/case']);
   });
 
-  it('test NO_READ_ACCESS_REDIRECTION navigation subscription', () => {
-    let NO_READ_ACCESS_REDIRECTION = NavigationOrigin.NO_READ_ACCESS_REDIRECTION;
-    navigationNotifier.announceNavigation({ action: NO_READ_ACCESS_REDIRECTION });
-    navigationListenerService.init();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/list/case']);
-  });
-
   it('test DRAFT_RESUMED navigation subscription', () => {
-
-    let DRAFT_RESUMED = NavigationOrigin.DRAFT_RESUMED;
-    let navParam = { action: DRAFT_RESUMED, jid: 'j001', ctid: 'c001', etid: 'e001', theQueryParams: 'id=1001' };
-    navigationNotifier.announceNavigation(navParam);
-    navigationListenerService.init();
+    let navParam = {
+      action: NavigationOrigin.DRAFT_RESUMED,
+      jid: 'j001', ctid: 'c001', etid: 'e001', theQueryParams: 'id=1001'
+    };
+    navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['create/case',
       navParam.jid,
       navParam.ctid,
       navParam.etid], { queryParams: navParam.theQueryParams });
   });
 
+  it('test error on DRAFT_RESUMED navigation subscription', () => {
+    const VALID_ERROR = {
+      callbackErrors: ['error1', 'error2'],
+      callbackWarnings: ['warning1', 'warning2']
+    };
+    let navParam = {
+      action: NavigationOrigin.DRAFT_RESUMED
+      , jid: 'j001', ctid: 'c001', etid: 'e001', theQueryParams: 'id=1001'
+    };
+    mockRouter.navigate.and.returnValue({ catch: (error) => error(VALID_ERROR) });
+    navigationNotifierService.announceNavigation(navParam);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['create/case',
+      navParam.jid,
+      navParam.ctid,
+      navParam.etid], { queryParams: navParam.theQueryParams });
+    expect(mockCallbackErrorSubject.next).toHaveBeenCalled();
+  });
+
   it('test EVENT_TRIGGERED navigation subscription', () => {
-    let EVENT_TRIGGERED = NavigationOrigin.EVENT_TRIGGERED;
-    let navParam = { action: EVENT_TRIGGERED, relativeTo: 'relativeTo', etid: 'e001', theQueryParams: 'id=1001' };
-    navigationNotifier.announceNavigation(navParam);
-    navigationListenerService.init();
+    let navParam = {
+      action: NavigationOrigin.EVENT_TRIGGERED,
+      relativeTo: 'relativeTo', etid: 'e001', theQueryParams: 'id=1001'
+    };
+    navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['trigger',
       navParam.etid], { queryParams: navParam.theQueryParams, relativeTo: navParam.relativeTo });
+  });
+
+  it('test error on EVENT_TRIGGERED navigation subscription', () => {
+    const VALID_ERROR = {
+      callbackErrors: ['error1', 'error2'],
+      callbackWarnings: ['warning1', 'warning2']
+    };
+    let navParam = {
+      action: NavigationOrigin.EVENT_TRIGGERED,
+      relativeTo: 'relativeTo', etid: 'e001', theQueryParams: 'id=1001'
+    };
+    mockRouter.navigate.and.returnValue({ catch: (error) => error(VALID_ERROR) });
+    navigationNotifierService.announceNavigation(navParam);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['trigger',
+      navParam.etid], { queryParams: navParam.theQueryParams, relativeTo: navParam.relativeTo });
+    expect(mockCallbackErrorSubject.next).toHaveBeenCalled();
+  });
+
+  it('test NO_READ_ACCESS_REDIRECTION navigation subscription', () => {
+    mockRouter.navigate.and.returnValue(Promise.resolve());
+    let navigationResult = Promise.resolve('someResult');
+    navigationNotifierService.announceNavigation({ action: NavigationOrigin.NO_READ_ACCESS_REDIRECTION });
+    navigationListenerService.init();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/list/case']);
+    navigationResult.then(() => {
+      expect(mockAlertService.success).toHaveBeenCalledWith(NavigationListenerService.CASE_CREATED_MSG);
+    });
   });
 });

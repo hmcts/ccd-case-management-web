@@ -6,6 +6,7 @@ import { AlertService, HttpError, NavigationNotifierService, NavigationOrigin } 
 @Injectable()
 export class NavigationListenerService {
   public static readonly CASE_CREATED_MSG = 'The case has been created successfully';
+  public static readonly DRAFT_DELETED_MSG = `The draft has been successfully deleted`;
 
   callbackErrorsSubject: Subject<any> = new Subject();
   navigationSubscription: Subscription;
@@ -23,7 +24,7 @@ export class NavigationListenerService {
           return this.router.navigate(['list/case'])
             .then(() => {
               this.alertService.setPreserveAlerts(true);
-              this.alertService.success(`The draft has been successfully deleted`);
+              this.alertService.success(NavigationListenerService.DRAFT_DELETED_MSG);
             });
         case NavigationOrigin.ERROR_DELETING_DRAFT:
           return this.router.navigate(['list/case']);
@@ -43,7 +44,10 @@ export class NavigationListenerService {
             this.handleError(error, navigation.etid);
           });
         case NavigationOrigin.NO_READ_ACCESS_REDIRECTION:
-          return this.router.navigate((['/list/case']));
+          return this.router.navigate((['/list/case']))
+            .then(() => {
+              this.alertService.success(NavigationListenerService.CASE_CREATED_MSG);
+            });
       }
     });
   }

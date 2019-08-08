@@ -364,6 +364,7 @@ describe('CoreComponent when no defaults in the profile', () => {
   let appConfig: any;
   let browserSupport: any;
   let oauth2Service: any;
+  let navigationListenerService: NavigationListenerService;
 
   beforeEach(async(() => {
 
@@ -371,6 +372,7 @@ describe('CoreComponent when no defaults in the profile', () => {
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
+    navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
 
     profile = {
       user: {
@@ -435,6 +437,7 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: AppConfig, useValue: appConfig },
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
+          { provide: NavigationListenerService, useValue: navigationListenerService },
         ]
       })
       .compileComponents();  // compile template and css

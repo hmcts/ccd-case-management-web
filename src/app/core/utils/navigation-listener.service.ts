@@ -54,7 +54,6 @@ export class NavigationListenerService {
 
   private handleError(error: HttpError, triggerId: string) {
     if (error.status !== 401 && error.status !== 403) {
-      error = error;
       console.log('error during triggering event:', triggerId);
       console.log(error);
       this.callbackErrorsSubject.next(error);

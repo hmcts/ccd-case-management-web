@@ -59,6 +59,19 @@ class CaseListComponent extends BasePage {
   }
 
   /**
+   * Gets a column by columns name and returns all results for that column in case list table
+   * @param expectedColumnTitle
+   * @returns {Promise<*>} Array of Text
+   */
+  async getColumnResultsValues (expectedColumnTitle){
+    let results = []
+    for (const result of await this.getColumnResults(expectedColumnTitle)){
+      results.push(await result.getText())
+    }
+    return results
+  }
+
+  /**
    * Returns all results for first column in case list table
    * @returns {Promise<*>} Array of WebElements
    */

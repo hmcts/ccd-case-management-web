@@ -13,6 +13,8 @@ class CaseListPage extends BasePage {
 
       this._landingPageFilters = by.css('ccd-workbasket-filters');
       this._createNewCaseButton = '#search-result > .button';
+
+      this._noCasesNotificationBox = $('ccd-search-result .notification');
   }
 
   async waitForPageLoaded(){
@@ -71,6 +73,10 @@ class CaseListPage extends BasePage {
 
   async clickCreateNewCaseButton(){
       await $(this._createNewCaseButton).click();
+  }
+
+  async isNoCasesBoxDisplayed(){
+    return await this._noCasesNotificationBox.isPresent() && this._noCasesNotificationBox.isDisplayed();
   }
 
 }

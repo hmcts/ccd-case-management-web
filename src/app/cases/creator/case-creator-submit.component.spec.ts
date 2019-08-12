@@ -7,9 +7,7 @@ import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import createSpyObj = jasmine.createSpyObj;
 import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
   FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
-  DraftService
-} from '@hmcts/ccd-case-ui-toolkit';
-import { newCaseField } from '@hmcts/ccd-case-ui-toolkit/dist/shared';
+  DraftService, CaseField } from '@hmcts/ccd-case-ui-toolkit';
 
 let CaseEditComponent: any = MockComponent({
   selector: 'ccd-case-edit',
@@ -65,8 +63,18 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     null,
     false,
     [
-      newCaseField('PersonFirstName', 'First name', null, null, 'READONLY').build(),
-      newCaseField('PersonLastName', 'Last name', null, null, 'OPTIONAL').build(),
+      <CaseField>({
+        id: 'PersonFirstName',
+        label: 'First name',
+        field_type: null,
+        display_context: 'READONLY'
+      }),
+      <CaseField>({
+        id: 'PersonLastName',
+        label: 'Last name',
+        field_type: null,
+        display_context: 'OPTIONAL'
+      })
     ],
     [],
     true
@@ -305,8 +313,18 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     null,
     false,
     [
-      newCaseField('PersonFirstName', 'First name', null, null, 'READONLY').build(),
-      newCaseField('PersonLastName', 'Last name', null, null, 'OPTIONAL').build(),
+      <CaseField>({
+        id: 'PersonFirstName',
+        label: 'First name',
+        field_type: null,
+        display_context: 'READONLY'
+      }),
+      <CaseField>({
+        id: 'PersonLastName',
+        label: 'Last name',
+        field_type: null,
+        display_context: 'OPTIONAL'
+      })
     ],
     [],
     false

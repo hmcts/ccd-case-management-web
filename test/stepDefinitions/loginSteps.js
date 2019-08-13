@@ -10,6 +10,8 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then}) {
 
+  let caseListPage = new CaseListPage()
+
   Given(/^I am on the CCD login page$/, async function () {
       loginPage = await Login.open();
   });
@@ -41,6 +43,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     switch (component){
       case 'filters':
         //we are waiting for the page to load by waiting for the filters so this is already done
+        break;
       case 'banners':
         expect (await caseListPage.getNavBarComponent().allComponentsDisplayed()).to.be.true;
         expect (await caseListPage.getFooter().isDisplayed()).to.be.true;
@@ -55,9 +58,11 @@ defineSupportCode(function ({ Given, When, Then}) {
 
 
 
-  Given(/^I have logged in$/, async function () {
+  Given(/^I have logged in$/,{timeout: 120 * 1000}, async function () {
       loginPage = await Login.open();
-      caseListPage = await loginPage.loginToApp();
+      await loginPage.loginToApp();
+
+      caseListPage = new CaseListPage();
       await caseListPage.waitForPageLoaded();
   });
 

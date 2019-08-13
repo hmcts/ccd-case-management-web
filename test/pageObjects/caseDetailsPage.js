@@ -16,6 +16,7 @@ class CaseDetailsPage extends BasePage {
     this._tabs = '.tabs-list li';
     this._accordians = 'ccd-read-complex-field-collection-table img';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
+    this._currentTabLabelFieldKeys = '.tabs-panel:not(.js-hidden) tr > th markdown';
     this._printButton = '#case-viewer-control-print';
     this._caseReference = 'ccd-case-header .heading-h1';
     this._alertSuccessBar = '.alert-success';
@@ -30,7 +31,6 @@ class CaseDetailsPage extends BasePage {
     this._detailsBoxSummary = '.EventLog-DetailsPanel tbody > tr:nth-of-type(5) > td span';
     this._detailsBoxComment = '.EventLog-DetailsPanel tbody > tr:nth-of-type(6) > td span';
 
-
   }
 
 
@@ -38,11 +38,14 @@ class CaseDetailsPage extends BasePage {
     await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
   }
 
+  async getCaseReference() {
+    return await $(this._caseReference).getText();
+  }
+
   /**
    * Check if case reference is visible
    * @returns {Promise<boolean>}
    */
-
   async isCaseReferenceVisible() {
     return await $(this._caseReference).isDisplayed();
   }
@@ -165,11 +168,20 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Get list of the fields displayed on the currency viewed tab
+   * Get list of the fields displayed on the currently viewed tab
    * @returns Array of Strings
    */
   async getTabFields(){
     return await this.getElementsText(await $$(this._currentTabFieldKeys))
+  }
+
+  /**
+   * Get field displayed on the currently viewed tab by id
+   * @param fieldId
+   * @returns Array of Strings
+   */
+  async getTabLabelFields(){
+    return await this.getElementsText(await $$(this._currentTabLabelFieldKeys))
   }
 
   /**

@@ -2,6 +2,12 @@
 Feature: Set of scenarios to test functionality of the Check Your Answers page
 
   Background:
+    Given the following definition for 'case fields in events'
+      | Event         | ID             | FieldType       | Display context | Page id         | Page label                    |
+      | createCase    | TextFieldFName | Text            | Optional        | MuliFormPage1   | Case Multiple Pages: Page 1/3 |
+      | createCase    | TextFieldMName | Text            | Optional        | MuliFormPage2   | Case Multiple Pages: Page 2/3 |
+      | createCase    | TextFieldLName | Text            | Optional        | MuliFormPage3   | Case Multiple Pages: Page 3/3 |
+      | addExtraInf   | Age            | Number          | Optional        | EventSingleOage | Cadd extra details page 1/1   |
     Given I have logged in
     And I have a case with 3 pages
 

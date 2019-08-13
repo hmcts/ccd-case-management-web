@@ -1,15 +1,19 @@
+
 BasePage = require('./basePage');
 let FieldUtils = require('../utils/fieldUtils.js');
 Button = require('./webdriver-components/button.js');
+TextField = require('./webdriver-components/textField');
+DropDown = require('./webdriver-components/dropdown');
+CCDAddressUKField = require('./ccd-components/complexTypes/addressComplex.js');
 CaseDetailsPage = require('./caseDetailsPage.js');
+
 
 
 class CreateCaseWizardPage extends BasePage{
 
-
     constructor() {
       super();
-      this.continueButton = new Button('button[type=submit]');
+      this.continueButton = new Button('ccd-case-edit button[type=submit]');
       this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
       this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
@@ -19,7 +23,6 @@ class CreateCaseWizardPage extends BasePage{
       this.topErrorBox = '.error-summary';
       this.fieldError = '.error-message';
       this.header = 'h1';
-
       this.fieldUtils =  new FieldUtils();
     }
 
@@ -41,6 +44,8 @@ class CreateCaseWizardPage extends BasePage{
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
+    async interactWithField(fieldDataType, value){
+      return await this.fieldUtils.interactWithField(fieldDataType, value);
     async interactWithField(fieldDataType, value, id){
       return await this.fieldUtils.interactWithField(fieldDataType, value, id);
     }
@@ -109,6 +114,10 @@ class CreateCaseWizardPage extends BasePage{
       return await new FieldUtils().getFieldValue(dataType);
     }
 
+    async getListOrder(listDataType){
+      return await new FieldUtils().getListOptions(listDataType);
+    }
+
     async clickCollectionAddNewButton(collectionFieldId) {
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
@@ -145,16 +154,30 @@ class CreateCaseWizardPage extends BasePage{
         await new CaseDetailsPage().waitForPageToLoad();
     }
 
-    async getFieldLabels(){
-        let labelElements = await $$(this.fieldLabels);
-        let labels = [];
-        for (const labelElem of labelElements){
-            let labelText = await labelElem.getText();
-            let label = labelText.replace(' (Optional)', '');
-            labels.push(label)
-        }
+  /**
+   * Strips out (Optional) string if present to return just label value
+   * @returns {Promise<Array>}
+   */
+  async getFieldLabels(){
+      let labels = [];
+      for (const label of await this.getFullFieldLabels()){
+          labels.push(label.replace(' (Optional)', ''))
+      }
 
-        return labels;
+      return labels;
+    }
+
+  /**
+   * Includes (Optional) if present
+   * @returns {Promise<Array>}
+   */
+  async getFullFieldLabels(){
+      let labelElements = await $$(this.fieldLabels);
+      let labels = [];
+      for (const labelElem of labelElements){
+          labels.push(await labelElem.getText())
+      }
+      return labels;
     }
 
     async getGreyBarFieldLabels(){

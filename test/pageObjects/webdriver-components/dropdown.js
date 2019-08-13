@@ -56,7 +56,7 @@ class Dropdown {
    */
   async getCurrentSelectedOption(){
       let text = await $(this._currentDropdownOptionElement).getText();
-      return text.trim();
+      return await text.trim();
   }
 
   /**
@@ -124,14 +124,15 @@ class Dropdown {
 
   async waitForElementToBeVisible(){
     const EC = protractor.ExpectedConditions;
-
+    let result = false;
     try {
       await browser.wait(EC.visibilityOf($(this._dropdownElement)), DEFAULT_TIMEOUT);
       return true;
     } catch (e) {
       let message = `timed out after ${DEFAULT_TIMEOUT} waiting for dropdown element ${element} to be visible`;
-      throw new CustomError(message, e);
+      console.log(message);
     }
+    return result;
   }
 
   /**
@@ -159,6 +160,16 @@ class Dropdown {
     if (fail){
       throw new CustomError(failmessage, 'failed 3 retry attempts')
     }
+  }
+
+  /**
+   * Index starts at 1
+   * @param index
+   * @returns {Promise<void>}
+   */
+  async selectFromDropdownByIndex(index){
+    let option = $$(`${this._dropdownElement} option`).get(index);
+    await option.click();
   }
 
 }

@@ -310,10 +310,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.58.12-RDM-PAY-1942-prerelease":
-  version "2.58.12-RDM-PAY-1942-prerelease"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.58.12-RDM-PAY-1942-prerelease.tgz#cccd313107382a7279c690ef6a9c6bcd2f57c3a3"
-  integrity sha512-GrPgQjEOkZPBTM1xM1EC8NRwHAp5r5G7IKxW2CHPLDs/uyxVejism6s5pcGqTc1tc+qCeegZ64JNi4gC0uGTgg==
+"@hmcts/ccd-case-ui-toolkit@2.58.18":
+  version "2.58.18"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.58.18.tgz#d6ec2f2591608969c46525fd9b94cbedcb3b48c2"
+  integrity sha512-WN/vQBAU7bsZd0K0YZkRors6yxR+bTqaH9182magEoOGo6eX8Afqx74zAnmgmA/S77sHcaX5Tovc6X5/p9lIZw==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -325,10 +325,10 @@
     typescript "3.1.1"
     underscore "^1.9.1"
 
-"@hmcts/ccpay-web-component@~2.0.12":
-  version "2.0.21"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-2.0.21.tgz#3d91a1bb5c0564fca5371e07840ecab8840c98bd"
-  integrity sha512-INkyOHUdyvH9K9bv9qxgJWFK4r1Q4BVKZQgJ6VRQV6JThD1oZA9j12046Pgxuf+mB9haAIqMenZtgFcWY0xhQA==
+"@hmcts/ccpay-web-component@^2.0.12":
+  version "2.0.38"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-2.0.38.tgz#4f0dc88793f4ed857007c6d7617cfec79877b6d1"
+  integrity sha512-VCR5Q68I+cX4gllhpbk++8FkFxGiDYHuFHrIbzAlLO7Np6eMkalloMhhI91sKU59oz20/UwMGcmmIEkTSOb01g==
   dependencies:
     tslib "^1.9.0"
 

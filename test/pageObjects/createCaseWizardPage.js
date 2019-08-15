@@ -44,8 +44,10 @@ class CreateCaseWizardPage extends BasePage{
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value){
+    async interactWithField(fieldDataType, value) {
       return await this.fieldUtils.interactWithField(fieldDataType, value);
+    }
+
     async interactWithField(fieldDataType, value, id){
       return await this.fieldUtils.interactWithField(fieldDataType, value, id);
     }

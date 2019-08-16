@@ -57,7 +57,7 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
-    "@hmcts/ccd-case-ui-toolkit": "2.58.12-RDM-4135-prerelease",
+    "@hmcts/ccd-case-ui-toolkit": "2.58.7",
     "@hmcts/ccpay-web-component": "~1.8.1",
     "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@nguniversal/express-engine": "^6.0.0",
@@ -89,8 +89,7 @@
     "url": "^0.11.0",
     "webdriver-manager": "^12.1.0",
     "x-frame-options": "^1.0.0",
-    "@hmcts/media-viewer": "0.1.0-credentials-fix",
-    "@ng-toolkit/universal": "^1.1.45",
+    "@hmcts/media-viewer": "1.0.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

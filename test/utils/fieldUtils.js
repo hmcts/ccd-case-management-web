@@ -162,83 +162,40 @@ class FieldDataTypes {
     return yesNoField;
   }
 
-  async fieldYesNoIsHidden(radioId) {
-    let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css, radioId);
-    return await yesNoField.isHidden();
-  }
+  //needs refactor later -------
+
 
   async fieldYesNoIsVisible(radioId) {
-    let css = await FIELDS.YES_NO.cssTag;
-    let yesNoField = await new CCDYesNoField(css, radioId);
+    let yesNoField = await new CCDYesNoField(radioId);
     return await yesNoField.isVisible();
   }
 
-  async textFieldIsHidden(id) {
-    let css = await FIELDS.TEXT.cssTag;
-    let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, id);
-    return await field.isHidden();
-  }
-
   async textFieldIsVisible(id) {
-    let css = await FIELDS.TEXT.cssTag;
-    let type = await FIELDS.TEXT.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(id);
     return await field.isVisible();
-  }
-
-  async numberFieldIsHidden(id) {
-    let css = await FIELDS.NUMBER.cssTag;
-    let type = await FIELDS.NUMBER.type;
-    let field = await new CCDStringField(css, type, id);
-    return await field.isHidden();
   }
 
   async numberFieldIsVisible(id) {
-    let css = await FIELDS.NUMBER.cssTag;
-    let type = await FIELDS.NUMBER.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(id);
     return await field.isVisible();
-  }
-
-  async caseLinkFieldIsHidden(id) {
-    let css = await FIELDS.CASE_LINK.cssTag;
-    let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, id);
-    return await field.isHidden();
   }
 
   async caseLinkFieldIsVisible(id) {
-    let css = await FIELDS.CASE_LINK.cssTag;
-    let type = await FIELDS.CASE_LINK.type;
-    let field = await new CCDStringField(css, type, id);
+    let field = await new CCDStringField(id);
     return await field.isVisible();
-  }
-
-  async fixedListFieldIsHidden(id) {
-    let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css, id);
-    return await field.isHidden();
   }
 
   async fixedListFieldIsVisible(id) {
-    let css = await FIELDS.FIXED_LIST.cssTag;
-    let field = await new CCDFixedListField(css, id);
+    let field = await new CCDFixedListField(id);
     return await field.isVisible();
-  }
-
-  async dateFieldIsHidden(id) {
-    let css = await FIELDS.DATE.cssTag;
-    let field = await new CCDDateField(css, id);
-    return await field.isHidden();
   }
 
   async dateFieldIsVisible(id) {
-    let css = await FIELDS.DATE.cssTag;
-    let field = await new CCDDateField(css, id);
+    let field = await new CCDDateField(id);
     return await field.isVisible();
   }
+
+  //--------
 
   /**
    * Select random radio butto option

@@ -14,7 +14,7 @@ class CreateCaseWizardPage extends BasePage{
     constructor() {
       super();
       this.continueButton = new Button('ccd-case-edit button[type=submit]');
-      this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
+        this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
       this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
@@ -52,65 +52,36 @@ class CreateCaseWizardPage extends BasePage{
       return await this.fieldUtils.interactWithField(fieldDataType, value, id);
     }
 
-    async fieldLabelContains(fieldDataType, fieldId, labelText) {
-      return await this.fieldUtils.fieldLabelContains(fieldDataType, fieldId, labelText);
-    }
-
     async getFieldDetails(fieldDataType, fieldId) {
       return await new FieldUtils().getFieldDetails(fieldDataType, fieldId);
-    }
-
-    async isTextFieldHiddenById(fieldId) {
-      return await this.fieldUtils.textFieldIsHidden(fieldId);
     }
 
     async isTextFieldVisibleById(fieldId) {
       return await this.fieldUtils.textFieldIsVisible(fieldId);
     }
 
-  async isNumberFieldHiddenById(fieldId) {
-    return await this.fieldUtils.numberFieldIsHidden(fieldId);
-  }
-
   async isNumberFieldVisibleById(fieldId) {
     return await this.fieldUtils.numberFieldIsVisible(fieldId);
   }
 
-    async isCaseLinkFieldHiddenById(fieldId) {
-      return await this.fieldUtils.caseLinkFieldIsHidden(fieldId);
-    }
-
     async isCaseLinkFieldVisibleById(fieldId) {
       return await this.fieldUtils.caseLinkFieldIsVisible(fieldId);
-    }
-
-    async isFixedListFieldHiddenById(fieldId) {
-      return await this.fieldUtils.fixedListFieldIsHidden(fieldId);
     }
 
     async isFixedListFieldVisibleById(fieldId) {
       return await this.fieldUtils.fixedListFieldIsVisible(fieldId);
     }
 
-    async isDateFieldHiddenById(fieldId) {
-      return await this.fieldUtils.dateFieldIsHidden(fieldId);
-    }
 
     async isDateFieldVisibleById(fieldId) {
       return await this.fieldUtils.dateFieldIsVisible(fieldId);
     }
 
-    async isYesOrNoFieldHiddenById(fieldId) {
-      return await this.fieldUtils.fieldYesNoIsHidden(fieldId);
-    }
 
     async isYesOrNoFieldVisibleById(fieldId) {
       return await this.fieldUtils.fieldYesNoIsVisible(fieldId);
     }
 
-    async setYesOrNoValue(radioButtonId, option) {
-      return await this.fieldUtils.selectYesNoOption(radioButtonId, option);
-    }
 
     async getFieldValue(dataType){
       return await new FieldUtils().getFieldValue(dataType);

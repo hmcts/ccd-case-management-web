@@ -243,32 +243,32 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^only the fields defined in AuthorisationComplexTypes sheet for CREATE should be visible$/, async function() {
-    expect(await caseWizardPage.isTextFieldHiddenById("FamilyDetails_MotherFullName")).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('FamilyDetails_MotherAge')).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('FamilyDetails_FatherFullName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('FamilyDetails_FatherAge')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('Homeless')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById("#FamilyDetails_MotherFullName")).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_MotherAge')).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherAge')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#Homeless')).to.be.true;
     expect(await caseWizardPage.isCollectionAddNewButtonEnabled('FamilyDetails_Children')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('MySchool_Number')).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Name')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Number')).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#MySchool_ProvidesAutisticChildrenSupport')).to.be.false;
     expect(await caseWizardPage.isCollectionAddNewButtonEnabled('MySchool_Class')).to.be.true;
   });
 
   Then(/^only the fields defined in AuthorisationComplexTypes sheet for UPDATE should be editable$/, async function() {
-    expect(await caseWizardPage.isTextFieldVisibleById("FamilyDetails_MotherFullName")).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('FamilyDetails_MotherAge')).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('FamilyDetails_FatherFullName')).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('FamilyDetails_Children_0_ChildFullName')).to.be.true;
-    expect(await caseWizardPage.isFixedListFieldVisibleById('FamilyDetails_Children_0_ChildGender')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('FamilyDetails_Children_0_IsAutistic')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('FamilyDetails_Children_0_NeedsSupport')).to.be.true;
-    expect(await caseWizardPage.isTextFieldHiddenById('FamilyDetails_FatherAge')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('Homeless')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById("#FamilyDetails_MotherFullName")).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_MotherAge')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_Children_0_ChildFullName')).to.be.true;
+    expect(await caseWizardPage.isFixedListFieldVisibleById('#FamilyDetails_Children_0_ChildGender')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#FamilyDetails_Children_0_IsAutistic')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#FamilyDetails_Children_0_NeedsSupport')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherAge')).to.be.false;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#Homeless')).to.be.true;
     expect(await caseWizardPage.isCollectionAddNewButtonEnabled('FamilyDetails_Children')).to.be.true;
-    expect(await caseWizardPage.isNumberFieldVisibleById('MySchool_Number')).to.be.true;
-    expect(await caseWizardPage.isTextFieldVisibleById('MySchool_Name')).to.be.true;
-    expect(await caseWizardPage.isYesOrNoFieldVisibleById('MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
+    expect(await caseWizardPage.isNumberFieldVisibleById('#MySchool_Number')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
     expect(await caseWizardPage.isCollectionAddNewButtonEnabled('MySchool_Class')).to.be.true;
   });
 
@@ -541,6 +541,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
+
   Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
     await baseSteps.navigateToCreateCasePage()
     for (let i = 0; i < numberOfItems; i++) {

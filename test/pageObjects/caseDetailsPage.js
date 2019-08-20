@@ -37,11 +37,14 @@ class CaseDetailsPage extends BasePage {
     await this.waitForElementToBeVisibleWithTimeout($('ccd-case-header'),10000)
   }
 
+  async getCaseReference() {
+    return await $(this._caseReference).getText();
+  }
+
   /**
    * Check if case reference is visible
    * @returns {Promise<boolean>}
    */
-
   async isCaseReferenceVisible() {
     return await $(this._caseReference).isDisplayed();
   }

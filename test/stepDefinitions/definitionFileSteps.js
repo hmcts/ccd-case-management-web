@@ -56,6 +56,26 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await populateCaseFields();
   });
 
+
+  Given(/^a case type exists with (?:case fields|a label)? configured in the case list results$/, async function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+    Data.optionalFields = [
+                            { fieldType: 'text', value: 'qwerty'},
+                            { fieldType: 'textarea', value: 'area text'},
+                            { fieldType: 'number', value: '123'},
+                            { fieldType: 'money-gbp', value: '20'},
+                            { fieldType: 'date', value: ''},
+                            { fieldType: 'date', value: '10102010'},
+                            { fieldType: 'email', value: '123@test.com'},
+                            { fieldType: 'fixed-list', value: 'Widow'},
+                            { fieldType: 'phone-uk', value: '07777777777'},
+                            { fieldType: 'yes-no', value: 'No'},
+                            { fieldType: 'multi-select', value: 'MANCHESTER'},
+                          ];
+  });
+
   Given(/^a case type containing a collection of complex types exists$/, function() {
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'Complex in Coll in Complex';
@@ -229,6 +249,10 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   Given(/^I have a case with a simple collection of complex$/, function() {
     Data.caseType = "Complex in Coll in Complex";
     Data.event = "Create Collection of Complex";
+  });
+
+  Given(/^a case type without any cases exists$/, function() {
+    Data.caseType = "CaseType With No Cases";
   });
 
 });

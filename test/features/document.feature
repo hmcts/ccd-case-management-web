@@ -20,14 +20,6 @@ Feature: Set of scenarios to test functionality of media viewer when the documen
     Then the media viewer is opened in a new tab
     And the document content is visible in the new tab
 
-  Scenario: create a case with GIF image uploaded and test with media viewer
-    Given a case type to upload a GIF image exists
-    And I create the case
-    And I navigate to tab 'Details'
-    When I click the document link
-    Then the media viewer is opened in a new tab
-    And the document content is visible in the new tab
-
   Scenario: create a case with TIF image uploaded and test with media viewer
     Given a case type to upload a TIF image exists
     And I create the case

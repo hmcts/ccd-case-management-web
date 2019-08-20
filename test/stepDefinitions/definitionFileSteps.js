@@ -16,6 +16,38 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
+  async function populateCaseFieldsWithFileUpload(extension){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
+      {fieldType: 'document', value: '/test/resources/dm-store/dm-store' + extension, fieldId: 'DocumentField'}];
+  }
+
+  Given(/^a case type to upload a PNG image exists$/, async function() {
+    await populateCaseFieldsWithFileUpload('.PNG');
+  });
+
+  Given(/^a case type to upload a JPG image exists$/, async function() {
+    await populateCaseFieldsWithFileUpload('.JPG');
+  });
+
+  Given(/^a case type to upload a GIF image exists$/, async function() {
+    await populateCaseFieldsWithFileUpload('.GIF');
+  });
+
+  Given(/^a case type to upload a TIF image exists$/, async function() {
+    await populateCaseFieldsWithFileUpload('.TIF');
+  });
+
+  Given(/^a case type to upload a PDF document exists$/, async function() {
+    await populateCaseFieldsWithFileUpload('.pdf');
+  });
+
+  Given(/^a case type to upload a DOC exists$/, async function() {
+    await populateCaseFieldsWithFileUpload('.docx');
+  });
+
   Given(/^a case type containing every field type exists$/, async function() {
     await populateCaseFields();
   });

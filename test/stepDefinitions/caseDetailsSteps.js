@@ -123,4 +123,20 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseDetailsPage.startEvent(event);
   });
 
+  When(/^I click the document link$/, async function () {
+    await caseDetailsPage.clickDocumentLink();
+  });
+
+  When(/^the media viewer is opened in a new tab$/, async function () {
+    let newTabUrl = await caseDetailsPage.openMediaViewer();
+    expect(newTabUrl.includes('/media-viewer')).to.true;
+  });
+
+  When(/^the document content is visible in the new tab$/, async function () {
+    await caseDetailsPage.documentContentVisible();
+  });
+
+  When(/^the document content is not visible in the new tab$/, async function () {
+    await caseDetailsPage.documentContentNotVisible();
+  });
 });

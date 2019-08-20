@@ -1,4 +1,5 @@
-@search @functional
+@RDM-4955
+# Review these tests when the media viewer phase 1 build issues are resolved
 Feature: Set of scenarios to test functionality of media viewer when the document link is clicked
 
   Background:

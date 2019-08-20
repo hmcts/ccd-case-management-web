@@ -240,7 +240,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async documentContentVisible(){
-    return await $('ccd-media-viewer').isPresent() && !$('mv-error-message').isPresent();
+    return await $('#toolbarViewer').isDisplayed() && !$('mv-error-message').isDisplayed();
   }
 
   /**
@@ -249,7 +249,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async documentContentNotVisible(){
-    return await $('ccd-media-viewer').isPresent() && $('mv-error-message').isPresent();
+    return await $('#toolbarViewer').isDisplayed() && $('mv-error-message').isDisplayed();
   }
 }
 

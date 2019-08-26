@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkbasketComponent } from './workbasket/workbasket.component';
 import { SearchComponent } from './search/search.component';
@@ -15,7 +16,6 @@ import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
 import { editorRouting as caseEditRouting, viewerRouting as caseViewRouting, CaseResolver } from '@hmcts/ccd-case-ui-toolkit';
-import { MediaViewerComponent } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components/palette/document/media-viewer.component';
 
 const routes: Routes = [
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'media-viewer',
-    component: MediaViewerComponent,
+    loadChildren: '@hmcts/ccd-case-ui-toolkit/dist/shared/components/palette/document/document.module#DocumentModule'
   },
   {
     path: '',
@@ -86,3 +86,9 @@ const routes: Routes = [
 ];
 
 export const routing = RouterModule.forRoot(routes);
+
+@NgModule({
+  imports: [routing],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

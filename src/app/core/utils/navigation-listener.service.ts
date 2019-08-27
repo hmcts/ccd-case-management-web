@@ -33,7 +33,7 @@ export class NavigationListenerService {
             ['create/case',
               navigation.jid,
               navigation.ctid,
-              navigation.etid], { queryParams: navigation.theQueryParams }).catch(error => {
+              navigation.etid], { queryParams: navigation.queryParams }).catch(error => {
             this.handleError(error, navigation.etid);
           });
         case NavigationOrigin.EVENT_TRIGGERED:

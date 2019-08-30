@@ -44,7 +44,7 @@
     "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json",
     "snyk-protect": "snyk protect",
     "prepare": "yarn run snyk-protect",
-    "fix-server-js-syntax": "sed -i \"\" \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js"
+    "fix-server-js-syntax": "uname -a && sed -i \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js"
   },
   "dependencies": {
     "@angular/animations": "~7.0.3",

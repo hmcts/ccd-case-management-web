@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'media-viewer',
-    loadChildren: './wrapper/media-viewer-wrapper.module#MediaViewerWrapperModule'
+    loadChildren: './mv-wrapper/media-viewer-wrapper.module#MediaViewerWrapperModule'
   },
   {
     path: '',

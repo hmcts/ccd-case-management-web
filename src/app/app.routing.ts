@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'media-viewer',
-    loadChildren: '@hmcts/ccd-case-ui-toolkit/dist/shared/components/palette/document/document.module#DocumentModule'
+    loadChildren: './wrapper/media-viewer-wrapper.module#MediaViewerWrapperModule'
   },
   {
     path: '',

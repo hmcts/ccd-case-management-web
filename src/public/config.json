@@ -14,7 +14,7 @@
   "pagination_page_size": 25,
   "postcode_lookup_url": "http://localhost:3453/addresses?postcode=${postcode}",
   "print_service_url": "http://localhost:3453/print",
-  "remote_document_management_url": "http://dm-store-aat.service.core-compute-aat.internal:443/documents",
+  "remote_document_management_url": "http://localhost:4603/documents",
   "remote_print_service_url": "https://return-case-doc.dev.ccd.reform.hmcts.net",
   "smart_survey_url": "https://www.smartsurvey.co.uk/s/CCDfeedback/",
   "payments_url": "http://localhost:3453/payments",

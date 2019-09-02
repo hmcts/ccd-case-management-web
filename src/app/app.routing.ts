@@ -57,10 +57,10 @@ const routes: Routes = [
       },
       {
         path: 'case/:jid/:ctid/:cid',
-        // resolve: {
-        //   case: CaseResolver
-        // },
-        // runGuardsAndResolvers: 'always',
+        resolve: {
+          case: CaseResolver
+        },
+        runGuardsAndResolvers: 'always',
         component: CaseViewConsumerComponent,
         children: caseViewRouting,
       },

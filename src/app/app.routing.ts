@@ -15,6 +15,7 @@ import { PrivacyComponent } from './footer-nav/privacy.component';
 import { TcComponent } from './footer-nav/tc.component';
 import { ContactUsComponent } from './footer-nav/contact-us.component';
 import { editorRouting as caseEditRouting, viewerRouting as caseViewRouting, CaseResolver } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseViewConsumerComponent } from './cases/view/case-view-consumer.component';
 
 const routes: Routes = [
   {
@@ -56,10 +57,7 @@ const routes: Routes = [
       },
       {
         path: 'case/:jid/:ctid/:cid',
-        resolve: {
-          case: CaseResolver
-        },
-        runGuardsAndResolvers: 'always',
+        component: CaseViewConsumerComponent,
         children: caseViewRouting,
       },
       // While CCD is progressively moving to case ID only endpoints, routes have to be duplicated.

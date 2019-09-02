@@ -17,6 +17,7 @@ import {
   MarkdownModule, NavigationNotifierService, PageValidationService,
   PaletteModule, PlaceholderService
 } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseViewConsumerComponent } from './view/case-view-consumer.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {
   declarations: [
     CaseCreatorComponent,
     CaseCreatorSubmitComponent,
+    CaseViewConsumerComponent
   ],
   providers: [
     CaseReferencePipe,

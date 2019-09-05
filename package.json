@@ -35,7 +35,7 @@
     "start:fr": "ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",
     "build:fr": "ng build --prod --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",
     "extract": "ng xi18n --outputPath=src/locale",
-    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server && npm run fix-server-js-syntax",
     "serve:ssr": "node dist/server.js",
     "build:client-and-server-bundles": "ng build --prod --no-progress && ng run ccd-case-management-web:server:production --no-progress",
     "webpack:server": "webpack --config webpack.server.config.js --colors",
@@ -43,7 +43,8 @@
     "stub-api": "json-server -p 3453 --delay 800 --routes stubs/api/aggregated.routes.json --watch stubs/api/aggregated.api.json",
     "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json",
     "snyk-protect": "snyk protect",
-    "prepare": "yarn run snyk-protect"
+    "prepare": "yarn run snyk-protect",
+    "fix-server-js-syntax": "uname -a && sed -i \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js"
   },
   "dependencies": {
     "@angular/animations": "~7.0.3",
@@ -59,12 +60,13 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
-    "@hmcts/ccd-case-ui-toolkit": "2.58.13",
+    "@hmcts/ccd-case-ui-toolkit": "2.62.11-RDM-4135-prerelease",
     "@hmcts/ccpay-web-component": "~1.8.1",
     "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^1.0.0",
+    "@hmcts/media-viewer": "1.1.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-like": "^0.2.14",

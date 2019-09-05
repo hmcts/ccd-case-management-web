@@ -358,8 +358,8 @@
     typescript "3.1.1"
     underscore "^1.9.1"
 
-"@hmcts/ccpay-web-component@^2.0.12":
-  version "2.0.38"
+"@hmcts/ccpay-web-component@^2.0.44":
+  version "2.0.44"
   resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-2.0.38.tgz#4f0dc88793f4ed857007c6d7617cfec79877b6d1"
   integrity sha512-VCR5Q68I+cX4gllhpbk++8FkFxGiDYHuFHrIbzAlLO7Np6eMkalloMhhI91sKU59oz20/UwMGcmmIEkTSOb01g==
   dependencies:

@@ -11,7 +11,7 @@ locals {
   default_ccd_print_service_url = "https://ccd-case-print-service-${local.env_ase_url}"
   ccd_print_service_url = "${var.ccd_print_service_url != "" ? var.ccd_print_service_url : local.default_ccd_print_service_url}"
 
-  default_document_management_url = "^https?://(?:api-gateway\\.test\\.dm\\.reform\\.hmcts\\.net|dm-store-${var.env}\\.service\\.core-compute-${var.env}\\.internal(?::\\d+)?)"
+  default_document_management_url = "^https?://(?:api-gateway\\.test\\.dm\\.reform\\.hmcts\\.net|qqqwwwdm-store-${var.env}\.service\.core-compute-${var.env}\.internal(?::\d+)?)"
   document_management_url = "${var.document_management_url != "" ? var.document_management_url : local.default_document_management_url}"
 
   // Vault name

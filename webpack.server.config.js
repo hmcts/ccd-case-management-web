@@ -13,7 +13,6 @@ module.exports = {
   // Make sure we don"t include all node_modules
   externals: [
 	    /node_modules/,
-	    /pdfjs-dist/,
 	    /@hmcts\/media-viewer/,
 	  ],
   optimization: {

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaViewerWrapperComponent } from './media-viewer-wrapper.component';
 import { DocumentUrlPipe } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components/palette/document/document-url.pipe';
 import { MediaViewerModule } from '@hmcts/media-viewer';
-import { WindowService } from './window.service';
+import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
 import { AbstractAppConfig } from '@hmcts/ccd-case-ui-toolkit/dist/app.config';
 import createSpyObj = jasmine.createSpyObj;
 

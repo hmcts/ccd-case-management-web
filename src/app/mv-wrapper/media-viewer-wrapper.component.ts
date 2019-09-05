@@ -1,7 +1,7 @@
 import { Component, Compiler, ViewChild, ViewContainerRef, ComponentFactoryResolver,
   ComponentFactory, ElementRef, OnInit, Renderer2, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { WindowService } from './window.service';
+import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
 
 const MEDIA_VIEWER = 'media-viewer';
 

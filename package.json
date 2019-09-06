@@ -35,7 +35,8 @@
     "start:fr": "ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",
     "build:fr": "ng build --prod --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",
     "extract": "ng xi18n --outputPath=src/locale",
-    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server && npm run fix-server-js-syntax",
+    "build:ssr": "npm run fix-colour-scss && npm run build:client-and-server-bundles && npm run webpack:server && npm run fix-server-js-syntax",
+    "build:ssr-mac": "npm run fix-colour-scss-mac && npm run build:client-and-server-bundles && npm run webpack:server && npm run fix-server-js-syntax-mac",
     "serve:ssr": "node dist/server.js",
     "build:client-and-server-bundles": "ng build --prod --no-progress && ng run ccd-case-management-web:server:production --no-progress",
     "webpack:server": "webpack --config webpack.server.config.js --colors",
@@ -44,7 +45,10 @@
     "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json",
     "snyk-protect": "snyk protect",
     "prepare": "yarn run snyk-protect",
-    "fix-server-js-syntax": "uname -a && sed -i \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js"
+    "fix-server-js-syntax": "sed -i \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js && uname -a",
+    "fix-colour-scss": "sed -i \"s|@error \\\"Unknown colour \\`#{\\$colour}\\`\\\";|@return \\$colour;|g\" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss",
+    "fix-server-js-syntax-mac": "uname -a && sed -i \"\" \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js",
+    "fix-colour-scss-mac": "sed -i \"\" \"s|@error \\\"Unknown colour \\`#{\\$colour}\\`\\\";|@return \\$colour;|g\" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss"
   },
   "dependencies": {
     "@angular/animations": "~7.0.3",

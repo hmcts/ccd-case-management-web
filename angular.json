@@ -37,7 +37,7 @@
             "styles": [
               "src/style/app.scss",
               "node_modules/govuk_template_mustache/assets/stylesheets/govuk-template.css",
-              "src/style/_colour.scss"
+              "node_modules/@hmcts/media-viewer/assets/aui-styles.scss"
             ],
             "scripts": []
           },

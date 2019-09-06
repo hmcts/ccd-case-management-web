@@ -61,6 +61,10 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.remote_document_management_url;
   }
 
+  public getAnnotationApiUrl(): string {
+    return this.config.annotation_api_url;
+  }
+
   public getPaginationPageSize() {
     return this.config.pagination_page_size;
   }

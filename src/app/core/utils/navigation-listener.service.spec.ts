@@ -42,13 +42,13 @@ describe('NavigationListenerService', () => {
   it('test DRAFT_RESUMED navigation subscription', () => {
     let navParam = {
       action: NavigationOrigin.DRAFT_RESUMED,
-      jid: 'j001', ctid: 'c001', etid: 'e001', theQueryParams: 'id=1001'
+      jid: 'j001', ctid: 'c001', etid: 'e001', queryParams: 'id=1001'
     };
     navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['create/case',
       navParam.jid,
       navParam.ctid,
-      navParam.etid], { queryParams: navParam.theQueryParams });
+      navParam.etid], { queryParams: navParam.queryParams });
   });
 
   it('test error on DRAFT_RESUMED navigation subscription', () => {
@@ -58,25 +58,25 @@ describe('NavigationListenerService', () => {
     };
     let navParam = {
       action: NavigationOrigin.DRAFT_RESUMED
-      , jid: 'j001', ctid: 'c001', etid: 'e001', theQueryParams: 'id=1001'
+      , jid: 'j001', ctid: 'c001', etid: 'e001', queryParams: 'id=1001'
     };
     mockRouter.navigate.and.returnValue({ catch: (error) => error(VALID_ERROR) });
     navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['create/case',
       navParam.jid,
       navParam.ctid,
-      navParam.etid], { queryParams: navParam.theQueryParams });
+      navParam.etid], { queryParams: navParam.queryParams });
     expect(mockCallbackErrorSubject.next).toHaveBeenCalled();
   });
 
   it('test EVENT_TRIGGERED navigation subscription', () => {
     let navParam = {
       action: NavigationOrigin.EVENT_TRIGGERED,
-      relativeTo: 'relativeTo', etid: 'e001', theQueryParams: 'id=1001'
+      relativeTo: 'relativeTo', etid: 'e001', queryParams: 'id=1001'
     };
     navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['trigger',
-      navParam.etid], { queryParams: navParam.theQueryParams, relativeTo: navParam.relativeTo });
+      navParam.etid], { queryParams: navParam.queryParams, relativeTo: navParam.relativeTo });
   });
 
   it('test error on EVENT_TRIGGERED navigation subscription', () => {
@@ -86,12 +86,12 @@ describe('NavigationListenerService', () => {
     };
     let navParam = {
       action: NavigationOrigin.EVENT_TRIGGERED,
-      relativeTo: 'relativeTo', etid: 'e001', theQueryParams: 'id=1001'
+      relativeTo: 'relativeTo', etid: 'e001', queryParams: 'id=1001'
     };
     mockRouter.navigate.and.returnValue({ catch: (error) => error(VALID_ERROR) });
     navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['trigger',
-      navParam.etid], { queryParams: navParam.theQueryParams, relativeTo: navParam.relativeTo });
+      navParam.etid], { queryParams: navParam.queryParams, relativeTo: navParam.relativeTo });
     expect(mockCallbackErrorSubject.next).toHaveBeenCalled();
   });
 

@@ -80,7 +80,9 @@ class NavBar {
   }
 
   async clickSignOut() {
+    browser.ignoreSynchronization = true;
     await $(this._signOut).click();
+    browser.ignoreSynchronization = false;
   }
 }
 

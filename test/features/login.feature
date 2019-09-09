@@ -19,5 +19,6 @@ Feature: Login Scenarios
 
   Scenario: I can log out and login as another user
     Given I have logged in
-    And I have logged out
+    When I have logged out
     And I have logged in as 'auto.ccd.fe2@gmail.com'
+    Then I should see CCD case list page

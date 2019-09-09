@@ -49,8 +49,8 @@
     "fix-server-js-syntax-mac": "uname -a && sed -i \"\" \"s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g\" ./dist/server.js",
     "fix-colour-scss": "sed -i \"s|@error \\\"Unknown colour \\`#{\\$colour}\\`\\\";|@return \\$colour;|g\" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss",
     "fix-colour-scss-mac": "sed -i \"\" \"s|@error \\\"Unknown colour \\`#{\\$colour}\\`\\\";|@return \\$colour;|g\" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss",
-    "fix-window-print": "find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i \"s|printWindow.print();|try{printWindow.print();}catch(e){console.log(e)}|g\" {} +;",
-    "fix-window-print-mac": "find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i \"\" \"s|printWindow.print();|try{printWindow.print();}catch(e){console.log(e)}|g\" {} +;"
+    "fix-window-print": "find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i \"s|printWindow.print();|;|g\" {} +;",
+    "fix-window-print-mac": "find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i \"\" \"s|printWindow.print();|;|g\" {} +;"
   },
   "dependencies": {
     "@angular/animations": "~7.0.3",

@@ -5,7 +5,7 @@ SearchPage = require('../searchPage.js');
  * This component is not angular therefore we need to set browser.ignoreSynchronization = true before interacting
  * with elements on this page and then turn it back to false after
  */
-class NavBar{
+class NavBar {
 
   constructor(){
       this._parentNavElement = 'nav';
@@ -79,7 +79,9 @@ class NavBar{
     return allDisplayed;
   }
 
-
+  async clickSignOut() {
+    await $(this._signOut).click();
+  }
 }
 
 module.exports = NavBar;

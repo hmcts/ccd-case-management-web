@@ -34,7 +34,6 @@ class LoginPage extends BasePage {
       return new LoginPage
   }
 
-
   /**
    * Inputs credentials into username and password field
    * @param username
@@ -51,22 +50,25 @@ class LoginPage extends BasePage {
    * @returns {Promise<CCDBanner>} new instance of the CCDBanner page
    */
   async clickSignIn() {
-      await element(this._signIn).click();
-      return new CCDBanner
+    await element(this._signIn).click();
+    return new CCDBanner
   }
 
   /**
-   * Performs full login workflow taking credentials fron env vars
+   * Performs full login workflow taking credentials from env vars
    * @returns {Promise<void>}
    */
-  async loginToApp(){
+  async loginToApp(username = '') {
+    if (username === '') {
       let username = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
       let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
-
-      await this.inputCredentials(username,password);
-      return await this.clickSignIn();
+      await this.inputCredentials(username, password);
+    } else {
+      let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
+      await this.inputCredentials(username, 'Pa55word11');
+    }
+    return await this.clickSignIn();
   }
-
 }
 
 module.exports = LoginPage;

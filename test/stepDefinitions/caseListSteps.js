@@ -14,6 +14,10 @@ defineSupportCode(function ({ Given, When, Then}) {
   let caseListPage = new CaseListPage();
   let wbFilters = new CaseFilters();
 
+  Given(/^I have logged out$/, {timeout: 120 * 1000}, async function () {
+    await caseListPage.getNavBarComponent().clickCaseListLink();
+    await caseListPage.getNavBarComponent().clickSignOut();
+  });
 
   Then(/^the case reference is displayed in the case list results with hyphens$/, async function () {
     await caseListPage.getNavBarComponent().clickCaseListLink();

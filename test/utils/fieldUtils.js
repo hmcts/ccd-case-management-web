@@ -162,6 +162,41 @@ class FieldDataTypes {
     return yesNoField;
   }
 
+  //needs refactor later -------
+
+
+  async fieldYesNoIsVisible(radioId) {
+    let yesNoField = await new CCDYesNoField(radioId);
+    return await yesNoField.isVisible();
+  }
+
+  async textFieldIsVisible(id) {
+    let field = await new CCDStringField(id);
+    return await field.isVisible();
+  }
+
+  async numberFieldIsVisible(id) {
+    let field = await new CCDStringField(id);
+    return await field.isVisible();
+  }
+
+  async caseLinkFieldIsVisible(id) {
+    let field = await new CCDStringField(id);
+    return await field.isVisible();
+  }
+
+  async fixedListFieldIsVisible(id) {
+    let field = await new CCDFixedListField(id);
+    return await field.isVisible();
+  }
+
+  async dateFieldIsVisible(id) {
+    let field = await new CCDDateField(id);
+    return await field.isVisible();
+  }
+
+  //--------
+
   /**
    * Select random radio butto option
    * @returns CCDStringField Object

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms/forms';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { plainToClass } from 'class-transformer';
-import { Jurisdiction, Profile, CaseType, CaseState, AlertService, SearchResultView, SearchService,
-  WindowService, JurisdictionService, PaginationMetadata } from '@hmcts/ccd-case-ui-toolkit';
+import {
+  Jurisdiction, Profile, CaseType, CaseState, AlertService, SearchResultView, SearchService,
+  WindowService, JurisdictionService, PaginationMetadata
+} from '@hmcts/ccd-case-ui-toolkit';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -26,11 +28,13 @@ export class SearchComponent implements OnInit {
   metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
-    private jurisdictionService: JurisdictionService,
-    private searchService: SearchService,
-    private paginationService: PaginationService,
-    private alertService: AlertService,
-    private windowService: WindowService) { }
+              private jurisdictionService: JurisdictionService,
+              private searchService: SearchService,
+              private paginationService: PaginationService,
+              private alertService: AlertService,
+              private windowService: WindowService,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
@@ -140,5 +144,9 @@ export class SearchComponent implements OnInit {
       fieldName = fieldName.replace(/\[(.*?)]/g, '$1').toLocaleLowerCase();
     }
     return fieldName;
+  }
+
+  navigateToCase(data: any) {
+    this.router.navigate(['/case/' + this.jurisdiction.id + '/' + this.caseType.id + '/' + data.caseId]);
   }
 }

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
-import { Profile } from '@hmcts/ccd-case-ui-toolkit';
+import { NavigationListenerService } from './utils/navigation-listener.service';
+import { JurisdictionService, Profile } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-core',
@@ -26,7 +26,8 @@ export class CoreComponent implements OnInit, OnDestroy {
               private jurisdictionService: JurisdictionService,
               private appConfig: AppConfig,
               private oauth2Service: OAuth2Service,
-              private browserSupportComponent: CcdBrowserSupportComponent) {}
+              private browserSupportComponent: CcdBrowserSupportComponent,
+              private navigationListenerService: NavigationListenerService) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
@@ -41,6 +42,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
       );
     }
+    this.navigationListenerService.init();
   }
 
   getSmartSurveyUrl(): string {

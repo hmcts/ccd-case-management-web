@@ -53,7 +53,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       let actualFields = await caseDetailsPage.getTabFields();
       for (const expectedField of expectedFields) {
           expect(actualFields).to.include(expectedField);
-        }
+      }
+  });
+
+  Then(/^the following field values will be visible:$/, async function (dataTable) {
+      let expectedFields = await [].concat(...dataTable.raw());
+      let actualFieldValues = await caseDetailsPage.getTabFieldValues();
+      for (const expectedField of expectedFields) {
+        expect(actualFieldValues).to.include(expectedField);
+      }
   });
 
   Then(/^the following fields will NOT be visible:$/, async function (dataTable) {

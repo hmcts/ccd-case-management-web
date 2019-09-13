@@ -14,6 +14,10 @@ Feature: Set of scenario's covering update functionality with a second user on a
     When I start the event 'Add Q&A'
     And verify the field with label 'Please double check' is visible
     And I populate the answer field and submit the event
-    And I navigate to tab 'Notes'
-    Then the following field values will be visible:
+    Then I navigate to tab 'Notes'
+    And the following field values will be visible:
       | Please double check       |
+    And I navigate to tab 'qanda'
+    And the following field values will be visible:
+      | Are you ready?  |
+      | Yes!            |

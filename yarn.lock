@@ -310,9 +310,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.58.11":
-  version "2.58.11"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.58.11.tgz#ad6de88a40460d29cc171eb3d5ba117285ec1b3f"
+"@hmcts/ccd-case-ui-toolkit@2.62.12-RDM-5509-prerelease":
+  version "2.62.12-RDM-5509-prerelease"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.62.12-RDM-5509-prerelease.tgz#ed2ad773c6447bb204c306b477d01c9b0817e719"
+  integrity sha512-tuxQg7HAXfAq99FWQ6rzYHK7ULJID6Btx6ckclPyB1Xd4gbeXLKpDUmS9YVfm0URz4rVF2e9+E6QZUY/9lel7Q==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

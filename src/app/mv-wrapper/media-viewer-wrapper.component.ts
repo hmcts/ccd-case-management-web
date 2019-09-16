@@ -39,7 +39,6 @@ export class MediaViewerWrapperComponent implements OnInit {
       this.mediaFilename = media.document_filename;
       this.mediaContentType = media.content_type;
     }
-    // this.windowService.removeLocalStorage(MEDIA_VIEWER);
     this.removeSideBar();
   }
 

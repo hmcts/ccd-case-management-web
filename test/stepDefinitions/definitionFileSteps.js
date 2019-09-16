@@ -229,5 +229,18 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.caseType = "CaseType With No Cases";
   });
 
+  Given(/^a case type containing Complex Type Authorisation exists$/, function() {
+    Data.caseType = 'Complex CRUD';
+    Data.mandatoryFields = [
+      { fieldType: 'text', fieldId: 'FamilyDetails_FatherFullName' },
+      { fieldType: 'text', fieldId: 'FamilyDetails_FatherAge' },
+      { fieldType: 'yes-no', fieldId: 'Homeless', value: 'Yes' },
+      { fieldType: 'text', fieldId: 'MySchool_Name' },
+      { fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes' },
+      { fieldType: 'text', fieldId: 'FamilyDetails_Children_0_ChildFullName' },
+      {fieldType: 'fixed-list', fieldId: 'FamilyDetails_Children_0_ChildGender', value: 'FEMALE'},
+    ];
+  });
+
 });
 

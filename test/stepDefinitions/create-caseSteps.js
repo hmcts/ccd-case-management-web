@@ -128,6 +128,16 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       await baseSteps.createCase();
   });
 
+  When(/^I create the case with Complex Type Authorisation$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.clickCollectionAddNewButton('FamilyDetails_Children');
+    await baseSteps.fillOutAndSubmitForm();
+  });
+
+  When(/^I select and start the event '(.*)'$/, async function (event) {
+    await new CaseDetailsPage().startEvent(event);
+  });
+
   Given('I start createCase event', async function () {
     await baseSteps.navigateToCreateCasePage();
   });
@@ -229,6 +239,40 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
 
+  When(/^I start the case creation for complex authorisation case$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+  });
+
+  Then(/^only the fields defined in AuthorisationComplexTypes sheet for CREATE should be visible$/, async function() {
+    expect(await caseWizardPage.isTextFieldVisibleById("#FamilyDetails_MotherFullName")).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_MotherAge')).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherAge')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#Homeless')).to.be.true;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('FamilyDetails_Children')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Number')).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#MySchool_ProvidesAutisticChildrenSupport')).to.be.false;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('MySchool_Class')).to.be.true;
+  });
+
+  Then(/^only the fields defined in AuthorisationComplexTypes sheet for UPDATE should be editable$/, async function() {
+    expect(await caseWizardPage.isTextFieldVisibleById("#FamilyDetails_MotherFullName")).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_MotherAge')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_Children_0_ChildFullName')).to.be.true;
+    expect(await caseWizardPage.isFixedListFieldVisibleById('#FamilyDetails_Children_0_ChildGender')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#FamilyDetails_Children_0_IsAutistic')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#FamilyDetails_Children_0_NeedsSupport')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherAge')).to.be.false;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#Homeless')).to.be.true;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('FamilyDetails_Children')).to.be.true;
+    expect(await caseWizardPage.isNumberFieldVisibleById('#MySchool_Number')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('MySchool_Class')).to.be.true;
+  });
+
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
       let fieldDisplayed = await caseWizardPage.isFieldPresent(dataType);
       expect(fieldDisplayed).to.be.true;
@@ -263,6 +307,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   When(/^I select and submit the event '(.*)'$/, async function (event) {
     await new CaseDetailsPage().startEvent(event);
     await baseSteps.fillOutAndSubmitForm();
+  });
+
+  When(/^I select and submit the event Modify Case$/, async function () {
+    await new CaseDetailsPage().startEvent('Modify Case');
   });
 
 
@@ -523,6 +571,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
+
   Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
     await baseSteps.navigateToCreateCasePage()
     for (let i = 0; i < numberOfItems; i++) {

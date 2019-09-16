@@ -156,6 +156,7 @@ export class AppConfig extends AbstractAppConfig {
 export class Config extends CaseEditorConfig {
   logout_url: string;
   oauth2_token_endpoint_url: string;
+  annotation_api_url: string;
   pagination_page_size: number;
   smart_survey_url: string;
   unsupported_browser_url: string;

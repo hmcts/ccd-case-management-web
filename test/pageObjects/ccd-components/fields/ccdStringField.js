@@ -98,12 +98,8 @@ class CCDStringField {
     await this._enterIntoField(value)
   }
 
-  async isHidden() {
-    return await this.stringField.waitForElementToBeInvisible();
-  }
-
   async isVisible() {
-    return await this.stringField.waitForElementToBeVisible();
+    return await this.stringField.isPresent() && await this.stringField.isDisplayed();
   }
 
   /**

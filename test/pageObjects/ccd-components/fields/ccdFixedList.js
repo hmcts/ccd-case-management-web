@@ -103,7 +103,7 @@ class CcdFixedList {
   }
 
   async isVisible() {
-    return await this.fixedList.waitForElementToBeVisible();
+    return await $(this.css).isPresent() && await $(this.css).isDisplayed();
   }
 
   /**

@@ -18,7 +18,7 @@ let CaseEditComponent: any = MockComponent({
   outputs: ['cancelled', 'submitted']
 });
 
-describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
+fdescribe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
   const JID = 'PROBATE';
   const CTID = 'ComplexTestType';
@@ -165,7 +165,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
     component.submit()(SANITISED_EDIT_FORM);
 
-    expect(casesService.createCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+    expect(casesService.createCase).toHaveBeenCalledWith(CTID, SANITISED_EDIT_FORM);
   });
 
   it('should validate case details with sanitised data when validated', () => {

@@ -1,8 +1,8 @@
 exports.config = {
 
   specs: [
-    '../features/fieldTypes.feature'
-    // '../features/*/*.feature'
+    '../features/*.feature',
+    '../features/*/*.feature'
   ],
 
   exclude: [],

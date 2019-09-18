@@ -18,7 +18,7 @@ let CaseEditComponent: any = MockComponent({
   outputs: ['cancelled', 'submitted']
 });
 
-fdescribe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
+describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
 
   const JID = 'PROBATE';
   const CTID = 'ComplexTestType';

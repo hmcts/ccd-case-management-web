@@ -71,12 +71,8 @@ class CcdYesNoField {
     this.label = await this._getLabel();
   }
 
-  async isHidden() {
-    return await this.yesRadio.waitForElementToBeInvisible();
-  }
-
   async isVisible() {
-    return await this.yesRadio.waitForElementToBeVisible();
+    return await this.yesRadio.isPresent() && await $(this.css).isDisplayed();
   }
 
   async getCurrentOption(){

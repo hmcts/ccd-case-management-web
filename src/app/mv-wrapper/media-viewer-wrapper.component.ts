@@ -28,11 +28,6 @@ export class MediaViewerWrapperComponent implements OnInit {
 
     console.log('Platform ID is ' + this.platformId);
 
-    if (!isPlatformBrowser(this.platformId)) {
-      console.log('On server. Skipping.');
-      return;
-    }
-
     const localStorageMedia = this.windowService.getLocalStorage(MEDIA_VIEWER);
     if (localStorageMedia) {
       const media = JSON.parse(localStorageMedia);

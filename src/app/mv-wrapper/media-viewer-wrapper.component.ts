@@ -25,13 +25,7 @@ export class MediaViewerWrapperComponent implements OnInit {
   }
 
   async ngOnInit() {
-
     console.log('Platform ID is ' + this.platformId);
-
-    if (!isPlatformBrowser(this.platformId)) {
-      console.log('On server. Skipping.');
-      return;
-    }
 
     const localStorageMedia = this.windowService.getLocalStorage(MEDIA_VIEWER);
     if (localStorageMedia) {

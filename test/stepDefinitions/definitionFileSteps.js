@@ -4,10 +4,10 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
-  Given(/^I have a case with 3 pages$/, async function () {
+  async function populateMultiplePageCaseType() {
     Data.caseType = 'Multiple Pages';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldFName'}];
-  });
+  }
 
   async function populateCaseFields(){
     Data.jurisdiction = 'Auto Test 1';
@@ -16,8 +16,20 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
+  Given(/^I have a case with 3 pages$/, async function () {
+    await populateMultiplePageCaseType();
+  });
+
   Given(/^a case type containing every field type exists$/, async function() {
     await populateCaseFields();
+  });
+
+  Given(/^a case type containing a Dynamic Fixed List field exists$/, async function() {
+    await populateCaseFields();
+  });
+
+  Given(/^a case type with multiple pages containing a dynamic fixed list exists$/, async function() {
+    await populateMultiplePageCaseType();
   });
 
   Given(/^a case type with the print button configured exist$/, async function() {

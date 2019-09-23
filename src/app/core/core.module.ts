@@ -16,6 +16,7 @@ import { CookiesComponent } from '../footer-nav/cookies.component';
 import { PrivacyComponent } from '../footer-nav/privacy.component';
 import { TcComponent } from '../footer-nav/tc.component';
 import { ContactUsComponent } from '../footer-nav/contact-us.component';
+import { AccessibilityComponent } from '../footer-nav/accessibility.component';
 import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
@@ -65,6 +66,7 @@ import { NavigationListenerService } from './utils/navigation-listener.service';
     PrivacyComponent,
     TcComponent,
     ContactUsComponent,
+    AccessibilityComponent,
     AccordionComponent,
     CcdBrowserSupportComponent
   ]

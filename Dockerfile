@@ -14,6 +14,7 @@ RUN apt-get update \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
+RUN ls /opt/jenkins/workspace/M_ccd-case-management-web_PR-788
 RUN printenv
 RUN pwd
 RUN echo $HOME

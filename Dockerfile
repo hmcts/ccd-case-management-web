@@ -17,7 +17,7 @@ USER hmcts
 RUN printenv
 RUN pwd
 RUN echo $HOME
-COPY package.json yarn.lock .snyk ./
+COPY package.json yarn.lock .snyk build-with-ssr.sh ./
 RUN yarn install
 COPY . .
 RUN yarn build:ssr

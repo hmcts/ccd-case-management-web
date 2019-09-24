@@ -14,9 +14,10 @@ RUN apt-get update \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
-COPY package.json yarn.lock .snyk ./
+COPY package.json yarn.lock .snyk bin ./
 RUN yarn install
 COPY . .
+RUN yarn build:ssr
 # ---- Unfold build:ssr ----
 RUN find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i "s|printWindow.print();|;|g" {} +;
 RUN sed -i "s|@error \"Unknown colour \`#{\$colour}\`\";|@return \$colour;|g" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss

@@ -14,14 +14,15 @@ RUN apt-get update \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
-RUN ls /opt/jenkins/workspace/M_ccd-case-management-web_PR-788
-RUN printenv
-RUN pwd
-RUN echo $HOME
-COPY package.json yarn.lock .snyk build-with-ssr.sh ./
+COPY package.json yarn.lock .snyk ./
 RUN yarn install
 COPY . .
-RUN yarn build:ssr
+# ---- Unfold build:ssr ----
+RUN find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i "s|printWindow.print();|;|g" {} +;
+RUN sed -i "s|@error \"Unknown colour \`#{\$colour}\`\";|@return \$colour;|g" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss
+RUN npm run build:client-and-server-bundles
+RUN npm run webpack:server
+RUN sed -i "s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g" ./dist/server.js
 
 # ---- Runtime image ----
 FROM ${base} AS runtime

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 function fix_server_js_syntax() {
     sed -i "s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g" ./dist/server.js

@@ -14,9 +14,9 @@ RUN apt-get update \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
-printenv
-pwd
-echo $HOME
+RUN printenv
+RUN pwd
+RUN echo $HOME
 COPY package.json yarn.lock .snyk ./
 RUN yarn install
 COPY . .

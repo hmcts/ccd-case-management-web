@@ -14,7 +14,10 @@ RUN apt-get update \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
-COPY package.json yarn.lock .snyk bin ./
+printenv
+pwd
+echo $HOME
+COPY package.json yarn.lock .snyk ./
 RUN yarn install
 COPY . .
 RUN yarn build:ssr

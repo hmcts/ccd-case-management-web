@@ -4,10 +4,10 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
-  Given(/^I have a case with 3 pages$/, async function () {
+  async function populateMultiplePageCaseType() {
     Data.caseType = 'Multiple Pages';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldFName'}];
-  });
+  }
 
   async function populateCaseFields(){
     Data.jurisdiction = 'Auto Test 1';
@@ -48,8 +48,20 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await populateCaseFieldsWithFileUpload('.docx');
   });
 
+  Given(/^I have a case with 3 pages$/, async function () {
+    await populateMultiplePageCaseType();
+  });
+
   Given(/^a case type containing every field type exists$/, async function() {
     await populateCaseFields();
+  });
+
+  Given(/^a case type containing a Dynamic Fixed List field exists$/, async function() {
+    await populateCaseFields();
+  });
+
+  Given(/^a case type with multiple pages containing a dynamic fixed list exists$/, async function() {
+    await populateMultiplePageCaseType();
   });
 
   Given(/^a case type with the print button configured exist$/, async function() {
@@ -253,6 +265,19 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type without any cases exists$/, function() {
     Data.caseType = "CaseType With No Cases";
+  });
+
+  Given(/^a case type containing Complex Type Authorisation exists$/, function() {
+    Data.caseType = 'Complex CRUD';
+    Data.mandatoryFields = [
+      { fieldType: 'text', fieldId: 'FamilyDetails_FatherFullName' },
+      { fieldType: 'text', fieldId: 'FamilyDetails_FatherAge' },
+      { fieldType: 'yes-no', fieldId: 'Homeless', value: 'Yes' },
+      { fieldType: 'text', fieldId: 'MySchool_Name' },
+      { fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes' },
+      { fieldType: 'text', fieldId: 'FamilyDetails_Children_0_ChildFullName' },
+      {fieldType: 'fixed-list', fieldId: 'FamilyDetails_Children_0_ChildGender', value: 'FEMALE'},
+    ];
   });
 
 });

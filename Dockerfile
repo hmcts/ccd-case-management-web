@@ -18,12 +18,6 @@ COPY package.json yarn.lock .snyk bin ./
 RUN yarn install
 COPY . .
 RUN yarn build:ssr
-# ---- Unfold build:ssr ----
-RUN find ./node_modules/@hmcts/media-viewer/ -type f -name '*.js' -exec sed -i "s|printWindow.print();|;|g" {} +;
-RUN sed -i "s|@error \"Unknown colour \`#{\$colour}\`\";|@return \$colour;|g" ./node_modules/@hmcts/media-viewer/assets/govuk-frontend/helpers/_colour.scss
-RUN npm run build:client-and-server-bundles
-RUN npm run webpack:server
-RUN sed -i "s|@hmcts/media-viewer;|'@hmcts/media-viewer';|g" ./dist/server.js
 
 # ---- Runtime image ----
 FROM ${base} AS runtime

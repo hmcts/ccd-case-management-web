@@ -14,6 +14,7 @@ export class MediaViewerWrapperComponent implements OnInit {
   mediaURL = '';
   mediaFilename = '';
   mediaContentType = '';
+  mediaAnnotationApiUrl = '';
 
   public constructor(public renderer: Renderer2,
                      private el: ElementRef,
@@ -33,6 +34,7 @@ export class MediaViewerWrapperComponent implements OnInit {
       this.mediaURL = media.document_binary_url;
       this.mediaFilename = media.document_filename;
       this.mediaContentType = media.content_type;
+      this.mediaAnnotationApiUrl = media.annotation_api_url;
     }
     this.removeSideBar();
   }

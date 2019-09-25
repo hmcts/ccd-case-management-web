@@ -343,10 +343,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.62.14-RDM-4135-prerelease":
-  version "2.62.14-RDM-4135-prerelease"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.62.14-RDM-4135-prerelease.tgz#84d787cf89ca1739cff66686675370ef93b83df9"
-  integrity sha512-I7Pm6RGnkUPQRM0OuW/WpL2q2FTKFITCVnM+g1gTAfuOc6aPcy45baSAJ/hiztYJLwGOpbW0GuGzbNnG510h1w==
+"@hmcts/ccd-case-ui-toolkit@2.62.16-RDM-5582-prerelease":
+  version "2.62.16-RDM-5582-prerelease"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.62.16-RDM-5582-prerelease.tgz#4caf62d5d257d9b1a9d01a7a57d41665ad432d38"
+  integrity sha512-vxDlSSwbXCSQP4JZUdGgYhdYoSb7yGcwkfQhsfUDXnJb9zKA2fFKZMDsk4rzY8mq9n/q1XZEIojOzMMPEMRNAA==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -370,10 +370,10 @@
   resolved "https://registry.yarnpkg.com/@hmcts/frontend/-/frontend-0.0.34-alpha.tgz#0d39b6d06c632ccb7c578fc91e3311306da9db0d"
   integrity sha512-+q3IB4L3UHsD5cs/11PDWEftDAmDV6eYkxm9eoNtXAfea93VhXNFA9ZEIV+TM7v/9xaAIkmDj9C4kCSUb1Hl3g==
 
-"@hmcts/media-viewer@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@hmcts/media-viewer/-/media-viewer-1.1.0.tgz#7254c305642f3bbb4a0fe0d1d59fa5397b32cb6f"
-  integrity sha512-bpLrWQlf5JbRJQmZlNKxUpHNW9G61mT6a/0sIAEe2TJBwExTeC6sT3gkgn0P3l10SlBSWEBVNVuHdmkLbj1HcQ==
+"@hmcts/media-viewer@1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@hmcts/media-viewer/-/media-viewer-1.1.7.tgz#da2510a2ee7c18a97c12fc98fde597b0a7a5629e"
+  integrity sha512-BS/LewvZOIMFqlP8ldI2ISzsmhT+ueVV5cLshI737u3gss15o+CboLhV3Z0uZLbkX2mOmVmtIAzShTiVCXAg6w==
   dependencies:
     "@hmcts/frontend" "^0.0.34-alpha"
     govuk-frontend "^2.11.0"

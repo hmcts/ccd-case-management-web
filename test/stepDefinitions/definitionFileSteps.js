@@ -1,5 +1,5 @@
 let Data = require('../utils/TestData.js');
-
+let RandomUtils = require('../utils/ccdDataGenerationUtils.js');
 var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
@@ -245,6 +245,18 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       { fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes' },
       { fieldType: 'text', fieldId: 'FamilyDetails_Children_0_ChildFullName' },
       {fieldType: 'fixed-list', fieldId: 'FamilyDetails_Children_0_ChildGender', value: 'FEMALE'},
+    ];
+  });
+
+  Given(/^a workbasket sort order case type exists with (?:case fields|a label)? configured in the case list results$/, async function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'CaseType With WB Sort orders';
+    Data.event = 'Create a case';
+    let randomText = await RandomUtils.generateRandomString();
+    await Math.random().toFixed()
+    Data.optionalFields = [
+      { fieldType: 'text', value:  randomText},
+      { fieldType: 'date', value: '10102010'},
     ];
   });
 

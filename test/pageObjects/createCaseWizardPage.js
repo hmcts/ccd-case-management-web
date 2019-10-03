@@ -14,7 +14,7 @@ class CreateCaseWizardPage extends BasePage{
     constructor() {
       super();
       this.continueButton = new Button('ccd-case-edit button[type=submit]');
-      this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
+        this.collectionAddNewElementButtonXPathTemplate = '//ccd-write-collection-field/*[@id="COLLECTION-ID-PLACEHOLDER"]/div/button[1]'; //MySchool_Class
       this.CollectionNewButton = new Button('.button', 'Add new');
       this.answerValueXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../following-sibling::td//ccd-field-read-label/*';
       this.answerChangeLinkXpathTemplate = '//span[text()="LABEL-TEXT-PLACEHOLDER"]/../../td[2]/a';
@@ -44,9 +44,44 @@ class CreateCaseWizardPage extends BasePage{
    * @returns An object containing data about the field we are interacting with
    * including the value in which we have entered
    */
-    async interactWithField(fieldDataType, value){
+    async interactWithField(fieldDataType, value) {
       return await this.fieldUtils.interactWithField(fieldDataType, value);
     }
+
+    async interactWithField(fieldDataType, value, id){
+      return await this.fieldUtils.interactWithField(fieldDataType, value, id);
+    }
+
+    async getFieldDetails(fieldDataType, fieldId) {
+      return await new FieldUtils().getFieldDetails(fieldDataType, fieldId);
+    }
+
+    async isTextFieldVisibleById(fieldId) {
+      return await this.fieldUtils.textFieldIsVisible(fieldId);
+    }
+
+  async isNumberFieldVisibleById(fieldId) {
+    return await this.fieldUtils.numberFieldIsVisible(fieldId);
+  }
+
+    async isCaseLinkFieldVisibleById(fieldId) {
+      return await this.fieldUtils.caseLinkFieldIsVisible(fieldId);
+    }
+
+    async isFixedListFieldVisibleById(fieldId) {
+      return await this.fieldUtils.fixedListFieldIsVisible(fieldId);
+    }
+
+
+    async isDateFieldVisibleById(fieldId) {
+      return await this.fieldUtils.dateFieldIsVisible(fieldId);
+    }
+
+
+    async isYesOrNoFieldVisibleById(fieldId) {
+      return await this.fieldUtils.fieldYesNoIsVisible(fieldId);
+    }
+
 
     async getFieldValue(dataType){
       return await new FieldUtils().getFieldValue(dataType);
@@ -59,6 +94,19 @@ class CreateCaseWizardPage extends BasePage{
     async clickCollectionAddNewButton(collectionFieldId) {
       let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
       await element(by.xpath(xpathLocator)).click();
+    }
+
+  async isCollectionAddNewButtonEnabled(collectionFieldId) {
+    let xpathLocator = await this.collectionAddNewElementButtonXPathTemplate.replace('COLLECTION-ID-PLACEHOLDER', collectionFieldId);
+    return await element(by.xpath(xpathLocator)).isEnabled();
+  }
+
+  /**
+   * Get contents of number field
+   * @returns {Promise<Promise<*>|Promise<String>>}
+   */
+    async getNumberFieldValue(){
+      return await this.fieldUtils.getNumberFieldValue();
     }
 
   /**

@@ -10,11 +10,11 @@ USER root
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     bzip2=1.0.6-8.1 \
-    patch=2.7.5-1+deb9u1 \
+    patch=2.7.5-1+deb9u2 \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
-COPY package.json yarn.lock .snyk ./
+COPY package.json yarn.lock .snyk bin ./
 RUN yarn install
 COPY . .
 RUN yarn build:ssr

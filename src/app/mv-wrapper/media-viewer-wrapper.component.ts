@@ -3,7 +3,7 @@ import { Component, Compiler, ViewChild, ViewContainerRef, ComponentFactoryResol
 import { isPlatformBrowser } from '@angular/common';
 import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
 
-const MEDIA_VIEWER = 'media-viewer';
+const MEDIA_VIEWER = 'media-viewer-info';
 
 @Component({
   selector: 'ccd-media-viewer',

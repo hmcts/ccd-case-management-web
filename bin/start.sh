@@ -11,7 +11,7 @@ function fix_colour_scss_mac() {
 osName="$(uname -s)"
 echo "Building with ssr on [$osName]."
 if [[ "Darwin" == "$osName" ]];then
-    start-mac": "npm run fix_colour_scss_mac && ng serve
+    fix_colour_scss_mac && ng serve
 else 
-    npm run fix_colour_scss && ng serve
+    fix_colour_scss && ng serve
 fi

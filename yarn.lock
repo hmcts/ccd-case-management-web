@@ -369,10 +369,10 @@
   resolved "https://registry.yarnpkg.com/@hmcts/frontend/-/frontend-0.0.34-alpha.tgz#0d39b6d06c632ccb7c578fc91e3311306da9db0d"
   integrity sha512-+q3IB4L3UHsD5cs/11PDWEftDAmDV6eYkxm9eoNtXAfea93VhXNFA9ZEIV+TM7v/9xaAIkmDj9C4kCSUb1Hl3g==
 
-"@hmcts/media-viewer@1.1.8":
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/@hmcts/media-viewer/-/media-viewer-1.1.8.tgz#b6047ef9eac75858ae66e1eaa82faa2c38f8f47d"
-  integrity sha512-L+mHEk8J3BzKLN+RnMsc7t9aBuMsZxUUNRMTYv8nvWy+AqKUANEOGu5MM0w7gdpvZywj+yyBJydYhUtL8sPM3A==
+"@hmcts/media-viewer@1.1.9":
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/@hmcts/media-viewer/-/media-viewer-1.1.9.tgz#86c6d2ebec3dd15807d386182bd15f6b390b7c22"
+  integrity sha512-2SnJpSvXI9wvKhjRlYm/S2P5mz/0JTp9NNkA4qpu3FNZF0bEn2yRsaF/LixoAi05JV8GFTpL3vJLOEiClaJf8g==
   dependencies:
     "@hmcts/frontend" "^0.0.34-alpha"
     govuk-frontend "^2.11.0"

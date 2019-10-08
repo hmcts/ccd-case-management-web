@@ -120,7 +120,7 @@ class FieldDataTypes {
 
   /**
    * Enter the valid document file name to be uploaded
-   * @returns CCDStringField Object
+   * @returns CCDDocumentField Object
    */
   async enterIntoDocumentField(value, id){
     let css = await FIELDS.DOCUMENT.cssTag;

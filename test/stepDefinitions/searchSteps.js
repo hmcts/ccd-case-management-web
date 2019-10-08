@@ -196,16 +196,20 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Then(/^the results should be sorted by '(.*)' in the '(.*)' order$/, async function (sortColumn, order) {
     let values = await searchPage.getCaseListComponent().getColumnResultsValues(sortColumn);
-    let isSorted = values.slice(1).every((item, i) => {
-      if (values[i] == '' || item == '') {
-        return true;
-      } else if (order == 'ascending') {
-        return values[i].toLowerCase() <= item.toLowerCase()
-      } else {
-        return values[i].toLowerCase() >= item.toLowerCase()
-      }
-    });
-
+    let isSorted = false;
+    if (values.length <= 1) {
+      isSorted = true;
+    } else {
+      isSorted = values.slice(1).every((item, i) => {
+        if (values[i] == '' || item == '') {
+          return true;
+        } else if (order == 'ascending') {
+          return values[i].toLowerCase() <= item.toLowerCase()
+        } else {
+          return values[i].toLowerCase() >= item.toLowerCase()
+        }
+      });
+    }
     expect (isSorted).to.be.true;
   });
 

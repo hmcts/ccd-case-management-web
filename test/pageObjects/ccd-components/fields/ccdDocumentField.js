@@ -43,7 +43,7 @@ class CcdDocumentField {
   }
 
   async uploadFile(value) {
-    let docField = await $(this.css);
+    let docField = await $(`${this.css} input`);
     await docField.sendKeys(value);
   }
 }

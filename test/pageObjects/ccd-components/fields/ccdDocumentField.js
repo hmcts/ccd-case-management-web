@@ -15,7 +15,7 @@ class CcdDocumentField {
     this.css = css;
     this.key = this.setKey(key);
 
-    this.label = `${this.css}`
+    this.label = `${this.css} label`
   }
 
   setKey(key){

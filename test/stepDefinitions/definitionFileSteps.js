@@ -252,8 +252,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.jurisdiction = 'Auto Test 1';
     Data.caseType = 'CaseType With WB Sort orders';
     Data.event = 'Create a case';
-    let randomText = await RandomUtils.generateRandomString();
-    await Math.random().toFixed()
+    let randomText = await RandomUtils.generateRandomString();    
     Data.optionalFields = [
       { fieldType: 'text', value:  randomText},
       { fieldType: 'date', value: '10102010'},

@@ -24,7 +24,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given('a file {string}', async function(fileName) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
-    {fieldType: 'document', value: '/test/resources/dm-store/' + fileName, fieldId: 'DocumentField'}];
+    {fieldType: 'document', value: '/test/resources/documents_for_mv/' + fileName, fieldId: 'DocumentField'}];
   });
 
   Given(/^a case type to upload a file$/, async function() {

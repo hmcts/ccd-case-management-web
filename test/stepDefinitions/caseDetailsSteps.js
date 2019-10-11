@@ -132,11 +132,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(newTabUrl.includes('/media-viewer')).to.true;
   });
 
-  When(/^the document content is visible in the new tab$/, async function () {
-    await caseDetailsPage.documentContentVisible();
+  Then(/^the pdf document is visible in the new tab$/, async function () {
+    await caseDetailsPage.pdfContentVisible();
   });
 
-  When(/^the document content is not visible in the new tab$/, async function () {
-    await caseDetailsPage.documentContentNotVisible();
+  Then(/^the image document is visible in the new tab$/, async function () {
+    await caseDetailsPage.imageContentVisible();
+  });
+
+  When(/^the document is shown as unsupported in the new tab$/, async function () {
+    await caseDetailsPage.documentContentTypeNotSupported();
   });
 });

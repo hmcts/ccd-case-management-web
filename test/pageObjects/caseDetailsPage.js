@@ -238,22 +238,37 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Makes sure that the media viewer content is visible for the supported document
-   * without error
+   * Check that Media Viewer is showing the pdf document.
    * @returns {Promise<void>}
    */
-  async documentContentVisible(){
-    return await $('#toolbarViewer').isDisplayed() && !$('mv-error-message').isDisplayed();
+  async pdfContentVisible(){
+    return await $('mv-pdf-viewer').isDisplayed() && !$('mv-error-message').isDisplayed();
   }
 
   /**
-   * Makes sure that the media viewer content is not visible for the unsupported document
-   * and displays an error
+   * Check that Media Viewer is showing the image document.
    * @returns {Promise<void>}
    */
-  async documentContentNotVisible(){
+  async imageContentVisible(){
+    return await $('mv-image-viewer').isDisplayed() && !$('mv-error-message').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing the current document as of unsupported type.
+   * @returns {Promise<void>}
+   */
+  async documentContentTypeNotSupported() {
+    return await $('#toolbarViewer').isDisplayed() && $('mv-error-message').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing an error message.
+   * @returns {Promise<void>}
+   */
+  async mediaViewerIsShowingErrorMessage() {
     return await $('#toolbarViewer').isDisplayed() && $('mv-error-message').isDisplayed();
   }
 }
+
 
 module.exports = CaseDetailsPage;

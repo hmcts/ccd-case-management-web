@@ -227,10 +227,10 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Checks if the media viewer is loaded in the new tab
+   * Returns the URL of media viewer loaded in the new tab
    * @returns {Promise<string>}
    */
-  async openMediaViewer(){
+  async getMediaViewerURL(){
     let handles = await browser.getAllWindowHandles();
     await browser.switchTo().window(handles[1]);
     await browser.waitForAngularEnabled(false);

@@ -128,7 +128,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^the media viewer is opened in a new tab$/, async function () {
-    let newTabUrl = await caseDetailsPage.openMediaViewer();
+    let newTabUrl = await caseDetailsPage.getMediaViewerURL();
     expect(newTabUrl.includes('/media-viewer')).to.true;
   });
 

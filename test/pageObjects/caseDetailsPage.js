@@ -242,7 +242,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async pdfContentVisible(){
-    return await $('mv-pdf-viewer').isDisplayed() && !$('mv-error-message').isDisplayed();
+    return await $('mv-pdf-viewer').isDisplayed();
   }
 
   /**
@@ -250,7 +250,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async imageContentVisible(){
-    return await $('mv-image-viewer').isDisplayed() && !$('mv-error-message').isDisplayed();
+    return await $('mv-image-viewer').isDisplayed();
   }
 
   /**
@@ -258,7 +258,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async documentContentTypeNotSupported() {
-    return await $('#toolbarViewer').isDisplayed() && $('mv-error-message').isDisplayed();
+    return await $('mv-unsupported-viewer').isDisplayed();
   }
 
   /**
@@ -266,7 +266,7 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async mediaViewerIsShowingErrorMessage() {
-    return await $('#toolbarViewer').isDisplayed() && $('mv-error-message').isDisplayed();
+    return await $('mv-error-message').isDisplayed();
   }
 }
 

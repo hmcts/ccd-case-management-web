@@ -58,7 +58,7 @@
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
     "@hmcts/ccd-case-ui-toolkit": "2.58.13",
-    "@hmcts/ccpay-web-component": "~1.8.1",
+    "@hmcts/ccpay-web-component": "~2.0.50",
     "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",

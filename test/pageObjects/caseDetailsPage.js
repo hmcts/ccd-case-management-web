@@ -30,6 +30,7 @@ class CaseDetailsPage extends BasePage {
     this._detailsBoxEvent = '.EventLog-DetailsPanel tbody > tr:nth-of-type(4) > td span';
     this._detailsBoxSummary = '.EventLog-DetailsPanel tbody > tr:nth-of-type(5) > td span';
     this._detailsBoxComment = '.EventLog-DetailsPanel tbody > tr:nth-of-type(6) > td span';
+    this._documentLink = 'ccd-read-document-field > a';
 
   }
 
@@ -216,6 +217,58 @@ class CaseDetailsPage extends BasePage {
     await first.click();
   }
 
+  /**
+   * Clicking on the document link
+   * @returns {Promise<void>}
+   */
+  async clickDocumentLink(){
+    let documentLink = await $(this._documentLink);
+    await documentLink.click();
+  }
+
+  /**
+   * Returns the URL of media viewer loaded in the new tab
+   * @returns {Promise<string>}
+   */
+  async getMediaViewerURL(){
+    let handles = await browser.getAllWindowHandles();
+    await browser.switchTo().window(handles[1]);
+    await browser.waitForAngularEnabled(false);
+    return await browser.getCurrentUrl();
+  }
+
+  /**
+   * Check that Media Viewer is showing the pdf document.
+   * @returns {Promise<void>}
+   */
+  async pdfContentVisible(){
+    return await $('mv-pdf-viewer').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing the image document.
+   * @returns {Promise<void>}
+   */
+  async imageContentVisible(){
+    return await $('mv-image-viewer').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing the current document as of unsupported type.
+   * @returns {Promise<void>}
+   */
+  async documentContentTypeNotSupported() {
+    return await $('mv-unsupported-viewer').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing an error message.
+   * @returns {Promise<void>}
+   */
+  async mediaViewerIsShowingErrorMessage() {
+    return await $('mv-error-message').isDisplayed();
+  }
 }
+
 
 module.exports = CaseDetailsPage;

@@ -18,7 +18,6 @@ class CcdDocumentField {
     this.label = `${this.css} label`
   }
 
-
   setKey(key){
     if (typeof key === 'undefined') {
       return this.css.replace('#','');
@@ -43,6 +42,10 @@ class CcdDocumentField {
     return await $(this.css).isDisplayed();
   }
 
+  async uploadFile(value) {
+    let docField = await $(`${this.css} input`);
+    await docField.sendKeys(value);
+  }
 }
 
 module.exports = CcdDocumentField;

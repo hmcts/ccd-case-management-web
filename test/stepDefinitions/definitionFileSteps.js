@@ -16,6 +16,21 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
+  async function populateCaseFieldsForFileUpload(){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+  }
+
+  Given('a file {string}', async function(fileName) {
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
+    {fieldType: 'document', value: '/test/resources/documents_for_mv/' + fileName, fieldId: 'DocumentField'}];
+  });
+
+  Given(/^a case type to upload a file$/, async function() {
+    await populateCaseFieldsForFileUpload();
+  });
+
   Given(/^I have a case with 3 pages$/, async function () {
     await populateMultiplePageCaseType();
   });

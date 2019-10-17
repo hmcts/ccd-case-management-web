@@ -123,6 +123,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       TestData.caseReference = await new CaseDetailsPage().getCaseReference();
   });
 
+  When(/^I create a case of this case type with the file given$/, async function () {
+    await baseSteps.createCase();
+  });
+  
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
   });

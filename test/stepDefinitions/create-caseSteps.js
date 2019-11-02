@@ -123,8 +123,22 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       TestData.caseReference = await new CaseDetailsPage().getCaseReference();
   });
 
+  When(/^I create a case of this case type with the file given$/, async function () {
+    await baseSteps.createCase();
+  });
+  
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
+  });
+
+  When(/^I create the case with Complex Type Authorisation$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+    await caseWizardPage.clickCollectionAddNewButton('FamilyDetails_Children');
+    await baseSteps.fillOutAndSubmitForm();
+  });
+
+  When(/^I select and start the event '(.*)'$/, async function (event) {
+    await new CaseDetailsPage().startEvent(event);
   });
 
   Given('I start createCase event', async function () {
@@ -198,6 +212,18 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await baseSteps.navigateToCreateCasePage();
   });
 
+  When(/^I navigate to multiple pages case type form pages$/, async function (){
+    await baseSteps.navigateToCreateCasePage();
+    await new CreateCaseWizardPage().clickContinueButton();
+  })
+
+  When(/^I create a case with multiple pages$/, async function (){
+    await baseSteps.navigateToCreateCasePage();
+    await new CreateCaseWizardPage().clickContinueButton();
+    await new CreateCaseWizardPage().clickContinueButton();
+    await new CreateCaseWizardPage().clickContinueButton();
+    await new CreateCaseWizardPage().clickSubmitCaseButton();
+  })
 
   Then(/^I should expect address list to be empty$/, async function(){
     let addressUK = await dataTypesPage.getAddressUKComplex();
@@ -214,6 +240,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await addressUK.clickAddressButton();
   });
 
+
   Then(/^I should see a '(.*)' addresses populated in the address list$/, async function(count) {
     let addressUK = await dataTypesPage.getAddressUKComplex();
 
@@ -228,9 +255,49 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
 
+  When(/^I start the case creation for complex authorisation case$/, async function () {
+    await baseSteps.navigateToCreateCasePage();
+  });
+
+  Then(/^only the fields defined in AuthorisationComplexTypes sheet for CREATE should be visible$/, async function() {
+    expect(await caseWizardPage.isTextFieldVisibleById("#FamilyDetails_MotherFullName")).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_MotherAge')).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherAge')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#Homeless')).to.be.true;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('FamilyDetails_Children')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Number')).to.be.false;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#MySchool_ProvidesAutisticChildrenSupport')).to.be.false;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('MySchool_Class')).to.be.true;
+  });
+
+  Then(/^only the fields defined in AuthorisationComplexTypes sheet for UPDATE should be editable$/, async function() {
+    expect(await caseWizardPage.isTextFieldVisibleById("#FamilyDetails_MotherFullName")).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_MotherAge')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherFullName')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_Children_0_ChildFullName')).to.be.true;
+    expect(await caseWizardPage.isFixedListFieldVisibleById('#FamilyDetails_Children_0_ChildGender')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#FamilyDetails_Children_0_IsAutistic')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#FamilyDetails_Children_0_NeedsSupport')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#FamilyDetails_FatherAge')).to.be.false;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#Homeless')).to.be.true;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('FamilyDetails_Children')).to.be.true;
+    expect(await caseWizardPage.isNumberFieldVisibleById('#MySchool_Number')).to.be.true;
+    expect(await caseWizardPage.isTextFieldVisibleById('#MySchool_Name')).to.be.true;
+    expect(await caseWizardPage.isYesOrNoFieldVisibleById('#MySchool_ProvidesAutisticChildrenSupport')).to.be.true;
+    expect(await caseWizardPage.isCollectionAddNewButtonEnabled('MySchool_Class')).to.be.true;
+  });
+
   Then(/^I should see a '(.*)' field$/, async function(dataType) {
       let fieldDisplayed = await caseWizardPage.isFieldPresent(dataType);
       expect(fieldDisplayed).to.be.true;
+  });
+
+  Then('the Dynamic list is populated with the following values', async function (dataTable) {
+    let expectedDynamicListItems = await [].concat(...dataTable.raw());
+    let actualDynamicListItems = await dataTypesPage.getDynamicListItems();
+    expect(expectedDynamicListItems).to.deep.equal(actualDynamicListItems);
   });
 
   Given(/^I have filled out the '(.*)' field$/, async function(dataType) {
@@ -262,6 +329,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   When(/^I select and submit the event '(.*)'$/, async function (event) {
     await new CaseDetailsPage().startEvent(event);
     await baseSteps.fillOutAndSubmitForm();
+  });
+
+  When(/^I select and submit the event Modify Case$/, async function () {
+    await new CaseDetailsPage().startEvent('Modify Case');
   });
 
 
@@ -493,6 +564,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickSubmitCaseButton();
   });
+
   Given(/^I have submitted a case with nested collection data containing (\d+) items$/, async function(numberOfItems){
     await baseSteps.navigateToCreateCasePage()
     for (let i = 0; i < numberOfItems; i++) {

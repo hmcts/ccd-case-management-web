@@ -15,6 +15,7 @@
   "postcode_lookup_url": "http://localhost:3453/addresses?postcode=${postcode}",
   "print_service_url": "http://localhost:3453/print",
   "remote_document_management_url": "http://localhost:4603/documents",
+  "annotation_api_url": "http://localhost:3453/em-anno",
   "remote_print_service_url": "https://return-case-doc.dev.ccd.reform.hmcts.net",
   "smart_survey_url": "https://www.smartsurvey.co.uk/s/CCDfeedback/",
   "payments_url": "http://localhost:3453/payments",

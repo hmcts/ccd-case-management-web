@@ -64,6 +64,7 @@ module "case-management-web" {
     CCD_GW_OAUTH2_URL = "${local.ccd_gateway_url}/oauth2"
     CCD_GW_OAUTH2_CLIENT_ID = "ccd_gateway"
     DM_URL = "${local.ccd_gateway_url}/documents"
+    ANNOTATION_API_URL = "${local.ccd_gateway_url}/em-anno"
     DM_URL_REMOTE = "${local.document_management_url}/documents"
     CCD_PAGE_SIZE = 25
     POSTCODE_LOOKUP_URL = "${local.ccd_gateway_url}/addresses?postcode=$${postcode}"

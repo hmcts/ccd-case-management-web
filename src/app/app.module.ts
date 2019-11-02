@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { WorkbasketModule } from './workbasket/workbasket.module';
 import { SearchModule } from './search/search.module';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app.routing';
 
 import { CasesModule } from './cases/cases.module';
 import { AppConfig } from './app.config';
@@ -24,7 +24,7 @@ import { AbstractAppConfig, ActivityModule } from '@hmcts/ccd-case-ui-toolkit';
     BrowserModule.withServerTransition({ appId: 'ccd-case-management-web' }),
     HttpModule,
     FormsModule,
-    routing,
+    AppRoutingModule,
     ScrollToModule.forRoot(),
     CoreModule,
     WorkbasketModule,

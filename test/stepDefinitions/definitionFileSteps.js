@@ -1,13 +1,13 @@
 let Data = require('../utils/TestData.js');
-
+let RandomUtils = require('../utils/ccdDataGenerationUtils.js');
 var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
-  Given(/^I have a case with 3 pages$/, async function () {
+  async function populateMultiplePageCaseType() {
     Data.caseType = 'Multiple Pages';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextFieldFName'}];
-  });
+  }
 
   async function populateCaseFields(){
     Data.jurisdiction = 'Auto Test 1';
@@ -16,8 +16,35 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
 
+  async function populateCaseFieldsForFileUpload(){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+  }
+
+  Given('a file {string}', async function(fileName) {
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
+    {fieldType: 'document', value: '/test/resources/documents_for_mv/' + fileName, fieldId: 'DocumentField'}];
+  });
+
+  Given(/^a case type to upload a file$/, async function() {
+    await populateCaseFieldsForFileUpload();
+  });
+
+  Given(/^I have a case with 3 pages$/, async function () {
+    await populateMultiplePageCaseType();
+  });
+
   Given(/^a case type containing every field type exists$/, async function() {
     await populateCaseFields();
+  });
+
+  Given(/^a case type containing a Dynamic Fixed List field exists$/, async function() {
+    await populateCaseFields();
+  });
+
+  Given(/^a case type with multiple pages containing a dynamic fixed list exists$/, async function() {
+    await populateMultiplePageCaseType();
   });
 
   Given(/^a case type with the print button configured exist$/, async function() {
@@ -221,6 +248,30 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case type without any cases exists$/, function() {
     Data.caseType = "CaseType With No Cases";
+  });
+
+  Given(/^a case type containing Complex Type Authorisation exists$/, function() {
+    Data.caseType = 'Complex CRUD';
+    Data.mandatoryFields = [
+      { fieldType: 'text', fieldId: 'FamilyDetails_FatherFullName' },
+      { fieldType: 'text', fieldId: 'FamilyDetails_FatherAge' },
+      { fieldType: 'yes-no', fieldId: 'Homeless', value: 'Yes' },
+      { fieldType: 'text', fieldId: 'MySchool_Name' },
+      { fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes' },
+      { fieldType: 'text', fieldId: 'FamilyDetails_Children_0_ChildFullName' },
+      {fieldType: 'fixed-list', fieldId: 'FamilyDetails_Children_0_ChildGender', value: 'FEMALE'},
+    ];
+  });
+
+  Given(/^a workbasket sort order case type exists with (?:case fields|a label)? configured in the case list results$/, async function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'CaseType With WB Sort orders';
+    Data.event = 'Create a case';
+    let randomText = await RandomUtils.generateRandomString();    
+    Data.optionalFields = [
+      { fieldType: 'text', value:  randomText},
+      { fieldType: 'date', value: '10102010'},
+    ];
   });
 
 });

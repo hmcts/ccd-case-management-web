@@ -119,6 +119,21 @@ class FieldDataTypes {
   }
 
   /**
+   * Enter the valid document file name to be uploaded
+   * @returns CCDDocumentField Object
+   */
+  async enterIntoDocumentField(value, id){
+    let css = await FIELDS.DOCUMENT.cssTag;
+    let docField = new CCDDocumentField(css, id);
+    let fileValue = ''
+    if (value ) {
+      fileValue = process.cwd() + value;
+    }
+    await docField.uploadFile(fileValue);
+    return docField;
+  }
+
+  /**
    * Select a provided option from the dropdown
    * @returns CCDStringField Object
    */
@@ -161,6 +176,41 @@ class FieldDataTypes {
     await yesNoField.selectOption(value);
     return yesNoField;
   }
+
+  //needs refactor later -------
+
+
+  async fieldYesNoIsVisible(radioId) {
+    let yesNoField = await new CCDYesNoField(radioId);
+    return await yesNoField.isVisible();
+  }
+
+  async textFieldIsVisible(id) {
+    let field = await new CCDStringField(id);
+    return await field.isVisible();
+  }
+
+  async numberFieldIsVisible(id) {
+    let field = await new CCDStringField(id);
+    return await field.isVisible();
+  }
+
+  async caseLinkFieldIsVisible(id) {
+    let field = await new CCDStringField(id);
+    return await field.isVisible();
+  }
+
+  async fixedListFieldIsVisible(id) {
+    let field = await new CCDFixedListField(id);
+    return await field.isVisible();
+  }
+
+  async dateFieldIsVisible(id) {
+    let field = await new CCDDateField(id);
+    return await field.isVisible();
+  }
+
+  //--------
 
   /**
    * Select random radio butto option
@@ -306,7 +356,7 @@ class FieldDataTypes {
       case 'date':
         return await this.enterIntoDateField(value, id);
       case 'document':
-        return //todo
+        return await this.enterIntoDocumentField(value, id);
       case 'email':
         return await this.enterIntoEmailField(value);
       case 'fixed-list':

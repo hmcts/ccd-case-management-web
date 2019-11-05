@@ -11,10 +11,7 @@ module.exports = {
   target: "node",
   resolve: { extensions: [".js", ".ts"] },
   // Make sure we don"t include all node_modules
-  externals: [
-	    /node_modules/,
-	    /@hmcts\/media-viewer/,
-	  ],
+  externals: [/node_modules/],
   optimization: {
     minimize: false
   },

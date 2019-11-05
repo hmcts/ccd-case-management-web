@@ -19,7 +19,6 @@ import { ContactUsComponent } from '../footer-nav/contact-us.component';
 import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
-import { NavigationListenerService } from './utils/navigation-listener.service';
 
 @NgModule({
   imports: [
@@ -34,7 +33,6 @@ import { NavigationListenerService } from './utils/navigation-listener.service';
     DraftService,
     HttpErrorService,
     DocumentService,
-    NavigationListenerService,
     FormErrorService,
     FormValueService,
     CaseEditWizardGuard,

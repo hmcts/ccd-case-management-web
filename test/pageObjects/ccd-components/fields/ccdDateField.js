@@ -87,10 +87,12 @@ class CcdDateField{
         && this._isYearFieldInputReady();
   }
 
-
+  async isHidden() {
+    return await this.dayCss.waitForElementToBeInvisible();
+  }
 
   async isVisible() {
-    return await this.dayCss.isPresent() && await this.dayCss.isDisplayed();
+    return await this.dayCss.waitForElementToBeVisible();
   }
 
   /**

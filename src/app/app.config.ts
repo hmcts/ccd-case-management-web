@@ -61,10 +61,6 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.remote_document_management_url;
   }
 
-  public getAnnotationApiUrl(): string {
-    return this.config.annotation_api_url;
-  }
-
   public getPaginationPageSize() {
     return this.config.pagination_page_size;
   }
@@ -156,7 +152,6 @@ export class AppConfig extends AbstractAppConfig {
 export class Config extends CaseEditorConfig {
   logout_url: string;
   oauth2_token_endpoint_url: string;
-  annotation_api_url: string;
   pagination_page_size: number;
   smart_survey_url: string;
   unsupported_browser_url: string;

@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkbasketComponent } from './workbasket/workbasket.component';
 import { SearchComponent } from './search/search.component';
@@ -24,10 +23,6 @@ const routes: Routes = [
     canActivate: [
       AppConfigGuard,
     ],
-  },
-  {
-    path: 'media-viewer',
-    loadChildren: './mv-wrapper/media-viewer-wrapper.module#MediaViewerWrapperModule'
   },
   {
     path: '',
@@ -86,9 +81,3 @@ const routes: Routes = [
 ];
 
 export const routing = RouterModule.forRoot(routes);
-
-@NgModule({
-  imports: [routing],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

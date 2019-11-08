@@ -62,6 +62,10 @@ app.engine('html', ngExpressEngine({
   ]
 }));
 
+const poweredByHeader = 'x-powered-by';
+app.disable(poweredByHeader);
+appHealth.disable(poweredByHeader);
+
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 

@@ -16,12 +16,12 @@ exports.config = {
 
   capabilities: {
     'shardTestFiles': true,
-    'maxInstances': 5,
+    'maxInstances': 10,
     'acceptInsecureCerts': true,
     'marionette': false,
     'browserName': 'chrome',
 
-    chromeOptions: { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote '] },
+    chromeOptions: { args: ['--window-size=1920,1080', '--start-maximized', '--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote '] },
 
     'proxy': {
       'proxyType': 'manual',

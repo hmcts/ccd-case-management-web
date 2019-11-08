@@ -15,7 +15,6 @@ defineSupportCode(function ({ Given, When, Then}) {
   let wbFilters = new CaseFilters();
 
   Given(/^I have logged out$/, {timeout: 120 * 1000}, async function () {
-    await caseListPage.getNavBarComponent().clickCaseListLink();
     await caseListPage.getNavBarComponent().clickSignOut();
   });
 
@@ -299,6 +298,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   When(/^I search for that case by case reference$/, async function () {
     await caseListPage.getNavBarComponent().clickCaseListLink();
+    await caseListPage.getWorkBasketFilters().selectCaseType(TestData.caseType);
     await caseListPage.getWorkBasketFilters().enterIntoCaseReferenceField(TestData.caseReference);
     await caseListPage.getWorkBasketFilters().clickApplyButton();
   });

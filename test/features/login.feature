@@ -20,5 +20,5 @@ Feature: Login Scenarios
   Scenario: I can log out and login as another user
     Given I have logged in
     When I have logged out
-    And I have logged in as 'auto.test.cnp+fe2@gmail.com'
+    And I have logged in as 'auto.test.cnp+fe.judge@gmail.com'
     Then I should see CCD case list page

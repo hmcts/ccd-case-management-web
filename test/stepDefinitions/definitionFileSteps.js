@@ -128,6 +128,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   ];
   });
 
+  Given(/^a case type with questions and answers exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Q&A functionality ';
+    Data.event = 'Create questions';
+  });
+
   async function populateCaseProgressionType(){
     Data.caseType = 'Case Progression';
     Data.optionalFields = [];

@@ -119,6 +119,21 @@ class FieldDataTypes {
   }
 
   /**
+   * Enter the valid document file name to be uploaded
+   * @returns CCDDocumentField Object
+   */
+  async enterIntoDocumentField(value, id){
+    let css = await FIELDS.DOCUMENT.cssTag;
+    let docField = new CCDDocumentField(css, id);
+    let fileValue = ''
+    if (value ) {
+      fileValue = process.cwd() + value;
+    }
+    await docField.uploadFile(fileValue);
+    return docField;
+  }
+
+  /**
    * Select a provided option from the dropdown
    * @returns CCDStringField Object
    */
@@ -341,7 +356,7 @@ class FieldDataTypes {
       case 'date':
         return await this.enterIntoDateField(value, id);
       case 'document':
-        return //todo
+        return await this.enterIntoDocumentField(value, id);
       case 'email':
         return await this.enterIntoEmailField(value);
       case 'fixed-list':

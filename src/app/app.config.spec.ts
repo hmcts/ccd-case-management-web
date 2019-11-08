@@ -12,6 +12,7 @@ describe('AppConfig', () => {
   const ACTIVITY_URL = 'http://activity';
   const DOC_MANAGEMENT_URL = 'http://localhost:3453/documents';
   const REMOTE_DOC_MANAGEMENT_URL = 'http://evidence.ccd.reform/documents';
+  const ANNOTATION_API_URL = 'http://localhost:3453/em-anno';
   const PAGINATION_PAGE_SIZE = 25;
   const POSTCODE_LOOKUP_URL = 'http://api.ccd.reform/addresses?postcode=';
   const OAUTH2_TOKEN_ENDPOINT_URL = 'http://gateway.ccd.reform/oauth2';
@@ -40,6 +41,7 @@ describe('AppConfig', () => {
     case_data_url: DATA_URL,
     document_management_url: DOC_MANAGEMENT_URL,
     remote_document_management_url: REMOTE_DOC_MANAGEMENT_URL,
+    annotation_api_url: ANNOTATION_API_URL,
     pagination_page_size: PAGINATION_PAGE_SIZE,
     postcode_lookup_url: POSTCODE_LOOKUP_URL,
     oauth2_token_endpoint_url: OAUTH2_TOKEN_ENDPOINT_URL,
@@ -89,6 +91,7 @@ describe('AppConfig', () => {
             expect(appConfig.getCaseDataUrl()).toEqual(DATA_URL);
             expect(appConfig.getDocumentManagementUrl()).toEqual(DOC_MANAGEMENT_URL);
             expect(appConfig.getRemoteDocumentManagementUrl()).toEqual(REMOTE_DOC_MANAGEMENT_URL);
+            expect(appConfig.getAnnotationApiUrl()).toEqual(ANNOTATION_API_URL);
             expect(appConfig.getPaginationPageSize()).toEqual(PAGINATION_PAGE_SIZE);
             expect(appConfig.getPostcodeLookupUrl()).toEqual(POSTCODE_LOOKUP_URL);
             expect(appConfig.getOAuth2TokenEndpointUrl()).toEqual(OAUTH2_TOKEN_ENDPOINT_URL);

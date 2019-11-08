@@ -87,8 +87,10 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   When(/^I search for this Case Type on the workbasket filters$/, async function(){
-    await caseListPage.getWorkBasketFilters().selectCaseType(TestData.caseType);
-    await caseListPage.getWorkBasketFilters().clickApplyButton();
+    await caseListPage.getNavBarComponent().clickCaseListLink();
+    await wbFilters.selectJurisdiction(TestData.jurisdiction);
+    await wbFilters.selectCaseType(TestData.caseType);
+    await wbFilters.clickApplyButton();
   });
 
   Then(/^page '(.*)' will be selected on the pagination$/, async function(pageNumber){

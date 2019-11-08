@@ -69,10 +69,10 @@ defineSupportCode(function ({ Given, When, Then}) {
     browser.ignoreSynchronization = true;
     loginPage = await Login.open();
     await loginPage.loginToApp(username);
+    browser.ignoreSynchronization = false;
 
     caseListPage = new CaseListPage();
     await caseListPage.waitForPageLoaded();
-    browser.ignoreSynchronization = false;
   });
 
   Then(/^I should see the <component> on the CCD case list page$/, async function () {

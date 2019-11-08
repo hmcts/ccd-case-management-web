@@ -1,4 +1,4 @@
-@mv
+@mv @functional
 Feature: Set of scenarios to view supported and unsupported types of documents with Media Viewer
 
 Background:

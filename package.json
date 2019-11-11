@@ -57,7 +57,7 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
-    "@hmcts/ccd-case-ui-toolkit": "2.62.19-RDM-6084-prerelease",
+    "@hmcts/ccd-case-ui-toolkit": "2.62.21-RDM-4335-prerelease",
     "@hmcts/ccpay-web-component": "~2.0.50",
     "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@nguniversal/express-engine": "^6.0.0",

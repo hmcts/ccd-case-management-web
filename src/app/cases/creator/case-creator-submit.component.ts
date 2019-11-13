@@ -37,7 +37,7 @@ export class CaseCreatorSubmitComponent implements OnInit {
   submit(): (sanitizedEditForm: CaseEventData) => Observable<object> {
     return (sanitizedEditForm: CaseEventData) => {
       sanitizedEditForm.draft_id = this.eventTrigger.case_id;
-      return this.casesService.createCase(this.jurisdictionId, this.caseTypeId, sanitizedEditForm);
+      return this.casesService.createCase(this.caseTypeId, sanitizedEditForm);
     }
   }
 

@@ -17,6 +17,7 @@ Feature: Login Scenarios
     | banners           |
     | case list results |
 
+  @broken
   Scenario: I can log out and login as another user
     Given I have logged in
     When I have logged out

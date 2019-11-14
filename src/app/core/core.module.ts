@@ -20,6 +20,7 @@ import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { FormGroupHelper } from '@hmcts/ccd-case-ui-toolkit/dist/shared/commons/form-group-helper';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { NavigationListenerService } from './utils/navigation-listener.service';
     ActivityResolver,
     ActivityPollingService,
     DocumentManagementService,
+    FormGroupHelper,
     AddressesService,
     AuthService,
     OAuth2Service,

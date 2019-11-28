@@ -12,6 +12,7 @@ install:
 script:
   - yarn --version
   - yarn lint
+  - yarn audit --level=high
   - yarn test
   - yarn test:coverage
   - codecov

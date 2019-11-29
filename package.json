@@ -58,7 +58,7 @@
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
     "@hmcts/ccd-case-ui-toolkit": "2.62.23-RDM-6635-RC15.2-PAY-prerelease",
-    "@hmcts/ccpay-web-component": "^3.0.0-beta32",
+    "@hmcts/ccpay-web-component": "^3.0.0-beta34",
     "@hmcts/media-viewer": "1.1.9",
     "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@nguniversal/express-engine": "^6.0.0",

@@ -117,8 +117,6 @@
     "karma-typescript": "^4.1.1",
     "lodash": "^4.17.13",
     "mocha": "^5.0.5",
-    "marked": "^0.7.0",
-    "minimatch": "^3.0.2",
     "ng2-mock-component": "^0.1.1",
     "node-sass": "^4.9.3",
     "nsp": "^3.2.1",
@@ -140,13 +138,13 @@
     "webpack-cli": "^2.0.14"
   },
   "resolutions": {
+    "braces": "^3.0.2",
     "handlebars": "^4.5.3",
     "https-proxy-agent": "^3.0.1",
-    "mem": "^6.0.1",
-    "marked": "^0.7.0",
-    "braces": "^3.0.2",
+    "cucumberjs-allure-reporter/allure-js-commons/mime": "^1.4.1",
     "lodash": "^4.17.15",
-    "mime": "^2.4.4"
+    "marked": "^0.7.0",
+    "mem": "^6.0.1"
   },
   "snyk": true
 }

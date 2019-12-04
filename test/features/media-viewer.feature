@@ -1,4 +1,7 @@
-@mv
+@broken
+# marked as broken until related gate-way api changes are merged into master
+# https://github.com/hmcts/ccd-api-gateway/pull/253
+
 Feature: Set of scenarios to view supported and unsupported types of documents with Media Viewer
 
 Background:

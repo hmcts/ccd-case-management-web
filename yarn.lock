@@ -312,7 +312,7 @@
 "@hmcts/ccd-case-ui-toolkit@2.62.23-RDM-6635-RC15.2-PAY-prerelease":
   version "2.62.23-RDM-6635-RC15.2-PAY-prerelease"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.62.23-RDM-6635-RC15.2-PAY-prerelease.tgz#c0ccfe97d15f26f052d5ead2bd93b837e4c6e846"
-  integrity sha512-osCaalNXfeBE0HEvyhZ7NAKabQZhL1r+jXVN2oJKOnjc5mR3EHyV7dR76hdgMlPAhVAXwBqQl+rPtq/kWNYnKQ=
+  integrity sha512-osCaalNXfeBE0HEvyhZ7NAKabQZhL1r+jXVN2oJKOnjc5mR3EHyV7dR76hdgMlPAhVAXwBqQl+rPtq/kWNYnKQ==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

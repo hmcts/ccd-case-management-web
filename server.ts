@@ -38,7 +38,6 @@ const CONFIG = {
   'unsupported_browser_url': process.env['UNSUPPORTED_BROWSER_URL'] || 'https://www.gov.uk/help/browsers',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
   'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:3453/payments',
-  'pay_bulk_scan_url': process.env['PAY_BULKSCAN_URL'] || 'http://localhost:3453/pay-bulkscan',
   'chrome_min_required_version': parseInt(process.env['CHROME_MIN_REQUIRED_VERSION'], 10) || 67,
   'ie_min_required_version': parseInt(process.env['IE_MIN_REQUIRED_VERSION'], 10) || 11,
   'edge_min_required_version': parseInt(process.env['EDGE_MIN_REQUIRED_VERSION'], 10) || 17,

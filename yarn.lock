@@ -312,7 +312,6 @@
 "@hmcts/ccd-case-ui-toolkit@2.62.22-RDM-4837-prerelease":
   version "2.62.22-RDM-4837-prerelease"
   resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.62.22-RDM-4837-prerelease.tgz#2aeaa51d2d41bf8eec7084ea854b17a7dbcbfc8c"
-  integrity sha512-DdkxlJqXwixsYENI1laeAe84/cFRe3psEMlUvirL7MAD0ZKXwnNH8SWOnwOqk9RBMxWVA93YYhfJcPbBFfRDnQ==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -324,9 +323,9 @@
     typescript "3.1.1"
     underscore "^1.9.1"
 
-"@hmcts/ccpay-web-component@~2.0.50":
-  version "2.0.51"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-2.0.51.tgz#9279b0c6b44e35586638c1d1ea6e2ef05ac1812f"
+"@hmcts/ccpay-web-component@2.0.53":
+  version "2.0.53"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-2.0.53.tgz#071f95df2ded265d93f54fdb865a6837228a508f"
   dependencies:
     tslib "^1.9.0"
 

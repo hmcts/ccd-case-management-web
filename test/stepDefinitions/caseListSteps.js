@@ -155,7 +155,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     expect(await columnResults[0].getText()).to.equal('Child full nameee');
   });
 
-  Given(/^I have filled the create case filters for a case other than the workbasket default$/, async function () {
+  Given(/^I have filled the case filters for a case other than the workbasket default$/, async function () {
     TestData.caseType='Multiple Pages';
     await wbFilters.selectCaseType(TestData.caseType);
     await wbFilters.interactWithField('text');

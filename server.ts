@@ -10,6 +10,7 @@ import * as express from 'express';
 import { join } from 'path';
 import * as xFrameOptions from 'x-frame-options';
 import * as healthcheck from "@hmcts/nodejs-healthcheck";
+import * as noCache from 'nocache';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -62,6 +63,10 @@ app.engine('html', ngExpressEngine({
   ]
 }));
 
+const poweredByHeader = 'x-powered-by';
+app.disable(poweredByHeader);
+appHealth.disable(poweredByHeader);
+
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 
@@ -82,6 +87,9 @@ app.get('/config', (req, res) => {
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
+
+// No cache for any routes handled by Universal
+app.use(noCache());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

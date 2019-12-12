@@ -143,7 +143,8 @@
     "https-proxy-agent": "^3.0.1",
     "lodash": "^4.17.15",
     "marked": "^0.7.0",
-    "mem": "^6.0.1"
+    "mem": "^6.0.1",
+    "serialize-javascript" : "^2.1.1"
   },
   "snyk": true
 }

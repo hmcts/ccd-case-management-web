@@ -20,12 +20,14 @@ import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { BannerModule } from './banner/banner.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     AlertModule,
+    BannerModule,
     CaseUIToolkitModule,
     DeviceDetectorModule.forRoot()
   ],

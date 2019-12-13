@@ -7,6 +7,7 @@ import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { NavigationListenerService } from './utils/navigation-listener.service';
 import { JurisdictionService, Profile } from '@hmcts/ccd-case-ui-toolkit';
+import { Banner } from './banner/banner.model';
 
 @Component({
   selector: 'ccd-core',
@@ -18,6 +19,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   selectedJurisdictionName: string;
   subscription: Subscription;
   unsupportedBrowser = false;
+  banners: Banner[] = [];
 
   profile: Profile;
 
@@ -42,6 +44,17 @@ export class CoreComponent implements OnInit, OnDestroy {
         jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
       );
     }
+    this.profile.jurisdictions.forEach(jurisdiction => {
+      if (jurisdiction.bannerEnabled) {
+        this.banners.push({
+          bannerDescription: jurisdiction.bannerDescription,
+          bannerUrlText: jurisdiction.bannerUrlText,
+          bannerUrl: jurisdiction.bannerUrl,
+          bannerViewed: false,
+          bannerEnabled: jurisdiction.bannerEnabled
+        });
+      }
+    });
     this.navigationListenerService.init();
   }
 

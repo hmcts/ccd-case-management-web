@@ -58,7 +58,11 @@ const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
   description: '',
-  caseTypes: CASE_TYPES_1
+  caseTypes: CASE_TYPES_1,
+  bannerDescription: "Test Banner Description",
+  bannerEnabled: true,
+  bannerUrl: "http://localhost:3451/test",
+  bannerUrlText: "click here to see it.>>>"
 };
 
 const CASE_TYPES_2: CaseTypeLite[] = [
@@ -134,7 +138,11 @@ const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
   description: '',
-  caseTypes: CASE_TYPES_2
+  caseTypes: CASE_TYPES_2,
+  bannerDescription: "Test Banner Description2",
+  bannerEnabled: true,
+  bannerUrl: "http://localhost:3451/test",
+  bannerUrlText: "click here to see it.>>>"
 };
 
 const SINGLE_EVENT: CaseEvent[] = [{
@@ -161,7 +169,11 @@ const JURISDICTION_SINGLE_EVENT: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
   description: '',
-  caseTypes: CASE_TYPES_SINGLE_EVENT
+  caseTypes: CASE_TYPES_SINGLE_EVENT,
+  bannerDescription: "Test Banner Description",
+  bannerEnabled: true,
+  bannerUrl: "http://localhost:3451/test",
+  bannerUrlText: "click here to see it.>>>"
 };
 
 const CASE_TYPE: CaseTypeLite = {

@@ -103,7 +103,11 @@ describe('WorkbasketComponent', () => {
     id: 'J1',
     name: 'Jurisdiction 1',
     description: '',
-    caseTypes: []
+    caseTypes: [],
+    bannerDescription: "Test Banner Description",
+    bannerEnabled: true,
+    bannerUrl: "http://localhost:3451/test",
+    bannerUrlText: "click here to see it.>>>"
   };
 
   const CASE_TYPES: CaseType[] = [

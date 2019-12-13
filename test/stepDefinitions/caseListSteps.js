@@ -126,7 +126,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     this.topResult = currentPageTopResult;
   });
 
-  Given(/^there are more than (\d+) page of results$/, async function(pages){
+  Given(/^there are more than (\d+) page of results$/, {timeout: 1200 * 1000}, async function(pages){
     let totalCases = await caseListPage.getCaseListComponent().getTotalCases();
     let casesToCreate = ((parseInt(pages) * 25) +1) - parseInt(totalCases);
 

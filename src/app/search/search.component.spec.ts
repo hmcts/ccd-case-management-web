@@ -11,10 +11,10 @@ const JURISDICTION: Jurisdiction = {
   name: 'Jurisdiction 1',
   description: '',
   caseTypes: [],
-  bannerDescription: "Test Banner Description",
+  bannerDescription: 'Test Banner Description',
   bannerEnabled: true,
-  bannerUrl: "http://localhost:3451/test",
-  bannerUrlText: "click here to see it.>>>"
+  bannerUrl: 'http://localhost:3451/test',
+  bannerUrlText: 'click here to see it.>>>'
 };
 
 const CASE_TYPES: CaseType[] = [

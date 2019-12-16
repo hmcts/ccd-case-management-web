@@ -13,7 +13,6 @@ import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
 import { HttpService, Jurisdiction, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
-import { BannerComponent } from './banner/banner.component';
 
 describe('CoreComponent', () => {
 
@@ -62,7 +61,7 @@ describe('CoreComponent', () => {
       'label'
     ]});
 
-  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});  
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
 
   let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
 
@@ -348,7 +347,7 @@ describe('CoreComponent when no defaults in the profile', () => {
       'label'
     ]});
 
-  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});  
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
 
   let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
 

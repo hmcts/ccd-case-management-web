@@ -14,8 +14,6 @@ describe('BannerComponent', () => {
     template: '<ng-content></ng-content>'
   });
 
-  const BANNERS: Banner[] = [];
-
   const BANNER: Banner = {
     bannerDescription: 'banner description',
     bannerUrlText: 'click here to see it. >>>',
@@ -61,6 +59,7 @@ describe('BannerComponent', () => {
   });
 
   it('should display one banner', () => {
+    const BANNERS: Banner[] = [];
     BANNERS.push(BANNER);
     component.banners = BANNERS;
     fixture.detectChanges();
@@ -69,21 +68,23 @@ describe('BannerComponent', () => {
   });
 
   it('should display two banners as received', () => {
+    const BANNERS: Banner[] = [];
     BANNERS.push(BANNER);
     BANNERS.push(BANNER1);
     component.banners = BANNERS;
     fixture.detectChanges();
 
-    expect(de.children.length).toBe(3);
+    expect(de.children.length).toBe(2);
   });
 
   it('should display one banner after changing the status to viewed', () => {
+    const BANNERS: Banner[] = [];
     BANNERS.push(BANNER);
     BANNERS.push(BANNER1);
     component.banners = BANNERS;
     component.closeBanner(BANNER);
     fixture.detectChanges();
 
-    expect(de.children.length).toBe(2);
+    expect(de.children.length).toBe(1);
   });
 });

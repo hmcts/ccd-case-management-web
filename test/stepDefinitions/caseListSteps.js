@@ -267,7 +267,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('fixed-list')) {
       let fixedListFieldValue = await fieldUtils.getFixedListFieldValue()
-      if (fixedListFieldValue !== 'undefined'){
+      if (fixedListFieldValue !== '--Select a value--'){
         allFiltersCleared = false;
         errMessage = `fixed list field has value ${fixedListFieldValue}`
 

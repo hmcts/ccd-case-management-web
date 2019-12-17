@@ -13,6 +13,7 @@ import {
   Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
   SearchResultView
 } from '@hmcts/ccd-case-ui-toolkit';
+import { Banner } from '../core/banner/banner.model';
 
 describe('WorkbasketComponent', () => {
 
@@ -99,15 +100,22 @@ describe('WorkbasketComponent', () => {
     hasDrafts: () => false
   };
 
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
+
   const JURISDICTION: Jurisdiction = {
     id: 'J1',
     name: 'Jurisdiction 1',
     description: '',
     caseTypes: [],
-    bannerDescription: 'Test Banner Description',
-    bannerEnabled: true,
-    bannerUrl: 'http://localhost:3451/test',
-    bannerUrlText: 'click here to see it.>>>'
+    banners: BANNERS
   };
 
   const CASE_TYPES: CaseType[] = [

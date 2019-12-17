@@ -45,13 +45,11 @@ export class CoreComponent implements OnInit, OnDestroy {
       );
     }
     this.profile.jurisdictions.forEach(jurisdiction => {
-      if (jurisdiction.bannerEnabled) {
-        this.banners.push({
-          bannerDescription: jurisdiction.bannerDescription,
-          bannerUrlText: jurisdiction.bannerUrlText,
-          bannerUrl: jurisdiction.bannerUrl,
-          bannerViewed: false,
-          bannerEnabled: jurisdiction.bannerEnabled
+      if (jurisdiction.banners) {
+        jurisdiction.banners.forEach(banner => {
+          if (banner.bannerEnabled) {
+            this.banners.push(banner);
+          }
         });
       }
     });

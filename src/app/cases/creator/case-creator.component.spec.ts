@@ -11,6 +11,7 @@ import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderServic
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
+import { Banner } from '../../core/banner/banner.model';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';
@@ -54,15 +55,22 @@ const CASE_TYPES_1: CaseTypeLite[] = [
     }
 ];
 
+const BANNERS: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
+
 const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
   description: '',
   caseTypes: CASE_TYPES_1,
-  bannerDescription: 'Test Banner Description',
-  bannerEnabled: true,
-  bannerUrl: 'http://localhost:3451/test',
-  bannerUrlText: 'click here to see it.>>>'
+  banners: BANNERS
 };
 
 const CASE_TYPES_2: CaseTypeLite[] = [
@@ -134,15 +142,22 @@ const CASE_TYPES_2: CaseTypeLite[] = [
   }
 ];
 
+const BANNERS_2: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
+
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
   description: '',
   caseTypes: CASE_TYPES_2,
-  bannerDescription: 'Test Banner Description2',
-  bannerEnabled: true,
-  bannerUrl: 'http://localhost:3451/test',
-  bannerUrlText: 'click here to see it.>>>'
+  banners: BANNERS_2
 };
 
 const SINGLE_EVENT: CaseEvent[] = [{
@@ -165,15 +180,22 @@ const CASE_TYPES_SINGLE_EVENT: CaseTypeLite[] = [
   }
 ];
 
+const BANNERS_3: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
+
 const JURISDICTION_SINGLE_EVENT: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
   description: '',
   caseTypes: CASE_TYPES_SINGLE_EVENT,
-  bannerDescription: 'Test Banner Description',
-  bannerEnabled: true,
-  bannerUrl: 'http://localhost:3451/test',
-  bannerUrlText: 'click here to see it.>>>'
+  banners: BANNERS_3
 };
 
 const CASE_TYPE: CaseTypeLite = {

@@ -13,18 +13,26 @@ import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
 import { HttpService, Jurisdiction, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { Banner } from './banner/banner.model';
 
 describe('CoreComponent', () => {
+
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
 
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
     name: 'Divorce',
     description: 'Divorce description',
     caseTypes: [],
-    bannerDescription: 'Test Banner Description',
-    bannerEnabled: true,
-    bannerUrl: 'http://localhost:3451/test',
-    bannerUrlText: 'click here to see it.>>>'
+    banners: BANNERS
   };
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [

@@ -7,11 +7,10 @@ import { Subject } from 'rxjs/Subject';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
-import { Banner } from '../../core/banner/banner.model';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';

@@ -4,7 +4,7 @@ import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { text } from '../../test/helpers';
-import { Banner } from './banner.model';
+import { Banner } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('BannerComponent', () => {
 

@@ -3,9 +3,8 @@ import { SearchComponent } from './search.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import createSpyObj = jasmine.createSpyObj;
-import { Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
+import { Jurisdiction, CaseType, CaseState, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { Router } from '@angular/router';
-import { Banner } from '../core/banner/banner.model';
 
 const BANNERS: Banner[] = [
   {

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Banner } from './banner.model';
-
+import { Banner } from '@hmcts/ccd-case-ui-toolkit';
 @Component({
   selector: 'ccd-banner',
   templateUrl: './banner.html',

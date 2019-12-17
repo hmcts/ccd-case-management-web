@@ -11,9 +11,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
 import {
   Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
-  SearchResultView
+  SearchResultView,
+  Banner
 } from '@hmcts/ccd-case-ui-toolkit';
-import { Banner } from '../core/banner/banner.model';
 
 describe('WorkbasketComponent', () => {
 

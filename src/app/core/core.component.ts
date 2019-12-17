@@ -6,8 +6,7 @@ import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { NavigationListenerService } from './utils/navigation-listener.service';
-import { JurisdictionService, Profile } from '@hmcts/ccd-case-ui-toolkit';
-import { Banner } from './banner/banner.model';
+import { JurisdictionService, Profile, Banner } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-core',

@@ -28,7 +28,7 @@ const CONFIG = {
   'case_data_url': process.env['CCD_DATA_URL'] || 'http://localhost:3453/data',
   'document_management_url': process.env['DM_URL'] || 'http://localhost:3453/documents',
   'remote_document_management_url': process.env['DM_URL_REMOTE'] || 'https://api-gateway.dev.dm.reform.hmcts.net/documents',
-  'annotation_api_url':process.env['ANNOTATION_API_URL'] || 'http://localhost:3453/em-anno',
+  'annotation_api_url': process.env['ANNOTATION_API_URL'] || 'http://localhost:3453/em-anno',
   'pagination_page_size': parseInt(process.env['CCD_PAGE_SIZE'], 10) || 25,
   'postcode_lookup_url': process.env['POSTCODE_LOOKUP_URL'] || 'http://localhost:3453/addresses?postcode=${postcode}',
   'oauth2_token_endpoint_url': process.env['CCD_GW_OAUTH2_URL'] || 'http://localhost:3453/oauth2',
@@ -54,6 +54,7 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/mai
 
 import { AppConfig } from './src/app/app.config';
 import { AppServerConfig } from './src/app/app.server.config';
+import { environment } from './src/environments/environment';
 
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
@@ -79,9 +80,11 @@ const healthConfig = {
 healthcheck.addTo(appHealth, healthConfig);
 app.use(appHealth);
 
-app.get('/config', (req, res) => {
-  res.status(200).json(CONFIG);
-});
+if (environment.production !== true) {
+  app.get('/config', (req, res) => {
+    res.status(200).json(CONFIG);
+  });
+}
 
 // Server static files from /browser
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {

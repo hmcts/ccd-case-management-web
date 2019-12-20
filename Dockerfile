@@ -16,7 +16,7 @@ RUN apt-get update \
 USER hmcts
 COPY package.json yarn.lock .snyk bin ./
 USER root
-RUN chmod 777 yarn.lock
+RUN chown hmcts yarn.lock
 USER hmcts
 RUN yarn install
 COPY . .

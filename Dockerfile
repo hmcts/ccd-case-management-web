@@ -13,10 +13,11 @@ RUN apt-get update \
     patch=2.7.5-1+deb9u2 \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
-RUN touch yarn.lock
-RUN chmod 777 yarn.lock
 USER hmcts
 COPY package.json yarn.lock .snyk bin ./
+USER root
+RUN chmod 777 yarn.lock
+USER hmcts
 RUN yarn install
 COPY . .
 RUN yarn build:ssr

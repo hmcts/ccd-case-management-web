@@ -15,6 +15,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
 COPY package.json yarn.lock .snyk bin ./
+RUN chmod 777 yarn.lock
 RUN yarn install
 COPY . .
 RUN yarn build:ssr

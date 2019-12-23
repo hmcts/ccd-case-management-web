@@ -68,8 +68,7 @@ const JURISDICTION_1: Jurisdiction = {
   id: 'J1',
   name: 'Jurisdiction 1',
   description: '',
-  caseTypes: CASE_TYPES_1,
-  banners: BANNERS
+  caseTypes: CASE_TYPES_1
 };
 
 const CASE_TYPES_2: CaseTypeLite[] = [
@@ -155,8 +154,7 @@ const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
   description: '',
-  caseTypes: CASE_TYPES_2,
-  banners: BANNERS_2
+  caseTypes: CASE_TYPES_2
 };
 
 const SINGLE_EVENT: CaseEvent[] = [{
@@ -193,8 +191,7 @@ const JURISDICTION_SINGLE_EVENT: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
   description: '',
-  caseTypes: CASE_TYPES_SINGLE_EVENT,
-  banners: BANNERS_3
+  caseTypes: CASE_TYPES_SINGLE_EVENT
 };
 
 const CASE_TYPE: CaseTypeLite = {

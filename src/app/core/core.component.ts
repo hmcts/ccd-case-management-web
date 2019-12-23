@@ -6,7 +6,7 @@ import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { NavigationListenerService } from './utils/navigation-listener.service';
-import { JurisdictionService, Profile, Banner } from '@hmcts/ccd-case-ui-toolkit';
+import { JurisdictionService, Profile, Banner, BannersService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({
   selector: 'ccd-core',
@@ -25,6 +25,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   constructor(public router: Router,
               private route: ActivatedRoute,
               private jurisdictionService: JurisdictionService,
+              private bannersService: BannersService,
               private appConfig: AppConfig,
               private oauth2Service: OAuth2Service,
               private browserSupportComponent: CcdBrowserSupportComponent,
@@ -43,15 +44,12 @@ export class CoreComponent implements OnInit, OnDestroy {
         jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
       );
     }
+
+    const ids : string[] = [];
     this.profile.jurisdictions.forEach(jurisdiction => {
-      if (jurisdiction.banners) {
-        jurisdiction.banners.forEach(banner => {
-          if (banner.bannerEnabled) {
-            this.banners.push(banner);
-          }
-        });
-      }
+      ids.push(jurisdiction.id);
     });
+    this.bannersService.getBanners(ids).subscribe(bannersReceived => this.banners = bannersReceived);
     this.navigationListenerService.init();
   }
 

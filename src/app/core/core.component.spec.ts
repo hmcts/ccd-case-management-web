@@ -11,8 +11,9 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService, Banner } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { Observable } from 'rxjs';
 
 describe('CoreComponent', () => {
 
@@ -30,8 +31,7 @@ describe('CoreComponent', () => {
     id: 'DIVORCE',
     name: 'Divorce',
     description: 'Divorce description',
-    caseTypes: [],
-    banners: BANNERS
+    caseTypes: []
   };
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
@@ -94,6 +94,7 @@ describe('CoreComponent', () => {
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
+  let bannersService: any;
   let navigationListenerService: NavigationListenerService;
   let httpService: any;
   let appConfig: any;
@@ -101,16 +102,20 @@ describe('CoreComponent', () => {
   let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
+  const BANNERS_URL = 'http://localhost:3451/api/display/banners';
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
     httpService = createSpyObj('HttpService', ['get']);
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
+    appConfig.getBannersUrl.and.returnValue(BANNERS_URL);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
 
     profile = {
       user: {
@@ -189,6 +194,7 @@ describe('CoreComponent', () => {
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
         ]
       })
       .compileComponents();  // compile template and css
@@ -381,14 +387,17 @@ describe('CoreComponent when no defaults in the profile', () => {
   let browserSupport: any;
   let oauth2Service: any;
   let navigationListenerService: NavigationListenerService;
+  let bannersService: any;
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
 
     profile = {
       user: {
@@ -455,6 +464,7 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
         ]
       })
       .compileComponents();  // compile template and css

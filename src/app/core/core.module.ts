@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard, RouterHelperService, DraftService,
   CasesService, ProfileService, ActivityService, ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService,
-  JurisdictionService, SearchResultViewItemComparatorFactory, ErrorNotifierService } from '@hmcts/ccd-case-ui-toolkit';
+  JurisdictionService, SearchResultViewItemComparatorFactory, ErrorNotifierService, BannersService } from '@hmcts/ccd-case-ui-toolkit';
 import { DocumentService } from './utils/document.service';
 import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
@@ -51,6 +51,7 @@ import { BannerModule } from './banner/banner.module';
     RequestOptionsBuilder,
     HttpService,
     JurisdictionService,
+    BannersService,
     ActivityService,
     ActivityResolver,
     ActivityPollingService,

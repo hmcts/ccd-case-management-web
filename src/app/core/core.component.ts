@@ -45,7 +45,7 @@ export class CoreComponent implements OnInit, OnDestroy {
       );
     }
 
-    const ids : string[] = [];
+    const ids: string[] = [];
     this.profile.jurisdictions.forEach(jurisdiction => {
       ids.push(jurisdiction.id);
     });

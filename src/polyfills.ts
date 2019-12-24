@@ -58,3 +58,10 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+ /*
+  * See https://github.com/algolia/algoliasearch-client-javascript/issues/691
+  */
+(window as any).process = {
+    env: { DEBUG: undefined },
+};

@@ -1,5 +1,5 @@
 <ng-container *ngFor="let bannerObj of banners">
-    <div *ngIf="!bannerObj.bannerViewed" class="banner banner-message" role="banner">
+    <div *ngIf="showBanner(bannerObj)" class="banner banner-message" role="banner">
         <span id='close' (click)="closeBanner(bannerObj)">x</span>
         {{bannerObj.bannerDescription}} <a href="{{bannerObj.bannerUrl}}" target="_blank">{{bannerObj.bannerUrlText}}</a>
     </div>

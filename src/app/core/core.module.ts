@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard, RouterHelperService, DraftService,
   CasesService, ProfileService, ActivityService, ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService,
-  JurisdictionService, SearchResultViewItemComparatorFactory } from '@hmcts/ccd-case-ui-toolkit';
+  JurisdictionService, SearchResultViewItemComparatorFactory, ErrorNotifierService } from '@hmcts/ccd-case-ui-toolkit';
 import { DocumentService } from './utils/document.service';
 import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
@@ -19,6 +19,7 @@ import { ContactUsComponent } from '../footer-nav/contact-us.component';
 import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { NavigationListenerService } from './utils/navigation-listener.service';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     DraftService,
     HttpErrorService,
     DocumentService,
+    NavigationListenerService,
     FormErrorService,
     FormValueService,
     CaseEditWizardGuard,
@@ -56,6 +58,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     OAuth2Service,
     CcdBrowserSupportComponent,
     SearchResultViewItemComparatorFactory,
+    ErrorNotifierService,
   ],
   declarations: [
     CoreComponent,

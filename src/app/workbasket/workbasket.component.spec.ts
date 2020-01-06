@@ -37,6 +37,7 @@ describe('WorkbasketComponent', () => {
 
   let SearchResultComponent: any = MockComponent({
     selector: 'ccd-search-result', inputs: [
+      'caseLinkUrlTemplate',
       'jurisdiction',
       'caseType',
       'caseState',
@@ -402,6 +403,7 @@ describe('WorkbasketComponent when no defaults in the profile', () => {
 
   let SearchResultComponent: any = MockComponent({
     selector: 'ccd-search-result', inputs: [
+      'caseLinkUrlTemplate',
       'jurisdiction',
       'caseType',
       'caseState',

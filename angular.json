@@ -27,11 +27,22 @@
                 "glob": "**/*",
                 "input": "src/public",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@hmcts/media-viewer/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "web.config",
+                "input": ".",
+                "output": "./.."
               }
             ],
             "styles": [
               "src/style/app.scss",
-              "node_modules/govuk_template_mustache/assets/stylesheets/govuk-template.css"
+              "node_modules/govuk_template_mustache/assets/stylesheets/govuk-template.css",
+              "node_modules/@hmcts/media-viewer/assets/aui-styles.scss"
             ],
             "scripts": []
           },

@@ -16,6 +16,7 @@ class CaseDetailsPage extends BasePage {
     this._tabs = '.tabs-list li';
     this._accordians = 'ccd-read-complex-field-collection-table img';
     this._currentTabFieldKeys = '.tabs-panel:not(.js-hidden) tr > th';
+    this._currentTabFieldValues = '.tabs-panel:not(.js-hidden) tr > td span';
     this._currentTabLabelFieldKeys = '.tabs-panel:not(.js-hidden) tr > th markdown';
     this._printButton = '#case-viewer-control-print';
     this._caseReference = 'ccd-case-header .heading-h1';
@@ -30,6 +31,7 @@ class CaseDetailsPage extends BasePage {
     this._detailsBoxEvent = '.EventLog-DetailsPanel tbody > tr:nth-of-type(4) > td span';
     this._detailsBoxSummary = '.EventLog-DetailsPanel tbody > tr:nth-of-type(5) > td span';
     this._detailsBoxComment = '.EventLog-DetailsPanel tbody > tr:nth-of-type(6) > td span';
+    this._documentLink = 'ccd-read-document-field > a';
 
   }
 
@@ -176,6 +178,14 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
+   * Get list of the fields displayed on the currently viewed tab
+   * @returns Array of Strings
+   */
+  async getTabFieldValues() {
+    return await this.getElementsText(await $$(this._currentTabFieldValues))
+  }
+
+  /**
    * Get field displayed on the currently viewed tab by id
    * @param fieldId
    * @returns Array of Strings
@@ -216,6 +226,58 @@ class CaseDetailsPage extends BasePage {
     await first.click();
   }
 
+  /**
+   * Clicking on the document link
+   * @returns {Promise<void>}
+   */
+  async clickDocumentLink(){
+    let documentLink = await $(this._documentLink);
+    await documentLink.click();
+  }
+
+  /**
+   * Returns the URL of media viewer loaded in the new tab
+   * @returns {Promise<string>}
+   */
+  async getMediaViewerURL(){
+    let handles = await browser.getAllWindowHandles();
+    await browser.switchTo().window(handles[1]);
+    await browser.waitForAngularEnabled(false);
+    return await browser.getCurrentUrl();
+  }
+
+  /**
+   * Check that Media Viewer is showing the pdf document.
+   * @returns {Promise<void>}
+   */
+  async pdfContentVisible(){
+    return await $('mv-pdf-viewer').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing the image document.
+   * @returns {Promise<void>}
+   */
+  async imageContentVisible(){
+    return await $('mv-image-viewer').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing the current document as of unsupported type.
+   * @returns {Promise<void>}
+   */
+  async documentContentTypeNotSupported() {
+    return await $('mv-unsupported-viewer').isDisplayed();
+  }
+
+  /**
+   * Check that Media Viewer is showing an error message.
+   * @returns {Promise<void>}
+   */
+  async mediaViewerIsShowingErrorMessage() {
+    return await $('mv-error-message').isDisplayed();
+  }
 }
+
 
 module.exports = CaseDetailsPage;

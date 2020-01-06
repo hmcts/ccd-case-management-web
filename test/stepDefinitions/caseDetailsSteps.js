@@ -53,7 +53,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       let actualFields = await caseDetailsPage.getTabFields();
       for (const expectedField of expectedFields) {
           expect(actualFields).to.include(expectedField);
-        }
+      }
+  });
+
+  Then(/^the following field values will be visible:$/, async function (dataTable) {
+      let expectedFields = await [].concat(...dataTable.raw());
+      let actualFieldValues = await caseDetailsPage.getTabFieldValues();
+      for (const expectedField of expectedFields) {
+        expect(actualFieldValues).to.include(expectedField);
+      }
   });
 
   Then(/^the following fields will NOT be visible:$/, async function (dataTable) {
@@ -123,4 +131,27 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseDetailsPage.startEvent(event);
   });
 
+  When(/^I click the document link$/, async function () {
+    await caseDetailsPage.clickDocumentLink();
+  });
+
+  Then(/^the media viewer is opened in a new tab$/, async function () {
+    let newTabUrl = await caseDetailsPage.getMediaViewerURL();
+    expect(newTabUrl.includes('/media-viewer')).to.be.true;
+  });
+
+  Then(/^the pdf document is visible in the new tab$/, async function () {
+    let visible = await caseDetailsPage.pdfContentVisible();
+    expect(visible).to.be.true;
+  });
+
+  Then(/^the image document is visible in the new tab$/, async function () {
+    let visible = await caseDetailsPage.imageContentVisible();
+    expect(visible).to.be.true;
+  });
+
+  When(/^the document is shown as unsupported in the new tab$/, async function () {
+    let shownUnsupported = await caseDetailsPage.documentContentTypeNotSupported();
+    expect(shownUnsupported).to.be.true;
+  });
 });

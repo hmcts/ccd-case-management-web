@@ -64,34 +64,28 @@ Feature: Set of scenarios to test functionality of search filters on the search 
       | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
       | Email       | Email Field                                                        |                                                            |
 
-  @searchtest
-  Scenario Outline: reset button clears drop down options and removes all dynamic filters
-    Given I am on the search page
-    And I have filled out the search filters including dynamic filters
-    When I click the 'Reset' button
-    Then I should not see a '<dataType>' dynamic filter
-
-    Examples:
-      | dataType    |
-      | TextArea    |
-      | Date        |
-      | Complex     |
-      | Phone-UK    |
-      | Number      |
-      | Yes-No      |
-      | Collection  |
-      | Fixed-List  |
-      | Money-GBP   |
-      | Document    |
-      | Multi-Select|
-      | Email       |
-
-      # due to current functionality of system on aat when clicking reset button it switches to another default
-      #case which happens to have a 'Text' dynamic filter and so will fail the test
-      @broken
-    Examples:
-      | dataType    |
-      | Text        |
+#  @broken #due to bug fix these tests are no longer valid
+#  Scenario Outline: reset button clears drop down options and removes all dynamic filters
+#    Given I am on the search page
+#    And I have filled out the search filters including dynamic filters
+#    When I click the 'Reset' button
+#    Then I should not see a '<dataType>' dynamic filter
+#
+#    Examples:
+#      | dataType    |
+#      | TextArea    |
+#      | Date        |
+#      | Complex     |
+#      | Phone-UK    |
+#      | Number      |
+#      | Yes-No      |
+#      | Collection  |
+#      | Fixed-List  |
+#      | Money-GBP   |
+#      | Document    |
+#      | Multi-Select|
+#      | Email       |
+#      | Text        |
 
   Scenario: apply button submits search options and returns results list
     Given a case exists

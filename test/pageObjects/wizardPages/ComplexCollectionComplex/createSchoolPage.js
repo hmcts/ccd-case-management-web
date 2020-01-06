@@ -69,8 +69,8 @@ class SchoolClassComplex  {
 
     //Main Fields
     this.className = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(1) input`,`MySchool.Class.${collectionOrderIndex}.ClassName`);
-    this.classNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(2) input`,`MySchool.Class.${collectionOrderIndex}.ClassNumber`); // hidden (className='A team')
-    this.classDegreeMultiSelectList = new CCDMultiSelectField(`${this.id} > ccd-field-write:nth-of-type(3) ccd-write-multi-select-list-field > div`); // CLASS REQUIRED FOR MULTI SELECT
+    this.classDegreeMultiSelectList = new CCDMultiSelectField(`${this.id} > ccd-field-write:nth-of-type(2) ccd-write-multi-select-list-field > div`); // CLASS REQUIRED FOR MULTI SELECT
+    this.classNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(3) input`,`MySchool.Class.${collectionOrderIndex}.ClassNumber`); // hidden (className='A team')
 
     //Class Members Collection
     this._classMembersComplex = new SchoolClassMembersComplex();
@@ -221,12 +221,12 @@ class SchoolClassMembersChildrenComplex {
   async initialiseFields(collectionId, collectionOrderIndex){
     this.id = collectionId;
 
-    this.childFullName = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(2) input`);
-    this.buildingAndStreet = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(3) ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(4) input`);
-    this.childGenderDropdown = new CCDFixedList(`${this.id} > ccd-field-write:nth-of-type(4) select`);
-    this.autisticChildCaseRefNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(6) input`);
-    this.isAutistic = new CCDYesNoField(`${this.id} > ccd-field-write:nth-of-type(5)`);
-    this.needsSupport = new CCDYesNoField(`${this.id} > ccd-field-write:nth-of-type(7)`);
+    this.childFullName = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(1) input`);
+    this.childGenderDropdown = new CCDFixedList(`${this.id} > ccd-field-write:nth-of-type(2) select`);
+    this.isAutistic = new CCDYesNoField(`${this.id} > ccd-field-write:nth-of-type(3)`);
+    this.needsSupport = new CCDYesNoField(`${this.id} > ccd-field-write:nth-of-type(4)`);
+    this.buildingAndStreet = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(6) ccd-write-complex-type-field > div > ccd-field-write:nth-of-type(1) input`);
+    this.autisticChildCaseRefNumber = new CCDStringField(`${this.id} > ccd-field-write:nth-of-type(7) input`);
   }
 
   async getFieldData(prependKey){
@@ -243,10 +243,6 @@ class SchoolClassMembersChildrenComplex {
   async enterChildFullName(text){
     await this.childFullName.enterText(text);
   }
-
-
-
-
 
   async enterBuildingAndStreet(text){
     await this.buildingAndStreet.enterText(text)

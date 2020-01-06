@@ -126,7 +126,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     this.topResult = currentPageTopResult;
   });
 
-  Given(/^there are more than (\d+) page of results$/, async function(pages){
+  Given(/^there are more than (\d+) page of results$/, {timeout: 1200 * 1000}, async function(pages){
     let totalCases = await caseListPage.getCaseListComponent().getTotalCases();
     let casesToCreate = ((parseInt(pages) * 25) +1) - parseInt(totalCases);
 
@@ -155,7 +155,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     expect(await columnResults[0].getText()).to.equal('Child full nameee');
   });
 
-  Given(/^I have filled the create case filters for a case other than the workbasket default$/, async function () {
+  Given(/^I have filled the case filters for a case other than the workbasket default$/, async function () {
     TestData.caseType='Multiple Pages';
     await wbFilters.selectCaseType(TestData.caseType);
     await wbFilters.interactWithField('text');
@@ -267,7 +267,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
     if (await fieldUtils.isFieldPresent('fixed-list')) {
       let fixedListFieldValue = await fieldUtils.getFixedListFieldValue()
-      if (fixedListFieldValue !== 'undefined'){
+      if (fixedListFieldValue !== '--Select a value--'){
         allFiltersCleared = false;
         errMessage = `fixed list field has value ${fixedListFieldValue}`
 

@@ -1,7 +1,4 @@
-@broken
-# marked as broken until related gate-way api changes are merged into master
-# https://github.com/hmcts/ccd-api-gateway/pull/253
-
+@mediaviewer @functional
 Feature: Set of scenarios to view supported and unsupported types of documents with Media Viewer
 
 Background:
@@ -62,3 +59,9 @@ Examples:
 | document_tif_2.TiF   |
 | document_tiff_1.tiff |
 | document_tiff_2.TiFf |
+| document_mp3_1.mp3   |
+| document_mp3_2.Mp3   |
+| document_mov_1.mov   |
+| document_mov_2.MoV   |
+| document_avi_1.avi   |
+| document_avi_2.AvI   |

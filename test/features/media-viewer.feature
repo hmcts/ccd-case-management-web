@@ -35,7 +35,7 @@ Examples:
 | document_jpeg_2.JpEg   |
 | document_png_1.png     |
 | document_png_2.PnG     |
-#| document_gif_1.gif     |  #  Disabled as gif files are not uploadable.
+#| document_gif_1.gif     | # Disabled as gif files are not uploadable.
 #| document_gif_2.GiF     | # Disabled as gif files are not uploadable.
 
 Scenario Outline: Create a case with a document of an unsupported type and view it on Media Viewer
@@ -59,9 +59,9 @@ Examples:
 | document_tif_2.TiF   |
 | document_tiff_1.tiff |
 | document_tiff_2.TiFf |
- | document_mp3_1.mp3 |
- | document_mp3_2.Mp3 |
- | document_mov_1.mov |
- | document_mov_2.MoV |
- | document_avi_1.avi |
- | document_avi_2.AvI |
+| document_mp3_1.mp3   |
+| document_mp3_2.Mp3   |
+| document_mov_1.mov   |
+| document_mov_2.MoV   |
+| document_avi_1.avi   |
+| document_avi_2.AvI   |

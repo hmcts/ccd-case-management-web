@@ -7,7 +7,7 @@
   "api_url": "http://localhost:3453/aggregated",
   "case_data_url": "http://localhost:3453/data",
   "document_management_url": "http://localhost:3453/documents",
-  "login_url": "https://localhost:3501/login",
+  "login_url": "http://localhost:5555/login",
   "logout_url": "http://localhost:3453/logout",
   "oauth2_token_endpoint_url": "http://localhost:3453/oauth2",
   "oauth2_client_id": "ccd_gateway",
@@ -23,5 +23,7 @@
   "chrome_min_required_version": 67,
   "ie_min_required_version": 11,
   "edge_min_required_version": 17,
-  "firefox_min_required_version": 60
+  "firefox_min_required_version": 60,
+  "shutter_redirect_url": "https://www.google.com",
+  "shutter_redirect_delay": 10
 }

@@ -137,6 +137,14 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.firefox_min_required_version;
   }
 
+  public getShutterRedirectUrl() {
+    return this.config.shutter_redirect_url;
+  }
+
+  public getShutterRedirectDelay() {
+    return this.config.shutter_redirect_delay;
+  }
+
   public getCaseHistoryUrl(caseId: string, eventId: string) {
     return this.getCaseDataUrl()
       + `/internal`
@@ -155,6 +163,10 @@ export class AppConfig extends AbstractAppConfig {
   public getBannersUrl() {
     return this.getCaseDataUrl() + `/internal/banners/`;
   }
+
+  public getJurisdictionUiConfigsUrl() {
+    return this.getCaseDataUrl() + `/internal/jurisdiction-ui-configs/`;
+  }
 }
 
 export class Config extends CaseEditorConfig {
@@ -168,4 +180,6 @@ export class Config extends CaseEditorConfig {
   ie_min_required_version: number;
   edge_min_required_version: number;
   firefox_min_required_version: number;
+  shutter_redirect_url: string;
+  shutter_redirect_delay: number;
 }

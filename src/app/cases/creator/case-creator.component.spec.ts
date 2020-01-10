@@ -5,12 +5,14 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import createSpyObj = jasmine.createSpyObj;
+import createSpy = jasmine.createSpy;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner, HttpService } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
+import { AppConfig } from '../../app.config';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';
@@ -269,6 +271,8 @@ let mockRouter: any;
 let mockOrderService: any;
 let mockCallbackErrorSubject: any;
 let mockAlertService: any;
+let mockHttpService: any;
+let mockAppConfig: any;
 let jurisdictionService: JurisdictionService;
 
 describe('CaseCreatorComponent', () => {
@@ -289,7 +293,9 @@ describe('CaseCreatorComponent', () => {
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
     mockAlertService = createSpyObj<AlertService>('alertService', ['clear']);
-    jurisdictionService = new JurisdictionService();
+    mockHttpService = createSpy();
+    mockAppConfig = createSpy();
+    jurisdictionService = new JurisdictionService(mockHttpService, mockAppConfig);
 
     TestBed
       .configureTestingModule({

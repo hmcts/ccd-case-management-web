@@ -25,7 +25,7 @@ export class ProfileResolver implements Resolve<Profile> {
     });
   }
 
-  isShuttered(configs: JurisdictionConfig[]): boolean {
+  private isShuttered(configs: JurisdictionConfig[]): boolean {
     return !configs.some(c => !c.shuttered);
   }
 

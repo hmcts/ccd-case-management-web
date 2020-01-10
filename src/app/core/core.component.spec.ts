@@ -108,10 +108,10 @@ describe('CoreComponent', () => {
 
   beforeEach(async(() => {
 
-    jurisdictionService = new JurisdictionService();
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
-    httpService = createSpyObj('HttpService', ['get']);
+    httpService = createSpy();
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
+    jurisdictionService = new JurisdictionService(httpService, appConfig);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
@@ -387,6 +387,7 @@ describe('CoreComponent when no defaults in the profile', () => {
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
+  let httpService: any;
   let appConfig: any;
   let browserSupport: any;
   let oauth2Service: any;
@@ -396,8 +397,9 @@ describe('CoreComponent when no defaults in the profile', () => {
 
   beforeEach(async(() => {
 
-    jurisdictionService = new JurisdictionService();
+    httpService = createSpy();
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
+    jurisdictionService = new JurisdictionService(httpService, appConfig);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);

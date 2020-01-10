@@ -7,7 +7,7 @@
   "api_url": "http://localhost:3453/aggregated",
   "case_data_url": "http://localhost:3453/data",
   "document_management_url": "http://localhost:3453/documents",
-  "login_url": "http://localhost:5555/login",
+  "login_url": "http://localhost:3501/login",
   "logout_url": "http://localhost:3453/logout",
   "oauth2_token_endpoint_url": "http://localhost:3453/oauth2",
   "oauth2_client_id": "ccd_gateway",

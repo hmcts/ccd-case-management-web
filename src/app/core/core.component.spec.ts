@@ -11,10 +11,22 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { Observable } from 'rxjs';
+import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
 
 describe('CoreComponent', () => {
+
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
 
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
@@ -57,6 +69,8 @@ describe('CoreComponent', () => {
       'label'
     ]});
 
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
+
   let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
 
   let RouterOutlet: any = MockComponent({ selector: 'router-outlet', inputs: []});
@@ -81,6 +95,7 @@ describe('CoreComponent', () => {
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
+  let bannersService: any;
   let navigationListenerService: NavigationListenerService;
   let httpService: any;
   let appConfig: any;
@@ -88,16 +103,22 @@ describe('CoreComponent', () => {
   let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
+  const BANNERS_URL = 'http://localhost:3451/api/display/banners';
+  let windowService: any;
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
     httpService = createSpyObj('HttpService', ['get']);
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
+    appConfig.getBannersUrl.and.returnValue(BANNERS_URL);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
 
     profile = {
       user: {
@@ -156,6 +177,7 @@ describe('CoreComponent', () => {
           CoreComponent,
           // Mocks
           AlertComponent,
+          BannerComponent,
           RouterOutlet,
           HeaderComponent,
           PhaseComponent,
@@ -175,6 +197,8 @@ describe('CoreComponent', () => {
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
+          { provide: WindowService, useValue: windowService }
         ]
       })
       .compileComponents();  // compile template and css
@@ -340,6 +364,8 @@ describe('CoreComponent when no defaults in the profile', () => {
       'label'
     ]});
 
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
+
   let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
 
   let RouterOutlet: any = MockComponent({ selector: 'router-outlet', inputs: []});
@@ -365,14 +391,19 @@ describe('CoreComponent when no defaults in the profile', () => {
   let browserSupport: any;
   let oauth2Service: any;
   let navigationListenerService: NavigationListenerService;
+  let bannersService: any;
+  let windowService: any;
 
   beforeEach(async(() => {
 
     jurisdictionService = new JurisdictionService();
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
 
     profile = {
       user: {
@@ -420,6 +451,7 @@ describe('CoreComponent when no defaults in the profile', () => {
           CoreComponent,
           // Mocks
           AlertComponent,
+          BannerComponent,
           RouterOutlet,
           HeaderComponent,
           PhaseComponent,
@@ -438,6 +470,8 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
+          { provide: WindowService, useValue: windowService }
         ]
       })
       .compileComponents();  // compile template and css

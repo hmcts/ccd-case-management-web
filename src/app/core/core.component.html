@@ -27,6 +27,10 @@
 </cut-header-bar>
 <!-- Header : End -->
 
+<!-- Jurisdiction Banners  Start-->
+<ccd-banner *ngIf="banners?.length > 0" [banners]= "banners"> </ccd-banner>
+<!-- Jurisdiction Banners  End-->
+
 <!-- Mini blue bar : A placeholder for now -->
 <div *ngIf="false" id="global-header-bar"></div>
 

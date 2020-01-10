@@ -5,6 +5,8 @@ import { MockComponent } from 'ng2-mock-component';
 import { By } from '@angular/platform-browser';
 import { text } from '../../test/helpers';
 import { Banner } from '@hmcts/ccd-case-ui-toolkit';
+import createSpyObj = jasmine.createSpyObj;
+import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
 
 describe('BannerComponent', () => {
 
@@ -33,8 +35,11 @@ describe('BannerComponent', () => {
   let fixture: ComponentFixture<BannerComponent>;
   let component: BannerComponent;
   let de: DebugElement;
+  let windowService;
 
   beforeEach(async(() => {
+
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
 
     TestBed
       .configureTestingModule({
@@ -43,6 +48,7 @@ describe('BannerComponent', () => {
           BannerComponent
         ],
         providers: [
+          { provide: WindowService, useValue: windowService }
         ]
       })
       .compileComponents();

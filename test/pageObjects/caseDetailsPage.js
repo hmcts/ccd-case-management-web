@@ -20,7 +20,15 @@ class CaseDetailsPage extends BasePage {
     this._currentTabLabelFieldKeys = '.tabs-panel:not(.js-hidden) tr > th markdown';
     this._printButton = '#case-viewer-control-print';
     this._caseReference = 'ccd-case-header .heading-h1';
+
+    // alert bar
     this._alertSuccessBar = '.alert-success';
+    this._alertErrorBar = '.alert-error';
+
+    // error summary
+    this._errorSummary = 'ccd-case-viewer div > .error-summary';
+    this._errorSummaryHeading = 'ccd-case-viewer div > .error-summary .error-summary-heading';
+    this._errorSummaryDetails = 'ccd-case-viewer div > .error-summary p';
 
     this._currentTabNestedFieldKeys = '.tabs-panel:not(.js-hidden) tr > th > td > tbody > tr > th';
     //Details Box
@@ -78,11 +86,20 @@ class CaseDetailsPage extends BasePage {
   }
 
   /**
-   * Get text value for the latest event in the History tab
+   * Get text value for the Alert Success bar
    * @returns {Promise<String>}
    */
   async getSuccessAlertBarText(){
     let text = await $(this._alertSuccessBar).getText();
+    return text
+  }
+
+  /**
+   * Get text value for the Alert Error bar
+   * @returns {Promise<String>}
+   */
+  async getErrorAlertBarText(){
+    let text = await $(this._alertErrorBar).getText();
     return text
   }
 
@@ -277,6 +294,48 @@ class CaseDetailsPage extends BasePage {
   async mediaViewerIsShowingErrorMessage() {
     return await $('mv-error-message').isDisplayed();
   }
+
+  /**
+   * Check if Error Summary is visible
+   * @returns {Promise<boolean>}
+   */
+  async isErrorSummaryVisible() {
+    return await $(this._errorSummary).isDisplayed();
+  }
+
+  /**
+   * Get text value for the Error Summary's header
+   * @returns {Promise<String>}
+   */
+  async getErrorSummaryHeadingText(){
+    return await $(this._errorSummaryHeading).getText();
+  }
+
+  /**
+   * Get text value for the Error Summary's details
+   * @returns {Promise<String>}
+   */
+  async getErrorSummaryDetailsText(){
+    return await $(this._errorSummaryDetails).getText();
+  }
+
+  /**
+   * Check if Go button is present and enabled
+   * @returns {Promise<boolean>}
+   */
+  async isGoButtonEnabled() {
+    return await this._goButton.isPresent()
+        && await this._goButton.isEnabled();
+  }
+
+  /**
+   * Get text value for the Go button
+   * @returns {Promise<String>}
+   */
+  async getGoButtonText() {
+    return await this._goButton.getText();
+  }
+
 }
 
 

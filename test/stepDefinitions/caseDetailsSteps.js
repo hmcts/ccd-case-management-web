@@ -42,6 +42,17 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(alertBarText).to.match(/^Case #\d{4}-\d{4}-\d{4}-\d{4} has been created\.$/);
   });
 
+  Then('the callback error or warnings bar will be visible', async function() {
+      let alertBarText = await caseDetailsPage.getErrorAlertBarText();
+      expect(alertBarText).to.equal('Unable to proceed because there are one or more callback Errors or Warnings');
+  });
+
+  Then(/^the callback validation error summary is displayed$/, async function () {
+    expect(await caseDetailsPage.isErrorSummaryVisible()).to.be.true;
+    expect(await caseDetailsPage.getErrorSummaryHeadingText()).to.equal('The callback data failed validation');
+    expect(await caseDetailsPage.getErrorSummaryDetailsText()).to.equal('Unable to proceed because there are one or more callback Errors or Warnings');
+  });
+
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
     await caseDetailsPage.clickTab(tabName);
     let fields = await caseDetailsPage.getTabFields();
@@ -154,4 +165,19 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     let shownUnsupported = await caseDetailsPage.documentContentTypeNotSupported();
     expect(shownUnsupported).to.be.true;
   });
+
+  Then(/^the go button is disabled$/, async function () {
+    let enabled = await caseDetailsPage.isGoButtonEnabled();
+    let text = await caseDetailsPage.getGoButtonText();
+    expect(enabled).to.be.false;
+    expect(text).to.equals('Go');
+  });
+
+  Then(/^the go button is enabled and has been renamed '(.*)'$/, async function (label) {
+    let enabled = await caseDetailsPage.isGoButtonEnabled();
+    let text = await caseDetailsPage.getGoButtonText();
+    expect(enabled).to.be.true;
+    expect(text).to.equals(label);
+  });
+
 });

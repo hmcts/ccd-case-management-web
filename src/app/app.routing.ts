@@ -30,7 +30,7 @@ const routes: Routes = [
     loadChildren: './mv-wrapper/media-viewer-wrapper.module#MediaViewerWrapperModule'
   },
   {
-    path: 'shut',
+    path: 'shutter',
     canActivate: [
       AppConfigGuard,
     ],

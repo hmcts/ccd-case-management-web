@@ -34,7 +34,7 @@ describe('AppConfig', () => {
   const CREATE_OR_UPDATE_DRAFT_URL = DATA_URL + '/internal/case-types/CTID/drafts/';
   const VIEW_OR_DELETE_DRAFT_URL = DATA_URL + '/internal/drafts/DID';
   const SHUTTER_REDIRECT_URL = 'http://expertui';
-  const SHUTTER_REDIRECT_DELAY = 10;
+  const SHUTTER_REDIRECT_WAIT = 10;
 
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,
@@ -63,7 +63,7 @@ describe('AppConfig', () => {
     edge_min_required_version: EDGE_MIN_REQUIRED_VERSION,
     firefox_min_required_version: FIREFOX_MIN_REQUIRED_VERSION,
     shutter_redirect_url: SHUTTER_REDIRECT_URL,
-    shutter_redirect_delay: SHUTTER_REDIRECT_DELAY,
+    shutter_redirect_wait: SHUTTER_REDIRECT_WAIT,
   };
 
   beforeEach(() => {
@@ -118,7 +118,7 @@ describe('AppConfig', () => {
             expect(appConfig.getCreateOrUpdateDraftsUrl('CTID')).toEqual(CREATE_OR_UPDATE_DRAFT_URL);
             expect(appConfig.getViewOrDeleteDraftsUrl('DID')).toEqual(VIEW_OR_DELETE_DRAFT_URL);
             expect(appConfig.getShutterRedirectUrl()).toEqual(SHUTTER_REDIRECT_URL);
-            expect(appConfig.getShutterRedirectDelay()).toEqual(SHUTTER_REDIRECT_DELAY);
+            expect(appConfig.getShutterRedirectWait()).toEqual(SHUTTER_REDIRECT_WAIT);
           });
       })));
   });

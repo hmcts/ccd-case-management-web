@@ -141,8 +141,8 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.shutter_redirect_url;
   }
 
-  public getShutterRedirectDelay() {
-    return this.config.shutter_redirect_delay;
+  public getShutterRedirectWait() {
+    return this.config.shutter_redirect_wait;
   }
 
   public getCaseHistoryUrl(caseId: string, eventId: string) {
@@ -181,5 +181,5 @@ export class Config extends CaseEditorConfig {
   edge_min_required_version: number;
   firefox_min_required_version: number;
   shutter_redirect_url: string;
-  shutter_redirect_delay: number;
+  shutter_redirect_wait: number;
 }

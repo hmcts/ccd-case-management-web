@@ -1,16 +1,16 @@
 import { ProfileResolver } from './profile.resolver';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
-import { Profile, JurisdictionConfig, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
+import { Profile, JurisdictionUIConfig, Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('ProfileResolver', () => {
   describe('resolve()', () => {
 
     const PROFILE: Profile = createSpyObj<any>('profile', ['toString']);
     const JURISDICTION: Jurisdiction = createSpyObj<any>('jurisdiction', ['toString']);
-    const JURISDICTION_CONFIG: JurisdictionConfig = createSpyObj<any>('jurisdictionConfig', ['toString']);
+    const JURISDICTION_CONFIG: JurisdictionUIConfig = createSpyObj<any>('jurisdictionConfig', ['toString']);
 
-    const SHUTTER_URL = 'shut';
+    const SHUTTER_URL = 'shutter';
 
     let profileResolver: ProfileResolver;
 
@@ -19,18 +19,18 @@ describe('ProfileResolver', () => {
     let router: any;
 
     let profile: Profile;
-    let jurisdictionConfigs: JurisdictionConfig[];
+    let jurisdictionConfigs: JurisdictionUIConfig[];
     let profileObs: Observable<Profile>;
-    let jurisdictionConfigsObs: Observable<JurisdictionConfig[]>;
+    let jurisdictionConfigsObs: Observable<JurisdictionUIConfig[]>;
 
     beforeEach(() => {
       profileService = createSpyObj('profileService', ['get']);
-      jurisdictionService = createSpyObj('jurisdictionService', ['getJurisdictionConfigs']);
+      jurisdictionService = createSpyObj('jurisdictionService', ['getJurisdictionUIConfigs', 'isShuttered']);
       router = createSpyObj('router', ['navigate']);
 
       profile = createProfile(createJurisdictions(['ref1']));
       profileObs = Observable.of(profile);
-      jurisdictionConfigs = createJurisdictionConfigs([true]);
+      jurisdictionConfigs = createJurisdictionUIConfigs([true]);
       jurisdictionConfigsObs = Observable.of(jurisdictionConfigs);
 
       profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
@@ -38,35 +38,39 @@ describe('ProfileResolver', () => {
 
     it('should resolve profile using profile service', () => {
       profileService.get.and.returnValue(profileObs);
-      jurisdictionService.getJurisdictionConfigs.and.returnValue(jurisdictionConfigsObs);
+      jurisdictionService.getJurisdictionUIConfigs.and.returnValue(jurisdictionConfigsObs);
 
       profileResolver.resolve().subscribe((p) => {
         expect(p).toBe(profile);
       });
 
       expect(profileService.get).toHaveBeenCalled();
-      expect(jurisdictionService.getJurisdictionConfigs).toHaveBeenCalled();
+      expect(jurisdictionService.getJurisdictionUIConfigs).toHaveBeenCalled();
     });
 
     it('should redirect to shutter page when all jurisdictions are shut', () => {
-      const configs = createJurisdictionConfigs([true, true, true]);
+      jurisdictionService.isShuttered.and.returnValue(true);
+      const configs = createJurisdictionUIConfigs([true, true, true]);
 
       profileService.get.and.returnValue(profileObs);
-      jurisdictionService.getJurisdictionConfigs.and.returnValue(Observable.of(configs));
+      jurisdictionService.getJurisdictionUIConfigs.and.returnValue(Observable.of(configs));
 
       profileResolver.resolve().subscribe();
 
+      expect(jurisdictionService.isShuttered).toHaveBeenCalledWith(configs, 1);
       expect(router.navigate).toHaveBeenCalledWith([SHUTTER_URL]);
     });
 
     it('should not redirect to shutter page when at least one jurisdiction is open', () => {
-      const configs = createJurisdictionConfigs([true, false, true]);
+      jurisdictionService.isShuttered.and.returnValue(false);
+      const configs = createJurisdictionUIConfigs([true, false, true]);
 
       profileService.get.and.returnValue(profileObs);
-      jurisdictionService.getJurisdictionConfigs.and.returnValue(Observable.of(configs));
+      jurisdictionService.getJurisdictionUIConfigs.and.returnValue(Observable.of(configs));
 
       profileResolver.resolve().subscribe();
 
+      expect(jurisdictionService.isShuttered).toHaveBeenCalledWith(configs, 1);
       expect(router.navigate).not.toHaveBeenCalled();
     });
 
@@ -83,7 +87,7 @@ describe('ProfileResolver', () => {
       return refs.map(ref => ({ ...JURISDICTION, id: ref }));
     }
 
-    function createJurisdictionConfigs(shuttered: boolean[]): JurisdictionConfig[] {
+    function createJurisdictionUIConfigs(shuttered: boolean[]): JurisdictionUIConfig[] {
       return shuttered.map(shut => ({ ...JURISDICTION_CONFIG, shuttered: shut }));
     }
 

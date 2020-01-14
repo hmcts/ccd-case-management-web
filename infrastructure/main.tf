@@ -31,8 +31,8 @@ locals {
   external_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
 
   ccd_activity_url = "${local.ccd_gateway_url}/activity"
-
-  default_shutter_redirect_url = "https://xui-mo-webapp-${local.env_ase_url}"
+  
+  default_shutter_redirect_url = "https://xui-webapp-${local.env_ase_url}"
   shutter_redirect_url = "${var.ccd_shutter_redirect_url != "" ? var.ccd_shutter_redirect_url : local.default_ccd_shutter_redirect_url}"
 }
 

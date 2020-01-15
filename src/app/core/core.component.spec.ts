@@ -11,7 +11,7 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService, AbstractAppConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
 import { Observable } from 'rxjs';
 
@@ -105,10 +105,9 @@ describe('CoreComponent', () => {
   const BANNERS_URL = 'http://localhost:3451/api/display/banners';
 
   beforeEach(async(() => {
-
-    jurisdictionService = new JurisdictionService();
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
     httpService = createSpyObj('HttpService', ['get']);
+    jurisdictionService = createSpyObj<any>('jurisdictionService', ['getJurisdictionConfigs']);
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
@@ -391,8 +390,8 @@ describe('CoreComponent when no defaults in the profile', () => {
 
   beforeEach(async(() => {
 
-    jurisdictionService = new JurisdictionService();
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
+    jurisdictionService = createSpyObj<any>('jurisdictionService', ['getJurisdictionConfigs']);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);

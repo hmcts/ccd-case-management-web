@@ -1,7 +1,8 @@
 import { ProfileResolver } from './profile.resolver';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
-import { Profile } from '@hmcts/ccd-case-ui-toolkit';
+import { Profile, AbstractAppConfig, HttpService, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
+import { Router } from '@angular/router';
 
 describe('ProfileResolver', () => {
   describe('resolve()', () => {
@@ -12,11 +13,15 @@ describe('ProfileResolver', () => {
     let profileResolver: ProfileResolver;
 
     let profileService: any;
+    let mockJurisdictionService: JurisdictionService;
+    let mockRouter: any;
 
     beforeEach(() => {
       profileService = createSpyObj('profileService', ['get']);
+      mockRouter = createSpyObj<Router>('router', ['navigate']);
+      mockJurisdictionService = createSpyObj<any>('jurisdictionService', ['getJurisdictionConfigs']);
 
-      profileResolver = new ProfileResolver(profileService);
+      profileResolver = new ProfileResolver(profileService, mockJurisdictionService, mockRouter);
     });
 
     it('should resolve profile using profile service', () => {

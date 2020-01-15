@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner, AbstractAppConfig, HttpService } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
@@ -289,7 +289,7 @@ describe('CaseCreatorComponent', () => {
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
     mockAlertService = createSpyObj<AlertService>('alertService', ['clear']);
-    jurisdictionService = new JurisdictionService();
+    jurisdictionService = createSpyObj<any>('jurisdictionService', ['getJurisdictionConfigs']);
 
     TestBed
       .configureTestingModule({

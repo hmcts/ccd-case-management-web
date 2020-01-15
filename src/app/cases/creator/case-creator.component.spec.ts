@@ -8,7 +8,7 @@ import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext, Banner, HttpService } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';

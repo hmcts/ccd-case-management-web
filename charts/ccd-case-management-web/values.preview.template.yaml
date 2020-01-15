@@ -17,6 +17,7 @@ nodejs:
     PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
     CCD_ACTIVITY_URL: https://gateway-ccd.aat.platform.hmcts.net/activity
     PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
+    PAY_BULKSCAN_URL: https://gateway-ccd.aat.platform.hmcts.net/pay-bulkscan
 
 idam-pr:
   redirect_uris:

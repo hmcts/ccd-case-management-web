@@ -34,10 +34,8 @@ describe('ProfileResolver', () => {
 
       profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
 
-
     beforeEach(() => {
       profileService = createSpyObj('profileService', ['get']);
-    
       profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
     });
 

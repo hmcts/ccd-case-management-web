@@ -28,6 +28,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   dialogConfig: MatDialogConfig;
   expertUIURL: string;
   jurisdictionConfigs: JurisdictionUIConfig[] = [];
+  private static readonly JURISDICTION_UI_CONFIGS_CACHED: string = 'UI_CONFIGS_CACHED';
 
   constructor(public router: Router,
               private route: ActivatedRoute,
@@ -61,7 +62,19 @@ export class CoreComponent implements OnInit, OnDestroy {
                                 this.jurisdictionConfigs = value
                               }});
     this.jurisdictionConfigs = this.jurisdictionConfigs.filter(j => j.shuttered);
-    if (this.jurisdictionConfigs.length > 0) {
+    this.jurisdictionConfigs = [
+      {
+        id: 'Test 1',
+        shuttered: true
+      },
+      {
+        id: 'Test 2',
+        shuttered: true
+      }
+    ]
+    let jurisdictionUIConfigsCached = this.windowService.getLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED);
+    if (!jurisdictionUIConfigsCached && this.jurisdictionConfigs.length > 0) {
+      this.windowService.setLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED, JSON.stringify(true));
       this.initDialog();
       const dialogRef = this.dialog.open(JurisdictionShutteringDialogComponent, this.dialogConfig);
         dialogRef.afterClosed().subscribe(result => {
@@ -113,6 +126,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   signOut(): void {
     this.oauth2Service.signOut();
     this.windowService.removeLocalStorage('BANNERS');
+    this.windowService.removeLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED);
   }
 
   ngOnDestroy(): void {

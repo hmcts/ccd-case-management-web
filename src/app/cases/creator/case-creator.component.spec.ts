@@ -271,8 +271,6 @@ let mockRouter: any;
 let mockOrderService: any;
 let mockCallbackErrorSubject: any;
 let mockAlertService: any;
-let mockHttpService: any;
-let mockAppConfig: any;
 let jurisdictionService: JurisdictionService;
 
 describe('CaseCreatorComponent', () => {
@@ -293,10 +291,7 @@ describe('CaseCreatorComponent', () => {
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
     mockAlertService = createSpyObj<AlertService>('alertService', ['clear']);
-    mockHttpService = createSpy();
-    mockAppConfig = createSpy();
-    jurisdictionService = new JurisdictionService(mockHttpService, mockAppConfig);
-
+    jurisdictionService = createSpyObj<any>('jurisdictionService', ['getJurisdictionUIConfigs']);
     TestBed
       .configureTestingModule({
         imports: [

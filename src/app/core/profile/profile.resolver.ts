@@ -24,5 +24,4 @@ export class ProfileResolver implements Resolve<Profile> {
       }));
     });
   }
-
 }

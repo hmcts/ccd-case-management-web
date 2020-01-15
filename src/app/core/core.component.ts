@@ -6,7 +6,9 @@ import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { NavigationListenerService } from './utils/navigation-listener.service';
-import { JurisdictionService, Profile, Banner, BannersService, WindowService, JurisdictionShutteringDialogComponent, JurisdictionUIConfig } from '@hmcts/ccd-case-ui-toolkit';
+import { JurisdictionService, Profile, Banner, BannersService,
+  WindowService, JurisdictionShutteringDialogComponent,
+  JurisdictionUIConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
 

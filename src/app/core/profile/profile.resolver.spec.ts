@@ -22,7 +22,6 @@ describe('ProfileResolver', () => {
     let jurisdictionConfigs: JurisdictionUIConfig[];
     let profileObs: Observable<Profile>;
     let jurisdictionConfigsObs: Observable<JurisdictionUIConfig[]>;
-
     beforeEach(() => {
       profileService = createSpyObj('profileService', ['get']);
       jurisdictionService = createSpyObj('jurisdictionService', ['getJurisdictionUIConfigs', 'isShuttered']);
@@ -33,6 +32,12 @@ describe('ProfileResolver', () => {
       jurisdictionConfigs = createJurisdictionUIConfigs([true]);
       jurisdictionConfigsObs = Observable.of(jurisdictionConfigs);
 
+      profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
+
+
+    beforeEach(() => {
+      profileService = createSpyObj('profileService', ['get']);
+    
       profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
     });
 
@@ -92,4 +97,5 @@ describe('ProfileResolver', () => {
     }
 
   });
+})
 });

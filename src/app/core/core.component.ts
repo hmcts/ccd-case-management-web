@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -6,8 +6,9 @@ import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { NavigationListenerService } from './utils/navigation-listener.service';
-import { JurisdictionService, Profile, Banner, BannersService, WindowService } from '@hmcts/ccd-case-ui-toolkit';
-import { JsonPipe } from '@angular/common';
+import { JurisdictionService, Profile, Banner, BannersService, WindowService, JurisdictionShutteringDialogComponent, JurisdictionUIConfig } from '@hmcts/ccd-case-ui-toolkit';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'ccd-core',
@@ -22,6 +23,9 @@ export class CoreComponent implements OnInit, OnDestroy {
   banners: Banner[] = [];
 
   profile: Profile;
+  dialogConfig: MatDialogConfig;
+  expertUIURL: string;
+  jurisdictionConfigs: JurisdictionUIConfig[] = [];
 
   constructor(public router: Router,
               private route: ActivatedRoute,
@@ -31,7 +35,9 @@ export class CoreComponent implements OnInit, OnDestroy {
               private oauth2Service: OAuth2Service,
               private browserSupportComponent: CcdBrowserSupportComponent,
               private navigationListenerService: NavigationListenerService,
-              private windowService: WindowService) {}
+              private windowService: WindowService,
+              private dialog: MatDialog,
+              @Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
@@ -45,6 +51,24 @@ export class CoreComponent implements OnInit, OnDestroy {
       this.jurisdictionService.announceSelectedJurisdiction(this.profile.jurisdictions.find(
         jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
       );
+    }
+    this.jurisdictionService.getJurisdictionUIConfigs
+                            (this.profile.jurisdictions.map(j => j.id))
+                            .subscribe(value => {
+                              if (value) {
+                                this.jurisdictionConfigs = value
+                              }});
+    this.jurisdictionConfigs = this.jurisdictionConfigs.filter(j => j.shuttered);
+    if (this.jurisdictionConfigs.length > 0) {
+      this.initDialog();
+      const dialogRef = this.dialog.open(JurisdictionShutteringDialogComponent, this.dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+          if (result === 'NewApplication') {
+            setTimeout(() => {
+              this.document.location.href = this.appConfig.getShutterRedirectUrl();
+            }, 0);
+          }
+        });
     }
 
     const ids: string[] = [];
@@ -61,6 +85,23 @@ export class CoreComponent implements OnInit, OnDestroy {
       });
     }
     this.navigationListenerService.init();
+  }
+
+  private initDialog() {
+    this.dialogConfig = new MatDialogConfig();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.ariaLabel = 'Label';
+    this.dialogConfig.minHeight = '300px';
+    this.dialogConfig.height = 'auto';
+    this.dialogConfig.width = '700px';
+    this.dialogConfig.panelClass = 'dialog';
+    this.dialogConfig.data = {jurisdictionConfigs: this.jurisdictionConfigs}
+
+    this.dialogConfig.closeOnNavigation = false;
+    this.dialogConfig.position = {
+      top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
+    }
   }
 
   getSmartSurveyUrl(): string {

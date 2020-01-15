@@ -15,6 +15,8 @@ import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService 
 import { NavigationListenerService } from './utils/navigation-listener.service';
 import { Observable } from 'rxjs';
 import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
+import { MatDialog } from '@angular/material';
+import { Response, ResponseOptions } from '@angular/http';
 
 describe('CoreComponent', () => {
 
@@ -105,12 +107,16 @@ describe('CoreComponent', () => {
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
   const BANNERS_URL = 'http://localhost:3451/api/display/banners';
   let windowService: any;
+  let dialog: any;
 
   beforeEach(async(() => {
-
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
-    httpService = createSpy();
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
+    navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    httpService = createSpyObj<HttpService>('httpService', ['get']);
+    httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+      body: JSON.stringify([])
+    }))));
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
     jurisdictionService = new JurisdictionService(httpService, appConfig);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
@@ -119,6 +125,7 @@ describe('CoreComponent', () => {
     bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
 
     profile = {
       user: {
@@ -198,7 +205,8 @@ describe('CoreComponent', () => {
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
-          { provide: WindowService, useValue: windowService }
+          { provide: WindowService, useValue: windowService },
+          { provide: MatDialog, useValue: dialog }
         ]
       })
       .compileComponents();  // compile template and css
@@ -394,11 +402,15 @@ describe('CoreComponent when no defaults in the profile', () => {
   let navigationListenerService: NavigationListenerService;
   let bannersService: any;
   let windowService: any;
+  let dialog: any;
 
   beforeEach(async(() => {
 
-    httpService = createSpy();
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl']);
+    httpService = createSpyObj<HttpService>('httpService', ['get']);
+    httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+      body: JSON.stringify([])
+    }))));
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
     jurisdictionService = new JurisdictionService(httpService, appConfig);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
@@ -406,6 +418,7 @@ describe('CoreComponent when no defaults in the profile', () => {
     bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
 
     profile = {
       user: {
@@ -473,7 +486,8 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
-          { provide: WindowService, useValue: windowService }
+          { provide: WindowService, useValue: windowService },
+          { provide: MatDialog, useValue: dialog }
         ]
       })
       .compileComponents();  // compile template and css

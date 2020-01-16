@@ -57,24 +57,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     }
     this.jurisdictionService.getJurisdictionUIConfigs
                             (this.profile.jurisdictions.map(j => j.id))
-                            .subscribe(value => {
-                              if (value) {
-                                this.jurisdictionConfigs = value
-                                this.jurisdictionConfigs = this.jurisdictionConfigs.filter(j => j.shuttered);
-                                let jurisdictionUIConfigsCached = this.windowService.getLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED);
-                                if (!jurisdictionUIConfigsCached && this.jurisdictionConfigs.length > 0) {
-                                  this.windowService.setLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED, JSON.stringify(true));
-                                  this.initDialog();
-                                  const dialogRef = this.dialog.open(JurisdictionShutteringDialogComponent, this.dialogConfig);
-                                  dialogRef.afterClosed().subscribe(result => {
-                                    if (result === 'NewApplication') {
-                                      setTimeout(() => {
-                                        this.document.location.href = this.appConfig.getShutterRedirectUrl();
-                                      }, 0);
-                                    }
-                                  });
-    }}});
-    
+                            .subscribe(value => this.handleShuttering(value));
 
     const ids: string[] = [];
     this.profile.jurisdictions.forEach(jurisdiction => {
@@ -90,6 +73,26 @@ export class CoreComponent implements OnInit, OnDestroy {
       });
     }
     this.navigationListenerService.init();
+  }
+
+  private handleShuttering(value: any) {
+    if (value) {
+      this.jurisdictionConfigs = value
+      this.jurisdictionConfigs = this.jurisdictionConfigs.filter(j => j.shuttered);
+      let jurisdictionUIConfigsCached = this.windowService.getLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED);
+      if (!jurisdictionUIConfigsCached && this.jurisdictionConfigs.length > 0) {
+        this.windowService.setLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED, JSON.stringify(true));
+        this.initDialog();
+        const dialogRef = this.dialog.open(JurisdictionShutteringDialogComponent, this.dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+          if (result === 'NewApplication') {
+            setTimeout(() => {
+              this.document.location.href = this.appConfig.getShutterRedirectUrl();
+            }, 0);
+          }
+        });
+      }
+    }
   }
 
   private initDialog() {

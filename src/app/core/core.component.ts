@@ -19,6 +19,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class CoreComponent implements OnInit, OnDestroy {
 
+  private static readonly JURISDICTION_UI_CONFIGS_CACHED: string = 'UI_CONFIGS_CACHED';
   selectedJurisdictionName: string;
   subscription: Subscription;
   unsupportedBrowser = false;
@@ -28,7 +29,6 @@ export class CoreComponent implements OnInit, OnDestroy {
   dialogConfig: MatDialogConfig;
   expertUIURL: string;
   jurisdictionConfigs: JurisdictionUIConfig[] = [];
-  private static readonly JURISDICTION_UI_CONFIGS_CACHED: string = 'UI_CONFIGS_CACHED';
 
   constructor(public router: Router,
               private route: ActivatedRoute,

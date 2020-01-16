@@ -62,16 +62,6 @@ export class CoreComponent implements OnInit, OnDestroy {
                                 this.jurisdictionConfigs = value
                               }});
     this.jurisdictionConfigs = this.jurisdictionConfigs.filter(j => j.shuttered);
-    this.jurisdictionConfigs = [
-      {
-        id: 'Test 1',
-        shuttered: true
-      },
-      {
-        id: 'Test 2',
-        shuttered: true
-      }
-    ]
     let jurisdictionUIConfigsCached = this.windowService.getLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED);
     if (!jurisdictionUIConfigsCached && this.jurisdictionConfigs.length > 0) {
       this.windowService.setLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED, JSON.stringify(true));

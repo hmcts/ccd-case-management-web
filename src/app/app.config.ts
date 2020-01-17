@@ -124,6 +124,10 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.pay_bulk_scan_url;
   }
 
+  public getPayBulkScanBaseUrl() {
+    return this.config.pay_bulk_scan_url;
+  }
+
   public getChromeMinRequiredVersion() {
     return this.config.chrome_min_required_version;
   }

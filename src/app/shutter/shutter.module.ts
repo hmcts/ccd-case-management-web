@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ShutterComponent } from './shutter.component';
 import { ShutterRoutingModule } from './shutter-routing.module';
-import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseUIToolkitModule, UrlTransformationService } from '@hmcts/ccd-case-ui-toolkit';
 
 @NgModule({
   imports: [
@@ -14,6 +14,9 @@ import { CaseUIToolkitModule } from '@hmcts/ccd-case-ui-toolkit';
   ],
   declarations: [
     ShutterComponent
+  ],
+  providers: [
+    UrlTransformationService
   ]
 })
 export class ShutterModule {}

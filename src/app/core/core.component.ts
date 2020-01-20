@@ -6,7 +6,7 @@ import { AppConfig } from '../app.config';
 import { OAuth2Service } from './auth/oauth2.service';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { NavigationListenerService } from './utils/navigation-listener.service';
-import { JurisdictionService, Profile, Banner, BannersService, WindowService } from '@hmcts/ccd-case-ui-toolkit';
+import { JurisdictionService, Profile, Banner, BannersService, WindowService, UrlTransformationService } from '@hmcts/ccd-case-ui-toolkit';
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -31,7 +31,8 @@ export class CoreComponent implements OnInit, OnDestroy {
               private oauth2Service: OAuth2Service,
               private browserSupportComponent: CcdBrowserSupportComponent,
               private navigationListenerService: NavigationListenerService,
-              private windowService: WindowService) {}
+              private windowService: WindowService,
+              private urlTransformationService: UrlTransformationService) {}
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data.profile;
@@ -55,7 +56,14 @@ export class CoreComponent implements OnInit, OnDestroy {
     if (bannersCached) {
       this.banners = JSON.parse(bannersCached);
     } else {
-      this.bannersService.getBanners(ids).subscribe(bannersReceived => {
+      this.bannersService.getBanners(ids).map(bannersReceived => {
+        bannersReceived.forEach(banner => {
+          if (banner.bannerUrl) {
+            banner.bannerUrl = this.urlTransformationService.getPreferredEquivalentOf(banner.bannerUrl);
+          }
+        })
+        return bannersReceived;
+      }).subscribe(bannersReceived => {
         this.banners = bannersReceived;
         this.windowService.setLocalStorage('BANNERS', JSON.stringify(this.banners));
       });

@@ -173,11 +173,4 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(text).to.equals('Go');
   });
 
-  Then(/^the go button is enabled and has been renamed '(.*)'$/, async function (label) {
-    let enabled = await caseDetailsPage.isGoButtonEnabled();
-    let text = await caseDetailsPage.getGoButtonText();
-    expect(enabled).to.be.true;
-    expect(text).to.equals(label);
-  });
-
 });

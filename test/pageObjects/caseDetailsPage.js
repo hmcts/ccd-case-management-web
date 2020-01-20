@@ -140,6 +140,19 @@ class CaseDetailsPage extends BasePage {
     await this._goButton.click()
   }
 
+  /**
+   * Click go button only if its text is set to the correct value
+   * @param label button label
+   * @returns {Promise<void>}
+   */
+  async clickGoButtonOnlyWhenTextIsSet(label){
+    let buttonText = await this._goButton.getText();
+    if (buttonText !== label)  {
+      throw new CustomError(`Go button text not set to '${label}'`)
+    }
+    await this._goButton.click()
+  }
+
 
   async clickTab(tabName){
     let element = await this.getElementWithText(await $$(this._tabs),tabName);

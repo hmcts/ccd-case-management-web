@@ -34,11 +34,6 @@ describe('ProfileResolver', () => {
 
       profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
 
-    beforeEach(() => {
-      profileService = createSpyObj('profileService', ['get']);
-      profileResolver = new ProfileResolver(profileService, jurisdictionService, router);
-    });
-
     it('should resolve profile using profile service', () => {
       profileService.get.and.returnValue(profileObs);
       jurisdictionService.getJurisdictionUIConfigs.and.returnValue(jurisdictionConfigsObs);

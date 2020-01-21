@@ -120,7 +120,6 @@ export class AppConfig extends AbstractAppConfig {
   public getPaymentsUrl() {
     return this.config.payments_url;
   }
-
   public getPayBulkScanBaseUrl() {
     return this.config.pay_bulk_scan_url;
   }

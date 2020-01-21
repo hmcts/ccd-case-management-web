@@ -108,7 +108,7 @@ describe('AppConfig', () => {
             expect(appConfig.getActivityNexPollRequestMs()).toEqual(ACTIVITY_NEXT_POLL_REQUEST_MS);
             expect(appConfig.getActivityRetry()).toEqual(ACTIVITY_RETRY);
             expect(appConfig.getPaymentsUrl()).toEqual(PAYMENTS_URL);
-            expect(  appConfig.getPayBulkScanBaseUrl()).toEqual(PAY_BULKSCAN_URL);
+            expect(appConfig.getPayBulkScanBaseUrl()).toEqual(PAY_BULKSCAN_URL);
             expect(appConfig.getChromeMinRequiredVersion()).toEqual(CHROME_MIN_REQUIRED_VERSION);
             expect(appConfig.getIEMinRequiredVersion()).toEqual(IE_MIN_REQUIRED_VERSION);
             expect(appConfig.getEdgeMinRequiredVersion()).toEqual(EDGE_MIN_REQUIRED_VERSION);

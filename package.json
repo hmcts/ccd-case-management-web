@@ -13,7 +13,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "postinstall": "webdriver-manager update --versions.chrome 78.0.3904.108",
+    "postinstall": "webdriver-manager update --versions.chrome 2.40",
     "build": "ng build",
     "start": "./bin/start.sh",
     "test": "ng test --code-coverage",

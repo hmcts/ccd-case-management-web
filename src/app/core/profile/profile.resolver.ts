@@ -24,4 +24,4 @@ export class ProfileResolver implements Resolve<Profile> {
       }));
     });
   }
-} /* istanbul ignore next */
+}

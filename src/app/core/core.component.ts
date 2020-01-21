@@ -26,7 +26,6 @@ export class CoreComponent implements OnInit, OnDestroy {
   banners: Banner[] = [];
 
   profile: Profile;
-  dialogConfig: MatDialogConfig;
   expertUIURL: string;
   jurisdictionConfigs: JurisdictionUIConfig[] = [];
 
@@ -82,8 +81,8 @@ export class CoreComponent implements OnInit, OnDestroy {
       let jurisdictionUIConfigsCached = this.windowService.getLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED);
       if (!jurisdictionUIConfigsCached && this.jurisdictionConfigs.length > 0) {
         this.windowService.setLocalStorage(CoreComponent.JURISDICTION_UI_CONFIGS_CACHED, JSON.stringify(true));
-        this.initDialog();
-        const dialogRef = this.dialog.open(JurisdictionShutteringDialogComponent, this.dialogConfig);
+        let dialogConfig = this.initDialog();
+        const dialogRef = this.dialog.open(JurisdictionShutteringDialogComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(result => {
           if (result === 'NewApplication') {
             setTimeout(() => {
@@ -96,20 +95,21 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
   private initDialog() {
-    this.dialogConfig = new MatDialogConfig();
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
-    this.dialogConfig.ariaLabel = 'Label';
-    this.dialogConfig.minHeight = '300px';
-    this.dialogConfig.height = 'auto';
-    this.dialogConfig.width = '700px';
-    this.dialogConfig.panelClass = 'dialog';
-    this.dialogConfig.data = {jurisdictionConfigs: this.jurisdictionConfigs}
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.ariaLabel = 'Label';
+    dialogConfig.minHeight = '300px';
+    dialogConfig.height = 'auto';
+    dialogConfig.width = '700px';
+    dialogConfig.panelClass = 'dialog';
+    dialogConfig.data = {jurisdictionConfigs: this.jurisdictionConfigs}
 
-    this.dialogConfig.closeOnNavigation = false;
-    this.dialogConfig.position = {
+    dialogConfig.closeOnNavigation = false;
+    dialogConfig.position = {
       top: window.innerHeight / 2 - 120 + 'px', left: window.innerWidth / 2 - 275 + 'px'
     }
+    return dialogConfig;
   }
 
   getSmartSurveyUrl(): string {

@@ -11,7 +11,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
 import {
   Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
-  SearchResultView
+  SearchResultView,
+  Banner
 } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('WorkbasketComponent', () => {
@@ -98,6 +99,16 @@ describe('WorkbasketComponent', () => {
     result_error: 'ERROR',
     hasDrafts: () => false
   };
+
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
 
   const JURISDICTION: Jurisdiction = {
     id: 'J1',

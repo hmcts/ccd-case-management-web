@@ -11,7 +11,7 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService, AbstractAppConfig } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, BannersService, JurisdictionUIConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
 import { Observable } from 'rxjs';
 import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
@@ -20,13 +20,16 @@ import { Response, ResponseOptions } from '@angular/http';
 
 describe('CoreComponent', () => {
 
-  const BANNERS: Banner[] = [
+  let jurisdictionConfigsArr: JurisdictionUIConfig[] = [
     {
-      bannerDescription: 'Test Banner Description',
-      bannerEnabled: true,
-      bannerUrl: 'http://localhost:3451/test',
-      bannerUrlText: 'click here to see it.>>>',
-      bannerViewed: false
+      id: 'PROBATE',
+      name: 'Probate',
+      shuttered: true
+    },
+    {
+      id: 'DIVORCE',
+      name: 'Divorce',
+      shuttered: true
     }
   ];
 
@@ -102,7 +105,6 @@ describe('CoreComponent', () => {
   let httpService: any;
   let appConfig: any;
   let browserSupport: any;
-  let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
   const BANNERS_URL = 'http://localhost:3451/api/display/banners';
@@ -114,7 +116,7 @@ describe('CoreComponent', () => {
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
     httpService = createSpyObj<HttpService>('httpService', ['get']);
     httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-      body: JSON.stringify([])
+      body: JSON.stringify(jurisdictionConfigsArr)
     }))));
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
     jurisdictionService = new JurisdictionService(httpService, appConfig);
@@ -338,6 +340,19 @@ describe('CoreComponent', () => {
 
 describe('CoreComponent when no defaults in the profile', () => {
 
+  let jurisdictionConfigsArr: JurisdictionUIConfig[] = [
+    {
+      id: 'PROBATE',
+      name: 'Probate',
+      shuttered: true
+    },
+    {
+      id: 'DIVORCE',
+      name: 'Divorce',
+      shuttered: true
+    }
+  ];
+
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
       'title',
       'username',
@@ -390,8 +405,6 @@ describe('CoreComponent when no defaults in the profile', () => {
   let profile;
 
   let mockRoute;
-
-  let comp: CoreComponent;
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
@@ -408,7 +421,7 @@ describe('CoreComponent when no defaults in the profile', () => {
 
     httpService = createSpyObj<HttpService>('httpService', ['get']);
     httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-      body: JSON.stringify([])
+      body: JSON.stringify(jurisdictionConfigsArr)
     }))));
     appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
     jurisdictionService = new JurisdictionService(httpService, appConfig);
@@ -497,7 +510,7 @@ describe('CoreComponent when no defaults in the profile', () => {
     fixture = TestBed.createComponent(CoreComponent);
     fixture.detectChanges();
 
-    comp = fixture.componentInstance;
+    let comp = fixture.componentInstance;
 
     de = fixture.debugElement;
   });

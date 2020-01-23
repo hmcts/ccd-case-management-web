@@ -11,7 +11,7 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService, UrlTransformationService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
 import { Observable } from 'rxjs';
 import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
@@ -105,6 +105,7 @@ describe('CoreComponent', () => {
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
   const BANNERS_URL = 'http://localhost:3451/api/display/banners';
   let windowService: any;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
 
@@ -119,6 +120,7 @@ describe('CoreComponent', () => {
     bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
 
     profile = {
       user: {
@@ -198,7 +200,8 @@ describe('CoreComponent', () => {
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
-          { provide: WindowService, useValue: windowService }
+          { provide: WindowService, useValue: windowService },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css
@@ -394,6 +397,7 @@ describe('CoreComponent when no defaults in the profile', () => {
   let navigationListenerService: NavigationListenerService;
   let bannersService: any;
   let windowService: any;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
 
@@ -406,6 +410,7 @@ describe('CoreComponent when no defaults in the profile', () => {
     bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
 
     profile = {
       user: {
@@ -473,7 +478,8 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
-          { provide: WindowService, useValue: windowService }
+          { provide: WindowService, useValue: windowService },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css

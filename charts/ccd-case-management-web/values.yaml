@@ -11,4 +11,3 @@ nodejs:
         CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
         CCD_ACTIVITY_MAX_REQUEST_PER_BATCH: 25
         POSTCODE_LOOKUP_URL: 'https://gateway-ccd.aat.platform.hmcts.net/addresses?postcode={{ .Values.postcodeParam }}'
-

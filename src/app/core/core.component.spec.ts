@@ -296,9 +296,9 @@ describe('CoreComponent', () => {
 
     let footerBar = footerBarEl.componentInstance;
 
-    expect(footerBar.email).toEqual('service-desk@hmcts.gsi.gov.uk');
+    expect(footerBar.email).toEqual('ashley.noronha@hmcts.net');
     expect(footerBar.phone).toEqual('0207 633 4140');
-    expect(footerBar.workhours).toEqual('Monday to Friday, 8am to 6pm (excluding bank holidays)');
+    expect(footerBar.workhours).toEqual('Work Hours: As little as possible :)');
   });
 
   it('should initially select jurisdiction id', () => {

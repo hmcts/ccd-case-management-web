@@ -10,7 +10,8 @@ class CaseListComponent extends BasePage {
   constructor(){
     super();
 
-    this.parentCss = '#search-result table'
+    this.parentCss = '#search-result table';
+    this.noCasesFound = '#search-result div';
     this._columnNamesList = '#search-result table thead table tr > div:nth-of-type(1)';
 
     this._columnDataCssTemplate = '#search-result table tbody tr td:nth-of-type(X)'
@@ -23,6 +24,8 @@ class CaseListComponent extends BasePage {
     this._paginationPageNumberLinks = 'pagination-template > ul > li > a >span:nth-of-type(2)';
     this._paginationNext = 'pagination-template .pagination-next > a';
     this._paginationPrevious = 'pagination-template .pagination-previous > a';
+
+
   }
 
   /**
@@ -30,7 +33,7 @@ class CaseListComponent extends BasePage {
    * @returns {Promise<*|boolean>}
    */
   async isDisplayed(){
-      return await $(this.parentCss).isDisplayed()
+      return await $(this.parentCss).isDisplayed() || await $(this.noCasesFound).isDisplayed()
   }
 
   /**

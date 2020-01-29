@@ -36,6 +36,8 @@ withParameterizedPipeline('angular', 'ccd', 'case-management-web', params.ENVIRO
 
     enableSlackNotifications('#ccd-param-builds')
 
+    before('securitychecks') {sh 'yarn test:audit'}
+
     after('checkout') {
         sh "yarn cache clean"
     }

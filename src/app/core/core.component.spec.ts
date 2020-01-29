@@ -569,6 +569,7 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
   let windowService: any;
   let dialog: any;
   let comp: CoreComponent;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
 
@@ -582,6 +583,7 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = new WindowService();
     dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
 
     profile = {
       user: {
@@ -650,7 +652,8 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
           { provide: WindowService, useValue: windowService },
-          { provide: MatDialog, useValue: dialog }
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css

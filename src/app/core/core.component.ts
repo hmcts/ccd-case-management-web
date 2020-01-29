@@ -95,7 +95,8 @@ export class CoreComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
           if (result === 'NewApplication') {
             setTimeout(() => {
-              this.document.location.href = this.appConfig.getShutterRedirectUrl();
+              this.document.location.href = this.urlTransformationService
+                                            .getPreferredEquivalentOf(this.appConfig.getShutterRedirectUrl());
             }, 0);
           }
         });

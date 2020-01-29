@@ -146,6 +146,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await populateCaseProgressionType();
   });
 
+  Given(/^a case with CaseView Callback functionality exists$/, async function() {
+    Data.caseType = 'CaseView Callback Messages';
+    Data.optionalFields = [];
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField0'},
+                            {fieldType: 'text', fieldId: 'TextField1'}];
+  });
+
   Given(/^a case with the print button not configured exists$/, async function() {
     await populateCaseProgressionType();
   });

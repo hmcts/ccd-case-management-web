@@ -11,7 +11,7 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService, BannersService, JurisdictionUIConfig } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService, JurisdictionUIConfig, UrlTransformationService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
 import { Observable } from 'rxjs';
 import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
@@ -97,6 +97,7 @@ describe('CoreComponent', () => {
   const BANNERS_URL = 'http://localhost:3451/api/display/banners';
   let windowService: any;
   let dialog: any;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
@@ -115,6 +116,7 @@ describe('CoreComponent', () => {
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
     dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
 
     profile = {
       user: {
@@ -195,7 +197,8 @@ describe('CoreComponent', () => {
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
           { provide: WindowService, useValue: windowService },
-          { provide: MatDialog, useValue: dialog }
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css
@@ -390,6 +393,7 @@ describe('CoreComponent when no defaults in the profile', () => {
   let bannersService: any;
   let windowService: any;
   let dialog: any;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
 
@@ -406,7 +410,7 @@ describe('CoreComponent when no defaults in the profile', () => {
     bannersService.getBanners.and.returnValue(Observable.of());
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
     dialog = createSpyObj<MatDialog>('dialog', ['open']);
-
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
     profile = {
       user: {
         idam: {
@@ -474,7 +478,8 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: NavigationListenerService, useValue: navigationListenerService },
           { provide: BannersService, useValue: bannersService },
           { provide: WindowService, useValue: windowService },
-          { provide: MatDialog, useValue: dialog }
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css

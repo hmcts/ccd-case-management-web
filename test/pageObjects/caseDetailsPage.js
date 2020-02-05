@@ -281,7 +281,23 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async pdfContentVisible(){
-    return await $('mv-pdf-viewer').isDisplayed();
+    let fail = true;
+    let failmessage = null;
+
+    for (let i = 1; i < 4; i++){
+      try {
+        await $('mv-pdf-viewer').isDisplayed();
+        fail = false;
+        break;
+      } catch (e) {
+        failmessage = e;
+        console.log(e);
+        console.log(`Attempt ${i}/3 failed, Retry after wait`);
+        await browser.sleep(2000 * i)
+      }
+    }
+
+    return !fail;
   }
 
   /**
@@ -321,7 +337,7 @@ class CaseDetailsPage extends BasePage {
 
     for (let i = 1; i < 4; i++){
       try {
-        await $('mv-unsupported-viewer').isDisplayed()
+        await $('mv-unsupported-viewer').isDisplayed();
         fail = false;
         break;
       } catch (e) {

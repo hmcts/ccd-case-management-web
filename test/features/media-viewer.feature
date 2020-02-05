@@ -64,4 +64,4 @@ Examples:
 | document_mov_1.mov   |
 | document_mov_2.MoV   |
 | document_avi_1.avi   |
-| document_avi_2.AvI   |
+| document_avi_2.Avi   |

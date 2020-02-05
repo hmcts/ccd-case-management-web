@@ -1,5 +1,5 @@
 # ---- Base Image ----
-FROM node:8.12.0-slim AS base
+FROM node:12.14.1-slim AS base
 WORKDIR /usr/src/app
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -33,7 +33,7 @@ RUN yarn build:ssr
 # Starting from a fresh node base image: no need for another
 # npm install as the built artifacts have their dependencies
 # built-in already, as stated above.
-FROM node:8.12.0-slim AS runtime
+FROM node:12.14.1-slim AS runtime
 WORKDIR /usr/src/app/dist
 COPY --from=build /usr/src/app/dist/ ./
 CMD node ./server.js

@@ -281,23 +281,75 @@ class CaseDetailsPage extends BasePage {
    * @returns {Promise<void>}
    */
   async pdfContentVisible(){
-    return await $('mv-pdf-viewer').isDisplayed();
+    let fail = true;
+    let failmessage = null;
+
+    for (let i = 1; i < 4; i++){
+      try {
+        await $('mv-pdf-viewer').isDisplayed();
+        fail = false;
+        break;
+      } catch (e) {
+        failmessage = e;
+        console.log(e);
+        console.log(`Attempt ${i}/3 failed, Retry after wait`);
+        await browser.sleep(2000 * i)
+      }
+    }
+
+    return !fail;
   }
 
   /**
    * Check that Media Viewer is showing the image document.
-   * @returns {Promise<void>}
+   * @returns {Promise<boolean>}
    */
   async imageContentVisible(){
-    return await $('mv-image-viewer').isDisplayed();
+
+    let fail = true;
+    let failmessage = null;
+
+    for (let i = 1; i < 4; i++){
+      try {
+        await $('mv-image-viewer').isDisplayed();
+        fail = false;
+        break;
+      } catch (e) {
+        failmessage = e;
+        console.log(e);
+        console.log(`Attempt ${i}/3 failed, Retry after wait`);
+        await browser.sleep(2000 * i)
+      }
+    }
+
+    return !fail;
+
+    // return await $('mv-image-viewer').isDisplayed();
   }
 
   /**
    * Check that Media Viewer is showing the current document as of unsupported type.
-   * @returns {Promise<void>}
+   * @returns {Promise<boolean>}
    */
   async documentContentTypeNotSupported() {
-    return await $('mv-unsupported-viewer').isDisplayed();
+    let fail = true;
+    let failmessage = null;
+
+    for (let i = 1; i < 4; i++){
+      try {
+        await $('mv-unsupported-viewer').isDisplayed();
+        fail = false;
+        break;
+      } catch (e) {
+        failmessage = e;
+        console.log(e);
+        console.log(`Attempt ${i}/3 failed, Retry after wait`);
+        await browser.sleep(2000 * i)
+      }
+    }
+
+    return !fail;
+
   }
 
   /**

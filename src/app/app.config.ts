@@ -154,6 +154,10 @@ export class AppConfig extends AbstractAppConfig {
   public getViewOrDeleteDraftsUrl(did: string) {
     return this.getCaseDataUrl() + `/internal/drafts/${did}`;
   }
+
+  public getBannersUrl() {
+    return this.getCaseDataUrl() + `/internal/banners/`;
+  }
 }
 
 export class Config extends CaseEditorConfig {

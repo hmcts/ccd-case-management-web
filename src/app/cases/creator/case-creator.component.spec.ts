@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import createSpyObj = jasmine.createSpyObj;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
@@ -52,6 +52,16 @@ const CASE_TYPES_1: CaseTypeLite[] = [
         }
       ],
     }
+];
+
+const BANNERS: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
 ];
 
 const JURISDICTION_1: Jurisdiction = {
@@ -130,6 +140,16 @@ const CASE_TYPES_2: CaseTypeLite[] = [
   }
 ];
 
+const BANNERS_2: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
+
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
@@ -154,6 +174,16 @@ const CASE_TYPES_SINGLE_EVENT: CaseTypeLite[] = [
     description: '',
     states: [],
     events: [...SINGLE_EVENT],
+  }
+];
+
+const BANNERS_3: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
   }
 ];
 

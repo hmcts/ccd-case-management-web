@@ -45,7 +45,7 @@ describe('PaginationService', () => {
 
       httpService = createSpyObj<HttpService>('httpService', ['get']);
       httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
-        body: JSON.stringify(SEARCH_VIEW)
+        body: JSON.stringify([SEARCH_VIEW])
       }))));
 
       params = new URLSearchParams();

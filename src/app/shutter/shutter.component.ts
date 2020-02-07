@@ -20,13 +20,17 @@ export class ShutterComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      const redirectUrl = this.urlTransformationService.getPreferredEquivalentOf(this.appConfig.getShutterRedirectUrl());
+      const redirectUrl = this.getRedirectUrl();
       this.document.location.href = redirectUrl;
     }, this.redirectWaitSecs * 1000);
   }
 
   getSmartSurveyUrl(): string {
     return this.appConfig.getSmartSurveyUrl();
+  }
+  
+  getRedirectUrl(): string {
+    return this.urlTransformationService.getPreferredEquivalentOf(this.appConfig.getShutterRedirectUrl());
   }
 
 }

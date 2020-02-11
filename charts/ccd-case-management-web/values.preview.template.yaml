@@ -18,6 +18,7 @@ nodejs:
     CCD_ACTIVITY_URL: https://ccd-api-gateway-web-pr-273.service.core-compute-preview.internal/activity
     PAYMENTS_URL: https://ccd-api-gateway-web-pr-273.service.core-compute-preview.internal/payments
     PAY_BULKSCAN_URL: https://gateway-ccd.aat.platform.hmcts.net/pay-bulkscan
+    SHUTTER_REDIRECT_URL: https://xui-webapp-ithc.service.core-compute-ithc.internal
 
 idam-pr:
   redirect_uris:

@@ -30,6 +30,7 @@ class NavBar {
    */
   async clickCreateCaseLink(){
     browser.ignoreSynchronization = true;
+    await browser.sleep(2000);
     await $(this._createCaseLink).click();
     browser.ignoreSynchronization = false;
     return new CreateCaseStartPage;

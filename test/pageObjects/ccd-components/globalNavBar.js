@@ -66,6 +66,7 @@ class NavBar {
   async allComponentsDisplayed(){
     browser.ignoreSynchronization = true;
 
+    await browser.sleep(1000);
     let allDisplayed =  await $(this._searchLink).isDisplayed() &&
       await $(this._caseListLink).isDisplayed() &&
       await $(this._createCaseLink).isDisplayed() &&

@@ -60,6 +60,7 @@ module "case-management-web" {
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
 
   app_settings = {
+    WEBSITE_NODE_DEFAULT_VERSION = "~12"
     IDAM_LOGIN_URL = "${var.idam_authentication_web_url}/login"
     CCD_GW_LOGOUT_URL = "${local.ccd_gateway_url}/logout"
     CCD_API_URL = "${local.ccd_gateway_url}/aggregated"

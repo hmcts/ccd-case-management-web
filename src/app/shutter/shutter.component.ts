@@ -28,7 +28,7 @@ export class ShutterComponent implements OnInit, AfterViewInit {
   getSmartSurveyUrl(): string {
     return this.appConfig.getSmartSurveyUrl();
   }
-  
+
   getRedirectUrl(): string {
     return this.urlTransformationService.getPreferredEquivalentOf(this.appConfig.getShutterRedirectUrl());
   }

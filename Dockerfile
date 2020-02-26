@@ -9,16 +9,16 @@ FROM ${base} AS build
 USER root
 RUN apk update \
     && apk add \
-    bzip2=1.0.6-8.1 \
-    patch=2.7.5-1+deb9u2 \
-    libfontconfig1=2.11.0-6.7+b1 \
+    bzip2>1.0.6 \
+    patch>2.7.5 \
+    libfontconfig1> 2.11.0 \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
 COPY package.json yarn.lock .snyk bin ./
 USER root
 RUN chown hmcts yarn.lock
 USER hmcts
-RUN yarn install
+RUN yarn install --ignore-optional
 COPY . .
 RUN yarn build:ssr
 

@@ -7,8 +7,8 @@ ARG base=hmctspublic.azurecr.io/base/node:12-alpine
 # .ts source into .js, producing self-sufficient scripts.
 FROM ${base} AS build
 USER root
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
+RUN apk update \
+    && apk add \
     bzip2=1.0.6-8.1 \
     patch=2.7.5-1+deb9u2 \
     libfontconfig1=2.11.0-6.7+b1 \

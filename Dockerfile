@@ -12,6 +12,7 @@ RUN apk update \
     bzip2>1.0.6 \
     patch>2.7.5 \
     fontconfig>2.11.0 \
+    bash \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
 COPY package.json yarn.lock .snyk bin ./

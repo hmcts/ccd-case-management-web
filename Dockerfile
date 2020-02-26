@@ -1,6 +1,6 @@
 # Keep hub.Dockerfile aligned to this file as far as possible
 
-ARG base=hmctspublic.azurecr.io/base/node:12-stretch-slim
+ARG base=hmctspublic.azurecr.io/base/node:12-alpine
 
 # ---- Build artifacts ----
 # Both frontend and backend codebases are bundled from their

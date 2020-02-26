@@ -45,6 +45,7 @@ withPipeline("angular", product, component) {
     }
 
     installCharts()
+    enableAksStagingDeployment()
 
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)

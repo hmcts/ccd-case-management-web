@@ -20,6 +20,16 @@ import { Response, ResponseOptions } from '@angular/http';
 
 describe('CoreComponent', () => {
 
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
+
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
     name: 'Divorce',
@@ -117,7 +127,6 @@ describe('CoreComponent', () => {
     windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
     dialog = createSpyObj<MatDialog>('dialog', ['open']);
     urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
-
     profile = {
       user: {
         idam: {

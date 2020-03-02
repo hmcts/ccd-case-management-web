@@ -81,5 +81,6 @@ module "case-management-web" {
     CCD_ACTIVITY_MAX_REQUEST_PER_BATCH = 25 // Better have this same as CCD_PAGE_SIZE
     PAYMENTS_URL = "${local.ccd_gateway_url}/payments"
     SHUTTER_REDIRECT_URL = "${local.shutter_redirect_url}"
+    PAY_BULKSCAN_URL = "${local.ccd_gateway_url}/pay-bulkscan"
   }
 }

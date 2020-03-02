@@ -23,4 +23,4 @@ nodejs:
 idam-pr:
   redirect_uris:
     CCD:
-    - https://${SERVICE_FQDN}/oauth2redirect
+      - https://${SERVICE_FQDN}/oauth2redirect

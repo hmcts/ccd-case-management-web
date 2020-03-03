@@ -17,7 +17,9 @@ describe('CcdBrowserSupportComponent', () => {
   const FIREFOX_MIN_REQUIRED_VERSION = 60;
 
   beforeEach(async(() => {
-    appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl', 'getChromeMinRequiredVersion']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl',
+      'getChromeMinRequiredVersion', 'getIEMinRequiredVersion', 'getFirefoxMinRequiredVersion',
+      'getEdgeMinRequiredVersion']);
     appConfig.getUnsupportedBrowserUrl.and.returnValue(UNSUPPORTED_BROWSER_URL);
     deviceService = createSpyObj('DeviceDetectorService', ['getDeviceInfo']);
     const deviceInfo = {
@@ -59,7 +61,47 @@ describe('CcdBrowserSupportComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should not display if unsupported browser', function () {
+
+  it('should not display if unsupported chrome browser', function () {
+    const deviceInfo = {
+      'browser': 'chrome',
+      'browser_version': '67.0'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
+  });
+
+  it('should not display if unsupported ie browser', function () {
+    const deviceInfo = {
+      'browser': 'ie',
+      'browser_version': '11'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
+  });
+
+  it('should not display if unsupported firefox browser', function () {
+    const deviceInfo = {
+      'browser': 'firefox',
+      'browser_version': '71'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
+  });
+
+  it('should not display if unsupported ms-edge browser', function () {
+    const deviceInfo = {
+      'browser': 'ms-edge',
+      'browser_version': '77'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
     expect(component).toBeTruthy();
     expect(component.isUnsupportedBrowser()).toBeFalsy();
   });

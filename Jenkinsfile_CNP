@@ -45,10 +45,10 @@ withPipeline("angular", product, component) {
     }
 
     installCharts()
-    enableAksStagingDeployment()
 
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
+    enableAksStagingDeployment()
 
     before('securitychecks') {sh 'yarn test:audit'}
 

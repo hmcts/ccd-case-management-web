@@ -19,7 +19,7 @@ RUN apt-get update \
 COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
 RUN chown hmcts yarn.lock
 USER hmcts
-RUN yarn install --ignore-optional --production \
+RUN yarn install \
   && yarn cache clean
 COPY . .
 RUN yarn build:ssr

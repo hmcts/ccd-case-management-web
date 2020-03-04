@@ -33,7 +33,7 @@ locals {
   ccd_activity_url = "${local.ccd_gateway_url}/activity"
   
   default_shutter_redirect_url = "https://xui-webapp-${local.env_ase_url}"
-  shutter_redirect_url = "${var.ccd_shutter_redirect_url != "" ? var.ccd_shutter_redirect_url : local.default_ccd_shutter_redirect_url}"
+  shutter_redirect_url = "${var.shutter_redirect_url != "" ? var.shutter_redirect_url : local.default_shutter_redirect_url}"
 }
 
 data "azurerm_key_vault" "ccd_shared_key_vault" {

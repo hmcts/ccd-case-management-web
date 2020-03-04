@@ -1,14 +1,11 @@
 # Keep hub.Dockerfile aligned to this file as far as possible
 
-ARG base=hmctspublic.azurecr.io/base/node:12-alpine 
-
-ARG inter=hmctspublic.azurecr.io/base/node:12-stretch-slim
+ARG base=hmctspublic.azurecr.io/base/node:12-stretch-slim
 
 # ---- Build artifacts ----
 # Both frontend and backend codebases are bundled from their
 # .ts source into .js, producing self-sufficient scripts.
-FROM ${inter} AS build
-
+FROM ${base} AS build
 USER root
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -16,11 +13,12 @@ RUN apt-get update \
     patch=2.7.5-1+deb9u2 \
     libfontconfig1=2.11.0-6.7+b1 \
     && rm -rf /var/lib/apt/lists/*
-COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
+USER hmcts
+COPY package.json yarn.lock .snyk bin ./
+USER root
 RUN chown hmcts yarn.lock
 USER hmcts
-RUN yarn install \
-  && yarn cache clean
+RUN yarn install
 COPY . .
 RUN yarn build:ssr
 

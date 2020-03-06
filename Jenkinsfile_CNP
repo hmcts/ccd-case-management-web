@@ -49,6 +49,7 @@ withPipeline("angular", product, component) {
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
     enableAksStagingDeployment()
+    disableLegacyDeploymentOnAAT()
 
     before('securitychecks') {sh 'yarn test:audit'}
 

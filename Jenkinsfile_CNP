@@ -55,24 +55,4 @@ withPipeline("angular", product, component) {
     after('checkout') {
         sh "yarn cache clean"
     }
-
-    after('functionalTest:aat'){
-        publishHTML(target:[
-            reportDir            : "test/results/",
-            reportFiles          : "index.html",
-            reportName           : "Functional Tests",
-            alwaysLinkToLastBuild: true
-        ])
-    }
-
-    after('functionalTest:preview'){
-        publishHTML(target:[
-            reportDir            : "test/results",
-            reportFiles          : "index.html",
-            reportName           : "Functional Tests",
-            alwaysLinkToLastBuild: true
-        ])
-    }
-
-
 }

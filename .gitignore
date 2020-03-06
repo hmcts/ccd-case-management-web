@@ -72,3 +72,5 @@ test-report
 # Cucumber report
 test/results
 test/functional-tests/results
+smoke-output/
+functional-output/

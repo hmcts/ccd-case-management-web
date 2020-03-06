@@ -20,7 +20,7 @@ class LoginPage extends BasePage {
   static async open(){
 
       //open browser and navigate to url
-      await browser.get(process.env.TEST_URL || 'http://localhost:3451',50000);
+      await browser.driver.get(process.env.TEST_URL || 'http://localhost:3451',50000);
 
       //wait for browser url to be correct
       let EC = protractor.ExpectedConditions;

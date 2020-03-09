@@ -1,5 +1,4 @@
 nodejs:
-<<<<<<< HEAD
     image: 'hmctspublic.azurecr.io/ccd/case-management-web:latest'
     applicationPort: 3451
     cpuLimits: 1
@@ -14,7 +13,7 @@ nodejs:
         POSTCODE_LOOKUP_URL: 'https://gateway-ccd.aat.platform.hmcts.net/addresses?postcode={{ .Values.postcodeParam }}'
         SHUTTER_REDIRECT_URL: 'https://xui-webapp-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
         SHUTTER_REDIRECT_WAIT: 10
-=======
+
   image: 'hmctspublic.azurecr.io/ccd/case-management-web:latest'
   ingressHost: www-ccd.{{ .Values.global.environment }}.platform.hmcts.net
   applicationPort: 3451
@@ -42,7 +41,6 @@ nodejs:
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS: 5000
     CCD_ACTIVITY_RETRY: 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
->>>>>>> master
 
 idam-pr:
   enabled: false

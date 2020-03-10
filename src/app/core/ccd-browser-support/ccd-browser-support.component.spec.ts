@@ -9,26 +9,15 @@ describe('CcdBrowserSupportComponent', () => {
   let fixture: ComponentFixture<CcdBrowserSupportComponent>;
   let appConfig: any;
   let deviceService: any;
-  let deviceServiceArg: any;
   const UNSUPPORTED_BROWSER_URL = 'https://www.gov.uk/help/browsers';
-  const CHROME_MIN_REQUIRED_VERSION = '67';
-  const IE_MIN_REQUIRED_VERSION = 11;
-  const EDGE_MIN_REQUIRED_VERSION = 17;
-  const FIREFOX_MIN_REQUIRED_VERSION = 60;
 
   beforeEach(async(() => {
-    appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl', 'getChromeMinRequiredVersion']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getUnsupportedBrowserUrl',
+      'getChromeMinRequiredVersion', 'getIEMinRequiredVersion', 'getFirefoxMinRequiredVersion',
+      'getEdgeMinRequiredVersion']);
     appConfig.getUnsupportedBrowserUrl.and.returnValue(UNSUPPORTED_BROWSER_URL);
     deviceService = createSpyObj('DeviceDetectorService', ['getDeviceInfo']);
-    const deviceInfo = {
-      'userAgent': 'nghcilwoy',
-      'os': 'XJO',
-      'browser': 'chrome',
-      'device': 'green tea',
-      'os_version': '10.5',
-      'browser_version': '67.0'
-    };
-    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
     TestBed.configureTestingModule({
       declarations: [ CcdBrowserSupportComponent ],
       providers: [
@@ -59,7 +48,47 @@ describe('CcdBrowserSupportComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should not display if unsupported browser', function () {
+
+  it('should not display if unsupported chrome browser', function () {
+    const deviceInfo = {
+      'browser': 'chrome',
+      'browser_version': '67.0'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
+  });
+
+  it('should not display if unsupported ie browser', function () {
+    const deviceInfo = {
+      'browser': 'ie',
+      'browser_version': '11'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
+  });
+
+  it('should not display if unsupported firefox browser', function () {
+    const deviceInfo = {
+      'browser': 'firefox',
+      'browser_version': '71'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
+    expect(component).toBeTruthy();
+    expect(component.isUnsupportedBrowser()).toBeFalsy();
+  });
+
+  it('should not display if unsupported ms-edge browser', function () {
+    const deviceInfo = {
+      'browser': 'ms-edge',
+      'browser_version': '77'
+    };
+    deviceService.getDeviceInfo.and.returnValue(deviceInfo);
+
     expect(component).toBeTruthy();
     expect(component.isUnsupportedBrowser()).toBeFalsy();
   });

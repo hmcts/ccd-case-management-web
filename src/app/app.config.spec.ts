@@ -36,6 +36,8 @@ describe('AppConfig', () => {
   const VIEW_OR_DELETE_DRAFT_URL = DATA_URL + '/internal/drafts/DID';
   const SHUTTER_REDIRECT_URL = 'http://expertui';
   const SHUTTER_REDIRECT_WAIT = 10;
+  const BANNER_URL = DATA_URL + '/internal/banners/';
+  const JURISDICTION_UI_CONFIGS_URL = DATA_URL + '/internal/jurisdiction-ui-configs/';
 
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,
@@ -122,6 +124,8 @@ describe('AppConfig', () => {
             expect(appConfig.getViewOrDeleteDraftsUrl('DID')).toEqual(VIEW_OR_DELETE_DRAFT_URL);
             expect(appConfig.getShutterRedirectUrl()).toEqual(SHUTTER_REDIRECT_URL);
             expect(appConfig.getShutterRedirectWait()).toEqual(SHUTTER_REDIRECT_WAIT);
+            expect(appConfig.getBannersUrl()).toEqual(BANNER_URL);
+            expect(appConfig.getJurisdictionUiConfigsUrl()).toEqual(JURISDICTION_UI_CONFIGS_URL);
           });
       })));
   });

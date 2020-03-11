@@ -60,5 +60,5 @@ exports.config = {
 
   SELENIUM_PROMISE_MANAGER: false,
 
-  allScriptsTimeout: 60000
+  allScriptsTimeout: 100000
 };

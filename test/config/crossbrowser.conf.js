@@ -98,7 +98,7 @@ const config = {
 
       SELENIUM_PROMISE_MANAGER: false,
 
-      allScriptsTimeout: 60000,
+      allScriptsTimeout: 10000,
 
       onPrepare() {
         const caps = browser.getCapabilities();

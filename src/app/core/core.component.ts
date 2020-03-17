@@ -51,7 +51,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         this.selectedJurisdictionName = selectedJurisdiction.name;
       }
     );
-    if (this.profile.default.workbasket.jurisdiction_id) {
+    if (this.profile.default.workbasket && this.profile.default.workbasket.jurisdiction_id) {
       this.jurisdictionService.announceSelectedJurisdiction(this.profile.jurisdictions.find(
         jurisdiction => jurisdiction.id === this.profile.default.workbasket.jurisdiction_id)
       );

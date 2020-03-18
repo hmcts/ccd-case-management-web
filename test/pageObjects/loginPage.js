@@ -69,7 +69,7 @@ class LoginPage extends BasePage {
 
     let password = 'Monday123';
     
-    if (username === 'auto.test.cnp@gmail.com' || username === 'auto.test.cnp+fe@gmail.com') {
+    if (user === 'auto.test.cnp@gmail.com' || user === 'auto.test.cnp+fe@gmail.com') {
        password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
     }
 

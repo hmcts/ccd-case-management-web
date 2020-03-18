@@ -522,7 +522,6 @@ describe('WorkbasketComponent when no defaults in the profile', () => {
 
 });
 
-
 describe('WorkbasketComponent when no workbasket defaults in the profile', () => {
 
   const TEMPLATE =

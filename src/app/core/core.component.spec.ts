@@ -337,7 +337,6 @@ describe('CoreComponent', () => {
   });
 });
 
-
 describe('CoreComponent when no workbasket defaults in the profile', () => {
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [

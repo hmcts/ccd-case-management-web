@@ -15,6 +15,7 @@ RUN apt-get update \
     bzip2=1.0.6-8.1 \
     patch=2.7.5-1+deb9u2 \
     libfontconfig1=2.11.0-6.7+b1 \
+    git \
     && rm -rf /var/lib/apt/lists/*
 COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
 RUN chown hmcts yarn.lock

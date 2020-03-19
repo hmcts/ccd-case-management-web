@@ -30,6 +30,7 @@ class NavBar {
    */
   async clickCreateCaseLink(){
     browser.ignoreSynchronization = true;
+    await browser.sleep(2000);
     await $(this._createCaseLink).click();
     browser.ignoreSynchronization = false;
     return new CreateCaseStartPage;
@@ -66,6 +67,7 @@ class NavBar {
   async allComponentsDisplayed(){
     browser.ignoreSynchronization = true;
 
+    await browser.sleep(1000);
     let allDisplayed =  await $(this._searchLink).isDisplayed() &&
       await $(this._caseListLink).isDisplayed() &&
       await $(this._createCaseLink).isDisplayed() &&

@@ -15,7 +15,7 @@ Feature: Login Scenarios
     | component         |
     | filters           |
     | banners           |
-    | case list results |
+   #| case list results |
 
   @broken
   Scenario: I can log out and login as another user

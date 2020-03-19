@@ -336,6 +336,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await new CaseDetailsPage().startEvent('Modify Case');
   });
 
+  When(/^I click 'Ignore Warning and Go' and submit the event$/, async function () {
+    await new CaseDetailsPage().clickGoButtonOnlyWhenTextIsSet('Ignore Warning and Go');
+    await baseSteps.fillOutAndSubmitForm();
+  });
 
   When(/^I click the 'Create a case' button$/, async function () {
     await caseListPage.clickCreateNewCaseButton();

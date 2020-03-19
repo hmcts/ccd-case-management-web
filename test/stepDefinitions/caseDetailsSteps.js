@@ -42,6 +42,17 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(alertBarText).to.match(/^Case #\d{4}-\d{4}-\d{4}-\d{4} has been created\.$/);
   });
 
+  Then('the callback error or warnings bar will be visible', async function() {
+      let alertBarText = await caseDetailsPage.getErrorAlertBarText();
+      expect(alertBarText).to.equal('Unable to proceed because there are one or more callback Errors or Warnings');
+  });
+
+  Then(/^the callback validation error summary is displayed$/, async function () {
+    expect(await caseDetailsPage.isErrorSummaryVisible()).to.be.true;
+    expect(await caseDetailsPage.getErrorSummaryHeadingText()).to.equal('The callback data failed validation');
+    expect(await caseDetailsPage.getErrorSummaryDetailsText()).to.equal('Unable to proceed because there are one or more callback Errors or Warnings');
+  });
+
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
     await caseDetailsPage.clickTab(tabName);
     let fields = await caseDetailsPage.getTabFields();
@@ -140,18 +151,26 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     expect(newTabUrl.includes('/media-viewer')).to.be.true;
   });
 
-  Then(/^the pdf document is visible in the new tab$/, async function () {
+  Then(/^the pdf document is visible in the new tab$/, {timeout: 60 * 1000}, async function () {
     let visible = await caseDetailsPage.pdfContentVisible();
     expect(visible).to.be.true;
   });
 
-  Then(/^the image document is visible in the new tab$/, async function () {
+  Then(/^the image document is visible in the new tab$/, {timeout: 60 * 1000}, async function () {
     let visible = await caseDetailsPage.imageContentVisible();
     expect(visible).to.be.true;
   });
 
-  When(/^the document is shown as unsupported in the new tab$/, async function () {
+  When(/^the document is shown as unsupported in the new tab$/, {timeout: 60 * 1000}, async function () {
     let shownUnsupported = await caseDetailsPage.documentContentTypeNotSupported();
     expect(shownUnsupported).to.be.true;
   });
+
+  Then(/^the go button is disabled$/, async function () {
+    let enabled = await caseDetailsPage.isGoButtonEnabled();
+    let text = await caseDetailsPage.getGoButtonText();
+    expect(enabled).to.be.false;
+    expect(text).to.equals('Go');
+  });
+
 });

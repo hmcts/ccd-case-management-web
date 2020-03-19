@@ -60,18 +60,12 @@ class LoginPage extends BasePage {
    */
   async loginToApp(username = '') {
     let user = '';
-
     if (username === '') {
       user = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
     } else {
       user = username;
     }
-
-    let password = 'Monday123';
-    
-    if (user === 'auto.test.cnp@gmail.com' || user === 'auto.test.cnp+fe@gmail.com') {
-       password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
-    }
+    let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
 
     await this.inputCredentials(user, password);
     return await this.clickSignIn();

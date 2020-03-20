@@ -102,4 +102,5 @@ app.get('*', (req, res) => {
 // Start up the Node server
 app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);
+  console.log(`RemoteDocumentManagementUrl is :${CONFIG.remote_document_management_url}`);
 });

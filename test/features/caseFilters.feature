@@ -27,7 +27,7 @@ Feature: Set of scenarios to test functionality of create case filters in case c
             | Number      | Number Field                                                       |                                                            |
             | Yes-No      | Yes or No Field                                                    |                                                            |
             | Collection  | Collection Field                                                   |                                                            |
-            | Fixed-List  | Marrital Status Field                                              | --Select a value--,Marriage,Civil Partnership,Single,Widow |
+            | Fixed-List  | Marrital Status Field                                              | --Select a value--,Civil Partnership,Marriage,Single,Widow |
             | Money-GBP   | Money Field                                                        |                                                            |
             | Document    | Document Field                                                     |                                                            |
             | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |

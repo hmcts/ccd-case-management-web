@@ -1,4 +1,4 @@
-@functional @broken
+@functional
 Feature: Set of scenario's covering update functionality with a second user on a created case data
 
   Background:

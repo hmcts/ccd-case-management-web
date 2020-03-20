@@ -58,7 +58,7 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
-    "@hmcts/ccd-case-ui-toolkit": "2.64.4-EUI",
+    "@hmcts/ccd-case-ui-toolkit": "2.64.5-dm-debug",
     "@hmcts/ccpay-web-component": "3.0.3",
     "@hmcts/media-viewer": "1.1.9",
     "@hmcts/nodejs-healthcheck": "^1.5.1",

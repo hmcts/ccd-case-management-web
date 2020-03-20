@@ -25,7 +25,7 @@ export class AppConfig extends AbstractAppConfig {
         .get(configUrl)
         .map(response => response.json())
         .catch((error: any): any => {
-          //console.error(`Configuration ${configUrl} could not be read`, error);
+          // console.error(`Configuration ${configUrl} could not be read`, error);
           reject();
           return throwError(error.json().error || 'Server error');
         })

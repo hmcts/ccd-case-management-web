@@ -155,7 +155,7 @@ export class WorkbasketComponent implements OnInit {
   private notifyDefaultJurisdiction() {
     Promise.resolve(null).then(() => {
       let profile = this.route.parent.snapshot.data.profile;
-      if (profile.default.workbasket.jurisdiction_id) {
+      if (profile.default.workbasket && profile.default.workbasket.jurisdiction_id) {
         let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
         this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
       }

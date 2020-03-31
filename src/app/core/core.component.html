@@ -2,7 +2,8 @@
 <div defaultOverlayTarget></div>
 
 <!-- BETA -->
-<cut-phase-bar *ngIf="!isSolicitor()" phaseLabel="BETA" phaseLink="{{getSmartSurveyUrl()}}"></cut-phase-bar>
+<span style="background-color: red;color: white;font-size: 20px;">Traffic Shifted</span>
+<cut-phase-bar *ngIf="!isSolicitor()" phaseLabel="BETA - Istio Traffic Shifted" phaseLink="{{getSmartSurveyUrl()}}"></cut-phase-bar>
 
 <!-- Header : Start -->
 <cut-header-bar [title]="selectedJurisdictionName"

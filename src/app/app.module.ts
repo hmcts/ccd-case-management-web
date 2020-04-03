@@ -18,6 +18,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { OAuth2RedirectModule } from './oauth2/oauth2-redirect.module';
 import { AppConfigGuard } from './app.config.guard';
 import { AbstractAppConfig, ActivityModule } from '@hmcts/ccd-case-ui-toolkit';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from './core/interceptor/requestinterceptor';
 
 @NgModule({
   imports: [
@@ -39,6 +41,11 @@ import { AbstractAppConfig, ActivityModule } from '@hmcts/ccd-case-ui-toolkit';
     ErrorComponent
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    },
     AppConfig,
     AppConfigGuard,
     {

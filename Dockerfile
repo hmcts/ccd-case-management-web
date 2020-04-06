@@ -20,7 +20,7 @@ RUN apt-get update \
 COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
 RUN chown hmcts yarn.lock
 USER hmcts
-RUN git config --global url."https://".insteadOf git://
+RUN git config --global url."http://".insteadOf git://
 RUN yarn install \
   && yarn cache clean
 COPY . .

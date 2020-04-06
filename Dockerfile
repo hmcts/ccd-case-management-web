@@ -16,12 +16,15 @@ RUN apt-get update \
     patch=2.7.5-1+deb9u2 \
     libfontconfig1=2.11.0-6.7+b1 \
     git \
-    && rm -rf /var/lib/apt/lists/*
-RUN apt-get install --no-install-recommends --no-install-suggests -y ca-certificates  
+    && rm -rf /var/lib/apt/lists/*  
+RUN apt-get update && apt-get install \
+    --no-install-recommends \
+    --no-install-suggests \
+    -y ca-certificates
 COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
 RUN chown hmcts yarn.lock
 USER hmcts
-RUN git config --global url."http://".insteadOf git://
+RUN git config --global url."https://".insteadOf git://
 RUN yarn install \
   && yarn cache clean
 COPY . .

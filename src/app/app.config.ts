@@ -19,6 +19,7 @@ export class AppConfig extends AbstractAppConfig {
     console.log('Loading app config...');
 
     let configUrl = environment.configUrl;
+    console.log('Config URL << >> ' + configUrl);
 
     return new Promise<void>((resolve, reject) => {
       this.http

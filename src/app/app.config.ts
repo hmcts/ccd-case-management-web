@@ -11,17 +11,17 @@ export class AppConfig extends AbstractAppConfig {
 
   protected config: Config;
 
-  constructor(private http: Http, @Inject('ORIGIN_URL') private originUrl: string) {
+  constructor(private http: Http, private location: Location) {
     super();
   }
 
   public load(): Promise<void> {
     console.log('Loading app config...');
 
-    console.log('Origin URL ' + this.originUrl);
+    console.log('Origin URL ' + this.location.origin);
     let configUrl = environment.configUrl;
-    if (this.originUrl) {
-      configUrl = this.originUrl + configUrl;
+    if (this.location.origin) {
+      configUrl = this.location.origin + configUrl;
     }
     console.log('Config URL << >> ' + configUrl);
 

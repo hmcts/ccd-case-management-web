@@ -2,7 +2,7 @@ import { AppConfig, Config } from './app.config';
 
 export class AppServerConfig extends AppConfig {
   constructor(config: Config) {
-    super(null);
+    super(null, null);
     this.config = config;
   }
 

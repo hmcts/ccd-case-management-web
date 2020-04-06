@@ -9,18 +9,21 @@ export class RequestInterceptor  implements HttpInterceptor {
 constructor(@Optional() @Inject(REQUEST) protected request?: Request) {}
 
 intercept(req: HttpRequest<any>, next: HttpHandler) {
-
+    console.log('In intercept Method');
     let serverReq = req;
     if (this.request) {
       if (req.url.startsWith('http://')) {
+        console.log('In intercept Method http condition');
         let newUrl = `${this.request.protocol}://${this.request.get('host')}`;
       if (!req.url.startsWith('/')) {
         newUrl += '/';
       }
       newUrl += req.url;
+      console.log('In intercept Method newURL ' + newUrl);
       serverReq = req.clone({url: newUrl});
       }
     }
+    console.log('In intercept Method End');
     return next.handle(serverReq);
   }
 }

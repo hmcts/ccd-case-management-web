@@ -12,12 +12,14 @@ intercept(req: HttpRequest<any>, next: HttpHandler) {
 
     let serverReq = req;
     if (this.request) {
-      let newUrl = `${this.request.protocol}://${this.request.get('host')}`;
+      if (req.url.startsWith('http://')) {
+        let newUrl = `${this.request.protocol}://${this.request.get('host')}`;
       if (!req.url.startsWith('/')) {
         newUrl += '/';
       }
       newUrl += req.url;
       serverReq = req.clone({url: newUrl});
+      }
     }
     return next.handle(serverReq);
   }

@@ -17,8 +17,7 @@ RUN apt-get update \
     libfontconfig1=2.11.0-6.7+b1 \
     git \
     && rm -rf /var/lib/apt/lists/*
-RUN apt-get install --no-install-recommends \
-    --no-install-suggests -y curl ca-certificates    
+RUN apt-get install --no-install-recommends --no-install-suggests -y ca-certificates  
 COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
 RUN chown hmcts yarn.lock
 USER hmcts

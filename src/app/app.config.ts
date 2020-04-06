@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -11,14 +11,18 @@ export class AppConfig extends AbstractAppConfig {
 
   protected config: Config;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, @Inject('ORIGIN_URL') private originUrl: string) {
     super();
   }
 
   public load(): Promise<void> {
     console.log('Loading app config...');
 
+    console.log('Origin URL ' + this.originUrl);
     let configUrl = environment.configUrl;
+    if (this.originUrl) {
+      configUrl = this.originUrl + configUrl;
+    }
     console.log('Config URL << >> ' + configUrl);
 
     return new Promise<void>((resolve, reject) => {

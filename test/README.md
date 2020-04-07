@@ -59,7 +59,7 @@ The tests will require the following environmental variables in order to run. To
 
 The functional tests use both Protractor with Cucumber. Individual tests/scenarios are tagged with annotations eg `@functional` and are executed agaist a run config file (`conf.js` or local.conf.js) via the CLI like so:
 
-`protractor test/config/local.conf.js --cucumberOpts.tags='@functional`
+`protractor test/config/local.conf.js --cucumberOpts.tags='@functional'`
 
 ommiting the tags will run all the tests
 

@@ -24,5 +24,7 @@
   "chrome_min_required_version": 67,
   "ie_min_required_version": 11,
   "edge_min_required_version": 17,
-  "firefox_min_required_version": 60
+  "firefox_min_required_version": 60,
+  "shutter_redirect_url": "https://xui-webapp-ithc.service.core-compute-ithc.internal/",
+  "shutter_redirect_wait": 10
 }

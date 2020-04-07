@@ -22,6 +22,7 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
 
+    exclude: ['node_modules'],
     reporters: ['mocha'],
     port: 9876,
     colors: true,

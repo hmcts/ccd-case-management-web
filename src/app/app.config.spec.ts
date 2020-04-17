@@ -2,6 +2,7 @@ import { AppConfig, Config } from './app.config';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppConfig', () => {
 
@@ -72,7 +73,7 @@ describe('AppConfig', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [HttpModule, HttpClientModule],
       providers: [
         { provide: XHRBackend, useClass: MockBackend },
         AppConfig

@@ -85,7 +85,6 @@ describe('AppConfig', () => {
 
     it('should load config from public/config.json',
       async(inject([AppConfig], (appConfig: AppConfig) => {
-      
         appConfig
           .load()
           .then(() => {

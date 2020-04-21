@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AppConfig extends AbstractAppConfig {
 
   protected config: Config;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     super();
   }
 
@@ -23,7 +23,6 @@ export class AppConfig extends AbstractAppConfig {
     return new Promise<void>((resolve, reject) => {
       this.http
         .get(configUrl)
-        .map(response => response.json())
         .catch((error: any): any => {
           console.error(`Configuration ${configUrl} could not be read`, error);
           reject();

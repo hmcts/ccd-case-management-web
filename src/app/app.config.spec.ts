@@ -1,6 +1,7 @@
 import { AppConfig, Config } from './app.config';
 import { async, inject, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from  '@angular/common/http/testing';
+import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
 
 describe('AppConfig', () => {
 
@@ -38,8 +39,6 @@ describe('AppConfig', () => {
   const BANNER_URL = DATA_URL + '/internal/banners/';
   const JURISDICTION_UI_CONFIGS_URL = DATA_URL + '/internal/jurisdiction-ui-configs/';
 
-  let httpMock: HttpTestingController;
-
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,
     logout_url: LOGOUT_URL,
@@ -73,18 +72,24 @@ describe('AppConfig', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpModule],
       providers: [
+        { provide: XHRBackend, useClass: MockBackend },
         AppConfig
       ]
     });
-    httpMock = TestBed.get(HttpTestingController);
   });
 
   describe('load()', () => {
 
     it('should load config from public/config.json',
-      async(inject([AppConfig], (appConfig: AppConfig) => {
+      async(inject([AppConfig, XHRBackend], (appConfig: AppConfig, mockBackend) => {
+        mockBackend.connections.subscribe((connection) => {
+          connection.mockRespond(new Response(new ResponseOptions({
+            body: JSON.stringify(MOCK_CONFIG)
+          })));
+        });
+
         appConfig
           .load()
           .then(() => {
@@ -122,9 +127,6 @@ describe('AppConfig', () => {
             expect(appConfig.getBannersUrl()).toEqual(BANNER_URL);
             expect(appConfig.getJurisdictionUiConfigsUrl()).toEqual(JURISDICTION_UI_CONFIGS_URL);
           });
-          let configRequest = httpMock.expectOne('/config.json');
-          configRequest.flush(MOCK_CONFIG);
-          httpMock.verify();
       })));
   });
 });

@@ -102,6 +102,7 @@ const config = {
 
       onPrepare() {
         const caps = browser.getCapabilities();
+        browser.sleep(5000);
         browser.manage()
             .window()
             .maximize();

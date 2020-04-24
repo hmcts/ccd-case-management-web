@@ -66,6 +66,7 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Given(/^I have logged in as '(.*)'$/, {timeout: 120 * 1000}, async function (username) {
+    browser.sleep(1000);
     browser.ignoreSynchronization = true;
     loginPage = await Login.open();
     await loginPage.loginToApp(username);

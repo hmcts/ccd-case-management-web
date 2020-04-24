@@ -37,6 +37,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
 
   Then(/^I should see the '(.*)' on the CCD case list page$/, async function (component) {
+    browser.sleep(1000);
     caseListPage = new CaseListPage();
 
     await caseListPage.waitForPageLoaded();

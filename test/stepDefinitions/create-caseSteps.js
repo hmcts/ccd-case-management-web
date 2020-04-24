@@ -457,6 +457,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^verify the field with label '(.*)' is not visible$/, async function (expectedLabel) {
+    browser.sleep(1000);
     let labels = await caseWizardPage.getFieldLabels();
     expect(labels).to.not.include(expectedLabel);
   });
@@ -699,7 +700,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await address.enterAddressLine1('10 Downing Street');
     await address.enterAddressLine2('PMO');
     await address.enterCountry('UK');
-
     await address.enterAddressLine4('showline5');
     // AddressComplex1_AddressLine5 is empty
   });

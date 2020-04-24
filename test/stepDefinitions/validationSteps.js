@@ -145,9 +145,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
-    browser.sleep(1000);
-    await baseSteps.navigateToCreateCasePage();
-    await caseWizardPage.interactWithField(fieldType, value);
+    browser.wait(await baseSteps.navigateToCreateCasePage(), 5000);
+    browser.wait(await caseWizardPage.interactWithField(fieldType, value), 5000);
   });
 
   When(/^I re-enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {

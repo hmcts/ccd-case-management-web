@@ -37,10 +37,9 @@ defineSupportCode(function ({ Given, When, Then}) {
 
 
   Then(/^I should see the '(.*)' on the CCD case list page$/, async function (component) {
-    browser.sleep(1000);
     caseListPage = new CaseListPage();
 
-    await caseListPage.waitForPageLoaded();
+    browser.wait(await caseListPage.waitForPageLoaded(), 5000);
 
     switch (component){
       case 'filters':
@@ -67,14 +66,13 @@ defineSupportCode(function ({ Given, When, Then}) {
   });
 
   Given(/^I have logged in as '(.*)'$/, {timeout: 120 * 1000}, async function (username) {
-    browser.sleep(1000);
     browser.ignoreSynchronization = true;
-    loginPage = await Login.open();
+    loginPage = browser.wait(await Login.open(), 5000);
     await loginPage.loginToApp(username);
     browser.ignoreSynchronization = false;
 
     caseListPage = new CaseListPage();
-    await caseListPage.waitForPageLoaded();
+    browser.wait(await caseListPage.waitForPageLoaded(), 5000);
   });
 
   Then(/^I should see the <component> on the CCD case list page$/, async function () {

@@ -457,8 +457,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   Then(/^verify the field with label '(.*)' is not visible$/, async function (expectedLabel) {
-    browser.sleep(1000);
-    let labels = await caseWizardPage.getFieldLabels();
+    let labels =  browser.wait(await caseWizardPage.getFieldLabels(), 5000);
     expect(labels).to.not.include(expectedLabel);
   });
 

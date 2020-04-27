@@ -145,6 +145,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   });
 
   When(/^I enter '(.*)' into the '(.*)' field$/, async function (value, fieldType) {
+    browser.wait(ExpectedConditions.presenceOf(element(by.css('ccd-write-money-gbp-field'))), 5000);
     browser.sleep(1000);
     await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField(fieldType, value);

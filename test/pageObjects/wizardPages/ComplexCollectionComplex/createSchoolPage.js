@@ -30,6 +30,7 @@ class CreateSchoolPage extends CreateCaseWizardPage {
     for (let i = 1; i < itemsInCollection + 1; i++) {
       let collectionItemObject = await this.collectionOfSchoolClass.getCollectionItem(i);
       let collectionItemData = await collectionItemObject.getFieldData(`${this.key}.Class.${i}`);
+      browser.wait(ExpectedConditions.presenceOf(element(by.css('#MySchool_Class_0_0'))), 5000);
       pageData.push(collectionItemData);
     }
 

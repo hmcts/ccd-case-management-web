@@ -61,7 +61,7 @@
     "@hmcts/ccd-case-ui-toolkit": "2.64.4-EUI",
     "@hmcts/ccpay-web-component": "3.0.3",
     "@hmcts/media-viewer": "1.1.9",
-    "@hmcts/nodejs-healthcheck": "^1.5.1",
+    "@hmcts/nodejs-healthcheck": "^1.6.0",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^1.0.0",

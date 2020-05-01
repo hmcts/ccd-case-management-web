@@ -362,6 +362,7 @@ defineSupportCode(function ({ Given, When, Then, And}) {
 
   When(/^I populate the form with the school data with a ClassName field set to '(.*)'$/, async function (className) {
     await baseSteps.navigateToCreateCasePage();
+    browser.sleep(5000);
     await populateFormDataWithSupportFieldSetTo('Yes', className);
   });
 

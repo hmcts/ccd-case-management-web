@@ -77,7 +77,6 @@
     "xlsx": "^0.15.1",
     "file-saver": "^2.0.2",
     "express": "^4.16.2",
-    "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "govuk-elements-sass": "^3.1.2",
     "govuk_template_mustache": "^0.23.0",
@@ -90,11 +89,10 @@
     "rx-polling": "~1.0.0",
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.0.0-rc.0",
-    "snyk": "^1.124.1",
+    "snyk": "^1.316.1",
     "url": "^0.11.0",
     "webdriver-manager": "^12.1.0",
     "x-frame-options": "^1.0.0",
-    "xlsx": "^0.15.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
@@ -148,7 +146,7 @@
     "lodash": "^4.17.15",
     "marked": "^0.7.0",
     "mem": "^6.0.1",
-    "serialize-javascript" : "^2.1.1",
+    "serialize-javascript": "^2.1.1",
     "assert": "^1.5.0",
     "util": "^0.10.3"
   },

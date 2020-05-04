@@ -206,7 +206,6 @@ defineSupportCode(function ({ Given, When, Then, And}) {
   });
 
   When(/^I have navigated to a case in the state 'Case created'$/, async function () {
-    browser.wait(ExpectedConditions.presenceOf(element(by.css('#menu-links-left'))), 5000);
     await baseSteps.createCase();
   });
 

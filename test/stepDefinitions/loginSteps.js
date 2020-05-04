@@ -60,6 +60,7 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   Given(/^I have logged in$/, {timeout: 120 * 1000}, async function () {
     loginPage = await Login.open();
+    browser.wait(ExpectedConditions.presenceOf(element(by.css('#username'))), 5000);
     await loginPage.loginToApp();
 
     caseListPage = new CaseListPage();

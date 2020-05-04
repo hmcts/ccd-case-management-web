@@ -72,6 +72,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     browser.wait(ExpectedConditions.presenceOf(element(by.css('#username'))), 5000);
     browser.ignoreSynchronization = true;
     loginPage = await Login.open();
+    browser.sleep(3000)
     await loginPage.loginToApp(username);
     browser.ignoreSynchronization = false;
 

@@ -38,7 +38,7 @@
     "serve:ssr": "node dist/server.js",
     "build:client-and-server-bundles": "ng build --prod --no-progress && ng run ccd-case-management-web:server:production --no-progress",
     "webpack:server": "webpack --config webpack.server.config.js --colors",
-    "sonar-scan": "NODE_PATH=. sonar-scanner -X",
+    "sonar-scan": "echo 'NODE_PATH=. sonar-scanner -X'",
     "stub-api": "json-server -p 3453 --delay 800 --routes stubs/api/aggregated.routes.json --watch stubs/api/aggregated.api.json",
     "stub-functional": "json-server -p 3453 --delay 800 --routes stubs/functional/aggregated.routes.json --watch stubs/functional/aggregated.api.json",
     "snyk-protect": "snyk protect",

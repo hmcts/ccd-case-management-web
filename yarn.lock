@@ -381,7 +381,7 @@
     tslib "^1.9.0"
     uuid "^3.3.2"
 
-"@hmcts/nodejs-healthcheck@^1.5.1":
+"@hmcts/nodejs-healthcheck@^1.6.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@hmcts/nodejs-healthcheck/-/nodejs-healthcheck-1.6.0.tgz#ecc2002f2617b207c0cc48c6c11198e53fc8bb68"
   integrity sha512-i9PsSbbZoI7fghnVNi6sWnwvWnJdTtEz0ytBuCogpLOVQLpeMh1FTub79AxAxIdJIvpS/s6lyGg5U+gk2mdhxA==

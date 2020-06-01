@@ -44,8 +44,6 @@ withPipeline("angular", product, component) {
         enableSlackNotifications('#ccd-pr-builds')
     }
 
-    installCharts()
-
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
     enableAksStagingDeployment()

@@ -16,7 +16,7 @@ nodejs:
     PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
     PAY_BULKSCAN_URL: https://gateway-ccd.aat.platform.hmcts.net/pay-bulkscan
     SHUTTER_REDIRECT_URL: https://xui-webapp-ithc.service.core-compute-ithc.internal
-    POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-273.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
+    POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
 
 idam-pr:
   enabled: true

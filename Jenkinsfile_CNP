@@ -31,7 +31,6 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
-
 withPipeline("angular", product, component) {
 
     onMaster {
@@ -43,8 +42,6 @@ withPipeline("angular", product, component) {
     onPR {
         enableSlackNotifications('#ccd-pr-builds')
     }
-
-    installCharts()
 
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)

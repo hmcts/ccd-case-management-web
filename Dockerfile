@@ -20,7 +20,7 @@ RUN apt-get update \
 RUN apt-get update && apt-get install \
     --no-install-recommends \
     --no-install-suggests \
-    -y ca-certificates    
+    -y ca-certificates
 COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
 RUN chown hmcts yarn.lock
 USER hmcts

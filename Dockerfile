@@ -1,36 +1,27 @@
-# Keep hub.Dockerfile aligned to this file as far as possible
-
-ARG base=hmctspublic.azurecr.io/base/node:12-alpine 
-
-ARG inter=hmctspublic.azurecr.io/base/node:12-stretch-slim
+FROM hmctspublic.azurecr.io/base/node:12-alpine as base
 
 # ---- Build artifacts ----
 # Both frontend and backend codebases are bundled from their
 # .ts source into .js, producing self-sufficient scripts.
-FROM ${inter} AS build
+COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
+FROM base AS build
 
 USER root
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-    bzip2=1.0.6-8.1 \
-    patch=2.7.5-1+deb9u2 \
-    libfontconfig1=2.11.0-6.7+b1 \
+RUN apk update \
+    && apk add  \
+    bzip2=1.0.8-r1 \
+    patch=2.7.6-r6 \
+    fontconfig=2.13.1-r2 \
+    ca-certificates \
     git \
-    && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install \
-    --no-install-recommends \
-    --no-install-suggests \
-    -y ca-certificates
-COPY --chown=hmcts:hmcts package.json yarn.lock .snyk bin ./
-RUN chown hmcts yarn.lock
+    && rm -rf /var/lib/apt/lists/*     
 USER hmcts
 RUN git config --global url."https://".insteadOf git://
-RUN yarn install \
-  && yarn cache clean
+RUN yarn install && yarn cache clean
 COPY . .
 RUN yarn build:ssr
 
 # ---- Runtime image ----
-FROM ${base} AS runtime
+FROM base AS runtime
 COPY --from=build ${WORKDIR}/dist/ ./
 CMD node ./server.js

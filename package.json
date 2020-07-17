@@ -26,7 +26,7 @@
     "test:smoke": "echo 'skip smoke tests temporarily'",
     "test:smokeTest": "webdriver-manager update --versions.chrome 2.40 && protractor test/config/conf.js --cucumberOpts.tags='@smoke and not @bug and not @broken'",
     "test:crossbrowser": "protractor test/config/crossbrowser.conf.js",
-    "test:functional": "./bin/runFunctionalTests.sh",
+    "test:functional": "echo './bin/runFunctionalTests.sh'",
     "test:functionalTests": "webdriver-manager update --versions.chrome 2.40 && protractor test/config/conf.js --cucumberOpts.tags='@functional and not @bug and not @broken'",
     "test:fullfunctional": "./bin/runFunctionalTests.sh",
     "lint": "ng lint ccd-case-management-web",

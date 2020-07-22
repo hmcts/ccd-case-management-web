@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install \
     --no-install-suggests \
     -y ca-certificates
 COPY --chown=hmcts:hmcts package.json yarn.lock ccd-yarn-audit-known-issues yarn-audit-known-issues .snyk bin ./
-#COPY --chown=hmcts:hmcts backup-yarn-audit-with-suppressions.sh ./yarn-audit-with-suppressions.sh
 RUN chown hmcts yarn.lock
 USER hmcts
 RUN git config --global url."https://".insteadOf git://

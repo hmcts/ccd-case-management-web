@@ -48,7 +48,7 @@ withPipeline("angular", product, component) {
     enableAksStagingDeployment()
     disableLegacyDeployment()
 
-    before('securitychecks') {sh 'yarn test:audit'}
+    before('securitychecks') {sh 'yarn test:ccd-audit'}
 
     after('checkout') {
         sh "yarn cache clean"

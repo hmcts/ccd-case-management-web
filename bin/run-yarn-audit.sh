@@ -4,6 +4,11 @@ yarn audit --groups dependencies
 result=$?
 set -e
 
+if [ ! -f ../yarn-audit-with-suppressions.sh ]; then
+    cp ./bin/backup-yarn-audit-with-suppressions.sh ./yarn-audit-with-suppressions.sh
+fi
+
+
 if [[ "$result" != 0 ]]; then
   if [[ -f ccd-yarn-audit-known-issues ]]; then
     set +e

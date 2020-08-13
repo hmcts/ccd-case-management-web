@@ -1,4 +1,4 @@
-@functional @complexcollections @showandhide @cya
+@functional @complexcollections @showandhide @cya @broken
 Feature: Set of scenarios testing show & hide on the CYA page using conditions based on fields in complex types
 
   Background:

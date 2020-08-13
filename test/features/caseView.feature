@@ -18,6 +18,7 @@ Feature: Set of scenarios testing case view functionality
 
     Given I have logged in
 
+    @broken
   Scenario: case reference visible on case view
     Given a case containing Tabs functionality exists
     And I create the case

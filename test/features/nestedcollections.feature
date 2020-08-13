@@ -16,6 +16,7 @@ Feature: Set of scenarios to test collection of complex table view
     And I have submitted a case with nested collection data
     Then the 'Address Line 2' field will NOT be visible on the 'Collection of Complex' tab
 
+    @broken
   Scenario: Clicking accordion on nested collection data view in Case Details shows datas
     Given a case type containing a collection of complex types exists
     And I have submitted a case with nested collection data
@@ -29,6 +30,7 @@ Feature: Set of scenarios to test collection of complex table view
       | ZipCode        |
       | Second Line 2  |
 
+      @broken
   Scenario: Clicking accordion on nested collection data view in Case Details shows datas
     Given a case type containing conditional data of collection of complex types exists
     And I have submitted a case with conditional nested collection data
@@ -41,6 +43,7 @@ Feature: Set of scenarios to test collection of complex table view
       | Second Line 1  |
       | Second Line 2  |
 
+        @broken
   Scenario: Complex Type data within a Collection of Complex Type is displayed
     Given a case type containing a collection of complex types containing complex exists
     And I have submitted a case with a collection of complex with a complex data

@@ -23,14 +23,14 @@ Feature: Set of scenarios to test functionality of create case filters in case c
             | TextArea    | Text Area                                                          |                                                            |
             | Date        | Date Field                                                         |                                                            |
             | Complex     | Address Field,Address Line 1,Address Line 2,Address Line 3,Country |                                                            |
-            | Phone-UK    | Phone Field                                                        |                                                            |
+#            | Phone-UK    | Phone Field                                                        |                                                            |
             | Number      | Number Field                                                       |                                                            |
-            | Yes-No      | Yes or No Field                                                    |                                                            |
+#            | Yes-No      | Yes or No Field                                                    |                                                            |
             | Collection  | Collection Field                                                   |                                                            |
             | Fixed-List  | Marrital Status Field                                              | --Select a value--,Civil Partnership,Marriage,Single,Widow |
             | Money-GBP   | Money Field                                                        |                                                            |
             | Document    | Document Field                                                     |                                                            |
-            | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
+#            | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
             | Email       | Email Field                                                        |                                                            |
 
 

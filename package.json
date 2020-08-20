@@ -150,7 +150,7 @@
     "serialize-javascript": "^2.1.1",
     "assert": "^1.5.0",
     "util": "^0.10.3",
-    "dot-prop": "4.2.1"
+    "dot-prop": "^5.2.0"
   },
   "snyk": true
 }

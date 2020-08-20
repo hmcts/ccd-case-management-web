@@ -11,6 +11,7 @@ Feature: Hide and show of mandatory field should reflect in a 'Continue' button 
     And I start createCase event
     And there is an 'Mandatory text' field on page1 with a text 'anytext'
 
+    @broken
   Scenario: Continue button enabled and clickable when conditional mandatory field is shown and any text entered
     Given there is an 'Text Field Optional Continue Button test' field on page1 with a matching show condition
     And a conditional text field on the same page is displayed

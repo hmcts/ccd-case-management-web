@@ -1,4 +1,4 @@
-@functional @showandhide @cya
+@functional @showandhide @cya @broken
 Feature: Hide and show of basic fields in collections on the Check Your Answers page
 
   Background:

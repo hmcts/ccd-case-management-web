@@ -152,7 +152,8 @@
     "util": "^0.10.3",
     "yargs-parser": "^18.1.2",
     "minimist": "^1.2.3",
-    "npm-registry-fetch": "^8.1.1"
+    "npm-registry-fetch": "^8.1.1",
+    "dot-prop": "^4.2.1"
   },
   "snyk": true
 }

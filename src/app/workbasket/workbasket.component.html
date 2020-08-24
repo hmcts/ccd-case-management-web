@@ -11,9 +11,11 @@
     </div>
     <div class="display-right" id="search-result" aria-live="polite" role="region" rightBody>
       <a routerLink="/create/case" class="button">Create new case</a>
-      <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
-                         [caseFilterFG]="caseFilterFG" [page]="page" [paginationMetadata]="paginationMetadata" (clickCase)="navigateToCase($event)"
-                         [metadataFields]="metadataFields" (changePage)="applyFilter($event)" #searchResults></ccd-search-result>
+      <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState"
+                         [resultView]="resultView" [caseFilterFG]="caseFilterFG" [page]="page"
+                         [paginationMetadata]="paginationMetadata" [caseLinkUrlTemplate]="'/v2/case/case_id'"
+                         [metadataFields]="metadataFields" (changePage)="applyFilter($event)" #searchResults>
+      </ccd-search-result>
     </div>
   </cut-body>
 </div>

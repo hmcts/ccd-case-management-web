@@ -13,6 +13,7 @@ let ConditionalsCreateCasePage4 = require('../pageObjects/wizardPages/Conditiona
 let CreateCollectionOfComplexPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createCollectionOfComplexPage.js');
 let DataTypesPage = require('../pageObjects/wizardPages/dataFieldTypesPage');
 let CreateSchoolPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createSchoolPage.js');
+let CreateQandAPage = require('../pageObjects/wizardPages/ComplexCollectionComplex/createQandAPage.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
 let expect = chai.expect;
@@ -123,6 +124,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
       TestData.caseReference = await new CaseDetailsPage().getCaseReference();
   });
 
+  When(/^I create a case of this case type with the file given$/, async function () {
+    await baseSteps.createCase();
+  });
+  
   When(/^I create the case$/, async function () {
       await baseSteps.createCase();
   });
@@ -331,6 +336,10 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     await new CaseDetailsPage().startEvent('Modify Case');
   });
 
+  When(/^I click 'Ignore Warning and Go' and submit the event$/, async function () {
+    await new CaseDetailsPage().clickGoButtonOnlyWhenTextIsSet('Ignore Warning and Go');
+    await baseSteps.fillOutAndSubmitForm();
+  });
 
   When(/^I click the 'Create a case' button$/, async function () {
     await caseListPage.clickCreateNewCaseButton();
@@ -539,6 +548,35 @@ defineSupportCode(function ({ Given, When, Then, And}) {
     }
     await childrenDetails.enterAutisticChildCaseRefNumber('1111222233334444');
   }
+
+  Given(/^I have submitted a case with question and judge notes collection data containing 1 item each$/, async function(){
+    let createQandAPage = new CreateQandAPage();
+
+    await baseSteps.navigateToCreateCasePage();
+
+    await createQandAPage.clickAddNewQandAButton();
+    let qanda = await createQandAPage.getCollectionOfQandA(1);
+    await qanda.enterQuestion('Are you ready?');
+
+    await createQandAPage.clickAddNewjudgeNotesButton();
+    let judgeNotes = await createQandAPage.getCollectionOfJudgeNotes(1);
+    await judgeNotes.enterNote('Please double check');
+
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+
+    TestData.caseReference = await new CaseDetailsPage().getCaseReference();
+  });
+
+  Given(/^I populate the answer field and submit the event$/, async function(){
+    let createQandAPage = new CreateQandAPage();
+
+    let qanda = await createQandAPage.getCollectionOfQandA(1);
+    await qanda.enterAnswer('Yes!');
+
+    await caseWizardPage.clickContinueButton();
+    await caseWizardPage.clickSubmitCaseButton();
+  });
 
   Given(/^I have submitted a case with nested collection data$/, async function(){
     await baseSteps.navigateToCreateCasePage();

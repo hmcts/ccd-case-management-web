@@ -11,10 +11,24 @@ import { AppConfig } from '../app.config';
 import createSpyObj = jasmine.createSpyObj;
 import createSpy = jasmine.createSpy;
 import { CcdBrowserSupportComponent } from '../core/ccd-browser-support/ccd-browser-support.component';
-import { HttpService, Jurisdiction, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpService, Jurisdiction, JurisdictionService, Banner, BannersService, JurisdictionUIConfig, UrlTransformationService } from '@hmcts/ccd-case-ui-toolkit';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { Observable } from 'rxjs';
+import { WindowService } from '@hmcts/ccd-case-ui-toolkit/dist/shared/services/window';
+import { MatDialog } from '@angular/material';
+import { Response, ResponseOptions } from '@angular/http';
 
 describe('CoreComponent', () => {
+
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
 
   const SELECTED_JURISDICTION: Jurisdiction = {
     id: 'DIVORCE',
@@ -57,6 +71,8 @@ describe('CoreComponent', () => {
       'label'
     ]});
 
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
+
   let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
 
   let RouterOutlet: any = MockComponent({ selector: 'router-outlet', inputs: []});
@@ -81,24 +97,36 @@ describe('CoreComponent', () => {
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
+  let bannersService: any;
   let navigationListenerService: NavigationListenerService;
   let httpService: any;
   let appConfig: any;
   let browserSupport: any;
-  let deviceServiceArg: any;
   let oauth2Service: any;
   const SMART_SURVEY_URL = 'https://www.smartsurvey.co.uk/s/CCDfeedback/';
+  const BANNERS_URL = 'http://localhost:3451/api/display/banners';
+  let windowService: any;
+  let dialog: any;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
-
-    jurisdictionService = new JurisdictionService();
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
-    httpService = createSpyObj('HttpService', ['get']);
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    httpService = createSpyObj<HttpService>('httpService', ['get']);
+    httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+      body: JSON.stringify([])
+    }))));
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
+    jurisdictionService = new JurisdictionService(httpService, appConfig);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     appConfig.getSmartSurveyUrl.and.returnValue(SMART_SURVEY_URL);
-
+    appConfig.getBannersUrl.and.returnValue(BANNERS_URL);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
     profile = {
       user: {
         idam: {
@@ -156,6 +184,7 @@ describe('CoreComponent', () => {
           CoreComponent,
           // Mocks
           AlertComponent,
+          BannerComponent,
           RouterOutlet,
           HeaderComponent,
           PhaseComponent,
@@ -175,6 +204,10 @@ describe('CoreComponent', () => {
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
+          { provide: WindowService, useValue: windowService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css
@@ -304,6 +337,180 @@ describe('CoreComponent', () => {
   });
 });
 
+describe('CoreComponent when no workbasket defaults in the profile', () => {
+
+  let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
+      'title',
+      'username',
+      'isSolicitor',
+    ]});
+
+  let PhaseComponent: any = MockComponent({ selector: 'cut-phase-bar', inputs: [
+      'phaseLabel',
+      'phaseLink',
+      'isSolicitor',
+    ]});
+
+  let BrowserSupportComponent: any = MockComponent({ selector: 'ccd-browser-support', inputs: [
+      'isSolicitor',
+    ]});
+
+  const TEMPLATE =
+    `<div>
+      <nav class="cut-nav-bar">
+          <ng-content select="[leftNavLinks]"></ng-content>
+          <ng-content select="[rightNavLinks]"></ng-content>
+      </nav>
+    </div>
+    `;
+
+  let NavigationComponent: any = MockComponent({ selector: 'cut-nav-bar', inputs: [
+      'isSolicitor',
+    ], template: TEMPLATE});
+
+  let NavigationItemComponent: any = MockComponent({ selector: 'cut-nav-item', inputs: [
+      'link',
+      'label'
+    ]});
+
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
+
+  let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
+
+  let RouterOutlet: any = MockComponent({ selector: 'router-outlet', inputs: []});
+
+  let FooterComponent: any = MockComponent({ selector: 'cut-footer-bar', inputs: [
+      'email',
+      'phone',
+      'workhours',
+      'isSolicitor',
+    ]});
+
+  let BlankComponent: any = MockComponent({ selector: 'blank-component', inputs: []});
+
+  let profile;
+
+  let mockRoute;
+  let fixture: ComponentFixture<CoreComponent>;
+  let de: DebugElement;
+  let jurisdictionService: JurisdictionService;
+  let httpService: any;
+  let appConfig: any;
+  let browserSupport: any;
+  let oauth2Service: any;
+  let navigationListenerService: NavigationListenerService;
+  let bannersService: any;
+  let windowService: any;
+  let dialog: any;
+  let urlTransformationService: any;
+
+  beforeEach(async(() => {
+
+    httpService = createSpyObj<HttpService>('httpService', ['get']);
+    httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+      body: JSON.stringify([])
+    }))));
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
+    jurisdictionService = new JurisdictionService(httpService, appConfig);
+    browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
+    oauth2Service = createSpyObj('AppConfig', ['signOut']);
+    navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
+    profile = {
+      user: {
+        idam: {
+          email: 'hello@world.co.uk',
+          forename: 'forename',
+          surname: 'surname'
+        }
+      },
+      default: {
+      },
+      jurisdictions: [
+        {
+          id: 'PROBATE',
+          name: 'Probate',
+          description: 'Probate descritpion',
+          case_types: []
+        }
+      ],
+      isSolicitor: createSpy(),
+      isCourtAdmin: createSpy()
+    };
+
+    mockRoute = {
+      snapshot: {
+        data: {
+          profile: profile
+        }
+      }
+    };
+
+    TestBed
+      .configureTestingModule({
+        imports: [
+          RouterTestingModule.withRoutes(
+            [
+              {path: 'list/case', component: BlankComponent},
+              {path: 'create/case', component: BlankComponent}
+            ]
+          )
+        ],
+        declarations: [
+          CoreComponent,
+          // Mocks
+          AlertComponent,
+          BannerComponent,
+          RouterOutlet,
+          HeaderComponent,
+          PhaseComponent,
+          FooterComponent,
+          PhaseComponent,
+          BrowserSupportComponent,
+          NavigationComponent,
+          NavigationItemComponent,
+          BlankComponent,
+        ],
+        providers: [
+          provideRoutes([]),
+          { provide: ActivatedRoute, useValue: mockRoute },
+          { provide: JurisdictionService, useValue: jurisdictionService },
+          { provide: AppConfig, useValue: appConfig },
+          { provide: OAuth2Service, useValue: oauth2Service },
+          { provide: CcdBrowserSupportComponent, useValue: browserSupport },
+          { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
+          { provide: WindowService, useValue: windowService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
+        ]
+      })
+      .compileComponents();  // compile template and css
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CoreComponent);
+    fixture.detectChanges();
+
+    let comp = fixture.componentInstance;
+
+    de = fixture.debugElement;
+  });
+
+  it('should not update jurisdiction id in the title when no workbasket defaults', () => {
+    let headerBar = de.query(By.directive(HeaderComponent));
+
+    expect(headerBar).toBeTruthy();
+    expect(headerBar.componentInstance.title).toBeUndefined();
+
+  });
+
+});
+
 describe('CoreComponent when no defaults in the profile', () => {
 
   let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
@@ -340,6 +547,8 @@ describe('CoreComponent when no defaults in the profile', () => {
       'label'
     ]});
 
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
+
   let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
 
   let RouterOutlet: any = MockComponent({ selector: 'router-outlet', inputs: []});
@@ -356,23 +565,208 @@ describe('CoreComponent when no defaults in the profile', () => {
   let profile;
 
   let mockRoute;
-
-  let comp: CoreComponent;
   let fixture: ComponentFixture<CoreComponent>;
   let de: DebugElement;
   let jurisdictionService: JurisdictionService;
+  let httpService: any;
   let appConfig: any;
   let browserSupport: any;
   let oauth2Service: any;
   let navigationListenerService: NavigationListenerService;
+  let bannersService: any;
+  let windowService: any;
+  let dialog: any;
+  let urlTransformationService: any;
 
   beforeEach(async(() => {
 
-    jurisdictionService = new JurisdictionService();
-    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl']);
+    httpService = createSpyObj<HttpService>('httpService', ['get']);
+    httpService.get.and.returnValue(Observable.of(new Response(new ResponseOptions({
+      body: JSON.stringify([])
+    }))));
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
+    jurisdictionService = new JurisdictionService(httpService, appConfig);
     browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
     oauth2Service = createSpyObj('AppConfig', ['signOut']);
     navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage', 'removeLocalStorage']);
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
+    profile = {
+      user: {
+        idam: {
+          email: 'hello@world.co.uk',
+          forename: 'forename',
+          surname: 'surname'
+        }
+      },
+      default: {
+        workbasket: {
+        }
+      },
+      jurisdictions: [
+        {
+          id: 'PROBATE',
+          name: 'Probate',
+          description: 'Probate descritpion',
+          case_types: []
+        }
+      ],
+      isSolicitor: createSpy(),
+      isCourtAdmin: createSpy()
+    };
+
+    mockRoute = {
+      snapshot: {
+        data: {
+          profile: profile
+        }
+      }
+    };
+
+    TestBed
+      .configureTestingModule({
+        imports: [
+          RouterTestingModule.withRoutes(
+            [
+              {path: 'list/case', component: BlankComponent},
+              {path: 'create/case', component: BlankComponent}
+            ]
+          )
+        ],
+        declarations: [
+          CoreComponent,
+          // Mocks
+          AlertComponent,
+          BannerComponent,
+          RouterOutlet,
+          HeaderComponent,
+          PhaseComponent,
+          FooterComponent,
+          PhaseComponent,
+          BrowserSupportComponent,
+          NavigationComponent,
+          NavigationItemComponent,
+          BlankComponent,
+        ],
+        providers: [
+          provideRoutes([]),
+          { provide: ActivatedRoute, useValue: mockRoute },
+          { provide: JurisdictionService, useValue: jurisdictionService },
+          { provide: AppConfig, useValue: appConfig },
+          { provide: OAuth2Service, useValue: oauth2Service },
+          { provide: CcdBrowserSupportComponent, useValue: browserSupport },
+          { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
+          { provide: WindowService, useValue: windowService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
+        ]
+      })
+      .compileComponents();  // compile template and css
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CoreComponent);
+    fixture.detectChanges();
+
+    let comp = fixture.componentInstance;
+
+    de = fixture.debugElement;
+  });
+
+  it('should not update jurisdiction id in the title when no profile defaults', () => {
+    let headerBar = de.query(By.directive(HeaderComponent));
+
+    expect(headerBar).toBeTruthy();
+    expect(headerBar.componentInstance.title).toBeUndefined();
+
+  });
+
+});
+
+describe('CoreComponent no shutter dialog when all jurisdictions are not shuttered', () => {
+  let HeaderComponent: any = MockComponent({ selector: 'cut-header-bar', inputs: [
+      'title',
+      'username',
+      'isSolicitor',
+    ]});
+
+  let PhaseComponent: any = MockComponent({ selector: 'cut-phase-bar', inputs: [
+      'phaseLabel',
+      'phaseLink',
+      'isSolicitor',
+    ]});
+
+  let BrowserSupportComponent: any = MockComponent({ selector: 'ccd-browser-support', inputs: [
+      'isSolicitor',
+    ]});
+
+  const TEMPLATE =
+    `<div>
+      <nav class="cut-nav-bar">
+          <ng-content select="[leftNavLinks]"></ng-content>
+          <ng-content select="[rightNavLinks]"></ng-content>
+      </nav>
+    </div>
+    `;
+
+  let NavigationComponent: any = MockComponent({ selector: 'cut-nav-bar', inputs: [
+      'isSolicitor',
+    ], template: TEMPLATE});
+
+  let NavigationItemComponent: any = MockComponent({ selector: 'cut-nav-item', inputs: [
+      'link',
+      'label'
+    ]});
+
+  let BannerComponent: any = MockComponent({ selector: 'ccd-banner', inputs: ['banners']});
+
+  let AlertComponent: any = MockComponent({ selector: 'ccd-alert', inputs: []});
+
+  let RouterOutlet: any = MockComponent({ selector: 'router-outlet', inputs: []});
+
+  let FooterComponent: any = MockComponent({ selector: 'cut-footer-bar', inputs: [
+      'email',
+      'phone',
+      'workhours',
+      'isSolicitor',
+    ]});
+
+  let BlankComponent: any = MockComponent({ selector: 'blank-component', inputs: []});
+
+  let profile;
+
+  let mockRoute;
+  let fixture: ComponentFixture<CoreComponent>;
+  let de: DebugElement;
+  let jurisdictionService: JurisdictionService;
+  let httpService: any;
+  let appConfig: any;
+  let browserSupport: any;
+  let oauth2Service: any;
+  let navigationListenerService: NavigationListenerService;
+  let bannersService: any;
+  let windowService: any;
+  let dialog: any;
+  let comp: CoreComponent;
+  let urlTransformationService: any;
+
+  beforeEach(async(() => {
+
+    httpService = createSpyObj<HttpService>('httpService', ['get']);
+    appConfig = createSpyObj('AppConfig', ['get', 'getSmartSurveyUrl', 'getBannersUrl', 'getShutterRedirectUrl', 'getJurisdictionUiConfigsUrl']);
+    jurisdictionService = new JurisdictionService(httpService, appConfig);
+    browserSupport = createSpyObj('CcdBrowserSupportComponent', ['isUnsupportedBrowser']);
+    oauth2Service = createSpyObj('AppConfig', ['signOut']);
+    navigationListenerService = createSpyObj('NavigationListenerService', ['init']);
+    bannersService = createSpyObj<BannersService>('bannersService', ['getBanners']);
+    bannersService.getBanners.and.returnValue(Observable.of());
+    windowService = new WindowService();
+    dialog = createSpyObj<MatDialog>('dialog', ['open']);
+    urlTransformationService =  createSpyObj<UrlTransformationService>('urlTransformationService', ['getPreferredEquivalentOf']);
 
     profile = {
       user: {
@@ -420,6 +814,7 @@ describe('CoreComponent when no defaults in the profile', () => {
           CoreComponent,
           // Mocks
           AlertComponent,
+          BannerComponent,
           RouterOutlet,
           HeaderComponent,
           PhaseComponent,
@@ -438,26 +833,107 @@ describe('CoreComponent when no defaults in the profile', () => {
           { provide: OAuth2Service, useValue: oauth2Service },
           { provide: CcdBrowserSupportComponent, useValue: browserSupport },
           { provide: NavigationListenerService, useValue: navigationListenerService },
+          { provide: BannersService, useValue: bannersService },
+          { provide: WindowService, useValue: windowService },
+          { provide: MatDialog, useValue: dialog },
+          { provide: UrlTransformationService, useValue: urlTransformationService }
         ]
       })
       .compileComponents();  // compile template and css
   }));
 
-  beforeEach(() => {
+  it('should not call shuttering logic when local store is available', () => {
+    let jurisdictionConfigsArr: JurisdictionUIConfig[] = [
+      {
+        id: 'PROBATE',
+        name: 'Probate',
+        shuttered: true
+      },
+      {
+        id: 'DIVORCE',
+        name: 'Divorce',
+        shuttered: true
+      }
+    ];
+    spyOn(jurisdictionService, 'getJurisdictionUIConfigs').and.callFake(function() {
+      return Observable.of(jurisdictionConfigsArr);
+    });
+    spyOn(windowService, 'getLocalStorage').and.callFake(function() {
+      let param = arguments[0];
+      if (param === 'UI_CONFIGS_CACHED') {
+        return JSON.stringify(true);
+      }
+    });
     fixture = TestBed.createComponent(CoreComponent);
     fixture.detectChanges();
 
     comp = fixture.componentInstance;
 
     de = fixture.debugElement;
+    fixture.detectChanges();
+    expect(windowService.getLocalStorage).toHaveBeenCalledWith('UI_CONFIGS_CACHED');
+    expect(dialog.open).toHaveBeenCalledTimes(0);
   });
 
-  it('should not update jurisdiction id in the title when no profile defaults', () => {
-    let headerBar = de.query(By.directive(HeaderComponent));
+  it('should not show shuttering dialog when all jurisdicitons are shuttered', () => {
+    let jurisdictionConfigsArr: JurisdictionUIConfig[] = [
+      {
+        id: 'PROBATE',
+        name: 'Probate',
+        shuttered: false
+      },
+      {
+        id: 'DIVORCE',
+        name: 'Divorce',
+        shuttered: false
+      }
+    ];
+    spyOn(jurisdictionService, 'getJurisdictionUIConfigs').and.callFake(function() {
+      return Observable.of(jurisdictionConfigsArr);
+    });
+    spyOn(windowService, 'getLocalStorage').and.callFake(function() {
+      let param = arguments[0];
+      if (param === 'UI_CONFIGS_CACHED') {
+        return null;
+      }
+    });
+    fixture = TestBed.createComponent(CoreComponent);
+    fixture.detectChanges();
 
-    expect(headerBar).toBeTruthy();
-    expect(headerBar.componentInstance.title).toBeUndefined();
+    comp = fixture.componentInstance;
 
+    de = fixture.debugElement;
+    expect(windowService.getLocalStorage).toHaveBeenCalled();
+    expect(dialog.open).toHaveBeenCalledTimes(0);
   });
 
+  it('should show shuttering dialog when some jurisdicitons are shuttered', () => {
+    let jurisdictionConfigsArr: JurisdictionUIConfig[] = [
+      {
+        id: 'PROBATE',
+        name: 'Probate',
+        shuttered: true
+      },
+      {
+        id: 'DIVORCE',
+        name: 'Divorce',
+        shuttered: false
+      }
+    ];
+    spyOn(jurisdictionService, 'getJurisdictionUIConfigs').and.callFake(function() {
+      return Observable.of(jurisdictionConfigsArr);
+    });
+    spyOn(windowService, 'getLocalStorage').and.callFake(function() {
+      let param = arguments[0];
+      if (param === 'UI_CONFIGS_CACHED') {
+        return null;
+      }
+    });
+    fixture = TestBed.createComponent(CoreComponent);
+    comp = fixture.componentInstance;
+    de = fixture.debugElement;
+    fixture.detectChanges();
+    expect(windowService.getLocalStorage).toHaveBeenCalledWith('UI_CONFIGS_CACHED');
+    expect(dialog.open).toHaveBeenCalledTimes(1);
+  });
 });

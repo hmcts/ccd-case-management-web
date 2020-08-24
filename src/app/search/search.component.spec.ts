@@ -3,8 +3,18 @@ import { SearchComponent } from './search.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import createSpyObj = jasmine.createSpyObj;
-import { Jurisdiction, CaseType, CaseState } from '@hmcts/ccd-case-ui-toolkit';
+import { Jurisdiction, CaseType, CaseState, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { Router } from '@angular/router';
+
+const BANNERS: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
 
 const JURISDICTION: Jurisdiction = {
   id: 'J1',

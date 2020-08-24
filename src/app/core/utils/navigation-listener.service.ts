@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { AlertService, HttpError, NavigationNotifierService, NavigationOrigin } from '@hmcts/ccd-case-ui-toolkit';
+import { Subscription } from 'rxjs';
+import { AlertService, HttpError, NavigationNotifierService, NavigationOrigin, ErrorNotifierService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Injectable()
 export class NavigationListenerService {
   public static readonly CASE_CREATED_MSG = 'The case has been created successfully';
   public static readonly DRAFT_DELETED_MSG = `The draft has been successfully deleted`;
 
-  callbackErrorsSubject: Subject<any> = new Subject();
   navigationSubscription: Subscription;
 
   constructor(
     private alertService: AlertService,
+    private errorNotifierService: ErrorNotifierService,
     private navigationNotifier: NavigationNotifierService,
     private router: Router) {
   }
@@ -56,7 +56,7 @@ export class NavigationListenerService {
     if (error.status !== 401 && error.status !== 403) {
       console.log('error during triggering event:', triggerId);
       console.log(error);
-      this.callbackErrorsSubject.next(error);
+      this.errorNotifierService.announceError(error);
     }
   }
 }

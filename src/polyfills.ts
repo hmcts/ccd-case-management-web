@@ -58,3 +58,28 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+ /*
+  * See https://github.com/angular/angular/issues/24769
+  */
+if (!Element.prototype.matches) {
+  Element.prototype.matches =
+    (<any>Element.prototype).matchesSelector ||
+    (<any>Element.prototype).mozMatchesSelector ||
+    (<any>Element.prototype).msMatchesSelector ||
+    (<any>Element.prototype).oMatchesSelector ||
+    (<any>Element.prototype).webkitMatchesSelector ||
+        function(s) {
+          let matches = (this.document || this.ownerDocument).querySelectorAll(s),
+              i = matches.length;
+          while (--i >= 0 && matches.item(i) !== this) {}
+          return i > -1;
+        };
+}
+
+ /*
+  * See https://github.com/algolia/algoliasearch-client-javascript/issues/691
+  */
+(window as any).process = {
+    env: { DEBUG: undefined },
+};

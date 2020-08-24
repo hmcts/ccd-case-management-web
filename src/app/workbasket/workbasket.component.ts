@@ -155,7 +155,7 @@ export class WorkbasketComponent implements OnInit {
   private notifyDefaultJurisdiction() {
     Promise.resolve(null).then(() => {
       let profile = this.route.parent.snapshot.data.profile;
-      if (profile.default.workbasket.jurisdiction_id) {
+      if (profile.default.workbasket && profile.default.workbasket.jurisdiction_id) {
         let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
         this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
       }
@@ -176,9 +176,5 @@ export class WorkbasketComponent implements OnInit {
       fieldName = fieldName.replace(/\[(.*?)]/g, '$1').toLocaleLowerCase();
     }
     return fieldName;
-  }
-
-  navigateToCase(data: any) {
-    this.router.navigate(['/case/' + this.jurisdiction.id + '/' + this.caseType.id + '/' + data.caseId]);
   }
 }

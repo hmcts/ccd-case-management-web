@@ -5,7 +5,7 @@ var savedValue;
  */
 module.exports = {
   jurisdiction: 'Auto Test 1',
-  caseType: '',
+  caseType: 'All Field Data Types',
   event: 'Create a case',
   optionalFields: [],
   mandatoryFields: [],

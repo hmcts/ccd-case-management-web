@@ -10,6 +10,7 @@ import * as express from 'express';
 import { join } from 'path';
 import * as xFrameOptions from 'x-frame-options';
 import * as healthcheck from "@hmcts/nodejs-healthcheck";
+import * as noCache from 'nocache';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -38,6 +39,7 @@ const CONFIG = {
   'unsupported_browser_url': process.env['UNSUPPORTED_BROWSER_URL'] || 'https://www.gov.uk/help/browsers',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
   'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:3453/payments',
+  'pay_bulk_scan_url': process.env['PAY_BULKSCAN_URL'] || 'http://localhost:3453/pay-bulkscan',
   'chrome_min_required_version': parseInt(process.env['CHROME_MIN_REQUIRED_VERSION'], 10) || 67,
   'ie_min_required_version': parseInt(process.env['IE_MIN_REQUIRED_VERSION'], 10) || 11,
   'edge_min_required_version': parseInt(process.env['EDGE_MIN_REQUIRED_VERSION'], 10) || 17,
@@ -45,7 +47,9 @@ const CONFIG = {
   'activity_next_poll_request_ms': parseInt(process.env['CCD_ACTIVITY_NEXT_POLL_REQUEST_MS'], 10) || 5000,
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
-  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25
+  'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25,
+  'shutter_redirect_url': process.env['SHUTTER_REDIRECT_URL'] || '',
+  'shutter_redirect_wait': parseInt(process.env['SHUTTER_REDIRECT_WAIT'], 10) || 10
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
@@ -61,6 +65,10 @@ app.engine('html', ngExpressEngine({
     { provide: AppConfig, useValue: new AppServerConfig(CONFIG) },
   ]
 }));
+
+const poweredByHeader = 'x-powered-by';
+app.disable(poweredByHeader);
+appHealth.disable(poweredByHeader);
 
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
@@ -82,6 +90,9 @@ app.get('/config', (req, res) => {
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
+
+// No cache for any routes handled by Universal
+app.use(noCache());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

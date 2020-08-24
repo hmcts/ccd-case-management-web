@@ -59,7 +59,7 @@ The tests will require the following environmental variables in order to run. To
 
 The functional tests use both Protractor with Cucumber. Individual tests/scenarios are tagged with annotations eg `@functional` and are executed agaist a run config file (`conf.js` or local.conf.js) via the CLI like so:
 
-`protractor test/config/local.conf.js --cucumberOpts.tags='@functional`
+`protractor test/config/local.conf.js --cucumberOpts.tags='@functional'`
 
 ommiting the tags will run all the tests
 
@@ -280,7 +280,12 @@ Notes: If you have a following error:
 [14:22:08] E/local - Error: No update-config.json found. Run 'webdriver-manager update' to download binaries.
 ```
 make sure you run the following command (mentioned in here https://github.com/angular/webdriver-manager/issues/269):
-`./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35`
+```
+chrome_version() {
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version | tr -d 'Google Chrome'
+}
+./node_modules/protractor/bin/webdriver-manager update --versions.chrome=$(chrome_version)
+```
 
 If you want to debug locally a useful change is to increase timeout from 60 s to some higher value. This can be done for all steps globally in `testSetup.js`:
 

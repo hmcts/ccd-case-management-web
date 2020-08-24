@@ -32,6 +32,11 @@
                 "glob": "**/*",
                 "input": "node_modules/@hmcts/media-viewer/assets",
                 "output": "/assets"
+              },
+              {
+                "glob": "web.config",
+                "input": ".",
+                "output": "./.."
               }
             ],
             "styles": [

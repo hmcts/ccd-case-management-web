@@ -145,8 +145,4 @@ export class SearchComponent implements OnInit {
     }
     return fieldName;
   }
-
-  navigateToCase(data: any) {
-    this.router.navigate(['/case/' + this.jurisdiction.id + '/' + this.caseType.id + '/' + data.caseId]);
-  }
 }

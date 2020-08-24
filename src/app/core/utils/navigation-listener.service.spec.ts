@@ -1,5 +1,5 @@
 import { NavigationListenerService } from './navigation-listener.service';
-import { AlertService, NavigationNotifierService, NavigationOrigin } from '@hmcts/ccd-case-ui-toolkit';
+import { AlertService, NavigationNotifierService, NavigationOrigin, ErrorNotifierService } from '@hmcts/ccd-case-ui-toolkit';
 import { Router } from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -8,17 +8,17 @@ describe('NavigationListenerService', () => {
   let navigationListenerService: NavigationListenerService;
   let mockAlertService: any;
   let navigationNotifierService: NavigationNotifierService;
+  let errorNotifierService: ErrorNotifierService;
   let mockRouter: any;
-  let mockCallbackErrorSubject: any;
 
   beforeEach(() => {
     mockRouter = createSpyObj<Router>('router', ['navigate']);
     mockAlertService = jasmine.createSpyObj<AlertService>('mockAlertService', ['setPreserveAlerts', 'success']);
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
+    errorNotifierService = createSpyObj<any>('errorNotifierService', ['announceError']);
     navigationNotifierService = new NavigationNotifierService();
-    navigationListenerService = new NavigationListenerService(mockAlertService, navigationNotifierService, mockRouter);
-    mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next', 'subscribe', 'unsubscribe']);
-    navigationListenerService.callbackErrorsSubject = mockCallbackErrorSubject;
+    navigationListenerService = new NavigationListenerService(mockAlertService, errorNotifierService, navigationNotifierService,
+      mockRouter);
     navigationListenerService.init();
   });
 
@@ -66,7 +66,7 @@ describe('NavigationListenerService', () => {
       navParam.jid,
       navParam.ctid,
       navParam.etid], { queryParams: navParam.queryParams });
-    expect(mockCallbackErrorSubject.next).toHaveBeenCalled();
+    expect(errorNotifierService.announceError).toHaveBeenCalledWith(VALID_ERROR);
   });
 
   it('test EVENT_TRIGGERED navigation subscription', () => {
@@ -92,7 +92,7 @@ describe('NavigationListenerService', () => {
     navigationNotifierService.announceNavigation(navParam);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['trigger',
       navParam.etid], { queryParams: navParam.queryParams, relativeTo: navParam.relativeTo });
-    expect(mockCallbackErrorSubject.next).toHaveBeenCalled();
+    expect(errorNotifierService.announceError).toHaveBeenCalledWith(VALID_ERROR);
   });
 
   it('test NO_READ_ACCESS_REDIRECTION navigation subscription', () => {

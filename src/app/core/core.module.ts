@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CaseUIToolkitModule, FormValueService, FormErrorService, AddressesService, HttpErrorService, HttpService, AuthService,
   DocumentManagementService, OrderService, WizardFactoryService, CaseEditWizardGuard, RouterHelperService, DraftService,
   CasesService, ProfileService, ActivityService, ActivityPollingService, RequestOptionsBuilder, WindowService, SearchService,
-  JurisdictionService, SearchResultViewItemComparatorFactory } from '@hmcts/ccd-case-ui-toolkit';
+  JurisdictionService, SearchResultViewItemComparatorFactory, ErrorNotifierService, BannersService, UrlTransformationService } from '@hmcts/ccd-case-ui-toolkit';
 import { DocumentService } from './utils/document.service';
 import { CoreComponent } from './core.component';
 import { CommonModule } from '@angular/common';
@@ -20,12 +20,14 @@ import { AccordionComponent } from '../shared/accordion/accordion.component';
 import { CcdBrowserSupportComponent } from './ccd-browser-support/ccd-browser-support.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NavigationListenerService } from './utils/navigation-listener.service';
+import { BannerModule } from './banner/banner.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     AlertModule,
+    BannerModule,
     CaseUIToolkitModule,
     DeviceDetectorModule.forRoot()
   ],
@@ -49,6 +51,7 @@ import { NavigationListenerService } from './utils/navigation-listener.service';
     RequestOptionsBuilder,
     HttpService,
     JurisdictionService,
+    BannersService,
     ActivityService,
     ActivityResolver,
     ActivityPollingService,
@@ -58,6 +61,8 @@ import { NavigationListenerService } from './utils/navigation-listener.service';
     OAuth2Service,
     CcdBrowserSupportComponent,
     SearchResultViewItemComparatorFactory,
+    ErrorNotifierService,
+    UrlTransformationService,
   ],
   declarations: [
     CoreComponent,

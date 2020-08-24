@@ -5,12 +5,14 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import createSpyObj = jasmine.createSpyObj;
+import createSpy = jasmine.createSpy;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
+import { AppConfig } from '../../app.config';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';
@@ -52,6 +54,16 @@ const CASE_TYPES_1: CaseTypeLite[] = [
         }
       ],
     }
+];
+
+const BANNERS: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
 ];
 
 const JURISDICTION_1: Jurisdiction = {
@@ -130,6 +142,16 @@ const CASE_TYPES_2: CaseTypeLite[] = [
   }
 ];
 
+const BANNERS_2: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
+
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
@@ -154,6 +176,16 @@ const CASE_TYPES_SINGLE_EVENT: CaseTypeLite[] = [
     description: '',
     states: [],
     events: [...SINGLE_EVENT],
+  }
+];
+
+const BANNERS_3: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
   }
 ];
 
@@ -239,7 +271,6 @@ let mockRouter: any;
 let mockOrderService: any;
 let mockCallbackErrorSubject: any;
 let mockAlertService: any;
-let jurisdictionService: JurisdictionService;
 
 describe('CaseCreatorComponent', () => {
 
@@ -259,8 +290,6 @@ describe('CaseCreatorComponent', () => {
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
     mockAlertService = createSpyObj<AlertService>('alertService', ['clear']);
-    jurisdictionService = new JurisdictionService();
-
     TestBed
       .configureTestingModule({
         imports: [
@@ -276,7 +305,6 @@ describe('CaseCreatorComponent', () => {
           { provide: Router, useValue: mockRouter },
           { provide: OrderService, useValue: mockOrderService },
           { provide: AlertService, useValue: mockAlertService },
-          { provide: JurisdictionService, useValue: jurisdictionService }
         ]
       })
       .compileComponents();

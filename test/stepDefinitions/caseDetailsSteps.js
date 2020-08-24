@@ -42,6 +42,17 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       expect(alertBarText).to.match(/^Case #\d{4}-\d{4}-\d{4}-\d{4} has been created\.$/);
   });
 
+  Then('the callback error or warnings bar will be visible', async function() {
+      let alertBarText = await caseDetailsPage.getErrorAlertBarText();
+      expect(alertBarText).to.equal('Unable to proceed because there are one or more callback Errors or Warnings');
+  });
+
+  Then(/^the callback validation error summary is displayed$/, async function () {
+    expect(await caseDetailsPage.isErrorSummaryVisible()).to.be.true;
+    expect(await caseDetailsPage.getErrorSummaryHeadingText()).to.equal('The callback data failed validation');
+    expect(await caseDetailsPage.getErrorSummaryDetailsText()).to.equal('Unable to proceed because there are one or more callback Errors or Warnings');
+  });
+
   Then(/^the '(.*)' field will be visible on the '(.*)' tab$/, async function (tabfield, tabName) {
     await caseDetailsPage.clickTab(tabName);
     let fields = await caseDetailsPage.getTabFields();
@@ -53,7 +64,15 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       let actualFields = await caseDetailsPage.getTabFields();
       for (const expectedField of expectedFields) {
           expect(actualFields).to.include(expectedField);
-        }
+      }
+  });
+
+  Then(/^the following field values will be visible:$/, async function (dataTable) {
+      let expectedFields = await [].concat(...dataTable.raw());
+      let actualFieldValues = await caseDetailsPage.getTabFieldValues();
+      for (const expectedField of expectedFields) {
+        expect(actualFieldValues).to.include(expectedField);
+      }
   });
 
   Then(/^the following fields will NOT be visible:$/, async function (dataTable) {
@@ -121,6 +140,37 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   When(/^I start the event '(.*)'$/, async function(event) {
     await caseDetailsPage.startEvent(event);
+  });
+
+  When(/^I click the document link$/, async function () {
+    await caseDetailsPage.clickDocumentLink();
+  });
+
+  Then(/^the media viewer is opened in a new tab$/, async function () {
+    let newTabUrl = await caseDetailsPage.getMediaViewerURL();
+    expect(newTabUrl.includes('/media-viewer')).to.be.true;
+  });
+
+  Then(/^the pdf document is visible in the new tab$/, {timeout: 60 * 1000}, async function () {
+    let visible = await caseDetailsPage.pdfContentVisible();
+    expect(visible).to.be.true;
+  });
+
+  Then(/^the image document is visible in the new tab$/, {timeout: 60 * 1000}, async function () {
+    let visible = await caseDetailsPage.imageContentVisible();
+    expect(visible).to.be.true;
+  });
+
+  When(/^the document is shown as unsupported in the new tab$/, {timeout: 60 * 1000}, async function () {
+    let shownUnsupported = await caseDetailsPage.documentContentTypeNotSupported();
+    expect(shownUnsupported).to.be.true;
+  });
+
+  Then(/^the go button is disabled$/, async function () {
+    let enabled = await caseDetailsPage.isGoButtonEnabled();
+    let text = await caseDetailsPage.getGoButtonText();
+    expect(enabled).to.be.false;
+    expect(text).to.equals('Go');
   });
 
 });

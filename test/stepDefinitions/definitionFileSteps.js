@@ -1,5 +1,5 @@
 let Data = require('../utils/TestData.js');
-
+let RandomUtils = require('../utils/ccdDataGenerationUtils.js');
 var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
@@ -15,6 +15,21 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     Data.event = 'Create a case';
     Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'}];
   }
+
+  async function populateCaseFieldsForFileUpload(){
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'All Field Data Types';
+    Data.event = 'Create a case';
+  }
+
+  Given('a file {string}', async function(fileName) {
+    Data.optionalFields = [{fieldType: 'text', fieldId: 'TextField'},
+    {fieldType: 'document', value: '/test/resources/documents_for_mv/' + fileName, fieldId: 'DocumentField'}];
+  });
+
+  Given(/^a case type to upload a file$/, async function() {
+    await populateCaseFieldsForFileUpload();
+  });
 
   Given(/^I have a case with 3 pages$/, async function () {
     await populateMultiplePageCaseType();
@@ -113,6 +128,12 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
   ];
   });
 
+  Given(/^a case type with questions and answers exists$/, function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'Q&A functionality ';
+    Data.event = 'Create questions';
+  });
+
   async function populateCaseProgressionType(){
     Data.caseType = 'Case Progression';
     Data.optionalFields = [];
@@ -123,6 +144,13 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   Given(/^a case with Case Progression functionality exists$/, async function() {
     await populateCaseProgressionType();
+  });
+
+  Given(/^a case with CaseView Callback functionality exists$/, async function() {
+    Data.caseType = 'CaseView Callback Messages';
+    Data.optionalFields = [];
+    Data.mandatoryFields = [{fieldType: 'text', fieldId: 'TextField0'},
+                            {fieldType: 'text', fieldId: 'TextField1'}];
   });
 
   Given(/^a case with the print button not configured exists$/, async function() {
@@ -245,6 +273,17 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
       { fieldType: 'yes-no', fieldId: 'MySchool_ProvidesAutisticChildrenSupport', value: 'Yes' },
       { fieldType: 'text', fieldId: 'FamilyDetails_Children_0_ChildFullName' },
       {fieldType: 'fixed-list', fieldId: 'FamilyDetails_Children_0_ChildGender', value: 'FEMALE'},
+    ];
+  });
+
+  Given(/^a workbasket sort order case type exists with (?:case fields|a label)? configured in the case list results$/, async function() {
+    Data.jurisdiction = 'Auto Test 1';
+    Data.caseType = 'CaseType With WB Sort orders';
+    Data.event = 'Create a case';
+    let randomText = await RandomUtils.generateRandomString();    
+    Data.optionalFields = [
+      { fieldType: 'text', value:  randomText},
+      { fieldType: 'date', value: '10102010'},
     ];
   });
 

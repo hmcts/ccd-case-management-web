@@ -27,7 +27,7 @@ Feature: Set of scenarios to test functionality of create case filters in case c
             | Number      | Number Field                                                       |                                                            |
             | Yes-No      | Yes or No Field                                                    |                                                            |
             | Collection  | Collection Field                                                   |                                                            |
-            | Fixed-List  | Marrital Status Field                                              | --Select a value--,Marriage,Civil Partnership,Single,Widow |
+            | Fixed-List  | Marrital Status Field                                              | --Select a value--,Civil Partnership,Marriage,Single,Widow |
             | Money-GBP   | Money Field                                                        |                                                            |
             | Document    | Document Field                                                     |                                                            |
             | Multi-Select| Multi Select Field,Cardiff,Manchester,Oxford                       |                                                            |
@@ -36,7 +36,7 @@ Feature: Set of scenarios to test functionality of create case filters in case c
 
     @caseListFilters
     Scenario: reset button switches case type to the workbasket default
-        Given I have filled the create case filters for a case other than the workbasket default
+        Given I have filled the case filters for a case other than the workbasket default
         When I click the 'Reset' button
         Then the filters are switched to the default 'All Field Data Types' case type
         And navigating back to the original case type shows cleared dynamic filters

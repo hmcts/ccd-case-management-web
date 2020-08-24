@@ -11,7 +11,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import createSpyObj = jasmine.createSpyObj;
 import {
   Jurisdiction, CaseType, CaseState, AlertService, SearchService, WindowService, JurisdictionService,
-  SearchResultView
+  SearchResultView,
+  Banner
 } from '@hmcts/ccd-case-ui-toolkit';
 
 describe('WorkbasketComponent', () => {
@@ -37,6 +38,7 @@ describe('WorkbasketComponent', () => {
 
   let SearchResultComponent: any = MockComponent({
     selector: 'ccd-search-result', inputs: [
+      'caseLinkUrlTemplate',
       'jurisdiction',
       'caseType',
       'caseState',
@@ -97,6 +99,16 @@ describe('WorkbasketComponent', () => {
     result_error: 'ERROR',
     hasDrafts: () => false
   };
+
+  const BANNERS: Banner[] = [
+    {
+      bannerDescription: 'Test Banner Description',
+      bannerEnabled: true,
+      bannerUrl: 'http://localhost:3451/test',
+      bannerUrlText: 'click here to see it.>>>',
+      bannerViewed: false
+    }
+  ];
 
   const JURISDICTION: Jurisdiction = {
     id: 'J1',
@@ -402,6 +414,7 @@ describe('WorkbasketComponent when no defaults in the profile', () => {
 
   let SearchResultComponent: any = MockComponent({
     selector: 'ccd-search-result', inputs: [
+      'caseLinkUrlTemplate',
       'jurisdiction',
       'caseType',
       'caseState',
@@ -501,6 +514,135 @@ describe('WorkbasketComponent when no defaults in the profile', () => {
   }));
 
   it('should not announce SelectedJurisdiction when no defaults available in the profile', () => {
+    let cutBodyEl = de.query($BODY);
+
+    expect(cutBodyEl).not.toBeNull();
+    expect(mockJurisdictionService.announceSelectedJurisdiction).not.toHaveBeenCalledWith();
+  });
+
+});
+
+describe('WorkbasketComponent when no workbasket defaults in the profile', () => {
+
+  const TEMPLATE =
+    `<div class="global-display">
+        <ng-content select="[topBody]"></ng-content>
+        <ng-content select="[leftBody]"></ng-content>
+        <ng-content select="[rightBody]"></ng-content>
+    </div>
+    `;
+
+  let BodyComponent: any = MockComponent({ selector: 'cut-body', template: TEMPLATE });
+
+  let WorkbasketFiltersComponent: any = MockComponent({
+    selector: 'ccd-workbasket-filters', inputs: [
+      'jurisdictions',
+      'defaults'
+    ], outputs: [
+      'onApply'
+    ]
+  });
+
+  let SearchResultComponent: any = MockComponent({
+    selector: 'ccd-search-result', inputs: [
+      'caseLinkUrlTemplate',
+      'jurisdiction',
+      'caseType',
+      'caseState',
+      'resultView',
+      'paginationMetadata',
+      'page',
+      'caseFilterFG',
+      'metadataFields'
+    ]
+  });
+
+  const JURISDICTIONS = [
+    {
+      id: 'J_ID',
+      name: 'Jurisdiction 1'
+    },
+    {
+      id: 'J_ID2',
+      name: 'Jurisdiction 2'
+    },
+    {
+      id: 'J_ID3',
+      name: 'Jurisdiction 3'
+    }
+  ];
+
+  const PROFILE = {
+    jurisdictions: JURISDICTIONS,
+    default: {
+    }
+  };
+
+  let mockRoute: any = {
+    parent: {
+      snapshot: {
+        data: {
+          profile: PROFILE
+        }
+      }
+    },
+    navigate: (param) => true
+  };
+
+  const $BODY = By.css('div cut-body');
+
+  let comp: WorkbasketComponent;
+  let fixture: ComponentFixture<WorkbasketComponent>;
+  let de: DebugElement;
+  let mockSearchService: any;
+  let mockPaginationService: any;
+  let mockJurisdictionService: JurisdictionService;
+  let alertService: AlertService;
+  let windowService;
+  let mockRouter;
+
+  beforeEach(async(() => {
+
+    mockSearchService = createSpyObj<SearchService>('searchService', ['search']);
+    mockPaginationService = createSpyObj<PaginationService>('paginationService', ['getPaginationMetadata']);
+    mockJurisdictionService = createSpyObj<any>('jurisdictionService', ['announceSelectedJurisdiction']);
+    alertService = createSpyObj<AlertService>('alertService', ['warning', 'clear']);
+    windowService = createSpyObj('windowService', ['setLocalStorage', 'getLocalStorage']);
+    mockRouter = createSpyObj<Router>('router', ['navigate']);
+    mockRouter.navigate.and.callThrough();
+
+    TestBed
+      .configureTestingModule({
+        imports: [],
+        declarations: [
+          WorkbasketComponent,
+          // Mocks
+          BodyComponent,
+          WorkbasketFiltersComponent,
+          SearchResultComponent
+        ],
+        providers: [
+          provideRoutes([]),
+          { provide: ActivatedRoute, useValue: mockRoute },
+          { provide: SearchService, useValue: mockSearchService },
+          { provide: PaginationService, useValue: mockPaginationService },
+          { provide: JurisdictionService, useValue: mockJurisdictionService },
+          { provide: AlertService, useValue: alertService },
+          { provide: WindowService, useValue: windowService },
+          { provide: Router, useValue: mockRouter }
+        ]
+      })
+      .compileComponents();  // compile template and css
+
+    fixture = TestBed.createComponent(WorkbasketComponent);
+    fixture.detectChanges();
+
+    comp = fixture.componentInstance;
+
+    de = fixture.debugElement;
+  }));
+
+  it('should not announce SelectedJurisdiction when no workbasket defaults available in the profile', () => {
     let cutBodyEl = de.query($BODY);
 
     expect(cutBodyEl).not.toBeNull();

@@ -76,3 +76,10 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     When I am on the last page of results
     Then three dots will be displayed after page 1 on the pagination
 
+  # marked as broken until related data-store api and definition-store api changes are (development) merged into master
+  @broken
+  Scenario: Workbasket results with sort order
+    Given a workbasket sort order case type exists with case fields configured in the case list results
+    And I have created a case for the caseType with data
+    When I search for this Case Type on the workbasket filters
+    Then the results should be sorted by 'Text Field' in the 'ascending' order

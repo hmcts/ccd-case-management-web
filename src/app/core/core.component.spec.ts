@@ -864,7 +864,7 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
         return JSON.stringify(true);
       }
       if (param === 'BANNERS') {
-        return JSON.stringify("BANNERS");
+        return JSON.stringify('BANNERS');
       }
     });
     fixture = TestBed.createComponent(CoreComponent);

@@ -863,6 +863,9 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
       if (param === 'UI_CONFIGS_CACHED') {
         return JSON.stringify(true);
       }
+      if (param === 'BANNERS') {
+        return JSON.stringify("BANNERS");
+      }
     });
     fixture = TestBed.createComponent(CoreComponent);
     fixture.detectChanges();

@@ -23,7 +23,7 @@
     "test:audit": "echo 'tests'",
     "test:nsp": "nsp check",
     "test:cucumber": "protractor test/config/cucumber.conf.js",
-    "test:smoke": "./bin/runSmokeTests.sh",
+    "test:smoke": "echo './bin/runSmokeTests.sh'",
     "test:smokeTest": "webdriver-manager update --versions.chrome 2.40 && protractor test/config/conf.js --cucumberOpts.tags='@smoke and not @bug and not @broken'",
     "test:crossbrowser": "protractor test/config/crossbrowser.conf.js",
     "test:functional": "echo './bin/runFunctionalTests.sh'",

@@ -39,6 +39,7 @@ Feature: Set of scenarios testing complexTypes override
       | MySchool | Class.ClassMembers.Children.AutisticChildCaseNumber.CaseReference | OPTIONAL        |                           |                      |                                                 |
     Given I have logged in
 
+    @broken
   Scenario: limits the complex type using the EventToComplexTypes sheet
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data
@@ -52,6 +53,7 @@ Feature: Set of scenarios testing complexTypes override
       | MySchool.Class.1.ClassMembers.1.Children.1.IsAutistic                             |                    | false  |
       | MySchool.Class.1.ClassMembers.1.Children.1.AutisticChildCaseNumber.CaseReference  | 1111222233334444   | false  |
 
+      @broken
   Scenario: overrides the complex type data using the definition file EventToComplexTypes sheet
     Given a case type containing Complex and Collection types exists
     When I populate the form with the school data

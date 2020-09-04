@@ -4,6 +4,7 @@ Feature: Set of scenarios to view supported and unsupported types of documents w
 Background:
   Given I have logged in
 
+  @broken
 Scenario Outline: Create a case with a pdf document and view it on Media Viewer
   Given a file '<fileName>'
   And a case type to upload a file
@@ -18,6 +19,7 @@ Examples:
 | document_pdf_1.pdf |
 | document_pdf_2.PdF |
 
+    @broken
 Scenario Outline: Create a case with an image of a supported type and view it on Media Viewer
   Given a file '<fileName>'
   And a case type to upload a file
@@ -37,6 +39,7 @@ Examples:
 | document_png_2.PnG     |
 #| document_gif_1.gif     | # Disabled as gif files are not uploadable.
 #| document_gif_2.GiF     | # Disabled as gif files are not uploadable.
+
 
 Scenario Outline: Create a case with a document of an unsupported type and view it on Media Viewer
   Given a file '<fileName>'

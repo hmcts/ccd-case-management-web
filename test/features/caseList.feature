@@ -67,7 +67,7 @@ Feature: Set of Scenarios testing the functionality of the Case List table
     Then I will see a different page of results
     And page '2' will be selected on the pagination
 
-  @pagination
+  @pagination @broken
   Scenario: display three dots (...) at beginning or end of pagination if there are 8 or more pages
     Given I am on case list page
     And there are more than 8 page of results

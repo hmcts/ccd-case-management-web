@@ -4,6 +4,7 @@ Feature: Set of scenario's covering update functionality with a second user on a
   Background:
     Given I have logged in as 'auto.test.cnp+fe.judge@gmail.com'
 
+    @broken
   Scenario: updates an element in a collection
     Given a case type with questions and answers exists
     And I have submitted a case with question and judge notes collection data containing 1 item each

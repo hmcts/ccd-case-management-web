@@ -20,6 +20,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | CaseHistory      | History            | CaseHistoryViewer |                    |
     Given I have logged in
 
+    @broken
   Scenario Outline: Fields are displayed on create case form page
     Given a case type containing every field type exists
     When I navigate to the case creation form page
@@ -113,7 +114,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | List 6|
       | List 7|
 
-    @validation
+    @validation @broken
   Scenario: Validation: cannot progress to next page without filling in mandatory field
     Given a case with a Mandatory field exists
     When I do not fill in the Mandatory field
@@ -125,7 +126,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     When I enter 'iamastring' into the 'number' field
     Then no text will appear in the number field
 
-    @validation
+    @validation @broken
   Scenario: Validation: invalid phone number is not accepted
     Given a case type containing every field type exists
     And I enter '11111111111' into the 'phone-uk' field

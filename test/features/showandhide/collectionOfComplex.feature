@@ -1,4 +1,4 @@
-@functional @showandhide
+@functional @showandhide @broken
 Feature: Set of scenarios testing show & hide functionality using conditions based on fields in collections of complex
 
   Background:

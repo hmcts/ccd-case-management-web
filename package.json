@@ -67,7 +67,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-like": "^0.2.14",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "core-js": "^2.6.9",
     "cucumber": "^5.0.0",
     "cucumber-html-reporter": "^4.0.5",
@@ -118,7 +118,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-remap-istanbul": "0.6.0",
     "karma-typescript": "^4.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mocha": "^5.0.5",
     "ng2-mock-component": "^0.1.1",
     "node-sass": "^4.12.0",
@@ -144,7 +144,7 @@
     "braces": "^3.0.2",
     "handlebars": "^4.5.3",
     "https-proxy-agent": "^3.0.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "marked": "^0.7.0",
     "mem": "^6.0.1",
     "serialize-javascript": "^2.1.1",
@@ -153,7 +153,8 @@
     "yargs-parser": "^18.1.2",
     "minimist": "^1.2.3",
     "npm-registry-fetch": "^8.1.1",
-    "dot-prop": "^5.2.0"
+    "dot-prop": "^5.2.0",
+    "bl": "^4.0.3"
   },
   "snyk": true
 }

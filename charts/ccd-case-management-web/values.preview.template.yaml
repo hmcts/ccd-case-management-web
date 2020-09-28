@@ -3,20 +3,20 @@ nodejs:
   ingressHost: ${SERVICE_FQDN}
   environment:
     IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
-    CCD_GW_LOGOUT_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/logout
-    CCD_API_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/aggregated
-    CCD_DATA_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/data
-    CCD_GW_OAUTH2_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/oauth2
-    DM_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/documents
+    CCD_GW_LOGOUT_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/logout
+    CCD_API_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/aggregated
+    CCD_DATA_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/data
+    CCD_GW_OAUTH2_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/oauth2
+    DM_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/documents
     DM_URL_REMOTE: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-aat\.service\.core-compute-aat\.internal(?::\d+)?)/documents
-    ANNOTATION_API_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/em-anno
-    PRINT_SERVICE_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/print
+    ANNOTATION_API_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/em-anno
+    PRINT_SERVICE_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/print
     PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
-    CCD_ACTIVITY_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/activity
-    PAYMENTS_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/payments
-    PAY_BULKSCAN_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/pay-bulkscan
+    CCD_ACTIVITY_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/activity
+    PAYMENTS_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/payments
+    PAY_BULKSCAN_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/pay-bulkscan
     SHUTTER_REDIRECT_URL: https://xui-webapp-ithc.service.core-compute-ithc.internal
-    POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-332.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
+    POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-345.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
 
 idam-pr:
   enabled: true

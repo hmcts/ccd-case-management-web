@@ -863,6 +863,9 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
       if (param === 'UI_CONFIGS_CACHED') {
         return JSON.stringify(true);
       }
+      if (param === 'BANNERS') {
+        return JSON.stringify('BANNERS');
+      }
     });
     fixture = TestBed.createComponent(CoreComponent);
     fixture.detectChanges();
@@ -929,6 +932,13 @@ describe('CoreComponent no shutter dialog when all jurisdictions are not shutter
         return null;
       }
     });
+
+    let spyDialogRef: any;
+    spyDialogRef = createSpyObj({ afterClosed : Observable.of({}), close: null });
+    spyDialogRef.componentInstance = {title: '', message: ''};
+
+    dialog.open.and.returnValue(spyDialogRef);
+
     fixture = TestBed.createComponent(CoreComponent);
     comp = fixture.componentInstance;
     de = fixture.debugElement;

@@ -5,8 +5,8 @@ nodejs:
   cpuLimits: 1
   autoscaling:
     enabled: true 
-    minReplicas: 8
-    maxReplicas: 16
+    minReplicas: 16
+    maxReplicas: 24
   postcodeParam: '$${postcode}'
   environment:
     CCD_ACTIVITY_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/activity

@@ -57,7 +57,7 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
-    "@hmcts/ccd-case-ui-toolkit": "2.64.4-EUI",
+    "@hmcts/ccd-case-ui-toolkit": "v2.67.3-tab-name-replaceAll",
     "@hmcts/ccpay-web-component": "4.0.0-beta87",
     "@hmcts/media-viewer": "1.3.1",
     "@hmcts/nodejs-healthcheck": "1.7.0",

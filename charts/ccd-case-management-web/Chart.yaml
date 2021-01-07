@@ -2,13 +2,13 @@ description: Helm chart for the HMCTS CCD Case Management
 name: ccd-case-management-web
 apiVersion: v2
 home: https://github.com/hmcts/ccd-case-management-web
-version: 2.0.8
+version: 2.1.2
 maintainers:
   - name: HMCTS CCD Dev Team
     email: ccd-devops@HMCTS.NET
 dependencies:
   - name: nodejs
-    version: 1.10.1
+    version: 2.3.4
     repository: '@hmctspublic'
   - name: idam-pr
     version: 2.2.6

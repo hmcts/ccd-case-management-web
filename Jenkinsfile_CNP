@@ -31,7 +31,6 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
-
 withPipeline("angular", product, component) {
 
     onMaster {
@@ -44,14 +43,10 @@ withPipeline("angular", product, component) {
         enableSlackNotifications('#ccd-pr-builds')
     }
 
-    installCharts()
-
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
     enableAksStagingDeployment()
     disableLegacyDeployment()
-
-    before('securitychecks') {sh 'yarn test:audit'}
 
     after('checkout') {
         sh "yarn cache clean"

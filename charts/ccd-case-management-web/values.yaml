@@ -3,6 +3,10 @@ nodejs:
   ingressHost: www-ccd.{{ .Values.global.environment }}.platform.hmcts.net
   applicationPort: 3451
   cpuLimits: 1
+  autoscaling:
+    enabled: true 
+    minReplicas: 16
+    maxReplicas: 24
   postcodeParam: '$${postcode}'
   environment:
     CCD_ACTIVITY_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/activity

@@ -6,7 +6,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8375dcaa04594226a973d5cd44842713)](https://www.codacy.com/app/adr1ancho/ccd-case-management-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hmcts/ccd-case-management-web&amp;utm_campaign=Badge_Grade)
 [![HitCount](http://hits.dwyl.io/hmcts/ccd-case-management-web.svg)](#ccd-case-management-web)
 
-An Angular front-end for Core Case Data.
+An Angular front-end for Core Case Data
 
 ### Quick start
 ```bash

@@ -37,6 +37,7 @@ Feature: Hide and show of basic fields
       | Mandatory text  |
       | Optional text   |
 
+    @broken
   Scenario: field on the same page visible when show & hide condition is met based on the Readonly field
     Given I have created a case with text fields
     When I start the event 'Approve a case'

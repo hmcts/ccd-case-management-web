@@ -33,18 +33,15 @@ describe('AppConfig', () => {
   const CASE_HISTORY_URL = DATA_URL + '/internal/cases/CID/events/EID';
   const CREATE_OR_UPDATE_DRAFT_URL = DATA_URL + '/internal/case-types/CTID/drafts/';
   const VIEW_OR_DELETE_DRAFT_URL = DATA_URL + '/internal/drafts/DID';
-<<<<<<< HEAD
   const APPLICATIONINSIGHTS_INSTRUMENTATIONKEY = 'some-key';
   const APPLICATIONINSIGHTS_ENABLED = 'true';
   const APPLICATIONINSIGHTS_ROLE = 'ccd-management-web';
-=======
   const SHUTTER_REDIRECT_URL = 'http://expertui';
   const SHUTTER_REDIRECT_WAIT = 10;
   const BANNER_URL = DATA_URL + '/internal/banners/';
   const JURISDICTION_UI_CONFIGS_URL = DATA_URL + '/internal/jurisdiction-ui-configs/';
 
   let httpMock: HttpTestingController;
->>>>>>> refs/heads/master
 
   const MOCK_CONFIG: Config = {
     login_url: LOGIN_URL,

@@ -49,6 +49,8 @@ withNightlyPipeline(type, product, app) {
     env.TEST_URL = params.TEST_URL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL = params.AUTOTEST_EMAIL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
+    
+    enableFullFunctionalTest()
 
     after('checkout') {
         sh "yarn cache clean"

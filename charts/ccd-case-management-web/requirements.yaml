@@ -1,4 +1,0 @@
-dependencies:
-  - name: nodejs
-    version: 0.2.0
-    repository: '@hmcts'

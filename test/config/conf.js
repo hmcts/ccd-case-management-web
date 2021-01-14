@@ -1,7 +1,10 @@
+const OUTPUT_DIR = !!process.env.PROTRACTOR_OUTPUT_DIR ? process.env.PROTRACTOR_OUTPUT_DIR : 'test';
+
 exports.config = {
 
   specs: [
-    '../features/*.feature'
+    '../features/*.feature',
+    '../features/*/*.feature'
   ],
 
   exclude: [],
@@ -35,17 +38,17 @@ exports.config = {
       '../stepDefinitions/*.js'
     ],
     tags: false,
-    format: 'json:test/results/results.json',
+    format: `json:${OUTPUT_DIR}/results/results.json`,
     profile: false,
     'no-source': true,
-    plugin: 'json:test/cucumber.json'
+    plugin: `json:${OUTPUT_DIR}/cucumber.json`
   },
 
   plugins: [{
     package: require.resolve('protractor-multiple-cucumber-html-reporter-plugin'),
     options:{
-      jsonOutputPath: 'test/results/',
-      reportPath: 'test/results/',
+      jsonOutputPath: `${OUTPUT_DIR}/results/`,
+      reportPath: `${OUTPUT_DIR}/results/`,
 
       automaticallyGenerateReport: true,
       removeExistingJsonReportFile: true,

@@ -2,8 +2,25 @@
 Feature: Set of scenarios to check we can read and write to all field data types when creating a case
 
   Background:
+    Given the following definition for 'case fields'
+      | ID               | Label              | FieldType         | FieldTypeParameter |
+      | TextField        | Text Field         | Text              |                    |
+      | TextAreaField    | Text Area          | TextArea          |                    |
+      | DateField        | Date Field         | Date              |                    |
+      | AddressField     | Address Field      | Address           |                    |
+      | PhoneField       | Phone Field        | PhoneUK           |                    |
+      | NumberField      | Number Field       | Number            |                    |
+      | YesNoField       | Yes or No Field    | YesOrNo           |                    |
+      | CollectionField  | Collection Field   | Collection        | Text               |
+      | MarritalStatus   | Fixed List         | FixedList         | marritalStatusEnum |
+      | MoneyField       | Money Field        | MoneyGBP          |                    |
+      | DocumentField    | Document Field     | Document          |                    |
+      | EmailField       | Email Field        | Email             |                    |
+      | MultiSelectField | Multi Select Field | MultiSelectList   | regionalCentreEnum |
+      | CaseHistory      | History            | CaseHistoryViewer |                    |
     Given I have logged in
 
+    @broken
   Scenario Outline: Fields are displayed on create case form page
     Given a case type containing every field type exists
     When I navigate to the case creation form page
@@ -54,7 +71,50 @@ Feature: Set of scenarios to check we can read and write to all field data types
       | Complex   |
 
 
-    @validation
+    @dynamicfixedlist @broken
+  Scenario: Dynamic fixed list is populated with values from AboutToStart Callback
+    Given a case type containing a Dynamic Fixed List field exists
+    When I navigate to the case creation form page
+    Then the Dynamic list is populated with the following values
+      |--Select a value--|
+      | List 1|
+      | List 2|
+      | List 3|
+      | List 4|
+      | List 5|
+      | List 6|
+      | List 7|
+
+  @dynamicfixedlist @broken
+  Scenario: Dynamic fixed list is populated with values from MidEvent Callback
+    Given a case type containing a Dynamic Fixed List field exists
+    When I navigate to multiple pages case type form pages
+    Then the Dynamic list is populated with the following values
+      |--Select a value--|
+      | List 1|
+      | List 2|
+      | List 3|
+      | List 4|
+      | List 5|
+      | List 6|
+      | List 7|
+
+  @dynamicfixedlist @broken
+  Scenario: Dynamic fixed list is populated with values from MidEvent Callback when case is being updated
+    Given a case type containing a Dynamic Fixed List field exists
+    And I create a case with a dynamic fixed list
+    When I start the event 'Add Details'
+    Then the Dynamic list is populated with the following values
+      |--Select a value--|
+      | List 1|
+      | List 2|
+      | List 3|
+      | List 4|
+      | List 5|
+      | List 6|
+      | List 7|
+
+    @validation @broken
   Scenario: Validation: cannot progress to next page without filling in mandatory field
     Given a case with a Mandatory field exists
     When I do not fill in the Mandatory field
@@ -66,7 +126,7 @@ Feature: Set of scenarios to check we can read and write to all field data types
     When I enter 'iamastring' into the 'number' field
     Then no text will appear in the number field
 
-    @validation
+    @validation @broken
   Scenario: Validation: invalid phone number is not accepted
     Given a case type containing every field type exists
     And I enter '11111111111' into the 'phone-uk' field
@@ -100,10 +160,8 @@ Feature: Set of scenarios to check we can read and write to all field data types
     @validation @regex
   Scenario: Validation: breaking REGEX validation stops progression of a case
     Given a case type containing a regex validated field exists
-    And I enter 'lowercaseisinvalid' into the 'text' field
-    When I click the Continue button
-    Then there will be validation errors
-    And the 'Continue' button will be disabled
+    When I enter 'lowercaseisinvalid' into the 'text' field
+    Then the 'Continue' button will be disabled
 
     @validation @bug
   Scenario: Validation: can continue after correcting Phone UK validation failure

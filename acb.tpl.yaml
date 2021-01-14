@@ -1,14 +1,14 @@
 version: 1.0-preview-1
 steps:
   - id: pull-build
-    cmd: docker pull {{.Run.Registry}}/hmcts/ccd-case-management-web/build:latest || true
+    cmd: docker pull {{.Run.Registry}}/ccd/case-management-web/build:latest || true
     when: ["-"]
     keep: true
 
   - id: build
     build: >
-      -t {{.Run.Registry}}/hmcts/ccd-case-management-web/build
-      --cache-from {{.Run.Registry}}/hmcts/ccd-case-management-web/build:latest
+      -t {{.Run.Registry}}/ccd/case-management-web/build
+      --cache-from {{.Run.Registry}}/ccd/case-management-web/build:latest
       --target build
       .
     when:
@@ -18,7 +18,7 @@ steps:
   - id: runtime
     build: >
       -t {{.Run.Registry}}/{{CI_IMAGE_TAG}}
-      --cache-from {{.Run.Registry}}/hmcts/ccd-case-management-web/build:latest
+      --cache-from {{.Run.Registry}}/ccd/case-management-web/build:latest
       --target runtime
       .
     when:
@@ -27,7 +27,7 @@ steps:
 
   - id: push-images
     push:
-      - "{{.Run.Registry}}/hmcts/ccd-case-management-web/build:latest"
+      - "{{.Run.Registry}}/ccd/case-management-web/build:latest"
       - "{{.Run.Registry}}/{{CI_IMAGE_TAG}}"
     when:
       - runtime

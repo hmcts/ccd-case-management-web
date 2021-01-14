@@ -22,12 +22,13 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
 
+    exclude: ['node_modules'],
     reporters: ['mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadless'],
     singleRun: true
   });
 };

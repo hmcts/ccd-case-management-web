@@ -9,12 +9,15 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import * as express from 'express';
 import { join } from 'path';
 import * as xFrameOptions from 'x-frame-options';
+import * as healthcheck from "@hmcts/nodejs-healthcheck";
+import * as noCache from 'nocache';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
 // Express server
 const app = express();
+const appHealth = express();
 
 const PORT = process.env.PORT || 3451;
 const DIST_FOLDER = join(process.cwd());
@@ -25,6 +28,7 @@ const CONFIG = {
   'case_data_url': process.env['CCD_DATA_URL'] || 'http://localhost:3453/data',
   'document_management_url': process.env['DM_URL'] || 'http://localhost:3453/documents',
   'remote_document_management_url': process.env['DM_URL_REMOTE'] || 'https://api-gateway.dev.dm.reform.hmcts.net/documents',
+  'annotation_api_url':process.env['ANNOTATION_API_URL'] || 'http://localhost:3453/em-anno',
   'pagination_page_size': parseInt(process.env['CCD_PAGE_SIZE'], 10) || 25,
   'postcode_lookup_url': process.env['POSTCODE_LOOKUP_URL'] || 'http://localhost:3453/addresses?postcode=${postcode}',
   'oauth2_token_endpoint_url': process.env['CCD_GW_OAUTH2_URL'] || 'http://localhost:3453/oauth2',
@@ -35,6 +39,7 @@ const CONFIG = {
   'unsupported_browser_url': process.env['UNSUPPORTED_BROWSER_URL'] || 'https://www.gov.uk/help/browsers',
   'activity_url': process.env['CCD_ACTIVITY_URL'] || '',
   'payments_url': process.env['PAYMENTS_URL'] || 'http://localhost:3453/payments',
+  'pay_bulk_scan_url': process.env['PAY_BULKSCAN_URL'] || 'http://localhost:3453/pay-bulkscan',
   'chrome_min_required_version': parseInt(process.env['CHROME_MIN_REQUIRED_VERSION'], 10) || 67,
   'ie_min_required_version': parseInt(process.env['IE_MIN_REQUIRED_VERSION'], 10) || 11,
   'edge_min_required_version': parseInt(process.env['EDGE_MIN_REQUIRED_VERSION'], 10) || 17,
@@ -46,6 +51,8 @@ const CONFIG = {
   'appInsights_instrumentationKey': process.env['APPLICATIONINSIGHTS_INSTRUMENTATIONKEY'] || 'some-key',
   'appInsights_enabled': process.env['APPLICATIONINSIGHTS_ENABLED'] || 'true',
   'appInsights_roleName': process.env['APPLICATIONINSIGHTS_ROLE'] || 'ccd-management-web',
+  'shutter_redirect_url': process.env['SHUTTER_REDIRECT_URL'] || '',
+  'shutter_redirect_wait': parseInt(process.env['SHUTTER_REDIRECT_WAIT'], 10) || 10
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
@@ -65,22 +72,21 @@ app.engine('html', ngExpressEngine({
   ]
 }));
 
+const poweredByHeader = 'x-powered-by';
+app.disable(poweredByHeader);
+appHealth.disable(poweredByHeader);
+
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 
 app.use(xFrameOptions());
 
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    'status': 'UP',
-    'buildInfo': {
-      'environment': 'development',
-      'project': 'ccd',
-      'name': 'case-management-web',
-      'version': '1.2.0'
-    }
-  });
-});
+// health check
+const healthConfig = {
+  checks: {},
+};
+healthcheck.addTo(appHealth, healthConfig);
+app.use(appHealth);
 
 app.get('/config', (req, res) => {
   res.status(200).json(CONFIG);
@@ -90,6 +96,9 @@ app.get('/config', (req, res) => {
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
+
+// No cache for any routes handled by Universal
+app.use(noCache());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

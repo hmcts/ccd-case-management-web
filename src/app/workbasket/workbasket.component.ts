@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { FormGroup } from '@angular/forms';
-import { SearchResultComponent } from '../shared/search/search-result.component';
 import { forkJoin } from 'rxjs';
 import { plainToClass } from 'class-transformer';
 import { Profile, Jurisdiction, AlertService, CaseType, CaseState, SearchResultView, SearchService, JurisdictionService,
-  WindowService } from '@hmcts/ccd-case-ui-toolkit';
+  WindowService, PaginationMetadata, SearchResultComponent} from '@hmcts/ccd-case-ui-toolkit';
 
 const ATTRIBUTE_SEPARATOR = '.';
 
@@ -33,19 +31,23 @@ export class WorkbasketComponent implements OnInit {
   @ViewChild('searchResults')
   searchResults: SearchResultComponent;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private searchService: SearchService,
     private paginationService: PaginationService,
     private jurisdictionService: JurisdictionService,
     private alertService: AlertService,
-    private windowService: WindowService) {
+    private windowService: WindowService,
+    private router: Router,
+  ) {
   }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
   }
 
-  applyFilter(filter): void {
+  applyFilter(returnValue): void {
+    const filter = returnValue.selected;
     if (this.searchResults) {
       this.searchResults.hideRows = true;
     }
@@ -91,11 +93,20 @@ export class WorkbasketComponent implements OnInit {
           this.caseState = filter.caseState;
           this.page = filter.page;
           this.paginationMetadata = results[1];
-          // Clearing the errors is only on the assumption this is the only place we display errors on case list page
-          this.resultView.result_error ? this.alertService.warning(this.resultView.result_error) : this.alertService.clear();
+          if (this.resultView.result_error) {
+            this.alertService.warning(this.resultView.result_error);
+          }
         });
 
     this.scrollToTop();
+
+    this.router.navigate(['/list/case'], {
+      queryParams: returnValue.queryParams
+    });
+  }
+
+  applyReset() {
+    this.router.navigate(['/list/case']);
   }
 
   private getCaseFilterFromFormGroup(isFormApply: boolean, formGroup?: FormGroup): object {
@@ -144,8 +155,10 @@ export class WorkbasketComponent implements OnInit {
   private notifyDefaultJurisdiction() {
     Promise.resolve(null).then(() => {
       let profile = this.route.parent.snapshot.data.profile;
-      let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
-      this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
+      if (profile.default.workbasket && profile.default.workbasket.jurisdiction_id) {
+        let defaultJurisdiction = profile.jurisdictions.find(j => j.id === profile.default.workbasket.jurisdiction_id);
+        this.jurisdictionService.announceSelectedJurisdiction(defaultJurisdiction);
+      }
     });
   }
 

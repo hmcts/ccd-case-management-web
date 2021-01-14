@@ -240,6 +240,14 @@ select::-ms-expand {
 .button-30 {
   height: 30px;
 }
+.button-padding {
+  margin-top: 20px;
+}
+.show-condition-grey-bar {
+  border-left: 10px solid #bfc1c3;
+  padding-left: 15px;
+  margin-bottom: 30px !important;
+}
 .markdown {
   h1 {
     @extend %headers;

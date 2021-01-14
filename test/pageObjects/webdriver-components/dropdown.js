@@ -4,6 +4,7 @@ let RandomUtils = require('../../utils/ccdDataGenerationUtils.js');
 /**
  * Wrapper object to handle all interactions around dealing with a dropdown box. constructor takes locator in plain string
  */
+const DEFAULT_TIMEOUT = 5000;
 class Dropdown {
 
 
@@ -16,9 +17,9 @@ class Dropdown {
     this._currentDropdownOptionElement = `${css} option:checked`;
   }
 
-  //private
-  async _getOptionElements(){
-    return await $$(`${this._dropdownElement} option`);
+  async getOptionElements(){
+    let firstDropdown = await $(this._dropdownElement);
+    return await firstDropdown.all(by.css('option'));
   }
 
   /**
@@ -26,25 +27,28 @@ class Dropdown {
    * @returns String Array
    */
   async getOptionsTextValues(){
-    let dropdownElements = await this._getOptionElements();
+    let dropdownElements = await this.getOptionElements();
     let stringArray = [];
     for (const option of dropdownElements){
       const optionText = await option.getText();
-      stringArray.push(optionText);
+      stringArray.push(optionText.trim());
     }
     return stringArray
   }
 
   /**
-   * Will randomly select any dropdown option
+   * Will select given value or randomly select any dropdown option if value not present
    */
-  async selectAnyOption(){
-    let options = await this._getOptionElements();
-    let elementListSize = await options.length;
-    let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
-    let optionToSelect = await options[randomOptionArrayInt-1];
-    await optionToSelect.click();
-
+  async selectAnOption(value){
+    if (value) {
+      await $(`${this._dropdownElement} option[value=${value}]`).click();
+    } else {
+      let options = await this.getOptionElements();
+      let elementListSize = await options.length;
+      let randomOptionArrayInt = await RandomUtils.generateRandomInt(1, await elementListSize);
+      let optionToSelect = await options[randomOptionArrayInt-1];
+      await optionToSelect.click();
+    }
   }
 
   /**
@@ -52,19 +56,9 @@ class Dropdown {
    * @returns String
    */
   async getCurrentSelectedOption(){
-    let text = await $(this._currentDropdownOptionElement).getText();
-    return text.trim();
+      let text = await $(this._currentDropdownOptionElement).getText();
+      return await text.trim();
   }
-
-    /**
-   * Returns is options selected for a dropdown
-   * @returns boolean
-   */
-    //todo doesn't work
-  // async isOptionSelected(){
-  //   let isChecked = await $(this._dropdownElement).getAttribute('ng-reflect-model');
-  //   return null != isChecked;
-  // }
 
   /**
    * Select a dropdown option by text value. Case insensitive
@@ -74,14 +68,14 @@ class Dropdown {
     let optionToSelect;
     let found = false;
 
-    let options = await this._getOptionElements();
+    let options = await this.getOptionElements();
     let optionsTextArray = [];
 
 
     for (const option of options){
         const optionText = await option.getText();
-        await optionsTextArray.push(optionText)
-        if (optionText.toLowerCase() === dropdownOption.toLowerCase()){
+        await optionsTextArray.push(optionText);
+        if (optionText.trim().toLowerCase() === dropdownOption.trim().toLowerCase()){
            optionToSelect = option;
            found = true;
            break;
@@ -117,6 +111,31 @@ class Dropdown {
     return await $(this._dropdownElement).isEnabled();
   }
 
+  async waitForElementToBeInvisible(){
+    const EC = protractor.ExpectedConditions;
+
+    try {
+      await browser.wait(EC.invisibilityOf(await element(by.css(this._dropdownElement))), DEFAULT_TIMEOUT);
+      return true;
+    } catch (e) {
+      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for dropdown element ${element} to be invisible`;
+      throw new CustomError(message, e);
+    }
+  }
+
+  async waitForElementToBeVisible(){
+    const EC = protractor.ExpectedConditions;
+    let result = false;
+    try {
+      await browser.wait(EC.visibilityOf($(this._dropdownElement)), DEFAULT_TIMEOUT);
+      return true;
+    } catch (e) {
+      let message = `timed out after ${DEFAULT_TIMEOUT} waiting for dropdown element ${element} to be visible`;
+      console.log(message);
+    }
+    return result;
+  }
+
   /**
    * Select a dropdown option by text value. Retry 2 more times if fails.
    * @param dropdownOption
@@ -128,7 +147,7 @@ class Dropdown {
 
     for (let i = 1; i < 4; i++){
       try {
-        await this._selectFromDropdownByText(dropdownOption)
+        await this._selectFromDropdownByText(dropdownOption);
         fail = false;
         break;
       } catch (e) {
@@ -142,6 +161,16 @@ class Dropdown {
     if (fail){
       throw new CustomError(failmessage, 'failed 3 retry attempts')
     }
+  }
+
+  /**
+   * Index starts at 1
+   * @param index
+   * @returns {Promise<void>}
+   */
+  async selectFromDropdownByIndex(index){
+    let option = $$(`${this._dropdownElement} option`).get(index);
+    await option.click();
   }
 
 }

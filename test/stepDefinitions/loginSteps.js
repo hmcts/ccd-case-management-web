@@ -10,6 +10,9 @@ var { defineSupportCode } = require("cucumber");
 
 defineSupportCode(function ({ Given, When, Then}) {
 
+  let caseListPage = new CaseListPage();
+  let loginPage;
+
   Given(/^I am on the CCD login page$/, async function () {
       loginPage = await Login.open();
   });
@@ -41,6 +44,7 @@ defineSupportCode(function ({ Given, When, Then}) {
     switch (component){
       case 'filters':
         //we are waiting for the page to load by waiting for the filters so this is already done
+        break;
       case 'banners':
         expect (await caseListPage.getNavBarComponent().allComponentsDisplayed()).to.be.true;
         expect (await caseListPage.getFooter().isDisplayed()).to.be.true;
@@ -53,15 +57,23 @@ defineSupportCode(function ({ Given, When, Then}) {
 
   });
 
+  Given(/^I have logged in$/, {timeout: 120 * 1000}, async function () {
+    loginPage = await Login.open();
+    await loginPage.loginToApp();
 
-
-  Given(/^I have logged in$/, async function () {
-      loginPage = await Login.open();
-      caseListPage = await loginPage.loginToApp();
-
-      await caseListPage.waitForPageLoaded();
+    caseListPage = new CaseListPage();
+    await caseListPage.waitForPageLoaded();
   });
 
+  Given(/^I have logged in as '(.*)'$/, {timeout: 120 * 1000}, async function (username) {
+    browser.ignoreSynchronization = true;
+    loginPage = await Login.open();
+    await loginPage.loginToApp(username);
+    browser.ignoreSynchronization = false;
+
+    caseListPage = new CaseListPage();
+    await caseListPage.waitForPageLoaded();
+  });
 
   Then(/^I should see the <component> on the CCD case list page$/, async function () {
       await waitForLandingPageToLoad();

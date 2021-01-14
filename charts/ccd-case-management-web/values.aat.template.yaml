@@ -1,15 +1,3 @@
 nodejs:
-  environment:
-    #IDAM_LOGIN_URL: https://idam.preprod.ccidam.reform.hmcts.net/login
-    IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
-    CCD_GW_LOGOUT_URL: https://gateway-ccd.aat.platform.hmcts.net/logout
-    CCD_API_URL: https://gateway-ccd.aat.platform.hmcts.net/aggregated
-    CCD_DATA_URL: https://gateway-ccd.aat.platform.hmcts.net/data
-    CCD_GW_OAUTH2_URL: https://gateway-ccd.aat.platform.hmcts.net/oauth2
-    DM_URL: https://gateway-ccd.aat.platform.hmcts.net/documents
-    DM_URL_REMOTE: ^https?://(?:api-gateway\\.preprod\\.dm\\.reform\\.hmcts\\.net|dm-store-aat\\.service\\.core-compute-aat\\.internal(?::\\d+)?)/documents
-    POSTCODE_LOOKUP_URL: https://gateway-ccd.aat.platform.hmcts.net/addresses?postcode=$${postcode}
-    PRINT_SERVICE_URL: https://gateway-ccd.aat.platform.hmcts.net/print
-    PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
-    CCD_ACTIVITY_URL: https://gateway-ccd.aat.platform.hmcts.net/activity
-    PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
+  image: ${IMAGE_NAME}
+  ingressHost: ${SERVICE_FQDN}

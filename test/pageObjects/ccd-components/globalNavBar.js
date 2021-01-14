@@ -5,7 +5,7 @@ SearchPage = require('../searchPage.js');
  * This component is not angular therefore we need to set browser.ignoreSynchronization = true before interacting
  * with elements on this page and then turn it back to false after
  */
-class NavBar{
+class NavBar {
 
   constructor(){
       this._parentNavElement = 'nav';
@@ -30,6 +30,7 @@ class NavBar{
    */
   async clickCreateCaseLink(){
     browser.ignoreSynchronization = true;
+    await browser.sleep(2000);
     await $(this._createCaseLink).click();
     browser.ignoreSynchronization = false;
     return new CreateCaseStartPage;
@@ -66,6 +67,7 @@ class NavBar{
   async allComponentsDisplayed(){
     browser.ignoreSynchronization = true;
 
+    await browser.sleep(1000);
     let allDisplayed =  await $(this._searchLink).isDisplayed() &&
       await $(this._caseListLink).isDisplayed() &&
       await $(this._createCaseLink).isDisplayed() &&
@@ -79,7 +81,11 @@ class NavBar{
     return allDisplayed;
   }
 
-
+  async clickSignOut() {
+    browser.ignoreSynchronization = true;
+    await $(this._signOut).click();
+    browser.ignoreSynchronization = false;
+  }
 }
 
 module.exports = NavBar;

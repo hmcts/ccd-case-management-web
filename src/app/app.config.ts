@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { throwError } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AppConfig extends AbstractAppConfig {
 
   protected config: Config;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     super();
   }
 
@@ -23,7 +23,6 @@ export class AppConfig extends AbstractAppConfig {
     return new Promise<void>((resolve, reject) => {
       this.http
         .get(configUrl)
-        .map(response => response.json())
         .catch((error: any): any => {
           console.error(`Configuration ${configUrl} could not be read`, error);
           reject();
@@ -59,6 +58,10 @@ export class AppConfig extends AbstractAppConfig {
 
   public getRemoteDocumentManagementUrl() {
     return this.config.remote_document_management_url;
+  }
+
+  public getAnnotationApiUrl(): string {
+    return this.config.annotation_api_url;
   }
 
   public getPaginationPageSize() {
@@ -116,6 +119,9 @@ export class AppConfig extends AbstractAppConfig {
   public getPaymentsUrl() {
     return this.config.payments_url;
   }
+  public getPayBulkScanBaseUrl() {
+    return this.config.pay_bulk_scan_url;
+  }
 
   public getChromeMinRequiredVersion() {
     return this.config.chrome_min_required_version;
@@ -143,6 +149,12 @@ export class AppConfig extends AbstractAppConfig {
 
   public getAppInsightsRoleName() {
     return this.config.appInsights_roleName;
+  public getShutterRedirectUrl() {
+    return this.config.shutter_redirect_url;
+  }
+
+  public getShutterRedirectWait() {
+    return this.config.shutter_redirect_wait;
   }
 
   public getCaseHistoryUrl(caseId: string, eventId: string) {
@@ -159,11 +171,20 @@ export class AppConfig extends AbstractAppConfig {
   public getViewOrDeleteDraftsUrl(did: string) {
     return this.getCaseDataUrl() + `/internal/drafts/${did}`;
   }
+
+  public getBannersUrl() {
+    return this.getCaseDataUrl() + `/internal/banners/`;
+  }
+
+  public getJurisdictionUiConfigsUrl() {
+    return this.getCaseDataUrl() + `/internal/jurisdiction-ui-configs/`;
+  }
 }
 
 export class Config extends CaseEditorConfig {
   logout_url: string;
   oauth2_token_endpoint_url: string;
+  annotation_api_url: string;
   pagination_page_size: number;
   smart_survey_url: string;
   unsupported_browser_url: string;
@@ -174,4 +195,6 @@ export class Config extends CaseEditorConfig {
   appInsights_instrumentationKey: string;
   appInsights_enabled: string;
   appInsights_roleName: string;
+  shutter_redirect_url: string;
+  shutter_redirect_wait: number;
 }

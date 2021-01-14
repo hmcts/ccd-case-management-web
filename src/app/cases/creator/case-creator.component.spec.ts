@@ -5,13 +5,14 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import createSpyObj = jasmine.createSpyObj;
+import createSpy = jasmine.createSpy;
 import { Observable } from 'rxjs';
 import { CaseTypeLite, Jurisdiction, CaseEvent, JurisdictionService, OrderService, AlertService,
-  CallbackErrorsContext } from '@hmcts/ccd-case-ui-toolkit';
+  CallbackErrorsContext, Banner } from '@hmcts/ccd-case-ui-toolkit';
 import { CaseCreatorComponent } from './case-creator.component';
-import { DefinitionsService } from '../../core/definitions/definitions.service';
 import { CaseViewerComponent, CreateCaseFiltersSelection } from '@hmcts/ccd-case-ui-toolkit/dist/shared/components';
 import { text } from '../../test/helpers';
+import { AppConfig } from '../../app.config';
 
 const EVENT_ID_1 = 'ID_1';
 const EVENT_NAME_1 = 'Event one';
@@ -53,6 +54,16 @@ const CASE_TYPES_1: CaseTypeLite[] = [
         }
       ],
     }
+];
+
+const BANNERS: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
 ];
 
 const JURISDICTION_1: Jurisdiction = {
@@ -131,6 +142,16 @@ const CASE_TYPES_2: CaseTypeLite[] = [
   }
 ];
 
+const BANNERS_2: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
+  }
+];
+
 const JURISDICTION_2: Jurisdiction = {
   id: 'J2',
   name: 'Jurisdiction 2',
@@ -155,6 +176,16 @@ const CASE_TYPES_SINGLE_EVENT: CaseTypeLite[] = [
     description: '',
     states: [],
     events: [...SINGLE_EVENT],
+  }
+];
+
+const BANNERS_3: Banner[] = [
+  {
+    bannerDescription: 'Test Banner Description',
+    bannerEnabled: true,
+    bannerUrl: 'http://localhost:3451/test',
+    bannerUrlText: 'click here to see it.>>>',
+    bannerViewed: false
   }
 ];
 
@@ -236,12 +267,10 @@ class CallbackErrorsComponent {
 
 }
 
-let mockDefinitionsService;
 let mockRouter: any;
 let mockOrderService: any;
 let mockCallbackErrorSubject: any;
 let mockAlertService: any;
-let jurisdictionService: JurisdictionService;
 
 describe('CaseCreatorComponent', () => {
 
@@ -249,6 +278,7 @@ describe('CaseCreatorComponent', () => {
   let component: CaseCreatorComponent;
   let de: DebugElement;
 
+  const $ERROR_HEADER = By.css('.error-summary-heading');
   const $ERROR_SUMMARY = By.css('.error-summary');
   const $ERROR_MESSAGE = By.css('p');
   const $ERROR_FIELD_MESSAGES = By.css('ul');
@@ -256,14 +286,10 @@ describe('CaseCreatorComponent', () => {
   beforeEach(async(() => {
     mockOrderService = createSpyObj<OrderService>('orderService', ['sort']);
     mockOrderService.sort.and.returnValue(SORTED_CASE_EVENTS);
-    mockDefinitionsService = createSpyObj('mockDefinitionsService', ['getJurisdictions']);
-    mockDefinitionsService.getJurisdictions.and.returnValue(Observable.of([JURISDICTION_2]));
     mockRouter = createSpyObj<Router>('router', ['navigate']);
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockCallbackErrorSubject = createSpyObj<any>('callbackErrorSubject', ['next']);
     mockAlertService = createSpyObj<AlertService>('alertService', ['clear']);
-    jurisdictionService = new JurisdictionService();
-
     TestBed
       .configureTestingModule({
         imports: [
@@ -279,8 +305,6 @@ describe('CaseCreatorComponent', () => {
           { provide: Router, useValue: mockRouter },
           { provide: OrderService, useValue: mockOrderService },
           { provide: AlertService, useValue: mockAlertService },
-          { provide: JurisdictionService, useValue: jurisdictionService },
-          { provide: DefinitionsService, useValue: mockDefinitionsService }
         ]
       })
       .compileComponents();
@@ -325,6 +349,7 @@ describe('CaseCreatorComponent', () => {
 
   it('should notify user about errors/warnings when fields selected and button clicked and response with callback errors/warnings', () => {
     const VALID_ERROR = {
+      error: 'Error heading',
       callbackErrors: ['error1', 'error2'],
       callbackWarnings: ['warning1', 'warning2']
     };
@@ -354,6 +379,7 @@ describe('CaseCreatorComponent', () => {
       }
     ];
     const VALID_ERROR = {
+      error: 'Field error',
       message: 'Field validation failed',
       details: {
         field_errors: FIELD_ERRORS
@@ -377,7 +403,9 @@ describe('CaseCreatorComponent', () => {
 
     let errorElement = de.query($ERROR_SUMMARY);
     expect(errorElement).toBeTruthy();
+    let errorHeader = errorElement.query($ERROR_HEADER);
     let errorMessage = errorElement.query($ERROR_MESSAGE);
+    expect(text(errorHeader)).toBe('Field error');
     expect(text(errorMessage)).toBe('Field validation failed');
     let errorFieldMessages = errorElement.query($ERROR_FIELD_MESSAGES);
     expect(errorFieldMessages.children.length).toBe(2);

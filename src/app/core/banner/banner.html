@@ -1,0 +1,7 @@
+<ng-container *ngFor="let bannerObj of banners">
+    <div *ngIf="showBanner(bannerObj)" class="banner banner-message" role="banner">
+        <span id='close' (click)="closeBanner(bannerObj)">x</span>
+        {{bannerObj.bannerDescription}} <a href="{{bannerObj.bannerUrl}}" target="_blank">{{bannerObj.bannerUrlText}}</a>
+    </div>
+</ng-container>
+  

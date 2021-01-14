@@ -9,44 +9,108 @@ let RadioField = require('../../webdriver-components/radioField.js');
 class CcdYesNoField {
 
   /**
-   * Must take the parent css tag for the ccd field component
-   * in the format  ccd-write-yes-no-field
-   *
    * @param css
+   *  * @param key - unique identifier for this element. this key can be used as reference for this field
+   * when querying the page fields' data via the 'page 'X' contains the following fields:' step. by default
+   * it will take the css and strip an # and use the result as the key (works for parsing id as css eg #FieldID)
    */
-  constructor(css){
+  constructor(css, key){
     this.css = css;
-    this.yesRadio = new RadioField(`${css} .form-group #YesNoField-Yes`);
-    this.noRadio = new RadioField(`${css} .form-group #YesNoField-No`);
+    this.key = this.setKey(key)
+
+    this.yesRadio = new RadioField(`${this.css} fieldset > div > .multiple-choice:nth-of-type(1) input`);
+    this.noRadio = new RadioField(`${this.css} fieldset > div > .multiple-choice:nth-of-type(2) input`);
+    this.label = `${this.css} legend`;
+
+    this.yesRadioSelectedCss = `${css} .form-group .selected #YesNoField-Yes`;
+    this.noRadioSelectedCss = `${css} .form-group .selected #YesNoField-No`;
     this.label = null;
 
     this.checkYourAnswersValue = null;
+  }
+
+  setKey(key){
+    if (typeof key === 'undefined') {
+      return this.css.replace('#','');
+    } else {
+      return key;
+    }
+  }
+
+
+  async getFieldData(key){
+    let data = new Map();
+    let field = 'field';
+    let value = 'value';
+    let hidden = 'hidden';
+
+    key = key ? key : this.key;
+
+    let displayed = await $(this.css).isDisplayed();
+
+    data.set(field, key);
+    data.set(value, await this.getCurrentOption());
+    data.set(hidden, !displayed);
+
+    return data;
   }
 
   /**
    * Select random radio button option
    * @returns {Promise<void>}
    */
-  async selectOption(){
+  async selectOption(option){
+    if(option && option === 'Yes') {
+      await this.selectYes();
+    } else if (option && option === 'No') {
+      await this.selectNo();
+    } else {
       let bool = RandomUtils.generateRandomBoolean();
       await (bool ? await this.selectYes() : await this.selectNo());
-      this.label = await this._getLabel();
+    }
+    this.label = await this._getLabel();
+  }
+
+  async isVisible() {
+    return await this.yesRadio.isPresent() && await $(this.css).isDisplayed();
+  }
+
+  async getCurrentOption(){
+    let option = '';
+    try {
+      if (await $(this.yesRadioSelectedCss).isDisplayed()) {
+        option = 'yes';
+      }
+    } catch (e) {
+      //do nothing
+    }
+
+    try {
+      if (await $(this.noRadioSelectedCss).isDisplayed()) {
+        option = 'no';
+      }
+    } catch (e) {
+      //do nothing
+    }
+
+    return option;
+
   }
 
   /**
    * Select 'Yes' radio button option
    */
   async selectYes(){
-      await this.yesRadio.click();
-      this.checkYourAnswersValue = 'Yes';
+    await this.yesRadio.click();
+    this.checkYourAnswersValue = 'Yes';
   }
 
   /**
    * Select 'No' radio button option
    */
   async selectNo(){
-      await this.noRadio().click();
-      this.checkYourAnswersValue = 'No';
+    await this.noRadio.click();
+    this.checkYourAnswersValue = 'No';
   }
 
   /**
@@ -69,6 +133,11 @@ class CcdYesNoField {
         labelTexts.includes('No');
   }
 
+  async hasFieldLabel(labelMatch) {
+    let label = await element(By.xpath(`${this.labelXPath}`)).getText();
+    return label.indexOf(labelMatch) !== -1;
+  }
+
   async _isYesRadioReady() {
     let isPresent = await this.yesRadio.isPresent();
     let isEnabled = await this.yesRadio.isEnabled();
@@ -82,11 +151,11 @@ class CcdYesNoField {
   }
 
   async _getLabel(){
-      return await $(`${this.css} .form-label`).getText();
+    return await $(`${this.css} .form-label`).getText();
   }
 
   async _getLabels(){
-      return await $$(`${this.css} .form-label`).getText();
+    return await $$(`${this.css} .form-label`).getText();
   }
 
 }

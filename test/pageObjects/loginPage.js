@@ -20,20 +20,19 @@ class LoginPage extends BasePage {
   static async open(){
 
       //open browser and navigate to url
-      await browser.get(process.env.TEST_URL || 'http://localhost:3451',50000);
+      await browser.driver.get(process.env.TEST_URL || 'http://localhost:3451',50000);
 
       //wait for browser url to be correct
       let EC = protractor.ExpectedConditions;
-      let currentURL = await browser.getCurrentUrl();
+      let currentURL = await browser.driver.getCurrentUrl();
       let errorMessage = `Failed to load page, Expected URL fragment: ${selfUrlPath} | Actual URL: ${currentURL}`;
 
-      await browser.wait(EC.urlContains(selfUrlPath),30000)
+      await browser.driver.wait(EC.urlContains(selfUrlPath),30000)
         .catch(err => console.log(errorMessage));
 
       //return new instance of the login page
       return new LoginPage
   }
-
 
   /**
    * Inputs credentials into username and password field
@@ -51,22 +50,26 @@ class LoginPage extends BasePage {
    * @returns {Promise<CCDBanner>} new instance of the CCDBanner page
    */
   async clickSignIn() {
-      await element(this._signIn).click();
-      return new CCDBanner
+    await element(this._signIn).click();
+    return new CCDBanner
   }
 
   /**
-   * Performs full login workflow taking credentials fron env vars
+   * Performs full login workflow taking credentials from env vars
    * @returns {Promise<void>}
    */
-  async loginToApp(){
-      let username = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
-      let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
+  async loginToApp(username = '') {
+    let user = '';
+    if (username === '') {
+      user = process.env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL;
+    } else {
+      user = username;
+    }
+    let password = process.env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD;
 
-      await this.inputCredentials(username,password);
-      return await this.clickSignIn();
+    await this.inputCredentials(user, password);
+    return await this.clickSignIn();
   }
-
 }
 
 module.exports = LoginPage;

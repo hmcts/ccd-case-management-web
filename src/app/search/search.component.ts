@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PaginationMetadata } from '../shared/search/pagination-metadata.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms/forms';
 import { PaginationService } from '../core/pagination/pagination.service';
 import { plainToClass } from 'class-transformer';
-import { Jurisdiction, Profile, CaseType, CaseState, AlertService, SearchResultView, SearchService,
-  WindowService, JurisdictionService } from '@hmcts/ccd-case-ui-toolkit';
+import {
+  Jurisdiction, Profile, CaseType, CaseState, AlertService, SearchResultView, SearchService,
+  WindowService, JurisdictionService, PaginationMetadata
+} from '@hmcts/ccd-case-ui-toolkit';
 
 const ATTRIBUTE_SEPERATOR = '.';
 
@@ -27,17 +28,20 @@ export class SearchComponent implements OnInit {
   metadataFields: string[];
 
   constructor(private route: ActivatedRoute,
-    private jurisdictionService: JurisdictionService,
-    private searchService: SearchService,
-    private paginationService: PaginationService,
-    private alertService: AlertService,
-    private windowService: WindowService) { }
+              private jurisdictionService: JurisdictionService,
+              private searchService: SearchService,
+              private paginationService: PaginationService,
+              private alertService: AlertService,
+              private windowService: WindowService,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.profile = this.route.parent.snapshot.data.profile;
   }
 
-  applyFilter(filter): void {
+  applyFilter(returnValue): void {
+    const filter = returnValue.selected;
     const paginationParams = {};
     const searchParams = {};
 

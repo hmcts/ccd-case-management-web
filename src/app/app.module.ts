@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { WorkbasketModule } from './workbasket/workbasket.module';
 import { SearchModule } from './search/search.module';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app.routing';
 
 import { CasesModule } from './cases/cases.module';
 import { AppConfig } from './app.config';
@@ -18,13 +18,15 @@ import { isPlatformBrowser } from '@angular/common';
 import { OAuth2RedirectModule } from './oauth2/oauth2-redirect.module';
 import { AppConfigGuard } from './app.config.guard';
 import { AbstractAppConfig, ActivityModule } from '@hmcts/ccd-case-ui-toolkit';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from './core/interceptor/requestinterceptor';
 
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'ccd-case-management-web' }),
     HttpModule,
     FormsModule,
-    routing,
+    AppRoutingModule,
     ScrollToModule.forRoot(),
     CoreModule,
     WorkbasketModule,
@@ -33,12 +35,18 @@ import { AbstractAppConfig, ActivityModule } from '@hmcts/ccd-case-ui-toolkit';
     SharedModule,
     OAuth2RedirectModule,
     ActivityModule,
+    HttpClientModule,
   ],
   declarations: [
     AppComponent,
     ErrorComponent
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    },
     AppConfig,
     AppConfigGuard,
     {

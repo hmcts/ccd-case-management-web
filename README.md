@@ -6,7 +6,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8375dcaa04594226a973d5cd44842713)](https://www.codacy.com/app/adr1ancho/ccd-case-management-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hmcts/ccd-case-management-web&amp;utm_campaign=Badge_Grade)
 [![HitCount](http://hits.dwyl.io/hmcts/ccd-case-management-web.svg)](#ccd-case-management-web)
 
-An Angular front-end for Core Case Data.
+An Angular front-end for Core Case Data
 
 ### Quick start
 ```bash
@@ -39,7 +39,7 @@ go to [http://localhost:3451](http://localhost:3451) in your browser.
 
 ## Prerequisites
 
-* [Node.js](https://nodejs.org/) >= v8.0.0
+* [Node.js](https://nodejs.org/) >= v12.0.0
 * [yarn](https://yarnpkg.com/)
 * [Docker](https://www.docker.com)
 
@@ -61,7 +61,7 @@ Environment variables:
 | CCD_ACTIVITY_NEXT_POLL_REQUEST_MS | Frequency of activity requests. A good setting for it is the value of ACTIVITY_TTL_SEC in the activity service backend (avoid setting it lower than ACTIVITY_TTL_SEC) |
 | CCD_ACTIVITY_RETRY | Number of attempts in case of unsuccessful calls to Activity service |
 | CCD_ACTIVITY_MAX_REQUEST_PER_BATCH | Max number of cases activity requests batched in a single activity call. A good setting for it is the value of CCD_PAGE_SIZE |
-| CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS | Max delay before a batch activity call is issued |
+| CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS | Max delay before a batch activity call is issued. |
 
 ## Install dependencies
 
@@ -144,4 +144,3 @@ You can generate api docs (using [TypeDoc](http://typedoc.org/)) for your code w
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
-  

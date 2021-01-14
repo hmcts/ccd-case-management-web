@@ -11,8 +11,10 @@
 
   </div>
   <div class="search-right" id="search-result" aria-live="polite" role="region" >
-    <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState" [resultView]="resultView"
-                       [caseFilterFG]="caseFilterFG" [paginationMetadata]="paginationMetadata"
-                       [metadataFields]="metadataFields" (changePage)="applyFilter($event)" ></ccd-search-result>
+    <ccd-search-result *ngIf="resultView" [jurisdiction]="jurisdiction" [caseType]="caseType" [caseState]="caseState"
+                       [resultView]="resultView" [caseFilterFG]="caseFilterFG" [paginationMetadata]="paginationMetadata"
+                       [caseLinkUrlTemplate]="'/v2/case/case_id'" [metadataFields]="metadataFields"
+                       (changePage)="applyFilter($event)">
+    </ccd-search-result>
   </div>
 </div>

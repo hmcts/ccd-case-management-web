@@ -5,9 +5,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CaseCreatorSubmitComponent } from './case-creator-submit.component';
 import createSpyObj = jasmine.createSpyObj;
-import { HttpError, Draft, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
+import {
+  HttpError, DRAFT_PREFIX, createCaseEventTrigger, CaseEventData, CaseDetails, CaseEventTrigger,
   FormErrorService, CaseReferencePipe, FormValueService, CaseView, AlertService, CaseEditPageComponent, CasesService,
-  DraftService } from '@hmcts/ccd-case-ui-toolkit';
+  DraftService
+} from '@hmcts/ccd-case-ui-toolkit';
+import { newCaseField } from '@hmcts/ccd-case-ui-toolkit/dist/shared';
 
 let CaseEditComponent: any = MockComponent({
   selector: 'ccd-case-edit',
@@ -63,18 +66,8 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     null,
     false,
     [
-      {
-        id: 'PersonFirstName',
-        label: 'First name',
-        field_type: null,
-        display_context: 'READONLY'
-      },
-      {
-        id: 'PersonLastName',
-        label: 'Last name',
-        field_type: null,
-        display_context: 'OPTIONAL'
-      }
+      newCaseField('PersonFirstName', 'First name', null, null, 'READONLY').build(),
+      newCaseField('PersonLastName', 'Last name', null, null, 'OPTIONAL').build()
     ],
     [],
     true
@@ -128,7 +121,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning', 'setPreserveAlerts']);
 
     router = createSpyObj('router', ['navigate']);
-    router.navigate.and.returnValue({then: f => f()});
+    router.navigate.and.returnValue({ then: f => f() });
     formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
 
     formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);
@@ -172,7 +165,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
     component.submit()(SANITISED_EDIT_FORM);
 
-    expect(casesService.createCase).toHaveBeenCalledWith(JID, CTID, SANITISED_EDIT_FORM);
+    expect(casesService.createCase).toHaveBeenCalledWith(CTID, SANITISED_EDIT_FORM);
   });
 
   it('should validate case details with sanitised data when validated', () => {
@@ -200,7 +193,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
   it('should navigate to case view upon successful case creation', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: CREATED_CASE.id});
+    component.submitted({ caseId: CREATED_CASE.id });
 
     expect(router.navigate).toHaveBeenCalledWith(['case', CREATED_CASE.jurisdiction, CREATED_CASE.case_type_id, CREATED_CASE.id]);
   });
@@ -216,7 +209,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
   it('should alert success message after navigation upon successful event creation and call back', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'CALLBACK_COMPLETED'});
+    component.submitted({ caseId: 123, status: 'CALLBACK_COMPLETED' });
 
     expect(alertService.success).toHaveBeenCalled();
   });
@@ -224,7 +217,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
   it('should alert warning message after navigation upon successful event creation but incomplete call back', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'INCOMPLETE_CALLBACK'});
+    component.submitted({ caseId: 123, status: 'INCOMPLETE_CALLBACK' });
 
     expect(alertService.warning).toHaveBeenCalled();
   });
@@ -232,34 +225,34 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
   it('should alert warning message after navigation upon successful event creation but incomplete delete draft', () => {
     casesService.createCase.and.returnValue(CREATED_CASE_OBS);
 
-    component.submitted({caseId: 123, status: 'INCOMPLETE_DELETE_DRAFT'});
+    component.submitted({ caseId: 123, status: 'INCOMPLETE_DELETE_DRAFT' });
 
     expect(alertService.warning).toHaveBeenCalled();
   });
 
   it('should have a cancel button going back to the case list for discard new draft', () => {
-    component.cancel({status: CaseEditPageComponent.NEW_FORM_DISCARD, data: {field1 : 'value1'}});
+    component.cancel({ status: CaseEditPageComponent.NEW_FORM_DISCARD, data: { field1: 'value1' } });
 
     expect(draftService.createOrUpdateDraft).not.toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith(['list/case']);
   });
 
   it('should have a cancel button going back to the view draft for discard existing draft', () => {
-    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_DISCARD, data: {field1 : 'value1'}});
+    component.cancel({ status: CaseEditPageComponent.RESUMED_FORM_DISCARD, data: { field1: 'value1' } });
 
     expect(draftService.createOrUpdateDraft).not.toHaveBeenCalledWith(JID, CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
   });
 
   it('should have a cancel button saving draft going back to the case list for save new draft', () => {
-    component.cancel({status: CaseEditPageComponent.NEW_FORM_SAVE, data : SANITISED_EDIT_FORM});
+    component.cancel({ status: CaseEditPageComponent.NEW_FORM_SAVE, data: SANITISED_EDIT_FORM });
 
     expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith(['list/case']);
   });
 
   it('should have a cancel button saving draft and going back to the view draft for save existing draft', () => {
-    component.cancel({status: CaseEditPageComponent.RESUMED_FORM_SAVE, data : SANITISED_EDIT_FORM});
+    component.cancel({ status: CaseEditPageComponent.RESUMED_FORM_SAVE, data: SANITISED_EDIT_FORM });
 
     expect(draftService.createOrUpdateDraft).toHaveBeenCalledWith(CTID, EVENT_TRIGGER.case_id, SANITISED_EDIT_FORM);
     expect(router.navigate).toHaveBeenCalledWith([`case/${JID}/${CTID}/${EVENT_TRIGGER.case_id}`]);
@@ -313,18 +306,8 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     null,
     false,
     [
-      {
-        id: 'PersonFirstName',
-        label: 'First name',
-        field_type: null,
-        display_context: 'READONLY'
-      },
-      {
-        id: 'PersonLastName',
-        label: 'Last name',
-        field_type: null,
-        display_context: 'OPTIONAL'
-      }
+      newCaseField('PersonFirstName', 'First name', null, null, 'READONLY').build(),
+      newCaseField('PersonLastName', 'Last name', null, null, 'OPTIONAL').build()
     ],
     [],
     false
@@ -378,7 +361,7 @@ describe('CaseCreatorSubmitComponent with Save and Resume enabled', () => {
     alertService = createSpyObj<AlertService>('alertService', ['success', 'warning', 'setPreserveAlerts']);
 
     router = createSpyObj('router', ['navigate']);
-    router.navigate.and.returnValue({then: f => f()});
+    router.navigate.and.returnValue({ then: f => f() });
     formErrorService = createSpyObj<FormErrorService>('formErrorService', ['mapFieldErrors']);
 
     formValueService = createSpyObj<FormValueService>('formValueService', ['sanitise']);

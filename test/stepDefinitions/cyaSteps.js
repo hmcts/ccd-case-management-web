@@ -1,5 +1,6 @@
 let CreateCaseWizardPage = require('../pageObjects/createCaseWizardPage');
 let baseSteps = require('./baseSteps.js');
+let CyaPage = require('../pageObjects/cyaPage')
 CustomError = require('../utils/errors/custom-error.js');
 
 let chai = require("chai").use(require("chai-as-promised"));
@@ -10,13 +11,15 @@ var { defineSupportCode } = require("cucumber");
 defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
   let caseWizardPage = new CreateCaseWizardPage();
+  let cyaPage = new CyaPage();
 
   Given(/^I am on the check your answers page$/, async function () {
     //multiple pages caseType
-    await baseSteps.navigateToCreateCasePage()
+    await baseSteps.navigateToCreateCasePage();
     await caseWizardPage.interactWithField('text');
     await caseWizardPage.clickContinueButton();
     this.fieldObject = await caseWizardPage.interactWithField('text');
+    this.label = await this.fieldObject.getLabel();
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.interactWithField('text');
     await caseWizardPage.clickContinueButton();
@@ -24,8 +27,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
   When('I click the change link', async function () {
-    let label = this.fieldObject.label.toString();
-    await caseWizardPage.clickChangeLink(label)
+    await caseWizardPage.clickChangeLink(this.label)
   });
 
 
@@ -51,8 +53,8 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     await caseWizardPage.clickContinueButton();
     await caseWizardPage.clickContinueButton();
 
-    let fieldLabel = await this.fieldObject.label;
-    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(fieldLabel)
+    // let fieldLabel = await this.fieldObject.label;
+    let actualValue = await caseWizardPage.getCheckYourAnswersValueByLabel(this.label);
     let expectedValue = await this.fieldObject.checkYourAnswersValue;
 
     expect(actualValue, 'wrong value for CYA').to.equal(expectedValue)
@@ -65,7 +67,7 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
 
 
   When(/^I Submit the case$/, async function () {
-    while (await caseWizardPage.continueButtonDisplayed()){
+    while (await caseWizardPage.continueButtonDisplayed()) {
       if (!caseWizardPage.continueButtonEnabled()) {
         throw new CustomError('Trying to click Continue/Submit button but it is not enabled')
       }
@@ -73,6 +75,36 @@ defineSupportCode(function ({ Given, When, Then, Before, After }) {
     }
   });
 
+  Then(/^the following fields will be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.include(expectedField);
+    }
+  });
 
+  Then(/^the following fields will NOT be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).not.to.include(expectedField);
+    }
+  });
+
+  Then(/^the following complex fields will be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getComplexFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).to.include(expectedField);
+    }
+  });
+
+  Then(/^the following complex fields will NOT be visible on CYA page:$/, async function (dataTable) {
+    let expectedFields = await [].concat(...dataTable.raw());
+    let actualFields = await cyaPage.getComplexFieldLabels();
+    for (const expectedField of expectedFields) {
+      expect(actualFields).not.to.include(expectedField);
+    }
+  });
 });
 

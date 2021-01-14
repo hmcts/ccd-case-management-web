@@ -5,7 +5,7 @@ services:
   ccd-case-management-web:
     build:
       context: .
-    image: hmcts/ccd-case-management-web
+    image: hmctspublic.azurecr.io/ccd/case-management-web
     environment:
       - IDAM_LOGIN_URL=https://localhost:3501/login
       - CCD_GATEWAY_BASE_URL=http://localhost:3453

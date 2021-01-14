@@ -11,7 +11,10 @@ module.exports = {
   target: "node",
   resolve: { extensions: [".js", ".ts"] },
   // Make sure we don"t include all node_modules
-  externals: [/node_modules/],
+  externals: [
+	    /node_modules/,
+	    /@hmcts\/media-viewer/,
+	  ],
   optimization: {
     minimize: false
   },
@@ -42,6 +45,7 @@ module.exports = {
       /(.+)?express(\\|\/)(.+)?/,
       path.join(__dirname, "src"),
       {}
-    )
+    ),
+    new webpack.DefinePlugin({ "global.GENTLY": false })
   ]
 };

@@ -125,7 +125,7 @@ describe('AppConfig', () => {
             expect(appConfig.getViewOrDeleteDraftsUrl('DID')).toEqual(VIEW_OR_DELETE_DRAFT_URL);
             expect(appConfig.getAppInsightsEnabled()).toEqual(APPLICATIONINSIGHTS_ENABLED);
             expect(appConfig.getAppInsightsRoleName()).toEqual(APPLICATIONINSIGHTS_ROLE);
-            expect(appConfig.getAppInsightsInstrumentationKey()).toEqual(APPINSIGHTS_INSTRUMENTATIONKEY)
+            expect(appConfig.getAppInsightsInstrumentationKey()).toEqual(APPINSIGHTS_INSTRUMENTATIONKEY);
             expect(appConfig.getShutterRedirectUrl()).toEqual(SHUTTER_REDIRECT_URL);
             expect(appConfig.getShutterRedirectWait()).toEqual(SHUTTER_REDIRECT_WAIT);
             expect(appConfig.getBannersUrl()).toEqual(BANNER_URL);

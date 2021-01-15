@@ -149,6 +149,8 @@ export class AppConfig extends AbstractAppConfig {
 
   public getAppInsightsRoleName() {
     return this.config.appInsights_roleName;
+  }
+
   public getShutterRedirectUrl() {
     return this.config.shutter_redirect_url;
   }

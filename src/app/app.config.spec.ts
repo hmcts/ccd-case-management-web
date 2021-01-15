@@ -33,7 +33,7 @@ describe('AppConfig', () => {
   const CASE_HISTORY_URL = DATA_URL + '/internal/cases/CID/events/EID';
   const CREATE_OR_UPDATE_DRAFT_URL = DATA_URL + '/internal/case-types/CTID/drafts/';
   const VIEW_OR_DELETE_DRAFT_URL = DATA_URL + '/internal/drafts/DID';
-  const APPLICATIONINSIGHTS_INSTRUMENTATIONKEY = 'some-key';
+  const APPINSIGHTS_INSTRUMENTATIONKEY = 'some-key';
   const APPLICATIONINSIGHTS_ENABLED = 'true';
   const APPLICATIONINSIGHTS_ROLE = 'ccd-management-web';
   const SHUTTER_REDIRECT_URL = 'http://expertui';
@@ -70,9 +70,9 @@ describe('AppConfig', () => {
     ie_min_required_version: IE_MIN_REQUIRED_VERSION,
     edge_min_required_version: EDGE_MIN_REQUIRED_VERSION,
     firefox_min_required_version: FIREFOX_MIN_REQUIRED_VERSION,
-    appInsights_instrumentationKey: APPLICATIONINSIGHTS_INSTRUMENTATIONKEY,
+    appInsights_instrumentationKey: APPINSIGHTS_INSTRUMENTATIONKEY,
     appInsights_enabled: APPLICATIONINSIGHTS_ENABLED,
-    appInsights_roleName: APPLICATIONINSIGHTS_ROLE
+    appInsights_roleName: APPLICATIONINSIGHTS_ROLE,
     shutter_redirect_url: SHUTTER_REDIRECT_URL,
     shutter_redirect_wait: SHUTTER_REDIRECT_WAIT,
   };
@@ -125,7 +125,7 @@ describe('AppConfig', () => {
             expect(appConfig.getViewOrDeleteDraftsUrl('DID')).toEqual(VIEW_OR_DELETE_DRAFT_URL);
             expect(appConfig.getAppInsightsEnabled()).toEqual(APPLICATIONINSIGHTS_ENABLED);
             expect(appConfig.getAppInsightsRoleName()).toEqual(APPLICATIONINSIGHTS_ROLE);
-            expect(appConfig.getAppInsightsInstrumentationKey()).toEqual(APPLICATIONINSIGHTS_INSTRUMENTATIONKEY)
+            expect(appConfig.getAppInsightsInstrumentationKey()).toEqual(APPINSIGHTS_INSTRUMENTATIONKEY)
             expect(appConfig.getShutterRedirectUrl()).toEqual(SHUTTER_REDIRECT_URL);
             expect(appConfig.getShutterRedirectWait()).toEqual(SHUTTER_REDIRECT_WAIT);
             expect(appConfig.getBannersUrl()).toEqual(BANNER_URL);

@@ -1,12 +1,14 @@
 const config = require('config');
 const appInsights = require('applicationinsights');
 
-const enabled = config.get('appInsights.enabled');
+// const enabled = config.get('appInsights.enabled');
+const enabled = true;
 
 const enableAppInsights = () => {
   if (enabled) {
     const appInsightsKey = config.get('secrets.ccd.AppInsightsInstrumentationKey');
-    const appInsightsRoleName = config.get('appInsights.roleName');
+    // const appInsightsRoleName = config.get('appInsights.roleName');
+    const appInsightsRoleName = 'ccd-management-web';
     appInsights.setup(appInsightsKey)
       .setAutoDependencyCorrelation(true)
       .setAutoCollectConsole(true, true);

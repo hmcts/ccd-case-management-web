@@ -1,0 +1,7 @@
+secrets:
+  ccd:
+    AppInsightsInstrumentationKey: "some-key"
+
+appInsights:
+  enabled: true
+  roleName: "case-management-web"

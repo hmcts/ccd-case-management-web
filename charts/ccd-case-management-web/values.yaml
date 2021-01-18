@@ -32,10 +32,7 @@ nodejs:
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS: 5000
     CCD_ACTIVITY_RETRY: 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
-  keyVaults:
-    ccd:
-      secrets:
-        - AppInsightsInstrumentationKey
+    APPINSIGHTS_INSTRUMENTATIONKEY: 1ead6939-464c-4643-bc74-b9617e874418
 
 idam-pr:
   enabled: false

@@ -36,3 +36,7 @@ nodejs:
 
 idam-pr:
   enabled: false
+
+appInsights:
+  enabled: true
+  roleName: "case-management-web"

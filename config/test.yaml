@@ -4,4 +4,4 @@ secrets:
 
 appInsights:
   enabled: false
-  roleName: "case-management-web"
+  roleName: "ccd-management-web"

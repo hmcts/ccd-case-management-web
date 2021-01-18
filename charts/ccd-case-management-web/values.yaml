@@ -33,10 +33,8 @@ nodejs:
     CCD_ACTIVITY_RETRY: 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
     APPINSIGHTS_INSTRUMENTATIONKEY: 1ead6939-464c-4643-bc74-b9617e874418
+    APPLICATIONINSIGHTS_ENABLED: true
+    APPLICATIONINSIGHTS_ROLE: ccd-management-web
 
 idam-pr:
   enabled: false
-
-appInsights:
-  enabled: true
-  roleName: "case-management-web"

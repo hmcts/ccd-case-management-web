@@ -6,8 +6,9 @@ const enabled = true;
 
 const enableAppInsights = () => {
   if (enabled) {
-    const appInsightsKey = config.get('secrets.ccd.AppInsightsInstrumentationKey');
+    // const appInsightsKey = config.get('secrets.ccd.AppInsightsInstrumentationKey');
     // const appInsightsRoleName = config.get('appInsights.roleName');
+    const appInsightsKey = '1ead6939-464c-4643-bc74-b9617e874418';
     const appInsightsRoleName = 'ccd-management-web';
     appInsights.setup(appInsightsKey)
       .setAutoDependencyCorrelation(true)

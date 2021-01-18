@@ -3,5 +3,5 @@ secrets:
     AppInsightsInstrumentationKey: "some-key"
 
 appInsights:
-  enabled: true
+  enabled: false
   roleName: "case-management-web"

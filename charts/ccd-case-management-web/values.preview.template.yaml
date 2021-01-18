@@ -23,3 +23,7 @@ idam-pr:
   redirect_uris:
     CCD:
       - https://${SERVICE_FQDN}/oauth2redirect
+
+appInsights:
+  enabled: true
+  roleName: "case-management-web"

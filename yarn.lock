@@ -392,6 +392,15 @@
     js-yaml "^3.8.4"
     superagent "5"
 
+"@hmcts/nodejs-logging@^3.0.0":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@hmcts/nodejs-logging/-/nodejs-logging-3.0.2.tgz#3327278e820c07fd075562932c6c56d637fc760a"
+  integrity sha512-NKkBxoUGDrqzwZxthkbk60l5P2D7XVfdddVxcOOT3I87JpiOrhOY0WgSS9gWUUKTZFnEETfOms9wwawdlHiMAg==
+  dependencies:
+    moment "^2.19.3"
+    on-finished "^2.3.0"
+    winston "^2.4.5"
+
 "@hmcts/nodejs-logging@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@hmcts/nodejs-logging/-/nodejs-logging-3.0.1.tgz#370bfee6c1d502ea7fec13001632bb03f15d072d"
@@ -400,6 +409,15 @@
     moment "^2.19.3"
     on-finished "^2.3.0"
     winston "^2.4.1"
+
+"@hmcts/properties-volume@0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@hmcts/properties-volume/-/properties-volume-0.0.9.tgz#1c2b29a563fcad9041231442476a4a3b7a8abf7d"
+  integrity sha512-qW6XDDnJT8wPfSrrFNFkoQXbtWS/KE55ifeRzXeHAXB8CB9r8e8H33jCql/3WYz/LX6PGQRlrZrU27mtQaNQ4g==
+  dependencies:
+    "@hmcts/nodejs-logging" "^3.0.0"
+    lodash "^4.17.11"
+    path "^0.12.7"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -9455,6 +9473,14 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
+path@^0.12.7:
+  version "0.12.7"
+  resolved "https://registry.yarnpkg.com/path/-/path-0.12.7.tgz#d4dc2a506c4ce2197eb481ebfcd5b36c0140b10f"
+  integrity sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
+  dependencies:
+    process "^0.11.1"
+    util "^0.10.3"
+
 pathval@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.0.tgz#b942e6d4bde653005ef6b71361def8727d0645e0"
@@ -9702,7 +9728,7 @@ process-nextick-args@~1.0.6:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
   integrity sha1-FQ4gt1ZZCtP5EJPyWk8q2L/zC6M=
 
-process@^0.11.10:
+process@^0.11.1, process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
@@ -12984,6 +13010,18 @@ winston@^2.4.1:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.4.tgz#a01e4d1d0a103cf4eada6fc1f886b3110d71c34b"
   integrity sha512-NBo2Pepn4hK4V01UfcWcDlmiVTs7VTB1h7bgnB0rgP146bYhMxX0ypCz3lBOfNxCO4Zuek7yeT+y/zM1OfMw4Q==
+  dependencies:
+    async "~1.0.0"
+    colors "1.0.x"
+    cycle "1.0.x"
+    eyes "0.1.x"
+    isstream "0.1.x"
+    stack-trace "0.0.x"
+
+winston@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.5.tgz#f2e431d56154c4ea765545fc1003bd340c95b59a"
+  integrity sha512-TWoamHt5yYvsMarGlGEQE59SbJHqGsZV8/lwC+iCcGeAe0vUaOh+Lv6SYM17ouzC/a/LB1/hz/7sxFBtlu1l4A==
   dependencies:
     async "~1.0.0"
     colors "1.0.x"

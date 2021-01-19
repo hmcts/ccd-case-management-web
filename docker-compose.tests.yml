@@ -9,6 +9,7 @@ services:
     environment:
       - CCD_CASEWORKER_AUTOTEST_FE_EMAIL
       - CCD_CASEWORKER_AUTOTEST_FE_PASSWORD
+      - APPINSIGHTS_INSTRUMENTATIONKEY
       - TEST_URL
     volumes:
       - "$PWD:/protractor"

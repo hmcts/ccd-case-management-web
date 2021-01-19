@@ -1,3 +1,7 @@
 secrets:
   ccd:
     AppInsightsInstrumentationKey: APPINSIGHTS_INSTRUMENTATIONKEY
+
+appInsights:
+  enabled: APPLICATIONINSIGHTS_ENABLED
+  roleName: APPLICATIONINSIGHTS_ROLE

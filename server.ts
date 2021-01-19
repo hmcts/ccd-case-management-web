@@ -63,7 +63,8 @@ import { AppServerConfig } from './src/app/app.server.config';
 const enableAppInsights = require('./src/app/app-insights/app-insights');
 
 let appServerConfig = new AppServerConfig(CONFIG);
-enableAppInsights(appServerConfig);
+enableAppInsights();
+
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [

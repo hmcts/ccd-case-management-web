@@ -7,7 +7,6 @@ properties([
         string(name: 'TEST_URL_PARAM', defaultValue: '', description: 'Test URL'),
         string(name: 'AUTOTEST_EMAIL_PARAM', defaultValue: '', description: 'Auto Test Email'),
         string(name: 'AUTOTEST_PASSWORD_PARAM', defaultValue: '', description: 'Auto Test Password'),
-        string(name: 'AUTOTEST_INSTRUMENTATIONKEY_PARAM', defaultValue: 'some-key', description: 'Auto Test Instrumentation key'),
         booleanParam(
             name: 'RUN_XBROWSER',
             defaultValue: false,
@@ -26,7 +25,6 @@ def secrets = [
     'ccd-${env}': [
         secret('ccd-caseworker-autotest-fe-email', 'CCD_CASEWORKER_AUTOTEST_FE_EMAIL'),
         secret('ccd-caseworker-autotest-fe-password', 'CCD_CASEWORKER_AUTOTEST_FE_PASSWORD'),
-        secret('AppInsightsInstrumentationKey', 'APPINSIGHTS_INSTRUMENTATIONKEY'),
     ]
 ]
 
@@ -51,7 +49,6 @@ withNightlyPipeline(type, product, app) {
     env.TEST_URL = params.TEST_URL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL = params.AUTOTEST_EMAIL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
-    env.APPINSIGHTS_INSTRUMENTATIONKEY = params.AUTOTEST_INSTRUMENTATIONKEY_PARAM
     
     enableFullFunctionalTest()
 

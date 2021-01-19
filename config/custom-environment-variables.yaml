@@ -1,3 +1,0 @@
-secrets:
-  ccd:
-    AppInsightsInstrumentationKey: APPINSIGHTS_INSTRUMENTATIONKEY

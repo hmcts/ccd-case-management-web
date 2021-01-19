@@ -12,7 +12,7 @@ data "azurerm_key_vault_secret" "appinsights_instrumentationkey" {
   key_vault_id = "${data.azurerm_key_vault.ccd_shared_key_vault.id}"
 }
 
-resource azurerm_key_vault_resource "appinsights_instrumentationkey_secret" {
+resource azurerm_key_vault_secret "appinsights_instrumentationkey_secret" {
   name         = "AppInsightsInstrumentationKey"
   value        = data.azurerm_key_vault_secret.appinsights_instrumentationkey.value
   key_vault_id = data.azurerm_key_vault.ccd_shared_key_vault.id

@@ -1,7 +1,0 @@
-secrets:
-  ccd:
-    AppInsightsInstrumentationKey: "some-key"
-
-appInsights:
-  enabled: false
-  roleName: "ccd-management-web"

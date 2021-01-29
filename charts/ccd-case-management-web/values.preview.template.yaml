@@ -17,7 +17,6 @@ nodejs:
     PAY_BULKSCAN_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/pay-bulkscan
     SHUTTER_REDIRECT_URL: https://xui-webapp-ithc.service.core-compute-ithc.internal
     POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
-    APPINSIGHTS_INSTRUMENTATIONKEY: 1ead6939-464c-4643-bc74-b9617e874418
 
 idam-pr:
   enabled: true

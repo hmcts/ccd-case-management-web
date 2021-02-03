@@ -3,7 +3,7 @@ import { AppConfig } from '../app.config';
 
 const enableAppInsights = (config: AppConfig) => {
   if (config.getAppInsightsEnabled().toLowerCase() === 'true') {
-    const appInsightsKey = config.getAppInsightsInstrumentationKey();
+    const appInsightsKey = config.get('secrets.ccd.AppInsightsInstrumentationKey');
     const appInsightsRoleName = config.getAppInsightsRoleName();
     appInsights.setup(appInsightsKey)
       .setAutoDependencyCorrelation(true)

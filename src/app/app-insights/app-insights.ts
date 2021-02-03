@@ -1,10 +1,12 @@
 import * as appInsights from 'applicationinsights';
 import { AppConfig } from '../app.config';
 
-const enableAppInsights = (config: AppConfig) => {
-  if (config.getAppInsightsEnabled().toLowerCase() === 'true') {
+const config = require('config');
+
+const enableAppInsights = (appConfig: AppConfig) => {
+  if (appConfig.getAppInsightsEnabled().toLowerCase() === 'true') {
     const appInsightsKey = config.get('secrets.ccd.AppInsightsInstrumentationKey');
-    const appInsightsRoleName = config.getAppInsightsRoleName();
+    const appInsightsRoleName = appConfig.getAppInsightsRoleName();
     appInsights.setup(appInsightsKey)
       .setAutoDependencyCorrelation(true)
       .setAutoCollectConsole(true, true);

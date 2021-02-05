@@ -1,4 +1,5 @@
 nodejs:
+  aadIdentityName: ccd
   image: 'hmctspublic.azurecr.io/ccd/case-management-web:latest'
   ingressHost: www-ccd.{{ .Values.global.environment }}.platform.hmcts.net
   applicationPort: 3451
@@ -32,6 +33,10 @@ nodejs:
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS: 5000
     CCD_ACTIVITY_RETRY: 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
+  keyVaults:
+    ccd:
+      secrets:
+        - AppInsightsInstrumentationKey
 
 idam-pr:
   enabled: false

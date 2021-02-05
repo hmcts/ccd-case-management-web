@@ -48,6 +48,8 @@ const CONFIG = {
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
   'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25,
+  'appInsights_enabled': process.env['APPINSIGHTS_ENABLED'] || 'true',
+  'appInsights_roleName': process.env['APPINSIGHTS_ROLE'] || 'ccd-management-web',
   'shutter_redirect_url': process.env['SHUTTER_REDIRECT_URL'] || '',
   'shutter_redirect_wait': parseInt(process.env['SHUTTER_REDIRECT_WAIT'], 10) || 10
 };
@@ -57,12 +59,19 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/mai
 
 import { AppConfig } from './src/app/app.config';
 import { AppServerConfig } from './src/app/app.server.config';
+import * as config from 'config';
+import * as propertiesVolume from '@hmcts/properties-volume';
+propertiesVolume.addTo(config);
+
+const enableAppInsights = require('./src/app/app-insights/app-insights');
+let appServerConfig = new AppServerConfig(CONFIG);
+enableAppInsights(appServerConfig);
 
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
     provideModuleMap(LAZY_MODULE_MAP),
-    { provide: AppConfig, useValue: new AppServerConfig(CONFIG) },
+    { provide: AppConfig, useValue: appServerConfig },
   ]
 }));
 

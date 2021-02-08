@@ -5,13 +5,13 @@ nodejs:
   applicationPort: 3451
   cpuLimits: 1
   autoscaling:
-    enabled: true 
+    enabled: true
     minReplicas: 16
     maxReplicas: 24
   postcodeParam: '$${postcode}'
   environment:
     CCD_ACTIVITY_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/activity
-    CCD_ACTIVITY_MAX_REQUEST_PER_BATCH: 25 
+    CCD_ACTIVITY_MAX_REQUEST_PER_BATCH: 25
     PAYMENTS_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/payments
     PAY_BULKSCAN_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/pay-bulkscan
     WEBSITE_NODE_DEFAULT_VERSION: '~12'
@@ -27,12 +27,13 @@ nodejs:
     CCD_PAGE_SIZE: 25
     POSTCODE_LOOKUP_URL: 'https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/addresses?postcode={{ .Values.postcodeParam }}'
     PRINT_SERVICE_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/print
-    PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net 
+    PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
     SHUTTER_REDIRECT_URL: 'https://xui-webapp-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
     SHUTTER_REDIRECT_WAIT: 10
     CCD_ACTIVITY_NEXT_POLL_REQUEST_MS: 5000
     CCD_ACTIVITY_RETRY: 5
     CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS: 1
+    APPINSIGHTS_ENABLED: 'true'
   keyVaults:
     ccd:
       secrets:

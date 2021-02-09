@@ -1,0 +1,6 @@
+appInsights:
+  enabled: true
+  roleName: ccd-management-web
+secrets:
+  ccd:
+    AppInsightsInstrumentationKey: 1ead6939-464c-4643-bc74-b9617e874418

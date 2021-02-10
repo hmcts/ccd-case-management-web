@@ -101,7 +101,7 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
 }));
 
 // No cache for any routes handled by Universal
-app.use(noCache());
+// app.use(noCache());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

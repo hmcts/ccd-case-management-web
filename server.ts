@@ -100,8 +100,14 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
 
-// No cache for any routes handled by Universal
-// app.use(noCache());
+// No cache for Activity API
+app.use('/activity', (req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+  res.set('Pragma', 'no-cache')
+  res.set('Expires', '0')
+  res.set('Surrogate-Control', 'no-store')
+  next()
+})
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

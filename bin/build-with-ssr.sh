@@ -27,7 +27,7 @@ function fix_window_print_mac() {
 osName="$(uname -s)"
 echo "Building with ssr on [$osName]."
 if [[ "Darwin" == "$osName" ]];then
-    fix_window_print_mac && fix_colour_scss_mac && npm run build:client-and-server-bundles && npm run webpack:server && fix_server_js_syntax_mac
+    fix_window_print_mac && fix_colour_scss_mac && node --max-old-space-size=8000 $(which npm) run build:client-and-server-bundles && node --max-old-space-size=8000 $(which npm) run webpack:server && fix_server_js_syntax_mac
 else 
-    fix_window_print && fix_colour_scss && npm run build:client-and-server-bundles && npm run webpack:server && fix_server_js_syntax
+    fix_window_print && fix_colour_scss && node --max-old-space-size=8000 $(which npm) run build:client-and-server-bundles && node --max-old-space-size=8000 $(which npm) run webpack:server && fix_server_js_syntax
 fi

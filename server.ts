@@ -63,15 +63,15 @@ import * as config from 'config';
 import * as propertiesVolume from '@hmcts/properties-volume';
 propertiesVolume.addTo(config);
 
-// const enableAppInsights = require('./src/app/app-insights/app-insights');
-// let appServerConfig = new AppServerConfig(CONFIG);
-// enableAppInsights(appServerConfig);
+const enableAppInsights = require('./src/app/app-insights/app-insights');
+let appServerConfig = new AppServerConfig(CONFIG);
+enableAppInsights(appServerConfig);
 
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
     provideModuleMap(LAZY_MODULE_MAP),
-    { provide: AppConfig, useValue: new AppServerConfig(CONFIG) },
+    { provide: AppConfig, useValue: appServerConfig },
   ]
 }));
 

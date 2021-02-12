@@ -18,7 +18,7 @@ enableProdMode();
 // Express server
 const app = express();
 const appHealth = express();
-const mvCacheHandler = require('./app/cache/handleMVCache');
+const mvCacheHandler = require('./app/cache/mv-cache');
 
 const PORT = process.env.PORT || 3451;
 const DIST_FOLDER = join(process.cwd());

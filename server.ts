@@ -18,6 +18,7 @@ enableProdMode();
 // Express server
 const app = express();
 const appHealth = express();
+const mvCacheHandler = require('./app/cache/handleMVCache');
 
 const PORT = process.env.PORT || 3451;
 const DIST_FOLDER = join(process.cwd());
@@ -99,6 +100,12 @@ app.get('/config', (req, res) => {
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
+
+// No cache for any routes handled by Universal
+app.use(noCache());
+
+// Enable caching for media-viewer
+app.use(mvCacheHandler());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

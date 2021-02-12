@@ -100,11 +100,6 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
 
-// No cache for routes handled by other than assets and media-viewer
-app.use('^((?!\/assets|media-viewer).)*$', (req, res, next) => {
-  noCache();
-});
-
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
   res.render('index', { req });

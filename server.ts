@@ -48,7 +48,7 @@ const CONFIG = {
   'activity_retry': parseInt(process.env['CCD_ACTIVITY_RETRY'], 10) || 5,
   'activity_batch_collection_delay_ms': parseInt(process.env['CCD_ACTIVITY_BATCH_COLLECTION_DELAY_MS'], 10) || 1,
   'activity_max_request_per_batch': parseInt(process.env['CCD_ACTIVITY_MAX_REQUEST_PER_BATCH'], 10) || 25,
-  'appInsights_enabled': process.env['APPINSIGHTS_ENABLED'] || 'true',
+  'appInsights_enabled': process.env['APPINSIGHTS_ENABLED'] || 'false',
   'appInsights_roleName': process.env['APPINSIGHTS_ROLE'] || 'ccd-case-management-web',
   'shutter_redirect_url': process.env['SHUTTER_REDIRECT_URL'] || '',
   'shutter_redirect_wait': parseInt(process.env['SHUTTER_REDIRECT_WAIT'], 10) || 10

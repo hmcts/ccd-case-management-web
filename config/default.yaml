@@ -1,5 +1,5 @@
 appInsights:
-  enabled: true
+  enabled: false
   roleName: ccd-case-management-web
 secrets:
   ccd:

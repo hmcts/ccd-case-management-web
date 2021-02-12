@@ -25,7 +25,7 @@
   "ie_min_required_version": 11,
   "edge_min_required_version": 17,
   "firefox_min_required_version": 60,
-  "appInsights_enabled": true,
+  "appInsights_enabled": false,
   "appInsights_roleName": "ccd-case-management-web",
   "shutter_redirect_url": "https://xui-webapp-ithc.service.core-compute-ithc.internal/",
   "shutter_redirect_wait": 10

@@ -139,6 +139,14 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.firefox_min_required_version;
   }
 
+  public getAppInsightsEnabled() {
+    return this.config.appInsights_enabled;
+  }
+
+  public getAppInsightsRoleName() {
+    return this.config.appInsights_roleName;
+  }
+
   public getShutterRedirectUrl() {
     return this.config.shutter_redirect_url;
   }
@@ -182,6 +190,8 @@ export class Config extends CaseEditorConfig {
   ie_min_required_version: number;
   edge_min_required_version: number;
   firefox_min_required_version: number;
+  appInsights_enabled: string;
+  appInsights_roleName: string;
   shutter_redirect_url: string;
   shutter_redirect_wait: number;
 }

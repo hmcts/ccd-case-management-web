@@ -67,7 +67,7 @@
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^1.0.0",
-    "applicationinsights": "^1.0.8",
+    "applicationinsights": "^1.0.5",
     "config": "^2.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",

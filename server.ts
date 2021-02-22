@@ -51,7 +51,9 @@ const CONFIG = {
   'appInsights_enabled': process.env['APPINSIGHTS_ENABLED'] || 'false',
   'appInsights_roleName': process.env['APPINSIGHTS_ROLE'] || 'ccd-case-management-web',
   'shutter_redirect_url': process.env['SHUTTER_REDIRECT_URL'] || '',
-  'shutter_redirect_wait': parseInt(process.env['SHUTTER_REDIRECT_WAIT'], 10) || 10
+  'shutter_redirect_wait': parseInt(process.env['SHUTTER_REDIRECT_WAIT'], 10) || 10,
+  'logging_level': process.env['LOGGING_LEVEL'] || 'Off',
+  'logging_case_field_list': process.env['LOGGING_CASE_FIELD_LIST'] || ''
 };
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack

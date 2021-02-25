@@ -119,7 +119,6 @@ export class AppConfig extends AbstractAppConfig {
   public getPaymentsUrl() {
     return this.config.payments_url;
   }
-
   public getPayBulkScanBaseUrl() {
     return this.config.pay_bulk_scan_url;
   }
@@ -161,7 +160,7 @@ export class AppConfig extends AbstractAppConfig {
       + `/internal`
       + `/cases/${caseId}`
       + `/events/${eventId}`;
-  }
+}
 
   public getCreateOrUpdateDraftsUrl(ctid: string) {
     return this.getCaseDataUrl() + `/internal/case-types/${ctid}/drafts/`;
@@ -177,14 +176,6 @@ export class AppConfig extends AbstractAppConfig {
 
   public getJurisdictionUiConfigsUrl() {
     return this.getCaseDataUrl() + `/internal/jurisdiction-ui-configs/`;
-  }
-
-  public getLoggingLevel() {
-    return this.config.logging_level;
-  }
-
-  public getLoggingCaseFieldList() {
-    return this.config.logging_case_field_list;
   }
 }
 
@@ -203,6 +194,4 @@ export class Config extends CaseEditorConfig {
   appInsights_roleName: string;
   shutter_redirect_url: string;
   shutter_redirect_wait: number;
-  logging_level: string;
-  logging_case_field_list: string;
 }

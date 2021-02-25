@@ -39,8 +39,6 @@ describe('AppConfig', () => {
   const SHUTTER_REDIRECT_WAIT = 10;
   const BANNER_URL = DATA_URL + '/internal/banners/';
   const JURISDICTION_UI_CONFIGS_URL = DATA_URL + '/internal/jurisdiction-ui-configs/';
-  const LOGGING_LEVEL = 'Off';
-  const LOGGING_CASE_FIELD_LIST = '';
 
   let httpMock: HttpTestingController;
 
@@ -75,8 +73,6 @@ describe('AppConfig', () => {
     appInsights_roleName: APPINSIGHTS_ROLE,
     shutter_redirect_url: SHUTTER_REDIRECT_URL,
     shutter_redirect_wait: SHUTTER_REDIRECT_WAIT,
-    logging_level: LOGGING_LEVEL,
-    logging_case_field_list: LOGGING_CASE_FIELD_LIST
   };
 
   beforeEach(() => {
@@ -131,8 +127,6 @@ describe('AppConfig', () => {
             expect(appConfig.getShutterRedirectWait()).toEqual(SHUTTER_REDIRECT_WAIT);
             expect(appConfig.getBannersUrl()).toEqual(BANNER_URL);
             expect(appConfig.getJurisdictionUiConfigsUrl()).toEqual(JURISDICTION_UI_CONFIGS_URL);
-            expect(appConfig.getLoggingLevel()).toEqual(LOGGING_LEVEL);
-            expect(appConfig.getLoggingCaseFieldList()).toEqual(LOGGING_CASE_FIELD_LIST);
           });
           let configRequest = httpMock.expectOne('/config.json');
           configRequest.flush(MOCK_CONFIG);

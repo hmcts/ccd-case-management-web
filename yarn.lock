@@ -357,10 +357,10 @@
   resolved "https://registry.yarnpkg.com/@deepcode/dcignore/-/dcignore-1.0.2.tgz#39e4a3df7dde8811925330506e4bb3fbf3c288d8"
   integrity sha512-DPgxtHuJwBORpqRkPXzzOT+uoPRVJmaN7LR+pmeL6DQM90kj6G6GFUH1i/YpRH8NbML8ZGEDwB9f9u4UwD2pzg==
 
-"@hmcts/ccd-case-ui-toolkit@2.64.6-EUI-CCD-RDM-11245-rel":
-  version "2.64.6-EUI-CCD-RDM-11245-rel"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.6-EUI-CCD-RDM-11245-rel.tgz#1022e8eae2513d8f019882e8f62fcb07b7edd305"
-  integrity sha512-Xnre/vzioXwgAxOZA3a+YZKe1F5kNfU3lXNwKnDeG3kVa6GizlCFXgotJJdoLT/YyUPfZOtjDgp8WmNWedYB3w==
+"@hmcts/ccd-case-ui-toolkit@2.64.7-EUI-CCD-RDM-8661-MoneyGBP":
+  version "2.64.7-EUI-CCD-RDM-8661-MoneyGBP"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.7-EUI-CCD-RDM-8661-MoneyGBP.tgz#9434712cfd6314409a90f663f998c20714601e0a"
+  integrity sha512-TTvjTh16PYZgEj2ZZ+3tOXSFk4LtGqNIPUhI1ytcdE3utt83q7QXAN3BxnpbZwmOxAT5Ar32RoiPnOXHLlSndA==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

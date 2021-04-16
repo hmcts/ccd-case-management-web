@@ -58,7 +58,7 @@
     "@angular/platform-server": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@angular/upgrade": "~7.0.3",
-    "@hmcts/ccd-case-ui-toolkit": "2.64.7-EUI-CCD-RDM-8661-MoneyGBP",
+    "@hmcts/ccd-case-ui-toolkit": "2.65.0",
     "@hmcts/ccpay-web-component": "3.0.27",
     "@hmcts/media-viewer": "1.3.1",
     "@hmcts/nodejs-healthcheck": "1.7.0",

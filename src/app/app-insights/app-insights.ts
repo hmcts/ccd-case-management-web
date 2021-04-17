@@ -8,7 +8,13 @@ const enableAppInsights = (appConfig: AppConfig) => {
     const appInsightsRoleName = appConfig.getAppInsightsRoleName();
     appInsights.setup(appInsightsKey)
       .setAutoDependencyCorrelation(true)
-      .setAutoCollectConsole(true, true);
+      .setAutoCollectRequests(true)
+      .setAutoCollectPerformance(true)
+      .setAutoCollectExceptions(true)
+      .setAutoCollectDependencies(true)
+      .setAutoCollectConsole(true)
+      .setUseDiskRetryCaching(true)
+      .setSendLiveMetrics(true);
     appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = appInsightsRoleName;
     console.log('Starting appInsights...');
     appInsights.start();

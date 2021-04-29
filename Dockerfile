@@ -14,9 +14,8 @@ RUN apk update \
     fontconfig=2.13.1-r2 \
     ca-certificates \
     git \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*     
 USER hmcts
-
 RUN git config --global url."https://".insteadOf git://
 RUN yarn install && yarn cache clean
 COPY . .
@@ -24,5 +23,5 @@ RUN yarn build:ssr
 
 # ---- Runtime image ----
 FROM base AS runtime
-COPY --from=build $WORKDIR .
-CMD node ./dist/server.js
+COPY --from=build ${WORKDIR}/dist/ ./
+CMD node ./server.js

@@ -24,5 +24,6 @@ RUN yarn build:ssr
 
 # ---- Runtime image ----
 FROM base AS runtime
-COPY --from=build $WORKDIR .
-CMD node ./dist/server.js
+ENV SRCDIR=${WORKDIR}/dist/
+COPY --from=build ${SRCDIR} ./
+CMD node ./server.js

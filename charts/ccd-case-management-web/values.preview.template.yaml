@@ -19,7 +19,7 @@ nodejs:
     POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
 
 idam-pr:
-  enabled: false
+  enabled: true
   redirect_uris:
     CCD:
       - https://${SERVICE_FQDN}/oauth2redirect

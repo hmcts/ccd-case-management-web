@@ -19,7 +19,7 @@ nodejs:
     POSTCODE_LOOKUP_URL: https://gateway-ccd.aat.platform.hmcts.net/addresses?postcode={{ .Values.postcodeParam }}
 
 idam-pr:
-  enabled: true
+  enabled: false
   redirect_uris:
     CCD:
       - https://${SERVICE_FQDN}/oauth2redirect

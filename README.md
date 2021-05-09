@@ -1,4 +1,4 @@
-# ccd-case-management-web
+### ccd-case-management-web
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/hmcts/ccd-case-management-web.svg?branch=master)](https://travis-ci.org/hmcts/ccd-case-management-web)
 [![Docker Build Status](https://img.shields.io/docker/build/hmcts/ccd-case-management-web.svg)](https://hub.docker.com/r/hmcts/ccd-case-management-web)

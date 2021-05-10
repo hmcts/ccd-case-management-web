@@ -16,7 +16,6 @@ RUN apk update \
     git \
     && rm -rf /var/lib/apt/lists/*
 USER hmcts
-
 RUN git config --global url."https://".insteadOf git://
 RUN yarn install && yarn cache clean
 COPY . .
@@ -24,6 +23,5 @@ RUN yarn build:ssr
 
 # ---- Runtime image ----
 FROM base AS runtime
-ENV SRCDIR=${WORKDIR}/dist/
-COPY --from=build ${SRCDIR} ./
+COPY --from=build ${WORKDIR}/dist/ ./
 CMD node ./server.js

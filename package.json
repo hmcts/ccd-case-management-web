@@ -92,7 +92,7 @@
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.0.0-rc.0",
     "snyk": "^1.124.1",
-    "underscore": "^1.12.1",
+    "underscore": "^1.10.2",
     "url": "^0.11.0",
     "webdriver-manager": "^12.1.0",
     "x-frame-options": "^1.0.0",
@@ -170,7 +170,6 @@
     "y18n": "^5.0.5",
     "ssri": "^6.0.2",
     "hosted-git-info": "^3.0.8",
-    "underscore": "^1.12.1",
     "xmlhttprequest-ssl": "^1.6.2",
     "url-parse": "^1.5.0"
   },

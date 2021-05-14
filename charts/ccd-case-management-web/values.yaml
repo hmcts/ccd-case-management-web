@@ -23,7 +23,7 @@ nodejs:
     CCD_GW_OAUTH2_CLIENT_ID: ccd_gateway
     DM_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/documents
     ANNOTATION_API_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/em-anno
-    DM_URL_REMOTE: "^https?://(((?:api-gateway\\.preprod\\.dm\\.reform\\.hmcts\\.net|dm-store-{{ .Values.global.environment }}\\.service\\.core-compute-{{ .Values.global.environment }}\\.internal(?::\\d+)?)/documents)|(em-hrs-api-{{ .Values.global.environment }}\\.service\\.core-compute-{{ .Values.global.environment }}\\.internal(?::\d+)?/hearing-recordings/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/segments/[0-9]))"
+    DM_URL_REMOTE: ^https?://(((?:api-gateway\\.preprod\\.dm\\.reform\\.hmcts\\.net|dm-store-{{ .Values.global.environment }}\\.service\\.core-compute-{{ .Values.global.environment }}\\.internal(?::\\d+)?)\/documents)|(em-hrs-api-{{ .Values.global.environment }}\\.service\\.core-compute-{{ .Values.global.environment }}\\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]))
     CCD_PAGE_SIZE: 25
     POSTCODE_LOOKUP_URL: 'https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/addresses?postcode={{ .Values.postcodeParam }}'
     PRINT_SERVICE_URL: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net/print

@@ -12,11 +12,11 @@ nodejs:
     ANNOTATION_API_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/em-anno
     PRINT_SERVICE_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/print
     PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
-    CCD_ACTIVITY_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/activity
-    PAYMENTS_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/payments
-    PAY_BULKSCAN_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/pay-bulkscan
-    SHUTTER_REDIRECT_URL: https://xui-webapp-ithc.service.core-compute-ithc.internal
-    POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web-pr-353.service.core-compute-preview.internal/addresses?postcode={{ .Values.postcodeParam }}
+    CCD_ACTIVITY_URL: https://gateway-ccd.aat.platform.hmcts.net/activity
+    PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
+    PAY_BULKSCAN_URL: https://gateway-ccd.aat.platform.hmcts.net/pay-bulkscan
+    SHUTTER_REDIRECT_URL: https://xui-webapp-aat.service.core-compute-aat.internal
+    POSTCODE_LOOKUP_URL: https://gateway-ccd.aat.platform.hmcts.net/addresses?postcode={{ .Values.postcodeParam }}
 
 idam-pr:
   enabled: true

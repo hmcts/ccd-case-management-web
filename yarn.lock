@@ -342,10 +342,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.64.7-EUI-CCD-CCD-1047-Underscore":
-  version "2.64.7-EUI-CCD-CCD-1047-Underscore"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.7-EUI-CCD-CCD-1047-Underscore.tgz#ac006cfa2a06c150120eca349d087a5a683fbe9f"
-  integrity sha512-kxPR0+W/aKTSK+4uV3fJ0OBHdPvUZZe/yrqyPA3eEjwdfAlbARUer9uj0knzj829381/kMgdUk9X/17PiofcIw==
+"@hmcts/ccd-case-ui-toolkit@2.64.7-EUI-CCD-CCD-1047-Underscore-Import":
+  version "2.64.7-EUI-CCD-CCD-1047-Underscore-Import"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.7-EUI-CCD-CCD-1047-Underscore-Import.tgz#002e046d713c220b2bbf93777fdc8c663d9a2bd7"
+  integrity sha512-N/gJgXDOm98lg2Zd1zOB+LP94SipS9GlgcmRHQ7yFC2cNO+64uBWkR6JAF+nTSWrAmOo3CkPMIGzDq+AS0PUjQ==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

@@ -364,10 +364,10 @@
   resolved "https://registry.yarnpkg.com/@deepcode/dcignore/-/dcignore-1.0.2.tgz#39e4a3df7dde8811925330506e4bb3fbf3c288d8"
   integrity sha512-DPgxtHuJwBORpqRkPXzzOT+uoPRVJmaN7LR+pmeL6DQM90kj6G6GFUH1i/YpRH8NbML8ZGEDwB9f9u4UwD2pzg==
 
-"@hmcts/ccd-case-ui-toolkit@2.64.7-EUI-CCD-CCD-1047-Underscore-Import":
-  version "2.64.7-EUI-CCD-CCD-1047-Underscore-Import"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.7-EUI-CCD-CCD-1047-Underscore-Import.tgz#002e046d713c220b2bbf93777fdc8c663d9a2bd7"
-  integrity sha512-N/gJgXDOm98lg2Zd1zOB+LP94SipS9GlgcmRHQ7yFC2cNO+64uBWkR6JAF+nTSWrAmOo3CkPMIGzDq+AS0PUjQ==
+"@hmcts/ccd-case-ui-toolkit@2.64.8-EUI-CCD":
+  version "2.64.8-EUI-CCD"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.8-EUI-CCD.tgz#c67526af9cae76859536b3b340f351f3afc27148"
+  integrity sha512-OHgYC7qZAx2pGXLAEp1xjcaKQX/QFXraQyDiM03OOMKfB/1Gh63O279PyKcE9s4CmTO7jSQfkNZKYVtLNR+26g==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"

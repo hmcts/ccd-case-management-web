@@ -9914,12 +9914,12 @@ ng2-mock-component@^0.1.1:
   resolved "https://registry.yarnpkg.com/ng2-mock-component/-/ng2-mock-component-0.1.1.tgz#5980e8887523754f855febc0c11f6c20f016d865"
   integrity sha512-HPcn61Wfmcmg2swJ4chqwGueTVkqz0PpnsTriLqMFblaW1/p1tthL9yKpa8TQpcwGSih2NI2Hb7IcQiMlC+E0w==
 
-ngx-device-detector@^1.3.0:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/ngx-device-detector/-/ngx-device-detector-1.5.2.tgz#7d577feff79b7c91245b3b9d1bbb7428443f9251"
-  integrity sha512-lUHmhVIak3/zet+V3Cy1mRVySrQyRxFEW2nXdpZK4w+puZXw1u6imKysd+Qk9i7bVSSTd5C9FuMu9SdVnT2X1Q==
+ngx-device-detector@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/ngx-device-detector/-/ngx-device-detector-1.4.0.tgz#141c258f5923f9ad8472f6a4d0c730db07633217"
+  integrity sha512-Lbf/soiH3fgQJY9p+RJvqQWE6zDl19wfKEwS9AWWZ6ecNoFcUqcmQPQDUma9FdD7ttm8iJku0f/D5/bEBjfn2A==
   dependencies:
-    tslib "^2.0.0"
+    tslib "^1.9.0"
 
 ngx-md@~6.0.0:
   version "6.0.9"

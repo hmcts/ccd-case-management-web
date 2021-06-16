@@ -358,10 +358,10 @@
     typescript "3.1.1"
     underscore "^1.9.1"
 
-"@hmcts/ccpay-web-component@v4.0.0-beta330":
-  version "4.0.0-beta330"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-4.0.0-beta330.tgz#f62c9aff89dd6f7c2f208f2f12e6b4193f1bc288"
-  integrity sha512-uYK74lX4CDpfyImvZWZ+Cq09Ofji0mUlFfuvjf9m0AQM/gYN5+AGTApx2DpqqfNUaObWHfXqIZjLuP6naRo05g==
+"@hmcts/ccpay-web-component@v4.0.0-beta332":
+  version "4.0.0-beta332"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccpay-web-component/-/ccpay-web-component-4.0.0-beta332.tgz#c3dac9ae59c4eb8a9cdb71d3192109089cd20207"
+  integrity sha512-YlQ7ZVoWwxsOYZS5ruDpsUtujbllDNDHT7LkPhjGeXNkLo8+AA5yO5aV4ja4OOc0tWqd2EA/qkAUA+sMoK9Dqg==
   dependencies:
     tslib "^1.9.0"
 

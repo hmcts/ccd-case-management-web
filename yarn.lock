@@ -364,10 +364,10 @@
   resolved "https://registry.yarnpkg.com/@deepcode/dcignore/-/dcignore-1.0.2.tgz#39e4a3df7dde8811925330506e4bb3fbf3c288d8"
   integrity sha512-DPgxtHuJwBORpqRkPXzzOT+uoPRVJmaN7LR+pmeL6DQM90kj6G6GFUH1i/YpRH8NbML8ZGEDwB9f9u4UwD2pzg==
 
-"@hmcts/ccd-case-ui-toolkit@2.64.7-EUI-CCD-RDM-8661-MoneyGBP":
-  version "2.64.7-EUI-CCD-RDM-8661-MoneyGBP"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.7-EUI-CCD-RDM-8661-MoneyGBP.tgz#9434712cfd6314409a90f663f998c20714601e0a"
-  integrity sha512-TTvjTh16PYZgEj2ZZ+3tOXSFk4LtGqNIPUhI1ytcdE3utt83q7QXAN3BxnpbZwmOxAT5Ar32RoiPnOXHLlSndA==
+"@hmcts/ccd-case-ui-toolkit@2.64.8-EUI-CCD":
+  version "2.64.8-EUI-CCD"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.8-EUI-CCD.tgz#c67526af9cae76859536b3b340f351f3afc27148"
+  integrity sha512-OHgYC7qZAx2pGXLAEp1xjcaKQX/QFXraQyDiM03OOMKfB/1Gh63O279PyKcE9s4CmTO7jSQfkNZKYVtLNR+26g==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -14234,15 +14234,10 @@ unbox-primitive@^1.0.1:
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
 
-underscore@^1.10.2, underscore@^1.9.1:
+underscore@^1.13.1, underscore@^1.9.1, underscore@~1.6.0:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
   integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
-
-underscore@~1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
-  integrity sha1-izixDKze9jM3uLJOT/htRa6lKag=
 
 union-value@^1.0.0:
   version "1.0.1"

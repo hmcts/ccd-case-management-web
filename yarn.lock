@@ -342,10 +342,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@hmcts/ccd-case-ui-toolkit@2.64.7-EUI-CCD-RDM-8661-MoneyGBP":
-  version "2.64.7-EUI-CCD-RDM-8661-MoneyGBP"
-  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.7-EUI-CCD-RDM-8661-MoneyGBP.tgz#9434712cfd6314409a90f663f998c20714601e0a"
-  integrity sha512-TTvjTh16PYZgEj2ZZ+3tOXSFk4LtGqNIPUhI1ytcdE3utt83q7QXAN3BxnpbZwmOxAT5Ar32RoiPnOXHLlSndA==
+"@hmcts/ccd-case-ui-toolkit@2.64.8-EUI-CCD":
+  version "2.64.8-EUI-CCD"
+  resolved "https://registry.yarnpkg.com/@hmcts/ccd-case-ui-toolkit/-/ccd-case-ui-toolkit-2.64.8-EUI-CCD.tgz#c67526af9cae76859536b3b340f351f3afc27148"
+  integrity sha512-OHgYC7qZAx2pGXLAEp1xjcaKQX/QFXraQyDiM03OOMKfB/1Gh63O279PyKcE9s4CmTO7jSQfkNZKYVtLNR+26g==
   dependencies:
     "@angular/cli" "^6.0.8"
     "@angular/compiler-cli" "~7.0.3"
@@ -12322,20 +12322,10 @@ uglifyjs-webpack-plugin@^1.2.4, uglifyjs-webpack-plugin@^1.2.5:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-underscore@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.10.2.tgz#73d6aa3668f3188e4adb0f1943bd12cfd7efaaaf"
-  integrity sha512-N4P+Q/BuyuEKFJ43B9gYuOj4TQUHXX+j2FqguVOpjkssLUUrnJofCcBccJSCoeturDoZU6GorDTHSvUDlSQbTg==
-
-underscore@^1.9.1:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.2.tgz#0c8d6f536d6f378a5af264a72f7bec50feb7cf2f"
-  integrity sha512-D39qtimx0c1fI3ya1Lnhk3E9nONswSKhnffBI0gME9C99fYOkNi04xs8K6pePLhvl1frbDemkaBQ5ikWllR2HQ==
-
-underscore@~1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
-  integrity sha1-izixDKze9jM3uLJOT/htRa6lKag=
+underscore@^1.13.1, underscore@^1.9.1, underscore@~1.6.0:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
+  integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

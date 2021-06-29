@@ -1,4 +1,5 @@
 version: 1.0-preview-1
+stepTimeout: 1200
 steps:
   - id: pull-build
     cmd: docker pull {{.Run.Registry}}/ccd/case-management-web/build:latest || true

@@ -29,6 +29,7 @@
     "test:functional": "echo 'TODO'",
     "test:functionalTests": "webdriver-manager update --versions.chrome 2.40 && protractor test/config/conf.js --cucumberOpts.tags='@functional and not @bug and not @broken'",
     "test:fullfunctional": "echo 'skip functional tests temporarily'",
+    "fortifyScan": "./test/java/gradlew -p test/java fortifyScan",
     "lint": "ng lint ccd-case-management-web",
     "e2e": "ng e2e",
     "start:fr": "ng serve --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --locale=fr",

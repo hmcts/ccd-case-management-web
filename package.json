@@ -99,8 +99,7 @@
     "webdriver-manager": "^12.1.0",
     "x-frame-options": "^1.0.0",
     "xlsx": "^0.17.0",
-    "zone.js": "^0.8.26",
-    "tar": "^6.1.2"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.6.8",
@@ -178,7 +177,8 @@
     "url-parse": "^1.5.0",
     "glob-parent": "^5.1.2",
     "normalize-url": "^6.0.1",
-    "trim-newlines": "^4.0.1"
+    "trim-newlines": "^4.0.1",
+    "tar": "^6.1.2"
   },
   "snyk": true
 }

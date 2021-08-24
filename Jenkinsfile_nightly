@@ -40,6 +40,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, app) {
 
     enableSlackNotifications('#ccd-nightly-builds')
+    enableFortifyScan()
 
     if (params.RUN_XBROWSER) {
         enableCrossBrowserTest()
@@ -49,11 +50,15 @@ withNightlyPipeline(type, product, app) {
     env.TEST_URL = params.TEST_URL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_FE_EMAIL = params.AUTOTEST_EMAIL_PARAM
     env.CCD_CASEWORKER_AUTOTEST_FE_PASSWORD = params.AUTOTEST_PASSWORD_PARAM
-    
+
     enableFullFunctionalTest()
 
     after('checkout') {
         sh "yarn cache clean"
+    }
+
+    after('fortify-scan') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
     }
 
 }

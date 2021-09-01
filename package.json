@@ -178,7 +178,7 @@
     "glob-parent": "^5.1.2",
     "normalize-url": "^6.0.1",
     "trim-newlines": "^4.0.1",
-    "tar": "^6.1.2"
+    "tar": "^6.1.9"
   },
   "snyk": true
 }

@@ -23,7 +23,8 @@ exports.config = {
     'marionette': false,
     'browserName': 'chrome',
 
-    chromeOptions: { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote '] },
+    chromeOptions: { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox',
+     '--no-zygote ', '--disable-browser-side-navigation', '--allow-insecure-localhost'] },
 
     'proxy': {
       'proxyType': 'manual',

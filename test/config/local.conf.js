@@ -20,6 +20,7 @@ exports.config = {
     'acceptInsecureCerts': true,
     'marionette': false,
     'browserName': 'chrome',
+    'acceptInsecureCerts': true,
 
     'proxy': {
       'proxyType': 'manual',

@@ -20,10 +20,12 @@ class LoginPage extends BasePage {
   static async open(){
 
       //open browser and navigate to url
-      await browser.driver.get(process.env.TEST_URL || 'http://localhost:3451',50000);
-
-      element(by.id('view-container')).getText().then(function(text) {
-        console.log(text);
+      await browser.driver.get(process.env.TEST_URL || 'http://localhost:3451', 50000)
+      .then( function () {
+          return browser.getPageSource();
+      })
+      .then( function (txt) {
+          console.log('CCD UI page source', txt);
       });
 
       //wait for browser url to be correct

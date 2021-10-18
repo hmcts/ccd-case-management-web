@@ -103,6 +103,11 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
 // No cache for any routes handled by Universal
 app.use(noCache());
 
+app.use('*', function (req, res, next) {
+  res.set('Access-Control-Allow-Origin', '*')
+  next()
+});
+
 // Enable caching for media-viewer
 app.use('/media-viewer', function (req, res, next) {
   res.set('Cache-Control', 'public, max-age=31536000')

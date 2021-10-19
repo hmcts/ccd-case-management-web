@@ -8,6 +8,7 @@ properties(
 
 def product = "ccd"
 def component = "case-management-web"
+def branchesToSync = ['demo', 'ithc', 'perftest']
 
 
 def secrets = [
@@ -43,6 +44,7 @@ withPipeline("angular", product, component) {
         enableSlackNotifications('#ccd-pr-builds')
     }
 
+    syncBranchesWithMaster(branchesToSync)
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
     enableAksStagingDeployment()

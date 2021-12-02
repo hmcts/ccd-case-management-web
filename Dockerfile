@@ -11,7 +11,7 @@ RUN apk update \
     && apk add  \
     bzip2=1.0.8-r1 \
     patch=2.7.6-r7 \
-    fontconfig=2.13.1-r2 \
+    fontconfig=2.13.1-r4 \
     ca-certificates \
     git \
     && rm -rf /var/lib/apt/lists/*

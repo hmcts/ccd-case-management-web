@@ -40,7 +40,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, app) {
 
     enableSlackNotifications('#ccd-nightly-builds')
-    enableFortifyScan()
+    // Temporarily disable fortify scan stage until fortify access re-enabled
+    //enableFortifyScan()
 
     if (params.RUN_XBROWSER) {
         enableCrossBrowserTest()
@@ -57,8 +58,8 @@ withNightlyPipeline(type, product, app) {
         sh "yarn cache clean"
     }
 
-    after('fortify-scan') {
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
-    }
+    //after('fortify-scan') {
+    //    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+    //}
 
 }
